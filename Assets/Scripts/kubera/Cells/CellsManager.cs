@@ -154,6 +154,23 @@ public class CellsManager : MonoBehaviour
 		return true;//(tempC).transform.position + nVec;
 	}
 
+	public Vector3 Positionate(Piece piece)
+	{
+		Cell tempC = null;
+
+		for(int i = 0;i < piece.pieces.Length;i++)
+		{
+			tempC = getCellOnVec(piece.pieces[i].transform.position);
+			tempC.occupied = true;
+			tempC.color = ECOLORS_ID.BLUE;
+		}
+		
+		tempC = getCellOnVec(piece.pieces[0].transform.position);
+		Vector3 nVec = new Vector3(tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x,
+		                           tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x,0);
+		return true;//(tempC).transform.position + nVec;
+	}
+
 	protected void createLettersOn(bool isHorizontal,int index)
 	{
 		if(isHorizontal)
