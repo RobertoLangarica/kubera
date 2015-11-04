@@ -5,8 +5,8 @@ using System.Collections.Generic;
 //[ExecuteInEditMode]
 public class CellsManager : MonoBehaviour 
 {
-	//public bool runCreationOnEditor = false;
-	//public bool destroyGridOnEditor = false;
+	public bool runCreationOnEditor = false;
+	public bool destroyGridOnEditor = false;
 
 	public GameObject cellPrefab;
 
@@ -24,20 +24,20 @@ public class CellsManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(Input.GetKeyDown(KeyCode.A))
+		/*if(Input.GetKeyDown(KeyCode.A))
 		{
 			LineCreated();
 		}
-		/*if(runCreationOnEditor)
+		if(runCreationOnEditor)
 		{
 			CreateGrid();
 			runCreationOnEditor = false;
-		}
+		}*/
 		if(destroyGridOnEditor)
 		{
 			DestroyGrid();
 			destroyGridOnEditor = false;
-		}*/
+		}
 	}
 
 	protected void CreateGrid()
@@ -147,11 +147,30 @@ public class CellsManager : MonoBehaviour
 				}
 			}
 		}
+		return true;
+	}
 
-		tempC = getCellOnVec(arr[0].transform.position);
-		Vector3 nVec = new Vector3(tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x,
-		                           tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x,0);
-		return true;//(tempC).transform.position + nVec;
+	public bool CanPositionate(Vector3[] arr)
+	{
+		Cell tempC = null;
+		
+		for(int i = 0;i < arr.Length;i++)
+		{
+			tempC = getCellOnVec(arr[i]);
+			if(tempC == null)
+			{
+				return false;
+			}
+			else
+			{
+				if(tempC.occupied)
+				{
+					return false;
+				}
+			}
+		}
+		Debug.Log ("SI puede!!!!!!!!!!!!!!!!!!!!");
+		return true;
 	}
 
 	public Vector3 Positionate(Piece piece)
@@ -194,7 +213,38 @@ public class CellsManager : MonoBehaviour
 		}
 	}
 
-	public void VerifyPosibility(List<GameObject> listPieces)
+	public bool VerifyPosibility(List<GameObject> listPieces)
 	{
+		Vector3 ofset = Vector3.zero;
+		Vector3 moveLittle = new Vector3(0.001f,-0.001f,0);
+		Vector3[] vecArr;
+		Piece lPPiece = null;
+
+		foreach(Cell val in cells)
+		{
+			if(!val.occupied)
+			{
+				//Debug.Log (val.transform.position);
+				for(int i = 0;i < listPieces.Count;i++)
+				{
+					//Debug.Log ("Checando piezas" + listPieces[i]);
+					lPPiece = listPieces[i].GetComponent<Piece>();
+					ofset = (val.transform.position + moveLittle) - lPPiece.pieces[0].transform.position;
+					vecArr = new Vector3[lPPiece.pieces.Length];
+					for(int j = 0;j < lPPiece.pieces.Length;j++)
+					{
+						//Debug.Log ("Modificando Vecs");
+						vecArr[j] = lPPiece.pieces[j].transform.position + ofset;
+						//Debug.Log (vecArr[j]);
+					}
+					if(CanPositionate(vecArr))
+					{
+						//Debug.Log ("Si se puede");
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }
