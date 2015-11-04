@@ -293,7 +293,7 @@ public class ABCDataStructure : MonoBehaviour {
 	protected bool hasValueInChildren(IntList List, int searchValue)
 	{
 		IntList tmp;
-		tmp = currentValidationList.Find(item => item.value == searchValue);
+		tmp = List.content.Find(item => item.value == searchValue);
 
 		if(tmp != null)
 		{
