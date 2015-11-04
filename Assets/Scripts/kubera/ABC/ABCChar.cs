@@ -6,7 +6,8 @@ public class ABCChar : MonoBehaviour
 	public string character = "A";
 	public bool wildcard = false;
 
-	protected int value;
+	[HideInInspector]
+	public int value;
 	
 	void Start () 
 	{

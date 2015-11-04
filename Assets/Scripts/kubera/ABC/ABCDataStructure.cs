@@ -8,6 +8,7 @@ public class ABCDataStructure : MonoBehaviour {
 	{
 		public int value;
 		public bool end;
+		public IntList wildcar;
 		public int wildcarIndex; //Representa el valor que se le da en la busqueda al comodin
 		public List<IntList> content;
 	};
@@ -127,7 +128,7 @@ public class ABCDataStructure : MonoBehaviour {
 	}
 	
 	protected bool isValid;
-	protected IntList currentValidationList;
+	protected List<IntList> currentValidationList;
 	protected List<IntList> levelsOfSearch;
 	public void initCharByCharValidation()
 	{
@@ -151,15 +152,26 @@ public class ABCDataStructure : MonoBehaviour {
 	 **/ 
 	public bool validateChar(ABCChar c)
 	{
-		List<IntList> tmp;
+		IntList tmp = null;
 
 		if(isValid)
 		{
-			tmp = currentValidationList.Find(item => item.value == c.value);
-
-			if(tmp == null)
+			if(c.wildcard)
 			{
+				//Armamos
+				IntList wildList = new IntList();
 
+			}
+			else
+			{
+				tmp = currentValidationList.Find(item => item.value == c.value);
+			}
+
+			//Guardamos el nuevo nivel de busqueda
+			if(tmp != null)
+			{
+				levelsOfSearch.Add(tmp);
+				return true;
 			}
 		}
 
@@ -169,8 +181,8 @@ public class ABCDataStructure : MonoBehaviour {
 
 	protected bool hasValueInChildren(IntList List, int searchValue)
 	{
-		List<IntList> tmp;
-		tmp = currentValidationList.Find(item => item.value == c.value);
+		IntList tmp;
+		tmp = currentValidationList.Find(item => item.value == searchValue);
 
 		if(tmp != null)
 		{
