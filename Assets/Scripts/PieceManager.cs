@@ -11,6 +11,7 @@ public class PieceManager : MonoBehaviour {
 
 	public static PieceManager instance;
 	protected int figuresInBar;
+	public GameManager gameManager;
 
 	// Use this for initialization
 	void Start () {
@@ -32,8 +33,9 @@ public class PieceManager : MonoBehaviour {
 			//print("barra "+i);
 			GameObject go = Instantiate(piecesList[0]);
 			piecesList.RemoveAt(0);
-			go.transform.position= firstPos [i].position;
+			go.transform.position= new Vector3(firstPos [i].position.x,firstPos [i].position.y,1);
 			go.GetComponent<Piece>().myFirstPos=firstPos[i];
+
 			if(piecesList.Count==0)
 			{
 				fillList();
@@ -44,11 +46,15 @@ public class PieceManager : MonoBehaviour {
 	protected void fillList()
 	{
 		//Debug.Log ("LLenando la lista");
-		piecesList.Add ((GameObject)(Resources.Load ("A")));
-		piecesList.Add ((GameObject)(Resources.Load ("B")));
-		piecesList.Add ((GameObject)(Resources.Load ("C")));
-		piecesList.Add ((GameObject)(Resources.Load ("D")));
-		piecesList.Add ((GameObject)(Resources.Load ("E")));
+
+
+
+		string[] myPieces = gameManager.data.levels[0].pieces.Split(new char[1]{','});
+
+		for(int i =0; i<myPieces.Length; i++)
+		{
+			piecesList.Add ((GameObject)(Resources.Load (myPieces[i])));
+		}
 
 		List<GameObject> newList = new List<GameObject>();
 

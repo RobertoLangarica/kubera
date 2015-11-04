@@ -6,12 +6,14 @@ public class GameManager : MonoBehaviour
 	[HideInInspector]
 	public Levels data;
 
+	protected int currLevel;
+
 	// Use this for initialization
-	void Start () 
+	void Awake () 
 	{
 		TextAsset tempTxt = (TextAsset)Resources.Load ("levels");
 		data = Levels.LoadFromText(tempTxt.text);
-
+		currLevel = 0;
 		Debug.Log(data.levels[0].pool);
 	}
 	

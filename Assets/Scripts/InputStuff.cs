@@ -23,8 +23,9 @@ public class InputStuff : MonoBehaviour {
 	[HideInInspector]
 	public DOnDragStart onDragStart;
 
+	public CellsManager cellManager;
 	protected GameObject piece;
-
+	
 	// Use this for initialization
 	void Start () {
 	
@@ -101,11 +102,16 @@ public class InputStuff : MonoBehaviour {
 
 
 			//checar si la pieza fue puesta correctamente
-			if(piece && false)
+			if(!piece)
+			{
+				break;
+			}
+
+			if(!cellManager.CanPositionate(piece.GetComponent<Piece>().pieces))
 			{
 				backToNormal();
 			}
-			else if(piece&& true)
+			else
 			{
 				piece.GetComponent<BoxCollider2D>().enabled = false;
 				PieceManager.instance.checkBarr();
@@ -132,7 +138,7 @@ public class InputStuff : MonoBehaviour {
 				
 				tempV3.y += 1.5f;
 				piece.transform.DOMove(tempV3,.2f);
-				piece.transform.DOScale(new Vector3(5,5,5),.1f);
+				piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
 			}
 		}
 	}

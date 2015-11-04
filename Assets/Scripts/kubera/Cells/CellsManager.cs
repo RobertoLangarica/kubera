@@ -5,8 +5,8 @@ using System.Collections.Generic;
 //[ExecuteInEditMode]
 public class CellsManager : MonoBehaviour 
 {
-	/*public bool runCreationOnEditor = false;
-	public bool destroyGridOnEditor = false;*/
+	//public bool runCreationOnEditor = false;
+	//public bool destroyGridOnEditor = false;
 
 	public GameObject cellPrefab;
 
@@ -42,7 +42,7 @@ public class CellsManager : MonoBehaviour
 
 	protected void CreateGrid()
 	{
-		Vector3 nPos = Vector3.zero;
+		Vector3 nPos = transform.position;
 		GameObject go = null;
 
 		for(int i = 0;i < height;i++)
@@ -55,7 +55,7 @@ public class CellsManager : MonoBehaviour
 				nPos.x += cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x + 0.03f;
 			}
 			nPos.y += cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y + 0.03f;
-			nPos.x = 0;
+			nPos.x = transform.position.x;
 		}
 	}
 
@@ -128,7 +128,7 @@ public class CellsManager : MonoBehaviour
 		}
 	}
 
-	public Vector3 CanPositionate(GameObject[] arr)
+	public bool CanPositionate(GameObject[] arr)
 	{
 		Cell tempC = null;
 
@@ -137,13 +137,13 @@ public class CellsManager : MonoBehaviour
 			tempC = getCellOnVec(arr[i].transform.position);
 			if(tempC == null)
 			{
-				return new Vector3(-100,-100,-100);
+				return false;
 			}
 			else
 			{
 				if(tempC.occupied)
 				{
-					return new Vector3(-100,-100,-100);
+					return false;
 				}
 			}
 		}
@@ -151,7 +151,7 @@ public class CellsManager : MonoBehaviour
 		tempC = getCellOnVec(arr[0].transform.position);
 		Vector3 nVec = new Vector3(tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x,
 		                           tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x,0);
-		return (tempC).transform.position + nVec;
+		return true;//(tempC).transform.position + nVec;
 	}
 
 	protected void createLettersOn(bool isHorizontal,int index)
