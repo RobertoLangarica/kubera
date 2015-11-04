@@ -165,10 +165,10 @@ public class CellsManager : MonoBehaviour
 			tempC.color = ECOLORS_ID.BLUE;
 		}
 		
-		tempC = getCellOnVec(piece.pieces[0].transform.position);
-		Vector3 nVec = new Vector3(tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x,
-		                           tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x,0);
-		return true;//(tempC).transform.position + nVec;
+		tempC = getCellOnVec(piece.transform.position);
+		Vector3 nVec = new Vector3(tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
+		                           -tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
+		return (tempC).transform.position + nVec;
 	}
 
 	protected void createLettersOn(bool isHorizontal,int index)
@@ -187,5 +187,9 @@ public class CellsManager : MonoBehaviour
 				cells[index+(i*width)].color = ECOLORS_ID.LETER;
 			}
 		}
+	}
+
+	public void VerifyPosibility(List<GameObject> listPieces)
+	{
 	}
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class PieceManager : MonoBehaviour {
 
 	protected List<GameObject> piecesList = new List<GameObject>();
+	public List<GameObject> piciesInBar = new List<GameObject>();
 	public Transform[] firstPos;
 
 	protected int sizeOfBar =3;
@@ -32,6 +33,7 @@ public class PieceManager : MonoBehaviour {
 		{
 			//print("barra "+i);
 			GameObject go = Instantiate(piecesList[0]);
+			piciesInBar.Add(piecesList[0]);
 			piecesList.RemoveAt(0);
 			go.transform.position= new Vector3(firstPos [i].position.x,firstPos [i].position.y,1);
 			go.GetComponent<Piece>().myFirstPos=firstPos[i];
@@ -68,9 +70,10 @@ public class PieceManager : MonoBehaviour {
 		piecesList = newList;
 	}
 
-	public void checkBarr()
+	public void checkBarr(GameObject piciesSelected)
 	{
 		figuresInBar--;
+		piciesInBar.Remove (piciesSelected);
 		if(figuresInBar ==0)
 		{
 			fillBar();

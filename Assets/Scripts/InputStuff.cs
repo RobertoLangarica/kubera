@@ -113,8 +113,13 @@ public class InputStuff : MonoBehaviour {
 			}
 			else
 			{
+				Vector3 myNewPosition = cellManager.Positionate(piece.GetComponent<Piece>());
+				piece.transform.DOMove(new Vector3(myNewPosition.x,myNewPosition.y,1),.1f);
+
 				piece.GetComponent<BoxCollider2D>().enabled = false;
-				PieceManager.instance.checkBarr();
+				PieceManager.instance.checkBarr(piece);
+				cellManager.LineCreated();
+				cellManager.VerifyPosibility(PieceManager.instance.piciesInBar);
 			}
 
 			piece = null;
