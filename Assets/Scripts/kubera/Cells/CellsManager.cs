@@ -162,6 +162,7 @@ public class CellsManager : MonoBehaviour
 		{
 			tempC = getCellOnVec(piece.pieces[i].transform.position);
 			tempC.occupied = true;
+			tempC.piece=piece.pieces[i];
 			tempC.color = ECOLORS_ID.BLUE;
 		}
 		
@@ -178,6 +179,8 @@ public class CellsManager : MonoBehaviour
 			for(int i = (index*width);i < (width*(index+1));i++)
 			{
 				cells[i].color = ECOLORS_ID.LETER;
+				cells[i].piece.GetComponent<SpriteRenderer>().color = new Color(0,0,0);
+				cells[i].piece.GetComponent<BoxCollider2D>().enabled = true;
 			}
 		}
 		else
@@ -185,6 +188,8 @@ public class CellsManager : MonoBehaviour
 			for(int i = 0;i < height;i++)
 			{
 				cells[index+(i*width)].color = ECOLORS_ID.LETER;
+				cells[index+(i*width)].piece.GetComponent<SpriteRenderer>().color = new Color(0,0,0);
+				cells[index+(i*width)].piece.GetComponent<BoxCollider2D>().enabled = true;
 			}
 		}
 	}

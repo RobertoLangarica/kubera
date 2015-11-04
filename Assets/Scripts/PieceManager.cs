@@ -33,6 +33,7 @@ public class PieceManager : MonoBehaviour {
 		{
 			//print("barra "+i);
 			GameObject go = Instantiate(piecesList[0]);
+			go.name = piecesList[0].name;
 			piciesInBar.Add(piecesList[0]);
 			piecesList.RemoveAt(0);
 			go.transform.position= new Vector3(firstPos [i].position.x,firstPos [i].position.y,1);
@@ -73,7 +74,17 @@ public class PieceManager : MonoBehaviour {
 	public void checkBarr(GameObject piciesSelected)
 	{
 		figuresInBar--;
-		piciesInBar.Remove (piciesSelected);
+		int toDelete = 0;
+		for(int i=0; i<piciesInBar.Count; i++)
+		{
+			if(piciesSelected.name == piciesInBar[i].name)
+			{
+				toDelete=i;
+				break;
+			}
+		}
+		piciesInBar.RemoveAt (toDelete);
+
 		if(figuresInBar ==0)
 		{
 			fillBar();
