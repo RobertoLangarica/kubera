@@ -119,7 +119,14 @@ public class InputStuff : MonoBehaviour {
 				piece.GetComponent<BoxCollider2D>().enabled = false;
 				PieceManager.instance.checkBarr(piece);
 				cellManager.LineCreated();
-				cellManager.VerifyPosibility(PieceManager.instance.piciesInBar);
+				if(!cellManager.VerifyPosibility(PieceManager.instance.piciesInBar))
+				{
+					Debug.Log ("Perdio");
+				}
+				else
+				{
+					Debug.Log ("Sigue");
+				}
 			}
 
 			piece = null;

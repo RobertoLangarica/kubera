@@ -73,7 +73,7 @@ public class PieceManager : MonoBehaviour {
 	public void checkBarr(GameObject piciesSelected)
 	{
 		figuresInBar--;
-		piciesInBar.Remove (piciesSelected);
+		piciesInBar.Remove(piciesSelected);
 		if(figuresInBar ==0)
 		{
 			fillBar();
