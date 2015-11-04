@@ -4,6 +4,8 @@ using System.Collections;
 public class Piece : MonoBehaviour {
 
 	public GameObject[] pieces;
+
+	[HideInInspector]
 	public Transform myFirstPos;
 
 	// Use this for initialization
