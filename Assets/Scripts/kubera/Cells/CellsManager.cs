@@ -199,8 +199,10 @@ public class CellsManager : MonoBehaviour
 			for(int i = (index*width);i < (width*(index+1));i++)
 			{
 				cells[i].color = ECOLORS_ID.LETER;
-				cells[i].piece.GetComponent<SpriteRenderer>().color = new Color(0,0,0);
+				cells[i].piece.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
 				cells[i].piece.GetComponent<BoxCollider2D>().enabled = true;
+				cells[i].piece.GetComponent<Letter>().myLeterCase = PieceManager.instance.putLeter();
+				cells[i].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(cells[i].piece.GetComponent<Letter>().myLeterCase);
 			}
 		}
 		else
@@ -208,8 +210,11 @@ public class CellsManager : MonoBehaviour
 			for(int i = 0;i < height;i++)
 			{
 				cells[index+(i*width)].color = ECOLORS_ID.LETER;
-				cells[index+(i*width)].piece.GetComponent<SpriteRenderer>().color = new Color(0,0,0);
+				cells[index+(i*width)].piece.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
 				cells[index+(i*width)].piece.GetComponent<BoxCollider2D>().enabled = true;
+				cells[index+(i*width)].piece.GetComponent<Letter>().myLeterCase = PieceManager.instance.putLeter();
+
+				cells[index+(i*width)].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(cells[index+(i*width)].piece.GetComponent<Letter>().myLeterCase);
 			}
 		}
 	}
