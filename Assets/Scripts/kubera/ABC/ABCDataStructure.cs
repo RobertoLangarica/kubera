@@ -22,6 +22,9 @@ public class ABCDataStructure : MonoBehaviour {
 	[HideInInspector]
 	public IntList data;
 
+	//public delegate void DOnWordComplete();
+	//public DOnWordComplete OnWordComplete;
+	
 	public int wordCount = 0;
 
 	// Use this for initialization
@@ -43,7 +46,11 @@ public class ABCDataStructure : MonoBehaviour {
 		registerNewWord("sal");
 		registerNewWord("sola");
 		registerNewWord("sol");
+
+		//OnWordComplete += foo;
 	}
+
+	protected void foo(){}
 	
 	public void registerNewWord(string word)
 	{
@@ -133,7 +140,8 @@ public class ABCDataStructure : MonoBehaviour {
 		return !(currChar < limit);
 	}
 	
-	protected bool isValid;
+	public bool isValid = true;
+	public bool completeWord = false;
 	protected IntList currentValidationList;
 	protected List<IntList> levelsOfSearch;
 	protected int levelsCount;
@@ -141,6 +149,8 @@ public class ABCDataStructure : MonoBehaviour {
 	{
 		//Valido por default
 		isValid = true;
+		completeWord = false;
+
 		//La raiz de las palabras
 		currentValidationList = data;
 
@@ -222,7 +232,17 @@ public class ABCDataStructure : MonoBehaviour {
 				}
 			}
 
+			//Checamos si ya se completo una palabra
+			if(isValid)
+			{
+				completeWord = currentValidationList.end;
+			}
+			else
+			{
+				completeWord = false;
+			}
 
+			return isValid;
 		}
 
 		//Invalido por default
@@ -280,6 +300,16 @@ public class ABCDataStructure : MonoBehaviour {
 				initCharByCharValidation();
 			}
 		}
+
+		//Checamos si ya se completo una palabra
+		if(isValid)
+		{
+			completeWord = currentValidationList.end;
+		}
+		else
+		{
+			completeWord = false;
+		}
 	}
 
 	/**
@@ -309,7 +339,7 @@ public class ABCDataStructure : MonoBehaviour {
 				List<IntList> partialChain = levelsOfSearch.GetRange(i+1,levelsOfSearch.Count-i+1);
 				List<IntList> partialResult;
 
-				for(int j = levelsOfSearch[i].wildcardIndex+1; j < levelsOfSearch[i].content.Count; j++)
+				for(int j = levelsOfSearch[i].wildcardIndex+1; j < l2; j++)
 				{
 					//Este nuevo comodin es valido?
 					levelsOfSearch[i].wildcardIndex = j;
@@ -511,5 +541,68 @@ public class ABCDataStructure : MonoBehaviour {
 
 		}
 		return -1;
+	}
+
+	public static string getStringByValue(int value)
+	{
+		switch(value)
+		{
+		case 0:
+			return "A";
+		case 1:
+			return "B";
+		case 2:
+			return "C";
+		case 3:
+			return "D";
+		case 4:
+			return "E";
+		case 5:
+			return "F";
+		case 6:
+			return "G";
+		case 7:
+			return "H";
+		case 8:
+			return "I";
+		case 9:
+			return "J";
+		case 10:
+			return "K";
+		case 11:
+			return "L";
+		case 12:
+			return "M";
+		case 13:
+			return "N";
+		case 14:
+			return "Ñ";
+		case 15:
+			return "O";
+		case 16:
+			return "P";
+		case 17:
+			return "Q";
+		case 18:
+			return "R";
+		case 19:
+			return "S";
+		case 20:
+			return "T";
+		case 21:
+			return "U";
+		case 22:
+			return "V";
+		case 23:
+			return "W";
+		case 24:
+			return "X";
+		case 25:
+			return "Y";
+		case 26:
+			return "Z";
+			
+		}
+		return "";
 	}
 }

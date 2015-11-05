@@ -1,20 +1,32 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class ABCChar : MonoBehaviour 
 {
-	public string character = "A";
+	public int value;
 	public bool wildcard = false;
 
 	[HideInInspector]
-	public int value;
+	public string character = "A";
+
 	
 	void Start () 
 	{
 		if(!wildcard)
 		{
-			character = character.ToUpperInvariant();
-			value = ABCDataStructure.getCharValue(character.ToCharArray()[0]);
+			character = ABCDataStructure.getStringByValue(value);
+		}
+		else
+		{
+			character = "";
+		}
+
+		Text txt = GetComponentInChildren<Text>();
+
+		if(txt != null)
+		{
+			txt.text = character;
 		}
 	}
 }
