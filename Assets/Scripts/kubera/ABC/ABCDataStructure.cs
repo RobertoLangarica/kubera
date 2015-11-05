@@ -174,7 +174,7 @@ public class ABCDataStructure : MonoBehaviour {
 				{
 					//Armamos el comodin
 					IntList wildcard = new IntList();
-					wildcard = true;
+					wildcard.wildcard = true;
 					wildcard.wildcardIndex = 0;
 					//El mismo contenido que el nodo anterior 
 					//(ya que al ser comodin referencia todas las listas)
@@ -306,7 +306,7 @@ public class ABCDataStructure : MonoBehaviour {
 				int l2 = levelsOfSearch[i].content.Count;
 				//Guardamos el estado actual
 				levelsOfSearch[i].lastCorrectValue = levelsOfSearch[i].wildcardIndex;
-				List<IntList> partialChain = values.GetRange(i+1,levelsOfSearch.Count-i+1);
+				List<IntList> partialChain = levelsOfSearch.GetRange(i+1,levelsOfSearch.Count-i+1);
 				List<IntList> partialResult;
 
 				for(int j = levelsOfSearch[i].wildcardIndex+1; j < levelsOfSearch[i].content.Count; j++)
