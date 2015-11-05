@@ -16,6 +16,7 @@ public class Cell : MonoBehaviour
 	public bool available;
 	public bool occupied;
 
+	public GameObject piece;
 	// Use this for initialization
 	void Start () {
 	
