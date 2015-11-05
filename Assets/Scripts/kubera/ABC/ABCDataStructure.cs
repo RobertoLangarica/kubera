@@ -22,6 +22,9 @@ public class ABCDataStructure : MonoBehaviour {
 	[HideInInspector]
 	public IntList data;
 
+	//public delegate void DOnWordComplete();
+	//public DOnWordComplete OnWordComplete;
+	
 	public int wordCount = 0;
 
 	// Use this for initialization
@@ -43,7 +46,11 @@ public class ABCDataStructure : MonoBehaviour {
 		registerNewWord("sal");
 		registerNewWord("sola");
 		registerNewWord("sol");
+
+		//OnWordComplete += foo;
 	}
+
+	protected void foo(){}
 	
 	public void registerNewWord(string word)
 	{
@@ -133,7 +140,8 @@ public class ABCDataStructure : MonoBehaviour {
 		return !(currChar < limit);
 	}
 	
-	protected bool isValid;
+	public bool isValid = true;
+	public bool completeWord = false;
 	protected IntList currentValidationList;
 	protected List<IntList> levelsOfSearch;
 	protected int levelsCount;
@@ -141,6 +149,8 @@ public class ABCDataStructure : MonoBehaviour {
 	{
 		//Valido por default
 		isValid = true;
+		completeWord = false;
+
 		//La raiz de las palabras
 		currentValidationList = data;
 
@@ -172,26 +182,39 @@ public class ABCDataStructure : MonoBehaviour {
 			{
 				if(currentValidationList.content.Count > 0)
 				{
-					//Armamos el comodin tomando el primer valor como el correcto
-					IntList wildcard = currentValidationList.content[0];
-					wildcard.wildcardIndex = 0;//Indicamos cual indice tenemos ahorita
+					//Armamos el comodin
+					IntList wildcard = new IntList();
 					wildcard.wildcard = true;
+					wildcard.wildcardIndex = 0;
+					//El mismo contenido que el nodo anterior 
+					//(ya que al ser comodin referencia todas las listas)
+					wildcard.content = currentValidationList.content;
 					currentValidationList = wildcard;
 
 					//Correcto sin validacion ya que es comodin
-					return true;
+					isValid = true;
 				}
 				else
 				{
 					//Se estan agregando caracteres de mas
 					//checamos si moviendo comodines
-					return checkBackwardsForWildcardOptions(c);
+					isValid = checkBackwardsForWildcardOptions(c);
 				}
 			}
 			else
 			{
 				//Buscamos en el nivel actual si existe el caracter que se pide
-				tmp = currentValidationList.content.Find(item => item.value == c.value);
+				if(currentValidationList.wildcard)
+				{
+					//Si es comodin busca en la lista que el comodin apunta en este momento
+					tmp = currentValidationList.content[currentValidationList.wildcardIndex].content.Find(item => item.value == c.value);
+				}
+				else
+				{
+					//Busqueda directa en el nodo
+					tmp = currentValidationList.content.Find(item => item.value == c.value);
+				}
+
 
 				if(tmp != null)
 				{
@@ -199,21 +222,33 @@ public class ABCDataStructure : MonoBehaviour {
 					//Guardamos el nuevo nivel de busqueda
 					currentValidationList = tmp;
 					levelsOfSearch.Add(tmp);
-					return true;
+					isValid = true;
 				}
 				else
 				{
 					//No existe!!
 					//checamos si moviendo comodines
-					return checkBackwardsForWildcardOptions(c);
+					isValid = checkBackwardsForWildcardOptions(c);
 				}
 			}
 
+			//Checamos si ya se completo una palabra
+			if(isValid)
+			{
+				completeWord = currentValidationList.end;
+			}
+			else
+			{
+				completeWord = false;
+			}
 
+			return isValid;
 		}
 
 		//Invalido por default
-		return false;
+		isValid = false;
+
+		return isValid;
 	}
 
 	/**
@@ -254,13 +289,7 @@ public class ABCDataStructure : MonoBehaviour {
 				//Si el nivel que quedo es comodin lo reseteamos al estado default
 				if(levelsOfSearch[levelsCount-1].wildcard)
 				{
-					levelsOfSearch[levelsCount-1].wildcard = false;
-
-					//Armamos el comodin tomando el primer valor como el correcto
-					IntList wildcard = levelsOfSearch[levelsCount-1].parent.content[0];
-					wildcard.wildcardIndex = 0;//Indicamos cual indice tenemos ahorita
-					wildcard.wildcard = true;
-					levelsOfSearch[levelsCount-1] = wildcard;
+					levelsOfSearch[levelsCount-1].wildcardIndex = 0;
 				}
 
 				currentValidationList = levelsOfSearch[levelsCount-1];
@@ -272,6 +301,15 @@ public class ABCDataStructure : MonoBehaviour {
 			}
 		}
 
+		//Checamos si ya se completo una palabra
+		if(isValid)
+		{
+			completeWord = currentValidationList.end;
+		}
+		else
+		{
+			completeWord = false;
+		}
 	}
 
 	/**
@@ -286,14 +324,153 @@ public class ABCDataStructure : MonoBehaviour {
 	 * */
 	protected bool checkBackwardsForWildcardOptions(ABCChar charToValidate)
 	{
+		int i = levelsOfSearch.Count;
+		IntList tmp;
+		List<IntList> copy = new List<IntList>(levelsOfSearch);
+
+		while(--i >= 0)
+		{
+			//Buscamos un comodin
+			if(levelsOfSearch[i].wildcard)
+			{
+				int l2 = levelsOfSearch[i].content.Count;
+				//Guardamos el estado actual
+				levelsOfSearch[i].lastCorrectValue = levelsOfSearch[i].wildcardIndex;
+				List<IntList> partialChain = levelsOfSearch.GetRange(i+1,levelsOfSearch.Count-i+1);
+				List<IntList> partialResult;
+
+				for(int j = levelsOfSearch[i].wildcardIndex+1; j < l2; j++)
+				{
+					//Este nuevo comodin es valido?
+					levelsOfSearch[i].wildcardIndex = j;
+					partialResult = getCorrectChain(levelsOfSearch[i].content[j],partialChain);
+					
+					//Se encontro una cadena valida
+					if(partialResult != null)
+					{
+						//Contiene el caracter a validar?
+						tmp = partialResult[partialResult.Count-1].content.Find(item => item.value == charToValidate.value);
+						
+						if(tmp != null)
+						{
+							//LISTO tenemos el valor como debe ser
+							levelsOfSearch.Add(tmp);
+							currentValidationList = tmp;
+							return true;
+						}
+					}
+				}
+			}
+		}
+
+		//Fue invalido hay que devolver el estado original los comodines
+		i = levelsOfSearch.Count;
+		while(--i >= 0)
+		{
+			//Buscamos un comodin
+			if(copy[i].wildcard)
+			{
+				if(i == 0)
+				{
+					copy[i].wildcardIndex = copy[i].lastCorrectValue;
+					copy[i].content = data.content;
+				}
+				else
+				{
+					copy[i].wildcardIndex = copy[i].lastCorrectValue;
+					copy[i].content = copy[i-1].content;
+				}
+			}
+		}
+
 		return false;
 	}
 
 
-	protected bool hasValueInChildren(IntList List, int searchValue)
+	/**
+	 * Busca dentro de target la cadena de nodos que contenga todos los valores dentro de value
+	 * y devuelve dicha cadena, si no existe una cadena valida devuelve nulo
+	 * */
+	protected List<IntList> getCorrectChain(IntList target, List<IntList> values)
+	{
+		List<IntList> result = new List<IntList>();
+
+		int limit = values.Count;
+		IntList tmp;
+		for(int i = 0; i < limit; i++)
+		{
+			if(values[i].wildcard)
+			{
+				//Guardamos el estado del comodin
+				values[i].lastCorrectValue = values[i].wildcardIndex;
+				
+				if(i == 0)
+				{
+					//Se inicia como comodin apuntando a target
+					values[i].content = target.content;
+				}
+				else
+				{
+					//Comodin apuntando al valor anterior de result
+					values[i].content = result[i-1].content;
+				}
+
+				//Ya se termino la validacion o continua debajo de este comodin?
+				if(i == limit-1)
+				{
+					//No hay nadie mas que explorar este comodin es el ultimo
+					result.Add(values[i]);
+				}
+				else
+				{
+					//Buscamos la cadena de valores correcta debajo de este comodin
+					int l2 = values[i].content.Count;
+					List<IntList> partialChain = values.GetRange(i+1,limit-i+1);
+					List<IntList> partialResult;
+					for(int j = 0; j < l2; j++)
+					{
+						//Si es el correcto que se quede con el valor correcto
+						values[i].wildcardIndex = j;
+						partialResult = getCorrectChain(values[i].content[j],partialChain);
+
+						//Se encontro una cadena valida
+						if(partialResult != null)
+						{
+							//Completamos la cadena y la devolvemos
+							result.AddRange(partialResult);
+							return result;
+						}
+					}
+
+					//Ya se iteraron todas las opciones del comodin y no se encontro
+					result.Clear();
+					return null;
+				}
+			}
+			else
+			{
+				tmp = target.content.Find(item => item.value == values[i].value);
+				
+				if(tmp != null)
+				{
+					result.Add(tmp);
+				}
+				else
+				{
+					//No hay una cadena valida
+					return null;
+				}
+			}
+		}
+
+		return null;
+	}
+
+
+	protected bool hasValueInChildren(IntList lst, int searchValue)
 	{
 		IntList tmp;
-		tmp = List.content.Find(item => item.value == searchValue);
+		tmp = lst.content.Find(item => item.value == searchValue);
 
 		if(tmp != null)
 		{
@@ -364,5 +541,68 @@ public class ABCDataStructure : MonoBehaviour {
 
 		}
 		return -1;
+	}
+
+	public static string getStringByValue(int value)
+	{
+		switch(value)
+		{
+		case 0:
+			return "A";
+		case 1:
+			return "B";
+		case 2:
+			return "C";
+		case 3:
+			return "D";
+		case 4:
+			return "E";
+		case 5:
+			return "F";
+		case 6:
+			return "G";
+		case 7:
+			return "H";
+		case 8:
+			return "I";
+		case 9:
+			return "J";
+		case 10:
+			return "K";
+		case 11:
+			return "L";
+		case 12:
+			return "M";
+		case 13:
+			return "N";
+		case 14:
+			return "Ñ";
+		case 15:
+			return "O";
+		case 16:
+			return "P";
+		case 17:
+			return "Q";
+		case 18:
+			return "R";
+		case 19:
+			return "S";
+		case 20:
+			return "T";
+		case 21:
+			return "U";
+		case 22:
+			return "V";
+		case 23:
+			return "W";
+		case 24:
+			return "X";
+		case 25:
+			return "Y";
+		case 26:
+			return "Z";
+			
+		}
+		return "";
 	}
 }
