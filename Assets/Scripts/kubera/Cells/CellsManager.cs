@@ -257,9 +257,4 @@ public class CellsManager : MonoBehaviour
 		}
 		return false;
 	}
-
-	public void destroyCell()
-	{
-
-	}
 }
