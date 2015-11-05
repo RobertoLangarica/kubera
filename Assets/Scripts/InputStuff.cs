@@ -75,6 +75,7 @@ public class InputStuff : MonoBehaviour {
 				{
 					piece = gesture.Raycast.Hit2D.transform.gameObject;
 				}
+
 			}
 		}	
 			break;
@@ -123,7 +124,7 @@ public class InputStuff : MonoBehaviour {
 				piece.GetComponent<BoxCollider2D>().enabled = false;
 				PieceManager.instance.checkBarr(piece);
 				cellManager.LineCreated();
-				if(!cellManager.VerifyPosibility(PieceManager.instance.piciesInBar))
+				if(!cellManager.VerifyPosibility(PieceManager.instance.piecesInBar))
 				{
 					Debug.Log ("Perdio");
 				}
@@ -160,6 +161,14 @@ public class InputStuff : MonoBehaviour {
 					piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
 				}
 			}
+		}
+	}
+
+	void OnTap(TapGesture gesture)
+	{
+		if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Letter>())
+		{
+
 		}
 	}
 

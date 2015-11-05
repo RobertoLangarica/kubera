@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 public class PieceManager : MonoBehaviour {
 
 	protected List<GameObject> piecesList = new List<GameObject>();
-	public List<GameObject> piciesInBar = new List<GameObject>();
+	public List<GameObject> piecesInBar = new List<GameObject>();
 	public Transform[] firstPos;
 
 	protected int sizeOfBar =3;
@@ -14,9 +15,22 @@ public class PieceManager : MonoBehaviour {
 	protected int figuresInBar;
 	public GameManager gameManager;
 
+	protected List<string> poolLeters = new List<string>();
+
+	//texturas de las letras
+	protected UnityEngine.Object[] textures;
+	protected string[] names;
+
 	// Use this for initialization
 	void Start () {
 		instance = this;
+
+		textures = Resources.LoadAll("Letters");
+		names = new string[textures.Length];
+		readTextures ();
+		Debug.Log (textures.Length);
+
+		fillPoolLetter ();
 		figuresInBar = sizeOfBar;
 		fillList ();
 		fillBar ();
@@ -34,7 +48,7 @@ public class PieceManager : MonoBehaviour {
 			//print("barra "+i);
 			GameObject go = Instantiate(piecesList[0]);
 			go.name = piecesList[0].name;
-			piciesInBar.Add(piecesList[0]);
+			piecesInBar.Add(piecesList[0]);
 			piecesList.RemoveAt(0);
 			go.transform.position= new Vector3(firstPos [i].position.x,firstPos [i].position.y,1);
 			go.GetComponent<Piece>().myFirstPos=firstPos[i];
@@ -49,9 +63,6 @@ public class PieceManager : MonoBehaviour {
 	protected void fillList()
 	{
 		//Debug.Log ("LLenando la lista");
-
-
-
 		string[] myPieces = gameManager.data.levels[0].pieces.Split(new char[1]{','});
 
 		for(int i =0; i<myPieces.Length; i++)
@@ -63,7 +74,7 @@ public class PieceManager : MonoBehaviour {
 
 		while(piecesList.Count >0)
 		{
-			int val = Random.Range(0,piecesList.Count);
+			int val = UnityEngine.Random.Range(0,piecesList.Count);
 			newList.Add(piecesList[val]);
 			piecesList.RemoveAt(val);
 		}
@@ -71,24 +82,73 @@ public class PieceManager : MonoBehaviour {
 		piecesList = newList;
 	}
 
-	public void checkBarr(GameObject piciesSelected)
+	protected void fillPoolLetter()
+	{
+		string[] myPieces = gameManager.data.levels[0].pool.Split(new char[1]{','});
+
+		for(int i =0; i<myPieces.Length; i++)
+		{
+			//print(myPieces[i]);
+			poolLeters.Add (myPieces[i]);
+		}
+	
+		List<string> newList = new List<string>();
+		
+		while(poolLeters.Count >0)
+		{
+			int val = UnityEngine.Random.Range(0,poolLeters.Count);
+			newList.Add(poolLeters[val]);
+			poolLeters.RemoveAt(val);
+		}
+
+		poolLeters = newList;
+	}
+
+	public void checkBarr(GameObject piecesSelected)
 	{
 		figuresInBar--;
 		int toDelete = 0;
-		for(int i=0; i<piciesInBar.Count; i++)
+		for(int i=0; i<piecesInBar.Count; i++)
 		{
-			if(piciesSelected.name == piciesInBar[i].name)
+			if(piecesSelected.name == piecesInBar[i].name)
 			{
 				toDelete=i;
 				break;
 			}
 		}
-		piciesInBar.RemoveAt (toDelete);
+		piecesInBar.RemoveAt (toDelete);
 
 		if(figuresInBar ==0)
 		{
 			fillBar();
 			figuresInBar = sizeOfBar;
+		}
+	}
+
+	public string putLeter()
+	{
+		string letter = poolLeters[0];
+		poolLeters.RemoveAt (0);
+		if(poolLeters.Count==0)
+		{
+			fillPoolLetter();
+		}
+		return letter;
+	}
+
+	public Sprite changeTexture(string nTextureName)
+	{
+		Sprite sprite;
+
+		sprite = (Sprite)textures[Array.IndexOf(names, nTextureName)];		
+		return sprite;
+	}
+
+	protected void readTextures()
+	{
+		for(int i=0; i< names.Length; i++) 
+		{
+			names[i] = textures[i].name;
 		}
 	}
 }
