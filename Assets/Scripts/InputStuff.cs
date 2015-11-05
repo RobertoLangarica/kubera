@@ -128,10 +128,6 @@ public class InputStuff : MonoBehaviour {
 				{
 					Debug.Log ("Perdio");
 				}
-				else
-				{
-					Debug.Log ("Sigue");
-				}
 			}
 			
 			piece = null;
