@@ -26,4 +26,11 @@ public class Cell : MonoBehaviour
 	void Update () {
 	
 	}
+
+	public void clearCell()
+	{
+		color = ECOLORS_ID.NONE;
+		occupied = false;
+		piece = null;
+	}
 }
