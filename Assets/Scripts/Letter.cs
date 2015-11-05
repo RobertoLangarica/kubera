@@ -4,7 +4,7 @@ using System.Collections;
 public class Letter : MonoBehaviour {
 
 	// Use this for initialization
-	public Cell myCell;
+	public string myLeterCase;
 	void Start () {
 	
 	}

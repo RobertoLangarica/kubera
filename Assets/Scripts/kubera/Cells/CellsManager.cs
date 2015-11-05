@@ -13,6 +13,8 @@ public class CellsManager : MonoBehaviour
 	public int width;
 	public int height;
 
+	//public List<Cell> selected = new List<Cell>();
+
 	protected List<Cell> cells = new List<Cell>();
 
 	// Use this for initialization
@@ -94,8 +96,6 @@ public class CellsManager : MonoBehaviour
 		int wIndex = 0;
 		int hIndex = 0;
 
-		Debug.Log ("Evaluando!!!");
-
 		for(int i = 0;i < cells.Count;i++)
 		{
 			if(cells[i].occupied && cells[i].color != ECOLORS_ID.LETER)
@@ -153,10 +153,12 @@ public class CellsManager : MonoBehaviour
 	public bool CanPositionate(Vector3[] arr)
 	{
 		Cell tempC = null;
+		//selected.Clear();
 		
 		for(int i = 0;i < arr.Length;i++)
 		{
 			tempC = getCellOnVec(arr[i]);
+			//selected.Add(tempC);
 			if(tempC == null)
 			{
 				return false;
@@ -169,7 +171,6 @@ public class CellsManager : MonoBehaviour
 				}
 			}
 		}
-		Debug.Log ("SI puede!!!!!!!!!!!!!!!!!!!!");
 		return true;
 	}
 
@@ -198,8 +199,10 @@ public class CellsManager : MonoBehaviour
 			for(int i = (index*width);i < (width*(index+1));i++)
 			{
 				cells[i].color = ECOLORS_ID.LETER;
-				cells[i].piece.GetComponent<SpriteRenderer>().color = new Color(0,0,0);
+				cells[i].piece.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
 				cells[i].piece.GetComponent<BoxCollider2D>().enabled = true;
+				cells[i].piece.GetComponent<Letter>().myLeterCase = PieceManager.instance.putLeter();
+				cells[i].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(cells[i].piece.GetComponent<Letter>().myLeterCase);
 			}
 		}
 		else
@@ -207,8 +210,11 @@ public class CellsManager : MonoBehaviour
 			for(int i = 0;i < height;i++)
 			{
 				cells[index+(i*width)].color = ECOLORS_ID.LETER;
-				cells[index+(i*width)].piece.GetComponent<SpriteRenderer>().color = new Color(0,0,0);
+				cells[index+(i*width)].piece.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
 				cells[index+(i*width)].piece.GetComponent<BoxCollider2D>().enabled = true;
+				cells[index+(i*width)].piece.GetComponent<Letter>().myLeterCase = PieceManager.instance.putLeter();
+
+				cells[index+(i*width)].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(cells[index+(i*width)].piece.GetComponent<Letter>().myLeterCase);
 			}
 		}
 	}
@@ -216,7 +222,8 @@ public class CellsManager : MonoBehaviour
 	public bool VerifyPosibility(List<GameObject> listPieces)
 	{
 		Vector3 ofset = Vector3.zero;
-		Vector3 moveLittle = new Vector3(0.001f,-0.001f,0);
+		float size = cellPrefab.gameObject.GetComponent<SpriteRenderer>().bounds.size.x *0.5f;
+		Vector3 moveLittle = new Vector3(size,-size,0);
 		Vector3[] vecArr;
 		Piece lPPiece = null;
 
@@ -240,6 +247,9 @@ public class CellsManager : MonoBehaviour
 					if(CanPositionate(vecArr))
 					{
 						//Debug.Log ("Si se puede");
+						//Debug.Log (val.transform.localPosition);
+						//selected = val.gameObject;
+						//Debug.Log(lPPiece.gameObject);
 						return true;
 					}
 				}
