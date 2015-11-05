@@ -180,7 +180,12 @@ public class ABCDataStructure : MonoBehaviour {
 		{
 			if(c.wildcard)
 			{
-				if(currentValidationList.content.Count > 0)
+				int cant = currentValidationList.wildcard ?
+					currentValidationList.content[currentValidationList.wildcardIndex].content.Count 
+						: currentValidationList.content.Count;
+
+
+				if(cant > 0)
 				{
 					//Armamos el comodin
 					IntList wildcard = new IntList();
@@ -188,7 +193,14 @@ public class ABCDataStructure : MonoBehaviour {
 					wildcard.wildcardIndex = 0;
 					//El mismo contenido que el nodo anterior 
 					//(ya que al ser comodin referencia todas las listas)
-					wildcard.content = currentValidationList.content;
+					if(currentValidationList.wildcard)
+					{
+						wildcard.content = currentValidationList.content[currentValidationList.wildcardIndex].content;
+					}
+					else
+					{
+						wildcard.content = currentValidationList.content;
+					}
 					currentValidationList = wildcard;
 
 					//Correcto sin validacion ya que es comodin
@@ -233,14 +245,7 @@ public class ABCDataStructure : MonoBehaviour {
 			}
 
 			//Checamos si ya se completo una palabra
-			if(isValid)
-			{
-				completeWord = currentValidationList.end;
-			}
-			else
-			{
-				completeWord = false;
-			}
+			checkAndupdateForcompleteWord();
 
 			return isValid;
 		}
@@ -302,9 +307,21 @@ public class ABCDataStructure : MonoBehaviour {
 		}
 
 		//Checamos si ya se completo una palabra
+		checkAndupdateForcompleteWord();
+	}
+
+	protected void checkAndupdateForcompleteWord()
+	{
 		if(isValid)
 		{
-			completeWord = currentValidationList.end;
+			if(currentValidationList.wildcard)
+			{
+				completeWord = currentValidationList.content[currentValidationList.wildcardIndex].end;
+			}
+			else
+			{
+				completeWord = currentValidationList.end;
+			}
 		}
 		else
 		{
@@ -478,6 +495,11 @@ public class ABCDataStructure : MonoBehaviour {
 		}
 
 		return false;
+	}
+
+	public static int getCharValue(string c)
+	{
+		return getCharValue(c.ToCharArray()[0]);
 	}
 
 	public static int getCharValue(char c)
