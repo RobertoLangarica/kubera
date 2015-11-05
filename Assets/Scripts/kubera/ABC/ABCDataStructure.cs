@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class ABCDataStructure : MonoBehaviour {
-	
+
+
+	//Clase para los nodos de la estructura
 	public class IntList
 	{
 		public int value;//Valor de caracter que representa este nodo
@@ -25,11 +27,20 @@ public class ABCDataStructure : MonoBehaviour {
 	//public delegate void DOnWordComplete();
 	//public DOnWordComplete OnWordComplete;
 	
-	public int wordCount = 0;
+	public int wordCount = 0;//Conteo de palabras presentes en el diccionario
 
-	// Use this for initialization
+
+	/*****PARA LA BUSQUEDA CARACTER POR CARACTER*****************/
+	public bool isValid = true;
+	public bool completeWord = false;//Esta en true solo cuando la validacion por caracter
+	protected IntList currentValidationList;
+	protected List<IntList> levelsOfSearch;
+	protected int levelsCount;
+	/************************************************************/
+	
 	void Start () 
 	{
+		//Puede no ser nulo si se modifica desde un EditorScript
 		if(data == null)
 		{
 			data = new IntList();
@@ -50,8 +61,13 @@ public class ABCDataStructure : MonoBehaviour {
 		//OnWordComplete += foo;
 	}
 
-	protected void foo(){}
-	
+	//protected void foo(){}
+
+	/**
+	 * Registra una nueva palabra en el diccionario
+	 * si la palabra existe previamente ya no se agrega 
+	 * y si existe parcialmente solo se agregan las partes que no existian previamente
+	 **/ 
 	public void registerNewWord(string word)
 	{
 		//Debug.Log ("Adding: "+word);
@@ -109,6 +125,10 @@ public class ABCDataStructure : MonoBehaviour {
 		}
 	}
 
+
+	/**
+	 * Recibe una cadena entera e indica si dicha cadena se encuentra dentro del diccionario
+	 * */
 	public bool isValidWord(string word)
 	{
 		//Dividimos la palabra en chars
@@ -139,12 +159,11 @@ public class ABCDataStructure : MonoBehaviour {
 
 		return !(currChar < limit);
 	}
-	
-	public bool isValid = true;
-	public bool completeWord = false;
-	protected IntList currentValidationList;
-	protected List<IntList> levelsOfSearch;
-	protected int levelsCount;
+
+	/**
+	 * Inicializa el chequeo caracter por caracter de una palabra,
+	 * para ir validando cada caracter se usa validateChar
+	 * */
 	public void initCharByCharValidation()
 	{
 		//Valido por default
@@ -483,7 +502,9 @@ public class ABCDataStructure : MonoBehaviour {
 		return null;
 	}
 
-
+	/**
+	 * Indica si el objeto IntList tiene el valor searchValue en alguno de sus hijos
+	 * */
 	protected bool hasValueInChildren(IntList lst, int searchValue)
 	{
 		IntList tmp;
@@ -497,11 +518,25 @@ public class ABCDataStructure : MonoBehaviour {
 		return false;
 	}
 
-	public static int getCharValue(string c)
+	/**
+	 * Recibe un grupo de caracteres y determina si es posible armar una palabra con ellos
+	 **/ 
+	public void isAWordPossible(List<ABCChar> chars)
 	{
-		return getCharValue(c.ToCharArray()[0]);
+
 	}
 
+	/**
+	 * Lee una cadena y lo convierte a un valor entero (basado en su posicion en el abecedario)
+	 **/
+	public static int getCharValue(string c)
+	{
+		return getCharValue(c.ToUpperInvariant().ToCharArray()[0]);
+	}
+
+	/**
+	 * Lee un caracter y lo convierte a un valor entero (basado en su posicion en el abecedario)
+	 **/
 	public static int getCharValue(char c)
 	{
 		switch(c)
@@ -565,6 +600,9 @@ public class ABCDataStructure : MonoBehaviour {
 		return -1;
 	}
 
+	/**
+	 * Recibe el valor de un caracter basado en el abecedario y devuelve la cadena que lo representa
+	 * */
 	public static string getStringByValue(int value)
 	{
 		switch(value)
