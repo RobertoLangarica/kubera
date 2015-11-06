@@ -220,9 +220,9 @@ public class ABCDataStructure : MonoBehaviour {
 					{
 						wildcard.content = currentValidationList.content;
 					}
-					currentValidationList = wildcard;
-
 					//Correcto sin validacion ya que es comodin
+					currentValidationList = wildcard;
+					levelsOfSearch.Add(wildcard);
 					isValid = true;
 				}
 				else
@@ -361,7 +361,7 @@ public class ABCDataStructure : MonoBehaviour {
 	protected bool checkBackwardsForWildcardOptions(ABCChar charToValidate)
 	{
 		int i = levelsOfSearch.Count;
-		IntList tmp;
+		IntList tmp = null;
 		List<IntList> copy = new List<IntList>(levelsOfSearch);
 
 		while(--i >= 0)
@@ -372,28 +372,46 @@ public class ABCDataStructure : MonoBehaviour {
 				int l2 = levelsOfSearch[i].content.Count;
 				//Guardamos el estado actual
 				levelsOfSearch[i].lastCorrectValue = levelsOfSearch[i].wildcardIndex;
-				List<IntList> partialChain = levelsOfSearch.GetRange(i+1,levelsOfSearch.Count-i+1);
+				List<IntList> partialChain = levelsOfSearch.GetRange(i+1,levelsOfSearch.Count-(i+1));
 				List<IntList> partialResult;
 
 				for(int j = levelsOfSearch[i].wildcardIndex+1; j < l2; j++)
 				{
 					//Este nuevo comodin es valido?
 					levelsOfSearch[i].wildcardIndex = j;
-					partialResult = getCorrectChain(levelsOfSearch[i].content[j],partialChain);
-					
-					//Se encontro una cadena valida
-					if(partialResult != null)
+
+					if(partialChain.Count > 0)
 					{
-						//Contiene el caracter a validar?
-						tmp = partialResult[partialResult.Count-1].content.Find(item => item.value == charToValidate.value);
+						partialResult = getCorrectChain(levelsOfSearch[i].content[j],partialChain);
 						
-						if(tmp != null)
+						//Se encontro una cadena valida
+						if(partialResult != null)
 						{
-							//LISTO tenemos el valor como debe ser
-							levelsOfSearch.Add(tmp);
-							currentValidationList = tmp;
-							return true;
+							//Contiene el caracter a validar?
+							if(partialResult[partialResult.Count-1].wildcard)
+							{
+								tmp = partialResult[partialResult.Count-1].content[partialResult[partialResult.Count-1].wildcardIndex].content.Find(item => item.value == charToValidate.value);
+							}
+							else
+							{
+								tmp = partialResult[partialResult.Count-1].content.Find(item => item.value == charToValidate.value);
+							}
 						}
+					}
+					else
+					{
+						//No hay nadie debajo y lo validamos directamente a este nodo
+						tmp = levelsOfSearch[i].content[levelsOfSearch[i].wildcardIndex].content.Find(item => item.value == charToValidate.value);
+
+					}
+
+					//Existe charToValidate al final de la cadena
+					if(tmp != null)
+					{
+						//LISTO tenemos el valor como debe ser
+						levelsOfSearch.Add(tmp);
+						currentValidationList = tmp;
+						return true;
 					}
 				}
 			}
@@ -439,7 +457,8 @@ public class ABCDataStructure : MonoBehaviour {
 			{
 				//Guardamos el estado del comodin
 				values[i].lastCorrectValue = values[i].wildcardIndex;
-				
+				values[i].wildcardIndex = 0;
+
 				if(i == 0)
 				{
 					//Se inicia como comodin apuntando a target
@@ -461,8 +480,9 @@ public class ABCDataStructure : MonoBehaviour {
 				{
 					//Buscamos la cadena de valores correcta debajo de este comodin
 					int l2 = values[i].content.Count;
-					List<IntList> partialChain = values.GetRange(i+1,limit-i+1);
+					List<IntList> partialChain = values.GetRange(i+1,limit-(i+1));
 					List<IntList> partialResult;
+
 					for(int j = 0; j < l2; j++)
 					{
 						//Si es el correcto que se quede con el valor correcto

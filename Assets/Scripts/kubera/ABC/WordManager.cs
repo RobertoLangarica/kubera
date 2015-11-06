@@ -86,15 +86,24 @@ public class WordManager : MonoBehaviour {
 		int l = container.transform.childCount;
 		while(--l >= 0)
 		{
-			if(words.completeWord)
+			Tile t = container.transform.GetChild(l).gameObject.GetComponent<Tile>();
+
+			if(t != null && t.piece != null)
 			{
-				GameObject.Destroy(container.transform.GetChild(l).gameObject.GetComponent<Tile>().piece);
-				container.transform.GetChild(l).gameObject.GetComponent<Tile>().piece.GetComponent<Letter>().cellIndex.clearCell();
+				if(words.completeWord)
+				{
+					if(t)
+					{
+						t.piece.GetComponent<Letter>().cellIndex.clearCell();
+						GameObject.Destroy(t.piece);
+					}
+				}
+				else
+				{
+					t.piece.GetComponent<Letter>().backToNormal();
+				}
 			}
-			else
-			{
-				container.transform.GetChild(l).gameObject.GetComponent<Tile>().piece.GetComponent<Letter>().backToNormal();
-			}
+
 			GameObject.Destroy(container.transform.GetChild(l).gameObject);
 		}
 
