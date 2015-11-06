@@ -151,4 +151,9 @@ public class PieceManager : MonoBehaviour {
 			names[i] = textures[i].name;
 		}
 	}
+
+	public void setPieceInLetter(GameObject letter)
+	{
+
+	}
 }

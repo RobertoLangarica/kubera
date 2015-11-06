@@ -12,6 +12,7 @@ public class WordManager : MonoBehaviour {
 
 	protected List<ABCChar> chars;
 
+
 	void Start()
 	{
 		chars = new List<ABCChar>();
@@ -26,7 +27,7 @@ public class WordManager : MonoBehaviour {
 		GameObject letter =  Instantiate(letterPrefab);
 		letter.GetComponent<UIChar>().character = character; 
 		letter.transform.SetParent(container.transform);
-
+		letter.transform.localScale = new Vector3 (1, 1, 1);
 
 		validateCharacter(character);
 
@@ -36,15 +37,21 @@ public class WordManager : MonoBehaviour {
 	 * Instancia UICHar y con la cadena que recibe crea un ABCChar que se
 	 * agrega como componente a la nueva pieza
 	 * */
-	public void addCharacter(string value)
+	public void addCharacter(string value,GameObject piece)
 	{
 		GameObject letter =  Instantiate(letterPrefab);
 		ABCChar character = letter.AddComponent<ABCChar>();
+		value = value.ToUpper ();
+		if (value == ".")
+		{
+			character.wildcard = true;
+		}
 		character.value = ABCDataStructure.getCharValue(value);
 		character.character = value.ToUpperInvariant();
-		Debug.Log (value+"__"+character.value);
 		letter.GetComponent<UIChar>().character = character; 
 		letter.transform.SetParent(container.transform);
+		letter.transform.localScale = new Vector3 (1, 1, 1);
+		letter.GetComponent<Tile> ().piece = piece;
 
 		validateCharacter(character);
 	}
@@ -79,8 +86,19 @@ public class WordManager : MonoBehaviour {
 		int l = container.transform.childCount;
 		while(--l >= 0)
 		{
+			if(words.completeWord)
+			{
+				GameObject.Destroy(container.transform.GetChild(l).gameObject.GetComponent<Tile>().piece);
+				container.transform.GetChild(l).gameObject.GetComponent<Tile>().piece.GetComponent<Letter>().cellIndex.clearCell();
+			}
+			else
+			{
+				container.transform.GetChild(l).gameObject.GetComponent<Tile>().piece.GetComponent<Letter>().backToNormal();
+			}
 			GameObject.Destroy(container.transform.GetChild(l).gameObject);
 		}
+
+
 	}
 
 	/**

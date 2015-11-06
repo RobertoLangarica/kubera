@@ -203,6 +203,7 @@ public class CellsManager : MonoBehaviour
 				cells[i].piece.GetComponent<BoxCollider2D>().enabled = true;
 				cells[i].piece.GetComponent<Letter>().myLeterCase = PieceManager.instance.putLeter();
 				cells[i].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(cells[i].piece.GetComponent<Letter>().myLeterCase);
+				cells[i].piece.GetComponent<Letter>().cellIndex = cells[i];
 			}
 		}
 		else
@@ -215,6 +216,7 @@ public class CellsManager : MonoBehaviour
 				cells[index+(i*width)].piece.GetComponent<Letter>().myLeterCase = PieceManager.instance.putLeter();
 
 				cells[index+(i*width)].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(cells[index+(i*width)].piece.GetComponent<Letter>().myLeterCase);
+				cells[index+(i*width)].piece.GetComponent<Letter>().cellIndex = cells[index+(i*width)];
 			}
 		}
 	}

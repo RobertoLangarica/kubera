@@ -162,9 +162,12 @@ public class InputStuff : MonoBehaviour {
 
 	void OnTap(TapGesture gesture)
 	{
-		if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Letter>())
+		if(gesture.Raycast.Hits2D != null)
 		{
-
+			if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Letter>())
+			{
+				gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Letter>().ShootLetter();
+			}
 		}
 	}
 
