@@ -9,8 +9,12 @@ public class ABCChar : MonoBehaviour
 
 	[HideInInspector]
 	public string character = "A";//La cadena que representa al caracter
-
+	[HideInInspector]
+	public bool empty = false;//Lo usa WordManager al eliminar caracteres
+	[HideInInspector]
 	public bool used;//Se usa por ABCDataStructure cuando averigua si se pueden armar palabras
+	[HideInInspector]
+	public int index;//Indice del caracter en WordManager
 
 	void Start () 
 	{

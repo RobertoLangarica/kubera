@@ -186,6 +186,16 @@ public class ABCDataStructure : MonoBehaviour {
 	}
 
 	/**
+	 * Limpia y deja en estado sin busqueda
+	 * */ 
+	public void cleanCharByCharValidation()
+	{
+		isValid = true;
+		completeWord = false;
+		levelsOfSearch.Clear();
+	}
+
+	/**
 	 * Devuelve true si el caracter es parte de una palabra
 	 **/ 
 	public bool validateChar(ABCChar c)
@@ -283,7 +293,7 @@ public class ABCDataStructure : MonoBehaviour {
 	 * */
 	public void deleteLvlOfSearch(int indexToDelete)
 	{
-		//Se elimina un indice mayos a los validados
+		//Se elimina un indice mayor a los validados
 		if(indexToDelete >= levelsOfSearch.Count)
 		{
 			//Disminuimos la cuenta de los niveles
@@ -538,33 +548,82 @@ public class ABCDataStructure : MonoBehaviour {
 		return false;
 	}
 
+
+	protected List<ABCChar> sortedChars;//Caracteres ordenados con los comodines al final
+	protected IntList currentPossibleList;
+	protected List<ABCChar> used = new List<ABCChar>();//Vamos guardando los que ya se usaron para la palabra
 	/**
 	 * Recibe un grupo de caracteres y determina si es posible armar una palabra con ellos
 	 **/ 
 	public bool isAWordPossible(List<ABCChar> chars)
 	{
-		//Vamos guardando los que ya se usaron para la palabra
-		/*List<ABCChar> used = new List<ABCChar>();
-		//La letra con la que ya se inicio una busqueda
-		Dictionary<int,bool> validated = new Dictionary<int, bool>();
+		/*Dictionary<int,bool> validated = new Dictionary<int, bool>();//La letra con la que ya se inicio una busqueda
 		IntList tmp;
 		int i,l;
 
-		l = chars.Count;
+		if(sortedChars != null)
+		{
+			sortedChars.Clear();
+		}
+		else
+		{
+			sortedChars = new List<ABCChar>();
+		}
+
+		//Sort con los comodines hasta el ultimo (para que primero se agoten las letras)
+		for(int x = 0; x < chars.Count; x++)
+		{
+			if(chars[x].wildcard)
+			{
+				sortedChars.Add(chars[x]);
+			}
+			else
+			{
+				sortedChars.Insert(0,chars[x]);
+			}
+		}
+
+		//Limpiamos la lista e usados
+		used.Clear();
+
+
+		l = sortedChars.Count;
 		i = 0;
 
 		for(; i < l; i++)
 		{
-			//Alguna palabra inicia con este caracter
-			tmp = data.content.Find(item => item.value == chars[i].value);
-
-			if(tmp != null)
+			//Solo si este caracter no se a checado previamente
+			if(!validated.ContainsKey(sortedChars[i].value))
 			{
-				used.Add(tmp);
+				validated.Add(sortedChars[i].value,true);
+
+				//Alguna palabra inicia con este caracter
+				tmp = data.content.Find(item => item.value == sortedChars[i].value);
+				
+				if(tmp != null)
+				{
+					sortedChars[i].used = true;
+					used.Add(tmp);
+
+					currentPossibleList = tmp;
+				}
 			}
 		}*/
 
 		return true;
+	}
+
+	protected ABCChar getCharFromList(int value,List<ABCChar> chars)
+	{
+		foreach(ABCChar c in chars)
+		{
+			if(c.wildcard || c.value == value)
+			{
+				return c;
+			}
+		}
+
+		return null;
 	}
 
 	/**

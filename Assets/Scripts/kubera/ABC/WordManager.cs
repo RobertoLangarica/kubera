@@ -10,8 +10,9 @@ public class WordManager : MonoBehaviour {
 	public ABCDataStructure words;
 
 
-	protected List<ABCChar> chars;
-
+	[HideInInspector]
+	public List<ABCChar> chars;
+	protected bool invalidCharlist;//Indica que la lista de caracteres tuvo o tiene uno invalido
 
 	void Start()
 	{
@@ -26,11 +27,10 @@ public class WordManager : MonoBehaviour {
 	{
 		GameObject letter =  Instantiate(letterPrefab);
 		letter.GetComponent<UIChar>().character = character; 
-		letter.transform.SetParent(container.transform);
+		addLetterToCorrectSpace(letter);
 		letter.transform.localScale = new Vector3 (1, 1, 1);
 
 		validateCharacter(character);
-
 	}
 
 	/**
@@ -49,11 +49,32 @@ public class WordManager : MonoBehaviour {
 		character.value = ABCDataStructure.getCharValue(value);
 		character.character = value.ToUpperInvariant();
 		letter.GetComponent<UIChar>().character = character; 
-		letter.transform.SetParent(container.transform);
+		addLetterToCorrectSpace(letter);
 		letter.transform.localScale = new Vector3 (1, 1, 1);
 		letter.GetComponent<Tile> ().piece = piece;
 
 		validateCharacter(character);
+	}
+
+	/**
+	 * Agrega la siguiente letra tomando en cuenta los espacios vacios
+	 **/ 
+	protected void addLetterToCorrectSpace(GameObject letter)
+	{
+		//Agregamos la letra al primer lugar vacio
+		for(int i = 0; i < chars.Count; i++)
+		{
+			if(chars[i].empty)
+			{
+				DestroyImmediate(container.transform.GetChild(i).gameObject);
+				letter.transform.SetParent(container.transform);
+				letter.transform.SetSiblingIndex(i);
+				return;
+			}
+		}
+
+		//Agregamos la letra al ultimo
+		letter.transform.SetParent(container.transform);
 	}
 
 	/**
@@ -65,13 +86,44 @@ public class WordManager : MonoBehaviour {
 		{
 			words.initCharByCharValidation();
 		}
-		
-		chars.Add(character);
-		words.validateChar(character);
-		
-		if(words.completeWord)
+
+		if(invalidCharlist)
 		{
-			onWordComplete();
+			int index = getFirstEmptyIndex();
+
+			//Sustituimos el character
+			chars[index].empty = false;
+			chars[index] = character;
+			character.index = index;
+
+			if(!hasEmptyChars())
+			{
+				//Se completaron los vacios y los validamos
+				words.initCharByCharValidation();
+
+				foreach(ABCChar c in chars)
+				{
+					words.validateChar(c);
+				}
+
+				invalidCharlist = false;
+
+				if(words.completeWord)
+				{
+					onWordComplete();
+				}
+			}
+		}
+		else
+		{
+			character.index = chars.Count;
+			chars.Add(character);
+			words.validateChar(character);
+			
+			if(words.completeWord)
+			{
+				onWordComplete();
+			}
 		}
 	}
 
@@ -81,6 +133,13 @@ public class WordManager : MonoBehaviour {
 	 **/ 
 	public void resetValidation()
 	{
+		invalidCharlist = false;
+
+		foreach(ABCChar c in chars)
+		{
+			c.empty = false;
+		}
+
 		chars.Clear();
 
 		int l = container.transform.childCount;
@@ -131,5 +190,80 @@ public class WordManager : MonoBehaviour {
 		}
 
 		return result;
+	}
+
+	/**
+	 * elimina el caracter indicado de la busqueda
+	 * */
+	public void deleteCharFromSearch(int lvlIndex)
+	{
+		if(lvlIndex == chars.Count-1)
+		{
+			//El usuairo elimino el ultimo caracter
+			words.deleteLvlOfSearch(lvlIndex);
+			chars.RemoveAt(lvlIndex);
+		}
+		else
+		{
+			words.cleanCharByCharValidation();
+			chars[lvlIndex].empty = true;
+			invalidCharlist = true;
+		}
+
+		//Eliminamos la letra anterior
+		DestroyImmediate(container.transform.GetChild(lvlIndex).gameObject);
+
+		
+		if(everythingIsEmpty())
+		{
+			resetValidation();
+		}
+		else if(lvlIndex != chars.Count)
+		{
+			//agregar hijo vacio para indicar el espacio
+			GameObject letter =  Instantiate(letterPrefab);
+			letter.transform.SetParent(container.transform);
+			letter.transform.SetSiblingIndex(lvlIndex);
+		}
+	}
+
+	/**
+	 * Indica si todos los caracteres en la busqueda los elimino 
+	 * el usuario y se marcaron como empty = true
+	 * */
+	protected bool everythingIsEmpty()
+	{
+		foreach(ABCChar c in chars)
+		{
+			if(!c.empty)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * indica si la lista tiene caracteres vacios
+	 **/ 
+	protected bool hasEmptyChars()
+	{	
+		return !everythingIsEmpty();
+	}
+	/**
+	 * Obtiene el indice del primer caracter vacio dentro de la lista
+	 **/ 
+	protected int getFirstEmptyIndex()
+	{
+		for(int i = 0; i < chars.Count; i++)
+		{
+			if(chars[i].empty)
+			{
+				return i;
+			}
+		}
+
+		return -1;
 	}
 }
