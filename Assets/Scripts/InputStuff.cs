@@ -88,9 +88,10 @@ public class InputStuff : MonoBehaviour {
 				{
 					Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 					tempV3.z = 1;
-					//hasMoved = false;
+					hasMoved = true;
 					tempV3.y += 1.5f;
-					piece.transform.position = tempV3;
+					movingLerping(tempV3,piece);
+					//piece.transform.position = tempV3;
 				}
 
 			}
@@ -101,7 +102,7 @@ public class InputStuff : MonoBehaviour {
 		case (ContinuousGesturePhase.Ended):
 		{
 			isDragging = false;
-			//hasMoved = false;
+			hasMoved = false;
 			onDragFinish();
 
 
@@ -129,7 +130,7 @@ public class InputStuff : MonoBehaviour {
 					Debug.Log ("Perdio");
 				}
 			}
-			
+			DOTween.Kill("MovingPiece");
 			piece = null;
 
 		}
@@ -151,13 +152,19 @@ public class InputStuff : MonoBehaviour {
 					Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 					tempV3.z = 1;
 					hasMoved = false;
-					
+
 					tempV3.y += 1.5f;
-					piece.transform.DOMove(tempV3,.2f);
-					piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
+					//piece.transform.position = tempV3;
+					piece.transform.DOMove(tempV3,.1f);
+					piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f).OnComplete(finishScale);
 				}
 			}
 		}
+	}
+
+	void finishScale()
+	{
+		print ("ended");
 	}
 
 	void OnTap(TapGesture gesture)
@@ -181,7 +188,16 @@ public class InputStuff : MonoBehaviour {
 
 	void backToNormal()
 	{
-		piece.transform.DOMove(piece.GetComponent<Piece>().myFirstPos.position,.2f);
+		Vector3 tempV3 = piece.GetComponent<Piece> ().myFirstPos.position;
+		piece.transform.DOMove(new Vector3(tempV3.x,tempV3.y,1),.2f);
 		piece.transform.DOScale(new Vector3(4,4,4),.1f);
+	}
+
+	public void movingLerping(Vector3 end,GameObject piece)
+	{
+		if (hasMoved) 
+		{
+			piece.transform.DOMove (end, .3f).SetId("MovingPiece");
+		}
 	}
 }

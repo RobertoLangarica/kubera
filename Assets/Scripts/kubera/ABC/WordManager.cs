@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class WordManager : MonoBehaviour {
 
 	public GameObject letterPrefab;
+	public GameObject empty;
 	public GameObject container;
 	public ABCDataStructure words;
 
@@ -98,6 +99,7 @@ public class WordManager : MonoBehaviour {
 
 			if(!hasEmptyChars())
 			{
+				print("no hay vacios");
 				//Se completaron los vacios y los validamos
 				words.initCharByCharValidation();
 
@@ -221,10 +223,22 @@ public class WordManager : MonoBehaviour {
 		else if(lvlIndex != chars.Count)
 		{
 			//agregar hijo vacio para indicar el espacio
-			GameObject letter =  Instantiate(letterPrefab);
+			GameObject letter =  Instantiate(empty);
+
 			letter.transform.SetParent(container.transform);
 			letter.transform.SetSiblingIndex(lvlIndex);
+			letter.transform.localScale = new Vector3(1,1,1);
 		}
+	}
+
+	public void deleteCharFromSearch(ABCChar abcChar)
+	{
+		deleteCharFromSearch(abcChar.index);
+	}
+
+	public void deleteCharFromSearch(UIChar uiChar)
+	{
+		deleteCharFromSearch(uiChar.character);
 	}
 
 	/**
@@ -240,7 +254,6 @@ public class WordManager : MonoBehaviour {
 				return false;
 			}
 		}
-
 		return true;
 	}
 
