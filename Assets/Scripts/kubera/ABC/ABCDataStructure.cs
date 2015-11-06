@@ -616,7 +616,6 @@ public class ABCDataStructure : MonoBehaviour {
 			return 25;
 		case 'Z':
 			return 26;
-
 		}
 		return -1;
 	}
