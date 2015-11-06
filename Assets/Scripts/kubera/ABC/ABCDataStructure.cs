@@ -521,9 +521,30 @@ public class ABCDataStructure : MonoBehaviour {
 	/**
 	 * Recibe un grupo de caracteres y determina si es posible armar una palabra con ellos
 	 **/ 
-	public void isAWordPossible(List<ABCChar> chars)
+	public bool isAWordPossible(List<ABCChar> chars)
 	{
+		//Vamos guardando los que ya se usaron para la palabra
+		/*List<ABCChar> used = new List<ABCChar>();
+		//La letra con la que ya se inicio una busqueda
+		Dictionary<int,bool> validated = new Dictionary<int, bool>();
+		IntList tmp;
+		int i,l;
 
+		l = chars.Count;
+		i = 0;
+
+		for(; i < l; i++)
+		{
+			//Alguna palabra inicia con este caracter
+			tmp = data.content.Find(item => item.value == chars[i].value);
+
+			if(tmp != null)
+			{
+				used.Add(tmp);
+			}
+		}*/
+
+		return true;
 	}
 
 	/**
