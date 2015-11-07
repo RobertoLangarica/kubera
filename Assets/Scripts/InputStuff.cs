@@ -125,10 +125,9 @@ public class InputStuff : MonoBehaviour {
 				piece.GetComponent<BoxCollider2D>().enabled = false;
 				PieceManager.instance.checkBarr(piece);
 				cellManager.LineCreated();
-				if(!cellManager.VerifyPosibility(PieceManager.instance.piecesInBar))
-				{
-					Debug.Log ("Perdio");
-				}
+
+				checkToLoose();
+
 			}
 			DOTween.Kill("MovingPiece");
 			piece = null;
@@ -198,6 +197,33 @@ public class InputStuff : MonoBehaviour {
 		if (hasMoved) 
 		{
 			piece.transform.DOMove (end, .3f).SetId("MovingPiece");
+		}
+	}
+
+	public void checkToLoose()
+	{
+		if(!cellManager.VerifyPosibility(PieceManager.instance.piecesInBar))
+		{
+			Debug.Log ("Perdio");
+			while(true)
+			{
+				bool pass = true;
+				for(int i=0; i < PieceManager.instance.listChar.Count; i++)
+				{
+					if(!PieceManager.instance.listChar[i])
+					{
+						print("Destroy");
+						PieceManager.instance.listChar.RemoveAt(i);
+						i--;
+						pass = false;
+					}
+				}
+				if(pass)
+				{
+					break;
+				}
+			}
+			FindObjectOfType<WordManager>().checkIfAWordisPossible(PieceManager.instance.listChar);
 		}
 	}
 }

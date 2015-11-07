@@ -7,6 +7,8 @@ public class PieceManager : MonoBehaviour {
 
 	protected List<GameObject> piecesList = new List<GameObject>();
 	public List<GameObject> piecesInBar = new List<GameObject>();
+	public List<ABCChar> listChar = new List<ABCChar>();
+
 	public Transform[] firstPos;
 
 	protected int sizeOfBar =3;
