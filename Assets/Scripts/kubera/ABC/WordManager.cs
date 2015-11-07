@@ -279,4 +279,20 @@ public class WordManager : MonoBehaviour {
 
 		return -1;
 	}
+
+	/**
+	 * Revisa si es posible armar una palabra con los caracteres que se tienen en este momento
+	 **/ 
+	public void checkIfAWordisPossible()
+	{
+		checkIfAWordisPossible(chars);
+	}
+
+	/**
+	 * Revisa si es posible armar una palabra con los caracteres que se tienen
+	 **/
+	public void checkIfAWordisPossible(List<ABCChar> pool)
+	{
+		Debug.Log ("Possible word: "+words.isAWordPossible(pool));
+	}
 }

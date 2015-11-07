@@ -550,14 +550,13 @@ public class ABCDataStructure : MonoBehaviour {
 
 
 	protected List<ABCChar> sortedChars;//Caracteres ordenados con los comodines al final
-	protected IntList currentPossibleList;
 	protected List<ABCChar> used = new List<ABCChar>();//Vamos guardando los que ya se usaron para la palabra
 	/**
 	 * Recibe un grupo de caracteres y determina si es posible armar una palabra con ellos
 	 **/ 
 	public bool isAWordPossible(List<ABCChar> chars)
 	{
-		/*Dictionary<int,bool> validated = new Dictionary<int, bool>();//La letra con la que ya se inicio una busqueda
+		Dictionary<int,bool> validated = new Dictionary<int, bool>();//La letra con la que ya se inicio una busqueda
 		IntList tmp;
 		int i,l;
 
@@ -603,21 +602,108 @@ public class ABCDataStructure : MonoBehaviour {
 				if(tmp != null)
 				{
 					sortedChars[i].used = true;
-					used.Add(tmp);
+					used.Add(sortedChars[i]);
 
-					currentPossibleList = tmp;
+					//Aun existen caracteres
+					if(used.Count < sortedChars.Count)
+					{
+						if(searchForNextPossibleWord(tmp))
+						{
+							//se encontro una palabra!!
+							string s = "";
+							foreach(ABCChar c in used)
+							{
+								s = s+c.character;
+							}
+
+							Debug.Log("Se puede formar la palabra: "+s);
+
+							return true;
+						}
+						else
+						{
+							used[0].used = false;
+							used.Clear();
+						}
+					}
 				}
 			}
-		}*/
+		}
 
-		return true;
+		return false;
 	}
 
-	protected ABCChar getCharFromList(int value,List<ABCChar> chars)
+	/**
+	 * Busca dentro dentro de la lista si existen los caracteres en desuso
+	 * y forman una palabra
+	 **/ 
+	protected bool searchForNextPossibleWord(IntList current)
+	{
+		ABCChar tmp;
+		bool result = false;
+		int prevused = used.Count;
+
+		foreach(IntList val in current.content)
+		{
+			tmp = getUnusedCharFromList(val.value, sortedChars);
+
+			if(tmp != null)
+			{
+				//Lo agregamos como usado
+				used.Add(tmp);
+				tmp.used = true;
+
+				//Ya es una palabra?
+				if(val.end)
+				{
+					result =  true;
+					break;
+				}
+				else
+				{
+					//Buscamos otro character
+					if(used.Count < sortedChars.Count)
+					{
+						//Aun existen caracteres asi que buscamos una palabra
+						result = searchForNextPossibleWord(val);
+
+						//Ya que se devuelva true
+						if(result)
+						{
+							break;
+						}
+					}
+					else
+					{
+						//Ya no hay caracteres
+						break;
+					}
+				}
+			}
+		}
+
+		if(!result)
+		{
+			//Devolvemos a en desuso los caracteres que se marcaron como tal en esta llamada
+			int dif = used.Count - prevused;
+			for(int i = 0; i < dif; i++)
+			{
+				used[used.Count-1].used = false;
+				used.RemoveAt(used.Count-1);
+			}
+		}
+
+		return result;
+	}
+
+	/**
+	 * Busca un character que no este marcado como usado y que coincida con value
+	 * */
+	protected ABCChar getUnusedCharFromList(int value,List<ABCChar> chars)
 	{
 		foreach(ABCChar c in chars)
 		{
-			if(c.wildcard || c.value == value)
+			if(!c.used && (c.wildcard || c.value == value))
 			{
 				return c;
 			}
