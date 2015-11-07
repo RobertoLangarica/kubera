@@ -22,6 +22,23 @@ public class WordManager : MonoBehaviour {
 	}
 
 	/**
+	 * SOLO PARA TEST
+	 * */
+	public void addAndCloneCharacter(ABCChar character)
+	{
+		GameObject letter =  Instantiate(letterPrefab);
+		ABCChar char2 = letter.AddComponent<ABCChar>();
+		char2.value = character.value;
+		char2.index = character.index;
+		char2.used = character.used;
+		letter.GetComponent<UIChar>().character = char2; 
+		addLetterToCorrectSpace(letter);
+		letter.transform.localScale = new Vector3 (1, 1, 1);
+		
+		validateCharacter(char2);
+	}
+
+	/**
 	 * Instancia un UIChar que recibe como referencia a character y manda validarlo
 	 * */
 	public void addCharacter(ABCChar character)

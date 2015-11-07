@@ -611,12 +611,12 @@ public class ABCDataStructure : MonoBehaviour {
 						{
 							//se encontro una palabra!!
 							string s = "";
+							//Marcamos todos como en desuso
 							foreach(ABCChar c in used)
 							{
+								c.used = false;
 								s = s+c.character;
 							}
-
-							Debug.Log("Se puede formar la palabra: "+s);
 
 							return true;
 						}
