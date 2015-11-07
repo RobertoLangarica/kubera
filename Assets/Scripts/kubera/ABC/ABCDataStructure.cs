@@ -230,6 +230,7 @@ public class ABCDataStructure : MonoBehaviour {
 					{
 						wildcard.content = currentValidationList.content;
 					}
+
 					//Correcto sin validacion ya que es comodin
 					currentValidationList = wildcard;
 					levelsOfSearch.Add(wildcard);
@@ -618,6 +619,8 @@ public class ABCDataStructure : MonoBehaviour {
 								s = s+c.character;
 							}
 
+							Debug.Log ("Posible: "+s);
+
 							return true;
 						}
 						else
@@ -705,6 +708,13 @@ public class ABCDataStructure : MonoBehaviour {
 		{
 			if(!c.used && (c.wildcard || c.value == value))
 			{
+				//Solo para fines de debug le pongo el caharacter y value al comodin
+				if(c.wildcard)
+				{
+					c.value = value;
+					c.character = getStringByValue(value);
+				}
+
 				return c;
 			}
 		}

@@ -31,6 +31,7 @@ public class WordManager : MonoBehaviour {
 		char2.value = character.value;
 		char2.index = character.index;
 		char2.used = character.used;
+		char2.wildcard = character.wildcard;
 		letter.GetComponent<UIChar>().character = char2; 
 		addLetterToCorrectSpace(letter);
 		letter.transform.localScale = new Vector3 (1, 1, 1);
