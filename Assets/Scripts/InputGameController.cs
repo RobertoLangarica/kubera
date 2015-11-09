@@ -2,7 +2,7 @@
 using System.Collections;
 using DG.Tweening;
 
-public class InputStuff : MonoBehaviour {
+public class InputGameController : MonoBehaviour {
 
 	protected bool hasMoved;
 
