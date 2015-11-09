@@ -26,7 +26,7 @@ public class Piece : MonoBehaviour {
 	
 	protected ECOLORS_ID currentColor;
 	protected Color rendererColor;
-	protected float currentAlpha;
+	protected float currentAlpha = 1;
 
 	[HideInInspector]
 	public Transform myFirstPos;
