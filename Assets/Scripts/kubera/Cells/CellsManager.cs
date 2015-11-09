@@ -201,14 +201,14 @@ public class CellsManager : MonoBehaviour
 				cells[i].color = ECOLORS_ID.LETER;
 				cells[i].piece.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
 				cells[i].piece.GetComponent<BoxCollider2D>().enabled = true;
-				cells[i].piece.GetComponent<Letter>().myLeterCase = PieceManager.instance.putLeter();
-				cells[i].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(cells[i].piece.GetComponent<Letter>().myLeterCase);
-				cells[i].piece.GetComponent<Letter>().cellIndex = cells[i];
+				cells[i].piece.GetComponent<Tile>().myLeterCase = PieceManager.instance.putLeter();
+				cells[i].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(cells[i].piece.GetComponent<Tile>().myLeterCase);
+				cells[i].piece.GetComponent<Tile>().cellIndex = cells[i];
 				cells[i].piece.AddComponent<ABCChar>();
-				print(cells[i].piece.GetComponent<Letter>().myLeterCase);
-				cells[i].piece.GetComponent<ABCChar>().character = cells[i].piece.GetComponent<Letter>().myLeterCase;
-				print(cells[i].piece.GetComponent<ABCChar>().character);
-				if(cells[i].piece.GetComponent<Letter>().myLeterCase == ".")
+			
+				cells[i].piece.GetComponent<ABCChar>().character = cells[i].piece.GetComponent<Tile>().myLeterCase;
+
+				if(cells[i].piece.GetComponent<Tile>().myLeterCase == ".")
 				{
 					cells[i].piece.AddComponent<ABCChar>().wildcard = true;
 				}
@@ -222,14 +222,14 @@ public class CellsManager : MonoBehaviour
 				cells[index+(i*width)].color = ECOLORS_ID.LETER;
 				cells[index+(i*width)].piece.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
 				cells[index+(i*width)].piece.GetComponent<BoxCollider2D>().enabled = true;
-				cells[index+(i*width)].piece.GetComponent<Letter>().myLeterCase = PieceManager.instance.putLeter();
-				cells[index+(i*width)].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(cells[index+(i*width)].piece.GetComponent<Letter>().myLeterCase);
-				cells[index+(i*width)].piece.GetComponent<Letter>().cellIndex = cells[index+(i*width)];
+				cells[index+(i*width)].piece.GetComponent<Tile>().myLeterCase = PieceManager.instance.putLeter();
+				cells[index+(i*width)].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(cells[index+(i*width)].piece.GetComponent<Tile>().myLeterCase);
+				cells[index+(i*width)].piece.GetComponent<Tile>().cellIndex = cells[index+(i*width)];
 				cells[index+(i*width)].piece.AddComponent<ABCChar>();
-				print(cells[index+(i*width)].piece.GetComponent<Letter>().myLeterCase);
-				cells[index+(i*width)].piece.GetComponent<ABCChar>().character = cells[index+(i*width)].piece.GetComponent<Letter>().myLeterCase;
-				print(cells[index+(i*width)].piece.GetComponent<ABCChar>().character);
-				if(cells[index+(i*width)].piece.GetComponent<Letter>().myLeterCase == ".")
+
+				cells[index+(i*width)].piece.GetComponent<ABCChar>().character = cells[index+(i*width)].piece.GetComponent<Tile>().myLeterCase;
+
+				if(cells[index+(i*width)].piece.GetComponent<Tile>().myLeterCase == ".")
 				{
 					cells[index+(i*width)].piece.AddComponent<ABCChar>().wildcard = true;
 				}

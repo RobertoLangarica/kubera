@@ -70,7 +70,7 @@ public class WordManager : MonoBehaviour {
 		letter.GetComponent<UIChar>().character = character; 
 		addLetterToCorrectSpace(letter);
 		letter.transform.localScale = new Vector3 (1, 1, 1);
-		letter.GetComponent<Tile> ().piece = piece;
+		letter.GetComponent<Letter> ().piece = piece;
 
 		validateCharacter(character);
 	}
@@ -165,7 +165,7 @@ public class WordManager : MonoBehaviour {
 		int l = container.transform.childCount;
 		while(--l >= 0)
 		{
-			Tile t = container.transform.GetChild(l).gameObject.GetComponent<Tile>();
+			Letter t = container.transform.GetChild(l).gameObject.GetComponent<Letter>();
 
 			if(t != null && t.piece != null)
 			{
@@ -173,13 +173,16 @@ public class WordManager : MonoBehaviour {
 				{
 					if(t)
 					{
-						t.piece.GetComponent<Letter>().cellIndex.clearCell();
-						GameObject.Destroy(t.piece);
+						t.piece.GetComponent<Tile>().cellIndex.clearCell();
+
+						//para destruir la pieza
+						t.DestroyPiece();
+						//GameObject.Destroy(t.piece);
 					}
 				}
 				else
 				{
-					t.piece.GetComponent<Letter>().backToNormal();
+					t.piece.GetComponent<Tile>().backToNormal();
 				}
 			}
 

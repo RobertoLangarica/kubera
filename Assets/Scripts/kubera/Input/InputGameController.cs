@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using DG.Tweening;
 
@@ -170,9 +170,9 @@ public class InputGameController : MonoBehaviour {
 	{
 		if(gesture.Raycast.Hits2D != null)
 		{
-			if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Letter>())
+			if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>())
 			{
-				gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Letter>().ShootLetter();
+				gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>().ShootLetter();
 			}
 		}
 	}

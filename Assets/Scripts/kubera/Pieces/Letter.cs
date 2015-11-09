@@ -1,39 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Letter : MonoBehaviour {
 
-	// Use this for initialization
-	public string myLeterCase;
-	protected bool used;
+	public GameObject piece;
 
-	public GameObject letterCase;
-
-	public Cell cellIndex;
-
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-	public void ShootLetter()
+	void Start()
 	{
-		//print ("S");
-		if(!used)
-		{
-			GameObject.Find("WordManager").GetComponent<WordManager>().addCharacter(myLeterCase,gameObject);
-			used=true;
-			gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,.2f);
-		}
+		GameObject wM = GameObject.Find("WordManager");
+
+		GetComponent<Button>().onClick.AddListener(
+			() => wM.GetComponent<WordManager>().deleteCharFromSearch(gameObject.GetComponent<UIChar>())
+												);
 	}
 
-	public void backToNormal()
+	public void returnState()
 	{
-		used=false;
-		gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
+		piece.GetComponent<Tile> ().backToNormal ();
+	}
+
+	public void DestroyPiece()
+	{
+		Destroy (piece);
 	}
 }
