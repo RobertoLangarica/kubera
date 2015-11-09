@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <scrabtris>
 	<levels>
-		<level name="01" difficulty="0" pool="a,b,c,d,e,f,g,h,i,." pieces="B,F"/>
+		<level name="01" difficulty="0" pool="h,o,l,a" pieces="A,B,C,D,E,F,G"/>
 	</levels>
 </scrabtris>

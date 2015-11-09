@@ -186,6 +186,16 @@ public class ABCDataStructure : MonoBehaviour {
 	}
 
 	/**
+	 * Limpia y deja en estado sin busqueda
+	 * */ 
+	public void cleanCharByCharValidation()
+	{
+		isValid = true;
+		completeWord = false;
+		levelsOfSearch.Clear();
+	}
+
+	/**
 	 * Devuelve true si el caracter es parte de una palabra
 	 **/ 
 	public bool validateChar(ABCChar c)
@@ -220,9 +230,10 @@ public class ABCDataStructure : MonoBehaviour {
 					{
 						wildcard.content = currentValidationList.content;
 					}
-					currentValidationList = wildcard;
 
 					//Correcto sin validacion ya que es comodin
+					currentValidationList = wildcard;
+					levelsOfSearch.Add(wildcard);
 					isValid = true;
 				}
 				else
@@ -283,7 +294,7 @@ public class ABCDataStructure : MonoBehaviour {
 	 * */
 	public void deleteLvlOfSearch(int indexToDelete)
 	{
-		//Se elimina un indice mayos a los validados
+		//Se elimina un indice mayor a los validados
 		if(indexToDelete >= levelsOfSearch.Count)
 		{
 			//Disminuimos la cuenta de los niveles
@@ -361,7 +372,7 @@ public class ABCDataStructure : MonoBehaviour {
 	protected bool checkBackwardsForWildcardOptions(ABCChar charToValidate)
 	{
 		int i = levelsOfSearch.Count;
-		IntList tmp;
+		IntList tmp = null;
 		List<IntList> copy = new List<IntList>(levelsOfSearch);
 
 		while(--i >= 0)
@@ -372,28 +383,46 @@ public class ABCDataStructure : MonoBehaviour {
 				int l2 = levelsOfSearch[i].content.Count;
 				//Guardamos el estado actual
 				levelsOfSearch[i].lastCorrectValue = levelsOfSearch[i].wildcardIndex;
-				List<IntList> partialChain = levelsOfSearch.GetRange(i+1,levelsOfSearch.Count-i+1);
+				List<IntList> partialChain = levelsOfSearch.GetRange(i+1,levelsOfSearch.Count-(i+1));
 				List<IntList> partialResult;
 
 				for(int j = levelsOfSearch[i].wildcardIndex+1; j < l2; j++)
 				{
 					//Este nuevo comodin es valido?
 					levelsOfSearch[i].wildcardIndex = j;
-					partialResult = getCorrectChain(levelsOfSearch[i].content[j],partialChain);
-					
-					//Se encontro una cadena valida
-					if(partialResult != null)
+
+					if(partialChain.Count > 0)
 					{
-						//Contiene el caracter a validar?
-						tmp = partialResult[partialResult.Count-1].content.Find(item => item.value == charToValidate.value);
+						partialResult = getCorrectChain(levelsOfSearch[i].content[j],partialChain);
 						
-						if(tmp != null)
+						//Se encontro una cadena valida
+						if(partialResult != null)
 						{
-							//LISTO tenemos el valor como debe ser
-							levelsOfSearch.Add(tmp);
-							currentValidationList = tmp;
-							return true;
+							//Contiene el caracter a validar?
+							if(partialResult[partialResult.Count-1].wildcard)
+							{
+								tmp = partialResult[partialResult.Count-1].content[partialResult[partialResult.Count-1].wildcardIndex].content.Find(item => item.value == charToValidate.value);
+							}
+							else
+							{
+								tmp = partialResult[partialResult.Count-1].content.Find(item => item.value == charToValidate.value);
+							}
 						}
+					}
+					else
+					{
+						//No hay nadie debajo y lo validamos directamente a este nodo
+						tmp = levelsOfSearch[i].content[levelsOfSearch[i].wildcardIndex].content.Find(item => item.value == charToValidate.value);
+
+					}
+
+					//Existe charToValidate al final de la cadena
+					if(tmp != null)
+					{
+						//LISTO tenemos el valor como debe ser
+						levelsOfSearch.Add(tmp);
+						currentValidationList = tmp;
+						return true;
 					}
 				}
 			}
@@ -439,7 +468,8 @@ public class ABCDataStructure : MonoBehaviour {
 			{
 				//Guardamos el estado del comodin
 				values[i].lastCorrectValue = values[i].wildcardIndex;
-				
+				values[i].wildcardIndex = 0;
+
 				if(i == 0)
 				{
 					//Se inicia como comodin apuntando a target
@@ -461,8 +491,9 @@ public class ABCDataStructure : MonoBehaviour {
 				{
 					//Buscamos la cadena de valores correcta debajo de este comodin
 					int l2 = values[i].content.Count;
-					List<IntList> partialChain = values.GetRange(i+1,limit-i+1);
+					List<IntList> partialChain = values.GetRange(i+1,limit-(i+1));
 					List<IntList> partialResult;
+
 					for(int j = 0; j < l2; j++)
 					{
 						//Si es el correcto que se quede con el valor correcto
@@ -518,12 +549,177 @@ public class ABCDataStructure : MonoBehaviour {
 		return false;
 	}
 
+
+	protected List<ABCChar> sortedChars;//Caracteres ordenados con los comodines al final
+	protected List<ABCChar> used = new List<ABCChar>();//Vamos guardando los que ya se usaron para la palabra
 	/**
 	 * Recibe un grupo de caracteres y determina si es posible armar una palabra con ellos
 	 **/ 
-	public void isAWordPossible(List<ABCChar> chars)
+	public bool isAWordPossible(List<ABCChar> chars)
 	{
+		Dictionary<int,bool> validated = new Dictionary<int, bool>();//La letra con la que ya se inicio una busqueda
+		IntList tmp;
+		int i,l;
 
+		if(sortedChars != null)
+		{
+			sortedChars.Clear();
+		}
+		else
+		{
+			sortedChars = new List<ABCChar>();
+		}
+
+		//Sort con los comodines hasta el ultimo (para que primero se agoten las letras)
+		for(int x = 0; x < chars.Count; x++)
+		{
+			if(chars[x].wildcard)
+			{
+				sortedChars.Add(chars[x]);
+			}
+			else
+			{
+				sortedChars.Insert(0,chars[x]);
+			}
+		}
+
+		//Limpiamos la lista e usados
+		used.Clear();
+
+
+		l = sortedChars.Count;
+		i = 0;
+
+		for(; i < l; i++)
+		{
+			//Solo si este caracter no se a checado previamente
+			if(!validated.ContainsKey(sortedChars[i].value))
+			{
+				validated.Add(sortedChars[i].value,true);
+
+				//Alguna palabra inicia con este caracter
+				tmp = data.content.Find(item => item.value == sortedChars[i].value);
+				
+				if(tmp != null)
+				{
+					sortedChars[i].used = true;
+					used.Add(sortedChars[i]);
+
+					//Aun existen caracteres
+					if(used.Count < sortedChars.Count)
+					{
+						if(searchForNextPossibleWord(tmp))
+						{
+							//se encontro una palabra!!
+							string s = "";
+							//Marcamos todos como en desuso
+							foreach(ABCChar c in used)
+							{
+								c.used = false;
+								s = s+c.character;
+							}
+
+							Debug.Log ("Posible: "+s);
+
+							return true;
+						}
+						else
+						{
+							used[0].used = false;
+							used.Clear();
+						}
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Busca dentro dentro de la lista si existen los caracteres en desuso
+	 * y forman una palabra
+	 **/ 
+	protected bool searchForNextPossibleWord(IntList current)
+	{
+		ABCChar tmp;
+		bool result = false;
+		int prevused = used.Count;
+
+		foreach(IntList val in current.content)
+		{
+			tmp = getUnusedCharFromList(val.value, sortedChars);
+
+			if(tmp != null)
+			{
+				//Lo agregamos como usado
+				used.Add(tmp);
+				tmp.used = true;
+
+				//Ya es una palabra?
+				if(val.end)
+				{
+					result =  true;
+					break;
+				}
+				else
+				{
+					//Buscamos otro character
+					if(used.Count < sortedChars.Count)
+					{
+						//Aun existen caracteres asi que buscamos una palabra
+						result = searchForNextPossibleWord(val);
+
+						//Ya que se devuelva true
+						if(result)
+						{
+							break;
+						}
+					}
+					else
+					{
+						//Ya no hay caracteres
+						break;
+					}
+				}
+			}
+		}
+
+		if(!result)
+		{
+			//Devolvemos a en desuso los caracteres que se marcaron como tal en esta llamada
+			int dif = used.Count - prevused;
+			for(int i = 0; i < dif; i++)
+			{
+				used[used.Count-1].used = false;
+				used.RemoveAt(used.Count-1);
+			}
+		}
+
+		return result;
+	}
+
+	/**
+	 * Busca un character que no este marcado como usado y que coincida con value
+	 * */
+	protected ABCChar getUnusedCharFromList(int value,List<ABCChar> chars)
+	{
+		foreach(ABCChar c in chars)
+		{
+			if(!c.used && (c.wildcard || c.value == value))
+			{
+				//Solo para fines de debug le pongo el caharacter y value al comodin
+				if(c.wildcard)
+				{
+					c.value = value;
+					c.character = getStringByValue(value);
+				}
+
+				return c;
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -595,7 +791,6 @@ public class ABCDataStructure : MonoBehaviour {
 			return 25;
 		case 'Z':
 			return 26;
-
 		}
 		return -1;
 	}
