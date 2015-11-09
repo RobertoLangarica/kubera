@@ -44,11 +44,12 @@ public class Piece : MonoBehaviour {
 	protected void selectAColor()
 	{
 		//Color myColor = new Color(Random.Range(0.0f,1.0f),Random.Range(0.0f,1.0f),Random.Range(0.0f,1.0f));
-		color = ECOLORS_ID(Random.Range(1,9));
+		color = (ECOLORS_ID)Random.Range(1,9);
 
 		foreach(GameObject piece in pieces)
 		{
 			piece.GetComponent<SpriteRenderer>().color = rendererColor;
+			piece.GetComponent<Tile>().color = currentColor;
 		}
 	}
 

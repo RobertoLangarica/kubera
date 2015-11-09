@@ -8,6 +8,7 @@ public class Tile : MonoBehaviour {
 	protected bool used;
 
 	public GameObject letterCase;
+	public ECOLORS_ID color;
 
 	public Cell cellIndex;
 
