@@ -5,15 +5,15 @@ using System.Collections.Generic;
 //[ExecuteInEditMode]
 public class CellsManager : MonoBehaviour 
 {
-	public bool runCreationOnEditor = false;
-	public bool destroyGridOnEditor = false;
+	//public bool runCreationOnEditor = false;
+	//public bool destroyGridOnEditor = false;
 
 	public GameObject cellPrefab;
 
 	public int width;
 	public int height;
 
-	//public List<Cell> selected = new List<Cell>();
+	public List<Cell> selected = new List<Cell>();
 
 	protected List<Cell> cells = new List<Cell>();
 
@@ -26,20 +26,21 @@ public class CellsManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		/*if(Input.GetKeyDown(KeyCode.A))
+		if(Input.GetKeyDown(KeyCode.A))
 		{
-			LineCreated();
+			//LineCreated();
+			clearCellsOfColor(cells[0]);
 		}
-		if(runCreationOnEditor)
+		/*if(runCreationOnEditor)
 		{
 			CreateGrid();
 			runCreationOnEditor = false;
-		}*/
+		}
 		if(destroyGridOnEditor)
 		{
 			DestroyGrid();
 			destroyGridOnEditor = false;
-		}
+		}*/
 	}
 
 	protected void CreateGrid()
@@ -88,6 +89,15 @@ public class CellsManager : MonoBehaviour
 		return null;
 	}
 
+	protected Cell getCellAt(int xPos,int yPos)
+	{
+		if(xPos < 0 || yPos < 0 || xPos >= width || yPos >= height)
+		{
+			return null;
+		}
+		return cells[(width*yPos)+xPos];
+	}
+
 	public void LineCreated()
 	{
 		int[] widthCount = new int[height];
@@ -114,7 +124,7 @@ public class CellsManager : MonoBehaviour
 		{
 			if(widthCount[i] == width)
 			{
-				Debug.Log("Se encontro linea en fila: " + i);
+				//Debug.Log("Se encontro linea en fila: " + i);
 				createLettersOn(true,i);
 			}
 		}
@@ -122,7 +132,7 @@ public class CellsManager : MonoBehaviour
 		{
 			if(heightCount[i] == height)
 			{
-				Debug.Log("Se encontro linea en columna: " + i);
+				//Debug.Log("Se encontro linea en columna: " + i);
 				createLettersOn(false,i);
 			}
 		}
@@ -231,25 +241,17 @@ public class CellsManager : MonoBehaviour
 		{
 			if(!val.occupied)
 			{
-				//Debug.Log (val.transform.position);
 				for(int i = 0;i < listPieces.Count;i++)
 				{
-					//Debug.Log ("Checando piezas" + listPieces[i]);
 					lPPiece = listPieces[i].GetComponent<Piece>();
 					ofset = (val.transform.position + moveLittle) - lPPiece.pieces[0].transform.position;
 					vecArr = new Vector3[lPPiece.pieces.Length];
 					for(int j = 0;j < lPPiece.pieces.Length;j++)
 					{
-						//Debug.Log ("Modificando Vecs");
 						vecArr[j] = lPPiece.pieces[j].transform.position + ofset;
-						//Debug.Log (vecArr[j]);
 					}
 					if(CanPositionate(vecArr))
 					{
-						//Debug.Log ("Si se puede");
-						//Debug.Log (val.transform.localPosition);
-						//selected = val.gameObject;
-						//Debug.Log(lPPiece.gameObject);
 						return true;
 					}
 				}
@@ -257,4 +259,93 @@ public class CellsManager : MonoBehaviour
 		}
 		return false;
 	}
+
+	public void clearCellsOfColor(Cell cell)
+	{
+		List<Cell> finalList = new List<Cell>();
+		List<Cell> pendingList = new List<Cell>();
+
+		pendingList.Add(cell);
+
+		while(pendingList.Count > 0)
+		{
+			searchNeigboursOfSameColor(pendingList[0],ref finalList,ref pendingList);
+		}
+		selected = finalList;
+	}
+
+	protected void searchNeigboursOfSameColor(Cell cell,ref List<Cell> final, ref List<Cell> pending)
+	{
+		int cX = cells.IndexOf(cell)%width;
+		int cY = cells.IndexOf(cell)/width;
+		Cell tempC = null;
+
+		tempC = getCellAt(cX-1,cY-1);
+		if(tempC != null)
+		{
+			if(tempC.color == cell.color && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			{
+				pending.Add(tempC);
+			}
+		}
+		tempC = getCellAt(cX,cY-1);
+		if(tempC != null)
+		{
+			if(tempC.color == cell.color && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			{
+				pending.Add(tempC);
+			}
+		}
+		tempC = getCellAt(cX+1,cY-1);
+		if(tempC != null)
+		{
+			if(tempC.color == cell.color && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			{
+				pending.Add(tempC);
+			}
+		}
+		tempC = getCellAt(cX-1,cY);
+		if(tempC != null)
+		{
+			if(tempC.color == cell.color && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			{
+				pending.Add(tempC);
+			}
+		}
+		tempC = getCellAt(cX+1,cY);
+		if(tempC != null)
+		{
+			if(tempC.color == cell.color && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			{
+				pending.Add(tempC);
+			}
+		}
+		tempC = getCellAt(cX-1,cY+1);
+		if(tempC != null)
+		{
+			if(tempC.color == cell.color && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			{
+				pending.Add(tempC);
+			}
+		}
+		tempC = getCellAt(cX,cY+1);
+		if(tempC != null)
+		{
+			if(tempC.color == cell.color && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			{
+				pending.Add(tempC);
+			}
+		}
+		tempC = getCellAt(cX+1,cY+1);
+		if(tempC != null)
+		{
+			if(tempC.color == cell.color && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			{
+				pending.Add(tempC);
+			}
+		}
+		pending.Remove(cell);
+		final.Add(cell);
+	}
 }
+

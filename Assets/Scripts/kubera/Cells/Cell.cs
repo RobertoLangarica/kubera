@@ -1,15 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum ECOLORS_ID
-{
-	NONE,
-	BLUE,
-	RED,
-	GREEN,
-	LETER
-}
-
 public class Cell : MonoBehaviour 
 {
 	public ECOLORS_ID color;
