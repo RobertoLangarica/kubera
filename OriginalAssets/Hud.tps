@@ -212,6 +212,8 @@
             <filename>documents-export-2015-11-09/levels-points.png</filename>
             <filename>documents-export-2015-11-09/levels-tubo.png</filename>
             <filename>documents-export-2015-11-09/levels-user.png</filename>
+            <filename>documents-export-2015-11-09/game-grid.png</filename>
+            <filename>documents-export-2015-11-09/home-logo.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

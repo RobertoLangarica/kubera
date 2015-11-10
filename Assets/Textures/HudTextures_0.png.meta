@@ -3,7 +3,31 @@ guid: 07284e179a17e489b967abb75c4951b4
 timeCreated: 1447112521
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: fondo
+    21300002: home-objetos-aretes
+    21300004: home-objetos-brocha
+    21300006: home-objetos-lentes
+    21300008: home-objetos-locion
+    21300010: home-objetos-perfume
+    21300012: home-objetos-pintaunas
+    21300014: home-objetos-reloj
+    21300016: home-objetos-sombras
+    21300018: home-objetos-tubo
+    21300020: home-objetos-zapatos
+    21300022: home-ui-config
+    21300024: home-ui-facebook
+    21300026: home-ui-jugar
+    21300028: home-ui
+    21300030: levels-brochas
+    21300032: levels-config
+    21300034: levels-level2
+    21300036: levels-level3
+    21300038: levels-music
+    21300040: levels-points
+    21300042: levels-tubo
+    21300044: levels-user
+    21300046: levels_level1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -27,29 +51,269 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
-  maxTextureSize: 2048
+  maxTextureSize: 4096
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
-    wrapMode: -1
-  nPOTScale: 1
+    wrapMode: 1
+  nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
-  alphaIsTransparency: 0
-  textureType: -1
+  alphaIsTransparency: 1
+  textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: fondo
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 254
+        width: 1024
+        height: 768
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: home-objetos-aretes
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 53
+        width: 178
+        height: 199
+      alignment: 9
+      pivot: {x: .502808988, y: .492462307}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: home-objetos-brocha
+      rect:
+        serializedVersion: 2
+        x: 710
+        y: 61
+        width: 338
+        height: 191
+      alignment: 9
+      pivot: {x: .498520702, y: .497382194}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: home-objetos-lentes
+      rect:
+        serializedVersion: 2
+        x: 1323
+        y: 97
+        width: 284
+        height: 178
+      alignment: 9
+      pivot: {x: .5, y: .502808988}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: home-objetos-locion
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 28
+        width: 179
+        height: 224
+      alignment: 9
+      pivot: {x: .494413406, y: .502232134}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: home-objetos-perfume
+      rect:
+        serializedVersion: 2
+        x: 1050
+        y: 9
+        width: 271
+        height: 266
+      alignment: 9
+      pivot: {x: .50922507, y: .501879692}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: home-objetos-pintaunas
+      rect:
+        serializedVersion: 2
+        x: 1290
+        y: 629
+        width: 242
+        height: 277
+      alignment: 9
+      pivot: {x: .502066135, y: .498194933}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: home-objetos-reloj
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 30
+        width: 345
+        height: 222
+      alignment: 9
+      pivot: {x: .497101456, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: home-objetos-sombras
+      rect:
+        serializedVersion: 2
+        x: 1717
+        y: 287
+        width: 235
+        height: 159
+      alignment: 9
+      pivot: {x: .497872353, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: home-objetos-tubo
+      rect:
+        serializedVersion: 2
+        x: 1829
+        y: 448
+        width: 190
+        height: 309
+      alignment: 9
+      pivot: {x: .484210521, y: .493527502}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: home-objetos-zapatos
+      rect:
+        serializedVersion: 2
+        x: 1028
+        y: 629
+        width: 260
+        height: 393
+      alignment: 9
+      pivot: {x: .503846169, y: .501272261}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: home-ui-config
+      rect:
+        serializedVersion: 2
+        x: 1290
+        y: 908
+        width: 111
+        height: 114
+      alignment: 9
+      pivot: {x: .513513505, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: home-ui-facebook
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 4
+        width: 101
+        height: 47
+      alignment: 9
+      pivot: {x: .5, y: .446808517}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: home-ui-jugar
+      rect:
+        serializedVersion: 2
+        x: 1717
+        y: 172
+        width: 231
+        height: 113
+      alignment: 9
+      pivot: {x: .508657992, y: .495575219}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: home-ui
+      rect:
+        serializedVersion: 2
+        x: 1546
+        y: 908
+        width: 495
+        height: 114
+      alignment: 9
+      pivot: {x: .5090909, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: levels-brochas
+      rect:
+        serializedVersion: 2
+        x: 1028
+        y: 277
+        width: 516
+        height: 350
+      alignment: 9
+      pivot: {x: .499031007, y: .507142842}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: levels-config
+      rect:
+        serializedVersion: 2
+        x: 1401
+        y: 18
+        width: 75
+        height: 77
+      alignment: 9
+      pivot: {x: .533333361, y: .519480526}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: levels-level2
+      rect:
+        serializedVersion: 2
+        x: 1546
+        y: 477
+        width: 159
+        height: 161
+      alignment: 9
+      pivot: {x: .522012591, y: .506211162}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: levels-level3
+      rect:
+        serializedVersion: 2
+        x: 1609
+        y: 13
+        width: 152
+        height: 157
+      alignment: 9
+      pivot: {x: .523026288, y: .528662443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: levels-music
+      rect:
+        serializedVersion: 2
+        x: 1323
+        y: 15
+        width: 76
+        height: 80
+      alignment: 9
+      pivot: {x: .526315808, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: levels-points
+      rect:
+        serializedVersion: 2
+        x: 1534
+        y: 640
+        width: 293
+        height: 117
+      alignment: 9
+      pivot: {x: .498293519, y: .508547008}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: levels-tubo
+      rect:
+        serializedVersion: 2
+        x: 1609
+        y: 759
+        width: 343
+        height: 147
+      alignment: 9
+      pivot: {x: .502915442, y: .493197292}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: levels-user
+      rect:
+        serializedVersion: 2
+        x: 1403
+        y: 924
+        width: 101
+        height: 98
+      alignment: 9
+      pivot: {x: .514851511, y: .479591846}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: levels_level1
+      rect:
+        serializedVersion: 2
+        x: 1546
+        y: 284
+        width: 169
+        height: 162
+      alignment: 9
+      pivot: {x: .502958596, y: .478395075}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 
