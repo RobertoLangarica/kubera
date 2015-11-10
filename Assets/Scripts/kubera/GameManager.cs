@@ -8,13 +8,14 @@ public class GameManager : MonoBehaviour
 
 	protected int currLevel;
 
+	public bool destroyByColor;
 	// Use this for initialization
 	void Awake () 
 	{
 		TextAsset tempTxt = (TextAsset)Resources.Load ("levels");
 		data = Levels.LoadFromText(tempTxt.text);
 		currLevel = 0;
-		Debug.Log(data.levels[0].pool);
+		//Debug.Log(data.levels[0].pool);
 	}
 	
 	// Update is called once per frame

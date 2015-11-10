@@ -87,7 +87,7 @@ public class InputGameController : MonoBehaviour {
 				if(piece)
 				{
 					Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-					tempV3.z = 1;
+					tempV3.z = -1;
 					hasMoved = true;
 					tempV3.y += 1.5f;
 					movingLerping(tempV3,piece);
@@ -123,7 +123,11 @@ public class InputGameController : MonoBehaviour {
 				piece.transform.DOMove(new Vector3(myNewPosition.x,myNewPosition.y,1),.1f);
 			
 				piece.GetComponent<BoxCollider2D>().enabled = false;
-				PieceManager.instance.checkBarr(piece);
+				//checamos si es powerup para no rellenar la barra
+				if(!piece.GetComponent<Piece>().powerUp)
+				{
+					PieceManager.instance.checkBarr(piece);
+				}
 				cellManager.LineCreated();
 
 				checkToLoose();
@@ -149,7 +153,7 @@ public class InputGameController : MonoBehaviour {
 				if(piece)
 				{
 					Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-					tempV3.z = 1;
+					tempV3.z = -1;
 					hasMoved = false;
 
 					tempV3.y += 1.5f;
@@ -187,9 +191,10 @@ public class InputGameController : MonoBehaviour {
 
 	void backToNormal()
 	{
+
 		Vector3 tempV3 = piece.GetComponent<Piece> ().myFirstPos.position;
-		piece.transform.DOMove(new Vector3(tempV3.x,tempV3.y,1),.2f);
-		piece.transform.DOScale(new Vector3(4,4,4),.1f);
+		piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f);
+		piece.transform.DOScale (new Vector3 (4, 4, 4), .1f);
 	}
 
 	public void movingLerping(Vector3 end,GameObject piece)
