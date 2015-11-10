@@ -6,6 +6,8 @@ public class PowerUpSpaces : MonoBehaviour {
 	public Transform[] powerUpPosses;
 
 	public GameObject powerOne;
+
+	public int powerUses = 3;
 	// Use this for initialization
 	void Start () {
 		for(int i = 0; i<3; i++)
