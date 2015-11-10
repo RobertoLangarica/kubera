@@ -26,12 +26,12 @@ public class CellsManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(Input.GetKeyDown(KeyCode.A))
+		/*if(Input.GetKeyDown(KeyCode.A))
 		{
 			//LineCreated();
 			clearCellsOfColor(cells[0]);
 		}
-		/*if(runCreationOnEditor)
+		if(runCreationOnEditor)
 		{
 			CreateGrid();
 			runCreationOnEditor = false;
