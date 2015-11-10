@@ -11,8 +11,14 @@ public class IntroUIObject : MonoBehaviour
 		LEFT,RIGHT,TOP,BOTTOM
 	}
 
-	public float duration;
-	public EOutPosition outPos;
+	public float INDuration;
+	public float INDelay;
+	public Ease EaseIN = Ease.Linear;
+	public float OUTDuration;
+	public float OUTDelay;
+	public Ease EaseOUT = Ease.Linear;
+	public EOutPosition outPosX;
+	public EOutPosition outPosY;
 	public bool initOut;
 	public bool autoIn;
 
@@ -31,7 +37,7 @@ public class IntroUIObject : MonoBehaviour
 		outMaxPos = anchoredMaxPos;
 
 		//Calculamos las posiciones de fuera
-		switch(outPos)
+		switch(outPosY)
 		{
 		case EOutPosition.BOTTOM:
 			outMaxPos.y-= 1;
@@ -41,6 +47,11 @@ public class IntroUIObject : MonoBehaviour
 			outMaxPos.y+= 1;
 			outMinPos.y+= 1;
 			break;
+		}
+
+		//Calculamos las posiciones de fuera
+		switch(outPosX)
+		{
 		case EOutPosition.RIGHT:
 			outMaxPos.x+= 1;
 			outMinPos.x+= 1;
@@ -66,17 +77,17 @@ public class IntroUIObject : MonoBehaviour
 
 	public void Out()
 	{
-		animate(outMaxPos,outMinPos,duration);
+		animate(outMaxPos,outMinPos,OUTDuration,OUTDelay,EaseOUT);
 	}
 
 	public void In()
 	{
-		animate(anchoredMaxPos,anchoredMinPos,duration);
+		animate(anchoredMaxPos,anchoredMinPos,INDuration,INDelay,EaseIN);
 	}
 
-	public void animate(Vector2 max, Vector2 min, float time)
+	public void animate(Vector2 max, Vector2 min, float time, float delay = 0,Ease ease = Ease.Linear)
 	{
-		DOTween.To (()=>rect.anchorMax, m=>rect.anchorMax = m, max, time).SetDelay(.2f);
-		DOTween.To (()=>rect.anchorMin, m=>rect.anchorMin = m, min, time).SetDelay(.2f);
+		DOTween.To (()=>rect.anchorMax, m=>rect.anchorMax = m, max, time).SetDelay(delay).SetEase(ease);
+		DOTween.To (()=>rect.anchorMin, m=>rect.anchorMin = m, min, time).SetDelay(delay).SetEase(ease);
 	}
 }
