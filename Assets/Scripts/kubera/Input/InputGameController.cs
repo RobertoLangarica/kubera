@@ -89,7 +89,7 @@ public class InputGameController : MonoBehaviour {
 					Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 					tempV3.z = -1;
 					hasMoved = true;
-					tempV3.y += 1.5f;
+					tempV3.y += 1.25f;
 					movingLerping(tempV3,piece);
 					//piece.transform.position = tempV3;
 				}
@@ -128,6 +128,11 @@ public class InputGameController : MonoBehaviour {
 				{
 					PieceManager.instance.checkBarr(piece);
 				}
+				else
+				{
+					FindObjectOfType<PowerUpSpaces>().powerUses--;
+				}
+
 				cellManager.LineCreated();
 
 				checkToLoose();
@@ -156,18 +161,13 @@ public class InputGameController : MonoBehaviour {
 					tempV3.z = -1;
 					hasMoved = false;
 
-					tempV3.y += 1.5f;
+					tempV3.y += 1.25f;
 					//piece.transform.position = tempV3;
 					piece.transform.DOMove(tempV3,.1f);
-					piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f).OnComplete(finishScale);
+					piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
 				}
 			}
 		}
-	}
-
-	void finishScale()
-	{
-		print ("ended");
 	}
 
 	void OnTap(TapGesture gesture)
@@ -207,7 +207,7 @@ public class InputGameController : MonoBehaviour {
 
 	public void checkToLoose()
 	{
-		if(!cellManager.VerifyPosibility(PieceManager.instance.piecesInBar))
+		if(!cellManager.VerifyPosibility(PieceManager.instance.piecesInBar) && FindObjectOfType<PowerUpSpaces>().powerUses ==0)
 		{
 			Debug.Log ("Perdio");
 			while(true)
@@ -217,7 +217,6 @@ public class InputGameController : MonoBehaviour {
 				{
 					if(!PieceManager.instance.listChar[i])
 					{
-						print("Destroy");
 						PieceManager.instance.listChar.RemoveAt(i);
 						i--;
 						pass = false;

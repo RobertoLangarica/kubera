@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 1370d7e20e87bbb429e2fe597d48024b
-timeCreated: 1446686202
+timeCreated: 1447118412
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -83,8 +83,8 @@ TextureImporter:
     - name: a
       rect:
         serializedVersion: 2
-        x: 0
-        y: 372
+        x: 6
+        y: 371
         width: 83
         height: 92
       alignment: 0
@@ -133,7 +133,7 @@ TextureImporter:
     - name: f
       rect:
         serializedVersion: 2
-        x: 415
+        x: 411
         y: 372
         width: 83
         height: 92
@@ -143,7 +143,7 @@ TextureImporter:
     - name: g
       rect:
         serializedVersion: 2
-        x: 0
+        x: 7
         y: 280
         width: 83
         height: 92
@@ -183,7 +183,7 @@ TextureImporter:
     - name: k
       rect:
         serializedVersion: 2
-        x: 332
+        x: 328
         y: 280
         width: 83
         height: 92
@@ -193,7 +193,7 @@ TextureImporter:
     - name: l
       rect:
         serializedVersion: 2
-        x: 415
+        x: 410
         y: 280
         width: 83
         height: 92
@@ -203,7 +203,7 @@ TextureImporter:
     - name: m
       rect:
         serializedVersion: 2
-        x: 0
+        x: 6
         y: 188
         width: 83
         height: 92
@@ -243,8 +243,8 @@ TextureImporter:
     - name: q
       rect:
         serializedVersion: 2
-        x: 332
-        y: 188
+        x: 328
+        y: 187
         width: 83
         height: 92
       alignment: 0
@@ -253,8 +253,8 @@ TextureImporter:
     - name: r
       rect:
         serializedVersion: 2
-        x: 415
-        y: 188
+        x: 409
+        y: 186
         width: 83
         height: 92
       alignment: 0
@@ -263,8 +263,8 @@ TextureImporter:
     - name: s
       rect:
         serializedVersion: 2
-        x: 0
-        y: 96
+        x: 6
+        y: 97
         width: 83
         height: 92
       alignment: 0
@@ -303,7 +303,7 @@ TextureImporter:
     - name: w
       rect:
         serializedVersion: 2
-        x: 332
+        x: 329
         y: 96
         width: 83
         height: 92
@@ -313,7 +313,7 @@ TextureImporter:
     - name: x
       rect:
         serializedVersion: 2
-        x: 415
+        x: 411
         y: 96
         width: 83
         height: 92
@@ -323,7 +323,7 @@ TextureImporter:
     - name: y
       rect:
         serializedVersion: 2
-        x: 0
+        x: 5
         y: 4
         width: 83
         height: 92
