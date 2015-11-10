@@ -30,7 +30,7 @@ public class PieceManager : MonoBehaviour {
 		textures = Resources.LoadAll("Letters");
 		names = new string[textures.Length];
 		readTextures ();
-		Debug.Log (textures.Length);
+		//Debug.Log (textures.Length);
 
 		fillPoolLetter ();
 		figuresInBar = sizeOfBar;
