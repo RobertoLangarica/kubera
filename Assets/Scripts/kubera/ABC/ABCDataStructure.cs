@@ -57,7 +57,7 @@ public class ABCDataStructure : MonoBehaviour {
 		registerNewWord("sal");
 		registerNewWord("sola");
 		registerNewWord("sol");
-
+		registerNewWord("belleza");
 		//OnWordComplete += foo;
 	}
 

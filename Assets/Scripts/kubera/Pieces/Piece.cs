@@ -12,7 +12,7 @@ public enum ECOLORS_ID
 	GREY,
 	MAGENTA,
 	RED,
-	WHITE,
+	//WHITE,
 	YELLOW,
 	LETER
 }
@@ -46,7 +46,7 @@ public class Piece : MonoBehaviour {
 	protected void selectAColor()
 	{
 		//Color myColor = new Color(Random.Range(0.0f,1.0f),Random.Range(0.0f,1.0f),Random.Range(0.0f,1.0f));
-		color = (ECOLORS_ID)Random.Range(1,9);
+		color = (ECOLORS_ID)Random.Range(1,8);
 
 		foreach(GameObject piece in pieces)
 		{
@@ -89,9 +89,9 @@ public class Piece : MonoBehaviour {
 			case ECOLORS_ID.RED:
 				rendererColor = new Color(0.965f, 0.282f, 0.427f);
 				break;
-			case ECOLORS_ID.WHITE:
-				rendererColor = new Color(0.910f, 0.937f, 0.957f);
-				break;
+//			case ECOLORS_ID.WHITE:
+//				rendererColor = new Color(0.910f, 0.937f, 0.957f);
+//				break;
 			case ECOLORS_ID.YELLOW:
 				rendererColor = new Color(0.976f, 0.627f, 0.000f);
 				break;
