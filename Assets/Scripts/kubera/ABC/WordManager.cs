@@ -117,7 +117,6 @@ public class WordManager : MonoBehaviour {
 
 			if(!hasEmptyChars())
 			{
-				print("no hay vacios");
 				//Se completaron los vacios y los validamos
 				words.initCharByCharValidation();
 
@@ -283,7 +282,14 @@ public class WordManager : MonoBehaviour {
 	 **/ 
 	protected bool hasEmptyChars()
 	{	
-		return !everythingIsEmpty();
+		foreach(ABCChar c in chars)
+		{
+			if(c.empty)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	/**
 	 * Obtiene el indice del primer caracter vacio dentro de la lista
