@@ -154,12 +154,21 @@ public class WordManager : MonoBehaviour {
 	{
 		invalidCharlist = false;
 
+		//si la palabra esta completa se cuentan un punto por letra y se le avisa a gameManager
+		if(words.completeWord)
+		{
+			//print (getFullWord().Length);
+			FindObjectOfType<GameManager>().addPoints(getFullWord().Length);
+		}
+
 		foreach(ABCChar c in chars)
 		{
 			c.empty = false;
 		}
 
 		chars.Clear();
+
+
 
 		int l = container.transform.childCount;
 		while(--l >= 0)

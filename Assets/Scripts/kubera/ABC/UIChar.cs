@@ -8,13 +8,17 @@ public class UIChar : MonoBehaviour
 	public ABCChar character;
 
 	protected Text textfield;
-
+	protected Image myImage;
 
 	// Use this for initialization
 	void Start () 
 	{
-		textfield = GetComponentInChildren<Text>();
-		textfield.text = character.character;
+		//textfield = GetComponentInChildren<Text>();
+		//textfield.text = character.character;
+		myImage = GetComponent<Image> ();
+
+		myImage.sprite = PieceManager.instance.changeTexture (character.character.ToLower () + "1");
+		//gameObject.transform.localScale = new Vector3(4, 4, 4);
 	}
 	
 	// Update is called once per frame

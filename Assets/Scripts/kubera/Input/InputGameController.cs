@@ -123,7 +123,10 @@ public class InputGameController : MonoBehaviour {
 				piece.transform.DOMove(new Vector3(myNewPosition.x,myNewPosition.y,1),.1f);
 			
 				piece.GetComponent<BoxCollider2D>().enabled = false;
-				//checamos si es powerup para no rellenar la barra
+
+				FindObjectOfType<GameManager>().addPoints(piece.GetComponent<Piece>().pieces.Length);
+
+				//checamos si es powerup para no rellenar la barra//hardocoding para teaser
 				if(!piece.GetComponent<Piece>().powerUp)
 				{
 					PieceManager.instance.checkBarr(piece);

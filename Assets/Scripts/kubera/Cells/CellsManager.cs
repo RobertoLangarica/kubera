@@ -246,6 +246,7 @@ public class CellsManager : MonoBehaviour
 				PieceManager.instance.listChar.Add(cells[index+(i*width)].piece.GetComponent<ABCChar>());
 			}
 		}
+		FindObjectOfType<GameManager>().addPoints(10);
 	}
 
 	public bool VerifyPosibility(List<GameObject> listPieces)
