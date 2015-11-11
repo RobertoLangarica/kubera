@@ -40,7 +40,7 @@ public class PopUp : MonoBehaviour
 
 	public void showUp()
 	{
-		transform.DOMove(new Vector3(Screen.width*0.5f,Screen.height*0.5f,0),1).SetEase(Ease.OutBack).OnComplete(()=>{
+		transform.DOMove(new Vector3(Screen.width*0.5f,Screen.height*0.5f,0),0.5f).SetEase(Ease.OutBack).OnComplete(()=>{
 			GetComponent<Image>().enabled = true;showComplete();});
 		//transform.position = ;
 	}
@@ -48,7 +48,7 @@ public class PopUp : MonoBehaviour
 	public void closePopUp()
 	{
 		GetComponent<Image>().enabled = false;
-		transform.DOMove(new Vector3(Screen.width*0.5f,Screen.height*1.5f,0),1).SetEase(Ease.InBack).OnComplete(()=>{
+		transform.DOMove(new Vector3(Screen.width*0.5f,Screen.height*1.5f,0),0.5f).SetEase(Ease.InBack).OnComplete(()=>{
 			closeComplete();});
 	}
 
