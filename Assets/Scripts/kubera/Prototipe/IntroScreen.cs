@@ -28,5 +28,6 @@ public class IntroScreen : MonoBehaviour {
 		}
 
 		Debug.Log ("Play");
+		ScreenManager.instance.GoToScene("ObjectiveScene");
 	}
 }
