@@ -20,7 +20,7 @@ public class PieceManager : MonoBehaviour {
 	protected List<string> poolLeters = new List<string>();
 
 	//texturas de las letras en juego
-	protected UnityEngine.Object[] textures;
+	public UnityEngine.Object[] textures;
 	protected string[] names;
 
 	// Use this for initialization
