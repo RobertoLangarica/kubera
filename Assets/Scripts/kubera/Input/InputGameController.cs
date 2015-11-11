@@ -25,7 +25,8 @@ public class InputGameController : MonoBehaviour {
 
 	public CellsManager cellManager;
 	protected GameObject piece;
-	
+
+	public float movingSpeed = .5f;
 	// Use this for initialization
 	void Start () {
 	
@@ -264,7 +265,7 @@ public class InputGameController : MonoBehaviour {
 		
 		tempV3.y += 1.25f;
 		//piece.transform.position = tempV3;
-		piece.transform.DOMove(tempV3,.1f);
+		piece.transform.DOMove(tempV3,movingSpeed);
 		piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
 	}
 
