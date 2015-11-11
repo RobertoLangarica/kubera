@@ -71,11 +71,15 @@ public class GameManager : MonoBehaviour
 	
 	public void goToIntro()
 	{
-		ScreenManager.instance.GoToScene("Intro");
+		//ScreenManager.instance.GoToScene("Intro");
+		winPopUp.closePopUp();
+		ScreenManager.instance.GoToSceneAsync("Intro",0.5f);
 	}
 	
 	public void goToPopScene()
 	{
-		ScreenManager.instance.GoToScene("ObjectiveScene");
+		//ScreenManager.instance.GoToScene("ObjectiveScene");
+		winPopUp.closePopUp();
+		ScreenManager.instance.GoToSceneAsync("ObjectiveScene",0.5f);
 	}
 }

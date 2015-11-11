@@ -7,8 +7,7 @@ public class PopUpScreen : MonoBehaviour
 	void Start () 
 	{
 		FindObjectOfType<PopUp>().redBDelegate += goToIntro;
-		FindObjectOfType<PopUp>().closeComplete += goToGame;
-		FindObjectOfType<PopUp>().greenBDelegate += FindObjectOfType<PopUp>().closePopUp;
+		FindObjectOfType<PopUp>().greenBDelegate += goToGame;
 
 		FindObjectOfType<PopUp>().showUp();
 	}
@@ -20,11 +19,15 @@ public class PopUpScreen : MonoBehaviour
 
 	protected void goToIntro()
 	{
-		ScreenManager.instance.GoToScene("Intro");
+		//ScreenManager.instance.GoToScene("Intro");
+		FindObjectOfType<PopUp>().closePopUp();
+		ScreenManager.instance.GoToSceneAsync("Intro",0.5f);
 	}
 
 	protected void goToGame()
 	{
-		ScreenManager.instance.GoToScene("Game");
+		//ScreenManager.instance.GoToScene("Game");
+		FindObjectOfType<PopUp>().closePopUp();
+		ScreenManager.instance.GoToSceneAsync("Game",0.5f);
 	}
 }
