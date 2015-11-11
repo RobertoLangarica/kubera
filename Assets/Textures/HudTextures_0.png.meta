@@ -101,260 +101,260 @@ TextureImporter:
     - name: game-points
       rect:
         serializedVersion: 2
-        x: 446
-        y: 1038
-        width: 295
-        height: 117
+        x: 636
+        y: 1160
+        width: 293
+        height: 116
       alignment: 9
-      pivot: {x: .506779671, y: .491452992}
+      pivot: {x: .506825924, y: .487068951}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: home-logo
       rect:
         serializedVersion: 2
         x: 1652
-        y: 1794
-        width: 387
-        height: 252
+        y: 1796
+        width: 385
+        height: 250
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: home-objetos-aretes
       rect:
         serializedVersion: 2
-        x: 428
-        y: 655
-        width: 180
-        height: 200
+        x: 183
+        y: 38
+        width: 178
+        height: 199
       alignment: 9
-      pivot: {x: .502777755, y: .495000005}
+      pivot: {x: .502808988, y: .492462307}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: home-objetos-brocha
       rect:
         serializedVersion: 2
-        x: 1548
-        y: 1107
-        width: 340
-        height: 192
+        x: 1546
+        y: 1074
+        width: 338
+        height: 191
       alignment: 9
-      pivot: {x: .498529404, y: .5}
+      pivot: {x: .498520702, y: .497382194}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: home-objetos-lentes
       rect:
         serializedVersion: 2
-        x: 438
-        y: 857
-        width: 286
-        height: 179
-      alignment: 0
-      pivot: {x: .5, y: .5}
+        x: 2
+        y: 951
+        width: 284
+        height: 178
+      alignment: 9
+      pivot: {x: .5, y: .502808988}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: home-objetos-locion
       rect:
         serializedVersion: 2
-        x: 264
-        y: 1050
-        width: 180
-        height: 226
+        x: 2
+        y: 13
+        width: 179
+        height: 224
       alignment: 9
-      pivot: {x: .497222215, y: .502212405}
+      pivot: {x: .494413406, y: .502232134}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: home-objetos-perfume
       rect:
         serializedVersion: 2
-        x: 743
-        y: 1009
-        width: 272
-        height: 267
+        x: 363
+        y: 3
+        width: 271
+        height: 266
       alignment: 9
-      pivot: {x: .507352948, y: .5}
+      pivot: {x: .50922507, y: .501879692}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: home-objetos-pintaunas
       rect:
         serializedVersion: 2
-        x: 1017
-        y: 850
-        width: 243
-        height: 278
-      alignment: 0
-      pivot: {x: .5, y: .5}
+        x: 194
+        y: 271
+        width: 242
+        height: 277
+      alignment: 9
+      pivot: {x: .502066135, y: .498194933}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: home-objetos-reloj
       rect:
         serializedVersion: 2
         x: 1652
-        y: 1568
-        width: 347
-        height: 224
+        y: 1572
+        width: 345
+        height: 222
       alignment: 9
-      pivot: {x: .497118145, y: .5}
+      pivot: {x: .497101456, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: home-objetos-sombras
       rect:
         serializedVersion: 2
-        x: 1262
-        y: 969
-        width: 237
+        x: 636
+        y: 999
+        width: 235
         height: 159
       alignment: 9
-      pivot: {x: .497890294, y: .5}
+      pivot: {x: .497872353, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: home-objetos-tubo
       rect:
         serializedVersion: 2
-        x: 726
-        y: 580
-        width: 192
-        height: 311
+        x: 2
+        y: 239
+        width: 190
+        height: 309
       alignment: 9
-      pivot: {x: .484375, y: .493569136}
+      pivot: {x: .484210521, y: .493527502}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: home-objetos-zapatos
       rect:
         serializedVersion: 2
         x: 2
-        y: 627
-        width: 261
-        height: 395
+        y: 550
+        width: 260
+        height: 393
       alignment: 9
-      pivot: {x: .501915693, y: .501265824}
+      pivot: {x: .503846169, y: .501272261}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: home-ui-config
       rect:
         serializedVersion: 2
-        x: 1890
-        y: 1024
-        width: 112
+        x: 297
+        y: 1162
+        width: 111
         height: 114
       alignment: 9
-      pivot: {x: .508928597, y: .5}
+      pivot: {x: .513513505, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: home-ui-facebook
       rect:
         serializedVersion: 2
-        x: 2
-        y: 1107
-        width: 103
-        height: 49
+        x: 297
+        y: 1113
+        width: 101
+        height: 47
       alignment: 9
-      pivot: {x: .5, y: .448979586}
+      pivot: {x: .5, y: .446808517}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: home-ui-jugar
       rect:
         serializedVersion: 2
-        x: 726
-        y: 893
-        width: 233
-        height: 114
+        x: 264
+        y: 830
+        width: 231
+        height: 113
       alignment: 9
-      pivot: {x: .508583665, y: .5}
+      pivot: {x: .508657992, y: .495575219}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: home-ui
       rect:
         serializedVersion: 2
-        x: 1548
-        y: 1301
-        width: 496
+        x: 1546
+        y: 1267
+        width: 495
         height: 114
       alignment: 9
-      pivot: {x: .508064508, y: .5}
+      pivot: {x: .5090909, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: levels-brochas
       rect:
         serializedVersion: 2
         x: 1028
-        y: 1130
-        width: 518
-        height: 351
+        y: 1131
+        width: 516
+        height: 350
       alignment: 9
-      pivot: {x: .499034762, y: .505698025}
+      pivot: {x: .499031007, y: .507142842}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: levels-config
       rect:
         serializedVersion: 2
-        x: 81
-        y: 1027
-        width: 76
-        height: 78
+        x: 931
+        y: 1117
+        width: 75
+        height: 77
       alignment: 9
-      pivot: {x: .526315808, y: .512820542}
+      pivot: {x: .533333361, y: .519480526}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: levels-level2
       rect:
         serializedVersion: 2
-        x: 265
-        y: 720
-        width: 161
-        height: 163
+        x: 1886
+        y: 1104
+        width: 159
+        height: 161
       alignment: 9
-      pivot: {x: .521739125, y: .506134987}
+      pivot: {x: .522012591, y: .506211162}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: levels-level3
       rect:
         serializedVersion: 2
-        x: 1890
-        y: 1140
-        width: 154
-        height: 159
+        x: 1886
+        y: 945
+        width: 152
+        height: 157
       alignment: 9
-      pivot: {x: .522727251, y: .528301895}
+      pivot: {x: .523026288, y: .528662443}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: levels-music
       rect:
         serializedVersion: 2
-        x: 2
-        y: 1025
-        width: 77
+        x: 931
+        y: 1196
+        width: 76
         height: 80
       alignment: 9
-      pivot: {x: .519480526, y: .5}
+      pivot: {x: .526315808, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: levels-points
       rect:
         serializedVersion: 2
-        x: 446
-        y: 1157
-        width: 295
-        height: 119
+        x: 2
+        y: 1159
+        width: 293
+        height: 117
       alignment: 9
-      pivot: {x: .498305082, y: .508403361}
+      pivot: {x: .498293519, y: .508547008}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: levels-tubo
       rect:
         serializedVersion: 2
         x: 1652
-        y: 1417
-        width: 345
-        height: 149
+        y: 1423
+        width: 343
+        height: 147
       alignment: 9
-      pivot: {x: .502898574, y: .493288577}
+      pivot: {x: .502915442, y: .493197292}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: levels-user
       rect:
         serializedVersion: 2
-        x: 159
-        y: 1028
-        width: 103
-        height: 100
+        x: 1546
+        y: 1383
+        width: 101
+        height: 98
       alignment: 9
-      pivot: {x: .514563084, y: .479999989}
+      pivot: {x: .514851511, y: .479591846}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: levels_level1
       rect:
         serializedVersion: 2
-        x: 265
-        y: 885
-        width: 171
-        height: 163
+        x: 438
+        y: 1114
+        width: 169
+        height: 162
       alignment: 9
-      pivot: {x: .502923965, y: .481595099}
+      pivot: {x: .502958596, y: .478395075}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: win-next
       rect:
         serializedVersion: 2
-        x: 2
-        y: 1158
-        width: 234
-        height: 118
+        x: 400
+        y: 996
+        width: 232
+        height: 116
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
