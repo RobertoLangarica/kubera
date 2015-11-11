@@ -216,6 +216,15 @@
             <filename>documents-export-2015-11-09/home-logo.png</filename>
             <filename>documents-export-2015-11-09/game-points.png</filename>
             <filename>documents-export-2015-11-09/win-next.png</filename>
+            <filename>documents-export-2015-11-09/game-send.png</filename>
+            <filename>documents-export-2015-11-09/win-close.png</filename>
+            <filename>documents-export-2015-11-09/win-graphics.png</filename>
+            <filename>documents-export-2015-11-09/win-band.png</filename>
+            <filename>documents-export-2015-11-09/win-base.png</filename>
+            <filename>documents-export-2015-11-09/game-objective.png</filename>
+            <filename>documents-export-2015-11-09/game-powerup-cube-disabled.png</filename>
+            <filename>documents-export-2015-11-09/game-powerup-cube-quantity.png</filename>
+            <filename>documents-export-2015-11-09/game-powerup-cube.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

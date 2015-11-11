@@ -154,12 +154,21 @@ public class WordManager : MonoBehaviour {
 	{
 		invalidCharlist = false;
 
+		//si la palabra esta completa se cuentan un punto por letra y se le avisa a gameManager
+		if(words.completeWord)
+		{
+			//print (getFullWord().Length);
+			FindObjectOfType<GameManager>().addPoints(getFullWord().Length);
+		}
+
 		foreach(ABCChar c in chars)
 		{
 			c.empty = false;
 		}
 
 		chars.Clear();
+
+
 
 		int l = container.transform.childCount;
 		while(--l >= 0)
@@ -320,6 +329,10 @@ public class WordManager : MonoBehaviour {
 	 **/
 	public void checkIfAWordisPossible(List<ABCChar> pool)
 	{
-		Debug.Log ("Possible word: "+words.isAWordPossible(pool));
+		//Debug.Log ("Possible word: "+words.isAWordPossible(pool));
+		if(!words.isAWordPossible(pool))
+		{
+			print("perdio de verdad");
+		}
 	}
 }

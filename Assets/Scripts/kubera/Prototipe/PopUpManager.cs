@@ -1,12 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PowerUpSpaces : MonoBehaviour {
-
-	public Transform[] powerUpPosses;
-
-	public GameObject powerOne;
-
+public class PopUpManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
