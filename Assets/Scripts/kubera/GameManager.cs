@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
 	public PopUp objectivePopUp;
 	public PopUp winPopUp;
+	public Text scoreText;
 
 	protected int currLevel;
 
@@ -31,11 +32,18 @@ public class GameManager : MonoBehaviour
 	{
 		objectivePopUp.redBDelegate += closePopUp;
 		objectivePopUp.greenBDelegate += closePopUp;
+
+		winPopUp.redBDelegate += goToIntro;
+		winPopUp.greenBDelegate += goToPopScene;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update () 
+	{
+		if(Input.GetKeyDown(KeyCode.A))
+		{
+			gameManagerLose();
+		}
 	}
 
 	public void addPoints(int point)
@@ -47,7 +55,8 @@ public class GameManager : MonoBehaviour
 
 	public void gameManagerLose()
 	{
-
+		scoreText.text = points.text;
+		winPopUp.showUp();
 	}
 
 	public void showObjective()

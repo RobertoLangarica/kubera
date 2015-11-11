@@ -30,14 +30,6 @@ public class PopUp : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(Input.GetKeyDown(KeyCode.A))
-		{
-			showUp();
-		}
-		if(Input.GetKeyDown(KeyCode.S))
-		{
-			closePopUp();
-		}
 	}
 
 	public void showUp()
