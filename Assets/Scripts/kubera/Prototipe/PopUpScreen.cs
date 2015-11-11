@@ -7,7 +7,8 @@ public class PopUpScreen : MonoBehaviour
 	void Start () 
 	{
 		FindObjectOfType<PopUp>().redBDelegate += goToIntro;
-		FindObjectOfType<PopUp>().greenBDelegate += goToGame;
+		FindObjectOfType<PopUp>().closeComplete += goToGame;
+		FindObjectOfType<PopUp>().greenBDelegate += FindObjectOfType<PopUp>().closePopUp;
 
 		FindObjectOfType<PopUp>().showUp();
 	}
