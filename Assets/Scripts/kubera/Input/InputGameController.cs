@@ -112,7 +112,6 @@ public class InputGameController : MonoBehaviour {
 				break;
 			}
 
-
 			if(!cellManager.CanPositionate(piece.GetComponent<Piece>().pieces))
 			{
 				backToNormal();
@@ -133,7 +132,6 @@ public class InputGameController : MonoBehaviour {
 				}
 				else
 				{
-					print(FindObjectOfType<PowerUpBase>());
 					FindObjectOfType<PowerUpBase>().PowerUsed();
 				}
 
@@ -173,7 +171,7 @@ public class InputGameController : MonoBehaviour {
 			}
 			else if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Letter>())
 			{
-				print("ketter");
+				//print("ketter");
 			}
 		}
 	}
@@ -198,7 +196,6 @@ public class InputGameController : MonoBehaviour {
 		{
 			backToNormal();
 		}
-		print("asd");
 	}
 
 	void backToNormal()

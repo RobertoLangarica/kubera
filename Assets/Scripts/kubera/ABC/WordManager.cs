@@ -329,6 +329,10 @@ public class WordManager : MonoBehaviour {
 	 **/
 	public void checkIfAWordisPossible(List<ABCChar> pool)
 	{
-		Debug.Log ("Possible word: "+words.isAWordPossible(pool));
+		//Debug.Log ("Possible word: "+words.isAWordPossible(pool));
+		if(!words.isAWordPossible(pool))
+		{
+			print("perdio de verdad");
+		}
 	}
 }

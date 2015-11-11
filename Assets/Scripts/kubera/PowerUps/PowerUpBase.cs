@@ -34,9 +34,9 @@ public class PowerUpBase : MonoBehaviour {
 		if (uses != 0) 
 		{
 			GameObject go = Instantiate (powerOne);
+			go.transform.position = Input.mousePosition;
 			go.name = powerOne.name;
 			go.GetComponent<Piece> ().powerUp = true;
-			go.transform.position = Input.mousePosition;
 			FindObjectOfType<InputGameController> ().activePowerUp (go);
 		}
 	}
