@@ -7,9 +7,13 @@ public class PopUp : MonoBehaviour
 {
 	public delegate void redButtonDel();
 	public delegate void greenButtonDel();
+	public delegate void onShowComplete();
+	public delegate void onCloseComplete();
 
 	public redButtonDel redBDelegate;
 	public greenButtonDel greenBDelegate;
+	public onShowComplete showComplete;
+	public onCloseComplete closeComplete;
 
 	protected Vector3 initialPos;
 
@@ -21,6 +25,8 @@ public class PopUp : MonoBehaviour
 
 		redBDelegate += foo;
 		greenBDelegate += foo;
+		showComplete += foo;
+		closeComplete += foo;
 
 		GetComponent<Image>().enabled = false;
 	}
@@ -35,14 +41,15 @@ public class PopUp : MonoBehaviour
 	public void showUp()
 	{
 		transform.DOMove(new Vector3(Screen.width*0.5f,Screen.height*0.5f,0),1).SetEase(Ease.OutBack).OnComplete(()=>{
-			GetComponent<Image>().enabled = true;});
+			GetComponent<Image>().enabled = true;showComplete();});
 		//transform.position = ;
 	}
 
 	public void closePopUp()
 	{
 		GetComponent<Image>().enabled = false;
-		transform.DOMove(new Vector3(Screen.width*0.5f,Screen.height*1.5f,0),1).SetEase(Ease.InBack);
+		transform.DOMove(new Vector3(Screen.width*0.5f,Screen.height*1.5f,0),1).SetEase(Ease.InBack).OnComplete(()=>{
+			closeComplete();});
 	}
 
 	public void redButton()
