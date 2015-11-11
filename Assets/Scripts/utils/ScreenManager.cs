@@ -73,7 +73,7 @@ public class ScreenManager : MonoBehaviour {
 				{
 					if(SceneFadeInOut.instance != null)
 					{
-						SceneFadeInOut.instance.Fade();
+						//SceneFadeInOut.instance.Fade();
 					}
 					
 					waitingScreen.allowSceneActivation = true;
