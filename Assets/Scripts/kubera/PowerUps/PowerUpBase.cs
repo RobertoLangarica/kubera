@@ -8,6 +8,7 @@ public class PowerUpBase : MonoBehaviour {
 
 	public GameObject powerOne;
 	public Text numberUses;
+	public GameObject imageUses;
 
 	// Use this for initialization
 	void Start () {
@@ -26,6 +27,11 @@ public class PowerUpBase : MonoBehaviour {
 			uses--;
 			numberUses.text = uses.ToString ();
 			//hacerlo no interactuable
+			if(uses==0)
+			{
+				imageUses.SetActive(false);
+				gameObject.GetComponent<Button>().interactable = false;
+			}
 		}
 	}
 

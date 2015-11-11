@@ -38,6 +38,9 @@ TextureImporter:
     21300062: win-base
     21300064: win-close
     21300066: win-graphics
+    21300068: game-powerup-cube-disabled
+    21300070: game-powerup-cube-quantity
+    21300072: game-powerup-cube
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -107,8 +110,8 @@ TextureImporter:
     - name: game-objective
       rect:
         serializedVersion: 2
-        x: 522
-        y: 151
+        x: 539
+        y: 428
         width: 152
         height: 225
       alignment: 9
@@ -117,12 +120,42 @@ TextureImporter:
     - name: game-points
       rect:
         serializedVersion: 2
-        x: 1148
-        y: 104
+        x: 265
+        y: 655
         width: 295
         height: 117
       alignment: 9
       pivot: {x: .506779671, y: .491452992}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: game-powerup-cube-disabled
+      rect:
+        serializedVersion: 2
+        x: 907
+        y: 860
+        width: 93
+        height: 95
+      alignment: 9
+      pivot: {x: .510752678, y: .49473685}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: game-powerup-cube-quantity
+      rect:
+        serializedVersion: 2
+        x: 2001
+        y: 1690
+        width: 44
+        height: 43
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: game-powerup-cube
+      rect:
+        serializedVersion: 2
+        x: 912
+        y: 957
+        width: 97
+        height: 101
+      alignment: 9
+      pivot: {x: .510309279, y: .495049506}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: game-send
       rect:
@@ -167,8 +200,8 @@ TextureImporter:
     - name: home-objetos-lentes
       rect:
         serializedVersion: 2
-        x: 676
-        y: 197
+        x: 693
+        y: 515
         width: 286
         height: 179
       alignment: 0
@@ -187,8 +220,8 @@ TextureImporter:
     - name: home-objetos-perfume
       rect:
         serializedVersion: 2
-        x: 510
-        y: 504
+        x: 265
+        y: 386
         width: 272
         height: 267
       alignment: 9
@@ -197,8 +230,8 @@ TextureImporter:
     - name: home-objetos-pintaunas
       rect:
         serializedVersion: 2
-        x: 265
-        y: 493
+        x: 522
+        y: 106
         width: 243
         height: 278
       alignment: 0
@@ -217,8 +250,8 @@ TextureImporter:
     - name: home-objetos-sombras
       rect:
         serializedVersion: 2
-        x: 964
-        y: 223
+        x: 1652
+        y: 612
         width: 237
         height: 159
       alignment: 9
@@ -317,8 +350,8 @@ TextureImporter:
     - name: levels-level3
       rect:
         serializedVersion: 2
-        x: 992
-        y: 62
+        x: 1891
+        y: 612
         width: 154
         height: 159
       alignment: 9
@@ -327,8 +360,8 @@ TextureImporter:
     - name: levels-music
       rect:
         serializedVersion: 2
-        x: 907
-        y: 895
+        x: 522
+        y: 24
         width: 77
         height: 80
       alignment: 9
@@ -337,8 +370,8 @@ TextureImporter:
     - name: levels-points
       rect:
         serializedVersion: 2
-        x: 522
-        y: 30
+        x: 565
+        y: 696
         width: 295
         height: 119
       alignment: 9
@@ -367,8 +400,8 @@ TextureImporter:
     - name: levels_level1
       rect:
         serializedVersion: 2
-        x: 819
-        y: 32
+        x: 1479
+        y: 688
         width: 171
         height: 163
       alignment: 9
@@ -377,8 +410,8 @@ TextureImporter:
     - name: win-band
       rect:
         serializedVersion: 2
-        x: 265
-        y: 378
+        x: 988
+        y: 738
         width: 489
         height: 113
       alignment: 0
@@ -397,8 +430,8 @@ TextureImporter:
     - name: win-close
       rect:
         serializedVersion: 2
-        x: 912
-        y: 977
+        x: 907
+        y: 777
         width: 79
         height: 81
       alignment: 0
@@ -417,8 +450,8 @@ TextureImporter:
     - name: win-next
       rect:
         serializedVersion: 2
-        x: 756
-        y: 384
+        x: 693
+        y: 395
         width: 234
         height: 118
       alignment: 0

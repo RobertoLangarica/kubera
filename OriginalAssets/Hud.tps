@@ -4,9 +4,9 @@
         <key>fileFormatVersion</key>
         <int>3</int>
         <key>texturePackerVersion</key>
-        <string>4.0.1</string>
+        <string>4.0.0</string>
         <key>fileName</key>
-        <string>C:/Users/AliVilla/Desktop/Kubera/kubera/OriginalAssets/Hud.tps</string>
+        <string>C:/VillaVanilla/Kubera/OriginalAssets/Hud.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -226,6 +226,9 @@
             <filename>documents-export-2015-11-09/win-band.png</filename>
             <filename>documents-export-2015-11-09/win-base.png</filename>
             <filename>documents-export-2015-11-09/game-objective.png</filename>
+            <filename>documents-export-2015-11-09/game-powerup-cube-disabled.png</filename>
+            <filename>documents-export-2015-11-09/game-powerup-cube-quantity.png</filename>
+            <filename>documents-export-2015-11-09/game-powerup-cube.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
