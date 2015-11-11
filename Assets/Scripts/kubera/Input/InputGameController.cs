@@ -133,7 +133,8 @@ public class InputGameController : MonoBehaviour {
 				}
 				else
 				{
-					FindObjectOfType<PowerUpSpaces>().powerUses--;
+					print(FindObjectOfType<PowerUpBase>());
+					FindObjectOfType<PowerUpBase>().PowerUsed();
 				}
 
 				cellManager.LineCreated();
@@ -170,6 +171,10 @@ public class InputGameController : MonoBehaviour {
 					piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
 				}
 			}
+			else if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Letter>())
+			{
+				print("ketter");
+			}
 		}
 	}
 
@@ -177,9 +182,12 @@ public class InputGameController : MonoBehaviour {
 	{
 		if(gesture.Raycast.Hits2D != null)
 		{
-			if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>())
+			if(gesture.Raycast.Hit2D.transform)
 			{
-				gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>().ShootLetter();
+				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>())
+				{
+					gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>().ShootLetter();
+				}
 			}
 		}
 	}
@@ -190,14 +198,22 @@ public class InputGameController : MonoBehaviour {
 		{
 			backToNormal();
 		}
+		print("asd");
 	}
 
 	void backToNormal()
 	{
-
-		Vector3 tempV3 = piece.GetComponent<Piece> ().myFirstPos.position;
-		piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f);
-		piece.transform.DOScale (new Vector3 (4, 4, 4), .1f);
+		if(piece.GetComponent<Piece>().powerUp)
+		{
+			Destroy(piece);
+		}
+		else
+		{
+			Vector3 tempV3 = piece.GetComponent<Piece> ().myFirstPos.position;
+			piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f);
+			piece.transform.DOScale (new Vector3 (4, 4, 4), .1f);
+			piece = null;
+		}
 	}
 
 	public void movingLerping(Vector3 end,GameObject piece)
@@ -208,9 +224,15 @@ public class InputGameController : MonoBehaviour {
 		}
 	}
 
+	IEnumerator check()
+	{
+		yield return new WaitForSeconds (.2f);
+		FindObjectOfType<WordManager>().checkIfAWordisPossible(PieceManager.instance.listChar);
+	}
+
 	public void checkToLoose()
 	{
-		if(!cellManager.VerifyPosibility(PieceManager.instance.piecesInBar) && FindObjectOfType<PowerUpSpaces>().powerUses ==0)
+		if(!cellManager.VerifyPosibility(PieceManager.instance.piecesInBar) && FindObjectOfType<PowerUpBase>().uses ==0)
 		{
 			Debug.Log ("Perdio");
 			while(true)
@@ -230,7 +252,35 @@ public class InputGameController : MonoBehaviour {
 					break;
 				}
 			}
-			FindObjectOfType<WordManager>().checkIfAWordisPossible(PieceManager.instance.listChar);
+			StartCoroutine(check());
+
 		}
 	}
+
+	public void activePowerUp(GameObject go)
+	{
+		piece = go;
+
+		Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y,0));
+		tempV3.z = -1;
+		hasMoved = false;
+		
+		tempV3.y += 1.25f;
+		//piece.transform.position = tempV3;
+		piece.transform.DOMove(tempV3,.1f);
+		piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
+	}
+
+	void OnSwipe(SwipeGesture gesture) 
+	{
+		if (!piece) 
+		{
+			if(gesture.Direction == FingerGestures.SwipeDirection.Up)
+			{
+				FindObjectOfType<WordManager>().resetValidation();
+				checkToLoose();
+			}
+		}
+	}
+
 }
