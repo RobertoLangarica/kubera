@@ -121,6 +121,7 @@ public class InputGameController : MonoBehaviour {
 			else
 			{
 				Vector3 myNewPosition = cellManager.Positionate(piece.GetComponent<Piece>());
+				DOTween.KillAll();
 				piece.transform.DOMove(new Vector3(myNewPosition.x,myNewPosition.y,1),.1f);
 			
 				piece.GetComponent<BoxCollider2D>().enabled = false;
