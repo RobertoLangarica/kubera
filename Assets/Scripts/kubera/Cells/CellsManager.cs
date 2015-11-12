@@ -102,6 +102,7 @@ public class CellsManager : MonoBehaviour
 	{
 		int[] widthCount = new int[height];
 		int[] heightCount = new int[width];
+		bool foundLine = false;
 
 		int wIndex = 0;
 		int hIndex = 0;
@@ -126,6 +127,7 @@ public class CellsManager : MonoBehaviour
 			{
 				//Debug.Log("Se encontro linea en fila: " + i);
 				createLettersOn(true,i);
+				foundLine = true;
 			}
 		}
 		for(int i = 0;i < width;i++)
@@ -134,7 +136,13 @@ public class CellsManager : MonoBehaviour
 			{
 				//Debug.Log("Se encontro linea en columna: " + i);
 				createLettersOn(false,i);
+				foundLine = true;
 			}
+		}
+
+		if(foundLine)
+		{
+			FindObjectOfType<GameManager>().GetComponent<AudioSource>().Play();
 		}
 	}
 
@@ -199,6 +207,8 @@ public class CellsManager : MonoBehaviour
 		tempC = getCellOnVec(piece.transform.position);
 		Vector3 nVec = new Vector3(tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
 		                           -tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
+
+		gameObject.GetComponent<AudioSource>().Play();
 		return (tempC).transform.position + nVec;
 	}
 

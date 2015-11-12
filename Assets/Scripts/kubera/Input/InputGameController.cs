@@ -188,6 +188,7 @@ public class InputGameController : MonoBehaviour {
 				{
 					gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>().ShootLetter();
 					FindObjectOfType<ShowNext>().ShowingNext(true);
+					gameObject.GetComponent<AudioSource>().Play();
 				}
 			}
 		}
