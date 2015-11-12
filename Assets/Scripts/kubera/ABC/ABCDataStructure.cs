@@ -47,17 +47,17 @@ public class ABCDataStructure : MonoBehaviour {
 			data.content = new List<IntList>();
 		}
 
-		registerNewWord("ola");
-		registerNewWord("hola");
-		registerNewWord("hola");
-		registerNewWord("holas");
-		registerNewWord("salas");
-		registerNewWord("sala");
-		registerNewWord("ala");
-		registerNewWord("sal");
-		registerNewWord("sola");
-		registerNewWord("sol");
 		registerNewWord("belleza");
+		registerNewWord("bella");
+		registerNewWord("ella");
+		registerNewWord("ala");
+		registerNewWord("bebe");
+		registerNewWord("beba");
+		registerNewWord("baba");
+		registerNewWord("babel");
+		registerNewWord("bala");
+		registerNewWord("alba");
+
 		//OnWordComplete += foo;
 	}
 
