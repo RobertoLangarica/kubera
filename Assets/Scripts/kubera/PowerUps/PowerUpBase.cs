@@ -39,9 +39,9 @@ public class PowerUpBase : MonoBehaviour {
 	{
 		if (uses != 0) 
 		{
-			Vector3 pos;
+			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-			GameObject go = (GameObject)Instantiate (powerOne,Camera.main.ScreenToWorldPoint(Input.mousePosition),Quaternion.identity);
+			GameObject go = (GameObject)Instantiate (powerOne,new Vector3(pos.x,pos.y+1.5f,1),Quaternion.identity);
 
 			go.name = powerOne.name;
 			go.GetComponent<Piece> ().powerUp = true;

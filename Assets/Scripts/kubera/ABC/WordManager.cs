@@ -152,6 +152,7 @@ public class WordManager : MonoBehaviour {
 	 **/ 
 	public void resetValidation()
 	{
+		FindObjectOfType<ShowNext>().ShowingNext(false);
 		invalidCharlist = false;
 
 		//si la palabra esta completa se cuentan un punto por letra y se le avisa a gameManager
@@ -206,6 +207,11 @@ public class WordManager : MonoBehaviour {
 	protected void onWordComplete()
 	{
 		Debug.Log("Se completo: "+getFullWord());
+
+		if(getFullWord() == "BELLEZA")
+		{
+			FindObjectOfType<GameManager>().winPopUp.showUp();
+		}
 	}
 
 	/**
