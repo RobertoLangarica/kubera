@@ -160,6 +160,11 @@ public class WordManager : MonoBehaviour {
 		{
 			//print (getFullWord().Length);
 			FindObjectOfType<GameManager>().addPoints(getFullWord().Length);
+
+			if(getFullWord() == "BELLEZA")
+			{
+				FindObjectOfType<GameManager>().gameManagerLose();
+			}
 		}
 
 		foreach(ABCChar c in chars)
@@ -207,11 +212,6 @@ public class WordManager : MonoBehaviour {
 	protected void onWordComplete()
 	{
 		Debug.Log("Se completo: "+getFullWord());
-
-		if(getFullWord() == "BELLEZA")
-		{
-			FindObjectOfType<GameManager>().winPopUp.showUp();
-		}
 	}
 
 	/**
