@@ -140,6 +140,17 @@ public class InputGameController : MonoBehaviour {
 
 				cellManager.LineCreated();
 
+				//if(!cellManager.LineCreated())
+				//{
+					FlashColor[] flash = piece.GetComponentsInChildren<FlashColor>();
+
+					foreach(FlashColor f in flash)
+					{
+						f.startFlash(f.GetComponent<SpriteRenderer>(),0.2f);
+					}
+				//}
+
+
 				checkToLoose();
 
 			}
