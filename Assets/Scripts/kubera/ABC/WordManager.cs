@@ -165,6 +165,7 @@ public class WordManager : MonoBehaviour {
 			{
 				FindObjectOfType<GameManager>().gameManagerLose();
 			}
+			FindObjectOfType<InputGameController>().checkToLoose();
 		}
 
 		foreach(ABCChar c in chars)
@@ -339,6 +340,7 @@ public class WordManager : MonoBehaviour {
 		if(!words.isAWordPossible(pool))
 		{
 			print("perdio de verdad");
+			FindObjectOfType<GameManager>().gameManagerLose();
 		}
 	}
 }
