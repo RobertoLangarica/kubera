@@ -98,7 +98,7 @@ public class CellsManager : MonoBehaviour
 		return cells[(width*yPos)+xPos];
 	}
 
-	public void LineCreated()
+	public bool LineCreated()
 	{
 		int[] widthCount = new int[height];
 		int[] heightCount = new int[width];
@@ -143,7 +143,11 @@ public class CellsManager : MonoBehaviour
 		if(foundLine)
 		{
 			FindObjectOfType<GameManager>().GetComponent<AudioSource>().Play();
+			return true;
 		}
+
+
+		return false;
 	}
 
 	public bool CanPositionate(GameObject[] arr)
