@@ -20,15 +20,16 @@ public class PieceManager : MonoBehaviour {
 	protected List<string> poolLeters = new List<string>();
 
 	//texturas de las letras en juego
-	public UnityEngine.Object[] textures;
+	protected UnityEngine.Object[] textureObject;
+
 	protected string[] names;
 
 	// Use this for initialization
 	void Start () {
 		instance = this;
 
-		textures = Resources.LoadAll("Letters");
-		names = new string[textures.Length];
+		textureObject = Resources.LoadAll("Letters");
+		names = new string[textureObject.Length];
 		readTextures ();
 		//Debug.Log (textures.Length);
 
@@ -142,7 +143,7 @@ public class PieceManager : MonoBehaviour {
 	{
 		Sprite sprite;
 
-		sprite = (Sprite)textures[Array.IndexOf(names, nTextureName)];		
+		sprite = (Sprite)textureObject[Array.IndexOf(names, nTextureName)];		
 		return sprite;
 	}
 
@@ -150,7 +151,7 @@ public class PieceManager : MonoBehaviour {
 	{
 		for(int i=0; i< names.Length; i++) 
 		{
-			names[i] = textures[i].name;
+			names[i] = textureObject[i].name;
 		}
 	}
 
