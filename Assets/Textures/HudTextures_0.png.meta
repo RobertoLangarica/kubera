@@ -120,8 +120,8 @@ TextureImporter:
     - name: game-points
       rect:
         serializedVersion: 2
-        x: 105
-        y: 1160
+        x: 799
+        y: 127
         width: 293
         height: 116
       alignment: 9
@@ -130,8 +130,8 @@ TextureImporter:
     - name: game-powerup-cube-disabled
       rect:
         serializedVersion: 2
-        x: 347
-        y: 1065
+        x: 949
+        y: 251
         width: 91
         height: 93
       alignment: 9
@@ -150,8 +150,8 @@ TextureImporter:
     - name: game-powerup-cube
       rect:
         serializedVersion: 2
-        x: 2
-        y: 909
+        x: 749
+        y: 245
         width: 95
         height: 99
       alignment: 9
@@ -160,8 +160,8 @@ TextureImporter:
     - name: game-send
       rect:
         serializedVersion: 2
-        x: 1016
-        y: 625
+        x: 867
+        y: 897
         width: 121
         height: 111
       alignment: 9
@@ -171,9 +171,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1652
-        y: 778
-        width: 385
-        height: 250
+        y: 625
+        width: 379
+        height: 244
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -190,8 +190,8 @@ TextureImporter:
     - name: home-objetos-brocha
       rect:
         serializedVersion: 2
-        x: 452
-        y: 786
+        x: 2
+        y: 37
         width: 338
         height: 191
       alignment: 9
@@ -200,8 +200,8 @@ TextureImporter:
     - name: home-objetos-lentes
       rect:
         serializedVersion: 2
-        x: 452
-        y: 979
+        x: 342
+        y: 57
         width: 284
         height: 178
       alignment: 9
@@ -230,8 +230,8 @@ TextureImporter:
     - name: home-objetos-pintaunas
       rect:
         serializedVersion: 2
-        x: 520
-        y: 111
+        x: 749
+        y: 346
         width: 242
         height: 277
       alignment: 9
@@ -240,8 +240,8 @@ TextureImporter:
     - name: home-objetos-reloj
       rect:
         serializedVersion: 2
-        x: 105
-        y: 786
+        x: 2
+        y: 629
         width: 345
         height: 222
       alignment: 9
@@ -271,7 +271,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 383
+        y: 230
         width: 260
         height: 393
       alignment: 9
@@ -280,8 +280,8 @@ TextureImporter:
     - name: home-ui-config
       rect:
         serializedVersion: 2
-        x: 903
-        y: 615
+        x: 867
+        y: 781
         width: 111
         height: 114
       alignment: 9
@@ -290,8 +290,8 @@ TextureImporter:
     - name: home-ui-facebook
       rect:
         serializedVersion: 2
-        x: 2
-        y: 804
+        x: 342
+        y: 8
         width: 101
         height: 47
       alignment: 9
@@ -300,8 +300,8 @@ TextureImporter:
     - name: home-ui-jugar
       rect:
         serializedVersion: 2
-        x: 792
-        y: 895
+        x: 1806
+        y: 916
         width: 231
         height: 113
       alignment: 9
@@ -310,8 +310,8 @@ TextureImporter:
     - name: home-ui
       rect:
         serializedVersion: 2
-        x: 749
-        y: 456
+        x: 799
+        y: 11
         width: 495
         height: 114
       alignment: 9
@@ -320,8 +320,8 @@ TextureImporter:
     - name: levels-brochas
       rect:
         serializedVersion: 2
-        x: 2
-        y: 31
+        x: 349
+        y: 658
         width: 516
         height: 350
       alignment: 9
@@ -330,8 +330,8 @@ TextureImporter:
     - name: levels-config
       rect:
         serializedVersion: 2
-        x: 677
-        y: 32
+        x: 993
+        y: 420
         width: 75
         height: 77
       alignment: 9
@@ -350,8 +350,8 @@ TextureImporter:
     - name: levels-level3
       rect:
         serializedVersion: 2
-        x: 749
-        y: 572
+        x: 1652
+        y: 871
         width: 152
         height: 157
       alignment: 9
@@ -360,8 +360,8 @@ TextureImporter:
     - name: levels-music
       rect:
         serializedVersion: 2
-        x: 520
-        y: 29
+        x: 993
+        y: 499
         width: 76
         height: 80
       alignment: 9
@@ -370,8 +370,8 @@ TextureImporter:
     - name: levels-points
       rect:
         serializedVersion: 2
-        x: 452
-        y: 1159
+        x: 867
+        y: 662
         width: 293
         height: 117
       alignment: 9
@@ -381,7 +381,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 1010
+        y: 861
         width: 343
         height: 147
       alignment: 9
@@ -390,8 +390,8 @@ TextureImporter:
     - name: levels-user
       rect:
         serializedVersion: 2
-        x: 2
-        y: 1178
+        x: 846
+        y: 246
         width: 101
         height: 98
       alignment: 9
@@ -400,8 +400,8 @@ TextureImporter:
     - name: levels_level1
       rect:
         serializedVersion: 2
-        x: 792
-        y: 731
+        x: 628
+        y: 73
         width: 169
         height: 162
       alignment: 9
@@ -410,8 +410,8 @@ TextureImporter:
     - name: win-band
       rect:
         serializedVersion: 2
-        x: 963
-        y: 738
+        x: 1094
+        y: 547
         width: 489
         height: 113
       alignment: 0
@@ -430,8 +430,8 @@ TextureImporter:
     - name: win-close
       rect:
         serializedVersion: 2
-        x: 598
-        y: 30
+        x: 993
+        y: 581
         width: 77
         height: 79
       alignment: 0
@@ -441,7 +441,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 264
-        y: 390
+        y: 237
         width: 483
         height: 386
       alignment: 0
