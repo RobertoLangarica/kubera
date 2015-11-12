@@ -27,6 +27,7 @@ public class InputGameController : MonoBehaviour {
 	protected GameObject piece;
 
 	public float movingSpeed = .5f;
+	public float movingUpFinger = 1.5f;
 	// Use this for initialization
 	void Start () {
 	
@@ -90,7 +91,7 @@ public class InputGameController : MonoBehaviour {
 					Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 					tempV3.z = -1;
 					hasMoved = true;
-					tempV3.y += 1.25f;
+					tempV3.y += movingUpFinger;
 					movingLerping(tempV3,piece);
 					//piece.transform.position = tempV3;
 				}
@@ -164,7 +165,7 @@ public class InputGameController : MonoBehaviour {
 					tempV3.z = -1;
 					hasMoved = false;
 
-					tempV3.y += 1.25f;
+					tempV3.y += movingUpFinger;
 					//piece.transform.position = tempV3;
 					piece.transform.DOMove(tempV3,.1f);
 					piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
@@ -264,7 +265,7 @@ public class InputGameController : MonoBehaviour {
 		tempV3.z = -1;
 		hasMoved = false;
 		
-		tempV3.y += 1.25f;
+		tempV3.y += movingUpFinger;
 		//piece.transform.position = tempV3;
 		piece.transform.DOMove(tempV3,movingSpeed);
 		piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
