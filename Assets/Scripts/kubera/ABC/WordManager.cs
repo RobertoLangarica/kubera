@@ -206,6 +206,11 @@ public class WordManager : MonoBehaviour {
 	protected void onWordComplete()
 	{
 		Debug.Log("Se completo: "+getFullWord());
+
+		if(getFullWord() == "BELLEZA")
+		{
+			FindObjectOfType<GameManager>().winPopUp.showUp();
+		}
 	}
 
 	/**
