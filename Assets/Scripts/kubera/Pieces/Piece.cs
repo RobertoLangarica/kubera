@@ -32,6 +32,13 @@ public class Piece : MonoBehaviour {
 
 	[HideInInspector]
 	public Transform myFirstPos;
+	[HideInInspector]
+	public int myFirstPosInt;
+	[HideInInspector]
+	public GameObject parent;
+
+	public bool firstPiece;
+	public GameObject[] rotatePieces;
 
 	// Use this for initialization
 	void Start () {

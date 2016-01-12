@@ -28,6 +28,8 @@ public class InputGameController : MonoBehaviour {
 
 	public float movingSpeed = .5f;
 	public float movingUpFinger = 1.5f;
+
+	protected bool canRotate = true;
 	// Use this for initialization
 	void Start () {
 	
@@ -73,11 +75,14 @@ public class InputGameController : MonoBehaviour {
 			{
 				//if(gesture.Raycast.Hit2D.transform.gameObject.GetComponents
 
-				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>())
+				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>() && !canRotate)
 				{
 					piece = gesture.Raycast.Hit2D.transform.gameObject;
 				}
-
+				else
+				{
+					piece = null;
+				}
 			}
 		}	
 			break;
@@ -131,7 +136,15 @@ public class InputGameController : MonoBehaviour {
 				//checamos si es powerup para no rellenar la barra//hardocoding para teaser
 				if(!piece.GetComponent<Piece>().powerUp)
 				{
-					PieceManager.instance.checkBarr(piece);
+					if(piece.GetComponent<Piece>().firstPiece)
+					{
+						PieceManager.instance.checkBarr(piece);
+					}
+					else
+					{
+						PieceManager.instance.destroyRotatePieces(piece.GetComponent<Piece>());
+						canRotate = false;
+					}
 				}
 				else
 				{
@@ -170,17 +183,40 @@ public class InputGameController : MonoBehaviour {
 			if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>())
 			{
 				piece = gesture.Raycast.Hit2D.transform.gameObject;
-				
+
 				if(piece)
 				{
-					Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-					tempV3.z = -1;
-					hasMoved = false;
 
-					tempV3.y += movingUpFinger;
-					//piece.transform.position = tempV3;
-					piece.transform.DOMove(tempV3,.1f);
-					piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
+					if(canRotate)
+					{
+						//piece.transform.DOLocalRotate(new Vector3(0,0,+90),.1f);
+						if(piece.GetComponent<Piece>().firstPiece)
+						{
+							choseToRotate(piece.GetComponent<Piece>());
+						}
+						else
+						{
+							Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
+							tempV3.z = -1;
+							hasMoved = false;
+							
+							tempV3.y += movingUpFinger;
+							//piece.transform.position = tempV3;
+							piece.transform.DOMove(tempV3,.1f);
+							piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
+						}
+					}
+					else
+					{
+						Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
+						tempV3.z = -1;
+						hasMoved = false;
+						
+						tempV3.y += movingUpFinger;
+						//piece.transform.position = tempV3;
+						piece.transform.DOMove(tempV3,.1f);
+						piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
+					}
 				}
 			}
 			else if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Letter>())
@@ -222,10 +258,21 @@ public class InputGameController : MonoBehaviour {
 		}
 		else
 		{
-			Vector3 tempV3 = piece.GetComponent<Piece> ().myFirstPos.position;
-			piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f);
-			piece.transform.DOScale (new Vector3 (4, 4, 4), .1f);
-			piece = null;
+			if(piece.GetComponent<Piece>().firstPiece)
+			{
+				Vector3 tempV3 = piece.GetComponent<Piece>().myFirstPos.position;
+				piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f);
+				piece.transform.DOScale (new Vector3 (4, 4, 4), .1f);
+				piece = null;
+			}
+			else
+			{
+				print("S");
+				Vector3 tempV3 = piece.GetComponent<Piece>().myFirstPos.position;
+				piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f);
+				piece.transform.DOScale (new Vector3 (2, 2, 2), .1f);
+				piece = null;
+			}
 		}
 	}
 
@@ -296,4 +343,8 @@ public class InputGameController : MonoBehaviour {
 		}
 	}
 
+	protected void choseToRotate(Piece piece)
+	{
+		PieceManager.instance.setRotatePieces(piece);
+	}
 }

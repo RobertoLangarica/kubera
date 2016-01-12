@@ -7,9 +7,11 @@ public class PieceManager : MonoBehaviour {
 
 	protected List<GameObject> piecesList = new List<GameObject>();
 	public List<GameObject> piecesInBar = new List<GameObject>();
+	public List<GameObject> piecesToRotate = new List<GameObject>();
 	public List<ABCChar> listChar = new List<ABCChar>();
 
 	public Transform[] firstPos;
+	public Transform[] rotatePos;
 
 	protected int sizeOfBar =3;
 
@@ -54,8 +56,9 @@ public class PieceManager : MonoBehaviour {
 			piecesInBar.Add(piecesList[0]);
 			piecesList.RemoveAt(0);
 			go.transform.position= new Vector3(firstPos [i].position.x,firstPos [i].position.y,1);
+			go.GetComponent<Piece>().myFirstPosInt = i;
 			go.GetComponent<Piece>().myFirstPos=firstPos[i];
-
+			go.transform.localScale = new Vector3(4,4,4);
 			if(piecesList.Count==0)
 			{
 				fillList();
@@ -149,7 +152,7 @@ public class PieceManager : MonoBehaviour {
 
 	protected void readTextures()
 	{
-		for(int i=0; i< names.Length; i++) 
+		for(int i=0; i< names.Length; i++)
 		{
 			names[i] = textureObject[i].name;
 		}
@@ -157,6 +160,44 @@ public class PieceManager : MonoBehaviour {
 
 	public void setPieceInLetter(GameObject letter)
 	{
+
+	}
+
+	//Se ponen las pieces que se rotaran
+	public void setRotatePieces(Piece piece)
+	{
+		for(int k=0; k<piecesToRotate.Count; k++)
+		{
+			Destroy(piecesToRotate[k]);
+			//piecesToRotate.RemoveAt(0);
+		}
+		piecesToRotate.Clear();
+		int j=0;
+		for(int i=piece.myFirstPosInt*3; i<piece.rotatePieces.Length+piece.myFirstPosInt*3; i++)
+		{
+			GameObject go = Instantiate(piece.rotatePieces[j]);
+			go.name = piece.name;
+			go.transform.localScale = new Vector3(2,2,2);
+			go.transform.position = new Vector3(rotatePos[i].position.x,rotatePos[i].position.y,1);
+			go.GetComponent<Piece>().myFirstPos = rotatePos[i];
+			go.GetComponent<Piece>().firstPiece =false;
+			go.GetComponent<Piece>().parent = piece.gameObject;
+			piecesToRotate.Add(go);
+			j++;
+		}
+	}
+
+	public void destroyRotatePieces(Piece piece)
+	{
+		print(piece.parent);
+		Destroy(piece.parent);
+		for(int k=0; k<piecesToRotate.Count; k++)
+		{
+			if(piece != piecesToRotate[k].GetComponent<Piece>())
+			{
+				Destroy(piecesToRotate[k]);
+			}
+		}
 
 	}
 }
