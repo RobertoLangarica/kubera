@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
 	public Text points;
 	protected int pointsCount =0;
 
-	// Use this for initialization
 	void Awake () 
 	{
 		TextAsset tempTxt = (TextAsset)Resources.Load ("levels");
@@ -36,14 +35,13 @@ public class GameManager : MonoBehaviour
 		winPopUp.redBDelegate += goToIntro;
 		winPopUp.greenBDelegate += goToPopScene;
 	}
-	
-	// Update is called once per frame
+
 	void Update () 
 	{
-		if(Input.GetKeyDown(KeyCode.A))
+		/*if(Input.GetKeyDown(KeyCode.A))
 		{
 			gameManagerLose();
-		}
+		}*/
 	}
 
 	public void addPoints(int point)

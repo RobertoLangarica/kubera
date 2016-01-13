@@ -24,4 +24,10 @@ public class Cell : MonoBehaviour
 		occupied = false;
 		piece = null;
 	}
+
+	public void destroyCell()
+	{
+		DestroyImmediate(piece);
+		clearCell();
+	}
 }
