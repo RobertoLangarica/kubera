@@ -71,6 +71,20 @@ public class CellsManager : MonoBehaviour
 		cells.Clear();
 	}
 
+	public void resetGrid(int columns, int rows)
+	{
+		width = columns;
+		height = rows;
+
+		resetGrid();
+	}
+
+	public void resetGrid()
+	{
+		DestroyGrid();
+		CreateGrid();
+	}
+
 	protected Cell getCellOnVec(Vector3 vec)
 	{
 		Vector3 tempV2 = Vector3.zero;
