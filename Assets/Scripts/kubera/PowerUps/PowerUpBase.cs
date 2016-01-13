@@ -10,14 +10,23 @@ public class PowerUpBase : MonoBehaviour {
 	public Text numberUses;
 	public GameObject imageUses;
 
-	// Use this for initialization
-	void Start () {
+	protected GameManager gameManager;
+	protected CellsManager cellsManager;
+
+	void Start () 
+	{
+		gameManager = FindObjectOfType<GameManager>();
+		cellsManager = FindObjectOfType<CellsManager>();
+
 		numberUses.text = uses.ToString ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	void Update () 
+	{
+		if(Input.GetKeyDown(KeyCode.A))
+		{
+			activateDestroyMode();
+		}
 	}
 
 	public void PowerUsed()
@@ -47,5 +56,12 @@ public class PowerUpBase : MonoBehaviour {
 			go.GetComponent<Piece> ().powerUp = true;
 			FindObjectOfType<InputGameController> ().activePowerUp (go);
 		}
+	}
+
+	public void activateDestroyMode()
+	{
+		gameManager.destroyByColor = true;
+
+		cellsManager.activatePositionedPiecesCollider();
 	}
 }

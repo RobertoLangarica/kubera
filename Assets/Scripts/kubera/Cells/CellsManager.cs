@@ -17,13 +17,11 @@ public class CellsManager : MonoBehaviour
 
 	protected List<Cell> cells = new List<Cell>();
 
-	// Use this for initialization
 	void Start () 
 	{
 		CreateGrid();
 	}
-	
-	// Update is called once per frame
+
 	void Update () 
 	{
 		/*if(Input.GetKeyDown(KeyCode.A))
@@ -205,7 +203,7 @@ public class CellsManager : MonoBehaviour
 			tempC = getCellOnVec(piece.pieces[i].transform.position);
 			tempC.occupied = true;
 			tempC.piece=piece.pieces[i];
-			tempC.color = ECOLORS_ID.BLUE;
+			tempC.color = piece.color;
 		}
 		
 		tempC = getCellOnVec(piece.transform.position);
@@ -294,7 +292,22 @@ public class CellsManager : MonoBehaviour
 		return false;
 	}
 
-	public void clearCellsOfColor(Cell cell)
+	public void selectCellsOfColor(GameObject cellPiece)
+	{
+		for(int i = 0;i < cells.Count;i++)
+		{
+			if(cells[i].piece != null)
+			{
+				if(cells[i].piece.Equals(cellPiece))
+				{
+					selectCellsOfColor(cells[i]);
+					return;
+				}
+			}
+		}
+	}
+
+	public void selectCellsOfColor(Cell cell)
 	{
 		List<Cell> finalList = new List<Cell>();
 		List<Cell> pendingList = new List<Cell>();
@@ -308,20 +321,52 @@ public class CellsManager : MonoBehaviour
 		selected = finalList;
 	}
 
+	public void activatePositionedPiecesCollider()
+	{
+		for(int i = 0;i < cells.Count;i++)
+		{
+			if(cells[i].piece != null)
+			{
+				cells[i].piece.GetComponent<Collider2D>().enabled = true;
+			}
+		}
+	}
+	
+	public void deactivatePositionedPiecesCollider()
+	{
+		for(int i = 0;i < cells.Count;i++)
+		{
+			if(cells[i].piece != null)
+			{
+				cells[i].piece.GetComponent<Collider2D>().enabled = false;
+			}
+		}
+	}
+
+	public void destroySelectedCells()
+	{
+		for(int i = 0;i < selected.Count;i++)
+		{
+			selected[i].destroyCell();
+		}
+
+		selected = new List<Cell>();
+	}
+
 	protected void searchNeigboursOfSameColor(Cell cell,ref List<Cell> final, ref List<Cell> pending)
 	{
 		int cX = cells.IndexOf(cell)%width;
 		int cY = cells.IndexOf(cell)/width;
 		Cell tempC = null;
 
-		tempC = getCellAt(cX-1,cY-1);
+		/*tempC = getCellAt(cX-1,cY-1);
 		if(tempC != null)
 		{
 			if(tempC.color == cell.color && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
 			{
 				pending.Add(tempC);
 			}
-		}
+		}*/
 		tempC = getCellAt(cX,cY-1);
 		if(tempC != null)
 		{
@@ -330,14 +375,14 @@ public class CellsManager : MonoBehaviour
 				pending.Add(tempC);
 			}
 		}
-		tempC = getCellAt(cX+1,cY-1);
+		/*tempC = getCellAt(cX+1,cY-1);
 		if(tempC != null)
 		{
 			if(tempC.color == cell.color && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
 			{
 				pending.Add(tempC);
 			}
-		}
+		}*/
 		tempC = getCellAt(cX-1,cY);
 		if(tempC != null)
 		{
@@ -354,14 +399,14 @@ public class CellsManager : MonoBehaviour
 				pending.Add(tempC);
 			}
 		}
-		tempC = getCellAt(cX-1,cY+1);
+		/*tempC = getCellAt(cX-1,cY+1);
 		if(tempC != null)
 		{
 			if(tempC.color == cell.color && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
 			{
 				pending.Add(tempC);
 			}
-		}
+		}*/
 		tempC = getCellAt(cX,cY+1);
 		if(tempC != null)
 		{
@@ -370,16 +415,15 @@ public class CellsManager : MonoBehaviour
 				pending.Add(tempC);
 			}
 		}
-		tempC = getCellAt(cX+1,cY+1);
+		/*tempC = getCellAt(cX+1,cY+1);
 		if(tempC != null)
 		{
 			if(tempC.color == cell.color && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
 			{
 				pending.Add(tempC);
 			}
-		}
+		}*/
 		pending.Remove(cell);
 		final.Add(cell);
 	}
 }
-
