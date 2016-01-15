@@ -8,16 +8,15 @@ public class WordManager : MonoBehaviour {
 	public GameObject letterPrefab;
 	public GameObject empty;
 	public GameObject container;
-	public ABCDataStructure words;
 
-
-	[HideInInspector]
-	public List<ABCChar> chars;
+	[HideInInspector]public ABCDataStructure words;
+	[HideInInspector]public List<ABCChar> chars;
 	protected bool invalidCharlist;//Indica que la lista de caracteres tuvo o tiene uno invalido
 
 	void Start()
 	{
 		chars = new List<ABCChar>();
+		words = FindObjectOfType<ABCDataStructure>();
 		//words.OnWordComplete += onWordComplete;
 	}
 
@@ -65,7 +64,7 @@ public class WordManager : MonoBehaviour {
 		{
 			character.wildcard = true;
 		}
-		character.value = ABCDataStructure.getCharValue(value);
+		character.value = words.getCharValue(value);
 		character.character = value.ToUpperInvariant();
 		letter.GetComponent<UIChar>().character = character; 
 		addLetterToCorrectSpace(letter);
