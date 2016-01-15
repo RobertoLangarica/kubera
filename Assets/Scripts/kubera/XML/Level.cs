@@ -15,4 +15,7 @@ public class Level
 	
 	[XmlAttribute("pieces")]
 	public string pieces;
+	
+	[XmlAttribute("grid")]
+	public string grid;
 }
