@@ -86,6 +86,19 @@ public class CellsManager : MonoBehaviour
 		}
 		cells.Clear();
 	}
+	public void resetGrid(int columns, int rows)
+	{
+		width = columns;
+		height = rows;
+		
+		resetGrid();
+	}
+	
+	public void resetGrid()
+	{
+		DestroyGrid();
+		CreateGrid();
+	}
 
 	/*
 	 * Regresa la celda dependiendo la posicion del mundo que se le manda
