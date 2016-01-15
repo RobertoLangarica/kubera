@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
 	public Text points;
 	protected int pointsCount =0;
+	public bool canRotate;
 
 	// Use this for initialization
 	void Awake () 

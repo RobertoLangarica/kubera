@@ -177,7 +177,7 @@ public class PieceManager : MonoBehaviour {
 		{
 			GameObject go = Instantiate(piece.rotatePieces[j]);
 			go.name = piece.name;
-			go.transform.localScale = new Vector3(2,2,2);
+			go.transform.localScale = new Vector3(1.5f,1.5f,1.5f);
 			go.transform.position = new Vector3(rotatePos[i].position.x,rotatePos[i].position.y,1);
 			go.GetComponent<Piece>().myFirstPos = rotatePos[i];
 			go.GetComponent<Piece>().firstPiece =false;
@@ -187,10 +187,12 @@ public class PieceManager : MonoBehaviour {
 		}
 	}
 
-	public void destroyRotatePieces(Piece piece)
+	public void destroyRotatePieces(Piece piece,bool destroyParent = true)
 	{
-		print(piece.parent);
-		Destroy(piece.parent);
+		if(destroyParent)
+		{
+			Destroy(piece.parent);
+		}
 		for(int k=0; k<piecesToRotate.Count; k++)
 		{
 			if(piece != piecesToRotate[k].GetComponent<Piece>())
@@ -198,6 +200,6 @@ public class PieceManager : MonoBehaviour {
 				Destroy(piecesToRotate[k]);
 			}
 		}
-
+		piecesToRotate.Clear();
 	}
 }

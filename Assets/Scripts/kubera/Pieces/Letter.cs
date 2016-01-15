@@ -5,23 +5,29 @@ using UnityEngine.UI;
 public class Letter : MonoBehaviour {
 
 	public GameObject piece;
+	public bool isColliding;
 
 	void Start()
 	{
 		GameObject wM = GameObject.Find("WordManager");
 
-		GetComponent<Button>().onClick.AddListener(
-			() => wM.GetComponent<WordManager>().deleteCharFromSearch(gameObject.GetComponent<UIChar>())
-												);
+		//GetComponent<Button>().onClick.AddListener(
+		//	() => wM.GetComponent<WordManager>().deleteCharFromSearch(gameObject.GetComponent<UIChar>())
+		//										);
 	}
 
 	public void returnState()
 	{
-		piece.GetComponent<Tile> ().backToNormal ();
+		//piece.GetComponent<Tile> ().backToNormal ();
 	}
 
 	public void DestroyPiece()
 	{
 		Destroy (piece);
+	}
+
+	void OnCollisionEnter2D(Collision2D coll) {
+		print("S");
+		isColliding = true;
 	}
 }
