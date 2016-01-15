@@ -40,6 +40,8 @@ public class Piece : MonoBehaviour {
 	public bool firstPiece;
 	public GameObject[] rotatePieces;
 
+	public int colorToSet = 1;
+	public bool randomColor=false;
 	// Use this for initialization
 	void Start () {
 		selectAColor ();
@@ -53,12 +55,31 @@ public class Piece : MonoBehaviour {
 	protected void selectAColor()
 	{
 		//Color myColor = new Color(Random.Range(0.0f,1.0f),Random.Range(0.0f,1.0f),Random.Range(0.0f,1.0f));
-		color = (ECOLORS_ID)Random.Range(1,8);
-
-		foreach(GameObject piece in pieces)
+		if(firstPiece)
 		{
-			piece.GetComponent<SpriteRenderer>().color = rendererColor;
-			piece.GetComponent<Tile>().color = currentColor;
+			if(colorToSet ==0 && randomColor)
+			{
+				color = (ECOLORS_ID)Random.Range(1,8);
+			}
+			else
+			{
+				color = (ECOLORS_ID)colorToSet;
+			}
+			
+			foreach(GameObject piece in pieces)
+			{
+				piece.GetComponent<SpriteRenderer>().color = rendererColor;
+				piece.GetComponent<Tile>().color = currentColor;
+			}
+		}
+		else
+		{
+			color = parent.GetComponent<Piece>().currentColor;
+			foreach(GameObject piece in pieces)
+			{
+				piece.GetComponent<SpriteRenderer>().color = rendererColor;
+				piece.GetComponent<Tile>().color = currentColor;
+			}
 		}
 	}
 
