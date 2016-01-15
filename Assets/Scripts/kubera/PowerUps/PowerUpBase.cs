@@ -9,17 +9,23 @@ public class PowerUpBase : MonoBehaviour {
 	public GameObject powerOne;
 	public Text numberUses;
 	public GameObject imageUses;
-	protected GameManager gameManager;
 
-	// Use this for initialization
-	void Start () {
-		gameManager = GameObject.FindObjectOfType<GameManager>();
+	protected GameManager gameManager;
+	protected CellsManager cellsManager;
+
+	void Start () 
+	{
+		gameManager = FindObjectOfType<GameManager>();
+		cellsManager = FindObjectOfType<CellsManager>();
 		numberUses.text = uses.ToString ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	void Update () 
+	{
+		if(Input.GetKeyDown(KeyCode.A))
+		{
+			activateDestroyMode();
+		}
 	}
 
 	public void PowerUsed()
@@ -63,5 +69,15 @@ public class PowerUpBase : MonoBehaviour {
 		{
 			gameManager.canRotate = false;
 		}
+	}
+
+	/*
+	 * Funcion del boton del PowerUp de Destruir por Color
+	 */
+	public void activateDestroyMode()
+	{
+		gameManager.destroyByColor = true;
+
+		cellsManager.activatePositionedPiecesCollider();
 	}
 }

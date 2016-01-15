@@ -69,7 +69,7 @@ public class PieceManager : MonoBehaviour {
 	protected void fillList()
 	{
 		//Debug.Log ("LLenando la lista");
-		string[] myPieces = gameManager.data.levels[0].pieces.Split(new char[1]{','});
+		string[] myPieces = gameManager.currentLevel.pieces.Split(new char[1]{','});
 
 		for(int i =0; i<myPieces.Length; i++)
 		{
@@ -90,7 +90,7 @@ public class PieceManager : MonoBehaviour {
 
 	protected void fillPoolLetter()
 	{
-		string[] myPieces = gameManager.data.levels[0].pool.Split(new char[1]{','});
+		string[] myPieces = gameManager.currentLevel.pool.Split(new char[1]{','});
 
 		for(int i =0; i<myPieces.Length; i++)
 		{

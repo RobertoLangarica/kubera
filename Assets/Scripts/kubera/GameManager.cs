@@ -4,14 +4,12 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour 
 {
-	[HideInInspector]
-	public Levels data;
-
 	public PopUp objectivePopUp;
 	public PopUp winPopUp;
 	public Text scoreText;
 
-	protected int currLevel;
+	[HideInInspector]
+	public Level currentLevel;
 
 	public bool destroyByColor;
 
@@ -19,34 +17,40 @@ public class GameManager : MonoBehaviour
 	protected int pointsCount =0;
 	public bool canRotate;
 
-	// Use this for initialization
+	protected PersistentData persistentData;
+
 	void Awake () 
 	{
-		TextAsset tempTxt = (TextAsset)Resources.Load ("levels");
-		data = Levels.LoadFromText(tempTxt.text);
-		currLevel = 0;
-		//Debug.Log(data.levels[0].pool);
+		persistentData = FindObjectOfType<PersistentData>();
+		
+		currentLevel = persistentData.data.levels[persistentData.currentLevel];
+
 		addPoints (0);
 	}
 
 	void Start()
 	{
+		//Se asignan delegates a los botones de los PopUps
 		objectivePopUp.redBDelegate += closePopUp;
 		objectivePopUp.greenBDelegate += closePopUp;
 
 		winPopUp.redBDelegate += goToIntro;
 		winPopUp.greenBDelegate += goToPopScene;
 	}
-	
-	// Update is called once per frame
+
 	void Update () 
 	{
-		if(Input.GetKeyDown(KeyCode.A))
+		/*if(Input.GetKeyDown(KeyCode.A))
 		{
 			gameManagerLose();
-		}
+		}*/
 	}
 
+	/*
+	 * Se incrementa el puntaje del jugador
+	 * 
+	 * @params point{int}: La cantidad de puntos que se le entregara al jugador
+	 */
 	public void addPoints(int point)
 	{
 		pointsCount += point;
@@ -54,6 +58,10 @@ public class GameManager : MonoBehaviour
 		points.text = pointsCount.ToString();
 	}
 
+	/*
+	 * Se activa el PopUp de cuando ha perdido
+	 * 
+	 */
 	public void gameManagerLose()
 	{
 		scoreText.text = points.text;

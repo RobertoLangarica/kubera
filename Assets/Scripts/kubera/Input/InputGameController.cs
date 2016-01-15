@@ -31,8 +31,7 @@ public class InputGameController : MonoBehaviour {
 	protected bool isLeter;
 	public float movingSpeed = .5f;
 	public float movingUpFinger = 1.5f;
-	
-	// Use this for initialization
+
 	void Start () 
 	{
 		gameManager = GameObject.FindObjectOfType<GameManager>();
@@ -247,9 +246,16 @@ public class InputGameController : MonoBehaviour {
 			{
 				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>())
 				{
-					gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>().ShootLetter();
-					FindObjectOfType<ShowNext>().ShowingNext(true);
-					gameObject.GetComponent<AudioSource>().Play();
+					if(gameManager.destroyByColor)
+					{
+						gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>().selectPieceColorToDestroy();
+					}
+					else
+					{
+						gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>().ShootLetter();
+						FindObjectOfType<ShowNext>().ShowingNext(true);
+						gameObject.GetComponent<AudioSource>().Play();
+					}
 				}
 			}
 		}

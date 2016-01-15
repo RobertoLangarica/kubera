@@ -11,9 +11,13 @@ public class Tile : MonoBehaviour {
 	public ECOLORS_ID color;
 
 	public Cell cellIndex;
-
-	void Start () {
+	protected GameManager gameManager;
+	protected CellsManager cellsManager;
 	
+	void Start () 
+	{
+		gameManager = FindObjectOfType<GameManager>();
+		cellsManager = FindObjectOfType<CellsManager>();	
 	}
 	
 	// Update is called once per frame
@@ -36,5 +40,22 @@ public class Tile : MonoBehaviour {
 	{
 		used=false;
 		gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
+	}
+
+	/*
+	 * Esta funcion se ejecuta cuando se ha seleccionado una pieza para ser destruida
+	 */
+	public void selectPieceColorToDestroy()
+	{
+		if(color != ECOLORS_ID.LETER)
+		{
+			cellsManager.selectCellsOfColor(gameObject);
+	
+			cellsManager.destroySelectedCells();
+		}
+
+		cellsManager.deactivatePositionedPiecesCollider();
+
+		gameManager.destroyByColor = false;
 	}
 }
