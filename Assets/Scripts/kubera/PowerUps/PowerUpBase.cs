@@ -58,6 +58,9 @@ public class PowerUpBase : MonoBehaviour {
 		}
 	}
 
+	/*
+	 * Funcion del boton del PowerUp de Destruir por Color
+	 */
 	public void activateDestroyMode()
 	{
 		gameManager.destroyByColor = true;

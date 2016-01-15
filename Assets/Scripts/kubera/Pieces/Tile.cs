@@ -42,11 +42,17 @@ public class Tile : MonoBehaviour {
 		gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
 	}
 
+	/*
+	 * Esta funcion se ejecuta cuando se ha seleccionado una pieza para ser destruida
+	 */
 	public void selectPieceColorToDestroy()
 	{
-		cellsManager.selectCellsOfColor(gameObject);
-
-		cellsManager.destroySelectedCells();
+		if(color != ECOLORS_ID.LETER)
+		{
+			cellsManager.selectCellsOfColor(gameObject);
+	
+			cellsManager.destroySelectedCells();
+		}
 
 		cellsManager.deactivatePositionedPiecesCollider();
 
