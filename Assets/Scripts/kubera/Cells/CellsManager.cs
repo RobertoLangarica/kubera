@@ -11,6 +11,8 @@ public class CellsManager : MonoBehaviour
 	//Es el prefab que se va a utilizar para la grid
 	public GameObject cellPrefab;
 
+	public GameObject letterFromBeginingPrefab;
+
 	//Medidas del grid
 	public int width;
 	public int height;
@@ -66,8 +68,7 @@ public class CellsManager : MonoBehaviour
 				go = GameObject.Instantiate(cellPrefab,nPos,Quaternion.identity) as GameObject;
 				go.transform.SetParent(transform);
 				cells.Add(go.GetComponent<Cell>());
-				Debug.Log (levelGridData[cells.Count-1]);
-				cells[cells.Count-1].cellType = int.Parse(levelGridData[cells.Count-1]);
+				cells[cells.Count-1].setTypeToCell(int.Parse(levelGridData[cells.Count-1]),letterFromBeginingPrefab);
 				nPos.x += cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x + 0.03f;
 			}
 			nPos.y -= cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y + 0.03f;
@@ -157,7 +158,7 @@ public class CellsManager : MonoBehaviour
 		//NOTA: Falta evaluar las celdas vacias
 		for(int i = 0;i < cells.Count;i++)
 		{
-			if(cells[i].occupied && cells[i].color != ECOLORS_ID.LETER)
+			if(cells[i].occupied && cells[i].typeOfPiece != ETYPEOFPIECE_ID.LETTER)
 			{
 				widthCount[wIndex]++;
 				heightCount[hIndex]++;
@@ -221,6 +222,10 @@ public class CellsManager : MonoBehaviour
 				{
 					return false;
 				}
+				if(!tempC.canPositionateOnThisCell())
+				{
+					return false;
+				}
 			}
 		}
 		return true;
@@ -251,7 +256,10 @@ public class CellsManager : MonoBehaviour
 				{
 					return false;
 				}
-				//if()
+				if(!tempC.canPositionateOnThisCell())
+				{
+					return false;
+				}
 			}
 		}
 		return true;
@@ -275,7 +283,7 @@ public class CellsManager : MonoBehaviour
 			tempC = getCellOnVec(piece.pieces[i].transform.position);
 			tempC.occupied = true;
 			tempC.piece=piece.pieces[i];
-			tempC.color = piece.color;
+			tempC.typeOfPiece = piece.typeOfPiece;
 		}
 		
 		tempC = getCellOnVec(piece.transform.position);
@@ -299,46 +307,42 @@ public class CellsManager : MonoBehaviour
 		{
 			for(int i = (index*width);i < (width*(index+1));i++)
 			{
-				cells[i].color = ECOLORS_ID.LETER;
-				cells[i].piece.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
-				cells[i].piece.GetComponent<BoxCollider2D>().enabled = true;
-				cells[i].piece.GetComponent<Tile>().myLeterCase = PieceManager.instance.putLeter();
-				cells[i].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(cells[i].piece.GetComponent<Tile>().myLeterCase);
-				cells[i].piece.GetComponent<Tile>().cellIndex = cells[i];
-				cells[i].piece.AddComponent<ABCChar>();
-			
-				cells[i].piece.GetComponent<ABCChar>().character = cells[i].piece.GetComponent<Tile>().myLeterCase;
-
-				if(cells[i].piece.GetComponent<Tile>().myLeterCase == ".")
-				{
-					cells[i].piece.AddComponent<ABCChar>().wildcard = true;
-				}
-				PieceManager.instance.listChar.Add(cells[i].piece.GetComponent<ABCChar>());
+				turnPiecesToLetters(i,0);
 			}
 		}
 		else
 		{
 			for(int i = 0;i < height;i++)
 			{
-				cells[index+(i*width)].color = ECOLORS_ID.LETER;
-				cells[index+(i*width)].piece.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
-				cells[index+(i*width)].piece.GetComponent<BoxCollider2D>().enabled = true;
-				cells[index+(i*width)].piece.GetComponent<Tile>().myLeterCase = PieceManager.instance.putLeter();
-				cells[index+(i*width)].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(cells[index+(i*width)].piece.GetComponent<Tile>().myLeterCase);
-				cells[index+(i*width)].piece.GetComponent<Tile>().cellIndex = cells[index+(i*width)];
-				cells[index+(i*width)].piece.AddComponent<ABCChar>();
-
-				cells[index+(i*width)].piece.GetComponent<ABCChar>().character = cells[index+(i*width)].piece.GetComponent<Tile>().myLeterCase;
-
-				if(cells[index+(i*width)].piece.GetComponent<Tile>().myLeterCase == ".")
-				{
-					cells[index+(i*width)].piece.AddComponent<ABCChar>().wildcard = true;
-				}
-				PieceManager.instance.listChar.Add(cells[index+(i*width)].piece.GetComponent<ABCChar>());
+				turnPiecesToLetters((i*width),index);
 			}
 		}
 		FindObjectOfType<GameManager>().addPoints(10);
 	}
+
+	protected void turnPiecesToLetters(int cellIndex,int lineIndex)
+	{
+		int newIndex = lineIndex+cellIndex;
+		cells[newIndex].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
+		if(cells[newIndex].piece != null)
+		{
+			cells[newIndex].piece.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
+			cells[newIndex].piece.GetComponent<BoxCollider2D>().enabled = true;
+			cells[newIndex].piece.GetComponent<Tile>().myLeterCase = PieceManager.instance.putLeter();
+			cells[newIndex].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(cells[newIndex].piece.GetComponent<Tile>().myLeterCase);
+			cells[newIndex].piece.GetComponent<Tile>().cellIndex = cells[newIndex];
+			cells[newIndex].piece.AddComponent<ABCChar>();
+		
+			cells[newIndex].piece.GetComponent<ABCChar>().character = cells[newIndex].piece.GetComponent<Tile>().myLeterCase;
+		
+			if(cells[newIndex].piece.GetComponent<Tile>().myLeterCase == ".")
+			{
+				cells[newIndex].piece.AddComponent<ABCChar>().wildcard = true;
+			}
+			PieceManager.instance.listChar.Add(cells[newIndex].piece.GetComponent<ABCChar>());
+		}
+	}
+
 
 	/*
 	 * Analiza si aun es posible colocar alguna de las piezas disponibles en la grid
@@ -485,7 +489,7 @@ public class CellsManager : MonoBehaviour
 		tempC = getCellAt(cX,cY-1);
 		if(tempC != null)
 		{
-			if(tempC.color == cell.color && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			if(tempC.typeOfPiece == cell.typeOfPiece && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
 			{
 				pending.Add(tempC);
 			}
@@ -493,7 +497,7 @@ public class CellsManager : MonoBehaviour
 		tempC = getCellAt(cX-1,cY);
 		if(tempC != null)
 		{
-			if(tempC.color == cell.color && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			if(tempC.typeOfPiece == cell.typeOfPiece && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
 			{
 				pending.Add(tempC);
 			}
@@ -501,7 +505,7 @@ public class CellsManager : MonoBehaviour
 		tempC = getCellAt(cX+1,cY);
 		if(tempC != null)
 		{
-			if(tempC.color == cell.color && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			if(tempC.typeOfPiece == cell.typeOfPiece && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
 			{
 				pending.Add(tempC);
 			}
@@ -509,7 +513,7 @@ public class CellsManager : MonoBehaviour
 		tempC = getCellAt(cX,cY+1);
 		if(tempC != null)
 		{
-			if(tempC.color == cell.color && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			if(tempC.typeOfPiece == cell.typeOfPiece && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
 			{
 				pending.Add(tempC);
 			}
@@ -528,7 +532,7 @@ public class CellsManager : MonoBehaviour
 		selected.Clear();
 		for(int i = 0;i < cells.Count;i++)
 		{
-			if(cells[i].color == cell.color)
+			if(cells[i].typeOfPiece == cell.typeOfPiece)
 			{
 				selected.Add(cells[i]);
 			}

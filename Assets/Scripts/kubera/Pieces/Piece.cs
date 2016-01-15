@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public enum ECOLORS_ID
+public enum ETYPEOFPIECE_ID
 {
 	NONE,
 	AQUA,
@@ -12,19 +12,23 @@ public enum ECOLORS_ID
 	GREY,
 	MAGENTA,
 	RED,
-	//WHITE,
 	YELLOW,
-	LETER
+	LETTER,
+	LETTER_FROM_BEGINING,
+	LETTER_DESTROY_POWERUP,
+	LETTER_ROTATE_POWERUP,
+	LETTER_WILD_POWERUP,
+	LETTER_BLOCK_POWERUP
 }
 
 public class Piece : MonoBehaviour {
 
 	public GameObject[] pieces;
-	public ECOLORS_ID initialColor;
+	public ETYPEOFPIECE_ID initialTypeOfPiece;
 	public SpriteRenderer spriteRenderer; 
 	public Image image;
 	
-	protected ECOLORS_ID currentColor;
+	protected ETYPEOFPIECE_ID currentTypeOfPiece;
 	protected Color rendererColor;
 	protected float currentAlpha = 1;
 	[HideInInspector]
@@ -35,7 +39,7 @@ public class Piece : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		selectAColor ();
+		selectTypeOfPiece ();
 	}
 	
 	// Update is called once per frame
@@ -43,59 +47,59 @@ public class Piece : MonoBehaviour {
 	
 	}
 
-	protected void selectAColor()
+	protected void selectTypeOfPiece()
 	{
 		//Color myColor = new Color(Random.Range(0.0f,1.0f),Random.Range(0.0f,1.0f),Random.Range(0.0f,1.0f));
-		color = (ECOLORS_ID)Random.Range(1,8);
+		typeOfPiece = (ETYPEOFPIECE_ID)Random.Range(1,8);
 
 		foreach(GameObject piece in pieces)
 		{
 			piece.GetComponent<SpriteRenderer>().color = rendererColor;
-			piece.GetComponent<Tile>().color = currentColor;
+			piece.GetComponent<Tile>().typeOfPiece = currentTypeOfPiece;
 		}
 	}
 
-	public ECOLORS_ID color
+	public ETYPEOFPIECE_ID typeOfPiece
 	{
 		//get{return spriteRenderer.color;}
 		//set{spriteRenderer.color = value;}
 		
-		get{return currentColor;}
+		get{return currentTypeOfPiece;}
 		set
 		{
-			initialColor = value;
-			currentColor = value;
+			initialTypeOfPiece = value;
+			currentTypeOfPiece = value;
 			
-			switch(currentColor)
+			switch(currentTypeOfPiece)
 			{
-			case ECOLORS_ID.AQUA:
+			case ETYPEOFPIECE_ID.AQUA:
 				rendererColor = new Color(0.376f, 0.698f, 0.639f); 
 				break;
-			case ECOLORS_ID.BLACK:
+			case ETYPEOFPIECE_ID.BLACK:
 				rendererColor = new Color(0.180f, 0.188f, 0.192f);
 				break;
-			case ECOLORS_ID.BLUE:
+			case ETYPEOFPIECE_ID.BLUE:
 				rendererColor = new Color(0.133f, 0.565f, 0.945f);
 				break;
-			case ECOLORS_ID.GREEN:
+			case ETYPEOFPIECE_ID.GREEN:
 				rendererColor = new Color(0.192f, 0.545f, 0.263f);
 				break;
-			case ECOLORS_ID.GREY:
+			case ETYPEOFPIECE_ID.GREY:
 				rendererColor = new Color(0.392f, 0.514f, 0.584f);
 				break;
-			case ECOLORS_ID.MAGENTA:
+			case ETYPEOFPIECE_ID.MAGENTA:
 				rendererColor = new Color(0.643f, 0.059f, 0.482f);
 				break;
-			case ECOLORS_ID.RED:
+			case ETYPEOFPIECE_ID.RED:
 				rendererColor = new Color(0.965f, 0.282f, 0.427f);
 				break;
 //			case ECOLORS_ID.WHITE:
 //				rendererColor = new Color(0.910f, 0.937f, 0.957f);
 //				break;
-			case ECOLORS_ID.YELLOW:
+			case ETYPEOFPIECE_ID.YELLOW:
 				rendererColor = new Color(0.976f, 0.627f, 0.000f);
 				break;
-			case ECOLORS_ID.NONE:
+			case ETYPEOFPIECE_ID.NONE:
 				return;
 			}
 			

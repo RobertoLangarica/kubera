@@ -16,6 +16,18 @@ public class Level
 	[XmlAttribute("pieces")]
 	public string pieces;
 	
+	[XmlAttribute("destroyPoweUpProbability")]
+	public int destroyPoweUpProbability;
+	
+	[XmlAttribute("rotatePoweUpProbability")]
+	public int rotatePoweUpProbability;
+	
+	[XmlAttribute("wildPoweUpProbability")]
+	public int wildPoweUpProbability;
+	
+	[XmlAttribute("blockPoweUpProbability")]
+	public int blockPoweUpProbability;
+	
 	[XmlAttribute("grid")]
 	public string grid;
 }
