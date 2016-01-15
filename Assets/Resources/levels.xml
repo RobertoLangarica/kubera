@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <scrabtris>
 	<levels>
-		<level name="01" difficulty="0" pool="b,e,l,l,e,z,a" pieces="A0,A1,A2,A3,B,C0,C1,C2,C3,D,E0,E1,E2,E3,F0,F1,H0,H1,H2,H3"
+		<level name="01" difficulty="0" pool="b,e,l,l,e,z,a" pieces="A0,A1,A2,A3,B,C0,C1,C2,C3,D,E0,E1,F0,F1,G0,G1,H0,H1,H2,H3"
 		grid="1,1,1,1,1,1,1,1,1,1,
 			1,1,1,1,1,1,1,1,1,1,
 			1,1,1,1,1,1,1,1,1,1,
