@@ -6,22 +6,20 @@ public class ABCChar : MonoBehaviour
 {
 	public int value;//Valor del caracter que se utiliza dentro de ABCDataStructure
 	public bool wildcard = false;//Indica si este caracter es un comodin
-
-	//[HideInInspector]
+	
 	public string character = "A";//La cadena que representa al caracter
-	[HideInInspector]
-	public bool empty = false;//Lo usa WordManager al eliminar caracteres
-	public bool used;//Se usa por ABCDataStructure cuando averigua si se pueden armar palabras
-	[HideInInspector]
-	public int index;//Indice del caracter en WordManager
+	[HideInInspector]public bool empty = false;//Lo usa WordManager al eliminar caracteres
+	[HideInInspector]public bool used;//Se usa por ABCDataStructure cuando averigua si se pueden armar palabras
+	[HideInInspector]public int index;//Indice del caracter en WordManager
 
 	void Start () 
 	{
 		//si es comodin lo dejamos en blanco y sino le dejamos el texto adecuado
 		if(!wildcard)
 		{
-			value = ABCDataStructure.getCharValue(character.ToUpper().ToCharArray()[0]);
-			character = ABCDataStructure.getStringByValue(value);
+			ABCDataStructure abc = FindObjectOfType<ABCDataStructure>();
+			value = abc.getCharValue(character.ToUpper().ToCharArray()[0]);
+			character = abc.getStringByValue(value);
 		}
 		else
 		{

@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
 	public bool destroyByColor;
 
 	public Text points;
-	protected int pointsCount;
+	protected int pointsCount =0;
+	public bool canRotate;
 
 	protected PersistentData persistentData;
 

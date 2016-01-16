@@ -20,19 +20,44 @@ public class ABCDataStructure : MonoBehaviour {
 
 	};
 
+	//Clase para los caracteres del abecedario
+	public class ABCUnit
+	{
+		public int ivalue;
+		public char cvalue;
+
+
+		//Constructores por comodidad de manejo
+		public ABCUnit(int intValue, char charValue)
+		{
+			ivalue = intValue;
+			cvalue = charValue;
+		}
+
+		public ABCUnit(int intValue, string character)
+		{
+			ivalue = intValue;
+			cvalue = character.ToCharArray()[0];
+		}
+
+		public ABCUnit(){}
+	};
+
+	//Alfabeto que contiene todos los caracteres y su representacion en entero
+	private List<ABCUnit> alfabet;
+
 	//Inicio de la estructura
-	[HideInInspector]
-	public IntList data;
+	[HideInInspector]public IntList data;
 
 	//public delegate void DOnWordComplete();
 	//public DOnWordComplete OnWordComplete;
 	
-	public int wordCount = 0;//Conteo de palabras presentes en el diccionario
+	[HideInInspector]public int wordCount = 0;//Conteo de palabras presentes en el diccionario
 
 
 	/*****PARA LA BUSQUEDA CARACTER POR CARACTER*****************/
-	public bool isValid = true;
-	public bool completeWord = false;//Esta en true solo cuando la validacion por caracter
+	[HideInInspector]public bool isValid = true;
+	[HideInInspector]public bool completeWord = false;//Esta en true solo cuando la validacion por caracter
 	protected IntList currentValidationList;
 	protected List<IntList> levelsOfSearch;
 	protected int levelsCount;
@@ -47,7 +72,7 @@ public class ABCDataStructure : MonoBehaviour {
 			data.content = new List<IntList>();
 		}
 
-		registerNewWord("belleza");
+		/*registerNewWord("belleza");
 		registerNewWord("bella");
 		registerNewWord("ella");
 		registerNewWord("ala");
@@ -56,7 +81,8 @@ public class ABCDataStructure : MonoBehaviour {
 		registerNewWord("baba");
 		registerNewWord("babel");
 		registerNewWord("bala");
-		registerNewWord("alba");
+		registerNewWord("alba");*/
+
 
 		//OnWordComplete += foo;
 	}
@@ -70,9 +96,7 @@ public class ABCDataStructure : MonoBehaviour {
 	 **/ 
 	public void registerNewWord(string word)
 	{
-		//Debug.Log ("Adding: "+word);
-
-		//Dividimos la palabra en chars
+		//Dividimos la palabra en chars y la forzamos a mayusculas
 		char[] chars = word.ToUpperInvariant().ToCharArray();
 
 		int currChar = -1;
@@ -89,7 +113,7 @@ public class ABCDataStructure : MonoBehaviour {
 				break;
 			}
 			currentList = tmp;
-			tmp = currentList.content.Find(item => item.value == ABCDataStructure.getCharValue(chars[currChar]));
+			tmp = currentList.content.Find(item => item.value == getCharValue(chars[currChar]));
 
 			//Una nueva subpalabra
 			if(tmp != null && currChar == limit-1 && !tmp.end)
@@ -107,7 +131,7 @@ public class ABCDataStructure : MonoBehaviour {
 			for(;currChar < limit; currChar++)
 			{
 				tmp = new IntList();
-				tmp.value = ABCDataStructure.getCharValue(chars[currChar]);
+				tmp.value = getCharValue(chars[currChar]);
 				tmp.end = currChar == limit-1;
 				//Debug.Log(chars[currChar]+"_"+tmp.value);
 				tmp.content = new List<IntList>();
@@ -148,7 +172,7 @@ public class ABCDataStructure : MonoBehaviour {
 				break;
 			}
 			currentList = tmp.content;
-			tmp = currentList.Find(item => item.value == ABCDataStructure.getCharValue(chars[currChar]));
+			tmp = currentList.Find(item => item.value == getCharValue(chars[currChar]));
 
 			//Subpalabra?
 			if(tmp != null && currChar == limit-1 && !tmp.end)
@@ -725,139 +749,59 @@ public class ABCDataStructure : MonoBehaviour {
 	/**
 	 * Lee una cadena y lo convierte a un valor entero (basado en su posicion en el abecedario)
 	 **/
-	public static int getCharValue(string c)
+	public int getCharValue(string c)
 	{
-		return getCharValue(c.ToUpperInvariant().ToCharArray()[0]);
+		return getCharValue(c.ToCharArray()[0]);
 	}
 
 	/**
 	 * Lee un caracter y lo convierte a un valor entero (basado en su posicion en el abecedario)
 	 **/
-	public static int getCharValue(char c)
+	public int getCharValue(char c)
 	{
-		switch(c)
+		ABCUnit tmp;
+		tmp = alfabet.Find(item => item.cvalue == c);
+
+		if(tmp != null)
 		{
-		case 'A':
-			return 0;
-		case 'B':
-			return 1;
-		case 'C':
-			return 2;
-		case 'D':
-			return 3;
-		case 'E':
-			return 4;
-		case 'F':
-			return 5;
-		case 'G':
-			return 6;
-		case 'H':
-			return 7;
-		case 'I':
-			return 8;
-		case 'J':
-			return 9;
-		case 'K':
-			return 10;
-		case 'L':
-			return 11;
-		case 'M':
-			return 12;
-		case 'N':
-			return 13;
-		case 'Ñ':
-			return 14;
-		case 'O':
-			return 15;
-		case 'P':
-			return 16;
-		case 'Q':
-			return 17;
-		case 'R':
-			return 18;
-		case 'S':
-			return 19;
-		case 'T':
-			return 20;
-		case 'U':
-			return 21;
-		case 'V':
-			return 22;
-		case 'W':
-			return 23;
-		case 'X':
-			return 24;
-		case 'Y':
-			return 25;
-		case 'Z':
-			return 26;
+			return tmp.ivalue;
 		}
+
 		return -1;
 	}
 
 	/**
 	 * Recibe el valor de un caracter basado en el abecedario y devuelve la cadena que lo representa
 	 * */
-	public static string getStringByValue(int value)
+	public string getStringByValue(int value)
 	{
-		switch(value)
+
+		ABCUnit tmp;
+		tmp = alfabet.Find(item => item.ivalue == value);
+		
+		if(tmp != null)
 		{
-		case 0:
-			return "A";
-		case 1:
-			return "B";
-		case 2:
-			return "C";
-		case 3:
-			return "D";
-		case 4:
-			return "E";
-		case 5:
-			return "F";
-		case 6:
-			return "G";
-		case 7:
-			return "H";
-		case 8:
-			return "I";
-		case 9:
-			return "J";
-		case 10:
-			return "K";
-		case 11:
-			return "L";
-		case 12:
-			return "M";
-		case 13:
-			return "N";
-		case 14:
-			return "Ñ";
-		case 15:
-			return "O";
-		case 16:
-			return "P";
-		case 17:
-			return "Q";
-		case 18:
-			return "R";
-		case 19:
-			return "S";
-		case 20:
-			return "T";
-		case 21:
-			return "U";
-		case 22:
-			return "V";
-		case 23:
-			return "W";
-		case 24:
-			return "X";
-		case 25:
-			return "Y";
-		case 26:
-			return "Z";
-			
+			return tmp.cvalue.ToString();
 		}
+		
 		return "";
+	}
+
+	/**
+	 * Inicializa el alfabeto recibiendo un csv con los caracteres
+	 * 
+	 * */
+	public void InitializeAlfabet(string csvText)
+	{
+		//Nos aseguramos que sean mayusculas
+		string[] chars = csvText.ToUpperInvariant().Split(',');
+		alfabet = new List<ABCUnit>();
+		int counter = -1;
+
+		foreach(string schar in chars)
+		{
+			alfabet.Add(new ABCUnit(++counter,schar));
+			Debug.Log (alfabet[counter].cvalue);
+		}
 	}
 }

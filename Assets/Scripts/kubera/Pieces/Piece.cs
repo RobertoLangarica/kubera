@@ -36,7 +36,16 @@ public class Piece : MonoBehaviour {
 
 	[HideInInspector]
 	public Transform myFirstPos;
+	[HideInInspector]
+	public int myFirstPosInt;
+	[HideInInspector]
+	public GameObject parent;
 
+	public bool firstPiece;
+	public GameObject[] rotatePieces;
+
+	public int colorToSet = 1;
+	public bool randomColor=false;
 	// Use this for initialization
 	void Start () {
 		selectTypeOfPiece ();
@@ -56,6 +65,32 @@ public class Piece : MonoBehaviour {
 		{
 			piece.GetComponent<SpriteRenderer>().color = rendererColor;
 			piece.GetComponent<Tile>().typeOfPiece = currentTypeOfPiece;
+			if(firstPiece)
+			{
+				if(colorToSet ==0 && randomColor)
+				{
+					currentTypeOfPiece = (ETYPEOFPIECE_ID)Random.Range(1,8);
+				}
+				else
+				{
+					currentTypeOfPiece = (ETYPEOFPIECE_ID)colorToSet;
+				}
+				
+				foreach(GameObject piece2 in pieces)
+				{
+					piece2.GetComponent<SpriteRenderer>().color = rendererColor;
+					piece2.GetComponent<Tile>().typeOfPiece = currentTypeOfPiece;
+				}
+			}
+			else
+			{
+				currentTypeOfPiece = parent.GetComponent<Piece>().currentTypeOfPiece;
+				foreach(GameObject piece2 in pieces)
+				{	
+					piece2.GetComponent<SpriteRenderer>().color = rendererColor;
+					piece2.GetComponent<Tile>().typeOfPiece = currentTypeOfPiece;
+				}
+			}
 		}
 	}
 
