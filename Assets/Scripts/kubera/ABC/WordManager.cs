@@ -13,9 +13,12 @@ public class WordManager : MonoBehaviour {
 	[HideInInspector]public List<ABCChar> chars;
 	protected bool invalidCharlist;//Indica que la lista de caracteres tuvo o tiene uno invalido
 
+	protected int padding = 300;
+
 	void Start()
 	{
 		chars = new List<ABCChar>();
+		container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding;
 		words = FindObjectOfType<ABCDataStructure>();
 		//words.OnWordComplete += onWordComplete;
 	}
@@ -72,6 +75,9 @@ public class WordManager : MonoBehaviour {
 		letter.GetComponent<Letter> ().piece = piece;
 
 		validateCharacter(character);
+
+		//para que las letras esten centradas HardCoding
+		actualizePadding(true);
 	}
 
 	/**
@@ -191,6 +197,7 @@ public class WordManager : MonoBehaviour {
 
 						//para destruir la pieza
 						t.DestroyPiece();
+
 						//GameObject.Destroy(t.piece);
 					}
 				}
@@ -203,7 +210,7 @@ public class WordManager : MonoBehaviour {
 			GameObject.Destroy(container.transform.GetChild(l).gameObject);
 		}
 
-
+		container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding = 300;
 	}
 
 	/**
@@ -239,6 +246,7 @@ public class WordManager : MonoBehaviour {
 			//El usuairo elimino el ultimo caracter
 			words.deleteLvlOfSearch(lvlIndex);
 			chars.RemoveAt(lvlIndex);
+			actualizePadding(false);
 		}
 		else
 		{
@@ -254,6 +262,7 @@ public class WordManager : MonoBehaviour {
 		if(everythingIsEmpty())
 		{
 			resetValidation();
+			container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding = 300;
 		}
 		else if(lvlIndex != chars.Count)
 		{
@@ -340,6 +349,57 @@ public class WordManager : MonoBehaviour {
 		{
 			print("perdio de verdad");
 			FindObjectOfType<GameManager>().gameManagerLose();
+		}
+	}
+
+	/**
+	 *Cambia el orden de las letras 
+	 **/
+	public void swappingLetters(GameObject letter)
+	{
+		for(int i=0; i<container.transform.childCount; i++)
+		{
+			if(container.transform.GetChild(i).gameObject != letter)
+			{
+				if((int)container.transform.GetChild(i).transform.position.x == (int)letter.transform.position.x )
+				{
+					print("S");
+					letter.transform.SetSiblingIndex(i);
+					//container.transform.SetSiblingIndex(0);
+				}
+			}
+		}
+	}
+	public void swappLetters(bool activate)
+	{
+		if(activate)
+		{
+			container.GetComponent<HorizontalLayoutGroup>().enabled = true;
+		}
+		else
+		{
+			container.GetComponent<HorizontalLayoutGroup>().enabled = false;
+		}
+	}
+
+	/**
+	 * actualiza el padding de la estructura de letras mostradas para que se vean alienadas
+	 **/
+	protected void actualizePadding(bool adding)
+	{
+		if(adding)
+		{
+			if(container.GetComponent<HorizontalLayoutGroup>().padding.left > 0)
+			{
+				container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding = padding-50;
+			}
+		}
+		else
+		{
+			if(container.GetComponent<HorizontalLayoutGroup>().padding.left < 300)
+			{
+				container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding = padding+50;
+			}
 		}
 	}
 }
