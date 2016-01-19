@@ -72,17 +72,6 @@ public class ABCDataStructure : MonoBehaviour {
 			data = new IntList();
 			data.content = new List<IntList>();
 		}
-
-		/*registerNewWord("belleza");
-		registerNewWord("bella");
-		registerNewWord("ella");
-		registerNewWord("ala");
-		registerNewWord("bebe");
-		registerNewWord("beba");
-		registerNewWord("baba");
-		registerNewWord("babel");
-		registerNewWord("bala");
-		registerNewWord("alba");*/
 	}
 
 	/**
@@ -114,7 +103,7 @@ public class ABCDataStructure : MonoBehaviour {
 			//Una nueva subpalabra
 			if(tmp != null && currChar == limit-1 && !tmp.end)
 			{
-				Debug.Log("Subpalabra:"+word);
+				//Debug.Log("Subpalabra:"+word);
 				tmp.end = true;
 				return;
 			}
@@ -140,7 +129,7 @@ public class ABCDataStructure : MonoBehaviour {
 		}
 		else
 		{
-			Debug.Log("Ya existia previamente la palabra: "+word);
+			//Debug.Log("Ya existia previamente la palabra: "+word);
 		}
 	}
 

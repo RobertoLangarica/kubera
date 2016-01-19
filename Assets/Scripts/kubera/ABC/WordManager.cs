@@ -370,6 +370,7 @@ public class WordManager : MonoBehaviour {
 			}
 		}
 	}
+
 	public void swappLetters(bool activate)
 	{
 		if(activate)

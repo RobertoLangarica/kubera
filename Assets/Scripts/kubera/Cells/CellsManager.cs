@@ -59,7 +59,7 @@ public class CellsManager : MonoBehaviour
 	{
 		Vector3 nPos = transform.position;
 		GameObject go = null;
-		string[] levelGridData = FindObjectOfType<GameManager>().currentLevel.grid.Split(',');
+		string[] levelGridData = PersistentData.instance.currentLevel.grid.Split(',');
 
 		for(int i = 0;i < height;i++)
 		{
