@@ -58,7 +58,27 @@ public class UserDataManager
 	public string language
 	{
 		get{return PlayerPrefs.GetString("language");}
-		set{PlayerPrefs.SetString("language",value);}
+
+		set
+		{
+			if(value.Equals(PlayerPrefs.GetString("language")))
+			{
+				return;
+			}
+
+			if(languageSupported(value))
+			{
+				PlayerPrefs.SetString("language",value);
+			}
+			else
+			{
+				//Lenguaje del sistema operativo
+				PlayerPrefs.SetString("language",getOSLanguage());
+			}
+
+			//Que se configure el juego para el lenguaje (en este caso diccionarios)
+			PersistentData.instance.configureGameForLanguage();
+		}
 	}
 
 	/**
@@ -93,6 +113,22 @@ public class UserDataManager
 		}
 
 		return SystemLanguage.English.ToString().ToLowerInvariant();
+	}
+
+	/**
+	 * Indica si un lenguaje es soportado por el juego
+	 **/ 
+	protected bool languageSupported(string language)
+	{
+		//[HARDCODING] no pude poner el enum convertido a cadena en minusculas porque se queja el switch
+		switch(language)
+		{
+		case "spanish":
+		case "english":
+			return true;
+		}
+
+		return false;
 	}
 
 	public void foo(){}

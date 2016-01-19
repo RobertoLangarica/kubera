@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 public class ABCDataStructure : MonoBehaviour {
 
@@ -82,12 +83,7 @@ public class ABCDataStructure : MonoBehaviour {
 		registerNewWord("babel");
 		registerNewWord("bala");
 		registerNewWord("alba");*/
-
-
-		//OnWordComplete += foo;
 	}
-
-	//protected void foo(){}
 
 	/**
 	 * Registra una nueva palabra en el diccionario
@@ -118,7 +114,7 @@ public class ABCDataStructure : MonoBehaviour {
 			//Una nueva subpalabra
 			if(tmp != null && currChar == limit-1 && !tmp.end)
 			{
-				//Debug.Log("Subpalabra:"+word);
+				Debug.Log("Subpalabra:"+word);
 				tmp.end = true;
 				return;
 			}
@@ -133,7 +129,6 @@ public class ABCDataStructure : MonoBehaviour {
 				tmp = new IntList();
 				tmp.value = getCharValue(chars[currChar]);
 				tmp.end = currChar == limit-1;
-				//Debug.Log(chars[currChar]+"_"+tmp.value);
 				tmp.content = new List<IntList>();
 				tmp.parent = currentList;
 				currentList.content.Add(tmp);
@@ -145,7 +140,7 @@ public class ABCDataStructure : MonoBehaviour {
 		}
 		else
 		{
-			//Debug.Log("Ya existia previamente la palabra: "+word);
+			Debug.Log("Ya existia previamente la palabra: "+word);
 		}
 	}
 
@@ -791,7 +786,7 @@ public class ABCDataStructure : MonoBehaviour {
 	 * Inicializa el alfabeto recibiendo un csv con los caracteres
 	 * 
 	 * */
-	public void InitializeAlfabet(string csvText)
+	public void initializeAlfabet(string csvText)
 	{
 		//Nos aseguramos que sean mayusculas
 		string[] chars = csvText.ToUpperInvariant().Split(',');
@@ -802,6 +797,35 @@ public class ABCDataStructure : MonoBehaviour {
 		{
 			alfabet.Add(new ABCUnit(++counter,schar));
 			//Debug.Log (alfabet[counter].cvalue);
+		}
+	}
+
+	/**
+	 * Procesa el diccionario recibido registrando todas las palabras:
+	 * Cada palabra viene en su propia linea
+	 **/ 
+	public void processDictionary(string text)
+	{
+		//Breaklines estandar
+		Regex regex = new Regex(@"\r\n?|\n");
+		text = regex.Replace(text,"\n");
+
+		//Quitamos toda la acentuacion y obtenemos un arreglo
+		string[]words = text.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u').Split('\n');
+		int count = words.Length;
+
+		//Inicializamos la data de la estrcutura en blanco
+		data = new IntList();
+		data.content = new List<IntList>();
+
+		//Registramos todas las palabras
+		for(int i =0; i < count; i++)
+		{
+			//Palabras de menos de 3 caracteres se ignoran
+			if(words[i].Length >= 3)
+			{
+				registerNewWord(words[i]);
+			}
 		}
 	}
 }
