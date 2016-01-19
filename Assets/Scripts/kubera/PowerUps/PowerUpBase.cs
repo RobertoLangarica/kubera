@@ -61,9 +61,16 @@ public class PowerUpBase : MonoBehaviour {
 
 	public void activeRotate(bool activate)
 	{
-		if(activate)
+		if (uses != 0) 
 		{
-			gameManager.canRotate = true;
+			if(activate)
+			{
+				gameManager.canRotate = true;
+			}
+			else
+			{
+				gameManager.canRotate = false;
+			}
 		}
 		else
 		{
@@ -79,5 +86,23 @@ public class PowerUpBase : MonoBehaviour {
 		gameManager.destroyByColor = true;
 
 		cellsManager.activatePositionedPiecesCollider();
+	}
+
+	public void activateWildCard()
+	{
+		if (uses != 0) 
+		{
+			GameObject.Find("WordManager").GetComponent<WordManager>().addCharacter(".",gameObject);
+			PowerUsed();
+		}
+	}
+
+	public void returnPower()
+	{
+		uses++;
+		numberUses.text = uses.ToString ();
+		imageUses.SetActive(true);
+		gameObject.GetComponent<Button>().interactable = true;
+		FindObjectOfType<ShowNext>().ShowingNext(true);
 	}
 }

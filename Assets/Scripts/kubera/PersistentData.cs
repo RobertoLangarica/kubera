@@ -37,6 +37,7 @@ public class PersistentData : MonoBehaviour
 
 		TextAsset tempTxt = (TextAsset)Resources.Load ("levels");
 		data = Levels.LoadFromText(tempTxt.text);
+		FindObjectOfType<ABCDataStructure>().InitializeAlfabet(tempTxt.text);
 	}
 
 	void Start()
@@ -48,6 +49,6 @@ public class PersistentData : MonoBehaviour
 
 
 		TextAsset abc = Resources.Load("ABCData/ABC_spanish") as TextAsset;
-		Debug.Log(abc);
+		//Debug.Log(abc);
 	}
 }

@@ -66,7 +66,7 @@ public class CellsManager : MonoBehaviour
 				go = GameObject.Instantiate(cellPrefab,nPos,Quaternion.identity) as GameObject;
 				go.transform.SetParent(transform);
 				cells.Add(go.GetComponent<Cell>());
-				Debug.Log (levelGridData[cells.Count-1]);
+				//Debug.Log (levelGridData[cells.Count-1]);
 				cells[cells.Count-1].cellType = int.Parse(levelGridData[cells.Count-1]);
 				nPos.x += cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x + 0.03f;
 			}

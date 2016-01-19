@@ -801,7 +801,7 @@ public class ABCDataStructure : MonoBehaviour {
 		foreach(string schar in chars)
 		{
 			alfabet.Add(new ABCUnit(++counter,schar));
-			Debug.Log (alfabet[counter].cvalue);
+			//Debug.Log (alfabet[counter].cvalue);
 		}
 	}
 }
