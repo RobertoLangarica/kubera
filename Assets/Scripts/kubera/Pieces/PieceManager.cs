@@ -101,23 +101,29 @@ public class PieceManager : MonoBehaviour {
 		int amout = 0;
 		ScriptableABCChar newLetter = null;
 
-		for(int i =0; i<myPieces.Length; i++)
+		if(XMLPoolLeters.Count == 0)
 		{
-			piecesInfo = myPieces[i].Split(new char[1]{'_'});
-			amout = int.Parse(piecesInfo[0]);
-			for(int j = 0;j < amout;j++)
+			for(int i =0; i<myPieces.Length; i++)
 			{
-				newLetter = new ScriptableABCChar();
-				newLetter.character = piecesInfo[1];
-				newLetter.pointsValue = piecesInfo[2];
-				newLetter.typeOfLetter = piecesInfo[3];
-				XMLPoolLeters.Add(newLetter);
+				piecesInfo = myPieces[i].Split(new char[1]{'_'});
+				amout = int.Parse(piecesInfo[0]);
+				for(int j = 0;j < amout;j++)
+				{
+					newLetter = new ScriptableABCChar();
+					newLetter.character = piecesInfo[1];
+					newLetter.pointsValue = piecesInfo[2];
+					newLetter.typeOfLetter = piecesInfo[3];
+					XMLPoolLeters.Add(newLetter);
+				}
 			}
 		}
 		/*****/
 
-		randomizedPoolLeters.Clear();
-		randomizedPoolLeters = new List<ScriptableABCChar>(XMLPoolLeters);
+		randomizedPoolLeters = new List<ScriptableABCChar>();
+		for(int i = 0;i < XMLPoolLeters.Count;i++)
+		{
+			randomizedPoolLeters.Add(XMLPoolLeters[i]);
+		}
 		XMLPoolLeters.Clear();
 
 		while(randomizedPoolLeters.Count >0)
@@ -128,7 +134,6 @@ public class PieceManager : MonoBehaviour {
 		}
 
 		randomizedPoolLeters = XMLPoolLeters;
-		Debug.Log (randomizedPoolLeters.Count);
 	}
 
 	public void checkBarr(GameObject piecesSelected)
@@ -152,10 +157,9 @@ public class PieceManager : MonoBehaviour {
 		}
 	}
 
-	public string putLeter()
+	public ScriptableABCChar giveLetterInfo()
 	{
-		string letter = randomizedPoolLeters[0].character;
-		letter = letter.ToLower();
+		ScriptableABCChar letter = randomizedPoolLeters[0];
 		randomizedPoolLeters.RemoveAt (0);
 		if(randomizedPoolLeters.Count==0)
 		{

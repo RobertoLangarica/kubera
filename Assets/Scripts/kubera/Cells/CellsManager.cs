@@ -313,23 +313,26 @@ public class CellsManager : MonoBehaviour
 	protected void turnPiecesToLetters(int cellIndex,int lineIndex)
 	{
 		int newIndex = lineIndex+cellIndex;
+		Tile tempTile = null;
+		ABCChar tempAbcChar = null;
+
 		cells[newIndex].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
 		if(cells[newIndex].piece != null)
 		{
+			tempTile = cells[newIndex].piece.GetComponent<Tile>();
+			tempAbcChar = cells[newIndex].piece.AddComponent<ABCChar>();
+			
+			tempAbcChar.initializeFromScriptableABCChar(PieceManager.instance.giveLetterInfo());
+			
+			tempTile.myLeterCase = tempAbcChar.character;
+			tempTile.cellIndex = cells[newIndex];
+			tempTile.typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
+			
 			cells[newIndex].piece.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
+			cells[newIndex].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(tempTile.myLeterCase);
 			cells[newIndex].piece.GetComponent<BoxCollider2D>().enabled = true;
-			cells[newIndex].piece.GetComponent<Tile>().myLeterCase = PieceManager.instance.putLeter();
-			cells[newIndex].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(cells[newIndex].piece.GetComponent<Tile>().myLeterCase);
-			cells[newIndex].piece.GetComponent<Tile>().cellIndex = cells[newIndex];
-			cells[newIndex].piece.AddComponent<ABCChar>();
-		
-			cells[newIndex].piece.GetComponent<ABCChar>().character = cells[newIndex].piece.GetComponent<Tile>().myLeterCase;
-		
-			if(cells[newIndex].piece.GetComponent<Tile>().myLeterCase == ".")
-			{
-				cells[newIndex].piece.AddComponent<ABCChar>().wildcard = true;
-			}
-			PieceManager.instance.listChar.Add(cells[newIndex].piece.GetComponent<ABCChar>());
+			
+			PieceManager.instance.listChar.Add(tempAbcChar);
 		}
 	}
 

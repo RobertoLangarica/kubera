@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
+//Clase creada para poder crear listas de objetos que inicializaran loas ABCChar
 public class ScriptableABCChar
 {
 	public string pointsValue;
@@ -46,11 +47,16 @@ public class ABCChar : MonoBehaviour
 		}
 	}
 
-	void initializeFromScriptableABCChar(ScriptableABCChar scriptAbcVals)
+	public void initializeFromScriptableABCChar(ScriptableABCChar scriptAbcVals)
 	{
 		character = scriptAbcVals.character;
 		pointsValue = scriptAbcVals.pointsValue;
 		typeOfLetter = scriptAbcVals.typeOfLetter;
+		
+		if(character == ".")
+		{
+			wildcard = true;
+		}
 	}
 
 	public void givePoint()
