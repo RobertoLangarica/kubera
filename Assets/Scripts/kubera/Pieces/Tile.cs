@@ -8,16 +8,18 @@ public class Tile : MonoBehaviour {
 	protected bool used;
 
 	public GameObject letterCase;
-	public ECOLORS_ID color;
+	public ETYPEOFPIECE_ID typeOfPiece;
 
 	public Cell cellIndex;
 	protected GameManager gameManager;
 	protected CellsManager cellsManager;
+	protected WordManager wordManager;
 	
 	void Start () 
 	{
 		gameManager = FindObjectOfType<GameManager>();
-		cellsManager = FindObjectOfType<CellsManager>();	
+		cellsManager = FindObjectOfType<CellsManager>();
+		wordManager = FindObjectOfType<WordManager>();
 	}
 	
 	// Update is called once per frame
@@ -30,7 +32,7 @@ public class Tile : MonoBehaviour {
 		//print ("S");
 		if(!used)
 		{
-			GameObject.Find("WordManager").GetComponent<WordManager>().addCharacter(myLeterCase,gameObject);
+			wordManager.addCharacter(myLeterCase,gameObject);
 			used=true;
 			gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,.2f);
 		}
@@ -47,7 +49,7 @@ public class Tile : MonoBehaviour {
 	 */
 	public void selectPieceColorToDestroy()
 	{
-		if(color != ECOLORS_ID.LETER)
+		if(typeOfPiece != ETYPEOFPIECE_ID.LETTER)
 		{
 			cellsManager.selectCellsOfColor(gameObject);
 	
