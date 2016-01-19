@@ -16,6 +16,7 @@ public class PersistentData : MonoBehaviour
 	public int currentLevel;
 	[HideInInspector]
 	public Levels data;
+	[HideInInspector]public ABCDataStructure abcStructure;
 
 	//El idioma en que se encuentra configurado actualmente el juego
 	private string currentLanguage;
@@ -46,8 +47,22 @@ public class PersistentData : MonoBehaviour
 			return;
 		}
 
+		abcStructure = FindObjectOfType<ABCDataStructure>();
 
-		TextAsset abc = Resources.Load("ABCData/ABC_spanish") as TextAsset;
-		Debug.Log(abc);
+		configureGameForLanguage();
+	}
+
+	/**
+	 * Configura el juego para el lenguaje que tiene UserDataManager
+	 **/ 
+	public void configureGameForLanguage()
+	{
+		//Alfabeto
+		TextAsset abc = Resources.Load("ABCData/ABC_"+UserDataManager.instance.language) as TextAsset;
+		abcStructure.initializeAlfabet(abc.text);
+
+		//Diccionario
+		abc = Resources.Load("ABCData/WORDS_"+UserDataManager.instance.language) as TextAsset;
+		abcStructure.processDictionary(abc.text);
 	}
 }
