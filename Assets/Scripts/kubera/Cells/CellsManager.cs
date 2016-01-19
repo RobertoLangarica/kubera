@@ -17,6 +17,8 @@ public class CellsManager : MonoBehaviour
 	public int width;
 	public int height;
 
+	public int pointPerLine = 10;
+
 	//Bandera para el powerUp de Destruccion por color
 	//false: destruye todos los del mismo color en la escena
 	//true: destruye todos los del mismo color que este juntos
@@ -27,28 +29,13 @@ public class CellsManager : MonoBehaviour
 	//Todas las celdas del grid
 	protected List<Cell> cells = new List<Cell>();
 
+	protected GameManager gameManager;
+
 	void Start () 
 	{
 		CreateGrid();
-	}
 
-	void Update () 
-	{
-		/*if(Input.GetKeyDown(KeyCode.A))
-		{
-			//LineCreated();
-			clearCellsOfColor(cells[0]);
-		}
-		if(runCreationOnEditor)
-		{
-			CreateGrid();
-			runCreationOnEditor = false;
-		}
-		if(destroyGridOnEditor)
-		{
-			DestroyGrid();
-			destroyGridOnEditor = false;
-		}*/
+		gameManager = FindObjectOfType<GameManager>();
 	}
 
 	/*
@@ -155,7 +142,6 @@ public class CellsManager : MonoBehaviour
 		int wIndex = 0;
 		int hIndex = 0;
 
-		//NOTA: Falta evaluar las celdas vacias
 		for(int i = 0;i < cells.Count;i++)
 		{
 			if(cells[i].occupied && cells[i].typeOfPiece != ETYPEOFPIECE_ID.LETTER)
@@ -176,6 +162,7 @@ public class CellsManager : MonoBehaviour
 			{
 				createLettersOn(true,i);
 				foundLine = true;
+				gameManager.addPoints(pointPerLine);
 			}
 		}
 		for(int i = 0;i < width;i++)
@@ -184,6 +171,7 @@ public class CellsManager : MonoBehaviour
 			{
 				createLettersOn(false,i);
 				foundLine = true;
+				gameManager.addPoints(pointPerLine);
 			}
 		}
 

@@ -76,14 +76,18 @@ public class Cell : MonoBehaviour
 		}
 		if((cellType & 0x8) == 0x8)
 		{
-			piece = (GameObject.Instantiate(piecePrefab) as GameObject).GetComponent<Piece>().pieces[0];
-			piece.transform.position = transform.position + new Vector3(gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
-			                                       -gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
-			piece.transform.position = new Vector3(piece.transform.position.x,piece.transform.position.y,0);
+			Vector3 tempV3 = transform.position + new Vector3(gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
+			                                                  -gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
+			GameObject go = GameObject.Instantiate(piecePrefab) as GameObject;
+			go.GetComponent<BoxCollider2D>().enabled = false;
+
+			piece = go.GetComponent<Piece>().pieces[0];
+			tempV3.z = 0;
+			go.transform.position = tempV3;
 
 			typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
 			occupied = true;
-			available = false;
+			available = true;
 
 			piece.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
 			piece.GetComponent<BoxCollider2D>().enabled = true;
@@ -91,6 +95,7 @@ public class Cell : MonoBehaviour
 			piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(piece.GetComponent<Tile>().myLeterCase);
 			piece.GetComponent<Tile>().cellIndex = this;
 			piece.AddComponent<ABCChar>();
+			piece.GetComponent<Tile>().typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
 				
 			piece.GetComponent<ABCChar>().character = piece.GetComponent<Tile>().myLeterCase;
 

@@ -69,11 +69,11 @@ public class Piece : MonoBehaviour {
 			{
 				if(colorToSet ==0 && randomColor)
 				{
-					currentTypeOfPiece = (ETYPEOFPIECE_ID)Random.Range(1,8);
+					typeOfPiece = (ETYPEOFPIECE_ID)Random.Range(1,8);
 				}
 				else
 				{
-					currentTypeOfPiece = (ETYPEOFPIECE_ID)colorToSet;
+					typeOfPiece = (ETYPEOFPIECE_ID)colorToSet;
 				}
 				
 				foreach(GameObject piece2 in pieces)
@@ -111,6 +111,7 @@ public class Piece : MonoBehaviour {
 				rendererColor = new Color(0.376f, 0.698f, 0.639f); 
 				break;
 			case ETYPEOFPIECE_ID.BLACK:
+			case ETYPEOFPIECE_ID.LETTER_FROM_BEGINING:
 				rendererColor = new Color(0.180f, 0.188f, 0.192f);
 				break;
 			case ETYPEOFPIECE_ID.BLUE:
