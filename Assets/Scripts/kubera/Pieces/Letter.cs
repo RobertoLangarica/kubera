@@ -9,7 +9,7 @@ public class Letter : MonoBehaviour {
 
 	void Start()
 	{
-		GameObject wM = GameObject.Find("WordManager");
+		GameObject wordManager = GameObject.Find("WordManager");
 
 		//GetComponent<Button>().onClick.AddListener(
 		//	() => wM.GetComponent<WordManager>().deleteCharFromSearch(gameObject.GetComponent<UIChar>())
@@ -26,8 +26,4 @@ public class Letter : MonoBehaviour {
 		Destroy (piece);
 	}
 
-	void OnCollisionEnter2D(Collision2D coll) {
-		print("S");
-		isColliding = true;
-	}
 }

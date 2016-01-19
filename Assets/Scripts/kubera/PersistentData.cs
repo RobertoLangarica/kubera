@@ -48,7 +48,7 @@ public class PersistentData : MonoBehaviour
 		}
 
 		abcStructure = FindObjectOfType<ABCDataStructure>();
-
+		
 		configureGameForLanguage();
 
 		print(currentLevelName);

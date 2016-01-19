@@ -14,6 +14,8 @@ public class WordManager : MonoBehaviour {
 	protected bool invalidCharlist;//Indica que la lista de caracteres tuvo o tiene uno invalido
 
 	protected int padding = 300;
+	protected int sortingAfterSwap;
+	protected Vector2[] positionOfLetters; //los vectores de las letras 
 
 	void Start()
 	{
@@ -160,6 +162,7 @@ public class WordManager : MonoBehaviour {
 		FindObjectOfType<ShowNext>().ShowingNext(false);
 		invalidCharlist = false;
 
+
 		//si la palabra esta completa se cuentan un punto por letra y se le avisa a gameManager
 		if(words.completeWord)
 		{
@@ -193,7 +196,10 @@ public class WordManager : MonoBehaviour {
 				{
 					if(t)
 					{
-						t.piece.GetComponent<Tile>().cellIndex.clearCell();
+						if(t.piece.GetComponent<Tile>())
+						{
+							t.piece.GetComponent<Tile>().cellIndex.clearCell();
+						}
 
 						//para destruir la pieza
 						t.DestroyPiece();
@@ -203,7 +209,15 @@ public class WordManager : MonoBehaviour {
 				}
 				else
 				{
-					t.piece.GetComponent<Tile>().backToNormal();
+					if(t.piece.GetComponent<Tile>())
+					{
+						t.piece.GetComponent<Tile>().backToNormal();
+					}
+					else if(t.gameObject.GetComponent<ABCChar>().wildcard)
+					{
+						GameObject.Find("WildCard").GetComponent<PowerUpBase>().returnPower();
+					}
+
 				}
 			}
 
@@ -358,33 +372,77 @@ public class WordManager : MonoBehaviour {
 	public void swappingLetters(GameObject letter)
 	{
 		for(int i=0; i<container.transform.childCount; i++)
-		{
+		{			
 			if(container.transform.GetChild(i).gameObject != letter)
 			{
-				if((int)container.transform.GetChild(i).transform.position.x == (int)letter.transform.position.x )
+				if((int)container.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition.x > ((int)letter.GetComponent<RectTransform>().anchoredPosition.x - ((int)letter.GetComponent<RectTransform>().rect.width * 0.5f)) 
+				   && (int)container.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition.x < ((int)letter.GetComponent<RectTransform>().anchoredPosition.x + ((int)letter.GetComponent<RectTransform>().rect.width * 0.5f)))
 				{
-					print("S");
-					letter.transform.SetSiblingIndex(i);
-					//container.transform.SetSiblingIndex(0);
+					if(letter.GetComponent<RectTransform>().anchoredPosition.x > container.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition.x)
+					{
+						//izquierda a derecha
+						sortingAfterSwap = i;
+
+						for(int j=container.transform.childCount-2; j>=i; j--)
+						{
+							//print(container.transform.GetChild(j).GetComponent<ABCChar>().character + "       "+j);
+							//print(position[j+1]);
+							container.transform.GetChild(j).GetComponent<RectTransform>().anchoredPosition = positionOfLetters[j+1];
+						}
+					}
+					else
+					{
+						//derecha a izquierda 
+						sortingAfterSwap = i+1;
+
+						for(int j =0; j<=i; j++)
+						{
+							//print(container.transform.GetChild(j).GetComponent<ABCChar>().character);
+							//print(position[j]);
+							container.transform.GetChild(j).GetComponent<RectTransform>().anchoredPosition = positionOfLetters[j];
+						}
+					}
+					break;
 				}
 			}
 		}
 	}
 
-	public void swappLetters(bool activate)
+
+	
+	/*
+	 * activa o desactiva el poder mover las letras
+	 * a la letra que se movera se mueve su index para que este arriba de las otras letras
+	 */
+	public void canSwappLetters(bool deActivate,GameObject letter)
 	{
-		if(activate)
+		if(deActivate)
 		{
-			container.GetComponent<HorizontalLayoutGroup>().enabled = true;
+			container.GetComponent<HorizontalLayoutGroup>().enabled = false;
+			sortingAfterSwap = letter.transform.GetSiblingIndex();
+			letter.transform.SetSiblingIndex(100);
 		}
 		else
 		{
-			container.GetComponent<HorizontalLayoutGroup>().enabled = false;
+			container.GetComponent<HorizontalLayoutGroup>().enabled = true;
+			letter.transform.SetSiblingIndex(sortingAfterSwap);
+		}
+	}
+
+	/*
+	 * llena el arreglo de vectores de las posiciones de las letras para poder moverlas
+	 */
+	public void setPositionToLetters()
+	{
+		positionOfLetters = new Vector2[container.transform.childCount];
+		for(int i=0; i<container.transform.childCount; i++)
+		{
+			positionOfLetters[i] = container.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition;
 		}
 	}
 
 	/**
-	 * actualiza el padding de la estructura de letras mostradas para que se vean alienadas
+	 * actualiza el padding de la estructura de letras mostradas para que se vean centradas
 	 **/
 	protected void actualizePadding(bool adding)
 	{

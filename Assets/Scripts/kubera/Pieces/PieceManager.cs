@@ -8,6 +8,7 @@ public class PieceManager : MonoBehaviour {
 	protected List<GameObject> piecesList = new List<GameObject>();
 	public List<GameObject> piecesInBar = new List<GameObject>();
 	public List<GameObject> piecesToRotate = new List<GameObject>();
+	//Lista de las letras que estan actualmente en la escena
 	public List<ABCChar> listChar = new List<ABCChar>();
 
 	public Transform[] firstPos;
@@ -19,7 +20,10 @@ public class PieceManager : MonoBehaviour {
 	protected int figuresInBar;
 	public GameManager gameManager;
 
-	protected List<string> poolLeters = new List<string>();
+	//Lista de las posibles listas que pueden salir en orden aleatorio
+	protected List<ScriptableABCChar> randomizedPoolLeters = new List<ScriptableABCChar>();
+	//Lista de las letras que se leyeron del XML
+	protected List<ScriptableABCChar> XMLPoolLeters = new List<ScriptableABCChar>();
 
 	//texturas de las letras en juego
 	protected UnityEngine.Object[] textureObject;
@@ -91,23 +95,45 @@ public class PieceManager : MonoBehaviour {
 	protected void fillPoolLetter()
 	{
 		string[] myPieces = PersistentData.instance.currentLevel.lettersPool.Split(new char[1]{','});
+		string[] piecesInfo;
 
-		for(int i =0; i<myPieces.Length; i++)
+		/*Aqui diseccionar el XML****************/
+		int amout = 0;
+		ScriptableABCChar newLetter = null;
+
+		if(XMLPoolLeters.Count == 0)
 		{
-			//print(myPieces[i]);
-			poolLeters.Add (myPieces[i]);
+			for(int i =0; i<myPieces.Length; i++)
+			{
+				piecesInfo = myPieces[i].Split(new char[1]{'_'});
+				amout = int.Parse(piecesInfo[0]);
+				for(int j = 0;j < amout;j++)
+				{
+					newLetter = new ScriptableABCChar();
+					newLetter.character = piecesInfo[1];
+					newLetter.pointsValue = piecesInfo[2];
+					newLetter.typeOfLetter = piecesInfo[3];
+					XMLPoolLeters.Add(newLetter);
+				}
+			}
 		}
-	
-		List<string> newList = new List<string>();
-		
-		while(poolLeters.Count >0)
+		/*****/
+
+		randomizedPoolLeters = new List<ScriptableABCChar>();
+		for(int i = 0;i < XMLPoolLeters.Count;i++)
 		{
-			int val = UnityEngine.Random.Range(0,poolLeters.Count);
-			newList.Add(poolLeters[val]);
-			poolLeters.RemoveAt(val);
+			randomizedPoolLeters.Add(XMLPoolLeters[i]);
+		}
+		XMLPoolLeters.Clear();
+
+		while(randomizedPoolLeters.Count >0)
+		{
+			int val = UnityEngine.Random.Range(0,randomizedPoolLeters.Count);
+			XMLPoolLeters.Add(randomizedPoolLeters[val]);
+			randomizedPoolLeters.RemoveAt(val);
 		}
 
-		poolLeters = newList;
+		randomizedPoolLeters = XMLPoolLeters;
 	}
 
 	public void checkBarr(GameObject piecesSelected)
@@ -131,11 +157,11 @@ public class PieceManager : MonoBehaviour {
 		}
 	}
 
-	public string putLeter()
+	public ScriptableABCChar giveLetterInfo()
 	{
-		string letter = poolLeters[0];
-		poolLeters.RemoveAt (0);
-		if(poolLeters.Count==0)
+		ScriptableABCChar letter = randomizedPoolLeters[0];
+		randomizedPoolLeters.RemoveAt (0);
+		if(randomizedPoolLeters.Count==0)
 		{
 			fillPoolLetter();
 		}
@@ -156,11 +182,6 @@ public class PieceManager : MonoBehaviour {
 		{
 			names[i] = textureObject[i].name;
 		}
-	}
-
-	public void setPieceInLetter(GameObject letter)
-	{
-
 	}
 
 	//Se ponen las pieces que se rotaran

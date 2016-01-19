@@ -85,7 +85,8 @@ public class InputGameController : MonoBehaviour {
 				{
 					piece = gesture.Raycast.Hit2D.transform.gameObject;
 					isLeter = true;
-					wordManager.swappLetters(false);
+					wordManager.setPositionToLetters();
+					wordManager.canSwappLetters(true,piece);
 				}
 			}
 		}	
@@ -140,6 +141,7 @@ public class InputGameController : MonoBehaviour {
 				//Lo habilitamos y ajustamos
 
 				swappingLetter();
+				piece = null;
 				break;
 			}
 
@@ -308,7 +310,14 @@ public class InputGameController : MonoBehaviour {
 	{
 		if (hasMoved) 
 		{
-			piece.transform.DOMove (end, .3f).SetId("MovingPiece");
+			if(piece.GetComponent<Letter>())
+			{
+				piece.transform.DOMove (end, .8f).SetId("MovingPiece");
+			}
+			else
+			{
+				piece.transform.DOMove (end, .3f).SetId("MovingPiece");
+			}
 		}
 	}
 
@@ -414,6 +423,8 @@ public class InputGameController : MonoBehaviour {
 	protected void swappingLetter()
 	{
 		DOTween.KillAll();
-		wordManager.swappLetters(true);
+
+
+		wordManager.canSwappLetters(false,piece);
 	}
 }

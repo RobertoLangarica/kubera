@@ -76,29 +76,32 @@ public class Cell : MonoBehaviour
 		}
 		if((cellType & 0x8) == 0x8)
 		{
-			piece = (GameObject.Instantiate(piecePrefab) as GameObject).GetComponent<Piece>().pieces[0];
-			piece.transform.position = transform.position + new Vector3(gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
-			                                       -gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
-			piece.transform.position = new Vector3(piece.transform.position.x,piece.transform.position.y,0);
-
 			typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
 			occupied = true;
-			available = false;
+			available = true;
 
+			Vector3 tempV3 = transform.position + new Vector3(gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
+			                                                  -gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
+			GameObject go = GameObject.Instantiate(piecePrefab) as GameObject;
+			go.GetComponent<BoxCollider2D>().enabled = false;
+			piece = go.GetComponent<Piece>().pieces[0];
+			tempV3.z = 0;
+			go.transform.position = tempV3;
+
+			Tile tempTile = piece.GetComponent<Tile>();
+			ABCChar tempAbcChar = piece.AddComponent<ABCChar>();
+
+			tempAbcChar.initializeFromScriptableABCChar(PieceManager.instance.giveLetterInfo());
+
+			tempTile.myLeterCase = tempAbcChar.character;
+			tempTile.cellIndex = this;
+			tempTile.typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
+			
 			piece.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
+			piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(tempTile.myLeterCase);
 			piece.GetComponent<BoxCollider2D>().enabled = true;
-			piece.GetComponent<Tile>().myLeterCase = PieceManager.instance.putLeter();
-			piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(piece.GetComponent<Tile>().myLeterCase);
-			piece.GetComponent<Tile>().cellIndex = this;
-			piece.AddComponent<ABCChar>();
-				
-			piece.GetComponent<ABCChar>().character = piece.GetComponent<Tile>().myLeterCase;
 
-			if(piece.GetComponent<Tile>().myLeterCase == ".")
-			{
-				piece.AddComponent<ABCChar>().wildcard = true;
-			}
-			PieceManager.instance.listChar.Add(piece.GetComponent<ABCChar>());
+			PieceManager.instance.listChar.Add(tempAbcChar);
 		}
 	}
 }

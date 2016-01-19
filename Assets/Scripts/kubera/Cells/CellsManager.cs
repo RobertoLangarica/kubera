@@ -17,6 +17,8 @@ public class CellsManager : MonoBehaviour
 	public int width;
 	public int height;
 
+	public int pointPerLine = 10;
+
 	//Bandera para el powerUp de Destruccion por color
 	//false: destruye todos los del mismo color en la escena
 	//true: destruye todos los del mismo color que este juntos
@@ -27,28 +29,13 @@ public class CellsManager : MonoBehaviour
 	//Todas las celdas del grid
 	protected List<Cell> cells = new List<Cell>();
 
+	protected GameManager gameManager;
+
 	void Start () 
 	{
 		CreateGrid();
-	}
 
-	void Update () 
-	{
-		/*if(Input.GetKeyDown(KeyCode.A))
-		{
-			//LineCreated();
-			clearCellsOfColor(cells[0]);
-		}
-		if(runCreationOnEditor)
-		{
-			CreateGrid();
-			runCreationOnEditor = false;
-		}
-		if(destroyGridOnEditor)
-		{
-			DestroyGrid();
-			destroyGridOnEditor = false;
-		}*/
+		gameManager = FindObjectOfType<GameManager>();
 	}
 
 	/*
@@ -68,7 +55,9 @@ public class CellsManager : MonoBehaviour
 				go = GameObject.Instantiate(cellPrefab,nPos,Quaternion.identity) as GameObject;
 				go.transform.SetParent(transform);
 				cells.Add(go.GetComponent<Cell>());
+
 				cells[cells.Count-1].setTypeToCell(int.Parse(levelGridData[cells.Count-1]),letterFromBeginingPrefab);
+
 				nPos.x += cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x + 0.03f;
 			}
 			nPos.y -= cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y + 0.03f;
@@ -155,7 +144,6 @@ public class CellsManager : MonoBehaviour
 		int wIndex = 0;
 		int hIndex = 0;
 
-		//NOTA: Falta evaluar las celdas vacias
 		for(int i = 0;i < cells.Count;i++)
 		{
 			if(cells[i].occupied && cells[i].typeOfPiece != ETYPEOFPIECE_ID.LETTER)
@@ -176,6 +164,7 @@ public class CellsManager : MonoBehaviour
 			{
 				createLettersOn(true,i);
 				foundLine = true;
+				gameManager.addPoints(pointPerLine);
 			}
 		}
 		for(int i = 0;i < width;i++)
@@ -184,6 +173,7 @@ public class CellsManager : MonoBehaviour
 			{
 				createLettersOn(false,i);
 				foundLine = true;
+				gameManager.addPoints(pointPerLine);
 			}
 		}
 
@@ -323,23 +313,26 @@ public class CellsManager : MonoBehaviour
 	protected void turnPiecesToLetters(int cellIndex,int lineIndex)
 	{
 		int newIndex = lineIndex+cellIndex;
+		Tile tempTile = null;
+		ABCChar tempAbcChar = null;
+
 		cells[newIndex].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
 		if(cells[newIndex].piece != null)
 		{
+			tempTile = cells[newIndex].piece.GetComponent<Tile>();
+			tempAbcChar = cells[newIndex].piece.AddComponent<ABCChar>();
+			
+			tempAbcChar.initializeFromScriptableABCChar(PieceManager.instance.giveLetterInfo());
+			
+			tempTile.myLeterCase = tempAbcChar.character;
+			tempTile.cellIndex = cells[newIndex];
+			tempTile.typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
+			
 			cells[newIndex].piece.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
+			cells[newIndex].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(tempTile.myLeterCase);
 			cells[newIndex].piece.GetComponent<BoxCollider2D>().enabled = true;
-			cells[newIndex].piece.GetComponent<Tile>().myLeterCase = PieceManager.instance.putLeter();
-			cells[newIndex].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(cells[newIndex].piece.GetComponent<Tile>().myLeterCase);
-			cells[newIndex].piece.GetComponent<Tile>().cellIndex = cells[newIndex];
-			cells[newIndex].piece.AddComponent<ABCChar>();
-		
-			cells[newIndex].piece.GetComponent<ABCChar>().character = cells[newIndex].piece.GetComponent<Tile>().myLeterCase;
-		
-			if(cells[newIndex].piece.GetComponent<Tile>().myLeterCase == ".")
-			{
-				cells[newIndex].piece.AddComponent<ABCChar>().wildcard = true;
-			}
-			PieceManager.instance.listChar.Add(cells[newIndex].piece.GetComponent<ABCChar>());
+			
+			PieceManager.instance.listChar.Add(tempAbcChar);
 		}
 	}
 
