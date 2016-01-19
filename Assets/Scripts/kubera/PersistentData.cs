@@ -38,6 +38,7 @@ public class PersistentData : MonoBehaviour
 
 		TextAsset tempTxt = (TextAsset)Resources.Load ("levels");
 		data = Levels.LoadFromText(tempTxt.text);
+
 	}
 
 	void Start()
@@ -48,7 +49,7 @@ public class PersistentData : MonoBehaviour
 		}
 
 		abcStructure = FindObjectOfType<ABCDataStructure>();
-
+		
 		configureGameForLanguage();
 	}
 

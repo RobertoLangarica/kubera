@@ -180,11 +180,6 @@ public class PieceManager : MonoBehaviour {
 		}
 	}
 
-	public void setPieceInLetter(GameObject letter)
-	{
-
-	}
-
 	//Se ponen las pieces que se rotaran
 	public void setRotatePieces(Piece piece)
 	{
