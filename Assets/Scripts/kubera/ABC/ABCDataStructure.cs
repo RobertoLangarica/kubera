@@ -114,7 +114,7 @@ public class ABCDataStructure : MonoBehaviour {
 			//Una nueva subpalabra
 			if(tmp != null && currChar == limit-1 && !tmp.end)
 			{
-				Debug.Log("Subpalabra:"+word);
+				//Debug.Log("Subpalabra:"+word);
 				tmp.end = true;
 				return;
 			}
@@ -140,7 +140,7 @@ public class ABCDataStructure : MonoBehaviour {
 		}
 		else
 		{
-			Debug.Log("Ya existia previamente la palabra: "+word);
+			//Debug.Log("Ya existia previamente la palabra: "+word);
 		}
 	}
 
@@ -359,7 +359,7 @@ public class ABCDataStructure : MonoBehaviour {
 		checkAndupdateForcompleteWord();
 	}
 
-	protected void checkAndupdateForcompleteWord()
+	public void checkAndupdateForcompleteWord()
 	{
 		if(isValid)
 		{
