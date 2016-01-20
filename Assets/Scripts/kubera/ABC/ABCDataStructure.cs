@@ -72,17 +72,6 @@ public class ABCDataStructure : MonoBehaviour {
 			data = new IntList();
 			data.content = new List<IntList>();
 		}
-
-		/*registerNewWord("belleza");
-		registerNewWord("bella");
-		registerNewWord("ella");
-		registerNewWord("ala");
-		registerNewWord("bebe");
-		registerNewWord("beba");
-		registerNewWord("baba");
-		registerNewWord("babel");
-		registerNewWord("bala");
-		registerNewWord("alba");*/
 	}
 
 	/**

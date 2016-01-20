@@ -418,6 +418,9 @@ public class WordManager : MonoBehaviour {
 			}
 		}
 	}
+
+
+	
 	/*
 	 * activa o desactiva el poder mover las letras
 	 * a la letra que se movera se mueve su index para que este arriba de las otras letras
@@ -455,6 +458,7 @@ public class WordManager : MonoBehaviour {
 			}
 		}
 	}
+
 	/*
 	 * llena el arreglo de vectores de las posiciones de las letras para poder moverlas
 	 */

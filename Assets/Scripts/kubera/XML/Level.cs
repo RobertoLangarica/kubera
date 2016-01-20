@@ -4,18 +4,38 @@ using System.Collections.Generic;
 
 public class Level
 {
-	[XmlAttribute("name")]
-	public string name;
+
+	/**
+	 * Nombre que tendra el nivel con el siguiente formato:
+	 * Numero de 4 digitos minimo
+	 * ej. 00001
+	 **/ 
+	[XmlAttribute("name")]public string name; 
+
+	[XmlAttribute("difficulty")]public int difficulty;//Dificultad que de momento no se utiliza
 	
-	[XmlAttribute("difficulty")]
-	public int difficulty;
+	/**
+	 * Letras separadas por ',' con el siguiente formato:
+	 * (Cantidad en numero)_(Letra)_(Valor en numero y letra)_(Tipo)
+	 * ej. 5_b_1_3,2_a_x2_5
+	 **/ 
+	[XmlAttribute("lettersPool")]public string lettersPool;
+
+	//Pool de letras obstaculo. Tienen el mismo formato que las letras
+	[XmlAttribute("obstacleLettersPool")]public string obstacleLettersPool;
+
+
+	/**
+	 * Listado de piezas separado por ',' con el siguiente formato:
+	 * (Cantidad)_Pieza
+	 * ej. 2_A0
+	 * */
+	[XmlAttribute("pieces")]public string pieces;
 	
-	[XmlAttribute("pool")]
-	public string pool;
-	
-	[XmlAttribute("pieces")]
-	public string pieces;
-	
-	[XmlAttribute("grid")]
-	public string grid;
+
+	/**
+	 * Cadena de enteros separdos por ',' que representan la grid de juego.
+	 * Hay que consultar a Cell para saber que significan los enteros
+	 **/ 
+	[XmlAttribute("grid")]public string grid;
 }

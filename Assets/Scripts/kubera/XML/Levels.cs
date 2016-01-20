@@ -32,4 +32,20 @@ public class Levels
 		set{_levels = new List<Level>(value);}
 		get{return _levels.ToArray();}
 	}
+
+	/**
+	 * Devuelve el nivel indicado en lvlName
+	 **/ 
+	public Level getLevelByName(string lvlName)
+	{
+		foreach(Level l in _levels)
+		{
+			if(l.name.Equals(lvlName))
+			{
+				return l;
+			}
+		}
+
+		return null;
+	}
 }

@@ -72,9 +72,11 @@ public class PieceManager : MonoBehaviour {
 	protected void fillList()
 	{
 		//Debug.Log ("LLenando la lista");
-		string[] myPieces = gameManager.currentLevel.pieces.Split(new char[1]{','});
 		string[] piecesInfo;
 		int amout = 0;
+
+		string[] myPieces = PersistentData.instance.currentLevel.pieces.Split(new char[1]{','});
+
 		for(int i =0; i<myPieces.Length; i++)
 		{
 			piecesInfo = myPieces[i].Split(new char[1]{'_'});
@@ -100,7 +102,7 @@ public class PieceManager : MonoBehaviour {
 
 	protected void fillPoolLetter()
 	{
-		string[] myPieces = gameManager.currentLevel.pool.Split(new char[1]{','});
+		string[] myPieces = PersistentData.instance.currentLevel.lettersPool.Split(new char[1]{','});
 		string[] piecesInfo;
 
 		/*Aqui diseccionar el XML****************/
