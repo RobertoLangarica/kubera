@@ -38,4 +38,25 @@ public class Level
 	 * Hay que consultar a Cell para saber que significan los enteros
 	 **/ 
 	[XmlAttribute("grid")]public string grid;
+
+	/**
+	 * Cantidad de movimientos que se tienen para el nivel
+	 **/ 
+	[XmlAttribute("moves")]public int moves;
+
+	/**
+	 * Puntos para obtener una estrella al pasar el nivel
+	 **/ 
+	[XmlAttribute("scoreToStar1")]public int scoreToStar1;
+
+	/**
+	 * Puntos para obtener una estrella al pasar el nivel
+	 **/ 
+	[XmlAttribute("scoreToStar2")]public int scoreToStar2;
+
+	/**
+	 * Puntos para obtener una estrella al pasar el nivel
+	 **/ 
+	[XmlAttribute("scoreToStar3")]public int scoreToStar3;
+	
 }
