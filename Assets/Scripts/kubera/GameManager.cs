@@ -8,9 +8,6 @@ public class GameManager : MonoBehaviour
 	public PopUp winPopUp;
 	public Text scoreText;
 
-	[HideInInspector]
-	public Level currentLevel;
-
 	public bool destroyByColor;
 
 	public Text points;
@@ -22,8 +19,6 @@ public class GameManager : MonoBehaviour
 	void Awake () 
 	{
 		persistentData = FindObjectOfType<PersistentData>();
-		
-		currentLevel = persistentData.data.levels[persistentData.currentLevel];
 
 		addPoints (0);
 	}

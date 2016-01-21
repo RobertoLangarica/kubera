@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -90,6 +90,7 @@ public class PowerUpBase : MonoBehaviour
 		{
 			GameObject.Find("WordManager").GetComponent<WordManager>().addCharacter(".",gameObject);
 			PowerUsed();
+			FindObjectOfType<ShowNext>().ShowingNext(true);
 		}
 	}
 
@@ -99,7 +100,7 @@ public class PowerUpBase : MonoBehaviour
 		numberUses.text = uses.ToString ();
 		imageUses.SetActive(true);
 		gameObject.GetComponent<Button>().interactable = true;
-		FindObjectOfType<ShowNext>().ShowingNext(true);
+
 	}
 
 	protected void initializeUsesFromUserData()

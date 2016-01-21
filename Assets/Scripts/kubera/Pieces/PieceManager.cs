@@ -54,7 +54,6 @@ public class PieceManager : MonoBehaviour {
 	{
 		for(int i= 0; i<sizeOfBar; i++)
 		{
-			//print("barra "+i);
 			GameObject go = Instantiate(piecesList[0]);
 			go.name = piecesList[0].name;
 			piecesInBar.Add(piecesList[0]);
@@ -73,11 +72,20 @@ public class PieceManager : MonoBehaviour {
 	protected void fillList()
 	{
 		//Debug.Log ("LLenando la lista");
-		string[] myPieces = gameManager.currentLevel.pieces.Split(new char[1]{','});
+		string[] piecesInfo;
+		int amout = 0;
+
+		string[] myPieces = PersistentData.instance.currentLevel.pieces.Split(new char[1]{','});
 
 		for(int i =0; i<myPieces.Length; i++)
 		{
-			piecesList.Add ((GameObject)(Resources.Load (myPieces[i])));
+			piecesInfo = myPieces[i].Split(new char[1]{'_'});
+			amout = int.Parse(piecesInfo[0]);
+
+			for(int j=0; j<amout; j++)
+			{
+				piecesList.Add ((GameObject)(Resources.Load (myPieces[i].Substring(2))));
+			}
 		}
 
 		List<GameObject> newList = new List<GameObject>();
@@ -94,7 +102,7 @@ public class PieceManager : MonoBehaviour {
 
 	protected void fillPoolLetter()
 	{
-		string[] myPieces = gameManager.currentLevel.pool.Split(new char[1]{','});
+		string[] myPieces = PersistentData.instance.currentLevel.lettersPool.Split(new char[1]{','});
 		string[] piecesInfo;
 
 		/*Aqui diseccionar el XML****************/
