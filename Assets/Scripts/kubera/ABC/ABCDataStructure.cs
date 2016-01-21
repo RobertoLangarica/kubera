@@ -348,7 +348,7 @@ public class ABCDataStructure : MonoBehaviour {
 		checkAndupdateForcompleteWord();
 	}
 
-	protected void checkAndupdateForcompleteWord()
+	public void checkAndupdateForcompleteWord()
 	{
 		if(isValid)
 		{

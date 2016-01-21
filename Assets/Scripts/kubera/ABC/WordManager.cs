@@ -69,6 +69,7 @@ public class WordManager : MonoBehaviour {
 		{
 			character.wildcard = true;
 		}
+
 		character.value = words.getCharValue(value);
 		character.character = value.ToUpperInvariant();
 		letter.GetComponent<UIChar>().character = character; 
@@ -138,6 +139,10 @@ public class WordManager : MonoBehaviour {
 				{
 					onWordComplete();
 				}
+				else
+				{
+					FindObjectOfType<ShowNext>().isWordCompleted(false);
+				}
 			}
 		}
 		else
@@ -149,6 +154,10 @@ public class WordManager : MonoBehaviour {
 			if(words.completeWord)
 			{
 				onWordComplete();
+			}
+			else
+			{
+				FindObjectOfType<ShowNext>().isWordCompleted(false);
 			}
 		}
 	}
@@ -199,10 +208,11 @@ public class WordManager : MonoBehaviour {
 						if(t.piece.GetComponent<Tile>())
 						{
 							t.piece.GetComponent<Tile>().cellIndex.clearCell();
+							//para destruir la pieza
+							t.DestroyPiece();
 						}
 
-						//para destruir la pieza
-						t.DestroyPiece();
+
 
 						//GameObject.Destroy(t.piece);
 					}
@@ -233,6 +243,7 @@ public class WordManager : MonoBehaviour {
 	protected void onWordComplete()
 	{
 		Debug.Log("Se completo: "+getFullWord());
+		FindObjectOfType<ShowNext>().isWordCompleted(true);
 	}
 
 	/**
@@ -426,6 +437,25 @@ public class WordManager : MonoBehaviour {
 		{
 			container.GetComponent<HorizontalLayoutGroup>().enabled = true;
 			letter.transform.SetSiblingIndex(sortingAfterSwap);
+			chars.Clear();
+			for(int i=0; i<container.transform.childCount; i++)
+			{
+				//print(container.transform.GetChild(i).GetComponent<ABCChar>().character);
+				chars.Add(container.transform.GetChild(i).GetComponent<ABCChar>());
+			}
+			words.initCharByCharValidation();
+			foreach(ABCChar c in chars)
+			{
+				words.validateChar(c);
+			}
+			if(words.completeWord)
+			{
+				onWordComplete();
+			}
+			else
+			{
+				FindObjectOfType<ShowNext>().isWordCompleted(false);
+			}
 		}
 	}
 
