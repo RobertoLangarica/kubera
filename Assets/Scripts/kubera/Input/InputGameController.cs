@@ -254,7 +254,7 @@ public class InputGameController : MonoBehaviour {
 					}
 					else
 					{
-						gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>().ShootLetter();
+						gesture.Raycast.Hit2D.transform.gameObject.GetComponent<ABCChar>().ShootLetter();
 						FindObjectOfType<ShowNext>().ShowingNext(true);
 						gameObject.GetComponent<AudioSource>().Play();
 					}

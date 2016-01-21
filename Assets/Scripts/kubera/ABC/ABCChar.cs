@@ -20,11 +20,18 @@ public class ABCChar : MonoBehaviour
 	[HideInInspector]public bool used;//Se usa por ABCDataStructure cuando averigua si se pueden armar palabras
 	[HideInInspector]public int index;//Indice del caracter en WordManager
 
-	protected string pointsValue;//Cantidad de puntos que entraga la letra al ser usada
-	protected string typeOfLetter;//El tpo de letra que es, puede ntregar powerUps al momento de usarse
+	public string pointsValue;//Cantidad de puntos que entraga la letra al ser usada
+	public string typeOfLetter;//El tpo de letra que es, puede ntregar powerUps al momento de usarse
+
+	protected PowerUpManager powerUpManager;//Acceso al manager de powerUps para agregarle usos
+	protected WordManager wordManager;
+	protected bool usedFromGrid;
 
 	void Start () 
 	{
+		powerUpManager = FindObjectOfType<PowerUpManager>();
+		wordManager = FindObjectOfType<WordManager>();
+
 		//si es comodin lo dejamos en blanco y sino le dejamos el texto adecuado
 		if(!wildcard)
 		{
@@ -45,6 +52,8 @@ public class ABCChar : MonoBehaviour
 		{
 			txt.text = character;
 		}
+
+		setTextureByType();
 	}
 
 	public void initializeFromScriptableABCChar(ScriptableABCChar scriptAbcVals)
@@ -58,19 +67,97 @@ public class ABCChar : MonoBehaviour
 			wildcard = true;
 		}
 	}
-
-	public void givePoint()
+	
+	public void ShootLetter()
 	{
-		switch(pointsValue)
+		//print ("S");
+		if(!usedFromGrid)
 		{
-		case("x2"):
-		{}
+			wordManager.addCharacter(this,gameObject);
+			usedFromGrid=true;
+			gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,.2f);
+		}
+	}
+	
+	public void backToNormal()
+	{
+		usedFromGrid=false;
+		gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
+	}
+
+	public void letterWasUsed()
+	{
+		switch(typeOfLetter)
+		{
+		case("2"):
+		{
+			powerUpManager.giveUsesToPowerUP(EPOWERUPS.DESTROY_POWERUP);
+		}
 			break;
-		case("x3"):
-		{}
+		case("3"):
+		{
+			powerUpManager.giveUsesToPowerUP(EPOWERUPS.ROTATE_POWERUP);
+		}
 			break;
-		default:
-		{}
+		case("4"):
+		{
+			powerUpManager.giveUsesToPowerUP(EPOWERUPS.WILDCARD_POWERUP);
+		}
+			break;
+		case("5"):
+		{
+			powerUpManager.giveUsesToPowerUP(EPOWERUPS.BLOCK_POWERUP);
+		}
+			break;
+		}
+	}
+
+	protected void setTextureByType()
+	{
+		SpriteRenderer abcCharSprite = gameObject.GetComponent<SpriteRenderer>();
+
+		if(abcCharSprite == null)
+		{
+			return;
+		}
+
+		switch(typeOfLetter)
+		{
+		case("0")://Son las letras que estan desde el inicio y bloquean las lineas
+		{
+			abcCharSprite.color = Color.grey;
+			abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+		}
+			break;
+		case("1")://Letras normales
+		{
+			abcCharSprite.color = Color.white;
+			abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+		}
+			break;
+		case("2")://Letras que al ser usadas dan el powerUp de destruir
+		{
+			abcCharSprite.color = Color.blue;
+			abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+		}
+			break;
+		case("3")://Letras que al ser usadas dan el powerUp de girar
+		{
+			abcCharSprite.color = Color.green;
+			abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+		}
+			break;
+		case("4")://Letras que al ser usadas dan el powerUp de comodin 
+		{
+			abcCharSprite.color = Color.yellow;
+			abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+		}
+			break;
+		case("5")://Letras que al ser usadas dan el powerUp de bloque
+		{
+			abcCharSprite.color = Color.magenta;
+			abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+		}
 			break;
 		}
 	}

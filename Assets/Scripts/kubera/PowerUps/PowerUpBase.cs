@@ -2,13 +2,15 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class PowerUpBase : MonoBehaviour {
-
+public class PowerUpBase : MonoBehaviour 
+{
 	public int uses;
 
 	public GameObject powerOne;
 	public Text numberUses;
 	public GameObject imageUses;
+
+	public EPOWERUPS typeOfPowerUp;
 
 	protected GameManager gameManager;
 	protected CellsManager cellsManager;
@@ -17,15 +19,9 @@ public class PowerUpBase : MonoBehaviour {
 	{
 		gameManager = FindObjectOfType<GameManager>();
 		cellsManager = FindObjectOfType<CellsManager>();
-		numberUses.text = uses.ToString ();
-	}
 
-	void Update () 
-	{
-		if(Input.GetKeyDown(KeyCode.A))
-		{
-			activateDestroyMode();
-		}
+		initializeUsesFromUserData();
+		numberUses.text = uses.ToString ();
 	}
 
 	public void PowerUsed()
@@ -104,5 +100,32 @@ public class PowerUpBase : MonoBehaviour {
 		imageUses.SetActive(true);
 		gameObject.GetComponent<Button>().interactable = true;
 		FindObjectOfType<ShowNext>().ShowingNext(true);
+	}
+
+	protected void initializeUsesFromUserData()
+	{
+		switch(name)
+		{
+		case("PowerRotate"):
+		{
+			uses = UserDataManager.instance.rotatePowerUpUses;
+		}
+			break;
+		case("PowerOne"):
+		{
+			uses = UserDataManager.instance.onePiecePowerUpUses;
+		}
+			break;
+		case("WildCard"):
+		{
+			uses = UserDataManager.instance.wildCardPowerUpUses;
+		}
+			break;
+		case("Destroy"):
+		{
+			uses = UserDataManager.instance.destroyPowerUpUses;
+		}
+			break;
+		}
 	}
 }

@@ -31,6 +31,7 @@ public class Cell : MonoBehaviour
 		if((cellType & 0x2) == 0x2)
 		{
 			cellType = 1;
+			available = true;
 		}
 	}
 
@@ -69,7 +70,7 @@ public class Cell : MonoBehaviour
 		{
 			typeOfPiece = ETYPEOFPIECE_ID.NONE;
 			occupied = true;
-			available = false;
+			available = true;
 			piece = null;
 			//Cambio Temporal;
 			GetComponent<SpriteRenderer>().enabled = false;
@@ -78,7 +79,7 @@ public class Cell : MonoBehaviour
 		{
 			typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
 			occupied = true;
-			available = true;
+			available = false;
 
 			Vector3 tempV3 = transform.position + new Vector3(gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
 			                                                  -gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
@@ -93,12 +94,9 @@ public class Cell : MonoBehaviour
 
 			tempAbcChar.initializeFromScriptableABCChar(PieceManager.instance.giveLetterInfo());
 
-			tempTile.myLeterCase = tempAbcChar.character;
 			tempTile.cellIndex = this;
 			tempTile.typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
-			
-			piece.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
-			piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(tempTile.myLeterCase);
+
 			piece.GetComponent<BoxCollider2D>().enabled = true;
 
 			PieceManager.instance.listChar.Add(tempAbcChar);

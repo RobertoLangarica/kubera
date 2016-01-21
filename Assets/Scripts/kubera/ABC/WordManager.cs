@@ -44,19 +44,6 @@ public class WordManager : MonoBehaviour {
 	}
 
 	/**
-	 * Instancia un UIChar que recibe como referencia a character y manda validarlo
-	 * */
-	public void addCharacter(ABCChar character)
-	{
-		GameObject letter =  Instantiate(letterPrefab);
-		letter.GetComponent<UIChar>().character = character; 
-		addLetterToCorrectSpace(letter);
-		letter.transform.localScale = new Vector3 (1, 1, 1);
-
-		validateCharacter(character);
-	}
-
-	/**
 	 * Instancia UICHar y con la cadena que recibe crea un ABCChar que se
 	 * agrega como componente a la nueva pieza
 	 * */
@@ -69,9 +56,32 @@ public class WordManager : MonoBehaviour {
 		{
 			character.wildcard = true;
 		}
+		
 		character.value = words.getCharValue(value);
 		character.character = value.ToUpperInvariant();
 		letter.GetComponent<UIChar>().character = character; 
+		addLetterToCorrectSpace(letter);
+		letter.transform.localScale = new Vector3 (1, 1, 1);
+		letter.GetComponent<Letter> ().piece = piece;
+		
+		validateCharacter(character);
+		
+		//para que las letras esten centradas HardCoding
+		actualizePadding(true);
+	}
+
+	public void addCharacter(ABCChar pieceABCChar,GameObject piece)
+	{
+		GameObject letter =  Instantiate(letterPrefab);
+		ABCChar character = letter.AddComponent<ABCChar>();
+
+		character.wildcard = pieceABCChar.wildcard;
+		character.value = words.getCharValue(pieceABCChar.character.ToUpper());
+		character.character = pieceABCChar.character.ToUpperInvariant();
+		character.pointsValue = pieceABCChar.pointsValue;
+		character.typeOfLetter = pieceABCChar.typeOfLetter;
+		letter.GetComponent<UIChar>().character = character; 
+
 		addLetterToCorrectSpace(letter);
 		letter.transform.localScale = new Vector3 (1, 1, 1);
 		letter.GetComponent<Letter> ().piece = piece;
@@ -159,6 +169,9 @@ public class WordManager : MonoBehaviour {
 	 **/ 
 	public void resetValidation()
 	{
+		int amount = 0;
+		int multiplierHelper = 1;
+
 		FindObjectOfType<ShowNext>().ShowingNext(false);
 		invalidCharlist = false;
 
@@ -166,8 +179,30 @@ public class WordManager : MonoBehaviour {
 		//si la palabra esta completa se cuentan un punto por letra y se le avisa a gameManager
 		if(words.completeWord)
 		{
-			//print (getFullWord().Length);
-			FindObjectOfType<GameManager>().addPoints(getFullWord().Length);
+			for(int i = 0;i < chars.Count;i++)
+			{
+				chars[i].letterWasUsed();
+				switch(chars[i].pointsValue)
+				{
+				case("x2"):
+				{multiplierHelper *= 2;}
+					break;
+				case("x3"):
+				{multiplierHelper *= 3;}
+					break;
+				case("x4"):
+				{multiplierHelper *= 4;}
+					break;
+				case("x5"):
+				{multiplierHelper *= 5;}
+					break;
+				default:
+				{amount += int.Parse(chars[i].pointsValue);}
+					break;
+				}
+			}
+			amount *= multiplierHelper;
+			FindObjectOfType<GameManager>().addPoints(amount);
 
 			if(getFullWord() == "BELLEZA")
 			{
@@ -209,9 +244,9 @@ public class WordManager : MonoBehaviour {
 				}
 				else
 				{
-					if(t.piece.GetComponent<Tile>())
+					if(t.piece.GetComponent<ABCChar>())
 					{
-						t.piece.GetComponent<Tile>().backToNormal();
+						t.piece.GetComponent<ABCChar>().backToNormal();
 					}
 					else if(t.gameObject.GetComponent<ABCChar>().wildcard)
 					{

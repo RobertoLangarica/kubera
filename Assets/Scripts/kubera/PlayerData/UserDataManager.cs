@@ -132,5 +132,53 @@ public class UserDataManager
 	}
 
 	public void foo(){}
+	
+	public int rotatePowerUpUses
+	{
+		get
+		{
+			return PlayerPrefs.GetInt("rotatePowerUpUses");
+		}		
+		set
+		{
+			PlayerPrefs.SetInt("rotatePowerUpUses",value);
+		}
+	}
+	
+	public int onePiecePowerUpUses
+	{
+		get
+		{
+			return PlayerPrefs.GetInt("onePiecePowerUpUses");
+		}		
+		set
+		{
+			PlayerPrefs.SetInt("onePiecePowerUpUses",value);
+		}
+	}
+	
+	public int wildCardPowerUpUses
+	{
+		get
+		{
+			return PlayerPrefs.GetInt("wildCardPowerUpUses");
+		}		
+		set
+		{
+			PlayerPrefs.SetInt("wildCardPowerUpUses",value);
+		}
+	}
+	
+	public int destroyPowerUpUses
+	{
+		get
+		{
+			return PlayerPrefs.GetInt("destroyPowerUpUses");
+		}		
+		set
+		{
+			PlayerPrefs.SetInt("destroyPowerUpUses",value);
+		}
+	}
 }
 
