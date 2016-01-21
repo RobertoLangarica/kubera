@@ -50,25 +50,29 @@ public class PersistentData : MonoBehaviour
 		abcStructure = FindObjectOfType<ABCDataStructure>();
 		
 		configureGameForLanguage();
-
-		print(currentLevelName);
 	}
 
 	/**
 	 * Configura el juego para el lenguaje que tiene UserDataManager
+	 * @param language el lenguaje para configurar, si se deja vacio se utiliza el de UserDataManager.
 	 **/ 
-	public void configureGameForLanguage()
+	public void configureGameForLanguage(string language = "")
 	{
+		if(language == "")
+		{
+			language = UserDataManager.instance.language;
+		}
+
 		//Niveles
-		TextAsset tempTxt = (TextAsset)Resources.Load ("levels_"+UserDataManager.instance.language);
+		TextAsset tempTxt = (TextAsset)Resources.Load ("levels_"+language);
 		levelsData = Levels.LoadFromText(tempTxt.text);
 
 		//Alfabeto
-		TextAsset abc = Resources.Load("ABCData/ABC_"+UserDataManager.instance.language) as TextAsset;
+		TextAsset abc = Resources.Load("ABCData/ABC_"+language) as TextAsset;
 		abcStructure.initializeAlfabet(abc.text);
 
 		//Diccionario
-		abc = Resources.Load("ABCData/WORDS_"+UserDataManager.instance.language) as TextAsset;
+		abc = Resources.Load("ABCData/WORDS_"+language) as TextAsset;
 		abcStructure.processDictionary(abc.text);
 
 
