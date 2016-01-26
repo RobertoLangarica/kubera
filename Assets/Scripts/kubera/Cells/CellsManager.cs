@@ -144,9 +144,11 @@ public class CellsManager : MonoBehaviour
 		int wIndex = 0;
 		int hIndex = 0;
 
+		int linesCount = 0;
+
 		for(int i = 0;i < cells.Count;i++)
 		{
-			if(cells[i].occupied && cells[i].typeOfPiece != ETYPEOFPIECE_ID.LETTER)
+			if(cells[i].occupied && cells[i].typeOfPiece != ETYPEOFPIECE_ID.LETTER && cells[i].available)
 			{
 				widthCount[wIndex]++;
 				heightCount[hIndex]++;
@@ -165,6 +167,7 @@ public class CellsManager : MonoBehaviour
 				createLettersOn(true,i);
 				foundLine = true;
 				gameManager.addPoints(pointPerLine);
+				linesCount++;
 			}
 		}
 		for(int i = 0;i < width;i++)
@@ -174,12 +177,47 @@ public class CellsManager : MonoBehaviour
 				createLettersOn(false,i);
 				foundLine = true;
 				gameManager.addPoints(pointPerLine);
+				linesCount++;
 			}
 		}
 
 		if(foundLine)
 		{
 			FindObjectOfType<GameManager>().GetComponent<AudioSource>().Play();
+
+			switch(linesCount)
+			{
+			case(1):
+			{
+				FindObjectOfType<GameManager>().addPoints(5);
+			}
+				break;
+			case(2):
+			{
+				FindObjectOfType<GameManager>().addPoints(15);
+			}
+				break;
+			case(3):
+			{
+				FindObjectOfType<GameManager>().addPoints(30);
+			}
+				break;
+			case(4):
+			{
+				FindObjectOfType<GameManager>().addPoints(50);
+			}
+				break;
+			case(5):
+			{
+				FindObjectOfType<GameManager>().addPoints(75);
+			}
+				break;
+			case(6):
+			{
+				FindObjectOfType<GameManager>().addPoints(105);
+			}
+				break;
+			}
 			return true;
 		}
 
@@ -307,7 +345,6 @@ public class CellsManager : MonoBehaviour
 				turnPiecesToLetters((i*width),index);
 			}
 		}
-		FindObjectOfType<GameManager>().addPoints(10);
 	}
 
 	protected void turnPiecesToLetters(int cellIndex,int lineIndex)
@@ -323,13 +360,10 @@ public class CellsManager : MonoBehaviour
 			tempAbcChar = cells[newIndex].piece.AddComponent<ABCChar>();
 			
 			tempAbcChar.initializeFromScriptableABCChar(PieceManager.instance.giveLetterInfo());
-			
-			tempTile.myLeterCase = tempAbcChar.character;
+
 			tempTile.cellIndex = cells[newIndex];
 			tempTile.typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
-			
-			cells[newIndex].piece.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
-			cells[newIndex].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(tempTile.myLeterCase);
+
 			cells[newIndex].piece.GetComponent<BoxCollider2D>().enabled = true;
 			
 			PieceManager.instance.listChar.Add(tempAbcChar);

@@ -180,7 +180,7 @@ public class PieceManager : MonoBehaviour {
 	{
 		Sprite sprite;
 
-		sprite = (Sprite)textureObject[Array.IndexOf(names, nTextureName)];		
+		sprite = (Sprite)textureObject[Array.IndexOf(names, nTextureName.ToLower())];		
 		return sprite;
 	}
 

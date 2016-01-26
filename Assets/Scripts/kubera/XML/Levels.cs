@@ -48,4 +48,50 @@ public class Levels
 
 		return null;
 	}
+
+	/**
+	 * Devuelve una lista con los nombres de los niveles cargados en el xml
+	 **/ 
+	public List<string> getAllLevelsNames()
+	{
+		List<string> result = new List<string>();
+
+		foreach(Level l in _levels)
+		{
+			result.Add(l.name);
+		}
+
+		return result;
+	}
+
+	/**
+	 * Indica si el nivel especificado existe
+	 **/ 
+	public bool existLevel(int levelNumber)
+	{
+		return existLevel(levelNumber.ToString("0000"));
+	}
+
+	/**
+	 * Indica si el nivel especificado existe
+	 **/ 
+	public bool existLevel(string levelName)
+	{
+		foreach(Level l in _levels)
+		{
+			if(l.name.Equals(levelName))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Agrega un nuevo nivel a la lista de niveles
+	 * */
+	public void addLevel(Level level)
+	{
+		_levels.Add(level);
+	}
 }

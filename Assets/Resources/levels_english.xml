@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<scrabtris xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <levels>
+    <level name="0001" difficulty="0" lettersPool="" obstacleLettersPool="" pieces="" grid="" moves="15" scoreToStar1="20" scoreToStar2="50" scoreToStar3="100" />
+  </levels>
+</scrabtris>

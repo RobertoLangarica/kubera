@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<scrabtris>
-	<levels>
-		<level 
+<?xml version="1.0" encoding="us-ascii"?>
+<scrabtris xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <levels>
+    <level 
 		name="0001" 
 		difficulty="0" 
 		lettersPool="6_b_1_1,1_e_x2_1,1_l_x3_1"
@@ -17,5 +17,7 @@
 			1,1,1,1,1,1,1,1,4,1,
 			1,1,1,1,1,1,1,1,4,1,
 			1,1,1,1,1,1,1,1,1,1"/>
-	</levels>
+    <level name="0002" difficulty="0" lettersPool="" obstacleLettersPool="" pieces="" grid="" moves="10" scoreToStar1="10" scoreToStar2="20" scoreToStar3="30" />
+    <level name="0003" difficulty="0" lettersPool="" obstacleLettersPool="" pieces="" grid="" moves="10" scoreToStar1="10" scoreToStar2="20" scoreToStar3="30" />
+  </levels>
 </scrabtris>
