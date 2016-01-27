@@ -314,12 +314,15 @@ public class CellsManager : MonoBehaviour
 			tempC.typeOfPiece = piece.typeOfPiece;
 		}
 		
-		tempC = getCellOnVec(piece.transform.position);
+		tempC = getCellOnVec(piece.pieces[0].transform.position);
+
+		Vector3 ofsetBetweenPieces = piece.pieces[0].transform.position - piece.transform.position;
+
 		Vector3 nVec = new Vector3(tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
 		                           -tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
 
 		gameObject.GetComponent<AudioSource>().Play();
-		return (tempC).transform.position + nVec;
+		return (tempC).transform.position + nVec - ofsetBetweenPieces;
 	}
 
 	/*
