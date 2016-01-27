@@ -61,7 +61,7 @@ public class PieceManager : MonoBehaviour {
 			go.transform.position= new Vector3(firstPos [i].position.x,firstPos [i].position.y,1);
 			go.GetComponent<Piece>().myFirstPosInt = i;
 			go.GetComponent<Piece>().myFirstPos=firstPos[i];
-			go.transform.localScale = new Vector3(4,4,4);
+			go.transform.localScale = new Vector3(2.5f,2.5f,2.5f);
 			if(piecesList.Count==0)
 			{
 				fillList();
