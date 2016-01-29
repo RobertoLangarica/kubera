@@ -15,21 +15,4 @@ public class Tile : MonoBehaviour
 		gameManager = FindObjectOfType<GameManager>();
 		cellsManager = FindObjectOfType<CellsManager>();
 	}
-
-	/*
-	 * Esta funcion se ejecuta cuando se ha seleccionado una pieza para ser destruida
-	 */
-	public void selectPieceColorToDestroy()
-	{
-		if(typeOfPiece != ETYPEOFPIECE_ID.LETTER)
-		{
-			cellsManager.selectCellsOfColor(gameObject);
-	
-			cellsManager.destroySelectedCells();
-		}
-
-		cellsManager.deactivatePositionedPiecesCollider();
-
-		gameManager.destroyByColor = false;
-	}
 }

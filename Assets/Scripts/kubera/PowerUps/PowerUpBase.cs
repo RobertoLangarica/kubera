@@ -6,7 +6,7 @@ public class PowerUpBase : MonoBehaviour
 {
 	public int uses;
 
-	public GameObject powerOne;
+	public GameObject powerUpCursor;
 	public Text numberUses;
 	public GameObject imageUses;
 
@@ -45,9 +45,9 @@ public class PowerUpBase : MonoBehaviour
 		{
 			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-			GameObject go = (GameObject)Instantiate (powerOne);//,new Vector3(pos.x,pos.y+1.5f,1),Quaternion.identity);
+			GameObject go = (GameObject)Instantiate (powerUpCursor);//,new Vector3(pos.x,pos.y+1.5f,1),Quaternion.identity);
 
-			go.GetComponent<Piece>().myFirstPos = powerOne.transform;
+			go.GetComponent<Piece>().myFirstPos = powerUpCursor.transform;
 			go.GetComponent<Piece>().myFirstPos.position = pos;
 			go.name = "PowerOne";
 			go.GetComponent<Piece> ().powerUp = true;
@@ -79,9 +79,20 @@ public class PowerUpBase : MonoBehaviour
 	 */
 	public void activateDestroyMode()
 	{
-		gameManager.destroyByColor = true;
+		if(uses != 0)
+		{
+			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-		cellsManager.activatePositionedPiecesCollider();
+			GameObject go = (GameObject)Instantiate (powerUpCursor);
+
+			go.GetComponent<Piece>().myFirstPos = powerUpCursor.transform;
+			go.GetComponent<Piece>().myFirstPos.position = pos;
+			go.name = "DestroyPowerUp";
+			go.GetComponent<Piece> ().powerUp = true;
+			FindObjectOfType<InputGameController> ().activePowerUp (go);
+
+			gameManager.destroyByColor = true;
+		}
 	}
 
 	public void activateWildCard()

@@ -69,7 +69,7 @@ public class Cell : MonoBehaviour
 		if((cellType & 0x4) == 0x4)
 		{
 			typeOfPiece = ETYPEOFPIECE_ID.NONE;
-			occupied = true;
+			occupied = false;
 			available = true;
 			piece = null;
 			//Cambio Temporal;

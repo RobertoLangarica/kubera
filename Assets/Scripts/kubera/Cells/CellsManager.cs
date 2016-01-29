@@ -97,7 +97,7 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @return {Cell}: La celda que tiene la posicion de mundo que se le envio dentro de sus limites
 	 */
-	protected Cell getCellOnVec(Vector3 vec)
+	public Cell getCellOnVec(Vector3 vec)
 	{
 		Vector3 tempV2 = Vector3.zero;
 		float size = 0;
@@ -496,6 +496,16 @@ public class CellsManager : MonoBehaviour
 		for(int i = 0;i < selected.Count;i++)
 		{
 			selected[i].destroyCell();
+		}
+
+		selected = new List<Cell>();
+	}
+
+	public void turnSelectedCellsToLetters()
+	{
+		for(int i = 0;i < selected.Count;i++)
+		{
+			turnPiecesToLetters(cells.IndexOf(selected[i]),0);
 		}
 
 		selected = new List<Cell>();
