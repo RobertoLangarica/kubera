@@ -11,7 +11,10 @@ public class GameManager : MonoBehaviour
 	public bool destroyByColor;
 
 	public Text points;
+	public GameObject MoneyGameObject;
+
 	protected int pointsCount =0;
+
 	public bool canRotate;
 
 	protected PersistentData persistentData;
@@ -85,5 +88,21 @@ public class GameManager : MonoBehaviour
 		//ScreenManager.instance.GoToScene("ObjectiveScene");
 		winPopUp.closePopUp();
 		ScreenManager.instance.GoToSceneAsync("ObjectiveScene",0.5f);
+	}
+
+	public void activeMoney(bool show,int howMany=0)
+	{
+		if(show)
+		{
+			MoneyGameObject.SetActive (true);
+			if(MoneyGameObject.transform.FindChild("Charge") != null)
+			{
+				MoneyGameObject.transform.FindChild ("Charge").GetComponentInChildren<Text> ().text = "-"+howMany.ToString ();
+			}
+		}
+		else
+		{
+			MoneyGameObject.SetActive(false);	
+		}
 	}
 }

@@ -15,6 +15,10 @@ public class PowerUpBase : MonoBehaviour
 	protected GameManager gameManager;
 	protected CellsManager cellsManager;
 
+	public delegate void rotateActive(bool activate);
+
+	public static rotateActive onRotateActive;
+
 	void Start () 
 	{
 		gameManager = FindObjectOfType<GameManager>();
@@ -41,6 +45,12 @@ public class PowerUpBase : MonoBehaviour
 
 	public void oneTilePower()
 	{
+		if (gameManager.canRotate) 
+		{
+			gameManager.canRotate = false;
+			activeDelegateRotation ();
+		}
+
 		if (uses != 0) 
 		{
 			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -72,6 +82,16 @@ public class PowerUpBase : MonoBehaviour
 		{
 			gameManager.canRotate = false;
 		}
+
+		activeDelegateRotation ();
+	}
+
+	protected void activeDelegateRotation()
+	{
+		if(onRotateActive != null)
+		{					
+			onRotateActive (gameManager.canRotate);
+		}
 	}
 
 	/*
@@ -79,6 +99,12 @@ public class PowerUpBase : MonoBehaviour
 	 */
 	public void activateDestroyMode()
 	{
+		if (gameManager.canRotate) 
+		{
+			gameManager.canRotate = false;
+			activeDelegateRotation ();
+		}
+
 		gameManager.destroyByColor = true;
 
 		cellsManager.activatePositionedPiecesCollider();
@@ -86,6 +112,12 @@ public class PowerUpBase : MonoBehaviour
 
 	public void activateWildCard()
 	{
+		if (gameManager.canRotate) 
+		{
+			gameManager.canRotate = false;
+			activeDelegateRotation ();
+		}
+		
 		if (uses != 0) 
 		{
 			GameObject.Find("WordManager").GetComponent<WordManager>().addCharacter(".",gameObject);

@@ -27,10 +27,12 @@ public class InputGameController : MonoBehaviour {
 	protected GameManager gameManager;
 	public CellsManager cellManager;
 	protected GameObject piece;
-	protected GameObject pieceReference;
+
 	protected bool isLeter;
 	public float movingSpeed = .5f;
 	public float movingUpFinger = 1.5f;
+
+	protected Vector3 selectedScale = new Vector3 (4.5f, 4.5f, 4.5f);
 
 	void Start () 
 	{
@@ -75,10 +77,13 @@ public class InputGameController : MonoBehaviour {
 			{
 				//if(gesture.Raycast.Hit2D.transform.gameObject.GetComponents
 
-				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>() && !gameManager.canRotate)
+				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>())
 				{
 					piece = gesture.Raycast.Hit2D.transform.gameObject;
 					isLeter = false;
+					
+					////////////////////////////////
+					piece.transform.DOScale(selectedScale,.1f);
 				}
 
 				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Letter>())
@@ -200,27 +205,7 @@ public class InputGameController : MonoBehaviour {
 				isLeter = false;
 				if(piece)
 				{
-					if(gameManager.canRotate)
-					{
-						if(piece.GetComponent<Piece>().firstPiece&&piece != pieceReference)
-						{
-							choseToRotate(piece.GetComponent<Piece>());
-							pieceReference = piece;
-							piece = null;
-						}
-						else
-						{
-							Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-							tempV3.z = -1;
-							hasMoved = false;
-							
-							tempV3.y += movingUpFinger;
-							//piece.transform.position = tempV3;
-							piece.transform.DOMove(tempV3,.1f);
-							piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
-						}
-					}
-					else
+					if(!gameManager.canRotate)
 					{
 						Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 						tempV3.z = -1;
@@ -246,6 +231,11 @@ public class InputGameController : MonoBehaviour {
 		{
 			if(gesture.Raycast.Hit2D.transform)
 			{
+				if (gameManager.canRotate) 
+				{
+					choseToRotate(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>());
+					return;
+				}
 				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>())
 				{
 					if(gameManager.destroyByColor)
@@ -292,15 +282,10 @@ public class InputGameController : MonoBehaviour {
 		{
 			Vector3 tempV3 = piece.GetComponent<Piece>().myFirstPos.position;
 			piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f);
-			if(piece.GetComponent<Piece>().firstPiece)
-			{
-				piece.transform.DOScale (new Vector3 (4, 4, 4), .1f);
-			}
-			else
-			{
-				piece.transform.DOScale (new Vector3 (1.5f, 1.5f, 1.5f), .1f);
-			}
-			
+
+
+			piece.transform.DOScale (new Vector3 (2.5f,2.5f,2.5f), .1f);
+						
 			piece = null;
 		}
 	}
@@ -393,30 +378,24 @@ public class InputGameController : MonoBehaviour {
 	{
 		if(!piece.GetComponent<Piece>().powerUp)
 		{
-			if((piece.GetComponent<Piece>().firstPiece == false && pieceReference )||(piece.GetComponent<Piece>().firstPiece == true && pieceReference))
+			if (gameManager.canRotate) 
 			{
-				if(pieceReference != piece)
+				//utilizo el powerUp de rotar
+				GameObject.Find ("PowerRotate").GetComponent<PowerUpBase> ().PowerUsed ();
+				if (PieceManager.instance.setRotationPiecesAsNormalRotation ()) 
 				{
-					PieceManager.instance.destroyRotatePieces(piece.GetComponent<Piece>());
-					//utilizo el powerUp de rotar
-					GameObject.Find("PowerRotate").GetComponent<PowerUpBase>().PowerUsed();
+					//ChargePower
+					print("ChargePowerUP");
 				}
-				else
-				{
-					PieceManager.instance.destroyRotatePieces(piece.GetComponent<Piece>(),false);
-
-				}
-				pieceReference = null;
-				gameManager.canRotate = false;
+				gameManager.canRotate = false;			
 			}
-			
 
 			PieceManager.instance.checkBarr(piece);
+			piece.transform.SetParent (null);
 		}
 		else
 		{
 			GameObject.Find(piece.name).GetComponent<PowerUpBase>().PowerUsed();
-			//FindObjectOfType<PowerUpBase>().PowerUsed();
 		}
 	}
 

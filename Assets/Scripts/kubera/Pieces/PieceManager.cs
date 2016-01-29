@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class PieceManager : MonoBehaviour {
 
@@ -29,10 +30,18 @@ public class PieceManager : MonoBehaviour {
 	protected UnityEngine.Object[] textureObject;
 
 	protected string[] names;
-
+	protected Transform piecesStock;
 	// Use this for initialization
 	void Start () {
 		instance = this;
+
+
+		{
+			GameObject temp = new GameObject();
+			piecesStock = temp.transform;
+			temp.name = "PiecesStock";
+		}
+		PowerUpBase.onRotateActive += activateRotation;
 
 		textureObject = Resources.LoadAll("Letters");
 		names = new string[textureObject.Length];
@@ -62,6 +71,7 @@ public class PieceManager : MonoBehaviour {
 			go.GetComponent<Piece>().myFirstPosInt = i;
 			go.GetComponent<Piece>().myFirstPos=firstPos[i];
 			go.transform.localScale = new Vector3(2.5f,2.5f,2.5f);
+			go.transform.SetParent (piecesStock);
 			if(piecesList.Count==0)
 			{
 				fillList();
@@ -192,43 +202,102 @@ public class PieceManager : MonoBehaviour {
 		}
 	}
 
-	//Se ponen las pieces que se rotaran
+	//Se cambian las piezas por las rotadas
 	public void setRotatePieces(Piece piece)
 	{
-		for(int k=0; k<piecesToRotate.Count; k++)
+		if (piece.rotatePieces.Length > 0) 
 		{
-			Destroy(piecesToRotate[k]);
-			//piecesToRotate.RemoveAt(0);
-		}
-		piecesToRotate.Clear();
-		int j=0;
-		for(int i=piece.myFirstPosInt*3; i<piece.rotatePieces.Length+piece.myFirstPosInt*3; i++)
-		{
-			GameObject go = Instantiate(piece.rotatePieces[j]);
-			go.name = piece.name;
-			go.transform.localScale = new Vector3(1.5f,1.5f,1.5f);
-			go.transform.position = new Vector3(rotatePos[i].position.x,rotatePos[i].position.y,1);
-			go.GetComponent<Piece>().myFirstPos = rotatePos[i];
-			go.GetComponent<Piece>().firstPiece =false;
-			go.GetComponent<Piece>().parent = piece.gameObject;
-			piecesToRotate.Add(go);
-			j++;
+			GameObject go = Instantiate (piece.rotatePieces [0]);
+			go.transform.localScale = new Vector3 (0, 0, 0);
+
+			go.transform.position = piece.gameObject.transform.position;
+			go.GetComponent<Piece> ().howManyHasBeenRotated = piece.howManyHasBeenRotated + 1;
+			go.transform.SetParent (piecesStock);
+			go.GetComponent<Piece> ().myFirstPos = piece.myFirstPos;
+
+
+			if (go.GetComponent<Piece> ().howManyHasBeenRotated > piece.rotatePieces.Length) 
+			{
+				go.GetComponent<Piece> ().howManyHasBeenRotated = 0;
+				piece.howManyHasBeenRotated = 0;
+			}
+			piece.gameObject.transform.DOScale(new Vector3(0,0),.25f).OnComplete(()=>{go.transform.DOScale (new Vector3 (2.5f, 2.5f), .25f).OnComplete(()=>{DestroyImmediate (piece.gameObject);});});
+
+			checkIfExistRotatedPiezes ();
+			//go.transform.DOScale (new Vector3 (2.5f, 2.5f), .5f);
+			//DestroyImmediate (piece.gameObject);
 		}
 	}
 
-	public void destroyRotatePieces(Piece piece,bool destroyParent = true)
+	//regresamos la rotacion inicial si no se concreto la rotacion
+	public void returnRotatePiecesToNormalRotation()
 	{
-		if(destroyParent)
+		for (int i = 0; i < piecesStock.childCount; i++) 
 		{
-			Destroy(piece.parent);
-		}
-		for(int k=0; k<piecesToRotate.Count; k++)
-		{
-			if(piece != piecesToRotate[k].GetComponent<Piece>())
-			{
-				Destroy(piecesToRotate[k]);
+			if (piecesStock.GetChild (i).GetComponent<Piece> ().howManyHasBeenRotated != 0) 
+			{				
+				int temp = piecesStock.GetChild (i).GetComponent<Piece>().rotatePieces.Length- piecesStock.GetChild (i).GetComponent<Piece> ().howManyHasBeenRotated;
+				GameObject goT = piecesStock.GetChild (i).gameObject;
+				GameObject go = Instantiate (piecesStock.GetChild (i).GetComponent<Piece>().rotatePieces[temp]);
+				go.transform.localScale = new Vector3 (0, 0, 0);
+				
+				go.transform.position = piecesStock.GetChild (i).gameObject.transform.position;
+
+				go.GetComponent<Piece> ().howManyHasBeenRotated = 0;
+				go.transform.SetParent (piecesStock);
+
+				piecesStock.GetChild (i).transform.DOScale(new Vector3(0,0),.25f).OnComplete(()=>{go.transform.DOScale (new Vector3 (2.5f, 2.5f), .25f).OnComplete(()=>{DestroyImmediate (goT);});;});
+
 			}
 		}
-		piecesToRotate.Clear();
+	}
+
+	//checamos si una pieza esta rotada
+	public void checkIfExistRotatedPiezes()
+	{
+		bool OneWasRotated = false;
+		for (int i = 0; i < piecesStock.childCount; i++) 
+		{
+			if (piecesStock.GetChild (i).GetComponent<Piece> ().howManyHasBeenRotated != 0) 
+			{	
+				OneWasRotated =  true;
+			}
+		}
+		//Prendemos el objeto de dinero
+		if(OneWasRotated)
+		{
+			gameManager.activeMoney (true, 50);
+		}
+		else
+		{
+			gameManager.activeMoney (false);
+		}
+	}
+
+	//Seteamos las piezas rotadas como si fueran la original
+	public bool setRotationPiecesAsNormalRotation()
+	{
+		bool OneWasRotated = false;
+		for (int i = 0; i < piecesStock.childCount; i++) 
+		{
+			if (piecesStock.GetChild (i).GetComponent<Piece> ().howManyHasBeenRotated != 0) 
+			{
+				piecesStock.GetChild (i).GetComponent<Piece> ().howManyHasBeenRotated = 0;
+				OneWasRotated = true;
+			}
+		}
+		return OneWasRotated;
+	}
+
+	protected void activateRotation(bool activate)
+	{
+		if(activate)
+		{
+			//Activar las imagenes de rotar
+		}
+		else
+		{
+			returnRotatePiecesToNormalRotation ();
+		}
 	}
 }
