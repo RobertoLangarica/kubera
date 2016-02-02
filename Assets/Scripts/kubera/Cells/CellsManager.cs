@@ -30,8 +30,12 @@ public class CellsManager : MonoBehaviour
 	//Todas las celdas del grid
 	protected List<Cell> cells = new List<Cell>();
 
+	protected PieceManager pieceManager;
+
 	void Start () 
 	{
+		pieceManager = FindObjectOfType<PieceManager>();
+
 		CreateGrid();
 	}
 
@@ -327,11 +331,11 @@ public class CellsManager : MonoBehaviour
 		{
 			tempAbcChar = cells[newIndex].piece.AddComponent<ABCChar>();
 			
-			tempAbcChar.initializeFromScriptableABCChar(PieceManager.instance.giveLetterInfo());
+			tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());
 
 			cells[newIndex].piece.GetComponent<BoxCollider2D>().enabled = true;
 			
-			PieceManager.instance.listChar.Add(tempAbcChar);
+			pieceManager.listChar.Add(tempAbcChar);
 		}
 	}
 
@@ -347,11 +351,11 @@ public class CellsManager : MonoBehaviour
 
 		ABCChar tempAbcChar = cell.piece.AddComponent<ABCChar>();
 
-		tempAbcChar.initializeFromScriptableABCChar(PieceManager.instance.giveLetterInfo());
+		tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());
 
 		cell.piece.GetComponent<BoxCollider2D>().enabled = true;
 
-		PieceManager.instance.listChar.Add(tempAbcChar);
+		pieceManager.listChar.Add(tempAbcChar);
 	}
 
 
