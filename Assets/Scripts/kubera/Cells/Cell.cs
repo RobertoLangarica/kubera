@@ -53,7 +53,7 @@ public class Cell : MonoBehaviour
 		return false;
 	}
 
-	public void setTypeToCell(int newCellType = 1,GameObject piecePrefab = null)
+	public void setTypeToCell(int newCellType = 1)
 	{
 		cellType = newCellType;
 		if((cellType & 0x1) == 0x1)
@@ -72,7 +72,8 @@ public class Cell : MonoBehaviour
 			occupied = false;
 			available = true;
 			piece = null;
-			//Cambio Temporal;
+
+			//Cambio Temporal
 			GetComponent<SpriteRenderer>().enabled = false;
 		}
 		if((cellType & 0x8) == 0x8)
@@ -80,22 +81,6 @@ public class Cell : MonoBehaviour
 			typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
 			occupied = true;
 			available = false;
-
-			Vector3 tempV3 = transform.position + new Vector3(gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
-			                                                  -gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
-			GameObject go = GameObject.Instantiate(piecePrefab) as GameObject;
-			go.GetComponent<BoxCollider2D>().enabled = false;
-			piece = go.GetComponent<Piece>().pieces[0];
-			tempV3.z = 0;
-			go.transform.position = tempV3;
-
-			ABCChar tempAbcChar = piece.AddComponent<ABCChar>();
-
-			tempAbcChar.initializeFromScriptableABCChar(PieceManager.instance.giveLetterInfo());
-
-			piece.GetComponent<BoxCollider2D>().enabled = true;
-
-			PieceManager.instance.listChar.Add(tempAbcChar);
 		}
 	}
 }
