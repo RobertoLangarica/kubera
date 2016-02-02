@@ -34,6 +34,9 @@ public class InputGameController : MonoBehaviour {
 
 	protected Vector3 selectedScale = new Vector3 (4.5f, 4.5f, 4.5f);
 
+	[HideInInspector]
+	protected bool canRotate;
+
 	void Start () 
 	{
 		gameManager = GameObject.FindObjectOfType<GameManager>();
@@ -66,159 +69,160 @@ public class InputGameController : MonoBehaviour {
 		
 		switch(gesture.Phase)
 		{
-		case (ContinuousGesturePhase.Started):
-		{
-			isDragging = true;
-			hasMoved = true;
-			onDragStart();
-
-
-			if(gesture.Raycast.Hits2D != null)
+			case (ContinuousGesturePhase.Started):
 			{
-				//if(gesture.Raycast.Hit2D.transform.gameObject.GetComponents
-
-				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>())
-				{
-					piece = gesture.Raycast.Hit2D.transform.gameObject;
-					isLeter = false;
-					
-					////////////////////////////////
-					piece.transform.DOScale(selectedScale,.1f);
-				}
-
-				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Letter>())
-				{
-					piece = gesture.Raycast.Hit2D.transform.gameObject;
-					isLeter = true;
-					wordManager.setPositionToLetters();
-					wordManager.canSwappLetters(true,piece);
-				}
-			}
-		}	
-			break;
-			
-		case (ContinuousGesturePhase.Updated):
-		{
-			if(!isMultiFinger)
-			{
-				// si existe la pieza la movemos con movingLerping de acuerdo a la posicion del mouse
-				if(piece && !isLeter)
-				{
-					Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-					tempV3.z = -1;
-					hasMoved = true;
-					tempV3.y += movingUpFinger;
-					movingLerping(tempV3,piece);
-				}
-				else if(piece && isLeter)
-				{
-					float y = piece.transform.position.y;
-					float z = piece.transform.position.z;
-					Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-					tempV3.z = -1;
-					hasMoved = true;
-					//tempV3.y += movingUpFinger;
-					tempV3.y = y;
-					tempV3.z = z;
-					wordManager.swappingLetters(piece);
-					movingLerping(tempV3,piece);
-				}
-			}
-			else
-			{}
-
-		}
-			break;
-		case (ContinuousGesturePhase.Ended):
-			{
-				isDragging = false;
-				hasMoved = false;
-				onDragFinish();
+				isDragging = true;
+				hasMoved = true;
+				onDragStart();
 			
 			
-				//si no hay pieza terminamos
-				if(!piece)
+				if(gesture.Raycast.Hits2D != null)
 				{
-					break;
-				}
+					//if(gesture.Raycast.Hit2D.transform.gameObject.GetComponents
 			
-				if(piece.GetComponent<Letter>())
-				{
-					//Lo habilitamos y ajustamos
-			
-					swappingLetter();
-					piece = null;
-					break;
-				}
-			
-				//checamos que podamos poner la pieza
-				if(!cellManager.CanPositionate(piece.GetComponent<Piece>().pieces))
-				{
-					if(gameManager.destroyByColor)
+					if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>())
 					{
-						Cell tempCell = cellManager.getCellOnVec(piece.transform.position);
-						if(tempCell != null)
+						piece = gesture.Raycast.Hit2D.transform.gameObject;
+						isLeter = false;
+						
+						////////////////////////////////
+						piece.transform.DOScale(selectedScale,.1f);
+					}
+			
+					if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<UIChar>())
+					{
+						piece = gesture.Raycast.Hit2D.transform.gameObject;
+						isLeter = true;
+			
+						wordManager.setPositionToLetters();
+						wordManager.canSwappLetters(true,piece);
+					}
+				}
+			}	
+			break;
+			
+			case (ContinuousGesturePhase.Updated):
+			{
+				if(!isMultiFinger)
+				{
+					// si existe la pieza la movemos con movingLerping de acuerdo a la posicion del mouse
+					if(piece && !isLeter)
+					{
+						Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
+						tempV3.z = -1;
+						hasMoved = true;
+						tempV3.y += movingUpFinger;
+						movingLerping(tempV3,piece);
+					}
+					else if(piece && isLeter)
+					{
+						float y = piece.transform.position.y;
+						float z = piece.transform.position.z;
+						Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
+						tempV3.z = -1;
+						hasMoved = true;
+						//tempV3.y += movingUpFinger;
+						tempV3.y = y;
+						tempV3.z = z;
+						wordManager.swappingLetters(piece);
+						movingLerping(tempV3,piece);
+					}
+				}
+				else
+				{}
+			
+			}
+				break;
+			case (ContinuousGesturePhase.Ended):
+				{
+					isDragging = false;
+					hasMoved = false;
+					onDragFinish();
+				
+				
+					//si no hay pieza terminamos
+					if(!piece)
+					{
+						break;
+					}
+				
+					if(piece.GetComponent<UIChar>())
+					{
+						//Lo habilitamos y ajustamos
+				
+						swappingLetter();
+						piece = null;
+						break;
+					}
+				
+					//checamos que podamos poner la pieza
+					if(!cellManager.CanPositionate(piece.GetComponent<Piece>().pieces))
+					{
+						if(gameManager.destroyByColor)
 						{
-							if(tempCell.occupied)
+							Cell tempCell = cellManager.getCellOnVec(piece.transform.position);
+							if(tempCell != null)
 							{
-								if(tempCell.typeOfPiece != ETYPEOFPIECE_ID.LETTER)
-								{	
-									cellManager.selectCellsOfColor(tempCell);
-										
-									DestroyImmediate(piece);
-	
-									cellManager.turnSelectedCellsToLetters();
+								if(tempCell.occupied)
+								{
+									if(tempCell.typeOfPiece != ETYPEOFPIECE_ID.LETTER)
+									{	
+										cellManager.selectCellsOfColor(tempCell);
+											
+										DestroyImmediate(piece);
+			
+										cellManager.turnSelectedCellsToLetters();
+									}
+									gameManager.destroyByColor = false;
 								}
+							}
+							else
+							{
+								backToNormal();
 								gameManager.destroyByColor = false;
 							}
 						}
 						else
 						{
 							backToNormal();
-							gameManager.destroyByColor = false;
 						}
 					}
 					else
 					{
-						backToNormal();
-					}
-				}
-				else
-				{
-					if(gameManager.destroyByColor)
-					{
-							backToNormal();
-					}
-					else
-					{
-						//ponemos la pieza en su posicion correcta de manera suave y le quitamos el colider a la pieza completa
-						Vector3 myNewPosition = cellManager.Positionate(piece.GetComponent<Piece>());
-						DOTween.KillAll();
-						piece.transform.DOMove(new Vector3(myNewPosition.x,myNewPosition.y,1),.1f);
-						piece.GetComponent<BoxCollider2D>().enabled = false;
-						//Ponemos los puntos de acuerdo a la cantidad de piezas
-						gameManager.addPoints(piece.GetComponent<Piece>().pieces.Length);
-						afterDragEnded();
-						cellManager.LineCreated();
-						//if(!cellManager.LineCreated())
-						//{
-						FlashColor[] flash = piece.GetComponentsInChildren<FlashColor>();
-						foreach(FlashColor f in flash)
+						if(gameManager.destroyByColor)
 						{
-							f.startFlash(f.GetComponent<SpriteRenderer>(),0.2f);
+								backToNormal();
 						}
-						//}
-						//Checamos si ya no puede hacer ningun movimiento
-						checkToLoose();
+						else
+						{
+							//ponemos la pieza en su posicion correcta de manera suave y le quitamos el colider a la pieza completa
+							Vector3 myNewPosition = cellManager.Positionate(piece.GetComponent<Piece>());
+							DOTween.KillAll();
+							piece.transform.DOMove(new Vector3(myNewPosition.x,myNewPosition.y,1),.1f);
+							piece.GetComponent<BoxCollider2D>().enabled = false;
+							//Ponemos los puntos de acuerdo a la cantidad de piezas
+							gameManager.addPoints(piece.GetComponent<Piece>().pieces.Length);
+							afterDragEnded();
+							cellManager.LineCreated();
+							//if(!cellManager.LineCreated())
+							//{
+							FlashColor[] flash = piece.GetComponentsInChildren<FlashColor>();
+							foreach(FlashColor f in flash)
+							{
+								f.startFlash(f.GetComponent<SpriteRenderer>(),0.2f);
+							}
+							//}
+							//Checamos si ya no puede hacer ningun movimiento
+							checkToLoose();
+						}
 					}
+					DOTween.Kill("MovingPiece");
+					piece = null;
+				
 				}
-				DOTween.Kill("MovingPiece");
-				piece = null;
-			
+				break;
+				
 			}
-			break;
-			
-		}
 	}
 
 
@@ -245,7 +249,7 @@ public class InputGameController : MonoBehaviour {
 					}
 				}
 			}
-			else if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Letter>())
+			else if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<UIChar>())
 			{
 				//print("Letter");
 			}
@@ -275,7 +279,7 @@ public class InputGameController : MonoBehaviour {
 
 	void OnFingerUp()
 	{
-		if(piece&&!hasMoved && !piece.GetComponent<Letter>())
+		if(piece&&!hasMoved && !piece.GetComponent<UIChar>())
 		{
 			backToNormal();
 		}
@@ -315,7 +319,7 @@ public class InputGameController : MonoBehaviour {
 	{
 		if (hasMoved) 
 		{
-			if(piece.GetComponent<Letter>())
+			if(piece.GetComponent<UIChar>())
 			{
 				piece.transform.DOMove (end, .8f).SetId("MovingPiece");
 			}
@@ -423,7 +427,18 @@ public class InputGameController : MonoBehaviour {
 	{
 		DOTween.KillAll();
 
-
 		wordManager.canSwappLetters(false,piece);
+	}
+
+	public void setCanRotate(bool rotate)
+	{
+		if (rotate) 
+		{
+			canRotate = true;
+		}
+		else 
+		{
+			canRotate = false;
+		}
 	}
 }
