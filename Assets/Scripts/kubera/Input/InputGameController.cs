@@ -36,6 +36,13 @@ public class InputGameController : MonoBehaviour {
 
 	[HideInInspector]
 	protected bool canRotate;
+	protected bool destroyByColor;
+
+	public delegate void rotateState (bool rotate);
+	public rotateState stateOfRotatePowerUp;
+
+	public delegate void destroyByColorState (bool destroyByColor);
+	public rotateState setDestroyByColorDelegate;
 
 	void Start () 
 	{
@@ -159,7 +166,7 @@ public class InputGameController : MonoBehaviour {
 				//checamos que podamos poner la pieza
 				if(!cellManager.CanPositionate(piece.GetComponent<Piece>().pieces))
 				{
-					if(gameManager.destroyByColor)
+					if(destroyByColor)
 					{
 						Cell tempCell = cellManager.getCellOnVec(piece.transform.position);
 						if(tempCell != null)
@@ -180,15 +187,16 @@ public class InputGameController : MonoBehaviour {
 								{
 									backToNormal();
 								}
-								gameManager.destroyByColor = false;
-
+								destroyByColor = false;
+								setDestroyByColorDelegate (destroyByColor);
 							}
 						}
 
 						else
 						{
 							backToNormal();
-							gameManager.destroyByColor = false;
+							destroyByColor = false;
+							setDestroyByColorDelegate (destroyByColor);
 						}
 					}
 					else
@@ -199,10 +207,11 @@ public class InputGameController : MonoBehaviour {
 
 				else
 				{
-					if(gameManager.destroyByColor)
+					if(destroyByColor)
 					{
 						backToNormal();
-						gameManager.destroyByColor = false;
+						destroyByColor = false;
+						setDestroyByColorDelegate (destroyByColor);
 					}
 					else
 					{
@@ -212,8 +221,10 @@ public class InputGameController : MonoBehaviour {
 						DOTween.KillAll();
 						piece.transform.DOMove(new Vector3(myNewPosition.x,myNewPosition.y,1),.1f);
 						piece.GetComponent<BoxCollider2D>().enabled = false;
+
 						//Ponemos los puntos de acuerdo a la cantidad de piezas
 						gameManager.addPoints(piece.GetComponent<Piece>().pieces.Length);
+
 						afterDragEnded();
 						cellManager.LineCreated();
 						//if(!cellManager.LineCreated())
@@ -247,7 +258,7 @@ public class InputGameController : MonoBehaviour {
 				isLeter = false;
 				if(piece)
 				{
-					if(!gameManager.canRotate)
+					if(!canRotate)
 					{
 						Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 						tempV3.z = -1;
@@ -273,7 +284,7 @@ public class InputGameController : MonoBehaviour {
 		{
 			if(gesture.Raycast.Hit2D.transform)
 			{
-				if (gameManager.canRotate) 
+				if (canRotate) 
 				{
 					choseToRotate(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>());
 					return;
@@ -413,7 +424,7 @@ public class InputGameController : MonoBehaviour {
 	{
 		if(!piece.GetComponent<Piece>().powerUp)
 		{
-			if (gameManager.canRotate) 
+			if (canRotate) 
 			{
 				//utilizo el powerUp de rotar
 				GameObject.Find ("PowerRotate").GetComponent<PowerUpBase> ().PowerUsed ();
@@ -422,7 +433,9 @@ public class InputGameController : MonoBehaviour {
 					//ChargePower
 					print("ChargePowerUP");
 				}
-				gameManager.canRotate = false;			
+				canRotate = false;
+				stateOfRotatePowerUp (canRotate);
+
 			}
 
 			PieceManager.instance.checkBarr(piece);
@@ -452,4 +465,16 @@ public class InputGameController : MonoBehaviour {
 			canRotate = false;
 		}
 	}
+
+	public void setDestroyByColor(bool activate)
+	{
+		if (activate) 
+		{
+			destroyByColor = true;
+		}
+		else 
+		{
+			destroyByColor = false;
+		}
+	}	
 }

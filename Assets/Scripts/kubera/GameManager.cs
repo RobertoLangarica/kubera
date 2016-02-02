@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
 	public Text scoreText;
 
-	public bool destroyByColor;
+
 
 	public Text points;
 	public GameObject MoneyGameObject;
@@ -14,18 +14,25 @@ public class GameManager : MonoBehaviour
 	protected int pointsCount =0;
 
 	public bool canRotate;
+	public bool destroyByColor;
 
 	protected PersistentData persistentData;
 	protected WordManager wordManager;
 	protected CellsManager cellManager;
+	protected PowerUpManager powerUpManager;
+	protected InputGameController inputGameController;
 
 	void Awake () 
 	{
 		persistentData = FindObjectOfType<PersistentData>();
 		wordManager = FindObjectOfType<WordManager>();
 		cellManager = FindObjectOfType<CellsManager>();
+		powerUpManager = FindObjectOfType<PowerUpManager> ();
+		inputGameController = FindObjectOfType<InputGameController> ();
 
 		addPoints (0);
+		inputGameController.stateOfRotatePowerUp += setRotationOfPieces;
+		inputGameController.setDestroyByColorDelegate += setDestroyByColor;
 	}
 
 	void Update () 
@@ -129,5 +136,45 @@ public class GameManager : MonoBehaviour
 
 			wordManager.resetValidation();
 		}
+	}
+
+	/**
+	 * Activa el poder rotar a las imagenes por Boton
+	 **/
+	public void activateRotationByPowerUp()
+	{
+		for(int i=0; i < powerUpManager.powersUpOnEditor.Count; i++)
+		{
+			if (powerUpManager.powersUpOnEditor[i].typeOfPowerUp == EPOWERUPS.ROTATE_POWERUP) 
+			{
+				canRotate = powerUpManager.powersUpOnEditor [i].activeRotate ();
+				break;
+			}
+		}
+		inputGameController.setCanRotate (canRotate);
+	}
+
+	protected void setRotationOfPieces(bool activate)
+	{
+		canRotate = activate;
+	}
+
+	public void activateDestroyByColorPowerUp()
+	{
+		for(int i=0; i < powerUpManager.powersUpOnEditor.Count; i++)
+		{
+			if (powerUpManager.powersUpOnEditor[i].typeOfPowerUp == EPOWERUPS.DESTROY_POWERUP) 
+			{
+				destroyByColor = powerUpManager.powersUpOnEditor [i].activateDestroyMode ();
+				break;
+			}
+		}
+		inputGameController.setDestroyByColor (destroyByColor);
+	}
+
+
+	protected void setDestroyByColor(bool activate)
+	{
+		destroyByColor = activate;
 	}
 }

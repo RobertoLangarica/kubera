@@ -65,22 +65,15 @@ public class PowerUpBase : MonoBehaviour
 		}
 	}
 
-	public void activeRotate(bool activate)
+	public bool activeRotate()
 	{
 		if (uses != 0) 
 		{
-			if(activate)
-			{
-				gameManager.canRotate = true;
-			}
-			else
-			{
-				gameManager.canRotate = false;
-			}
+			return true;
 		}
 		else
 		{
-			gameManager.canRotate = false;
+			return false;
 		}
 
 		activeDelegateRotation ();
@@ -97,7 +90,7 @@ public class PowerUpBase : MonoBehaviour
 	/*
 	 * Funcion del boton del PowerUp de Destruir por Color
 	 */
-	public void activateDestroyMode()
+	public bool activateDestroyMode()
 	{
 		if (gameManager.canRotate) 
 		{
@@ -117,8 +110,9 @@ public class PowerUpBase : MonoBehaviour
 			go.GetComponent<Piece> ().powerUp = true;
 			FindObjectOfType<InputGameController> ().activePowerUp (go);
 
-			gameManager.destroyByColor = true;
+			return true;
 		}
+		return false;
 	}
 
 	public void activateWildCard()
