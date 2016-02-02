@@ -134,95 +134,106 @@ public class InputGameController : MonoBehaviour {
 			}
 				break;
 			case (ContinuousGesturePhase.Ended):
-				{
-					isDragging = false;
-					hasMoved = false;
-					onDragFinish();
+			{
 				
-				
-					//si no hay pieza terminamos
-					if(!piece)
-					{
-						break;
-					}
-				
-					if(piece.GetComponent<UIChar>())
-					{
-						//Lo habilitamos y ajustamos
-				
-						swappingLetter();
-						piece = null;
-						break;
-					}
-				
-					//checamos que podamos poner la pieza
-					if(!cellManager.CanPositionate(piece.GetComponent<Piece>().pieces))
-					{
-						if(gameManager.destroyByColor)
-						{
-							Cell tempCell = cellManager.getCellOnVec(piece.transform.position);
-							if(tempCell != null)
-							{
-								if(tempCell.occupied)
-								{
-									if(tempCell.typeOfPiece != ETYPEOFPIECE_ID.LETTER)
-									{	
-										cellManager.selectCellsOfColor(tempCell);
-											
-										DestroyImmediate(piece);
+				isDragging = false;
+				hasMoved = false;
+				onDragFinish();
 			
-										cellManager.turnSelectedCellsToLetters();
-									}
-									gameManager.destroyByColor = false;
-								}
-							}
-							else
+			
+				//si no hay pieza terminamos
+				if(!piece)
+				{
+					break;
+				}
+			
+				if(piece.GetComponent<UIChar>())
+				{
+					//Lo habilitamos y ajustamos
+			
+					swappingLetter();
+					piece = null;
+					break;
+				}
+			
+				//checamos que podamos poner la pieza
+				if(!cellManager.CanPositionate(piece.GetComponent<Piece>().pieces))
+				{
+					if(gameManager.destroyByColor)
+					{
+						Cell tempCell = cellManager.getCellOnVec(piece.transform.position);
+						if(tempCell != null)
+						{
+							if(tempCell.occupied)
 							{
-								backToNormal();
+								Debug.Log(tempCell.typeOfPiece);
+								if(tempCell.typeOfPiece != ETYPEOFPIECE_ID.LETTER && tempCell.typeOfPiece != ETYPEOFPIECE_ID.LETTER_FROM_BEGINING)
+								{	
+									Debug.Log("Entro!!!!!!!!!!!!!");
+									cellManager.selectCellsOfColor(tempCell);
+										
+									DestroyImmediate(piece);
+								
+									cellManager.turnSelectedCellsToLetters();
+								}
+								else
+								{
+									backToNormal();
+								}
 								gameManager.destroyByColor = false;
+
 							}
 						}
+
 						else
 						{
 							backToNormal();
+							gameManager.destroyByColor = false;
 						}
 					}
 					else
 					{
-						if(gameManager.destroyByColor)
-						{
-								backToNormal();
-						}
-						else
-						{
-							//ponemos la pieza en su posicion correcta de manera suave y le quitamos el colider a la pieza completa
-							Vector3 myNewPosition = cellManager.Positionate(piece.GetComponent<Piece>());
-							DOTween.KillAll();
-							piece.transform.DOMove(new Vector3(myNewPosition.x,myNewPosition.y,1),.1f);
-							piece.GetComponent<BoxCollider2D>().enabled = false;
-							//Ponemos los puntos de acuerdo a la cantidad de piezas
-							gameManager.addPoints(piece.GetComponent<Piece>().pieces.Length);
-							afterDragEnded();
-							cellManager.LineCreated();
-							//if(!cellManager.LineCreated())
-							//{
-							FlashColor[] flash = piece.GetComponentsInChildren<FlashColor>();
-							foreach(FlashColor f in flash)
-							{
-								f.startFlash(f.GetComponent<SpriteRenderer>(),0.2f);
-							}
-							//}
-							//Checamos si ya no puede hacer ningun movimiento
-							checkToLoose();
-						}
+						backToNormal();
 					}
-					DOTween.Kill("MovingPiece");
-					piece = null;
-				
 				}
-				break;
-				
+
+				else
+				{
+					if(gameManager.destroyByColor)
+					{
+						backToNormal();
+						gameManager.destroyByColor = false;
+					}
+					else
+					{
+
+						//ponemos la pieza en su posicion correcta de manera suave y le quitamos el colider a la pieza completa
+						Vector3 myNewPosition = cellManager.Positionate(piece.GetComponent<Piece>());
+						DOTween.KillAll();
+						piece.transform.DOMove(new Vector3(myNewPosition.x,myNewPosition.y,1),.1f);
+						piece.GetComponent<BoxCollider2D>().enabled = false;
+						//Ponemos los puntos de acuerdo a la cantidad de piezas
+						gameManager.addPoints(piece.GetComponent<Piece>().pieces.Length);
+						afterDragEnded();
+						cellManager.LineCreated();
+						//if(!cellManager.LineCreated())
+						//{
+						FlashColor[] flash = piece.GetComponentsInChildren<FlashColor>();
+						foreach(FlashColor f in flash)
+						{
+							f.startFlash(f.GetComponent<SpriteRenderer>(),0.2f);
+						}
+						//}
+						//Checamos si ya no puede hacer ningun movimiento
+						checkToLoose();
+					}
+
+				}
+					DOTween.Kill("MovingPiece");
+					piece = null;				
 			}
+			break;
+		}
 	}
 
 
