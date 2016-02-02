@@ -30,3 +30,11 @@ obj/
 .Trashes
 ehthumbs.db
 Thumbs.db
+Assets/Plugins/DOTween/DOTween.dll.meta
+Assets/Plugins/DOTween/DOTween43.dll.meta
+Assets/Plugins/DOTween/DOTween46.dll.meta
+Assets/Plugins/DOTween/DOTween50.dll.meta
+Assets/Plugins/DOTween/Editor/DOTweenEditor.dll.meta
+Assets/Plugins/DOTween/Editor/DOTweenEditor.pdb.meta
+ProjectSettings/ClusterInputManager.asset
+ProjectSettings/UnityConnectSettings.asset
