@@ -10,6 +10,8 @@ public class UIChar : MonoBehaviour
 	protected Text textfield;
 	protected Image myImage;
 
+	public GameObject piece;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -20,10 +22,10 @@ public class UIChar : MonoBehaviour
 		myImage.sprite = PieceManager.instance.changeTexture (character.character.ToLower () + "1");
 		//gameObject.transform.localScale = new Vector3(4, 4, 4);
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
 
+	public void DestroyPiece()
+	{
+		Destroy (piece);
 	}
+
 }
