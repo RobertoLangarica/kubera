@@ -176,46 +176,12 @@ public class WordManager : MonoBehaviour {
 	 **/ 
 	public void resetValidation()
 	{
-		int amount = 0;
-		int multiplierHelper = 1;
-
-		FindObjectOfType<ShowNext>().ShowingNext(false);
 		invalidCharlist = false;
 
-
-		//si la palabra esta completa se cuentan un punto por letra y se le avisa a gameManager
-		if(words.completeWord)
+		int l = container.transform.childCount;
+		while(--l >= 0)
 		{
-			for(int i = 0;i < chars.Count;i++)
-			{
-				chars[i].letterWasUsed();
-				switch(chars[i].pointsValue)
-				{
-				case("x2"):
-				{multiplierHelper *= 2;}
-					break;
-				case("x3"):
-				{multiplierHelper *= 3;}
-					break;
-				case("x4"):
-				{multiplierHelper *= 4;}
-					break;
-				case("x5"):
-				{multiplierHelper *= 5;}
-					break;
-				default:
-				{amount += int.Parse(chars[i].pointsValue);}
-					break;
-				}
-			}
-			amount *= multiplierHelper;
-			FindObjectOfType<GameManager>().addPoints(amount);
-
-			if(getFullWord() == "BELLEZA")
-			{
-				FindObjectOfType<GameManager>().gameManagerLose();
-			}
-			FindObjectOfType<InputGameController>().checkToLoose();
+			GameObject.Destroy(container.transform.GetChild(l).gameObject);
 		}
 
 		foreach(ABCChar c in chars)
@@ -224,48 +190,6 @@ public class WordManager : MonoBehaviour {
 		}
 
 		chars.Clear();
-
-
-
-		int l = container.transform.childCount;
-		while(--l >= 0)
-		{
-			Letter t = container.transform.GetChild(l).gameObject.GetComponent<Letter>();
-
-			if(t != null && t.piece != null)
-			{
-				if(words.completeWord)
-				{
-					if(t)
-					{
-						if(t.piece.GetComponent<Tile>())
-						{
-							t.piece.GetComponent<Tile>().cellIndex.clearCell();
-							//para destruir la pieza
-							t.DestroyPiece();
-						}
-
-
-
-						//GameObject.Destroy(t.piece);
-					}
-				}
-				else
-				{
-					if(t.piece.GetComponent<ABCChar>())
-					{
-						t.piece.GetComponent<ABCChar>().backToNormal();
-					}
-					else if(t.gameObject.GetComponent<ABCChar>().wildcard)
-					{
-						GameObject.Find("WildCard").GetComponent<PowerUpBase>().returnPower();
-					}
-
-				}
-			}
-
-			GameObject.Destroy(container.transform.GetChild(l).gameObject);
-		}
 
 		container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding = 300;
 	}

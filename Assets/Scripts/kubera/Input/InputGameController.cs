@@ -161,13 +161,19 @@ public class InputGameController : MonoBehaviour {
 						{
 							if(tempCell.occupied)
 							{
-								if(tempCell.typeOfPiece != ETYPEOFPIECE_ID.LETTER)
+								Debug.Log(tempCell.typeOfPiece);
+								if(tempCell.typeOfPiece != ETYPEOFPIECE_ID.LETTER && tempCell.typeOfPiece != ETYPEOFPIECE_ID.LETTER_FROM_BEGINING)
 								{	
+									Debug.Log("Entro!!!!!!!!!!!!!");
 									cellManager.selectCellsOfColor(tempCell);
 										
 									DestroyImmediate(piece);
 	
 									cellManager.turnSelectedCellsToLetters();
+								}
+								else
+								{
+									backToNormal();
 								}
 								gameManager.destroyByColor = false;
 							}
@@ -187,7 +193,8 @@ public class InputGameController : MonoBehaviour {
 				{
 					if(gameManager.destroyByColor)
 					{
-							backToNormal();
+						backToNormal();
+						gameManager.destroyByColor = false;
 					}
 					else
 					{

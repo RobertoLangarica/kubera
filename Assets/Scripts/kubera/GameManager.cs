@@ -4,8 +4,6 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour 
 {
-	public PopUp objectivePopUp;
-	public PopUp winPopUp;
 	public Text scoreText;
 
 	public bool destroyByColor;
@@ -18,22 +16,16 @@ public class GameManager : MonoBehaviour
 	public bool canRotate;
 
 	protected PersistentData persistentData;
+	protected WordManager wordManager;
+	protected CellsManager cellManager;
 
 	void Awake () 
 	{
 		persistentData = FindObjectOfType<PersistentData>();
+		wordManager = FindObjectOfType<WordManager>();
+		cellManager = FindObjectOfType<CellsManager>();
 
 		addPoints (0);
-	}
-
-	void Start()
-	{
-		//Se asignan delegates a los botones de los PopUps
-		objectivePopUp.redBDelegate += closePopUp;
-		objectivePopUp.greenBDelegate += closePopUp;
-
-		winPopUp.redBDelegate += goToIntro;
-		winPopUp.greenBDelegate += goToPopScene;
 	}
 
 	void Update () 
@@ -56,40 +48,6 @@ public class GameManager : MonoBehaviour
 		points.text = pointsCount.ToString();
 	}
 
-	/*
-	 * Se activa el PopUp de cuando ha perdido
-	 * 
-	 */
-	public void gameManagerLose()
-	{
-		scoreText.text = points.text;
-		winPopUp.showUp();
-	}
-
-	public void showObjective()
-	{
-		objectivePopUp.showUp();
-	}
-
-	public void closePopUp()
-	{
-		objectivePopUp.closePopUp();
-	}
-	
-	public void goToIntro()
-	{
-		//ScreenManager.instance.GoToScene("Intro");
-		winPopUp.closePopUp();
-		ScreenManager.instance.GoToSceneAsync("Intro",0.5f);
-	}
-	
-	public void goToPopScene()
-	{
-		//ScreenManager.instance.GoToScene("ObjectiveScene");
-		winPopUp.closePopUp();
-		ScreenManager.instance.GoToSceneAsync("ObjectiveScene",0.5f);
-	}
-
 	public void activeMoney(bool show,int howMany=0)
 	{
 		if(show)
@@ -103,6 +61,73 @@ public class GameManager : MonoBehaviour
 		else
 		{
 			MoneyGameObject.SetActive(false);	
+		}
+	}
+
+	public void verifyWord()
+	{
+		//FindObjectOfType<ShowNext>().ShowingNext(false);
+
+		int amount = 0;
+		int multiplierHelper = 1;
+
+		if(wordManager.words.completeWord)
+		{
+			for(int i = 0;i < wordManager.chars.Count;i++)
+			{
+				wordManager.chars[i].letterWasUsed();
+				switch(wordManager.chars[i].pointsValue)
+				{
+				case("x2"):
+					{multiplierHelper *= 2;}
+					break;
+				case("x3"):
+					{multiplierHelper *= 3;}
+					break;
+				case("x4"):
+					{multiplierHelper *= 4;}
+					break;
+				case("x5"):
+					{multiplierHelper *= 5;}
+					break;
+				default:
+					{amount += int.Parse(wordManager.chars[i].pointsValue);}
+					break;
+				}
+			}
+			amount *= multiplierHelper;
+			addPoints(amount);
+
+			//FindObjectOfType<InputGameController>().checkToLoose();
+
+			for(int i = 0;i < wordManager.chars.Count;i++)
+			{
+				ABCChar abcChar = wordManager.chars[i];
+				UIChar uiChar = wordManager.chars[i].gameObject.GetComponent<UIChar>();
+
+				if(uiChar != null && abcChar != null)
+				{
+					if(wordManager.words.completeWord)
+					{
+						cellManager.getCellOnVec(wordManager.chars[i].gameObject.transform.position).clearCell();
+						//uiChat.DestroyPiece();
+					}
+					else
+					{
+						if(abcChar.wildcard)
+						{
+							//GameObject.Find("WildCard").GetComponent<PowerUpBase>().returnPower();
+						}
+						else
+						{
+							abcChar.backToNormal();						
+						}
+
+					}
+				}
+			}
+
+			wordManager.resetValidation();
 		}
 	}
 }
