@@ -61,7 +61,7 @@ public class WordManager : MonoBehaviour {
 		letter.GetComponent<UIChar>().character = character; 
 		addLetterToCorrectSpace(letter);
 		letter.transform.localScale = new Vector3 (1, 1, 1);
-		letter.GetComponent<Letter> ().piece = piece;
+		letter.GetComponent<UIChar> ().piece = piece;
 		
 		validateCharacter(character);
 		
@@ -83,7 +83,7 @@ public class WordManager : MonoBehaviour {
 
 		addLetterToCorrectSpace(letter);
 		letter.transform.localScale = new Vector3 (1, 1, 1);
-		letter.GetComponent<Letter> ().piece = piece;
+		letter.GetComponent<UIChar> ().piece = piece;
 
 		validateCharacter(character);
 
@@ -330,7 +330,6 @@ public class WordManager : MonoBehaviour {
 		if(!words.isAWordPossible(pool))
 		{
 			print("perdio de verdad");
-			FindObjectOfType<GameManager>().gameManagerLose();
 		}
 	}
 

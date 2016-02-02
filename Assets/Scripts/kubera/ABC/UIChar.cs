@@ -10,6 +10,7 @@ public class UIChar : MonoBehaviour
 	protected Text textfield;
 	protected Image myImage;
 
+	[HideInInspector]
 	public GameObject piece;
 
 	// Use this for initialization

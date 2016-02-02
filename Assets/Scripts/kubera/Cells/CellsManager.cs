@@ -353,19 +353,14 @@ public class CellsManager : MonoBehaviour
 	protected void turnPiecesToLetters(int cellIndex,int lineIndex)
 	{
 		int newIndex = lineIndex+cellIndex;
-		Tile tempTile = null;
 		ABCChar tempAbcChar = null;
 
 		cells[newIndex].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
 		if(cells[newIndex].piece != null)
 		{
-			tempTile = cells[newIndex].piece.GetComponent<Tile>();
 			tempAbcChar = cells[newIndex].piece.AddComponent<ABCChar>();
 			
 			tempAbcChar.initializeFromScriptableABCChar(PieceManager.instance.giveLetterInfo());
-
-			tempTile.cellIndex = cells[newIndex];
-			tempTile.typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
 
 			cells[newIndex].piece.GetComponent<BoxCollider2D>().enabled = true;
 			

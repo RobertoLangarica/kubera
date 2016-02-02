@@ -109,7 +109,7 @@ public class PowerUpBase : MonoBehaviour
 		{
 			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-			GameObject go = (GameObject)Instantiate (powerUpCursor);
+			GameObject go = Instantiate (powerUpCursor) as GameObject;
 
 			go.GetComponent<Piece>().myFirstPos = powerUpCursor.transform;
 			go.GetComponent<Piece>().myFirstPos.position = pos;

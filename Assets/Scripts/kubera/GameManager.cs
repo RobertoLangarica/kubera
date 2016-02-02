@@ -102,15 +102,15 @@ public class GameManager : MonoBehaviour
 
 			for(int i = 0;i < wordManager.chars.Count;i++)
 			{
-				ABCChar abcChar = wordManager.chars[i];
-				UIChar uiChar = wordManager.chars[i].gameObject.GetComponent<UIChar>();
+				ABCChar abcChar = wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<ABCChar>();
+				UIChar uiChar = wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<UIChar>();
 
 				if(uiChar != null && abcChar != null)
 				{
 					if(wordManager.words.completeWord)
 					{
-						cellManager.getCellOnVec(wordManager.chars[i].gameObject.transform.position).clearCell();
-						//uiChat.DestroyPiece();
+						cellManager.getCellOnVec(uiChar.gameObject.transform.position).clearCell();
+						uiChar.DestroyPiece();
 					}
 					else
 					{

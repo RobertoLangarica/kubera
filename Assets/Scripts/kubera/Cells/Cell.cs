@@ -89,13 +89,9 @@ public class Cell : MonoBehaviour
 			tempV3.z = 0;
 			go.transform.position = tempV3;
 
-			Tile tempTile = piece.GetComponent<Tile>();
 			ABCChar tempAbcChar = piece.AddComponent<ABCChar>();
 
 			tempAbcChar.initializeFromScriptableABCChar(PieceManager.instance.giveLetterInfo());
-
-			tempTile.cellIndex = this;
-			tempTile.typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
 
 			piece.GetComponent<BoxCollider2D>().enabled = true;
 
