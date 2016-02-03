@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
 	public bool canRotate;
 	public bool destroyByColor;
 
+	protected EPOWERUPS activatedPowerUp;
+
 	protected PersistentData persistentData;
 	protected WordManager wordManager;
 	protected CellsManager cellManager;
@@ -34,8 +36,8 @@ public class GameManager : MonoBehaviour
 		cellManager.OnlinesCounted += linesCreated;
 
 		addPoints (0);
-		inputGameController.stateOfRotatePowerUp += setRotationOfPieces;
-		inputGameController.setDestroyByColorDelegate += setDestroyByColor;
+		inputGameController.deactivateRotateMode += setRotationOfPieces;
+		inputGameController.deactivateDestroyMode += setDestroyByColor;
 		inputGameController.pointsAtPieceSetCorrectly += addPoints;
 	}
 
@@ -185,38 +187,73 @@ public class GameManager : MonoBehaviour
 	 **/
 	public void activateRotationByPowerUp()
 	{
-		for(int i=0; i < powerUpManager.powersUpOnEditor.Count; i++)
-		{
-			if (powerUpManager.powersUpOnEditor[i].typeOfPowerUp == EPOWERUPS.ROTATE_POWERUP) 
-			{
-				canRotate = powerUpManager.powersUpOnEditor [i].activeRotate ();
-				break;
-			}
-		}
+		deactivateCurrentPowerUp();
+
+		canRotate = true;
 		inputGameController.setCanRotate (canRotate);
+		activatedPowerUp = EPOWERUPS.ROTATE_POWERUP;
+	}
+
+	public void addWildCardInCurrentWord()
+	{
+		deactivateCurrentPowerUp();
+
+		wordManager.addCharacter(".",gameObject);
+		FindObjectOfType<ShowNext>().ShowingNext(true);
+		activatedPowerUp = EPOWERUPS.WILDCARD_POWERUP;
+	}
+
+	public void createOneSquareBlock()
+	{
+		deactivateCurrentPowerUp();
+
+		inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.BLOCK_POWERUP).oneTilePower());
+		activatedPowerUp = EPOWERUPS.BLOCK_POWERUP;
+	}
+
+	public void activateDestroyAColorPowerUp()
+	{
+		deactivateCurrentPowerUp();
+
+		destroyByColor = true;
+		cellManager.selectNeighbours = false;
+
+		inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP).activateDestroyMode());
+		inputGameController.setDestroyByColor (destroyByColor);
+		activatedPowerUp = EPOWERUPS.DESTROY_ALL_COLOR_POWERUP;
+	}
+
+	public void activateDestroyNeighborsOfSameColor()
+	{
+		deactivateCurrentPowerUp();
+
+		destroyByColor = true;
+		cellManager.selectNeighbours = true;
+
+		inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.DESTROY_NEIGHBORS_POWERUP).activateDestroyMode());
+		inputGameController.setDestroyByColor (destroyByColor);
+		activatedPowerUp = EPOWERUPS.DESTROY_NEIGHBORS_POWERUP;
+	}
+
+	protected void deactivateCurrentPowerUp()
+	{
+		if (canRotate) 
+		{
+			canRotate = false;
+		}
+		if(destroyByColor)
+		{
+			destroyByColor = false;
+		}
+	}
+
+	protected void setDestroyByColor(bool activate)
+	{
+		destroyByColor = activate;
 	}
 
 	protected void setRotationOfPieces(bool activate)
 	{
 		canRotate = activate;
-	}
-
-	public void activateDestroyByColorPowerUp()
-	{
-		for(int i=0; i < powerUpManager.powersUpOnEditor.Count; i++)
-		{
-			if (powerUpManager.powersUpOnEditor[i].typeOfPowerUp == EPOWERUPS.DESTROY_POWERUP) 
-			{
-				destroyByColor = powerUpManager.powersUpOnEditor [i].activateDestroyMode ();
-				break;
-			}
-		}
-		inputGameController.setDestroyByColor (destroyByColor);
-	}
-
-
-	protected void setDestroyByColor(bool activate)
-	{
-		destroyByColor = activate;
 	}
 }

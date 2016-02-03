@@ -5,11 +5,14 @@ using System.Collections.Generic;
 
 namespace ABC
 {
-	public class WordManager : MonoBehaviour {
+	public class WordManager : MonoBehaviour 
+	{
 
 		public GameObject letterPrefab;
 		public GameObject empty;
 		public GameObject container;
+
+		public string wildCardPointValue;
 
 		[HideInInspector]public ABCDataStructure words;
 		[HideInInspector]public List<ABCChar> chars;

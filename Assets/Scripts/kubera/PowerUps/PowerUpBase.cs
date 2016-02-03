@@ -13,7 +13,6 @@ public class PowerUpBase : MonoBehaviour
 
 	public EPOWERUPS typeOfPowerUp;
 
-	protected GameManager gameManager;
 	protected CellsManager cellsManager;
 
 	public delegate void rotateActive(bool activate);
@@ -22,7 +21,6 @@ public class PowerUpBase : MonoBehaviour
 
 	void Start () 
 	{
-		gameManager = FindObjectOfType<GameManager>();
 		cellsManager = FindObjectOfType<CellsManager>();
 
 		initializeUsesFromUserData();
@@ -38,98 +36,38 @@ public class PowerUpBase : MonoBehaviour
 			//hacerlo no interactuable
 			if(uses==0)
 			{
-				imageUses.SetActive(false);
-				gameObject.GetComponent<Button>().interactable = false;
+				//imageUses.SetActive(false);
+				//gameObject.GetComponent<Button>().interactable = false;
 			}
 		}
 	}
 
-	public void oneTilePower()
+	public GameObject oneTilePower()
 	{
-		if (gameManager.canRotate) 
-		{
-			gameManager.canRotate = false;
-			activeDelegateRotation ();
-		}
+		Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-		if (uses != 0) 
-		{
-			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-			GameObject go = (GameObject)Instantiate (powerUpCursor);//,new Vector3(pos.x,pos.y+1.5f,1),Quaternion.identity);
-
-			go.GetComponent<Piece>().myFirstPos = powerUpCursor.transform;
-			go.GetComponent<Piece>().myFirstPos.position = pos;
-			go.name = "PowerOne";
-			go.GetComponent<Piece> ().powerUp = true;
-			FindObjectOfType<InputGameController> ().activePowerUp (go);
-		}
-	}
-
-	public bool activeRotate()
-	{
-		if (uses != 0) 
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-
-		activeDelegateRotation ();
-	}
-
-	protected void activeDelegateRotation()
-	{
-		if(onRotateActive != null)
-		{					
-			onRotateActive (gameManager.canRotate);
-		}
+		GameObject go = (GameObject)Instantiate (powerUpCursor);//,new Vector3(pos.x,pos.y+1.5f,1),Quaternion.identity);
+		go.GetComponent<Piece>().myFirstPos = powerUpCursor.transform;
+		go.GetComponent<Piece>().myFirstPos.position = pos;
+		go.name = "PowerOne";
+		go.GetComponent<Piece> ().powerUp = true;
+		return go;
 	}
 
 	/*
 	 * Funcion del boton del PowerUp de Destruir por Color
 	 */
-	public bool activateDestroyMode()
+	public GameObject activateDestroyMode()
 	{
-		if (gameManager.canRotate) 
-		{
-			gameManager.canRotate = false;
-			activeDelegateRotation ();
-		}
+		Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-		if(uses != 0)
-		{
-			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		GameObject go = Instantiate (powerUpCursor) as GameObject;
 
-			GameObject go = Instantiate (powerUpCursor) as GameObject;
-
-			go.GetComponent<Piece>().myFirstPos = powerUpCursor.transform;
-			go.GetComponent<Piece>().myFirstPos.position = pos;
-			go.name = "DestroyPowerUp";
-			go.GetComponent<Piece> ().powerUp = true;
-			FindObjectOfType<InputGameController> ().activePowerUp (go);
-
-			return true;
-		}
-		return false;
-	}
-
-	public void activateWildCard()
-	{
-		if (gameManager.canRotate) 
-		{
-			gameManager.canRotate = false;
-			activeDelegateRotation ();
-		}
-		
-		if (uses != 0) 
-		{
-			GameObject.Find("WordManager").GetComponent<WordManager>().addCharacter(".",gameObject);
-			PowerUsed();
-			FindObjectOfType<ShowNext>().ShowingNext(true);
-		}
+		go.GetComponent<Piece>().myFirstPos = powerUpCursor.transform;
+		go.GetComponent<Piece>().myFirstPos.position = pos;
+		go.name = "DestroyPowerUp";
+		go.GetComponent<Piece> ().powerUp = true;
+		return go;
 	}
 
 	public void returnPower()

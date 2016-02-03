@@ -25,13 +25,11 @@ namespace ABC
 		public string pointsValue;//Cantidad de puntos que entraga la letra al ser usada
 		public string typeOfLetter;//El tpo de letra que es, puede ntregar powerUps al momento de usarse
 
-		protected PowerUpManager powerUpManager;//Acceso al manager de powerUps para agregarle usos
 		protected WordManager wordManager;
 		protected bool usedFromGrid;
 
 		void Start () 
 		{
-			powerUpManager = FindObjectOfType<PowerUpManager>();
 			wordManager = FindObjectOfType<WordManager>();
 
 			//si es comodin lo dejamos en blanco y sino le dejamos el texto adecuado
@@ -69,6 +67,7 @@ namespace ABC
 				wildcard = true;
 			}
 		}
+	
 		
 		public void ShootLetter()
 		{
@@ -89,29 +88,6 @@ namespace ABC
 
 		public void letterWasUsed()
 		{
-			switch(typeOfLetter)
-			{
-			case("2"):
-			{
-				powerUpManager.giveUsesToPowerUP(EPOWERUPS.DESTROY_POWERUP);
-			}
-				break;
-			case("3"):
-			{
-				powerUpManager.giveUsesToPowerUP(EPOWERUPS.ROTATE_POWERUP);
-			}
-				break;
-			case("4"):
-			{
-				powerUpManager.giveUsesToPowerUP(EPOWERUPS.WILDCARD_POWERUP);
-			}
-				break;
-			case("5"):
-			{
-				powerUpManager.giveUsesToPowerUP(EPOWERUPS.BLOCK_POWERUP);
-			}
-				break;
-			}
 		}
 
 		protected void setTextureByType()
@@ -123,45 +99,45 @@ namespace ABC
 				return;
 			}
 
-			//switch(typeOfLetter)
-			//{
-			//case("0")://Son las letras que estan desde el inicio y bloquean las lineas
-			//{
-			//	abcCharSprite.color = Color.grey;
-			//	abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
-			//}
-			//	break;
-			//case("1")://Letras normales
-			//{
-			//	abcCharSprite.color = Color.white;
-			//	abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
-			//}
-			//	break;
-			//case("2")://Letras que al ser usadas dan el powerUp de destruir
-			//{
-			//	abcCharSprite.color = Color.blue;
-			//	abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
-			//}
-			//	break;
-			//case("3")://Letras que al ser usadas dan el powerUp de girar
-			//{
-			//	abcCharSprite.color = Color.green;
-			//	abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
-			//}
-			//	break;
-			//case("4")://Letras que al ser usadas dan el powerUp de comodin 
-			//{
-			//	abcCharSprite.color = Color.yellow;
-			//	abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
-			//}
-			//	break;
-			//case("5")://Letras que al ser usadas dan el powerUp de bloque
-			//{
-			//	abcCharSprite.color = Color.magenta;
-			//	abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
-			//}
-			//	break;
-			//}
+			/*switch(typeOfLetter)
+			{
+			case("0")://Son las letras que estan desde el inicio y bloquean las lineas
+			{
+				abcCharSprite.color = Color.grey;
+				abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+			}
+				break;
+			case("1")://Letras normales
+			{
+				abcCharSprite.color = Color.white;
+				abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+			}
+				break;
+			case("2")://Letras que al ser usadas dan el powerUp de destruir
+			{
+				abcCharSprite.color = Color.blue;
+				abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+			}
+				break;
+			case("3")://Letras que al ser usadas dan el powerUp de girar
+			{
+				abcCharSprite.color = Color.green;
+				abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+			}
+				break;
+			case("4")://Letras que al ser usadas dan el powerUp de comodin 
+			{
+				abcCharSprite.color = Color.yellow;
+				abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+			}
+				break;
+			case("5")://Letras que al ser usadas dan el powerUp de bloque
+			{
+				abcCharSprite.color = Color.magenta;
+				abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+			}
+				break;
+			}*/
 		}
 	}
 }
