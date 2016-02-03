@@ -341,8 +341,8 @@ public class CellsManager : MonoBehaviour
 
 	protected void addLetterPieceToCell(Cell cell)
 	{
-		Vector3 tempV3 = transform.position + new Vector3(gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
-		-gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
+		Vector3 tempV3 = cell.transform.position + new Vector3(cell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
+			-cell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
 		GameObject go = GameObject.Instantiate(letterFromBeginingPrefab) as GameObject;
 		go.GetComponent<BoxCollider2D>().enabled = false;
 		cell.piece = go.GetComponent<Piece>().pieces[0];
