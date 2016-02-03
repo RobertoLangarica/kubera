@@ -1,12 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace ABC
 {
-	public class WordManager : MonoBehaviour 
-	{
+	public class WordManager : MonoBehaviour {
 
 		public GameObject letterPrefab;
 		public GameObject empty;
@@ -47,19 +46,6 @@ namespace ABC
 		}
 
 		/**
-		 * Instancia un UIChar que recibe como referencia a character y manda validarlo
-		 * */
-		public void addCharacter(ABCChar character)
-		{
-			GameObject letter =  Instantiate(letterPrefab);
-			letter.GetComponent<UIChar>().character = character; 
-			addLetterToCorrectSpace(letter);
-			letter.transform.localScale = new Vector3 (1, 1, 1);
-
-			validateCharacter(character);
-		}
-
-		/**
 		 * Instancia UICHar y con la cadena que recibe crea un ABCChar que se
 		 * agrega como componente a la nueva pieza
 		 * */
@@ -72,13 +58,34 @@ namespace ABC
 			{
 				character.wildcard = true;
 			}
-
 			character.value = words.getCharValue(value);
 			character.character = value.ToUpperInvariant();
 			letter.GetComponent<UIChar>().character = character; 
 			addLetterToCorrectSpace(letter);
 			letter.transform.localScale = new Vector3 (1, 1, 1);
-			letter.GetComponent<Letter> ().piece = piece;
+			letter.GetComponent<UIChar> ().piece = piece;
+			
+			validateCharacter(character);
+			
+			//para que las letras esten centradas HardCoding
+			actualizePadding(true);
+		}
+
+		public void addCharacter(ABCChar pieceABCChar,GameObject piece)
+		{
+			GameObject letter =  Instantiate(letterPrefab);
+			ABCChar character = letter.AddComponent<ABCChar>();
+
+			character.wildcard = pieceABCChar.wildcard;
+			character.value = words.getCharValue(pieceABCChar.character.ToUpper());
+			character.character = pieceABCChar.character.ToUpperInvariant();
+			character.pointsValue = pieceABCChar.pointsValue;
+			character.typeOfLetter = pieceABCChar.typeOfLetter;
+			letter.GetComponent<UIChar>().character = character; 
+
+			addLetterToCorrectSpace(letter);
+			letter.transform.localScale = new Vector3 (1, 1, 1);
+			letter.GetComponent<UIChar> ().piece = piece;
 
 			validateCharacter(character);
 
@@ -171,21 +178,12 @@ namespace ABC
 		 **/ 
 		public void resetValidation()
 		{
-			FindObjectOfType<ShowNext>().ShowingNext(false);
 			invalidCharlist = false;
 
-
-			//si la palabra esta completa se cuentan un punto por letra y se le avisa a gameManager
-			if(words.completeWord)
+			int l = container.transform.childCount;
+			while(--l >= 0)
 			{
-				//print (getFullWord().Length);
-				FindObjectOfType<GameManager>().addPoints(getFullWord().Length);
-
-				if(getFullWord() == "BELLEZA")
-				{
-					FindObjectOfType<GameManager>().gameManagerLose();
-				}
-				FindObjectOfType<InputGameController>().checkToLoose();
+				GameObject.Destroy(container.transform.GetChild(l).gameObject);
 			}
 
 			foreach(ABCChar c in chars)
@@ -194,48 +192,6 @@ namespace ABC
 			}
 
 			chars.Clear();
-
-
-
-			int l = container.transform.childCount;
-			while(--l >= 0)
-			{
-				Letter t = container.transform.GetChild(l).gameObject.GetComponent<Letter>();
-
-				if(t != null && t.piece != null)
-				{
-					if(words.completeWord)
-					{
-						if(t)
-						{
-							if(t.piece.GetComponent<Tile>())
-							{
-								t.piece.GetComponent<Tile>().cellIndex.clearCell();
-								//para destruir la pieza
-								t.DestroyPiece();
-							}
-
-
-
-							//GameObject.Destroy(t.piece);
-						}
-					}
-					else
-					{
-						if(t.piece.GetComponent<Tile>())
-						{
-							t.piece.GetComponent<Tile>().backToNormal();
-						}
-						else if(t.gameObject.GetComponent<ABCChar>().wildcard)
-						{
-							GameObject.Find("WildCard").GetComponent<PowerUpBase>().returnPower();
-						}
-
-					}
-				}
-
-				GameObject.Destroy(container.transform.GetChild(l).gameObject);
-			}
 
 			container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding = 300;
 		}
@@ -376,7 +332,6 @@ namespace ABC
 			if(!words.isAWordPossible(pool))
 			{
 				print("perdio de verdad");
-				FindObjectOfType<GameManager>().gameManagerLose();
 			}
 		}
 

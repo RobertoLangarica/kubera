@@ -25,17 +25,34 @@ public class InputGameController : MonoBehaviour {
 	public DOnDragStart onDragStart;
 
 	protected WordManager wordManager;
-	protected GameManager gameManager;
+
 	public CellsManager cellManager;
 	protected GameObject piece;
-	protected GameObject pieceReference;
+
 	protected bool isLeter;
+	protected bool isPiece;
+
+
 	public float movingSpeed = .5f;
 	public float movingUpFinger = 1.5f;
 
+	protected Vector3 selectedScale = new Vector3 (4.5f, 4.5f, 4.5f);
+
+	[HideInInspector]
+	protected bool canRotate;
+	protected bool destroyByColor;
+
+	public delegate void rotateState (bool rotate);
+	public rotateState stateOfRotatePowerUp;
+
+	public delegate void destroyByColorState (bool destroyByColor);
+	public rotateState setDestroyByColorDelegate;
+
+	public delegate void pieceSetCorrectly (int sizeOfPiece);
+	public pieceSetCorrectly pointsAtPieceSetCorrectly;
+
 	void Start () 
 	{
-		gameManager = GameObject.FindObjectOfType<GameManager>();
 		wordManager = GameObject.FindObjectOfType<WordManager>();
 
 		onDragFinish = foo;
@@ -65,128 +82,162 @@ public class InputGameController : MonoBehaviour {
 		
 		switch(gesture.Phase)
 		{
-		case (ContinuousGesturePhase.Started):
-		{
-			isDragging = true;
-			hasMoved = true;
-			onDragStart();
-
-
-			if(gesture.Raycast.Hits2D != null)
+			case (ContinuousGesturePhase.Started):
 			{
-				//if(gesture.Raycast.Hit2D.transform.gameObject.GetComponents
-
-				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>() && !gameManager.canRotate)
+				isDragging = true;
+				hasMoved = true;
+				onDragStart();
+				print("Ser");
+				if(isLeter)
 				{
-					piece = gesture.Raycast.Hit2D.transform.gameObject;
-					isLeter = false;
-				}
-
-				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Letter>())
-				{
-					piece = gesture.Raycast.Hit2D.transform.gameObject;
-					isLeter = true;
+							
 					wordManager.setPositionToLetters();
 					wordManager.canSwappLetters(true,piece);
+
 				}
-			}
-		}	
+			}	
 			break;
 			
-		case (ContinuousGesturePhase.Updated):
-		{
-			if(!isMultiFinger)
+			case (ContinuousGesturePhase.Updated):
 			{
-				// si existe la pieza la movemos con movingLerping de acuerdo a la posicion del mouse
-				if(piece && !isLeter)
+				if(!isMultiFinger)
 				{
-					Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-					tempV3.z = -1;
-					hasMoved = true;
-					tempV3.y += movingUpFinger;
-					movingLerping(tempV3,piece);
-				}
-				else if(piece && isLeter)
-				{
-					float y = piece.transform.position.y;
-					float z = piece.transform.position.z;
-					Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-					tempV3.z = -1;
-					hasMoved = true;
-					//tempV3.y += movingUpFinger;
-					tempV3.y = y;
-					tempV3.z = z;
-					wordManager.swappingLetters(piece);
-					movingLerping(tempV3,piece);
-				}
-			}
-			else
-			{}
-		}
-			break;
-		case (ContinuousGesturePhase.Ended):
-		{
-			isDragging = false;
-			hasMoved = false;
-			onDragFinish();
+					if (!piece) {return;}
 
-
-			//si no hay pieza terminamos
-			if(!piece)
-			{
-				break;
-			}
-
-			if(piece.GetComponent<Letter>())
-			{
-				//Lo habilitamos y ajustamos
-
-				swappingLetter();
-				piece = null;
-				break;
-			}
-
-			//checamos que podamos poner la pieza
-			if(!cellManager.CanPositionate(piece.GetComponent<Piece>().pieces))
-			{
-				backToNormal();
-			}
-			else
-			{
-				//ponemos la pieza en su posicion correcta de manera suave y le quitamos el colider a la pieza completa
-				Vector3 myNewPosition = cellManager.Positionate(piece.GetComponent<Piece>());
-				DOTween.KillAll();
-				piece.transform.DOMove(new Vector3(myNewPosition.x,myNewPosition.y,1),.1f);
-				piece.GetComponent<BoxCollider2D>().enabled = false;
-
-				//Ponemos los puntos de acuerdo a la cantidad de piezas
-				gameManager.addPoints(piece.GetComponent<Piece>().pieces.Length);
-
-
-				afterDragEnded();
-
-				cellManager.LineCreated();
-
-				//if(!cellManager.LineCreated())
-				//{
-					FlashColor[] flash = piece.GetComponentsInChildren<FlashColor>();
-
-					foreach(FlashColor f in flash)
+					// si existe la pieza la movemos con movingLerping de acuerdo a la posicion del mouse
+					if(!isLeter)
 					{
-						f.startFlash(f.GetComponent<SpriteRenderer>(),0.2f);
+						Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
+						tempV3.z = -1;
+						hasMoved = true;
+						tempV3.y += movingUpFinger;
+						movingLerping(tempV3,piece);
 					}
-				//}
+					else if(isLeter)
+					{
+						float y = piece.transform.position.y;
+						float z = piece.transform.position.z;
+						Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
+						tempV3.z = -1;
+						hasMoved = true;
 
-				//Checamos si ya no puede hacer ningun movimiento
-				checkToLoose();
+						//tempV3.y += movingUpFinger;
 
+						tempV3.y = y;
+						tempV3.z = z;
+						wordManager.swappingLetters(piece);
+						movingLerping(tempV3,piece);
+					}
+				}
+				else
+				{}			
 			}
-			DOTween.Kill("MovingPiece");
-			piece = null;
-
-		}
 			break;
+
+			case (ContinuousGesturePhase.Ended):
+			{				
+				isDragging = false;
+				hasMoved = false;
+				onDragFinish();
 			
+			
+				//si no hay pieza terminamos
+				if(!piece)
+				{
+					break;
+				}
+			
+				if(isLeter)
+				{
+					//Lo habilitamos y ajustamos
+			
+					swappingLetter();
+					piece = null;
+					break;
+				}
+			
+				//checamos que podamos poner la pieza
+				if(!cellManager.CanPositionate(piece.GetComponent<Piece>().pieces))
+				{
+					if(destroyByColor)
+					{
+						Cell tempCell = cellManager.getCellOnVec(piece.transform.position);
+						if(tempCell != null)
+						{
+							if(tempCell.occupied)
+							{
+								Debug.Log(tempCell.typeOfPiece);
+								if(tempCell.typeOfPiece != ETYPEOFPIECE_ID.LETTER && tempCell.typeOfPiece != ETYPEOFPIECE_ID.LETTER_FROM_BEGINING)
+								{	
+									Debug.Log("Entro!!!!!!!!!!!!!");
+									cellManager.selectCellsOfColor(tempCell);
+										
+									DestroyImmediate(piece);
+								
+									cellManager.turnSelectedCellsToLetters();
+								}
+								else
+								{
+									backToNormal();
+								}
+								destroyByColor = false;
+								setDestroyByColorDelegate (destroyByColor);
+							}
+						}
+
+						else
+						{
+							backToNormal();
+							destroyByColor = false;
+							setDestroyByColorDelegate (destroyByColor);
+						}
+					}
+					else
+					{
+						backToNormal();
+					}
+				}
+
+				else
+				{
+					if(destroyByColor)
+					{
+						backToNormal();
+						destroyByColor = false;
+						setDestroyByColorDelegate (destroyByColor);
+					}
+					else
+					{
+
+						//ponemos la pieza en su posicion correcta de manera suave y le quitamos el colider a la pieza completa
+						Vector3 myNewPosition = cellManager.Positionate(piece.GetComponent<Piece>());
+						DOTween.KillAll();
+						piece.transform.DOMove(new Vector3(myNewPosition.x,myNewPosition.y,1),.1f);
+						piece.GetComponent<BoxCollider2D>().enabled = false;
+
+						//Ponemos los puntos de acuerdo a la cantidad de piezas
+
+						pointsAtPieceSetCorrectly (piece.GetComponent<Piece> ().pieces.Length);
+
+						afterDragEnded();
+						cellManager.LineCreated();
+
+
+						FlashColor[] flash = piece.GetComponentsInChildren<FlashColor>();
+						foreach(FlashColor f in flash)
+						{
+							f.startFlash(f.GetComponent<SpriteRenderer>(),0.2f);
+						}
+						//}
+						//Checamos si ya no puede hacer ningun movimiento
+						checkToLoose();
+					}
+
+				}
+					DOTween.Kill("MovingPiece");
+					piece = null;				
+			}
+			break;
 		}
 	}
 
@@ -195,47 +246,28 @@ public class InputGameController : MonoBehaviour {
 	{
 		if(gesture.Raycast.Hits2D != null)
 		{
-			if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>())
+			checkWhatIs (gesture.Raycast.Hit2D.transform.gameObject);
+
+			if(isPiece)
 			{
 				piece = gesture.Raycast.Hit2D.transform.gameObject;
-				isLeter = false;
-				if(piece)
+
+				if(!canRotate)
 				{
-					if(gameManager.canRotate)
-					{
-						if(piece.GetComponent<Piece>().firstPiece&&piece != pieceReference)
-						{
-							choseToRotate(piece.GetComponent<Piece>());
-							pieceReference = piece;
-							piece = null;
-						}
-						else
-						{
-							Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-							tempV3.z = -1;
-							hasMoved = false;
-							
-							tempV3.y += movingUpFinger;
-							//piece.transform.position = tempV3;
-							piece.transform.DOMove(tempV3,.1f);
-							piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
-						}
-					}
-					else
-					{
-						Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-						tempV3.z = -1;
-						hasMoved = false;
-						
-						tempV3.y += movingUpFinger;
-						//piece.transform.position = tempV3;
-						piece.transform.DOMove(tempV3,.1f);
-						piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
-					}
+					Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
+					tempV3.z = -1;
+					hasMoved = false;
+
+					tempV3.y += movingUpFinger;
+					//piece.transform.position = tempV3;
+					piece.transform.DOMove(tempV3,.1f);
+					piece.transform.DOScale(selectedScale,.1f);
 				}
+
 			}
-			else if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Letter>())
+			else if(isLeter)
 			{
+				piece = gesture.Raycast.Hit2D.transform.gameObject;
 				//print("Letter");
 			}
 		}
@@ -247,18 +279,16 @@ public class InputGameController : MonoBehaviour {
 		{
 			if(gesture.Raycast.Hit2D.transform)
 			{
-				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>())
+				if (canRotate) 
 				{
-					if(gameManager.destroyByColor)
-					{
-						gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>().selectPieceColorToDestroy();
-					}
-					else
-					{
-						gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>().ShootLetter();
-						FindObjectOfType<ShowNext>().ShowingNext(true);
-						gameObject.GetComponent<AudioSource>().Play();
-					}
+					choseToRotate(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>());
+					return;
+				}
+				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<ABCChar>())
+				{
+					gesture.Raycast.Hit2D.transform.gameObject.GetComponent<ABCChar>().ShootLetter();
+					FindObjectOfType<ShowNext>().ShowingNext(true);
+					gameObject.GetComponent<AudioSource>().Play();
 				}
 			}
 		}
@@ -266,7 +296,7 @@ public class InputGameController : MonoBehaviour {
 
 	void OnFingerUp()
 	{
-		if(piece&&!hasMoved && !piece.GetComponent<Letter>())
+		if(piece&&!hasMoved && !isLeter)
 		{
 			backToNormal();
 		}
@@ -275,7 +305,7 @@ public class InputGameController : MonoBehaviour {
 	// si la pieza no fue puesta correctamente la regresamos a su posicion inicial
 	void backToNormal()
 	{
-		GameObject gop = piece.gameObject;
+		GameObject gotemp = piece.gameObject;
 
 		/*
 		 * checamos si es powerUp, la regresamos a su posicion y la destruimos al llegar ahi
@@ -285,23 +315,17 @@ public class InputGameController : MonoBehaviour {
 		{
 			print(piece.GetComponent<Piece>().myFirstPos.position);
 			Vector3 tempV3 = piece.GetComponent<Piece>().myFirstPos.position;
-			piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f).OnComplete(()=>{DestroyImmediate(gop);});
+			piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f).OnComplete(()=>{DestroyImmediate(gotemp);});
 			piece.transform.DOScale (new Vector3 (0, 0, 0), .2f);
-
 		}
 		else
 		{
 			Vector3 tempV3 = piece.GetComponent<Piece>().myFirstPos.position;
 			piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f);
-			if(piece.GetComponent<Piece>().firstPiece)
-			{
-				piece.transform.DOScale (new Vector3 (4, 4, 4), .1f);
-			}
-			else
-			{
-				piece.transform.DOScale (new Vector3 (1.5f, 1.5f, 1.5f), .1f);
-			}
-			
+
+
+			piece.transform.DOScale (new Vector3 (2.5f,2.5f,2.5f), .1f);
+						
 			piece = null;
 		}
 	}
@@ -311,7 +335,7 @@ public class InputGameController : MonoBehaviour {
 	{
 		if (hasMoved) 
 		{
-			if(piece.GetComponent<Letter>())
+			if(isLeter)
 			{
 				piece.transform.DOMove (end, .8f).SetId("MovingPiece");
 			}
@@ -371,12 +395,11 @@ public class InputGameController : MonoBehaviour {
 
 	void OnSwipe(SwipeGesture gesture) 
 	{
-		if (!piece) 
+		if (isLeter) 
 		{
 			if(gesture.Direction == FingerGestures.SwipeDirection.Up)
 			{
-				FindObjectOfType<WordManager>().resetValidation();
-				checkToLoose();
+				
 			}
 		}
 	}
@@ -394,30 +417,26 @@ public class InputGameController : MonoBehaviour {
 	{
 		if(!piece.GetComponent<Piece>().powerUp)
 		{
-			if((piece.GetComponent<Piece>().firstPiece == false && pieceReference )||(piece.GetComponent<Piece>().firstPiece == true && pieceReference))
+			if (canRotate) 
 			{
-				if(pieceReference != piece)
+				//utilizo el powerUp de rotar
+				GameObject.Find ("PowerRotate").GetComponent<PowerUpBase> ().PowerUsed ();
+				if (PieceManager.instance.setRotationPiecesAsNormalRotation ()) 
 				{
-					PieceManager.instance.destroyRotatePieces(piece.GetComponent<Piece>());
-					//utilizo el powerUp de rotar
-					GameObject.Find("PowerRotate").GetComponent<PowerUpBase>().PowerUsed();
+					//ChargePower
+					print("ChargePowerUP");
 				}
-				else
-				{
-					PieceManager.instance.destroyRotatePieces(piece.GetComponent<Piece>(),false);
+				canRotate = false;
+				stateOfRotatePowerUp (canRotate);
 
-				}
-				pieceReference = null;
-				gameManager.canRotate = false;
 			}
-			
 
 			PieceManager.instance.checkBarr(piece);
+			piece.transform.SetParent (null);
 		}
 		else
 		{
 			GameObject.Find(piece.name).GetComponent<PowerUpBase>().PowerUsed();
-			//FindObjectOfType<PowerUpBase>().PowerUsed();
 		}
 	}
 
@@ -425,7 +444,49 @@ public class InputGameController : MonoBehaviour {
 	{
 		DOTween.KillAll();
 
-
 		wordManager.canSwappLetters(false,piece);
+	}
+
+	public void setCanRotate(bool rotate)
+	{
+		if (rotate) 
+		{
+			canRotate = true;
+		}
+		else 
+		{
+			canRotate = false;
+		}
+	}
+
+	public void setDestroyByColor(bool activate)
+	{
+		if (activate) 
+		{
+			destroyByColor = true;
+		}
+		else 
+		{
+			destroyByColor = false;
+		}
+	}
+
+	protected void checkWhatIs(GameObject go)
+	{
+		if (go.GetComponent<Piece> ()) 
+		{
+			isPiece = true;
+			isLeter = false;
+			return;
+		}
+
+		if (go.GetComponent<UIChar> ()) 
+		{
+			isPiece = false;
+			isLeter = true;
+			return;
+		}
+		isPiece = false;
+		isLeter = false;
 	}
 }

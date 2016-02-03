@@ -6,8 +6,9 @@ using ABC;
 //[ExecuteInEditMode]
 public class CellsManager : MonoBehaviour 
 {
-	//public bool runCreationOnEditor = false;
-	//public bool destroyGridOnEditor = false;
+	public delegate void linesCreated(int lines);
+
+	[HideInInspector]public linesCreated OnlinesCounted;
 
 	//Es el prefab que se va a utilizar para la grid
 	public GameObject cellPrefab;
@@ -30,13 +31,13 @@ public class CellsManager : MonoBehaviour
 	//Todas las celdas del grid
 	protected List<Cell> cells = new List<Cell>();
 
-	protected GameManager gameManager;
+	protected PieceManager pieceManager;
 
 	void Start () 
 	{
-		CreateGrid();
+		pieceManager = FindObjectOfType<PieceManager>();
 
-		gameManager = FindObjectOfType<GameManager>();
+		CreateGrid();
 	}
 
 	/*
@@ -57,7 +58,12 @@ public class CellsManager : MonoBehaviour
 				go.transform.SetParent(transform);
 				cells.Add(go.GetComponent<Cell>());
 
-				cells[cells.Count-1].setTypeToCell(int.Parse(levelGridData[cells.Count-1]),letterFromBeginingPrefab);
+				cells[cells.Count-1].setTypeToCell(int.Parse(levelGridData[cells.Count-1]));
+
+				if(cells[cells.Count-1].typeOfPiece == ETYPEOFPIECE_ID.LETTER_FROM_BEGINING)
+				{
+					addLetterPieceToCell(cells[cells.Count-1]);
+				}
 
 				nPos.x += cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x + 0.03f;
 			}
@@ -98,7 +104,7 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @return {Cell}: La celda que tiene la posicion de mundo que se le envio dentro de sus limites
 	 */
-	protected Cell getCellOnVec(Vector3 vec)
+	public Cell getCellOnVec(Vector3 vec)
 	{
 		Vector3 tempV2 = Vector3.zero;
 		float size = 0;
@@ -133,10 +139,8 @@ public class CellsManager : MonoBehaviour
 
 	/*
 	 * Evalua el estado de la grid para determinar si se ha creado o no una linea de piezas
-	 * 
-	 * @return {bool}: Regresa verdadero si se creo almenos una linea o falso si no se creo ninguna
 	 */
-	public bool LineCreated()
+	public void LineCreated()
 	{
 		int[] widthCount = new int[height];
 		int[] heightCount = new int[width];
@@ -145,9 +149,11 @@ public class CellsManager : MonoBehaviour
 		int wIndex = 0;
 		int hIndex = 0;
 
+		int linesCount = 0;
+
 		for(int i = 0;i < cells.Count;i++)
 		{
-			if(cells[i].occupied && cells[i].typeOfPiece != ETYPEOFPIECE_ID.LETTER)
+			if(cells[i].occupied && cells[i].typeOfPiece != ETYPEOFPIECE_ID.LETTER && cells[i].available)
 			{
 				widthCount[wIndex]++;
 				heightCount[hIndex]++;
@@ -165,7 +171,7 @@ public class CellsManager : MonoBehaviour
 			{
 				createLettersOn(true,i);
 				foundLine = true;
-				gameManager.addPoints(pointPerLine);
+				linesCount++;
 			}
 		}
 		for(int i = 0;i < width;i++)
@@ -174,18 +180,20 @@ public class CellsManager : MonoBehaviour
 			{
 				createLettersOn(false,i);
 				foundLine = true;
-				gameManager.addPoints(pointPerLine);
+				linesCount++;
 			}
+		}
+
+		if(OnlinesCounted != null)
+		{
+			OnlinesCounted(linesCount);
 		}
 
 		if(foundLine)
 		{
-			FindObjectOfType<GameManager>().GetComponent<AudioSource>().Play();
-			return true;
+			//***********************************************Crear AudioManager
+			//FindObjectOfType<GameManager>().GetComponent<AudioSource>().Play();
 		}
-
-
-		return false;
 	}
 
 	/*
@@ -277,12 +285,16 @@ public class CellsManager : MonoBehaviour
 			tempC.typeOfPiece = piece.typeOfPiece;
 		}
 		
-		tempC = getCellOnVec(piece.transform.position);
+		tempC = getCellOnVec(piece.pieces[0].transform.position);
+
+		Vector3 ofsetBetweenPieces = piece.pieces[0].transform.position - piece.transform.position;
+
 		Vector3 nVec = new Vector3(tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
 		                           -tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
 
-		gameObject.GetComponent<AudioSource>().Play();
-		return (tempC).transform.position + nVec;
+		//***********************************************Crear AudioManager
+		//gameObject.GetComponent<AudioSource>().Play();
+		return (tempC).transform.position + nVec - ofsetBetweenPieces;
 	}
 
 	/*
@@ -308,33 +320,43 @@ public class CellsManager : MonoBehaviour
 				turnPiecesToLetters((i*width),index);
 			}
 		}
-		FindObjectOfType<GameManager>().addPoints(10);
 	}
 
 	protected void turnPiecesToLetters(int cellIndex,int lineIndex)
 	{
 		int newIndex = lineIndex+cellIndex;
-		Tile tempTile = null;
 		ABCChar tempAbcChar = null;
 
 		cells[newIndex].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
 		if(cells[newIndex].piece != null)
 		{
-			tempTile = cells[newIndex].piece.GetComponent<Tile>();
 			tempAbcChar = cells[newIndex].piece.AddComponent<ABCChar>();
 			
-			tempAbcChar.initializeFromScriptableABCChar(PieceManager.instance.giveLetterInfo());
-			
-			tempTile.myLeterCase = tempAbcChar.character;
-			tempTile.cellIndex = cells[newIndex];
-			tempTile.typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
-			
-			cells[newIndex].piece.GetComponent<SpriteRenderer>().color = new Color(1,1,1);
-			cells[newIndex].piece.GetComponent<SpriteRenderer>().sprite = PieceManager.instance.changeTexture(tempTile.myLeterCase);
+			tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());
+
 			cells[newIndex].piece.GetComponent<BoxCollider2D>().enabled = true;
 			
-			PieceManager.instance.listChar.Add(tempAbcChar);
+			pieceManager.listChar.Add(tempAbcChar);
 		}
+	}
+
+	protected void addLetterPieceToCell(Cell cell)
+	{
+		Vector3 tempV3 = cell.transform.position + new Vector3(cell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
+			-cell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
+		GameObject go = GameObject.Instantiate(letterFromBeginingPrefab) as GameObject;
+		go.GetComponent<BoxCollider2D>().enabled = false;
+		cell.piece = go.GetComponent<Piece>().pieces[0];
+		tempV3.z = 0;
+		go.transform.position = tempV3;
+
+		ABCChar tempAbcChar = cell.piece.AddComponent<ABCChar>();
+
+		tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());
+
+		cell.piece.GetComponent<BoxCollider2D>().enabled = true;
+
+		pieceManager.listChar.Add(tempAbcChar);
 	}
 
 
@@ -460,6 +482,16 @@ public class CellsManager : MonoBehaviour
 		for(int i = 0;i < selected.Count;i++)
 		{
 			selected[i].destroyCell();
+		}
+
+		selected = new List<Cell>();
+	}
+
+	public void turnSelectedCellsToLetters()
+	{
+		for(int i = 0;i < selected.Count;i++)
+		{
+			turnPiecesToLetters(cells.IndexOf(selected[i]),0);
 		}
 
 		selected = new List<Cell>();

@@ -12,6 +12,9 @@ namespace ABC
 		protected Text textfield;
 		protected Image myImage;
 
+		[HideInInspector]
+		public GameObject piece;
+
 		// Use this for initialization
 		void Start () 
 		{
@@ -22,11 +25,11 @@ namespace ABC
 			myImage.sprite = PieceManager.instance.changeTexture (character.character.ToLower () + "1");
 			//gameObject.transform.localScale = new Vector3(4, 4, 4);
 		}
-		
-		// Update is called once per frame
-		void Update () 
-		{
 
+		public void DestroyPiece()
+		{
+			Destroy (piece);
 		}
+
 	}
 }

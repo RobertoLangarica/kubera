@@ -6,13 +6,13 @@ public enum ETYPEOFPIECE_ID
 {
 	NONE,
 	AQUA,
-	BLACK,
 	BLUE,
 	GREEN,
 	GREY,
 	MAGENTA,
 	RED,
 	YELLOW,
+	BLACK,
 	LETTER,
 	LETTER_FROM_BEGINING,
 	LETTER_DESTROY_POWERUP,
@@ -41,8 +41,10 @@ public class Piece : MonoBehaviour {
 	[HideInInspector]
 	public GameObject parent;
 
-	public bool firstPiece;
 	public GameObject[] rotatePieces;
+
+	//[HideInInspector]
+	public int howManyHasBeenRotated =0;
 
 	public int colorToSet = 1;
 	public bool randomColor=false;
@@ -64,32 +66,19 @@ public class Piece : MonoBehaviour {
 		foreach(GameObject piece in pieces)
 		{
 			piece.GetComponent<SpriteRenderer>().color = rendererColor;
-			piece.GetComponent<Tile>().typeOfPiece = currentTypeOfPiece;
-			if(firstPiece)
+
+			if(colorToSet ==0 && randomColor)
 			{
-				if(colorToSet ==0 && randomColor)
-				{
-					typeOfPiece = (ETYPEOFPIECE_ID)Random.Range(1,8);
-				}
-				else
-				{
-					typeOfPiece = (ETYPEOFPIECE_ID)colorToSet;
-				}
-				
-				foreach(GameObject piece2 in pieces)
-				{
-					piece2.GetComponent<SpriteRenderer>().color = rendererColor;
-					piece2.GetComponent<Tile>().typeOfPiece = currentTypeOfPiece;
-				}
+				typeOfPiece = (ETYPEOFPIECE_ID)Random.Range(1,8);
 			}
 			else
 			{
-				currentTypeOfPiece = parent.GetComponent<Piece>().currentTypeOfPiece;
-				foreach(GameObject piece2 in pieces)
-				{	
-					piece2.GetComponent<SpriteRenderer>().color = rendererColor;
-					piece2.GetComponent<Tile>().typeOfPiece = currentTypeOfPiece;
-				}
+				typeOfPiece = (ETYPEOFPIECE_ID)colorToSet;
+			}
+			
+			foreach(GameObject piece2 in pieces)
+			{
+				piece2.GetComponent<SpriteRenderer>().color = rendererColor;
 			}
 		}
 	}
