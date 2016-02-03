@@ -87,13 +87,23 @@ public class InputGameController : MonoBehaviour {
 				isDragging = true;
 				hasMoved = true;
 				onDragStart();
-				print("Ser");
+
 				if(isLeter)
 				{
-							
 					wordManager.setPositionToLetters();
 					wordManager.canSwappLetters(true,piece);
+				}
 
+				if (isPiece) 
+				{
+					Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
+					tempV3.z = -1;
+					hasMoved = false;
+
+					tempV3.y += movingUpFinger;
+					//piece.transform.position = tempV3;
+					piece.transform.DOMove(tempV3,.1f);
+					piece.transform.DOScale(selectedScale,.1f);
 				}
 			}	
 			break;
