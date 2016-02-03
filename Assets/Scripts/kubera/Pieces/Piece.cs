@@ -66,7 +66,6 @@ public class Piece : MonoBehaviour {
 		foreach(GameObject piece in pieces)
 		{
 			piece.GetComponent<SpriteRenderer>().color = rendererColor;
-			piece.GetComponent<Tile>().typeOfPiece = currentTypeOfPiece;
 
 			if(colorToSet ==0 && randomColor)
 			{
@@ -80,7 +79,6 @@ public class Piece : MonoBehaviour {
 			foreach(GameObject piece2 in pieces)
 			{
 				piece2.GetComponent<SpriteRenderer>().color = rendererColor;
-				piece2.GetComponent<Tile>().typeOfPiece = currentTypeOfPiece;
 			}
 		}
 	}

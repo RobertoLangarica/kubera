@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
 		powerUpManager = FindObjectOfType<PowerUpManager> ();
 		inputGameController = FindObjectOfType<InputGameController> ();
 
+		cellManager.OnlinesCounted += linesCreated;
+
 		addPoints (0);
 		inputGameController.stateOfRotatePowerUp += setRotationOfPieces;
 		inputGameController.setDestroyByColorDelegate += setDestroyByColor;
@@ -136,6 +138,43 @@ public class GameManager : MonoBehaviour
 			}
 
 			wordManager.resetValidation();
+		}
+	}
+
+	public void linesCreated(int totalLines)
+	{
+		switch(totalLines)
+		{
+		case(1):
+			{
+				addPoints(5);
+			}
+			break;
+		case(2):
+			{
+				addPoints(15);
+			}
+			break;
+		case(3):
+			{
+				addPoints(30);
+			}
+			break;
+		case(4):
+			{
+				addPoints(50);
+			}
+			break;
+		case(5):
+			{
+				addPoints(75);
+			}
+			break;
+		case(6):
+			{
+				addPoints(105);
+			}
+			break;
 		}
 	}
 

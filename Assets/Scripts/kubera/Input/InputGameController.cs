@@ -283,7 +283,7 @@ public class InputGameController : MonoBehaviour {
 					choseToRotate(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>());
 					return;
 				}
-				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Tile>())
+				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<ABCChar>())
 				{
 					gesture.Raycast.Hit2D.transform.gameObject.GetComponent<ABCChar>().ShootLetter();
 					FindObjectOfType<ShowNext>().ShowingNext(true);

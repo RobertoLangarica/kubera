@@ -5,8 +5,9 @@ using System.Collections.Generic;
 //[ExecuteInEditMode]
 public class CellsManager : MonoBehaviour 
 {
-	//public bool runCreationOnEditor = false;
-	//public bool destroyGridOnEditor = false;
+	public delegate void linesCreated(int lines);
+
+	[HideInInspector]public linesCreated OnlinesCounted;
 
 	//Es el prefab que se va a utilizar para la grid
 	public GameObject cellPrefab;
@@ -29,13 +30,13 @@ public class CellsManager : MonoBehaviour
 	//Todas las celdas del grid
 	protected List<Cell> cells = new List<Cell>();
 
-	protected GameManager gameManager;
+	protected PieceManager pieceManager;
 
 	void Start () 
 	{
-		CreateGrid();
+		pieceManager = FindObjectOfType<PieceManager>();
 
-		gameManager = FindObjectOfType<GameManager>();
+		CreateGrid();
 	}
 
 	/*
@@ -56,7 +57,12 @@ public class CellsManager : MonoBehaviour
 				go.transform.SetParent(transform);
 				cells.Add(go.GetComponent<Cell>());
 
-				cells[cells.Count-1].setTypeToCell(int.Parse(levelGridData[cells.Count-1]),letterFromBeginingPrefab);
+				cells[cells.Count-1].setTypeToCell(int.Parse(levelGridData[cells.Count-1]));
+
+				if(cells[cells.Count-1].typeOfPiece == ETYPEOFPIECE_ID.LETTER_FROM_BEGINING)
+				{
+					addLetterPieceToCell(cells[cells.Count-1]);
+				}
 
 				nPos.x += cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x + 0.03f;
 			}
@@ -132,10 +138,8 @@ public class CellsManager : MonoBehaviour
 
 	/*
 	 * Evalua el estado de la grid para determinar si se ha creado o no una linea de piezas
-	 * 
-	 * @return {bool}: Regresa verdadero si se creo almenos una linea o falso si no se creo ninguna
 	 */
-	public bool LineCreated()
+	public void LineCreated()
 	{
 		int[] widthCount = new int[height];
 		int[] heightCount = new int[width];
@@ -166,7 +170,6 @@ public class CellsManager : MonoBehaviour
 			{
 				createLettersOn(true,i);
 				foundLine = true;
-				gameManager.addPoints(pointPerLine);
 				linesCount++;
 			}
 		}
@@ -176,53 +179,20 @@ public class CellsManager : MonoBehaviour
 			{
 				createLettersOn(false,i);
 				foundLine = true;
-				gameManager.addPoints(pointPerLine);
 				linesCount++;
 			}
 		}
 
-		if(foundLine)
+		if(OnlinesCounted != null)
 		{
-			FindObjectOfType<GameManager>().GetComponent<AudioSource>().Play();
-
-			switch(linesCount)
-			{
-			case(1):
-			{
-				FindObjectOfType<GameManager>().addPoints(5);
-			}
-				break;
-			case(2):
-			{
-				FindObjectOfType<GameManager>().addPoints(15);
-			}
-				break;
-			case(3):
-			{
-				FindObjectOfType<GameManager>().addPoints(30);
-			}
-				break;
-			case(4):
-			{
-				FindObjectOfType<GameManager>().addPoints(50);
-			}
-				break;
-			case(5):
-			{
-				FindObjectOfType<GameManager>().addPoints(75);
-			}
-				break;
-			case(6):
-			{
-				FindObjectOfType<GameManager>().addPoints(105);
-			}
-				break;
-			}
-			return true;
+			OnlinesCounted(linesCount);
 		}
 
-
-		return false;
+		if(foundLine)
+		{
+			//***********************************************Crear AudioManager
+			//FindObjectOfType<GameManager>().GetComponent<AudioSource>().Play();
+		}
 	}
 
 	/*
@@ -321,7 +291,8 @@ public class CellsManager : MonoBehaviour
 		Vector3 nVec = new Vector3(tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
 		                           -tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
 
-		gameObject.GetComponent<AudioSource>().Play();
+		//***********************************************Crear AudioManager
+		//gameObject.GetComponent<AudioSource>().Play();
 		return (tempC).transform.position + nVec - ofsetBetweenPieces;
 	}
 
@@ -360,12 +331,31 @@ public class CellsManager : MonoBehaviour
 		{
 			tempAbcChar = cells[newIndex].piece.AddComponent<ABCChar>();
 			
-			tempAbcChar.initializeFromScriptableABCChar(PieceManager.instance.giveLetterInfo());
+			tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());
 
 			cells[newIndex].piece.GetComponent<BoxCollider2D>().enabled = true;
 			
-			PieceManager.instance.listChar.Add(tempAbcChar);
+			pieceManager.listChar.Add(tempAbcChar);
 		}
+	}
+
+	protected void addLetterPieceToCell(Cell cell)
+	{
+		Vector3 tempV3 = cell.transform.position + new Vector3(cell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
+			-cell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
+		GameObject go = GameObject.Instantiate(letterFromBeginingPrefab) as GameObject;
+		go.GetComponent<BoxCollider2D>().enabled = false;
+		cell.piece = go.GetComponent<Piece>().pieces[0];
+		tempV3.z = 0;
+		go.transform.position = tempV3;
+
+		ABCChar tempAbcChar = cell.piece.AddComponent<ABCChar>();
+
+		tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());
+
+		cell.piece.GetComponent<BoxCollider2D>().enabled = true;
+
+		pieceManager.listChar.Add(tempAbcChar);
 	}
 
 
