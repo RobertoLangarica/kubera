@@ -18,7 +18,6 @@ public class PieceManager : MonoBehaviour {
 
 	protected int sizeOfBar =3;
 
-	public static PieceManager instance;
 	protected int figuresInBar;
 	public GameManager gameManager;
 
@@ -33,15 +32,13 @@ public class PieceManager : MonoBehaviour {
 	protected string[] names;
 	protected Transform piecesStock;
 	// Use this for initialization
-	void Start () {
-		instance = this;
+	void Start () 
+	{
+		
+		GameObject temp = new GameObject();
+		piecesStock = temp.transform;
+		temp.name = "PiecesStock";
 
-
-		{
-			GameObject temp = new GameObject();
-			piecesStock = temp.transform;
-			temp.name = "PiecesStock";
-		}
 		PowerUpBase.onRotateActive += activateRotation;
 
 		textureObject = Resources.LoadAll("Letters");

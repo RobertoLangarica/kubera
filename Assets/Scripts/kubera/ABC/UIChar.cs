@@ -22,7 +22,7 @@ namespace ABC
 			//textfield.text = character.character;
 			myImage = GetComponent<Image> ();
 
-			myImage.sprite = PieceManager.instance.changeTexture (character.character.ToLower () + "1");
+			//myImage.sprite = PieceManager.instance.changeTexture (character.character.ToLower () + "1");
 			//gameObject.transform.localScale = new Vector3(4, 4, 4);
 		}
 
@@ -30,6 +30,8 @@ namespace ABC
 		{
 			Destroy (piece);
 		}
+
+
 
 	}
 }

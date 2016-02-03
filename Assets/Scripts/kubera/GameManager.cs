@@ -116,6 +116,7 @@ public class GameManager : MonoBehaviour
 				ABCChar abcChar = wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<ABCChar>();
 				UIChar uiChar = wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<UIChar>();
 
+				print (wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<ABCChar>());
 				if(uiChar != null && abcChar != null)
 				{
 					if(wordManager.words.completeWord)

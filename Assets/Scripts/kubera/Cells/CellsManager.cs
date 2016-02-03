@@ -330,6 +330,7 @@ public class CellsManager : MonoBehaviour
 		cells[newIndex].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
 		if(cells[newIndex].piece != null)
 		{
+			cells[newIndex].piece.AddComponent<UIChar>();
 			tempAbcChar = cells[newIndex].piece.AddComponent<ABCChar>();
 			
 			tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());
@@ -350,6 +351,7 @@ public class CellsManager : MonoBehaviour
 		tempV3.z = 0;
 		go.transform.position = tempV3;
 
+		cell.piece.AddComponent<UIChar>();
 		ABCChar tempAbcChar = cell.piece.AddComponent<ABCChar>();
 
 		tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());

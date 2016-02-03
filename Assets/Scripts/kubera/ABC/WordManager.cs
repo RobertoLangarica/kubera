@@ -194,6 +194,7 @@ namespace ABC
 			chars.Clear();
 
 			container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding = 300;
+
 		}
 
 		/**

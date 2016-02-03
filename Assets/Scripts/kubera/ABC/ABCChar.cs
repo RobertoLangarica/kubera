@@ -123,45 +123,45 @@ namespace ABC
 				return;
 			}
 
-			switch(typeOfLetter)
-			{
-			case("0")://Son las letras que estan desde el inicio y bloquean las lineas
-			{
-				abcCharSprite.color = Color.grey;
-				abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
-			}
-				break;
-			case("1")://Letras normales
-			{
-				abcCharSprite.color = Color.white;
-				abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
-			}
-				break;
-			case("2")://Letras que al ser usadas dan el powerUp de destruir
-			{
-				abcCharSprite.color = Color.blue;
-				abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
-			}
-				break;
-			case("3")://Letras que al ser usadas dan el powerUp de girar
-			{
-				abcCharSprite.color = Color.green;
-				abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
-			}
-				break;
-			case("4")://Letras que al ser usadas dan el powerUp de comodin 
-			{
-				abcCharSprite.color = Color.yellow;
-				abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
-			}
-				break;
-			case("5")://Letras que al ser usadas dan el powerUp de bloque
-			{
-				abcCharSprite.color = Color.magenta;
-				abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
-			}
-				break;
-			}
+			//switch(typeOfLetter)
+			//{
+			//case("0")://Son las letras que estan desde el inicio y bloquean las lineas
+			//{
+			//	abcCharSprite.color = Color.grey;
+			//	abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+			//}
+			//	break;
+			//case("1")://Letras normales
+			//{
+			//	abcCharSprite.color = Color.white;
+			//	abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+			//}
+			//	break;
+			//case("2")://Letras que al ser usadas dan el powerUp de destruir
+			//{
+			//	abcCharSprite.color = Color.blue;
+			//	abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+			//}
+			//	break;
+			//case("3")://Letras que al ser usadas dan el powerUp de girar
+			//{
+			//	abcCharSprite.color = Color.green;
+			//	abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+			//}
+			//	break;
+			//case("4")://Letras que al ser usadas dan el powerUp de comodin 
+			//{
+			//	abcCharSprite.color = Color.yellow;
+			//	abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+			//}
+			//	break;
+			//case("5")://Letras que al ser usadas dan el powerUp de bloque
+			//{
+			//	abcCharSprite.color = Color.magenta;
+			//	abcCharSprite.sprite = PieceManager.instance.changeTexture(character);
+			//}
+			//	break;
+			//}
 		}
 	}
 }
