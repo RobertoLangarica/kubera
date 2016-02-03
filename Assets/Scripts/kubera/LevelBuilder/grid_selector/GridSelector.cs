@@ -82,7 +82,8 @@ namespace LevelBuilder
 
 		public void setTitle(string title)
 		{
-			txtTitle.text = title;
+			if(txtTitle != null)
+			{txtTitle.text = title;}
 		}
 
 		public void showAllQuantities()

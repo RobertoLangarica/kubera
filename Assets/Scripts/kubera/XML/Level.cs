@@ -24,6 +24,13 @@ public class Level
 	//Pool de letras obstaculo. Tienen el mismo formato que las letras
 	[XmlAttribute("obstacleLettersPool")]public string obstacleLettersPool;
 
+	[XmlAttribute("unblockBomb")]public bool unblockBomb;
+	[XmlAttribute("unblockBlock")]public bool unblockBlock;
+	[XmlAttribute("unblockRotate")]public bool unblockRotate;
+	[XmlAttribute("unblockDestroy")]public bool unblockDestroy;
+	[XmlAttribute("unblockWildcar")]public bool unblockWildcar;
+
+	[XmlAttribute("winCondition")]public string winCondition;
 
 	/**
 	 * Listado de piezas separado por ',' con el siguiente formato:
