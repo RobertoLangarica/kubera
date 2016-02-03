@@ -86,7 +86,7 @@ public class InputGameController : MonoBehaviour {
 				isDragging = true;
 				hasMoved = true;
 				onDragStart();
-			
+				print("Ser");
 				if(isLeter)
 				{
 							
@@ -394,12 +394,11 @@ public class InputGameController : MonoBehaviour {
 
 	void OnSwipe(SwipeGesture gesture) 
 	{
-		if (!piece) 
+		if (isLeter) 
 		{
 			if(gesture.Direction == FingerGestures.SwipeDirection.Up)
 			{
-				FindObjectOfType<WordManager>().resetValidation();
-				checkToLoose();
+				
 			}
 		}
 	}
