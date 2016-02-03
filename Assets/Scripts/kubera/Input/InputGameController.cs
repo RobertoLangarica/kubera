@@ -28,6 +28,7 @@ public class InputGameController : MonoBehaviour {
 	protected PieceManager pieceManager;
 
 	public CellsManager cellManager;
+
 	protected GameObject piece;
 
 	protected bool isLeter;
