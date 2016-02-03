@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using ABC;
 
 /**
  * clase que ponemos en un prefab que va existir 
