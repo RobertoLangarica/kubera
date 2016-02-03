@@ -24,11 +24,14 @@ public class InputGameController : MonoBehaviour {
 	public DOnDragStart onDragStart;
 
 	protected WordManager wordManager;
-	protected GameManager gameManager;
+
 	public CellsManager cellManager;
 	protected GameObject piece;
 
 	protected bool isLeter;
+	protected bool isPiece;
+
+
 	public float movingSpeed = .5f;
 	public float movingUpFinger = 1.5f;
 
@@ -44,9 +47,11 @@ public class InputGameController : MonoBehaviour {
 	public delegate void destroyByColorState (bool destroyByColor);
 	public rotateState setDestroyByColorDelegate;
 
+	public delegate void pieceSetCorrectly (int sizeOfPiece);
+	public pieceSetCorrectly pointsAtPieceSetCorrectly;
+
 	void Start () 
 	{
-		gameManager = GameObject.FindObjectOfType<GameManager>();
 		wordManager = GameObject.FindObjectOfType<WordManager>();
 
 		onDragFinish = foo;
@@ -82,28 +87,12 @@ public class InputGameController : MonoBehaviour {
 				hasMoved = true;
 				onDragStart();
 			
-			
-				if(gesture.Raycast.Hits2D != null)
+				if(isLeter)
 				{
-					//if(gesture.Raycast.Hit2D.transform.gameObject.GetComponents
-			
-					if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>())
-					{
-						piece = gesture.Raycast.Hit2D.transform.gameObject;
-						isLeter = false;
-						
-						////////////////////////////////
-						piece.transform.DOScale(selectedScale,.1f);
-					}
-			
-					if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<UIChar>())
-					{
-						piece = gesture.Raycast.Hit2D.transform.gameObject;
-						isLeter = true;
-			
-						wordManager.setPositionToLetters();
-						wordManager.canSwappLetters(true,piece);
-					}
+							
+					wordManager.setPositionToLetters();
+					wordManager.canSwappLetters(true,piece);
+
 				}
 			}	
 			break;
@@ -112,8 +101,10 @@ public class InputGameController : MonoBehaviour {
 			{
 				if(!isMultiFinger)
 				{
+					if (!piece) {return;}
+
 					// si existe la pieza la movemos con movingLerping de acuerdo a la posicion del mouse
-					if(piece && !isLeter)
+					if(!isLeter)
 					{
 						Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 						tempV3.z = -1;
@@ -121,14 +112,16 @@ public class InputGameController : MonoBehaviour {
 						tempV3.y += movingUpFinger;
 						movingLerping(tempV3,piece);
 					}
-					else if(piece && isLeter)
+					else if(isLeter)
 					{
 						float y = piece.transform.position.y;
 						float z = piece.transform.position.z;
 						Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 						tempV3.z = -1;
 						hasMoved = true;
+
 						//tempV3.y += movingUpFinger;
+
 						tempV3.y = y;
 						tempV3.z = z;
 						wordManager.swappingLetters(piece);
@@ -136,13 +129,12 @@ public class InputGameController : MonoBehaviour {
 					}
 				}
 				else
-				{}
-			
+				{}			
 			}
-				break;
+			break;
+
 			case (ContinuousGesturePhase.Ended):
-			{
-				
+			{				
 				isDragging = false;
 				hasMoved = false;
 				onDragFinish();
@@ -154,7 +146,7 @@ public class InputGameController : MonoBehaviour {
 					break;
 				}
 			
-				if(piece.GetComponent<UIChar>())
+				if(isLeter)
 				{
 					//Lo habilitamos y ajustamos
 			
@@ -223,12 +215,13 @@ public class InputGameController : MonoBehaviour {
 						piece.GetComponent<BoxCollider2D>().enabled = false;
 
 						//Ponemos los puntos de acuerdo a la cantidad de piezas
-						gameManager.addPoints(piece.GetComponent<Piece>().pieces.Length);
+
+						pointsAtPieceSetCorrectly (piece.GetComponent<Piece> ().pieces.Length);
 
 						afterDragEnded();
 						cellManager.LineCreated();
-						//if(!cellManager.LineCreated())
-						//{
+
+
 						FlashColor[] flash = piece.GetComponentsInChildren<FlashColor>();
 						foreach(FlashColor f in flash)
 						{
@@ -252,27 +245,28 @@ public class InputGameController : MonoBehaviour {
 	{
 		if(gesture.Raycast.Hits2D != null)
 		{
-			if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>())
+			checkWhatIs (gesture.Raycast.Hit2D.transform.gameObject);
+
+			if(isPiece)
 			{
 				piece = gesture.Raycast.Hit2D.transform.gameObject;
-				isLeter = false;
-				if(piece)
+
+				if(!canRotate)
 				{
-					if(!canRotate)
-					{
-						Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-						tempV3.z = -1;
-						hasMoved = false;
-						
-						tempV3.y += movingUpFinger;
-						//piece.transform.position = tempV3;
-						piece.transform.DOMove(tempV3,.1f);
-						piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
-					}
+					Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
+					tempV3.z = -1;
+					hasMoved = false;
+
+					tempV3.y += movingUpFinger;
+					//piece.transform.position = tempV3;
+					piece.transform.DOMove(tempV3,.1f);
+					piece.transform.DOScale(selectedScale,.1f);
 				}
+
 			}
-			else if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<UIChar>())
+			else if(isLeter)
 			{
+				piece = gesture.Raycast.Hit2D.transform.gameObject;
 				//print("Letter");
 			}
 		}
@@ -301,7 +295,7 @@ public class InputGameController : MonoBehaviour {
 
 	void OnFingerUp()
 	{
-		if(piece&&!hasMoved && !piece.GetComponent<UIChar>())
+		if(piece&&!hasMoved && !isLeter)
 		{
 			backToNormal();
 		}
@@ -310,7 +304,7 @@ public class InputGameController : MonoBehaviour {
 	// si la pieza no fue puesta correctamente la regresamos a su posicion inicial
 	void backToNormal()
 	{
-		GameObject gop = piece.gameObject;
+		GameObject gotemp = piece.gameObject;
 
 		/*
 		 * checamos si es powerUp, la regresamos a su posicion y la destruimos al llegar ahi
@@ -320,9 +314,8 @@ public class InputGameController : MonoBehaviour {
 		{
 			print(piece.GetComponent<Piece>().myFirstPos.position);
 			Vector3 tempV3 = piece.GetComponent<Piece>().myFirstPos.position;
-			piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f).OnComplete(()=>{DestroyImmediate(gop);});
+			piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f).OnComplete(()=>{DestroyImmediate(gotemp);});
 			piece.transform.DOScale (new Vector3 (0, 0, 0), .2f);
-
 		}
 		else
 		{
@@ -341,7 +334,7 @@ public class InputGameController : MonoBehaviour {
 	{
 		if (hasMoved) 
 		{
-			if(piece.GetComponent<UIChar>())
+			if(isLeter)
 			{
 				piece.transform.DOMove (end, .8f).SetId("MovingPiece");
 			}
@@ -476,5 +469,24 @@ public class InputGameController : MonoBehaviour {
 		{
 			destroyByColor = false;
 		}
-	}	
+	}
+
+	protected void checkWhatIs(GameObject go)
+	{
+		if (go.GetComponent<Piece> ()) 
+		{
+			isPiece = true;
+			isLeter = false;
+			return;
+		}
+
+		if (go.GetComponent<UIChar> ()) 
+		{
+			isPiece = false;
+			isLeter = true;
+			return;
+		}
+		isPiece = false;
+		isLeter = false;
+	}
 }

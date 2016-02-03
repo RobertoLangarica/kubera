@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 		addPoints (0);
 		inputGameController.stateOfRotatePowerUp += setRotationOfPieces;
 		inputGameController.setDestroyByColorDelegate += setDestroyByColor;
+		inputGameController.pointsAtPieceSetCorrectly += addPoints ();
 	}
 
 	void Update () 
