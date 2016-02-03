@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using ABC;
 
 public class GameManager : MonoBehaviour 
 {
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
 		addPoints (0);
 		inputGameController.deactivateRotateMode += setRotationOfPieces;
 		inputGameController.deactivateDestroyMode += setDestroyByColor;
+		inputGameController.pointsAtPieceSetCorrectly += addPoints;
 	}
 
 	void Update () 

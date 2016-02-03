@@ -4,8 +4,14 @@
     <level 
 		name="0001" 
 		difficulty="0" 
-		lettersPool="6_b_1_1,1_e_x2_1,1_l_x3_1"
+		lettersPool="1_b_1_1,2_e_x2_1,2_l_x3_1,1_z_1_1,1_a_1_1"
 		obstacleLettersPool=""
+		unblockBomb = "false"
+		unblockBlock = "false"
+		unblockRotate = "false"
+		unblockDestroy = "false"
+		unblockWildcar = "false"
+		winCondition = ""
 		pieces="1_2A1,1_2A2,1_3A1,1_3A2,1_3B1,1_3B2,1_3B3,1_3B4,1_4A1,1_4A2,1_4B1,1_4C1,1_4C2,1_4C3,1_4C4,1_4D1,1_4D2,1_4D3,1_4D4,1_4E1,1_4E2,1_4E3,1_4E4,1_4F1,1_4F2,1_4G1,1_4G2,1_5A1,1_5A2,1_5B1,1_5B2,1_5B3,1_5B4,1_5C1,1_5D1,1_5D2,1_5D3,1_5D4,1_5E1,1_5E2,1_5F1,1_5F2,1_5G1,1_5G2,1_5G3,1_5G4,1_6A1,1_6A2,1_9A1"
 		grid="1,10,1,1,1,1,1,1,1,1,
 			1,10,1,1,1,1,1,1,4,1,
@@ -17,7 +23,5 @@
 			1,1,1,1,1,1,1,1,4,1,
 			1,1,1,1,1,1,1,1,4,1,
 			1,1,1,1,1,1,1,1,1,1"/>
-    <level name="0002" difficulty="0" lettersPool="" obstacleLettersPool="" pieces="" grid="" moves="10" scoreToStar1="10" scoreToStar2="20" scoreToStar3="30" />
-    <level name="0003" difficulty="0" lettersPool="" obstacleLettersPool="" pieces="" grid="" moves="10" scoreToStar1="10" scoreToStar2="20" scoreToStar3="30" />
   </levels>
 </scrabtris>
