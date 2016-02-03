@@ -70,7 +70,6 @@ public class ABCChar : MonoBehaviour
 	
 	public void ShootLetter()
 	{
-		//print ("S");
 		if(!usedFromGrid)
 		{
 			wordManager.addCharacter(this,gameObject);
@@ -91,7 +90,7 @@ public class ABCChar : MonoBehaviour
 		{
 		case("2"):
 		{
-			powerUpManager.giveUsesToPowerUP(EPOWERUPS.DESTROY_POWERUP);
+			powerUpManager.giveUsesToPowerUP(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP);
 		}
 			break;
 		case("3"):

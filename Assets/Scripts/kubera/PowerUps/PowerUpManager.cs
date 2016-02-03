@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public enum EPOWERUPS
 {
-	DESTROY_POWERUP,
+	DESTROY_ALL_COLOR_POWERUP,
 	WILDCARD_POWERUP,
 	ROTATE_POWERUP,
 	BLOCK_POWERUP,
@@ -30,7 +30,7 @@ public class PowerUpManager : MonoBehaviour
 				UserDataManager.instance.onePiecePowerUpUses++;
 			}
 				break;
-			case(EPOWERUPS.DESTROY_POWERUP):
+			case(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP):
 			{
 				UserDataManager.instance.destroyPowerUpUses++;
 			}
@@ -49,7 +49,7 @@ public class PowerUpManager : MonoBehaviour
 		}
 	}
 
-	protected PowerUpBase getPowerUp(EPOWERUPS powerUp)
+	public PowerUpBase getPowerUp(EPOWERUPS powerUp)
 	{
 		for(int i = 0;i < powersUpOnEditor.Count;i++)
 		{

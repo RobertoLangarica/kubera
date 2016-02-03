@@ -334,7 +334,7 @@ public class CellsManager : MonoBehaviour
 			tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());
 
 			cells[newIndex].piece.GetComponent<BoxCollider2D>().enabled = true;
-			
+
 			pieceManager.listChar.Add(tempAbcChar);
 		}
 	}

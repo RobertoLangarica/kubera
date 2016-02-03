@@ -39,10 +39,10 @@ public class InputGameController : MonoBehaviour {
 	protected bool destroyByColor;
 
 	public delegate void rotateState (bool rotate);
-	public rotateState stateOfRotatePowerUp;
+	public rotateState deactivateRotateMode;
 
 	public delegate void destroyByColorState (bool destroyByColor);
-	public rotateState setDestroyByColorDelegate;
+	public rotateState deactivateDestroyMode;
 
 	void Start () 
 	{
@@ -188,7 +188,7 @@ public class InputGameController : MonoBehaviour {
 									backToNormal();
 								}
 								destroyByColor = false;
-								setDestroyByColorDelegate (destroyByColor);
+								deactivateDestroyMode (destroyByColor);
 							}
 						}
 
@@ -196,7 +196,7 @@ public class InputGameController : MonoBehaviour {
 						{
 							backToNormal();
 							destroyByColor = false;
-							setDestroyByColorDelegate (destroyByColor);
+							deactivateDestroyMode (destroyByColor);
 						}
 					}
 					else
@@ -211,7 +211,7 @@ public class InputGameController : MonoBehaviour {
 					{
 						backToNormal();
 						destroyByColor = false;
-						setDestroyByColorDelegate (destroyByColor);
+						deactivateDestroyMode (destroyByColor);
 					}
 					else
 					{
@@ -434,7 +434,7 @@ public class InputGameController : MonoBehaviour {
 					print("ChargePowerUP");
 				}
 				canRotate = false;
-				stateOfRotatePowerUp (canRotate);
+				deactivateRotateMode (canRotate);
 
 			}
 

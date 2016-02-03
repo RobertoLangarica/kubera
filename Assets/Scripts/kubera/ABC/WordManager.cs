@@ -9,6 +9,8 @@ public class WordManager : MonoBehaviour {
 	public GameObject empty;
 	public GameObject container;
 
+	public string wildCardPointValue;
+
 	[HideInInspector]public ABCDataStructure words;
 	[HideInInspector]public List<ABCChar> chars;
 	protected bool invalidCharlist;//Indica que la lista de caracteres tuvo o tiene uno invalido
@@ -55,6 +57,7 @@ public class WordManager : MonoBehaviour {
 		if (value == ".")
 		{
 			character.wildcard = true;
+			character.pointsValue = wildCardPointValue;
 		}
 		character.value = words.getCharValue(value);
 		character.character = value.ToUpperInvariant();
