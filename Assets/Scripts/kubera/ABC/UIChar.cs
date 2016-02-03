@@ -20,10 +20,22 @@ namespace ABC
 		{
 			//textfield = GetComponentInChildren<Text>();
 			//textfield.text = character.character;
-			myImage = GetComponent<Image> ();
+			//myImage = GetComponent<Image> ();
 
-			myImage.sprite = PieceManager.instance.changeTexture (character.character.ToLower () + "1");
+			//myImage.sprite = PieceManager.instance.changeTexture (character.character.ToLower () + "1");
 			//gameObject.transform.localScale = new Vector3(4, 4, 4);
+		}
+
+		public void changeSpriteRendererTexture(Sprite newSprite)
+		{
+			GetComponent<SpriteRenderer> ().sprite = newSprite;//PieceManager.instance.changeTexture (character.character.ToLower () + "1");
+			GetComponent<SpriteRenderer> ().color = Color.white;
+		}
+
+		public void changeImageTexture(Sprite newSprite)
+		{
+			GetComponent<Image> ().sprite = newSprite;//PieceManager.instance.changeTexture (character.character.ToLower () + "1");
+			GetComponent<Image> ().color = Color.white;
 		}
 
 		public void DestroyPiece()

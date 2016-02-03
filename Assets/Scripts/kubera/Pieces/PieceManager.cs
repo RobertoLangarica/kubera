@@ -18,7 +18,6 @@ public class PieceManager : MonoBehaviour {
 
 	protected int sizeOfBar =3;
 
-	public static PieceManager instance;
 	protected int figuresInBar;
 	public GameManager gameManager;
 
@@ -27,26 +26,17 @@ public class PieceManager : MonoBehaviour {
 	//Lista de las letras que se leyeron del XML
 	protected List<ScriptableABCChar> XMLPoolLeters = new List<ScriptableABCChar>();
 
-	//texturas de las letras en juego
-	protected UnityEngine.Object[] textureObject;
+	protected List<ScriptableABCChar> XMLPoolBlackLeters = new List<ScriptableABCChar>();
 
-	protected string[] names;
 	protected Transform piecesStock;
 	// Use this for initialization
-	void Start () {
-		instance = this;
+	void Start () 
+	{
+		GameObject temp = new GameObject();
+		piecesStock = temp.transform;
+		temp.name = "PiecesStock";
 
-
-		{
-			GameObject temp = new GameObject();
-			piecesStock = temp.transform;
-			temp.name = "PiecesStock";
-		}
 		PowerUpBase.onRotateActive += activateRotation;
-
-		textureObject = Resources.LoadAll("Letters");
-		names = new string[textureObject.Length];
-		readTextures ();
 		//Debug.Log (textures.Length);
 
 		fillPoolLetter ();
@@ -135,6 +125,25 @@ public class PieceManager : MonoBehaviour {
 					XMLPoolLeters.Add(newLetter);
 				}
 			}
+
+			if(PersistentData.instance.currentLevel.obstacleLettersPool.Length > 0)
+			{
+				myPieces = PersistentData.instance.currentLevel.obstacleLettersPool.Split(new char[1]{','});
+
+				for(int i =0; i<myPieces.Length; i++)
+				{
+					piecesInfo = myPieces[i].Split(new char[1]{'_'});
+					amout = int.Parse(piecesInfo[0]);
+					for(int j = 0;j < amout;j++)
+					{
+						newLetter = new ScriptableABCChar();
+						newLetter.character = piecesInfo[1];
+						newLetter.pointsValue = piecesInfo[2];
+						newLetter.typeOfLetter = piecesInfo[3];
+						XMLPoolBlackLeters.Add(newLetter);
+					}
+				}
+			}
 		}
 		/*****/
 
@@ -187,20 +196,11 @@ public class PieceManager : MonoBehaviour {
 		return letter;
 	}
 
-	public Sprite changeTexture(string nTextureName)
+	public ScriptableABCChar giveBlackLetterInfo()
 	{
-		Sprite sprite;
-
-		sprite = (Sprite)textureObject[Array.IndexOf(names, nTextureName.ToLower())];		
-		return sprite;
-	}
-
-	protected void readTextures()
-	{
-		for(int i=0; i< names.Length; i++)
-		{
-			names[i] = textureObject[i].name;
-		}
+		ScriptableABCChar letter = XMLPoolBlackLeters[0];
+		XMLPoolBlackLeters.RemoveAt (0);
+		return letter;
 	}
 
 	//Se cambian las piezas por las rotadas

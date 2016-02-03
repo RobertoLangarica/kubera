@@ -5,7 +5,7 @@
 		name="0001" 
 		difficulty="0" 
 		lettersPool="1_b_1_1,2_e_x2_1,2_l_x3_1,1_z_1_1,1_a_1_1"
-		obstacleLettersPool=""
+		obstacleLettersPool="1_b_1_1,2_e_x2_1,2_l_x3_1,1_z_1_1,1_a_1_1"
 		unblockBomb = "false"
 		unblockBlock = "false"
 		unblockRotate = "false"

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -22,12 +23,38 @@ namespace ABC
 		protected int sortingAfterSwap;
 		protected Vector2[] positionOfLetters; //los vectores de las letras 
 
+
+		//texturas de las letras en juego
+		protected UnityEngine.Object[] textureObject;
+		protected string[] names;
+
+
 		void Start()
 		{
+			textureObject = Resources.LoadAll("Letters");
+			names = new string[textureObject.Length];
+			readTextures();
+
 			chars = new List<ABCChar>();
 			container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding;
 			words = FindObjectOfType<ABCDataStructure>();
 			//words.OnWordComplete += onWordComplete;
+		}
+
+		public Sprite changeTexture(string nTextureName)
+		{
+			Sprite sprite;
+
+			sprite = (Sprite)textureObject[Array.IndexOf(names, nTextureName.ToLower())];		
+			return sprite;
+		}
+
+		protected void readTextures()
+		{
+			for(int i=0; i< names.Length; i++)
+			{
+				names[i] = textureObject[i].name;
+			}
 		}
 
 		/**
@@ -67,6 +94,7 @@ namespace ABC
 			addLetterToCorrectSpace(letter);
 			letter.transform.localScale = new Vector3 (1, 1, 1);
 			letter.GetComponent<UIChar> ().piece = piece;
+			letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
 			
 			validateCharacter(character);
 			
@@ -89,6 +117,7 @@ namespace ABC
 			addLetterToCorrectSpace(letter);
 			letter.transform.localScale = new Vector3 (1, 1, 1);
 			letter.GetComponent<UIChar> ().piece = piece;
+			letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
 
 			validateCharacter(character);
 

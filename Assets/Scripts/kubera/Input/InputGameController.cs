@@ -25,6 +25,7 @@ public class InputGameController : MonoBehaviour {
 	public DOnDragStart onDragStart;
 
 	protected WordManager wordManager;
+	protected PieceManager pieceManager;
 
 	public CellsManager cellManager;
 	protected GameObject piece;
@@ -54,6 +55,7 @@ public class InputGameController : MonoBehaviour {
 	void Start () 
 	{
 		wordManager = GameObject.FindObjectOfType<WordManager>();
+		pieceManager = GameObject.FindObjectOfType<PieceManager>();
 
 		onDragFinish = foo;
 		onAnyDrag	 = foo;
@@ -359,22 +361,22 @@ public class InputGameController : MonoBehaviour {
 	IEnumerator check()
 	{
 		yield return new WaitForSeconds (.2f);
-		FindObjectOfType<WordManager>().checkIfAWordisPossible(PieceManager.instance.listChar);
+		FindObjectOfType<WordManager>().checkIfAWordisPossible(pieceManager.listChar);
 	}
 
 	public void checkToLoose()
 	{
-		if(!cellManager.VerifyPosibility(PieceManager.instance.piecesInBar) && FindObjectOfType<PowerUpBase>().uses ==0)
+		if(!cellManager.VerifyPosibility(pieceManager.piecesInBar) && FindObjectOfType<PowerUpBase>().uses ==0)
 		{
 			Debug.Log ("Perdio");
 			while(true)
 			{
 				bool pass = true;
-				for(int i=0; i < PieceManager.instance.listChar.Count; i++)
+				for(int i=0; i < pieceManager.listChar.Count; i++)
 				{
-					if(!PieceManager.instance.listChar[i])
+					if(!pieceManager.listChar[i])
 					{
-						PieceManager.instance.listChar.RemoveAt(i);
+						pieceManager.listChar.RemoveAt(i);
 						i--;
 						pass = false;
 					}
@@ -416,7 +418,7 @@ public class InputGameController : MonoBehaviour {
 
 	protected void choseToRotate(Piece piece)
 	{
-		PieceManager.instance.setRotatePieces(piece);
+		pieceManager.setRotatePieces(piece);
 	}
 
 	/*
@@ -431,7 +433,7 @@ public class InputGameController : MonoBehaviour {
 			{
 				//utilizo el powerUp de rotar
 				GameObject.Find ("PowerRotate").GetComponent<PowerUpBase> ().PowerUsed ();
-				if (PieceManager.instance.setRotationPiecesAsNormalRotation ()) 
+				if (pieceManager.setRotationPiecesAsNormalRotation ()) 
 				{
 					//ChargePower
 					print("ChargePowerUP");
@@ -441,7 +443,7 @@ public class InputGameController : MonoBehaviour {
 
 			}
 
-			PieceManager.instance.checkBarr(piece);
+			pieceManager.checkBarr(piece);
 			piece.transform.SetParent (null);
 		}
 		else

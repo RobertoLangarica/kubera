@@ -32,10 +32,12 @@ public class CellsManager : MonoBehaviour
 	protected List<Cell> cells = new List<Cell>();
 
 	protected PieceManager pieceManager;
+	protected WordManager wordManager;
 
 	void Start () 
 	{
 		pieceManager = FindObjectOfType<PieceManager>();
+		wordManager = FindObjectOfType<WordManager>();
 
 		CreateGrid();
 	}
@@ -62,7 +64,7 @@ public class CellsManager : MonoBehaviour
 
 				if(cells[cells.Count-1].typeOfPiece == ETYPEOFPIECE_ID.LETTER_FROM_BEGINING)
 				{
-					addLetterPieceToCell(cells[cells.Count-1]);
+					turnPiecesToBlackLetters(cells[cells.Count-1]);
 				}
 
 				nPos.x += cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x + 0.03f;
@@ -334,13 +336,17 @@ public class CellsManager : MonoBehaviour
 			
 			tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());
 
+			UIChar tempUiChar = cells[newIndex].piece.AddComponent<UIChar>();
+			tempUiChar.changeSpriteRendererTexture(wordManager.changeTexture (tempAbcChar.character.ToLower ()));
+
+
 			cells[newIndex].piece.GetComponent<BoxCollider2D>().enabled = true;
 
 			pieceManager.listChar.Add(tempAbcChar);
 		}
 	}
 
-	protected void addLetterPieceToCell(Cell cell)
+	protected void turnPiecesToBlackLetters(Cell cell)
 	{
 		Vector3 tempV3 = cell.transform.position + new Vector3(cell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
 			-cell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
@@ -352,7 +358,11 @@ public class CellsManager : MonoBehaviour
 
 		ABCChar tempAbcChar = cell.piece.AddComponent<ABCChar>();
 
-		tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());
+		tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveBlackLetterInfo());
+
+		UIChar tempUiChar = cell.piece.AddComponent<UIChar>();
+		tempUiChar.changeSpriteRendererTexture(wordManager.changeTexture (tempAbcChar.character.ToLower ()));
+
 
 		cell.piece.GetComponent<BoxCollider2D>().enabled = true;
 
