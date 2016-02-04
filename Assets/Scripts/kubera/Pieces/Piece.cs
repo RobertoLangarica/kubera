@@ -63,6 +63,12 @@ public class Piece : MonoBehaviour {
 		//Color myColor = new Color(Random.Range(0.0f,1.0f),Random.Range(0.0f,1.0f),Random.Range(0.0f,1.0f));
 		//typeOfPiece = (ETYPEOFPIECE_ID)Random.Range(1,8);
 
+		if(typeOfPiece == ETYPEOFPIECE_ID.LETTER_FROM_BEGINING)
+		{
+			return;
+		}
+
+
 		foreach(GameObject piece in pieces)
 		{
 			piece.GetComponent<SpriteRenderer>().color = rendererColor;
@@ -93,7 +99,9 @@ public class Piece : MonoBehaviour {
 		{
 			initialTypeOfPiece = value;
 			currentTypeOfPiece = value;
-			
+
+			Debug.Log(currentTypeOfPiece);
+
 			switch(currentTypeOfPiece)
 			{
 			case ETYPEOFPIECE_ID.AQUA:
