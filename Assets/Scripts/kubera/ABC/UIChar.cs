@@ -48,9 +48,9 @@ namespace ABC
 
 		protected void setColorToSpriteRendererTextureByType()
 		{
-			SpriteRenderer abcCharSprite = gameObject.GetComponent<SpriteRenderer>();
+			SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer>();
 
-			if(abcCharSprite == null)
+			if(sprite == null)
 			{
 				return;
 			}
@@ -58,10 +58,10 @@ namespace ABC
 			switch(typeOfLetter)
 			{
 			case("0")://Son las letras que estan desde el inicio y bloquean las lineas
-				abcCharSprite.color = Color.grey;
+				sprite.color = Color.grey;
 				break;
 			case("1")://Letras normales
-				abcCharSprite.color = Color.white;
+				sprite.color = Color.white;
 				break;
 			}
 		}

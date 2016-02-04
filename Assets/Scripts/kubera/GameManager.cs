@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 	protected CellsManager cellManager;
 	protected PowerUpManager powerUpManager;
 	protected InputGameController inputGameController;
-
+	protected PieceManager pieceManager;
 	void Awake () 
 	{
 		persistentData = FindObjectOfType<PersistentData>();
@@ -30,21 +30,14 @@ public class GameManager : MonoBehaviour
 		cellManager = FindObjectOfType<CellsManager>();
 		powerUpManager = FindObjectOfType<PowerUpManager> ();
 		inputGameController = FindObjectOfType<InputGameController> ();
+		pieceManager = FindObjectOfType<PieceManager>();
 
 		cellManager.OnlinesCounted += linesCreated;
+		cellManager.OnLetterCreated += registerNewLetterCreated;
 
-		addPoints (0);
 		inputGameController.deactivateRotateMode += setRotationOfPieces;
 		inputGameController.deactivateDestroyMode += setDestroyByColor;
 		inputGameController.pointsAtPieceSetCorrectly += addPoints;
-	}
-
-	void Update () 
-	{
-		/*if(Input.GetKeyDown(KeyCode.A))
-		{
-			gameManagerLose();
-		}*/
 	}
 
 	/*
@@ -179,6 +172,23 @@ public class GameManager : MonoBehaviour
 			}
 			break;
 		}
+	}
+
+	protected void registerNewLetterCreated(ABCChar abcChar,UIChar uiChar,bool isBlackLetter)
+	{
+		if(isBlackLetter)
+		{
+			abcChar.initializeFromScriptableABCChar(pieceManager.giveBlackLetterInfo());
+		}
+		else
+		{
+			abcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());
+		}
+
+		uiChar.typeOfLetter = abcChar.typeOfLetter;
+		uiChar.changeSpriteRendererTexture(wordManager.changeTexture (abcChar.character.ToLower ()));
+
+		pieceManager.listChar.Add(abcChar);
 	}
 
 	/**

@@ -7,8 +7,10 @@ using ABC;
 public class CellsManager : MonoBehaviour 
 {
 	public delegate void linesCreated(int lines);
-
 	[HideInInspector]public linesCreated OnlinesCounted;
+
+	public delegate void letterCreated(ABCChar abcChar,UIChar uiChar,bool isBlackLetter);
+	[HideInInspector]public letterCreated OnLetterCreated;
 
 	//Es el prefab que se va a utilizar para la grid
 	public GameObject cellPrefab;
@@ -31,14 +33,8 @@ public class CellsManager : MonoBehaviour
 	//Todas las celdas del grid
 	protected List<Cell> cells = new List<Cell>();
 
-	protected PieceManager pieceManager;
-	protected WordManager wordManager;
-
 	void Start () 
 	{
-		pieceManager = FindObjectOfType<PieceManager>();
-		wordManager = FindObjectOfType<WordManager>();
-
 		CreateGrid();
 	}
 
@@ -327,23 +323,20 @@ public class CellsManager : MonoBehaviour
 	protected void turnPiecesToLetters(int cellIndex,int lineIndex)
 	{
 		int newIndex = lineIndex+cellIndex;
-		ABCChar tempAbcChar = null;
 
 		cells[newIndex].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
 		if(cells[newIndex].piece != null)
 		{
-			tempAbcChar = cells[newIndex].piece.AddComponent<ABCChar>();
-			
-			tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());
+			ABCChar tempAbcChar = cells[newIndex].piece.AddComponent<ABCChar>();
 
 			UIChar tempUiChar = cells[newIndex].piece.AddComponent<UIChar>();
-			tempUiChar.typeOfLetter = tempAbcChar.typeOfLetter;
-			tempUiChar.changeSpriteRendererTexture(wordManager.changeTexture (tempAbcChar.character.ToLower ()));
-
 
 			cells[newIndex].piece.GetComponent<BoxCollider2D>().enabled = true;
 
-			pieceManager.listChar.Add(tempAbcChar);
+			if(OnLetterCreated != null)
+			{
+				OnLetterCreated(tempAbcChar,tempUiChar,false);
+			}
 		}
 	}
 
@@ -354,24 +347,23 @@ public class CellsManager : MonoBehaviour
 		
 		GameObject go = GameObject.Instantiate(letterFromBeginingPrefab) as GameObject;
 		go.GetComponent<BoxCollider2D>().enabled = false;
-		go.GetComponent<Piece>().colorToSet = 0;
-		go.GetComponent<Piece>().randomColor = false;
-		cell.piece = go.GetComponent<Piece>().pieces[0];
+		Piece goPiece = go.GetComponent<Piece>();
+		goPiece.typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
+		cell.piece = goPiece.pieces[0];
+		cell.typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
 		tempV3.z = 0;
 		go.transform.position = tempV3;
 
 		ABCChar tempAbcChar = cell.piece.AddComponent<ABCChar>();
 
-		tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveBlackLetterInfo());
-
 		UIChar tempUiChar = cell.piece.AddComponent<UIChar>();
-		tempUiChar.typeOfLetter = tempAbcChar.typeOfLetter;
-		tempUiChar.changeSpriteRendererTexture(wordManager.changeTexture (tempAbcChar.character.ToLower ()));
-
 
 		cell.piece.GetComponent<BoxCollider2D>().enabled = true;
 
-		pieceManager.listChar.Add(tempAbcChar);
+		if(OnLetterCreated != null)
+		{
+			OnLetterCreated(tempAbcChar,tempUiChar,true);
+		}
 	}
 
 
