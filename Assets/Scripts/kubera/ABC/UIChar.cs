@@ -17,15 +17,13 @@ namespace ABC
 		[HideInInspector]
 		public GameObject piece;
 
+		protected WordManager wordManager;
+		protected bool usedFromGrid;
+
 		// Use this for initialization
 		void Start () 
 		{
-			//textfield = GetComponentInChildren<Text>();
-			//textfield.text = character.character;
-			//myImage = GetComponent<Image> ();
-
-			//myImage.sprite = PieceManager.instance.changeTexture (character.character.ToLower () + "1");
-			//gameObject.transform.localScale = new Vector3(4, 4, 4);
+			wordManager = FindObjectOfType<WordManager>();
 		}
 
 		public void changeSpriteRendererTexture(Sprite newSprite)
@@ -64,6 +62,22 @@ namespace ABC
 				sprite.color = Color.white;
 				break;
 			}
+		}
+
+		public void ShootLetter()
+		{
+			if(!usedFromGrid)
+			{
+				wordManager.addCharacter(gameObject.GetComponent<ABCChar>(),gameObject);
+				usedFromGrid=true;
+				gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,.2f);
+			}
+		}
+
+		public void backToNormal()
+		{
+			usedFromGrid=false;
+			setColorToSpriteRendererTextureByType();
 		}
 	}
 }

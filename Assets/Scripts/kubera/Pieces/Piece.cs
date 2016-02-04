@@ -68,7 +68,6 @@ public class Piece : MonoBehaviour {
 			return;
 		}
 
-
 		foreach(GameObject piece in pieces)
 		{
 			piece.GetComponent<SpriteRenderer>().color = rendererColor;
@@ -77,7 +76,7 @@ public class Piece : MonoBehaviour {
 			{
 				typeOfPiece = (ETYPEOFPIECE_ID)Random.Range(1,8);
 			}
-			else
+			else if(colorToSet != 0)
 			{
 				typeOfPiece = (ETYPEOFPIECE_ID)colorToSet;
 			}

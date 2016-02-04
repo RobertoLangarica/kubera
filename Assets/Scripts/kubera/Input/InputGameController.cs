@@ -300,7 +300,7 @@ public class InputGameController : MonoBehaviour {
 				{
 					if(!gesture.Raycast.Hit2D.transform.gameObject.GetComponent<ABCChar>().isSelected)
 					{
-						gesture.Raycast.Hit2D.transform.gameObject.GetComponent<ABCChar>().ShootLetter();
+						gesture.Raycast.Hit2D.transform.gameObject.GetComponent<UIChar>().ShootLetter();
 						FindObjectOfType<ShowNext>().ShowingNext(true);
 						gameObject.GetComponent<AudioSource>().Play();
 					}

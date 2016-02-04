@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 	public Text movementsText;
 
 	public GameObject MoneyGameObject;
+	public GameObject bonificationPiece;
 
 	protected int pointsCount =0;
 	protected int wordsMade =0;
@@ -81,6 +82,15 @@ public class GameManager : MonoBehaviour
 			}
 		}
 	}
+
+	void Update()
+	{
+		if(Input.GetKeyUp(KeyCode.A))
+		{
+			winBonification();
+		}
+	}
+
 	/*
 	 * Se incrementa el puntaje del jugador
 	 * 
@@ -191,7 +201,7 @@ public class GameManager : MonoBehaviour
 					}
 					else
 					{
-						abcChar.backToNormal();						
+						uiChar.piece.GetComponent<UIChar>().backToNormal();						
 					}
 
 				}
@@ -396,6 +406,43 @@ public class GameManager : MonoBehaviour
 			}
 			StartCoroutine(check());
 
+		}
+	}
+
+	protected void winBonification()
+	{
+		//Se limpian las letras
+		verifyWord();
+
+		add1x1Block();
+	}
+
+	protected void add1x1Block()
+	{
+		Cell[] emptyCells = cellManager.allEmptyCells();
+		Cell cell;
+
+
+		if(currentMoves != 0)
+		{
+			cell = emptyCells[Random.Range(0,emptyCells.Length-1)];
+			currentMoves--;
+
+			GameObject go = GameObject.Instantiate(bonificationPiece) as GameObject;
+			SpriteRenderer sprite = go.GetComponent<Piece>().pieces[0].GetComponent<SpriteRenderer>();
+
+			Vector3 nVec = new Vector3(sprite.bounds.size.x*0.5f,
+				-sprite.bounds.size.x*0.5f,0) + cell.transform.position;
+
+			go.transform.position = nVec;
+
+			go.transform.position = cellManager.Positionate(go.GetComponent<Piece>());
+
+			//Debug.Log(cellManager.colorOfMoreQuantity());
+			go.GetComponent<Piece>().colorToSet =0;
+			go.GetComponent<Piece>().typeOfPiece = cellManager.colorOfMoreQuantity();
+
+			add1x1Block();
 		}
 	}
 }
