@@ -71,7 +71,7 @@ namespace ABC
 			letter.GetComponent<UIChar>().character = char2; 
 			addLetterToCorrectSpace(letter);
 			letter.transform.localScale = new Vector3 (1, 1, 1);
-			
+			letter.GetComponent<ABCChar>().isSelected = true;
 			validateCharacter(char2);
 		}
 
@@ -95,7 +95,7 @@ namespace ABC
 			letter.transform.localScale = new Vector3 (1, 1, 1);
 			letter.GetComponent<UIChar> ().piece = piece;
 			letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
-			
+			letter.GetComponent<ABCChar>().isSelected = true;
 			validateCharacter(character);
 			
 			//para que las letras esten centradas HardCoding
@@ -113,7 +113,7 @@ namespace ABC
 			character.pointsValue = pieceABCChar.pointsValue;
 			character.typeOfLetter = pieceABCChar.typeOfLetter;
 			letter.GetComponent<UIChar>().character = character; 
-
+			letter.GetComponent<ABCChar>().isSelected = true;
 			addLetterToCorrectSpace(letter);
 			letter.transform.localScale = new Vector3 (1, 1, 1);
 			letter.GetComponent<UIChar> ().piece = piece;

@@ -27,6 +27,7 @@ namespace ABC
 
 		protected WordManager wordManager;
 		protected bool usedFromGrid;
+		public bool isSelected;
 
 		void Start () 
 		{
@@ -71,7 +72,6 @@ namespace ABC
 		
 		public void ShootLetter()
 		{
-			//print ("S");
 			if(!usedFromGrid)
 			{
 				wordManager.addCharacter(this,gameObject);

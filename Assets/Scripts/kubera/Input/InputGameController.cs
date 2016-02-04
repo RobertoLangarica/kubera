@@ -297,11 +297,14 @@ public class InputGameController : MonoBehaviour {
 					choseToRotate(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>());
 					return;
 				}
-				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<ABCChar>())
+				if(isLeter)
 				{
-					gesture.Raycast.Hit2D.transform.gameObject.GetComponent<ABCChar>().ShootLetter();
-					FindObjectOfType<ShowNext>().ShowingNext(true);
-					gameObject.GetComponent<AudioSource>().Play();
+					if(!gesture.Raycast.Hit2D.transform.gameObject.GetComponent<ABCChar>().isSelected)
+					{
+						gesture.Raycast.Hit2D.transform.gameObject.GetComponent<ABCChar>().ShootLetter();
+						FindObjectOfType<ShowNext>().ShowingNext(true);
+						gameObject.GetComponent<AudioSource>().Play();
+					}
 				}
 			}
 		}
