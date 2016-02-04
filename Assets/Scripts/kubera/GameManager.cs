@@ -5,14 +5,20 @@ using ABC;
 
 public class GameManager : MonoBehaviour 
 {
+	//Texto del PoUp
 	public Text scoreText;
 
 	public Text points;
+	public Text movementsText;
+
 	public GameObject MoneyGameObject;
 
 	protected int pointsCount =0;
 	protected int wordsMade =0;
 	protected string[] myWinCondition;
+
+	protected int totalMoves;
+	protected int currentMoves;
 
 	public bool canRotate;
 	public bool destroyByColor;
@@ -25,6 +31,7 @@ public class GameManager : MonoBehaviour
 	protected PowerUpManager powerUpManager;
 	protected InputGameController inputGameController;
 	protected PieceManager pieceManager;
+
 	void Awake () 
 	{
 		persistentData = FindObjectOfType<PersistentData>();
@@ -39,26 +46,38 @@ public class GameManager : MonoBehaviour
 
 		inputGameController.deactivateRotateMode += setRotationOfPieces;
 		inputGameController.deactivateDestroyMode += setDestroyByColor;
-		inputGameController.pointsAtPieceSetCorrectly += addPoints;
+		inputGameController.pointsAtPieceSetCorrectly += piecePositionatedCorrectly;
 	}
 
 	void Start()
 	{
-		myWinCondition = PersistentData.instance.currentLevel.winCondition.Split (new char[1]{ '_' });
+		myWinCondition = persistentData.currentLevel.winCondition.Split (new char[1]{ '_' });
 		print (myWinCondition[0] +" " +myWinCondition[1]);
+
+		currentMoves = totalMoves = persistentData.currentLevel.moves;
+		movementsText.text = currentMoves.ToString();
 	}
 	/*
 	 * Se incrementa el puntaje del jugador
 	 * 
 	 * @params point{int}: La cantidad de puntos que se le entregara al jugador
 	 */
-	public void addPoints(int point)
+	protected void addPoints(int point)
 	{
 		pointsCount += point;
 
 		points.text = pointsCount.ToString();
 
 		checkWinCondition ();
+	}
+
+	protected void piecePositionatedCorrectly(int length)
+	{
+		currentMoves--;
+
+		movementsText.text = currentMoves.ToString();
+
+		addPoints(length);
 	}
 
 	public void activeMoney(bool show,int howMany=0)
