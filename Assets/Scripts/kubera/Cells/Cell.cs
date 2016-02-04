@@ -70,7 +70,7 @@ public class Cell : MonoBehaviour
 		if((cellType & 0x4) == 0x4)
 		{
 			typeOfPiece = ETYPEOFPIECE_ID.NONE;
-			occupied = false;
+			occupied = true;
 			available = true;
 			piece = null;
 
