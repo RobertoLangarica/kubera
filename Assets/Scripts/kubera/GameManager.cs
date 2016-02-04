@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour
 {
 	public Text scoreText;
 
-
-
 	public Text points;
 	public GameObject MoneyGameObject;
 
@@ -59,6 +57,8 @@ public class GameManager : MonoBehaviour
 		pointsCount += point;
 
 		points.text = pointsCount.ToString();
+
+		checkWinCondition ();
 	}
 
 	public void activeMoney(bool show,int howMany=0)
@@ -112,36 +112,36 @@ public class GameManager : MonoBehaviour
 
 			//FindObjectOfType<InputGameController>().checkToLoose();
 
-			for(int i = 0;i < wordManager.chars.Count;i++)
-			{
-				ABCChar abcChar = wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<ABCChar>();
-				UIChar uiChar = wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<UIChar>();
+		}
 
-				print (wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<ABCChar>());
-				if(uiChar != null && abcChar != null)
+		for(int i = 0;i < wordManager.chars.Count;i++)
+		{
+			ABCChar abcChar = wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<ABCChar>();
+			UIChar uiChar = wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<UIChar>();
+
+			print (wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<ABCChar>());
+			if(uiChar != null && abcChar != null)
+			{
+				if(wordManager.words.completeWord)
 				{
-					if(wordManager.words.completeWord)
+					cellManager.getCellOnVec(uiChar.gameObject.transform.position).clearCell();
+					uiChar.DestroyPiece();
+				}
+				else
+				{
+					if(abcChar.wildcard)
 					{
-						cellManager.getCellOnVec(uiChar.gameObject.transform.position).clearCell();
-						uiChar.DestroyPiece();
+						//GameObject.Find("WildCard").GetComponent<PowerUpBase>().returnPower();
 					}
 					else
 					{
-						if(abcChar.wildcard)
-						{
-							//GameObject.Find("WildCard").GetComponent<PowerUpBase>().returnPower();
-						}
-						else
-						{
-							abcChar.backToNormal();						
-						}
-
+						abcChar.backToNormal();						
 					}
+
 				}
 			}
-
-			wordManager.resetValidation();
 		}
+		wordManager.resetValidation();
 	}
 
 	public void linesCreated(int totalLines)
@@ -254,5 +254,11 @@ public class GameManager : MonoBehaviour
 	protected void setRotationOfPieces(bool activate)
 	{
 		canRotate = activate;
+	}
+
+	protected void checkWinCondition ()
+	{
+		string[] myWinCondition = persistentData.currentLevel.winCondition.Split (new char[1]{ '_' });
+		print (myWinCondition.Length);
 	}
 }
