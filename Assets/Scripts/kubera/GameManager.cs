@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour
 					}
 					else
 					{
-						abcChar.backToNormal();						
+						uiChar.piece.GetComponent<UIChar>().backToNormal();						
 					}
 
 				}

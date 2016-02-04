@@ -25,14 +25,10 @@ namespace ABC
 		public string pointsValue;//Cantidad de puntos que entraga la letra al ser usada
 		public string typeOfLetter;//El tpo de letra que es, puede ntregar powerUps al momento de usarse
 
-		protected WordManager wordManager;
-		protected bool usedFromGrid;
 		public bool isSelected;
 
 		void Start () 
 		{
-			wordManager = FindObjectOfType<WordManager>();
-
 			//si es comodin lo dejamos en blanco y sino le dejamos el texto adecuado
 			if(!wildcard)
 			{
@@ -65,23 +61,6 @@ namespace ABC
 			{
 				wildcard = true;
 			}
-		}
-	
-		
-		public void ShootLetter()
-		{
-			if(!usedFromGrid)
-			{
-				wordManager.addCharacter(this,gameObject);
-				usedFromGrid=true;
-				gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,.2f);
-			}
-		}
-		
-		public void backToNormal()
-		{
-			usedFromGrid=false;
-			gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
 		}
 	}
 }
