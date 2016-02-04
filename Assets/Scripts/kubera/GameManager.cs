@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
 			}
 			amount *= multiplierHelper;
 			addPoints(amount);
-			wordMade++;
+			wordsMade++;
 			//FindObjectOfType<InputGameController>().checkToLoose();
 
 		}
