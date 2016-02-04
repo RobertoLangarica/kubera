@@ -100,8 +100,6 @@ public class Piece : MonoBehaviour {
 			initialTypeOfPiece = value;
 			currentTypeOfPiece = value;
 
-			Debug.Log(currentTypeOfPiece);
-
 			switch(currentTypeOfPiece)
 			{
 			case ETYPEOFPIECE_ID.AQUA:

@@ -302,5 +302,40 @@ public class GameManager : MonoBehaviour
 		default:
 			break;
 		}
+
+		checkToLoose();
+	}
+
+	IEnumerator check()
+	{
+		yield return new WaitForSeconds (.2f);
+		FindObjectOfType<WordManager>().checkIfAWordisPossible(pieceManager.listChar);
+	}
+
+	public void checkToLoose()
+	{
+		if(!cellManager.VerifyPosibility(pieceManager.piecesInBar) || currentMoves == 0)
+		{
+			Debug.Log ("Perdio");
+			while(true)
+			{
+				bool pass = true;
+				for(int i=0; i < pieceManager.listChar.Count; i++)
+				{
+					if(!pieceManager.listChar[i])
+					{
+						pieceManager.listChar.RemoveAt(i);
+						i--;
+						pass = false;
+					}
+				}
+				if(pass)
+				{
+					break;
+				}
+			}
+			StartCoroutine(check());
+
+		}
 	}
 }
