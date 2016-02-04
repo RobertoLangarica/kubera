@@ -332,12 +332,12 @@ public class CellsManager : MonoBehaviour
 		cells[newIndex].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
 		if(cells[newIndex].piece != null)
 		{
-			cells[newIndex].piece.AddComponent<UIChar>();
 			tempAbcChar = cells[newIndex].piece.AddComponent<ABCChar>();
 			
 			tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());
 
 			UIChar tempUiChar = cells[newIndex].piece.AddComponent<UIChar>();
+			tempUiChar.typeOfLetter = tempAbcChar.typeOfLetter;
 			tempUiChar.changeSpriteRendererTexture(wordManager.changeTexture (tempAbcChar.character.ToLower ()));
 
 
@@ -351,18 +351,21 @@ public class CellsManager : MonoBehaviour
 	{
 		Vector3 tempV3 = cell.transform.position + new Vector3(cell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
 			-cell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
+		
 		GameObject go = GameObject.Instantiate(letterFromBeginingPrefab) as GameObject;
 		go.GetComponent<BoxCollider2D>().enabled = false;
+		go.GetComponent<Piece>().colorToSet = 0;
+		go.GetComponent<Piece>().randomColor = false;
 		cell.piece = go.GetComponent<Piece>().pieces[0];
 		tempV3.z = 0;
 		go.transform.position = tempV3;
 
-		cell.piece.AddComponent<UIChar>();
 		ABCChar tempAbcChar = cell.piece.AddComponent<ABCChar>();
 
 		tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveBlackLetterInfo());
 
 		UIChar tempUiChar = cell.piece.AddComponent<UIChar>();
+		tempUiChar.typeOfLetter = tempAbcChar.typeOfLetter;
 		tempUiChar.changeSpriteRendererTexture(wordManager.changeTexture (tempAbcChar.character.ToLower ()));
 
 

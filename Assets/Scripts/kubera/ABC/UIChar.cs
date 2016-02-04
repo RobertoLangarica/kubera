@@ -8,6 +8,8 @@ namespace ABC
 	{
 		[HideInInspector]
 		public ABCChar character;
+		[HideInInspector]
+		public string typeOfLetter;
 
 		protected Text textfield;
 		protected Image myImage;
@@ -30,6 +32,7 @@ namespace ABC
 		{
 			GetComponent<SpriteRenderer> ().sprite = newSprite;//PieceManager.instance.changeTexture (character.character.ToLower () + "1");
 			GetComponent<SpriteRenderer> ().color = Color.white;
+			setColorToSpriteRendererTextureByType();
 		}
 
 		public void changeImageTexture(Sprite newSprite)
@@ -43,7 +46,24 @@ namespace ABC
 			Destroy (piece);
 		}
 
+		protected void setColorToSpriteRendererTextureByType()
+		{
+			SpriteRenderer abcCharSprite = gameObject.GetComponent<SpriteRenderer>();
 
+			if(abcCharSprite == null)
+			{
+				return;
+			}
 
+			switch(typeOfLetter)
+			{
+			case("0")://Son las letras que estan desde el inicio y bloquean las lineas
+				abcCharSprite.color = Color.grey;
+				break;
+			case("1")://Letras normales
+				abcCharSprite.color = Color.white;
+				break;
+			}
+		}
 	}
 }
