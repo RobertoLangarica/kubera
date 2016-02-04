@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using ABC;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour 
 {
@@ -15,6 +16,9 @@ public class GameManager : MonoBehaviour
 
 	protected int pointsCount =0;
 	protected int wordsMade =0;
+	protected List<string> letters;
+	protected int blackLettersUsed =0;
+
 	protected string[] myWinCondition;
 
 	protected int totalMoves;
@@ -51,11 +55,31 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
-		myWinCondition = persistentData.currentLevel.winCondition.Split (new char[1]{ '_' });
-		print (myWinCondition[0] +" " +myWinCondition[1]);
+		myWinCondition = persistentData.currentLevel.winCondition.Split (new char[1]{ '-' });
+
 
 		currentMoves = totalMoves = persistentData.currentLevel.moves;
 		movementsText.text = currentMoves.ToString();
+
+		if(myWinCondition[0] == "letters")
+		{
+			letters = new List<string> ();
+			int i;
+			string[] s = myWinCondition [1].Split (new char[1]{ ',' });
+			string[] temp;
+
+			for(i=0; i< s.Length; i++)
+			{
+				temp = s [i].Split (new char[1]{ '_' });
+				int amount = int.Parse (temp [0]);
+
+				for(int j=0; j<amount; j++)
+				{
+					//print (temp [1]);
+					letters.Add (temp [1]);
+				}
+			}
+		}
 	}
 	/*
 	 * Se incrementa el puntaje del jugador
@@ -102,11 +126,12 @@ public class GameManager : MonoBehaviour
 
 		int amount = 0;
 		int multiplierHelper = 1;
-
+		bool letterFound;
 		if(wordManager.words.completeWord)
 		{
 			for(int i = 0;i < wordManager.chars.Count;i++)
 			{
+				letterFound = false;
 				switch(wordManager.chars[i].pointsValue)
 				{
 				case("x2"):
@@ -125,7 +150,20 @@ public class GameManager : MonoBehaviour
 					{amount += int.Parse(wordManager.chars[i].pointsValue);}
 					break;
 				}
+				if (wordManager.chars [i].typeOfLetter == "0") 
+				{
+					blackLettersUsed++;
+				}
+				for (int j = 0; j < letters.Count; j++) 
+				{
+					if (letters [j].ToLower() == wordManager.chars [i].character.ToLower() && !letterFound) 
+					{
+						letters.RemoveAt (j);
+						letterFound = true;
+					}
+				}
 			}
+
 			amount *= multiplierHelper;
 			addPoints(amount);
 			wordsMade++;
@@ -237,34 +275,34 @@ public class GameManager : MonoBehaviour
 		activatedPowerUp = EPOWERUPS.WILDCARD_POWERUP;
 	}
 
-	public void createOneSquareBlock()
+	public void createOneSquareBlock(Transform myButtonPosition)
 	{
 		deactivateCurrentPowerUp();
 
-		inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.BLOCK_POWERUP).oneTilePower());
+		inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.BLOCK_POWERUP).oneTilePower(myButtonPosition));
 		activatedPowerUp = EPOWERUPS.BLOCK_POWERUP;
 	}
 
-	public void activateDestroyAColorPowerUp()
+	public void activateDestroyAColorPowerUp(Transform myButtonPosition)
 	{
 		deactivateCurrentPowerUp();
 
 		destroyByColor = true;
 		cellManager.selectNeighbours = false;
 
-		inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP).activateDestroyMode());
+		inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP).activateDestroyMode(myButtonPosition));
 		inputGameController.setDestroyByColor (destroyByColor);
 		activatedPowerUp = EPOWERUPS.DESTROY_ALL_COLOR_POWERUP;
 	}
 
-	public void activateDestroyNeighborsOfSameColor()
+	public void activateDestroyNeighborsOfSameColor(Transform myButtonPosition)
 	{
 		deactivateCurrentPowerUp();
 
 		destroyByColor = true;
 		cellManager.selectNeighbours = true;
 
-		inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.DESTROY_NEIGHBORS_POWERUP).activateDestroyMode());
+		inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.DESTROY_NEIGHBORS_POWERUP).activateDestroyMode(myButtonPosition));
 		inputGameController.setDestroyByColor (destroyByColor);
 		activatedPowerUp = EPOWERUPS.DESTROY_NEIGHBORS_POWERUP;
 	}
@@ -274,6 +312,7 @@ public class GameManager : MonoBehaviour
 		if (canRotate) 
 		{
 			canRotate = false;
+			inputGameController.setCanRotate (canRotate);
 		}
 		if(destroyByColor)
 		{
@@ -307,7 +346,19 @@ public class GameManager : MonoBehaviour
 			{
 				print ("win");
 			}
-			break;	
+			break;
+		case "letters":
+			if (letters.Count == 0) 
+			{
+				print ("win");
+			}
+			break;
+		case "blackLetters":
+			if (blackLettersUsed >= int.Parse (myWinCondition [1])) 
+			{
+				print ("win");
+			}
+			break;
 		default:
 			break;
 		}

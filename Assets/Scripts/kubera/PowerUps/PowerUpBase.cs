@@ -42,13 +42,13 @@ public class PowerUpBase : MonoBehaviour
 		}
 	}
 
-	public GameObject oneTilePower()
+	public GameObject oneTilePower(Transform myButtonPosition)
 	{
 		Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-		GameObject go = (GameObject)Instantiate (powerUpCursor);//,new Vector3(pos.x,pos.y+1.5f,1),Quaternion.identity);
-		go.GetComponent<Piece>().myFirstPos = powerUpCursor.transform;
-		go.GetComponent<Piece>().myFirstPos.position = pos;
+		GameObject go = Instantiate (powerUpCursor,myButtonPosition.position,myButtonPosition.rotation)as GameObject; //,new Vector3(pos.x,pos.y+1.5f,1),Quaternion.identity);
+		go.GetComponent<Piece>().myFirstPos = myButtonPosition;
+		//go.GetComponent<Piece>().myFirstPos.position = pos;
 		go.name = "PowerOne";
 		go.GetComponent<Piece> ().powerUp = true;
 		return go;
@@ -57,14 +57,14 @@ public class PowerUpBase : MonoBehaviour
 	/*
 	 * Funcion del boton del PowerUp de Destruir por Color
 	 */
-	public GameObject activateDestroyMode()
+	public GameObject activateDestroyMode(Transform myButtonPosition)
 	{
 		Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-		GameObject go = Instantiate (powerUpCursor) as GameObject;
+		GameObject go = Instantiate (powerUpCursor,myButtonPosition.position,myButtonPosition.rotation) as GameObject;
 
-		go.GetComponent<Piece>().myFirstPos = powerUpCursor.transform;
-		go.GetComponent<Piece>().myFirstPos.position = pos;
+		go.GetComponent<Piece>().myFirstPos = myButtonPosition;
+		//go.GetComponent<Piece>().myFirstPos.position = pos;
 		go.name = "DestroyPowerUp";
 		go.GetComponent<Piece> ().powerUp = true;
 		return go;

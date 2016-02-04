@@ -315,6 +315,7 @@ public class InputGameController : MonoBehaviour {
 		{
 			backToNormal();
 		}
+		pieceManager.returnRotatePiecesToNormalRotation ();
 	}
 
 	// si la pieza no fue puesta correctamente la regresamos a su posicion inicial
@@ -378,6 +379,8 @@ public class InputGameController : MonoBehaviour {
 		//piece.transform.position = tempV3;
 		piece.transform.DOMove(tempV3,.1f);
 		piece.transform.DOScale(new Vector3(4.5f,4.5f,4.5f),.1f);
+
+		checkWhatIs (go);
 	}
 
 	void OnSwipe(SwipeGesture gesture) 
