@@ -95,7 +95,6 @@ public class GameManager : MonoBehaviour
 		{
 			for(int i = 0;i < wordManager.chars.Count;i++)
 			{
-				wordManager.chars[i].letterWasUsed();
 				switch(wordManager.chars[i].pointsValue)
 				{
 				case("x2"):
