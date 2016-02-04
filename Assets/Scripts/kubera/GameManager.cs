@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 	public GameObject MoneyGameObject;
 
 	protected int pointsCount =0;
+	protected string[] myWinCondition;
 
 	public bool canRotate;
 	public bool destroyByColor;
@@ -40,6 +41,11 @@ public class GameManager : MonoBehaviour
 		inputGameController.pointsAtPieceSetCorrectly += addPoints;
 	}
 
+	void Start()
+	{
+		myWinCondition = PersistentData.instance.currentLevel.winCondition.Split (new char[1]{ '_' });
+		print (myWinCondition[0] +" " +myWinCondition[1]);
+	}
 	/*
 	 * Se incrementa el puntaje del jugador
 	 * 
@@ -112,11 +118,11 @@ public class GameManager : MonoBehaviour
 			ABCChar abcChar = wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<ABCChar>();
 			UIChar uiChar = wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<UIChar>();
 
-			print (wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<ABCChar>());
 			if(uiChar != null && abcChar != null)
 			{
 				if(wordManager.words.completeWord)
 				{
+					print ((uiChar.gameObject.transform.position));
 					cellManager.getCellOnVec(uiChar.gameObject.transform.position).clearCell();
 					uiChar.DestroyPiece();
 				}
@@ -268,7 +274,15 @@ public class GameManager : MonoBehaviour
 
 	protected void checkWinCondition ()
 	{
-		string[] myWinCondition = persistentData.currentLevel.winCondition.Split (new char[1]{ '_' });
-		print (myWinCondition.Length);
+		switch (myWinCondition[0]) {
+		case "points":
+			if(pointsCount >= int.Parse( myWinCondition[1]))
+			{
+				print ("win");
+			}
+			break;
+		default:
+			break;
+		}
 	}
 }
