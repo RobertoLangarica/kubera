@@ -31,7 +31,8 @@ public class InputGameController : MonoBehaviour {
 
 	protected GameObject piece;
 
-	protected bool isLeter;
+	protected bool isLeterOfPice;
+	protected bool isLetterSelected;
 	protected bool isPiece;
 
 
@@ -66,7 +67,6 @@ public class InputGameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 
 	protected void foo(){}
@@ -90,8 +90,9 @@ public class InputGameController : MonoBehaviour {
 				isDragging = true;
 				hasMoved = true;
 				onDragStart();
+				if (!piece) {return;}
 
-				if(isLeter)
+				if(isLetterSelected)
 				{
 					wordManager.setPositionToLetters();
 					wordManager.canSwappLetters(true,piece);
@@ -118,7 +119,7 @@ public class InputGameController : MonoBehaviour {
 					if (!piece) {return;}
 
 					// si existe la pieza la movemos con movingLerping de acuerdo a la posicion del mouse
-					if(!isLeter)
+					if(isPiece)
 					{
 						Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 						tempV3.z = -1;
@@ -126,7 +127,7 @@ public class InputGameController : MonoBehaviour {
 						tempV3.y += movingUpFinger;
 						movingLerping(tempV3,piece);
 					}
-					else if(isLeter)
+					else if(isLetterSelected)
 					{
 						float y = piece.transform.position.y;
 						float z = piece.transform.position.z;
@@ -160,7 +161,7 @@ public class InputGameController : MonoBehaviour {
 					break;
 				}
 			
-				if(isLeter)
+				if(isLetterSelected)
 				{
 					//Lo habilitamos y ajustamos
 			
@@ -278,7 +279,7 @@ public class InputGameController : MonoBehaviour {
 				}
 
 			}
-			else if(isLeter)
+			else if(isLetterSelected)
 			{
 				piece = gesture.Raycast.Hit2D.transform.gameObject;
 				//print("Letter");
@@ -297,7 +298,7 @@ public class InputGameController : MonoBehaviour {
 					choseToRotate(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<Piece>());
 					return;
 				}
-				if(isLeter)
+				if(isLeterOfPice)
 				{
 					if(!gesture.Raycast.Hit2D.transform.gameObject.GetComponent<ABCChar>().isSelected)
 					{
@@ -312,7 +313,7 @@ public class InputGameController : MonoBehaviour {
 
 	void OnFingerUp()
 	{
-		if(piece&&!hasMoved && !isLeter)
+		if(piece&&!hasMoved && !isLeterOfPice && !isLetterSelected)
 		{
 			backToNormal();
 		}
@@ -344,6 +345,10 @@ public class InputGameController : MonoBehaviour {
 						
 			piece = null;
 		}
+		piece = null;
+		isLeterOfPice = false;
+		isLetterSelected = false;
+		isPiece = false;
 	}
 
 	//hacemos que la pieza nos siga de manera mas suave
@@ -351,7 +356,7 @@ public class InputGameController : MonoBehaviour {
 	{
 		if (hasMoved) 
 		{
-			if(isLeter)
+			if(isLetterSelected)
 			{
 				piece.transform.DOMove (end, .8f).SetId("MovingPiece");
 			}
@@ -411,7 +416,7 @@ public class InputGameController : MonoBehaviour {
 
 	void OnSwipe(SwipeGesture gesture) 
 	{
-		if (isLeter) 
+		if (isLetterSelected) 
 		{
 			if(gesture.Direction == FingerGestures.SwipeDirection.Up)
 			{
@@ -492,17 +497,26 @@ public class InputGameController : MonoBehaviour {
 		if (go.GetComponent<Piece> ()) 
 		{
 			isPiece = true;
-			isLeter = false;
+			isLeterOfPice = false;
+			isLetterSelected = false;
 			return;
 		}
 
 		if (go.GetComponent<UIChar> ()) 
 		{
 			isPiece = false;
-			isLeter = true;
+			if (go.GetComponent<ABCChar> ().isSelected) 
+			{
+				isLetterSelected = true;
+			} 
+			else 
+			{
+				isLeterOfPice = true;
+			}
 			return;
 		}
 		isPiece = false;
-		isLeter = false;
+		isLeterOfPice = false;
+		isLetterSelected = false;
 	}
 }
