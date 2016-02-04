@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 	public GameObject MoneyGameObject;
 
 	protected int pointsCount =0;
+	protected int wordsMade =0;
 	protected string[] myWinCondition;
 
 	protected int totalMoves;
@@ -127,7 +128,7 @@ public class GameManager : MonoBehaviour
 			}
 			amount *= multiplierHelper;
 			addPoints(amount);
-
+			wordMade++;
 			//FindObjectOfType<InputGameController>().checkToLoose();
 
 		}
@@ -293,12 +294,20 @@ public class GameManager : MonoBehaviour
 	protected void checkWinCondition ()
 	{
 		switch (myWinCondition[0]) {
+
 		case "points":
 			if(pointsCount >= int.Parse( myWinCondition[1]))
 			{
 				print ("win");
 			}
 			break;
+
+		case "words":
+			if (wordsMade >= int.Parse (myWinCondition [1])) 
+			{
+				print ("win");
+			}
+			break;	
 		default:
 			break;
 		}
