@@ -571,4 +571,95 @@ public class CellsManager : MonoBehaviour
 			}
 		}
 	}
+
+	public Cell[] allEmptyCells()
+	{
+		List<Cell> result = new List<Cell>();
+
+		for(int i = 0;i < cells.Count;i++)
+		{
+			if(!cells[i].occupied)
+			{
+				result.Add(cells[i]);
+			}
+		}
+		return result.ToArray();
+	}
+
+	public ETYPEOFPIECE_ID colorOfMoreQuantity()
+	{
+		int[] quantity = new int[8];
+		int index = 0;
+		int amount = 0;
+
+		for(int i = 0;i < cells.Count;i++)
+		{
+			switch(cells[i].typeOfPiece)
+			{
+			case ETYPEOFPIECE_ID.AQUA:
+				quantity[0]++;
+				break;
+			case ETYPEOFPIECE_ID.BLACK:
+				quantity[1]++;
+				break;
+			case ETYPEOFPIECE_ID.BLUE:
+				quantity[2]++;
+				break;
+			case ETYPEOFPIECE_ID.GREEN:
+				quantity[3]++;
+				break;
+			case ETYPEOFPIECE_ID.GREY:
+				quantity[4]++;
+				break;
+			case ETYPEOFPIECE_ID.MAGENTA:
+				quantity[5]++;
+				break;
+			case ETYPEOFPIECE_ID.RED:
+				quantity[6]++;
+				break;
+			case ETYPEOFPIECE_ID.YELLOW:
+				quantity[7]++;
+				break;
+			}
+		}
+
+		for(int i = 0;i < quantity.Length;i++)
+		{
+			if(quantity[i] > amount)
+			{
+				index = i;
+				amount = quantity[i];
+			}
+		}
+
+		switch(index)
+		{
+		case 0:
+			return ETYPEOFPIECE_ID.AQUA;
+			break;
+		case 1:
+			return ETYPEOFPIECE_ID.BLACK;
+			break;
+		case 2:
+			return ETYPEOFPIECE_ID.BLUE;
+			break;
+		case 3:
+			return ETYPEOFPIECE_ID.GREEN;
+			break;
+		case 4:
+			return ETYPEOFPIECE_ID.GREY;
+			break;
+		case 5:
+			return ETYPEOFPIECE_ID.MAGENTA;
+			break;
+		case 6:
+			return ETYPEOFPIECE_ID.RED;
+			break;
+		case 7:
+			return ETYPEOFPIECE_ID.YELLOW;
+			break;
+		}
+
+		return ETYPEOFPIECE_ID.NONE;
+	}
 }
