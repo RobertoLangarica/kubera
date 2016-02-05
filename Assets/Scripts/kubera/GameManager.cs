@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
 	protected int totalMoves;
 	protected int currentMoves;
 
+	protected int winBombs;
+
 	public bool canRotate;
 	public bool destroyByColor;
 
@@ -418,6 +420,8 @@ public class GameManager : MonoBehaviour
 		//Se limpian las letras
 		verifyWord();
 
+		bombsForWinBonification();
+
 		add1x1Block();
 	}
 
@@ -453,7 +457,7 @@ public class GameManager : MonoBehaviour
 		else 
 		{
 			cellToLetter.AddRange (cellManager.searchCellsOfSameColor (cellManager.colorOfMoreQuantity ()));
-			print (cellToLetter.Count);
+			winBombs--;
 			StartCoroutine (addWinLetterAfterBlockMore ());
 		}
 	}
@@ -473,6 +477,17 @@ public class GameManager : MonoBehaviour
 		{
 			StartCoroutine (addWinLetterAfterBlockMore ());
 		}
+		else
+		{
+			cellToLetter = new List<Cell>();
+			cellToLetter = cellManager.searchCellsOfSameColor(cellManager.colorOfMoreQuantity());
+			winBombs--;
+		}
+	}
+
+	IEnumerator useBombs()
+	{
+		yield return new WaitForSeconds (.2f);
 	}
 
 	protected void setInput(bool active)
@@ -493,5 +508,26 @@ public class GameManager : MonoBehaviour
 				GameObject.Find ("PanelPowerUp").transform.GetChild(i).GetComponent<Button> ().interactable = false;
 			}
 		}
+	}
+
+	protected void bombsForWinBonification()
+	{
+		if(currentMoves > 0 && currentMoves < 4)
+		{
+			winBombs = 1;
+		}
+		else if(currentMoves > 3 && currentMoves < 7)
+		{
+			winBombs = 2;
+		}
+		else if(currentMoves > 6 && currentMoves < 10)
+		{
+			winBombs = 3;
+		}
+		else if(currentMoves > 10)
+		{
+			winBombs = 5;
+		}
+		winBombs = 0;
 	}
 }
