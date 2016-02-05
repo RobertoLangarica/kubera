@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 	public bool canRotate;
 	public bool destroyByColor;
 
-	protected List<Cell> cellToLetter;
+	public List<Cell> cellToLetter;
 
 	protected EPOWERUPS activatedPowerUp;
 
@@ -344,12 +344,13 @@ public class GameManager : MonoBehaviour
 
 	protected void checkWinCondition ()
 	{
+		bool win;
 		switch (myWinCondition[0]) {
-
 		case "points":
 			if(pointsCount >= int.Parse( myWinCondition[1]))
 			{
 				print ("win");
+				win = true;
 			}
 			break;
 
@@ -357,25 +358,35 @@ public class GameManager : MonoBehaviour
 			if (wordsMade >= int.Parse (myWinCondition [1])) 
 			{
 				print ("win");
+				win = true;
 			}
 			break;
 		case "letters":
 			if (letters.Count == 0) 
 			{
 				print ("win");
+				win = true;
 			}
 			break;
 		case "blackLetters":
 			if (blackLettersUsed >= int.Parse (myWinCondition [1])) 
 			{
 				print ("win");
+				win = true;
 			}
 			break;
 		default:
 			break;
 		}
 
-		checkToLoose();
+		if (win) 
+		{
+			winBonification ();
+		}
+		else
+		{
+			checkToLoose ();
+		}
 	}
 
 	IEnumerator check()
@@ -466,6 +477,7 @@ public class GameManager : MonoBehaviour
 	{
 		int random = Random.Range (0, cellToLetter.Count);
 		cellManager.turnPieceToLetterByWinNotification (cellToLetter[random]);
+		cellToLetter [random].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
 		cellToLetter.RemoveAt (random);
 
 		yield return new WaitForSeconds (.2f);
@@ -473,6 +485,64 @@ public class GameManager : MonoBehaviour
 		{
 			StartCoroutine (addWinLetterAfterBlockMore ());
 		}
+		else
+		{
+			cellToLetter.AddRange (cellManager.searchCellsOfSameColor (ETYPEOFPIECE_ID.LETTER));
+			cellToLetter.AddRange (cellManager.searchCellsOfSameColor (ETYPEOFPIECE_ID.LETTER_FROM_BEGINING));
+			winPoints ();
+			StartCoroutine (destroyLetter ());
+		}
+	}
+
+	IEnumerator destroyLetter()
+	{
+		int random = Random.Range (0, cellToLetter.Count);
+		cellToLetter [random].destroyCell ();
+		cellToLetter.RemoveAt (random);
+
+		yield return new WaitForSeconds (.2f);
+		if (cellToLetter.Count > 0) 
+		{
+			
+			StartCoroutine (destroyLetter ());
+		}
+	}
+
+	protected void winPoints()
+	{
+		int amount = 0;
+		int multiplierHelper = 1;
+
+		for (int i = 0; i < cellToLetter.Count; i++) 
+		{
+			print (amount + " " + multiplierHelper);
+			switch (cellToLetter[i].piece.GetComponent<ABCChar>().pointsValue) 
+			{
+			case("x2"):
+				{
+					multiplierHelper *= 2;}
+				break;
+			case("x3"):
+				{
+					multiplierHelper *= 3;}
+				break;
+			case("x4"):
+				{
+					multiplierHelper *= 4;}
+				break;
+			case("x5"):
+				{
+					multiplierHelper *= 5;}
+				break;
+			default:
+				{
+					amount += int.Parse (cellToLetter[i].piece.GetComponent<ABCChar>().pointsValue);}
+				break;
+			}
+		}
+
+		amount *= multiplierHelper;
+		addPoints(amount);
 	}
 
 	protected void setInput(bool active)
