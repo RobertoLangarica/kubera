@@ -366,6 +366,20 @@ public class CellsManager : MonoBehaviour
 		}
 	}
 
+	public void turnPieceToLetterByWinNotification(Cell cell)
+	{
+		ABCChar tempAbcChar = cell.piece.AddComponent<ABCChar>();
+
+		UIChar tempUiChar = cell.piece.AddComponent<UIChar>();
+
+		cell.piece.GetComponent<BoxCollider2D>().enabled = true;
+
+		if(OnLetterCreated != null)
+		{
+			OnLetterCreated(tempAbcChar,tempUiChar,false);
+		}
+	}
+
 
 	/*
 	 * Analiza si aun es posible colocar alguna de las piezas disponibles en la grid

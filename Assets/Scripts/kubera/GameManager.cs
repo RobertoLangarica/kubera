@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
 	public bool canRotate;
 	public bool destroyByColor;
 
+	protected List<Cell> cellToLetter;
+
 	protected EPOWERUPS activatedPowerUp;
 
 	protected PersistentData persistentData;
@@ -57,7 +59,7 @@ public class GameManager : MonoBehaviour
 	void Start()
 	{
 		myWinCondition = persistentData.currentLevel.winCondition.Split (new char[1]{ '-' });
-
+		cellToLetter = new List<Cell> ();
 
 		currentMoves = totalMoves = persistentData.currentLevel.moves;
 		movementsText.text = currentMoves.ToString();
@@ -422,27 +424,50 @@ public class GameManager : MonoBehaviour
 		Cell[] emptyCells = cellManager.allEmptyCells();
 		Cell cell;
 
+		if (currentMoves != 0) {
+			cell = emptyCells [Random.Range (0, emptyCells.Length - 1)];
+			cellToLetter.Add (cell);
 
-		if(currentMoves != 0)
-		{
-			cell = emptyCells[Random.Range(0,emptyCells.Length-1)];
 			currentMoves--;
 
-			GameObject go = GameObject.Instantiate(bonificationPiece) as GameObject;
-			SpriteRenderer sprite = go.GetComponent<Piece>().pieces[0].GetComponent<SpriteRenderer>();
+			GameObject go = GameObject.Instantiate (bonificationPiece) as GameObject;
+			SpriteRenderer sprite = go.GetComponent<Piece> ().pieces [0].GetComponent<SpriteRenderer> ();
 
-			Vector3 nVec = new Vector3(sprite.bounds.size.x*0.5f,
-				-sprite.bounds.size.x*0.5f,0) + cell.transform.position;
+			Vector3 nVec = new Vector3 (sprite.bounds.size.x * 0.5f,
+				               -sprite.bounds.size.x * 0.5f, 0) + cell.transform.position;
 
 			go.transform.position = nVec;
 
-			go.transform.position = cellManager.Positionate(go.GetComponent<Piece>());
+			go.transform.position = cellManager.Positionate (go.GetComponent<Piece> ());
 
 			//Debug.Log(cellManager.colorOfMoreQuantity());
-			go.GetComponent<Piece>().colorToSet =0;
-			go.GetComponent<Piece>().typeOfPiece = cellManager.colorOfMoreQuantity();
+			go.GetComponent<Piece> ().colorToSet = 0;
+			go.GetComponent<Piece> ().typeOfPiece = cellManager.colorOfMoreQuantity ();
 
-			add1x1Block();
+			//cellManager.turnPieceToLetterByWinNotification (cell);
+			StartCoroutine (add1x1BlockMore ());
+		}
+		else 
+		{
+			StartCoroutine (addWinLetterAfterBlockMore ());
 		}
 	}
+	IEnumerator add1x1BlockMore()
+	{
+		yield return new WaitForSeconds (.2f);
+		add1x1Block ();
+	}
+	IEnumerator addWinLetterAfterBlockMore()
+	{
+		int random = Random.Range (0, cellToLetter.Count);
+		cellManager.turnPieceToLetterByWinNotification (cellToLetter[random]);
+		cellToLetter.RemoveAt (random);
+
+		yield return new WaitForSeconds (.2f);
+		if (cellToLetter.Count > 0) 
+		{
+			StartCoroutine (addWinLetterAfterBlockMore ());
+		}
+	}
+
 }
