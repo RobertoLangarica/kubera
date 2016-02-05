@@ -413,6 +413,8 @@ public class GameManager : MonoBehaviour
 
 	protected void winBonification()
 	{
+		setInput (false);
+
 		//Se limpian las letras
 		verifyWord();
 
@@ -426,9 +428,10 @@ public class GameManager : MonoBehaviour
 
 		if (currentMoves != 0) {
 			cell = emptyCells [Random.Range (0, emptyCells.Length - 1)];
-			cellToLetter.Add (cell);
+
 
 			currentMoves--;
+			movementsText.text = currentMoves.ToString();
 
 			GameObject go = GameObject.Instantiate (bonificationPiece) as GameObject;
 			SpriteRenderer sprite = go.GetComponent<Piece> ().pieces [0].GetComponent<SpriteRenderer> ();
@@ -438,17 +441,19 @@ public class GameManager : MonoBehaviour
 
 			go.transform.position = nVec;
 
-			go.transform.position = cellManager.Positionate (go.GetComponent<Piece> ());
-
 			//Debug.Log(cellManager.colorOfMoreQuantity());
 			go.GetComponent<Piece> ().colorToSet = 0;
 			go.GetComponent<Piece> ().typeOfPiece = cellManager.colorOfMoreQuantity ();
+
+			go.transform.position = cellManager.Positionate (go.GetComponent<Piece> ());
 
 			//cellManager.turnPieceToLetterByWinNotification (cell);
 			StartCoroutine (add1x1BlockMore ());
 		}
 		else 
 		{
+			cellToLetter.AddRange (cellManager.searchCellsOfSameColor (cellManager.colorOfMoreQuantity ()));
+			print (cellToLetter.Count);
 			StartCoroutine (addWinLetterAfterBlockMore ());
 		}
 	}
@@ -470,4 +475,23 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	protected void setInput(bool active)
+	{
+		if (active) 
+		{
+			GameObject.Find ("FingerGestures").SetActive (true);
+			for (int i = 0; i < GameObject.Find ("PanelPowerUp").transform.childCount; i++) 
+			{
+				GameObject.Find ("PanelPowerUp").transform.GetChild(i).GetComponent<Button> ().interactable = true;
+			}
+		}
+		else 
+		{
+			GameObject.Find ("FingerGestures").SetActive (false);
+			for (int i = 0; i < GameObject.Find ("PanelPowerUp").transform.childCount; i++) 
+			{
+				GameObject.Find ("PanelPowerUp").transform.GetChild(i).GetComponent<Button> ().interactable = false;
+			}
+		}
+	}
 }

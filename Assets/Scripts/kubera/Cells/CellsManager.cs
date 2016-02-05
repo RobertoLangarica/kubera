@@ -574,7 +574,7 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @params cell{Cell}: Celda de la que se tomara su color comop parametro para evaluar
 	 */
-	protected void searchCellsOfSameColor(Cell cell)
+	public List<Cell> searchCellsOfSameColor(Cell cell)
 	{
 		selected.Clear();
 		for(int i = 0;i < cells.Count;i++)
@@ -584,6 +584,20 @@ public class CellsManager : MonoBehaviour
 				selected.Add(cells[i]);
 			}
 		}
+		return selected;
+	}
+
+	public List<Cell> searchCellsOfSameColor(ETYPEOFPIECE_ID cellType)
+	{
+		selected.Clear();
+		for(int i = 0;i < cells.Count;i++)
+		{
+			if(cells[i].typeOfPiece == cellType)
+			{
+				selected.Add(cells[i]);
+			}
+		}
+		return selected;
 	}
 
 	public Cell[] allEmptyCells()
