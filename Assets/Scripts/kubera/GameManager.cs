@@ -433,7 +433,14 @@ public class GameManager : MonoBehaviour
 
 		bombsForWinBonification();
 
-		add1x1Block();
+		if(cellManager.colorOfMoreQuantity() != ETYPEOFPIECE_ID.NONE)
+		{
+			add1x1Block();
+		}
+		else
+		{
+			destroyAndCountAllLetters();
+		}
 	}
 
 	protected void add1x1Block()
@@ -507,12 +514,17 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			cellToLetter = new List<Cell>();
-			cellToLetter.AddRange (cellManager.searchCellsOfSameColor (ETYPEOFPIECE_ID.LETTER));
-			cellToLetter.AddRange (cellManager.searchCellsOfSameColor (ETYPEOFPIECE_ID.LETTER_FROM_BEGINING));
-			winPoints ();
-			StartCoroutine (destroyLetter ());
+			destroyAndCountAllLetters();
 		}
+	}
+
+	protected void destroyAndCountAllLetters()
+	{
+		cellToLetter = new List<Cell>();
+		cellToLetter.AddRange (cellManager.searchCellsOfSameColor (ETYPEOFPIECE_ID.LETTER));
+		cellToLetter.AddRange (cellManager.searchCellsOfSameColor (ETYPEOFPIECE_ID.LETTER_FROM_BEGINING));
+		winPoints ();
+		StartCoroutine (destroyLetter ());
 	}
 
 	IEnumerator destroyLetter()
