@@ -617,7 +617,7 @@ public class CellsManager : MonoBehaviour
 	public ETYPEOFPIECE_ID colorOfMoreQuantity()
 	{
 		int[] quantity = new int[8];
-		int index = 0;
+		int index = -1;
 		int amount = 0;
 
 		for(int i = 0;i < cells.Count;i++)
