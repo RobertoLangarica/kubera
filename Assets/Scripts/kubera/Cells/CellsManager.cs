@@ -17,6 +17,9 @@ public class CellsManager : MonoBehaviour
 
 	public GameObject letterFromBeginingPrefab;
 
+	//El prefab que se instanciara para ocupar celdas desde el inicio
+	public GameObject initialPiece;
+
 	//Medidas del grid
 	public int width;
 	public int height;
@@ -61,6 +64,10 @@ public class CellsManager : MonoBehaviour
 				if(cells[cells.Count-1].typeOfPiece == ETYPEOFPIECE_ID.LETTER_FROM_BEGINING)
 				{
 					turnPiecesToBlackLetters(cells[cells.Count-1]);
+				}
+				else if(cells[cells.Count-1].typeOfPiece != ETYPEOFPIECE_ID.NONE)
+				{
+					addBlockToInitialOccupiedCell(cells[cells.Count-1]);
 				}
 
 				nPos.x += cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x + 0.03f;
@@ -364,6 +371,23 @@ public class CellsManager : MonoBehaviour
 		{
 			OnLetterCreated(tempAbcChar,tempUiChar,true);
 		}
+	}
+
+	protected void addBlockToInitialOccupiedCell(Cell cell)
+	{
+		GameObject go = GameObject.Instantiate (initialPiece) as GameObject;
+		SpriteRenderer sprite = go.GetComponent<Piece> ().pieces [0].GetComponent<SpriteRenderer> ();
+
+		Vector3 nVec = new Vector3 (sprite.bounds.size.x * 0.5f,
+			-sprite.bounds.size.x * 0.5f, 0) + cell.transform.position;
+
+		go.transform.position = nVec;
+
+		//Debug.Log(cellManager.colorOfMoreQuantity());
+		go.GetComponent<Piece> ().colorToSet = 0;
+		go.GetComponent<Piece> ().typeOfPiece = cell.typeOfPiece;
+
+		go.transform.position = Positionate (go.GetComponent<Piece> ());
 	}
 
 	public void turnPieceToLetterByWinNotification(Cell cell)

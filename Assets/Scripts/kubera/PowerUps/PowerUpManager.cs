@@ -15,40 +15,6 @@ public class PowerUpManager : MonoBehaviour
 {
 	public List<PowerUpBase> powersUpOnEditor = new List<PowerUpBase>();
 
-	public void giveUsesToPowerUP(EPOWERUPS powerUp,int uses = 1)
-	{
-		PowerUpBase selectePower = getPowerUp(powerUp);
-
-		if(selectePower != null)
-		{
-			selectePower.uses++;
-			selectePower.numberUses.text = uses.ToString ();
-			switch(powerUp)
-			{
-			case(EPOWERUPS.BLOCK_POWERUP):
-			{
-				UserDataManager.instance.onePiecePowerUpUses++;
-			}
-				break;
-			case(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP):
-			{
-				UserDataManager.instance.destroyPowerUpUses++;
-			}
-				break;
-			case(EPOWERUPS.ROTATE_POWERUP):
-			{
-				UserDataManager.instance.rotatePowerUpUses++;
-			}
-				break;
-			case(EPOWERUPS.WILDCARD_POWERUP):
-			{
-				UserDataManager.instance.wildCardPowerUpUses++;
-			}
-				break;
-			}
-		}
-	}
-
 	public PowerUpBase getPowerUp(EPOWERUPS powerUp)
 	{
 		for(int i = 0;i < powersUpOnEditor.Count;i++)
@@ -59,5 +25,50 @@ public class PowerUpManager : MonoBehaviour
 			}
 		}
 		return null;
+	}
+
+	public void activateAvailablePowers()
+	{
+		//UserDataManager.instance.rotatePowerUpAvailable= false;
+		getPowerUp(EPOWERUPS.ROTATE_POWERUP).gameObject.SetActive(UserDataManager.instance.rotatePowerUpAvailable);
+
+		//UserDataManager.instance.onePiecePowerUpAvailable = false;
+		getPowerUp(EPOWERUPS.BLOCK_POWERUP).gameObject.SetActive(UserDataManager.instance.onePiecePowerUpAvailable);
+
+		//UserDataManager.instance.destroyPowerUpAvailable = false;
+		getPowerUp(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP).gameObject.SetActive(UserDataManager.instance.destroyPowerUpAvailable);
+
+		//UserDataManager.instance.destroyNeighborsPowerUpAvailable = false;
+		getPowerUp(EPOWERUPS.DESTROY_NEIGHBORS_POWERUP).gameObject.SetActive(UserDataManager.instance.destroyNeighborsPowerUpAvailable);
+
+		//UserDataManager.instance.wildCardPowerUpAvailable = false;
+		getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gameObject.SetActive(UserDataManager.instance.wildCardPowerUpAvailable);
+
+	}
+
+	public void activatePower(EPOWERUPS powerUp)
+	{
+		switch(powerUp)
+		{
+		case(EPOWERUPS.ROTATE_POWERUP):
+			getPowerUp(EPOWERUPS.ROTATE_POWERUP).gameObject.SetActive(true);
+			break;
+
+		case(EPOWERUPS.BLOCK_POWERUP):
+			getPowerUp(EPOWERUPS.BLOCK_POWERUP).gameObject.SetActive(true);
+			break;
+
+		case(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP):
+			getPowerUp(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP).gameObject.SetActive(true);
+			break;
+
+		case(EPOWERUPS.DESTROY_NEIGHBORS_POWERUP):
+			getPowerUp(EPOWERUPS.DESTROY_NEIGHBORS_POWERUP).gameObject.SetActive(true);
+			break;
+
+		case(EPOWERUPS.WILDCARD_POWERUP):
+			getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gameObject.SetActive(true);
+			break;
+		}
 	}
 }

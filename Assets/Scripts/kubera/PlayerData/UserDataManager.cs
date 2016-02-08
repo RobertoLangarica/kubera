@@ -133,51 +133,80 @@ public class UserDataManager
 
 	public void foo(){}
 	
-	public int rotatePowerUpUses
+	public bool rotatePowerUpAvailable
 	{
 		get
 		{
-			return PlayerPrefs.GetInt("rotatePowerUpUses");
+			return PlayerPrefs.GetInt("rotatePowerUpUses") == 0 ? false : true;
 		}		
 		set
 		{
-			PlayerPrefs.SetInt("rotatePowerUpUses",value);
+			int tempBool = value == false ? 0 : 1;
+			PlayerPrefs.SetInt("rotatePowerUpUses",tempBool);
 		}
 	}
 	
-	public int onePiecePowerUpUses
+	public bool onePiecePowerUpAvailable
 	{
 		get
 		{
-			return PlayerPrefs.GetInt("onePiecePowerUpUses");
+			return PlayerPrefs.GetInt("onePiecePowerUpUses") == 0 ? false : true;
 		}		
 		set
 		{
-			PlayerPrefs.SetInt("onePiecePowerUpUses",value);
+			int tempBool = value == false ? 0 : 1;
+			PlayerPrefs.SetInt("onePiecePowerUpUses",tempBool);
 		}
 	}
 	
-	public int wildCardPowerUpUses
+	public bool wildCardPowerUpAvailable
 	{
 		get
 		{
-			return PlayerPrefs.GetInt("wildCardPowerUpUses");
+			return PlayerPrefs.GetInt("wildCardPowerUpUses") == 0 ? false : true;
 		}		
 		set
 		{
-			PlayerPrefs.SetInt("wildCardPowerUpUses",value);
+			int tempBool = value == false ? 0 : 1;
+			PlayerPrefs.SetInt("wildCardPowerUpUses",tempBool);
 		}
 	}
 	
-	public int destroyPowerUpUses
+	public bool destroyPowerUpAvailable
 	{
 		get
 		{
-			return PlayerPrefs.GetInt("destroyPowerUpUses");
+			return PlayerPrefs.GetInt("destroyPowerUpUses") == 0 ? false : true;
 		}		
 		set
 		{
-			PlayerPrefs.SetInt("destroyPowerUpUses",value);
+			int tempBool = value == false ? 0 : 1;
+			PlayerPrefs.SetInt("destroyPowerUpUses",tempBool);
+		}
+	}
+
+	public bool destroyNeighborsPowerUpAvailable
+	{
+		get
+		{
+			return PlayerPrefs.GetInt("destroyNeighborsPowerUpUses") == 0 ? false : true;
+		}		
+		set
+		{
+			int tempBool = value == false ? 0 : 1;
+			PlayerPrefs.SetInt("destroyNeighborsPowerUpUses",tempBool);
+		}
+	}
+
+	public int playerGems
+	{
+		get
+		{
+			return PlayerPrefs.GetInt("playerGems");
+		}		
+		set
+		{
+			PlayerPrefs.SetInt("playerGems",value);
 		}
 	}
 }
