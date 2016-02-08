@@ -11,11 +11,15 @@ public class Cell : MonoBehaviour
 
 	/*
 	 * Valores en el XML para cada tipo de celda
+	 * 0x0000
 	 * 1 = Celda disponblbe y normal
-	 * 2 = Celda que al momento de que se le manda a llamar clearCell se convertira en tipo 1
-	 *     EJEMPLO:Para el Tile que empieza con una letra y al destruirla queda disponible, se le coloca esta bandera para que al hacerle clear se convierta en tipo 1
-	 * 4 = Celda que es un hueco en la grid (Este si cuenta para la linea)
-	 * 8 = Celda que es un obstaculo en la grid (En este obstaculo se agregaran letras a destruir)(hay que añadirle el '2' para que libere la celda)
+	 * 2 = Cubo de color que se agrega desde el inicio
+	 * 4 = Celda vacia (si cuenta para la linea)
+	 * 8 = Letra como obstaculo
+	 * 
+	 * El siguiente nibble se utiliza para los colores que se marcan en la bandera 2
+	 * Son colores del 0 al 7 de momento
+	 * 0xNNNN0000
 	 */
 	[HideInInspector]
 	public int cellType;

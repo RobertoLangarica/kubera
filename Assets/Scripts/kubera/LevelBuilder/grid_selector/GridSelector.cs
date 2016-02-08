@@ -30,8 +30,7 @@ namespace LevelBuilder
 			{
 				foreach(GridItemRenderer item in itemRenderers)
 				{
-					item.onQuantityChange -= onItemQuantityChange;
-					GameObject.DestroyImmediate(item);
+					GameObject.DestroyImmediate(item.gameObject);
 				}	
 			}
 		}
@@ -43,10 +42,10 @@ namespace LevelBuilder
 			for(int i = 0; i < data.Count; i++)
 			{
 				GridItemRenderer item = instantiateItemRenderer();
-				item.onQuantityChange += onItemQuantityChange;
 				item.index = i;
-				item.setQuantity(data[i].quantity);
+				item.setData(data[i]);
 				item.setObjectToShow(data[i].objectToShow);
+				item.showData();
 				itemRenderers.Add(item);
 			}
 		}
@@ -54,11 +53,6 @@ namespace LevelBuilder
 		private GridItemRenderer instantiateItemRenderer()
 		{
 			return GameObject.Instantiate(ItemRendererPrefab).GetComponent<GridItemRenderer>();
-		}
-
-		private void onItemQuantityChange(GridItemRenderer target)
-		{
-			data[target.index].quantity = target.getQuantity();
 		}
 
 		private void layoutItemRenderers()
@@ -86,11 +80,11 @@ namespace LevelBuilder
 			{txtTitle.text = title;}
 		}
 
-		public void showAllQuantities()
+		public void updateAllRenderersShowedData()
 		{
 			for(int i = 0; i < itemRenderers.Count; i++)
 			{
-				itemRenderers[i].showQuantity();
+				itemRenderers[i].showData();
 			}
 		}
 	}

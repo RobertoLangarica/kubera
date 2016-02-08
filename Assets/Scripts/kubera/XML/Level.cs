@@ -28,7 +28,7 @@ public class Level
 	[XmlAttribute("unblockBlock")]public bool unblockBlock;
 	[XmlAttribute("unblockRotate")]public bool unblockRotate;
 	[XmlAttribute("unblockDestroy")]public bool unblockDestroy;
-	[XmlAttribute("unblockWildcar")]public bool unblockWildcar;
+	[XmlAttribute("unblockWildcard")]public bool unblockWildcard;
 
 	[XmlAttribute("winCondition")]public string winCondition;
 
