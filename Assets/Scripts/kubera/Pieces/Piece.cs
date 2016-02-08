@@ -61,7 +61,12 @@ public class Piece : MonoBehaviour {
 	protected void selectTypeOfPiece()
 	{
 		//Color myColor = new Color(Random.Range(0.0f,1.0f),Random.Range(0.0f,1.0f),Random.Range(0.0f,1.0f));
-		typeOfPiece = (ETYPEOFPIECE_ID)Random.Range(1,8);
+		//typeOfPiece = (ETYPEOFPIECE_ID)Random.Range(1,8);
+
+		if(typeOfPiece == ETYPEOFPIECE_ID.LETTER_FROM_BEGINING)
+		{
+			return;
+		}
 
 		foreach(GameObject piece in pieces)
 		{
@@ -71,7 +76,7 @@ public class Piece : MonoBehaviour {
 			{
 				typeOfPiece = (ETYPEOFPIECE_ID)Random.Range(1,8);
 			}
-			else
+			else if(colorToSet != 0)
 			{
 				typeOfPiece = (ETYPEOFPIECE_ID)colorToSet;
 			}
@@ -93,7 +98,7 @@ public class Piece : MonoBehaviour {
 		{
 			initialTypeOfPiece = value;
 			currentTypeOfPiece = value;
-			
+
 			switch(currentTypeOfPiece)
 			{
 			case ETYPEOFPIECE_ID.AQUA:
@@ -125,6 +130,7 @@ public class Piece : MonoBehaviour {
 				rendererColor = new Color(0.976f, 0.627f, 0.000f);
 				break;
 			case ETYPEOFPIECE_ID.NONE:
+				rendererColor = Color.white;
 				return;
 			}
 			

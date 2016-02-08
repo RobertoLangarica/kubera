@@ -1,15 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace ABC
 {
-	public class WordManager : MonoBehaviour {
+	public class WordManager : MonoBehaviour 
+	{
 
 		public GameObject letterPrefab;
 		public GameObject empty;
 		public GameObject container;
+
+		public string wildCardPointValue;
 
 		[HideInInspector]public ABCDataStructure words;
 		[HideInInspector]public List<ABCChar> chars;
@@ -19,12 +23,38 @@ namespace ABC
 		protected int sortingAfterSwap;
 		protected Vector2[] positionOfLetters; //los vectores de las letras 
 
+
+		//texturas de las letras en juego
+		protected UnityEngine.Object[] textureObject;
+		protected string[] names;
+
+
 		void Start()
 		{
+			textureObject = Resources.LoadAll("Letters");
+			names = new string[textureObject.Length];
+			readTextures();
+
 			chars = new List<ABCChar>();
 			container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding;
 			words = FindObjectOfType<ABCDataStructure>();
 			//words.OnWordComplete += onWordComplete;
+		}
+
+		public Sprite changeTexture(string nTextureName)
+		{
+			Sprite sprite;
+
+			sprite = (Sprite)textureObject[Array.IndexOf(names, nTextureName.ToLower())];		
+			return sprite;
+		}
+
+		protected void readTextures()
+		{
+			for(int i=0; i< names.Length; i++)
+			{
+				names[i] = textureObject[i].name;
+			}
 		}
 
 		/**
@@ -41,7 +71,7 @@ namespace ABC
 			letter.GetComponent<UIChar>().character = char2; 
 			addLetterToCorrectSpace(letter);
 			letter.transform.localScale = new Vector3 (1, 1, 1);
-			
+			letter.GetComponent<ABCChar>().isSelected = true;
 			validateCharacter(char2);
 		}
 
@@ -64,7 +94,8 @@ namespace ABC
 			addLetterToCorrectSpace(letter);
 			letter.transform.localScale = new Vector3 (1, 1, 1);
 			letter.GetComponent<UIChar> ().piece = piece;
-			
+			letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
+			letter.GetComponent<ABCChar>().isSelected = true;
 			validateCharacter(character);
 			
 			//para que las letras esten centradas HardCoding
@@ -82,10 +113,11 @@ namespace ABC
 			character.pointsValue = pieceABCChar.pointsValue;
 			character.typeOfLetter = pieceABCChar.typeOfLetter;
 			letter.GetComponent<UIChar>().character = character; 
-
+			letter.GetComponent<ABCChar>().isSelected = true;
 			addLetterToCorrectSpace(letter);
 			letter.transform.localScale = new Vector3 (1, 1, 1);
 			letter.GetComponent<UIChar> ().piece = piece;
+			letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
 
 			validateCharacter(character);
 
@@ -194,6 +226,7 @@ namespace ABC
 			chars.Clear();
 
 			container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding = 300;
+
 		}
 
 		/**

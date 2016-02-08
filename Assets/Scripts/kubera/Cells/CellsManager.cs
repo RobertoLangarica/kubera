@@ -7,8 +7,10 @@ using ABC;
 public class CellsManager : MonoBehaviour 
 {
 	public delegate void linesCreated(int lines);
-
 	[HideInInspector]public linesCreated OnlinesCounted;
+
+	public delegate void letterCreated(ABCChar abcChar,UIChar uiChar,bool isBlackLetter);
+	[HideInInspector]public letterCreated OnLetterCreated;
 
 	//Es el prefab que se va a utilizar para la grid
 	public GameObject cellPrefab;
@@ -31,12 +33,8 @@ public class CellsManager : MonoBehaviour
 	//Todas las celdas del grid
 	protected List<Cell> cells = new List<Cell>();
 
-	protected PieceManager pieceManager;
-
 	void Start () 
 	{
-		pieceManager = FindObjectOfType<PieceManager>();
-
 		CreateGrid();
 	}
 
@@ -62,7 +60,7 @@ public class CellsManager : MonoBehaviour
 
 				if(cells[cells.Count-1].typeOfPiece == ETYPEOFPIECE_ID.LETTER_FROM_BEGINING)
 				{
-					addLetterPieceToCell(cells[cells.Count-1]);
+					turnPiecesToBlackLetters(cells[cells.Count-1]);
 				}
 
 				nPos.x += cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x + 0.03f;
@@ -325,38 +323,61 @@ public class CellsManager : MonoBehaviour
 	protected void turnPiecesToLetters(int cellIndex,int lineIndex)
 	{
 		int newIndex = lineIndex+cellIndex;
-		ABCChar tempAbcChar = null;
 
 		cells[newIndex].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
 		if(cells[newIndex].piece != null)
 		{
-			tempAbcChar = cells[newIndex].piece.AddComponent<ABCChar>();
-			
-			tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());
+			ABCChar tempAbcChar = cells[newIndex].piece.AddComponent<ABCChar>();
+
+			UIChar tempUiChar = cells[newIndex].piece.AddComponent<UIChar>();
 
 			cells[newIndex].piece.GetComponent<BoxCollider2D>().enabled = true;
-			
-			pieceManager.listChar.Add(tempAbcChar);
+
+			if(OnLetterCreated != null)
+			{
+				OnLetterCreated(tempAbcChar,tempUiChar,false);
+			}
 		}
 	}
 
-	protected void addLetterPieceToCell(Cell cell)
+	protected void turnPiecesToBlackLetters(Cell cell)
 	{
 		Vector3 tempV3 = cell.transform.position + new Vector3(cell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
 			-cell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
+		
 		GameObject go = GameObject.Instantiate(letterFromBeginingPrefab) as GameObject;
 		go.GetComponent<BoxCollider2D>().enabled = false;
-		cell.piece = go.GetComponent<Piece>().pieces[0];
+		Piece goPiece = go.GetComponent<Piece>();
+		goPiece.typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
+		cell.piece = goPiece.pieces[0];
+		cell.typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
 		tempV3.z = 0;
 		go.transform.position = tempV3;
 
 		ABCChar tempAbcChar = cell.piece.AddComponent<ABCChar>();
 
-		tempAbcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());
+		UIChar tempUiChar = cell.piece.AddComponent<UIChar>();
 
 		cell.piece.GetComponent<BoxCollider2D>().enabled = true;
 
-		pieceManager.listChar.Add(tempAbcChar);
+		if(OnLetterCreated != null)
+		{
+			OnLetterCreated(tempAbcChar,tempUiChar,true);
+		}
+	}
+
+	public void turnPieceToLetterByWinNotification(Cell cell)
+	{
+		ABCChar tempAbcChar = cell.piece.AddComponent<ABCChar>();
+
+		UIChar tempUiChar = cell.piece.AddComponent<UIChar>();
+
+		cell.piece.GetComponent<BoxCollider2D>().enabled = true;
+
+		if(OnLetterCreated != null)
+		{
+			OnLetterCreated(tempAbcChar,tempUiChar,false);
+		}
 	}
 
 
@@ -553,7 +574,7 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @params cell{Cell}: Celda de la que se tomara su color comop parametro para evaluar
 	 */
-	protected void searchCellsOfSameColor(Cell cell)
+	public List<Cell> searchCellsOfSameColor(Cell cell)
 	{
 		selected.Clear();
 		for(int i = 0;i < cells.Count;i++)
@@ -563,5 +584,110 @@ public class CellsManager : MonoBehaviour
 				selected.Add(cells[i]);
 			}
 		}
+		return selected;
+	}
+
+	public List<Cell> searchCellsOfSameColor(ETYPEOFPIECE_ID cellType)
+	{
+		selected.Clear();
+		for(int i = 0;i < cells.Count;i++)
+		{
+			if(cells[i].typeOfPiece == cellType)
+			{
+				selected.Add(cells[i]);
+			}
+		}
+		return selected;
+	}
+
+	public Cell[] allEmptyCells()
+	{
+		List<Cell> result = new List<Cell>();
+
+		for(int i = 0;i < cells.Count;i++)
+		{
+			if(!cells[i].occupied)
+			{
+				result.Add(cells[i]);
+			}
+		}
+		return result.ToArray();
+	}
+
+	public ETYPEOFPIECE_ID colorOfMoreQuantity()
+	{
+		int[] quantity = new int[8];
+		int index = -1;
+		int amount = 0;
+
+		for(int i = 0;i < cells.Count;i++)
+		{
+			switch(cells[i].typeOfPiece)
+			{
+			case ETYPEOFPIECE_ID.AQUA:
+				quantity[0]++;
+				break;
+			case ETYPEOFPIECE_ID.BLACK:
+				quantity[1]++;
+				break;
+			case ETYPEOFPIECE_ID.BLUE:
+				quantity[2]++;
+				break;
+			case ETYPEOFPIECE_ID.GREEN:
+				quantity[3]++;
+				break;
+			case ETYPEOFPIECE_ID.GREY:
+				quantity[4]++;
+				break;
+			case ETYPEOFPIECE_ID.MAGENTA:
+				quantity[5]++;
+				break;
+			case ETYPEOFPIECE_ID.RED:
+				quantity[6]++;
+				break;
+			case ETYPEOFPIECE_ID.YELLOW:
+				quantity[7]++;
+				break;
+			}
+		}
+
+		for(int i = 0;i < quantity.Length;i++)
+		{
+			if(quantity[i] > amount)
+			{
+				index = i;
+				amount = quantity[i];
+			}
+		}
+
+		switch(index)
+		{
+		case 0:
+			return ETYPEOFPIECE_ID.AQUA;
+			break;
+		case 1:
+			return ETYPEOFPIECE_ID.BLACK;
+			break;
+		case 2:
+			return ETYPEOFPIECE_ID.BLUE;
+			break;
+		case 3:
+			return ETYPEOFPIECE_ID.GREEN;
+			break;
+		case 4:
+			return ETYPEOFPIECE_ID.GREY;
+			break;
+		case 5:
+			return ETYPEOFPIECE_ID.MAGENTA;
+			break;
+		case 6:
+			return ETYPEOFPIECE_ID.RED;
+			break;
+		case 7:
+			return ETYPEOFPIECE_ID.YELLOW;
+			break;
+		}
+
+		return ETYPEOFPIECE_ID.NONE;
 	}
 }
