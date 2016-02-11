@@ -87,7 +87,7 @@ namespace LevelBuilder
 		{
 			onAddWordToDictionary(wordPopup.getInputValue());
 			wordPopup.activateAdd(false);
-			wordPopup.showWarning("");
+			wordPopup.showWarning("Palabra válida");
 		}
 
 		public void onWordChange()
@@ -101,7 +101,7 @@ namespace LevelBuilder
 			}
 			else if(!isValidWord(wordPopup.getInputValue()))
 			{
-				wordPopup.showWarning("Palabra no valida para el diccionario.");
+				wordPopup.showWarning("Palabra no válida para el diccionario.");
 				wordPopup.activateAdd(true);
 			}
 			else if(isPreviouslyUsedWord(wordPopup.getInputValue()))
@@ -110,7 +110,7 @@ namespace LevelBuilder
 			}
 			else
 			{
-				wordPopup.showWarning("Palabra valida");
+				wordPopup.showWarning("Palabra válida");
 			}
 		}
 
@@ -150,13 +150,12 @@ namespace LevelBuilder
 			inputWords.text = "00";
 		}
 
-		public void sincronizeDataWithString(string csv)
+		public void sincronizeDataWithString(string data)
 		{
 			resetToDefault();
+			if(data == null || data.Length == 0){return;}
 
-			if(csv.Length == 0){return;}
-
-			string[] goal = csv.Split('-');
+			string[] goal = data.Split('-');
 
 			if(goal[0] == "points")
 			{
@@ -179,41 +178,43 @@ namespace LevelBuilder
 			}
 			else if(goal[0] == "word")
 			{
-				wordPopup.setInputValue(goal[1].Split('_')[1]);
+				wordPopup.setInputValue(goal[1].Split('_')[0]);
 				toggleWord.isOn = true;
 			}
 		}
 			
-		public string getStringData(string forcedType)
+		public string getStringData()
 		{
+			string result = "";
+
 			if(togglePoints.isOn)
 			{
-				return "points-"+inputPoints.text;
+				result =  "points-"+inputPoints.text;
 			}
 			else if(toggleLetters.isOn)
 			{
-				return "letters-"+abcSelector.getCSVData(ABC_NORMAL_TYPE);
+				result = "letters-"+abcSelector.getCSVData(ABC_NORMAL_TYPE);
 			}
 			else if(toggleWordsCount.isOn)
 			{
-				return "words-"+inputWords.text;
+				result = "words-"+inputWords.text;
 			}
 			else if(toggleObstacles.isOn)
 			{
-				return "obstacles-";
+				result = "obstacles-";
 			}
 			else if(toggleWord.isOn)
 			{
+				//Primero se guarda con acentos luego sin acentos
 				string word = wordPopup.getInputValue();
-				string result = "word-";
+				result = "word-";
 				word = word.ToLowerInvariant();
 				result += word+"_";
 				word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
 				result+= word;
-				return result;
 			}
-
-			return "";
+				
+			return result;
 		}
 	}
 }

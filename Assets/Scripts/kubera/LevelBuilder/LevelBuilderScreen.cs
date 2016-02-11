@@ -90,6 +90,7 @@ namespace LevelBuilder
 
 			piecesSelector.resetDataItems();
 			piecesSelector.updateShowedData();
+			levelGoalSelector.resetToDefault();
 
 			gridEditor.resetDataItems();
 
@@ -190,6 +191,7 @@ namespace LevelBuilder
 			lvlToSave.obstacleLettersPool = abcObstacleSelector.getCSVData(ABC_OBSTACLE_TYPE);
 			lvlToSave.pieces = piecesSelector.getCSVData();
 			lvlToSave.grid = gridEditor.getCSVData();
+			lvlToSave.winCondition = levelGoalSelector.getStringData();
 			lvlToSave.unblockBomb = powerupToggles[BOMB_POWERUP].isOn;
 			lvlToSave.unblockBlock = powerupToggles[BLOCK_POWERUP].isOn;
 			lvlToSave.unblockRotate = powerupToggles[ROTATE_POWERUP].isOn;
@@ -224,6 +226,7 @@ namespace LevelBuilder
 			abcObstacleSelector.sincronizeDataWithCSV(level.obstacleLettersPool);
 			piecesSelector.sincronizeDataWithCSV(level.pieces);
 			gridEditor.sincronizeDataWithCSV(level.grid);
+			levelGoalSelector.sincronizeDataWithString(level.winCondition);
 			powerupToggles[BOMB_POWERUP].isOn = level.unblockBomb;
 			powerupToggles[BLOCK_POWERUP].isOn = level.unblockBlock;
 			powerupToggles[ROTATE_POWERUP].isOn = level.unblockRotate;
@@ -407,9 +410,14 @@ namespace LevelBuilder
 				{
 					string[] goal = lvl.winCondition.Split('-');
 
-					if(goal[0] == "word" && goal[1] == word)
+					if(goal[0] == "word")
 					{
-						return true;
+						string[] words = goal[1].Split('_');
+
+						if(words[0] == word || words[1] == word)
+						{
+							return true;	
+						}
 					}
 				}	
 			}

@@ -16,11 +16,6 @@ namespace LevelBuilder
 		public DNotification onAdd;
 		public DNotification onChange;
 
-		void Start()
-		{
-			reset();
-		}
-
 		public void reset()
 		{
 			btnAdd.interactable = false;

@@ -91,8 +91,10 @@ public class PersistentData : MonoBehaviour
 
 		//Diccionario
 		TextAsset abc = Resources.Load("ABCData/WORDS_"+language) as TextAsset;
-		StreamWriter writer = new StreamWriter(Application.dataPath+"/Resources/"+"ABCData/WORDS_"+language+".txt");
-		writer.WriteLine(word);
+		StreamWriter writer = new StreamWriter(Application.dataPath+"/Resources/"+"ABCData/WORDS_"+language+".txt",true);
+		writer.Write("\n"+word);
+		writer.Close();
+		writer.Dispose();
 	}
 
 	/**
