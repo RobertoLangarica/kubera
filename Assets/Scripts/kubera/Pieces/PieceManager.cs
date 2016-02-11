@@ -29,6 +29,9 @@ public class PieceManager : MonoBehaviour {
 	protected List<ScriptableABCChar> XMLPoolBlackLeters = new List<ScriptableABCChar>();
 
 	protected Transform piecesStock;
+
+	protected bool isRotating = false;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -85,7 +88,7 @@ public class PieceManager : MonoBehaviour {
 
 			for(int j=0; j<amout; j++)
 			{
-				piecesList.Add ((GameObject)(Resources.Load (myPieces[i].Substring(2))));
+				piecesList.Add ((GameObject)(Resources.Load (piecesInfo[1])));
 			}
 		}
 
@@ -207,6 +210,10 @@ public class PieceManager : MonoBehaviour {
 	//Se cambian las piezas por las rotadas
 	public void setRotatePieces(Piece piece)
 	{
+		if (isRotating)
+		{
+			return;
+		}
 		if (piece.rotatePieces.Length > 0) 
 		{
 			GameObject go = Instantiate (piece.rotatePieces [0]) as GameObject;
@@ -217,18 +224,21 @@ public class PieceManager : MonoBehaviour {
 			go.transform.SetParent (piecesStock);
 			go.GetComponent<Piece> ().myFirstPos = piece.myFirstPos;
 
-
 			if (go.GetComponent<Piece> ().howManyHasBeenRotated > piece.rotatePieces.Length) 
 			{
 				go.GetComponent<Piece> ().howManyHasBeenRotated = 0;
 				piece.howManyHasBeenRotated = 0;
 			}
+
+			isRotating = true;
 			piece.gameObject.transform.DOScale(new Vector3(0,0),.25f).OnComplete(()=>
 				{
+					DestroyImmediate (piece.gameObject);
+
 					go.transform.DOScale (new Vector3 (2.5f, 2.5f), .25f).OnComplete(()=>
-					{
-							DestroyImmediate (piece.gameObject);
-					});
+						{
+							isRotating = false;
+						});
 				});
 
 			checkIfExistRotatedPiezes ();
@@ -240,22 +250,35 @@ public class PieceManager : MonoBehaviour {
 	//regresamos la rotacion inicial si no se concreto la rotacion
 	public void returnRotatePiecesToNormalRotation()
 	{
+		print ("S");
+		if (isRotating)
+		{
+			return;
+		}
+
 		for (int i = 0; i < piecesStock.childCount; i++) 
 		{
 			if (piecesStock.GetChild (i).GetComponent<Piece> ().howManyHasBeenRotated != 0) 
 			{				
 				int temp = piecesStock.GetChild (i).GetComponent<Piece>().rotatePieces.Length- piecesStock.GetChild (i).GetComponent<Piece> ().howManyHasBeenRotated;
-				GameObject goT = piecesStock.GetChild (i).gameObject;
-				GameObject go = Instantiate (piecesStock.GetChild (i).GetComponent<Piece>().rotatePieces[temp]);
-				go.transform.localScale = new Vector3 (0, 0, 0);
+				GameObject oldPiece = piecesStock.GetChild (i).gameObject;
+				GameObject newPiece = Instantiate (piecesStock.GetChild (i).GetComponent<Piece>().rotatePieces[temp]);
+				newPiece.transform.localScale = new Vector3 (0, 0, 0);
 				
-				go.transform.position = piecesStock.GetChild (i).gameObject.transform.position;
+				newPiece.transform.position = piecesStock.GetChild (i).gameObject.transform.position;
 
-				go.GetComponent<Piece> ().howManyHasBeenRotated = 0;
-				go.transform.SetParent (piecesStock);
+				newPiece.GetComponent<Piece> ().howManyHasBeenRotated = 0;
+				newPiece.transform.SetParent (piecesStock);
 
-				piecesStock.GetChild (i).transform.DOScale(new Vector3(0,0),.25f).OnComplete(()=>{go.transform.DOScale (new Vector3 (2.5f, 2.5f), .25f).OnComplete(()=>{DestroyImmediate (goT);});;});
+				newPiece.GetComponent<Piece> ().myFirstPos = oldPiece.GetComponent<Piece> ().myFirstPos;
 
+				piecesStock.GetChild (i).transform.DOScale(new Vector3(0,0),.25f).OnComplete(()=>
+					{
+						newPiece.transform.DOScale (new Vector3 (2.5f, 2.5f), .25f).OnComplete(()=>
+							{
+								DestroyImmediate (oldPiece);
+							});;
+					});
 			}
 		}
 	}

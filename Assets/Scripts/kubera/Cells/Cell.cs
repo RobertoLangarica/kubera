@@ -102,31 +102,31 @@ public class Cell : MonoBehaviour
 			{
 			case(1):
 				typeOfPiece = ETYPEOFPIECE_ID.AQUA;
-				Debug.Log(typeOfPiece);
+				//Debug.Log(typeOfPiece);
 				break;
 			case(2):
 				typeOfPiece = ETYPEOFPIECE_ID.BLUE;
-				Debug.Log(typeOfPiece);
+				//Debug.Log(typeOfPiece);
 				break;
 			case(3):
 				typeOfPiece = ETYPEOFPIECE_ID.GREEN;
-				Debug.Log(typeOfPiece);
+				//Debug.Log(typeOfPiece);
 				break;
 			case(4):
 				typeOfPiece = ETYPEOFPIECE_ID.MAGENTA;
-				Debug.Log(typeOfPiece);
+				//Debug.Log(typeOfPiece);
 				break;
 			case(5):
 				typeOfPiece = ETYPEOFPIECE_ID.RED;
-				Debug.Log(typeOfPiece);
+				//Debug.Log(typeOfPiece);
 				break;
 			case(6):
 				typeOfPiece = ETYPEOFPIECE_ID.YELLOW;
-				Debug.Log(typeOfPiece);
+				//Debug.Log(typeOfPiece);
 				break;
 			case(7):
 				typeOfPiece = ETYPEOFPIECE_ID.GREY;
-				Debug.Log(typeOfPiece);
+				//Debug.Log(typeOfPiece);
 				break;
 			}
 		}

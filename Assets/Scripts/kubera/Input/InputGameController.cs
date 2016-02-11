@@ -50,7 +50,7 @@ public class InputGameController : MonoBehaviour
 	public rotateState deactivateRotateMode;
 
 	public delegate void destroyByColorState (bool destroyByColor);
-	public rotateState deactivateDestroyMode;
+	public destroyByColorState deactivateDestroyMode;
 
 	public delegate void pieceSetCorrectly (int sizeOfPiece);
 	public pieceSetCorrectly pointsAtPieceSetCorrectly;
@@ -330,15 +330,16 @@ public class InputGameController : MonoBehaviour
 
 	void OnFingerUp()
 	{
-		if(piece&&!hasMoved && !isLeterOfPice && !isLetterSelected)
+		if (!isPiece && canRotate) 
 		{
-			if (canRotate) 
-			{
-				pieceManager.returnRotatePiecesToNormalRotation ();
-			}
-				
+			pieceManager.returnRotatePiecesToNormalRotation ();
+		}
+
+		if(piece&&!hasMoved && !isLeterOfPice && !isLetterSelected)
+		{				
 			backToNormal();
 		}
+
 		//pieceManager.returnRotatePiecesToNormalRotation ();
 	}
 
