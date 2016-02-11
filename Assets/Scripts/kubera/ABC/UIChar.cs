@@ -39,6 +39,11 @@ namespace ABC
 			GetComponent<Image> ().color = Color.white;
 		}
 
+		public void changeColorAndSetValues(string letter)
+		{
+			setColorToImage();
+		}
+
 		public void DestroyPiece()
 		{
 			Destroy (piece);
@@ -46,9 +51,9 @@ namespace ABC
 
 		protected void setColorToSpriteRendererTextureByType()
 		{
-			SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer>();
+			SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
-			if(sprite == null)
+			if(spriteRenderer == null)
 			{
 				return;
 			}
@@ -56,10 +61,31 @@ namespace ABC
 			switch(typeOfLetter)
 			{
 			case("0")://Son las letras que estan desde el inicio y bloquean las lineas
-				sprite.color = Color.grey;
+				spriteRenderer.color = Color.grey;
 				break;
 			case("1")://Letras normales
-				sprite.color = Color.white;
+				spriteRenderer.color = Color.white;
+				break;
+			}
+		}
+
+		protected void setColorToImage()
+		{
+			Image image = gameObject.GetComponent<Image>();
+
+			if(image == null)
+			{
+				setColorToSpriteRendererTextureByType ();
+				return;
+			}
+
+			switch(typeOfLetter)
+			{
+			case("0")://Son las letras que estan desde el inicio y bloquean las lineas
+				image.color = Color.grey;
+				break;
+			case("1")://Letras normales
+				image.color = Color.white;
 				break;
 			}
 		}
@@ -70,14 +96,15 @@ namespace ABC
 			{
 				wordManager.addCharacter(gameObject.GetComponent<ABCChar>(),gameObject);
 				usedFromGrid=true;
-				gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,.2f);
+				//gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,.2f);
+				gameObject.GetComponent<Image>().color = new Color(1,1,1,.2f);
 			}
 		}
 
 		public void backToNormal()
 		{
 			usedFromGrid=false;
-			setColorToSpriteRendererTextureByType();
+			setColorToImage();
 		}
 	}
 }

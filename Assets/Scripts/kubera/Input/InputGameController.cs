@@ -313,9 +313,15 @@ public class InputGameController : MonoBehaviour {
 	{
 		if(piece&&!hasMoved && !isLeterOfPice && !isLetterSelected)
 		{
+			if (canRotate) 
+			{
+				pieceManager.returnRotatePiecesToNormalRotation ();
+			}
+				
 			backToNormal();
 		}
-		pieceManager.returnRotatePiecesToNormalRotation ();
+
+		//pieceManager.returnRotatePiecesToNormalRotation ();
 	}
 
 	// si la pieza no fue puesta correctamente la regresamos a su posicion inicial
