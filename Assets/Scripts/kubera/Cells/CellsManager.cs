@@ -399,6 +399,8 @@ public class CellsManager : MonoBehaviour
 		go.GetComponent<Piece> ().typeOfPiece = cell.typeOfPiece;
 
 		go.transform.position = Positionate (go.GetComponent<Piece> ());
+
+		go.GetComponent<BoxCollider2D> ().enabled = false;
 	}
 
 	public void turnPieceToLetterByWinNotification(Cell cell)

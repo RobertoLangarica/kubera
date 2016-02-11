@@ -158,7 +158,14 @@ public class GameManager : MonoBehaviour
 			MoneyGameObject.SetActive (true);
 			if(MoneyGameObject.transform.FindChild("Charge") != null)
 			{
-				MoneyGameObject.transform.FindChild ("Charge").GetComponentInChildren<Text> ().text = "-"+howMany.ToString ();
+				if (howMany == 0) 
+				{
+					MoneyGameObject.transform.FindChild ("Charge").GetComponentInChildren<Text> ().text = " " + howMany.ToString ();
+				}
+				else
+				{
+					MoneyGameObject.transform.FindChild ("Charge").GetComponentInChildren<Text> ().text = "-" + howMany.ToString ();
+				}
 			}
 		}
 		else
@@ -337,7 +344,6 @@ public class GameManager : MonoBehaviour
 	public void activateRotationByPowerUp()
 	{
 		deactivateCurrentPowerUp();
-
 		canRotate = true;
 		inputGameController.setCanRotate (canRotate);
 		activatedPowerUp = powerUpManager.getPowerUp(EPOWERUPS.ROTATE_POWERUP);
@@ -418,6 +424,10 @@ public class GameManager : MonoBehaviour
 	protected void setRotationOfPieces(bool activate)
 	{
 		canRotate = activate;
+		if (!activate) 
+		{
+			activeMoney (false);
+		}
 	}
 
 	protected void checkWinCondition ()

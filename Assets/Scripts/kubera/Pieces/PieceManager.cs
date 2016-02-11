@@ -30,7 +30,8 @@ public class PieceManager : MonoBehaviour {
 
 	protected Transform piecesStock;
 
-	protected bool isRotating = false;
+	[HideInInspector]
+	public bool isRotating = false;
 
 	// Use this for initialization
 	void Start () 
@@ -208,14 +209,16 @@ public class PieceManager : MonoBehaviour {
 	}
 
 	//Se cambian las piezas por las rotadas
-	public void setRotatePieces(Piece piece)
+	public void setRotatePiece(Piece piece)
 	{
 		if (isRotating)
 		{
 			return;
 		}
-		if (piece.rotatePieces.Length > 0) 
-		{
+
+		if (piece.rotatePieces.Length > 0) {
+			isRotating = true;
+
 			GameObject go = Instantiate (piece.rotatePieces [0]) as GameObject;
 			go.transform.localScale = new Vector3 (0, 0, 0);
 
@@ -224,33 +227,32 @@ public class PieceManager : MonoBehaviour {
 			go.transform.SetParent (piecesStock);
 			go.GetComponent<Piece> ().myFirstPos = piece.myFirstPos;
 
-			if (go.GetComponent<Piece> ().howManyHasBeenRotated > piece.rotatePieces.Length) 
-			{
+			if (go.GetComponent<Piece> ().howManyHasBeenRotated > piece.rotatePieces.Length) {
 				go.GetComponent<Piece> ().howManyHasBeenRotated = 0;
 				piece.howManyHasBeenRotated = 0;
 			}
-
-			isRotating = true;
-			piece.gameObject.transform.DOScale(new Vector3(0,0),.25f).OnComplete(()=>
-				{
-					DestroyImmediate (piece.gameObject);
-
-					go.transform.DOScale (new Vector3 (2.5f, 2.5f), .25f).OnComplete(()=>
-						{
-							isRotating = false;
-						});
+				
+			piece.gameObject.transform.DOScale (new Vector3 (0, 0), 0.25f).OnComplete (() => {
+				DestroyImmediate (piece.gameObject);
+			
+				go.transform.DOScale (new Vector3 (2.5f, 2.5f), 0.25f).OnComplete (() => {
+					isRotating = false;
 				});
+			});
 
 			checkIfExistRotatedPiezes ();
 			//go.transform.DOScale (new Vector3 (2.5f, 2.5f), .5f);
 			//DestroyImmediate (piece.gameObject);
+		} 
+		else 
+		{
+			print ("else");
 		}
 	}
 
 	//regresamos la rotacion inicial si no se concreto la rotacion
 	public void returnRotatePiecesToNormalRotation()
 	{
-		print ("S");
 		if (isRotating)
 		{
 			return;
@@ -281,6 +283,7 @@ public class PieceManager : MonoBehaviour {
 					});
 			}
 		}
+		checkIfExistRotatedPiezes ();
 	}
 
 	//checamos si una pieza esta rotada
@@ -301,7 +304,7 @@ public class PieceManager : MonoBehaviour {
 		}
 		else
 		{
-			gameManager.activeMoney (false);
+			gameManager.activeMoney (true, 0);
 		}
 	}
 
@@ -325,6 +328,7 @@ public class PieceManager : MonoBehaviour {
 		if(activate)
 		{
 			//Activar las imagenes de rotar
+			print("activateRotation");
 		}
 		else
 		{
