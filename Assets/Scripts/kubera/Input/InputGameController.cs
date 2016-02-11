@@ -436,7 +436,7 @@ public class InputGameController : MonoBehaviour
 
 	protected void choseToRotate(Piece piece)
 	{
-		pieceManager.setRotatePieces(piece);
+		pieceManager.setRotatePiece(piece);
 	}
 
 	/*

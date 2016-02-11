@@ -209,7 +209,7 @@ public class PieceManager : MonoBehaviour {
 	}
 
 	//Se cambian las piezas por las rotadas
-	public void setRotatePieces(Piece piece)
+	public void setRotatePiece(Piece piece)
 	{
 		if (isRotating)
 		{
