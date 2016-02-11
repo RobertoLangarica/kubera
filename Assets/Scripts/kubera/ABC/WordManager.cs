@@ -118,7 +118,7 @@ namespace ABC
 			letter.transform.localScale = new Vector3 (1, 1, 1);
 			letter.GetComponent<UIChar> ().piece = piece;
 			letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
-
+			piece.GetComponent<ABCChar> ().isSelected = true;
 			validateCharacter(character);
 
 			//para que las letras esten centradas HardCoding
