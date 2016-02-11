@@ -1,28 +1,8 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <scrabtris xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <levels>
-    <level 
-		name="0001" 
-		difficulty="0" 
-		lettersPool="1_b_1_1,2_e_x2_1,2_l_x3_1,1_z_1_1,1_a_1_1"
-		obstacleLettersPool="1_b_1_0,2_e_x2_0,2_l_x3_0,1_z_1_0,1_a_1_0"
-		unblockBomb = "false"
-		unblockBlock = "false"
-		unblockRotate = "false"
-		unblockDestroy = "false"
-		unblockWildcar = "false"
-		winCondition = "letters-1_b,2_e,2_l,1_z,1_a"
-		moves = "20"
-		pieces="1_2A1,1_2A2,1_3A1,1_3A2,1_3B1,1_3B2,1_3B3,1_3B4,1_4A1,1_4A2,1_4B1,1_4C1,1_4C2,1_4C3,1_4C4,1_4D1,1_4D2,1_4D3,1_4D4,1_4E1,1_4E2,1_4E3,1_4E4,1_4F1,1_4F2,1_4G1,1_4G2,1_5A1,1_5A2,1_5B1,1_5B2,1_5B3,1_5B4,1_5C1,1_5D1,1_5D2,1_5D3,1_5D4,1_5E1,1_5E2,1_5F1,1_5F2,1_5G1,1_5G2,1_5G3,1_5G4,1_6A1,1_6A2,1_9A1"
-		grid="1,10,1,1,1,1,1,1,1,1,
-			1,10,1,1,1,1,1,1,4,1,
-			1,10,1,1,1,1,1,1,4,1,
-			1,10,1,1,1,1,1,1,1,1,
-			1,10,1,1,1,1,1,1,1,1,
-			1,10,1,1,1,1,1,1,1,1,
-			1,10,1,1,1,1,1,1,1,1,
-			1,1,1,1,1,1,1,1,4,1,
-			1,1,1,1,1,1,1,1,4,1,
-			1,1,1,1,1,1,1,1,1,1"/>
+    <level name="0001" difficulty="0" lettersPool="03_A_02_1,02_A_02_x2,02_A_02_x3,03_B_00_1,01_B_00_x2,02_C_00_1,02_C_00_x2,01_C_00_x3" obstacleLettersPool="03_A_02_0" unblockBomb="false" unblockBlock="true" unblockRotate="false" unblockDestroy="false" unblockWildcard="false" winCondition="" pieces="02_1A1,02_2A1,02_2A2,02_3A1" grid="4,1,1,1,1,1,1,1,1,4,4,1,1,1,1,1,1,1,1,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,98,1,1,1,1,1,1,18,18,98,98,114,1,1,1,1,66,66,18,98,34,114,50,50,50,8,66,66,18,34,34,34,50,50,50,8" moves="10" scoreToStar1="10" scoreToStar2="20" scoreToStar3="200" />
+    <level name="0002" difficulty="0" lettersPool="" obstacleLettersPool="" unblockBomb="false" unblockBlock="false" unblockRotate="false" unblockDestroy="false" unblockWildcard="false" pieces="" grid="" moves="10" scoreToStar1="10" scoreToStar2="20" scoreToStar3="30" />
+    <level name="0003" difficulty="0" lettersPool="" obstacleLettersPool="" unblockBomb="false" unblockBlock="false" unblockRotate="false" unblockDestroy="false" unblockWildcard="false" pieces="" grid="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1" moves="10" scoreToStar1="10" scoreToStar2="20" scoreToStar3="30" />
   </levels>
 </scrabtris>

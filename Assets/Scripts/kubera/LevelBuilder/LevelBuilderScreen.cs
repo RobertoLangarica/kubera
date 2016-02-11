@@ -7,6 +7,14 @@ namespace LevelBuilder
 {
 	public class LevelBuilderScreen : MonoBehaviour {
 
+		public const int BOMB_POWERUP		= 0;
+		public const int BLOCK_POWERUP		= 1;
+		public const int ROTATE_POWERUP 	= 2;
+		public const int DESTROY_POWERUP 	= 3;
+		public const int WILDCARD_POWERUP 	= 4;
+
+		public const string ABC_NORMAL_TYPE	 = "1";
+		public const string ABC_OBSTACLE_TYPE= "0";
 
 		public InputField inputStar1;
 		public InputField inputStar2;
@@ -18,6 +26,11 @@ namespace LevelBuilder
 		public Dropdown languageSelector;
 		public Dropdown lvlSelector;
 		public ABCPoolSelector abcSelector;
+		public ABCPoolSelector abcObstacleSelector;
+		public ABCPoolSelector abcGoalSelector;
+		public LevelGoalSelector levelGoalSelector;
+		public PiecesSelector piecesSelector;
+		public TileGridEditor gridEditor;
 		public Toggle[] powerupToggles;
 
 		public GameObject saveAsPopUp;
@@ -25,11 +38,23 @@ namespace LevelBuilder
 		private Text saveAsWarning;
 		private Button saveAsAccept;
 
+		private string abcDataBeforeOpen;
+		private string piecesDataBeforeOpen;
+		private string gridDataBeforeOpen;
+	
 		//Nombre para el nivel que se esta modificando (este nivel puede no existir en el xml de niveles)
 		private string currentEditingLevelName;
 
 		public void Start()
 		{
+			//Esperamos 1 frame para evitar los problemas de sincronia entre 
+			//quien manda llamar primero su Start o su Awake
+			StartCoroutine("Initialization");
+		}
+
+		private IEnumerator Initialization()
+		{
+			yield return null;
 			saveAsPopUp.SetActive(true);//Activo para poderle extrar hijos
 			saveAsInput = saveAsPopUp.GetComponentInChildren<InputField>();
 			saveAsWarning = saveAsPopUp.GetComponentsInChildren<Text>(true)[1];
@@ -38,15 +63,21 @@ namespace LevelBuilder
 			saveAsAccept.interactable = false;
 			saveAsPopUp.SetActive(false);
 
+			levelGoalSelector.isValidWord += wordExistInDictionary;
+			levelGoalSelector.isPreviouslyUsedWord += wordExistInPreviousLevels;
+			levelGoalSelector.onAddWordToDictionary += addWordToDictionary;
+
+			piecesSelector.Initialize();
+			gridEditor.Inititalize();
 
 			//HUD por default
-			resetEditorToDefaultState();
+			resetEditorToDefaultState(UserDataManager.instance.language);
 		}
-
+			
 		/**
 		 * Pone el editor en estado default para comenzar a editar un nuevo nivel
 		 **/ 
-		private void resetEditorToDefaultState()
+		private void resetEditorToDefaultState(string language)
 		{
 			//opciones de niveles en el dropdown de cargar
 			updateLevelSelectorOptions();
@@ -55,14 +86,18 @@ namespace LevelBuilder
 			//Mostrando el nombre correcto
 			updateShowedName();
 
-			setAlfabetToABCSelector();
+			setAlfabetToABCSelectors();
+
+			piecesSelector.resetDataItems();
+			piecesSelector.updateShowedData();
+
+			gridEditor.resetDataItems();
 
 			//Valores por default
 			inputMovements.text = "10";
 			inputStar1.text = "10";
 			inputStar2.text = "20";
 			inputStar3.text = "30";
-			hideABCSelector();
 
 			foreach(Toggle toggle in powerupToggles)
 			{
@@ -72,7 +107,7 @@ namespace LevelBuilder
 			//Actualizamos el lenguaje al que este configurado 
 			for(int i = 0; i < languageSelector.options.Count; i++)
 			{
-				if(languageSelector.options[i].text == UserDataManager.instance.language)
+				if(languageSelector.options[i].text == language)
 				{
 					languageSelector.value = i;
 					break;
@@ -120,51 +155,17 @@ namespace LevelBuilder
 		 **/ 
 		private void updateShowedName()
 		{
-			lblName.text = currentEditingLevelName;
 			lblTitle.text = currentEditingLevelName;
 		}
 
-		private void setAlfabetToABCSelector()
+		private void setAlfabetToABCSelectors()
 		{
 			abcSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
+			abcGoalSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
+			abcObstacleSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
 		}
 
-		public void onStarValueChange()
-		{
-			lblScore.text = (int.Parse(inputStar1.text) + int.Parse(inputStar2.text) + int.Parse(inputStar3.text)).ToString();
-		}
-
-		/**
-		 * Carga el nivel seleccionado para su configuracion
-		 **/
-		public void OnLeveleSelectedToLoad()
-		{
-			if(lvlSelector.value != 0)
-			{
-				loadHUDFromLevel(lvlSelector.options[lvlSelector.value].text);
-			}
-		}
-
-		/**
-		 * Cambia al lenguaje seleccionado
-		 **/ 
-		public void OnLanguageSelected()
-		{
-			//Que se carguen los niveles adecuados
-			PersistentData.instance.configureGameForLanguage(languageSelector.options[languageSelector.value].text);
-
-			//Las nuevas opciones de niveles con ese lenguaje
-			updateLevelSelectorOptions();
-
-			//Estado default del editor
-			setcurrentEditingNameToTheLast();
-			updateShowedName();
-		}
-			
-		/**
-		 * Guardamos el currentLevel dentro del XML
-		 **/ 
-		public void save()
+		public void writeLevelToXML()
 		{
 			Level lvlToSave;
 			bool add = false;
@@ -185,10 +186,15 @@ namespace LevelBuilder
 
 			lvlToSave.name = currentEditingLevelName;
 			lvlToSave.difficulty = 0;
-			lvlToSave.lettersPool = "";
-			lvlToSave.obstacleLettersPool = "";
-			lvlToSave.pieces = "";
-			lvlToSave.grid = "";
+			lvlToSave.lettersPool = abcSelector.getCSVData(ABC_NORMAL_TYPE);
+			lvlToSave.obstacleLettersPool = abcObstacleSelector.getCSVData(ABC_OBSTACLE_TYPE);
+			lvlToSave.pieces = piecesSelector.getCSVData();
+			lvlToSave.grid = gridEditor.getCSVData();
+			lvlToSave.unblockBomb = powerupToggles[BOMB_POWERUP].isOn;
+			lvlToSave.unblockBlock = powerupToggles[BLOCK_POWERUP].isOn;
+			lvlToSave.unblockRotate = powerupToggles[ROTATE_POWERUP].isOn;
+			lvlToSave.unblockDestroy = powerupToggles[DESTROY_POWERUP].isOn;
+			lvlToSave.unblockWildcard = powerupToggles[WILDCARD_POWERUP].isOn;
 			lvlToSave.moves = int.Parse(inputMovements.text);
 			lvlToSave.scoreToStar1 = int.Parse(inputStar1.text);
 			lvlToSave.scoreToStar2 = int.Parse(inputStar2.text);
@@ -206,10 +212,7 @@ namespace LevelBuilder
 			updateLevelSelectorOptions();
 		}
 
-		/**
-		 * Lee los datos de un nivel y configura la HUD para que los muestre correctamente
-		 **/ 
-		private void loadHUDFromLevel(string levelName)
+		private void configureHUDFromLevel(string levelName)
 		{
 			//Actualizamos el nombre
 			currentEditingLevelName = levelName;
@@ -217,21 +220,47 @@ namespace LevelBuilder
 
 			Level level = PersistentData.instance.levelsData.getLevelByName(levelName);
 
-
-			//level.lettersPool = "";
-			//level.obstacleLettersPool = "";
-			//level.pieces = "";
-			//level.grid = "";
+			abcSelector.sincronizeDataWithCSV(level.lettersPool);
+			abcObstacleSelector.sincronizeDataWithCSV(level.obstacleLettersPool);
+			piecesSelector.sincronizeDataWithCSV(level.pieces);
+			gridEditor.sincronizeDataWithCSV(level.grid);
+			powerupToggles[BOMB_POWERUP].isOn = level.unblockBomb;
+			powerupToggles[BLOCK_POWERUP].isOn = level.unblockBlock;
+			powerupToggles[ROTATE_POWERUP].isOn = level.unblockRotate;
+			powerupToggles[DESTROY_POWERUP].isOn = level.unblockDestroy;
+			powerupToggles[WILDCARD_POWERUP].isOn = level.unblockWildcard;
 			inputMovements.text = level.moves.ToString();
 			inputStar1.text = level.scoreToStar1.ToString();
 			inputStar2.text = level.scoreToStar2.ToString();
 			inputStar3.text = level.scoreToStar3.ToString();
 		}
+			
+		public void OnLanguageSelected()
+		{
+			//[TODO] show loading
 
-		/**
-		 * Mostramos el popUp de guardar como para seleccionar nuevo nombre
-		 **/ 
-		public void saveAs()
+			//Que se carguen los niveles adecuados
+			PersistentData.instance.configureGameForLanguage(languageSelector.options[languageSelector.value].text);
+
+
+			resetEditorToDefaultState(languageSelector.options[languageSelector.value].text);
+		}
+
+		public void OnLeveleSelectedToLoad()
+		{
+			if(lvlSelector.value != 0)
+			{
+				//[TODO] show loading
+				configureHUDFromLevel(lvlSelector.options[lvlSelector.value].text);
+			}
+		}
+			
+		public void onStarPointsChange()
+		{
+			lblScore.text = (int.Parse(inputStar1.text) + int.Parse(inputStar2.text) + int.Parse(inputStar3.text)).ToString();
+		}
+			
+		public void OnShowSaveAsPopup()
 		{
 			//Estado default del saveas popup
 			saveAsInput.text = "";
@@ -240,11 +269,8 @@ namespace LevelBuilder
 
 			saveAsPopUp.SetActive(true);
 		}
-
-		/**
-		 * Reaccion al cambio de nombre en el popup saveAs
-		 **/ 
-		public void onSaveAsNameChange()
+			
+		public void OnSaveAsPopupNameChange()
 		{
 			if(saveAsInput.text != "")
 			{
@@ -260,36 +286,143 @@ namespace LevelBuilder
 				saveAsWarning.gameObject.SetActive(false);
 			}
 		}
-
-		/**
-		 * Se cancela el guardar como
-		 **/ 
-		public void OnSaveAsCancel()
+			
+		public void OnSaveAsPopupCancel()
 		{
 			saveAsPopUp.SetActive(false);
 		}
-
-		/**
-		 * Se acepta y se aguarda el nivel con el nombre que se indica
-		 **/ 
-		public void OnSaveAsAccept()
+			
+		public void OnSaveAsPopupAccept()
 		{
 			saveAsPopUp.SetActive(false);
 
 			currentEditingLevelName = int.Parse(saveAsInput.text).ToString("0000");
 			updateShowedName();
 
-			save();
+			//[TODO] show loading
+			writeLevelToXML();
 		}
 
-		public void showABCSelector()
+		public void OnSave()
 		{
+			//[TODO] show loading
+			writeLevelToXML();
+		}
+
+		public void OnShowABCSelector()
+		{
+			abcDataBeforeOpen = abcSelector.getCSVData(ABC_NORMAL_TYPE);
 			abcSelector.gameObject.SetActive(true);
 		}
 
-		public void hideABCSelector()
+		public void OnCancelABCSelector()
 		{
+			abcSelector.sincronizeDataWithCSV(abcDataBeforeOpen);
+			abcSelector.updateShowedData();
+			//Reset de datos a los del XML
 			abcSelector.gameObject.SetActive(false);
+		}
+			
+		public void OnAcceptABCSelector()
+		{
+			//Se quedan los datos como estan
+			abcSelector.gameObject.SetActive(false);
+		}
+
+		public void OnShowABCObstacleSelector()
+		{
+			abcDataBeforeOpen = abcObstacleSelector.getCSVData(ABC_OBSTACLE_TYPE);
+			abcObstacleSelector.gameObject.SetActive(true);
+		}
+
+		public void OnCancelABCObstacleSelector()
+		{
+			abcObstacleSelector.sincronizeDataWithCSV(abcDataBeforeOpen);
+			abcObstacleSelector.updateShowedData();
+			abcObstacleSelector.gameObject.SetActive(false);
+		}
+
+		public void OnAcceptABCObstacleSelector()
+		{
+			//Se quedan los datos como estan
+			abcObstacleSelector.gameObject.SetActive(false);
+		}
+
+		public void OnShowPiecesSelector()
+		{
+			piecesDataBeforeOpen = piecesSelector.getCSVData();
+			//Si no hay datos nos quedamos con los del XML
+			piecesSelector.gameObject.SetActive(true);
+		}
+
+		public void OnCancelPiecesSelector()
+		{
+			//Reset de datos a los del XML
+			piecesSelector.sincronizeDataWithCSV(piecesDataBeforeOpen);
+			piecesSelector.updateShowedData();
+			piecesSelector.gameObject.SetActive(false);
+		}
+
+		public void OnAcceptPiecesSelector()
+		{
+			//Se quedan los datos como estan
+			piecesSelector.gameObject.SetActive(false);
+		}
+
+		public void OnShowGridEditor()
+		{
+			gridDataBeforeOpen = gridEditor.getCSVData();
+			//Si no hay datos nos quedamos con los del XML
+			gridEditor.gameObject.SetActive(true);
+		}
+
+		public void OnCancelGridEditor()
+		{
+			//Reset de datos a los del XML
+			gridEditor.sincronizeDataWithCSV(gridDataBeforeOpen);
+			gridEditor.gameObject.SetActive(false);
+		}
+
+		public void OnAcceptGridEditor()
+		{
+			//Se quedan los datos como estan
+			gridEditor.gameObject.SetActive(false);
+		}
+
+		public bool wordExistInDictionary(string word)
+		{
+			word = word.ToLowerInvariant();
+			word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+			return PersistentData.instance.abcStructure.isValidWord(word);
+		}
+
+		public bool wordExistInPreviousLevels(string word)
+		{
+			word = word.ToLowerInvariant();
+			word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+
+			foreach(Level lvl in PersistentData.instance.levelsData.levels)
+			{
+				if(lvl.winCondition != null && lvl.winCondition.Length != 0)
+				{
+					string[] goal = lvl.winCondition.Split('-');
+
+					if(goal[0] == "word" && goal[1] == word)
+					{
+						return true;
+					}
+				}	
+			}
+
+			return false;
+		}
+
+		public void addWordToDictionary(string word)
+		{
+			word = word.ToLowerInvariant();
+			word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+			PersistentData.instance.addWordToDictionary(word,languageSelector.options[languageSelector.value].text);
+			PersistentData.instance.abcStructure.registerNewWord(word);
 		}
 	}
 }

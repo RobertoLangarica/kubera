@@ -3,7 +3,8 @@ using System.Collections;
 using DG.Tweening;
 using ABC;
 
-public class InputGameController : MonoBehaviour {
+public class InputGameController : MonoBehaviour 
+{
 
 	protected bool hasMoved;
 
@@ -53,6 +54,12 @@ public class InputGameController : MonoBehaviour {
 
 	public delegate void pieceSetCorrectly (int sizeOfPiece);
 	public pieceSetCorrectly pointsAtPieceSetCorrectly;
+
+	public delegate void PowerUpBackToNormal();
+	public PowerUpBackToNormal OnPowerUpBackToNormal;
+
+	public delegate bool PowerUpUsed();
+	public PowerUpUsed OnPowerUpUsed;
 
 	void Start () 
 	{
@@ -181,10 +188,10 @@ public class InputGameController : MonoBehaviour {
 						{
 							if(tempCell.occupied)
 							{
-								Debug.Log(tempCell.typeOfPiece);
-								if(tempCell.typeOfPiece != ETYPEOFPIECE_ID.LETTER && tempCell.typeOfPiece != ETYPEOFPIECE_ID.LETTER_FROM_BEGINING)
+								if(tempCell.typeOfPiece != ETYPEOFPIECE_ID.LETTER 
+									&& tempCell.typeOfPiece != ETYPEOFPIECE_ID.LETTER_FROM_BEGINING
+									&& OnPowerUpUsed())
 								{	
-									Debug.Log("Entro!!!!!!!!!!!!!");
 									cellManager.selectCellsOfColor(tempCell);
 										
 									DestroyImmediate(piece);
@@ -223,25 +230,37 @@ public class InputGameController : MonoBehaviour {
 					}
 					else
 					{
-
-						//ponemos la pieza en su posicion correcta de manera suave y le quitamos el colider a la pieza completa
-						Vector3 myNewPosition = cellManager.Positionate(piece.GetComponent<Piece>());
-						DOTween.KillAll();
-						piece.transform.DOMove(new Vector3(myNewPosition.x,myNewPosition.y,1),.1f);
-						piece.GetComponent<BoxCollider2D>().enabled = false;
-
-						//Ponemos los puntos de acuerdo a la cantidad de piezas
-
-						pointsAtPieceSetCorrectly (piece.GetComponent<Piece> ().pieces.Length);
-
-						afterDragEnded();
-						cellManager.LineCreated();
-
-
-						FlashColor[] flash = piece.GetComponentsInChildren<FlashColor>();
-						foreach(FlashColor f in flash)
+						bool conPositionatePiece = true;
+						if(piece.GetComponent<Piece>().powerUp)
 						{
-							f.startFlash(f.GetComponent<SpriteRenderer>(),0.2f);
+							if(!OnPowerUpUsed())
+							{
+								conPositionatePiece = false;
+								backToNormal();
+							}
+						}
+
+						if(conPositionatePiece)
+						{
+							//ponemos la pieza en su posicion correcta de manera suave y le quitamos el colider a la pieza completa
+							Vector3 myNewPosition = cellManager.Positionate(piece.GetComponent<Piece>());
+							DOTween.KillAll();
+							piece.transform.DOMove(new Vector3(myNewPosition.x,myNewPosition.y,1),.1f);
+							piece.GetComponent<BoxCollider2D>().enabled = false;
+
+							//Ponemos los puntos de acuerdo a la cantidad de piezas
+
+							pointsAtPieceSetCorrectly (piece.GetComponent<Piece> ().pieces.Length);
+	
+							afterDragEnded();
+							cellManager.LineCreated();
+
+	
+							FlashColor[] flash = piece.GetComponentsInChildren<FlashColor>();
+							foreach(FlashColor f in flash)
+							{
+								f.startFlash(f.GetComponent<SpriteRenderer>(),0.2f);
+							}
 						}
 					}
 
@@ -320,7 +339,6 @@ public class InputGameController : MonoBehaviour {
 				
 			backToNormal();
 		}
-
 		//pieceManager.returnRotatePiecesToNormalRotation ();
 	}
 
@@ -339,16 +357,18 @@ public class InputGameController : MonoBehaviour {
 			Vector3 tempV3 = piece.GetComponent<Piece>().myFirstPos.position;
 			piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f).OnComplete(()=>{DestroyImmediate(gotemp);});
 			piece.transform.DOScale (new Vector3 (0, 0, 0), .2f);
+
+			if(OnPowerUpBackToNormal != null)
+			{
+				OnPowerUpBackToNormal();
+			}
 		}
 		else
 		{
 			Vector3 tempV3 = piece.GetComponent<Piece>().myFirstPos.position;
 			piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f);
 
-
 			piece.transform.DOScale (new Vector3 (2.5f,2.5f,2.5f), .1f);
-						
-			piece = null;
 		}
 
 		piece = null;

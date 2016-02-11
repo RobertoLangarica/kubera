@@ -9,47 +9,37 @@ namespace LevelBuilder
 		public Text txtQuantity;
 		public GameObject container;
 
-		public delegate void DNotification(GridItemRenderer target);
-		public DNotification onQuantityChange;
+		protected GridDataItem data;
 
 		[HideInInspector]public int index = 0;
-		private int quantity = 0;
 
-		void Start()
+		protected void foo(GridItemRenderer target){}
+
+		public void addQuantity()
 		{
-			onQuantityChange += foo;
+			data.quantity++;
+			showData();
 		}
 
-		void foo(GridItemRenderer target){}
-
-		public void add()
+		public void substractQuantity()
 		{
-			quantity++;
-			onQuantityChange(this);
-			showQuantity();
+			data.quantity = data.quantity == 0 ? 0 : data.quantity-1;
+			showData();
 		}
 
-		public void remove()
+		public virtual void showData()
 		{
-			quantity = quantity == 0 ? 0 : quantity-1;
-			onQuantityChange(this);
-			showQuantity();
+			txtQuantity.text = data.quantity.ToString("00");
 		}
 
-		public void showQuantity()
+		public virtual void setData(GridDataItem newData)
 		{
-			txtQuantity.text = quantity.ToString("000");
-		}
-
-		public void setQuantity(int value)
-		{
-			quantity = value;
-			showQuantity();
+			data = newData;
 		}
 
 		public int getQuantity()
 		{
-			return quantity;
+			return data.quantity;
 		}
 
 		public void setObjectToShow(GameObject objectToShow)

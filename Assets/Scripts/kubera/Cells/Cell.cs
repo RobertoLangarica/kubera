@@ -11,11 +11,15 @@ public class Cell : MonoBehaviour
 
 	/*
 	 * Valores en el XML para cada tipo de celda
+	 * 0x0000
 	 * 1 = Celda disponblbe y normal
-	 * 2 = Celda que al momento de que se le manda a llamar clearCell se convertira en tipo 1
-	 *     EJEMPLO:Para el Tile que empieza con una letra y al destruirla queda disponible, se le coloca esta bandera para que al hacerle clear se convierta en tipo 1
-	 * 4 = Celda que es un hueco en la grid (Este si cuenta para la linea)
-	 * 8 = Celda que es un obstaculo en la grid (En este obstaculo se agregaran letras a destruir)(hay que añadirle el '2' para que libere la celda)
+	 * 2 = Cubo de color que se agrega desde el inicio
+	 * 4 = Celda vacia (si cuenta para la linea)
+	 * 8 = Letra como obstaculo
+	 * 
+	 * El siguiente nibble se utiliza para los colores que se marcan en la bandera 2
+	 * Son colores del 0 al 7 de momento
+	 * 0xNNNN0000
 	 */
 	[HideInInspector]
 	public int cellType;
@@ -29,7 +33,7 @@ public class Cell : MonoBehaviour
 		occupied = false;
 		piece = null;
 
-		if((cellType & 0x2) == 0x2)
+		if((cellType & 0x2) == 0x2 || (cellType & 0x8) == 0x8)
 		{
 			cellType = 1;
 			available = true;
@@ -56,6 +60,9 @@ public class Cell : MonoBehaviour
 
 	public void setTypeToCell(int newCellType = 1)
 	{
+		bool isAColorBlock = false;
+		int tempType = 0;
+
 		cellType = newCellType;
 		if((cellType & 0x1) == 0x1)
 		{
@@ -66,6 +73,11 @@ public class Cell : MonoBehaviour
 		}
 		if((cellType & 0x2) == 0x2)
 		{
+			occupied = true;
+			available = true;
+			piece = null;
+			isAColorBlock = true;
+			tempType = cellType >> 4;
 		}
 		if((cellType & 0x4) == 0x4)
 		{
@@ -82,6 +94,41 @@ public class Cell : MonoBehaviour
 			typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
 			occupied = true;
 			available = false;
+		}
+
+		if(isAColorBlock)
+		{
+			switch(tempType)
+			{
+			case(1):
+				typeOfPiece = ETYPEOFPIECE_ID.AQUA;
+				Debug.Log(typeOfPiece);
+				break;
+			case(2):
+				typeOfPiece = ETYPEOFPIECE_ID.BLUE;
+				Debug.Log(typeOfPiece);
+				break;
+			case(3):
+				typeOfPiece = ETYPEOFPIECE_ID.GREEN;
+				Debug.Log(typeOfPiece);
+				break;
+			case(4):
+				typeOfPiece = ETYPEOFPIECE_ID.MAGENTA;
+				Debug.Log(typeOfPiece);
+				break;
+			case(5):
+				typeOfPiece = ETYPEOFPIECE_ID.RED;
+				Debug.Log(typeOfPiece);
+				break;
+			case(6):
+				typeOfPiece = ETYPEOFPIECE_ID.YELLOW;
+				Debug.Log(typeOfPiece);
+				break;
+			case(7):
+				typeOfPiece = ETYPEOFPIECE_ID.GREY;
+				Debug.Log(typeOfPiece);
+				break;
+			}
 		}
 	}
 }
