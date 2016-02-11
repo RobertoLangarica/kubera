@@ -33,7 +33,7 @@ public class Cell : MonoBehaviour
 		occupied = false;
 		piece = null;
 
-		if((cellType & 0x2) == 0x2)
+		if((cellType & 0x2) == 0x2 || (cellType & 0x8) == 0x8)
 		{
 			cellType = 1;
 			available = true;
@@ -60,6 +60,9 @@ public class Cell : MonoBehaviour
 
 	public void setTypeToCell(int newCellType = 1)
 	{
+		bool isAColorBlock = false;
+		int tempType = 0;
+
 		cellType = newCellType;
 		if((cellType & 0x1) == 0x1)
 		{
@@ -70,6 +73,11 @@ public class Cell : MonoBehaviour
 		}
 		if((cellType & 0x2) == 0x2)
 		{
+			occupied = true;
+			available = true;
+			piece = null;
+			isAColorBlock = true;
+			tempType = cellType >> 4;
 		}
 		if((cellType & 0x4) == 0x4)
 		{
@@ -86,6 +94,41 @@ public class Cell : MonoBehaviour
 			typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
 			occupied = true;
 			available = false;
+		}
+
+		if(isAColorBlock)
+		{
+			switch(tempType)
+			{
+			case(1):
+				typeOfPiece = ETYPEOFPIECE_ID.AQUA;
+				Debug.Log(typeOfPiece);
+				break;
+			case(2):
+				typeOfPiece = ETYPEOFPIECE_ID.BLUE;
+				Debug.Log(typeOfPiece);
+				break;
+			case(3):
+				typeOfPiece = ETYPEOFPIECE_ID.GREEN;
+				Debug.Log(typeOfPiece);
+				break;
+			case(4):
+				typeOfPiece = ETYPEOFPIECE_ID.MAGENTA;
+				Debug.Log(typeOfPiece);
+				break;
+			case(5):
+				typeOfPiece = ETYPEOFPIECE_ID.RED;
+				Debug.Log(typeOfPiece);
+				break;
+			case(6):
+				typeOfPiece = ETYPEOFPIECE_ID.YELLOW;
+				Debug.Log(typeOfPiece);
+				break;
+			case(7):
+				typeOfPiece = ETYPEOFPIECE_ID.GREY;
+				Debug.Log(typeOfPiece);
+				break;
+			}
 		}
 	}
 }
