@@ -27,6 +27,8 @@ namespace LevelBuilder
 		public Dropdown lvlSelector;
 		public ABCPoolSelector abcSelector;
 		public ABCPoolSelector abcObstacleSelector;
+		public ABCPoolSelector abcGoalSelector;
+		public LevelGoalSelector levelGoalSelector;
 		public PiecesSelector piecesSelector;
 		public TileGridEditor gridEditor;
 		public Toggle[] powerupToggles;
@@ -60,6 +62,10 @@ namespace LevelBuilder
 			saveAsAccept = saveAsPopUp.GetComponentsInChildren<Button>(true)[1];
 			saveAsAccept.interactable = false;
 			saveAsPopUp.SetActive(false);
+
+			levelGoalSelector.isValidWord += wordExistInDictionary;
+			levelGoalSelector.isPreviouslyUsedWord += wordExistInPreviousLevels;
+			levelGoalSelector.onAddWordToDictionary += addWordToDictionary;
 
 			piecesSelector.Initialize();
 			gridEditor.Inititalize();
@@ -149,13 +155,13 @@ namespace LevelBuilder
 		 **/ 
 		private void updateShowedName()
 		{
-			lblName.text = currentEditingLevelName;
 			lblTitle.text = currentEditingLevelName;
 		}
 
 		private void setAlfabetToABCSelectors()
 		{
 			abcSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
+			abcGoalSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
 			abcObstacleSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
 		}
 
@@ -381,6 +387,42 @@ namespace LevelBuilder
 		{
 			//Se quedan los datos como estan
 			gridEditor.gameObject.SetActive(false);
+		}
+
+		public bool wordExistInDictionary(string word)
+		{
+			word = word.ToLowerInvariant();
+			word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+			return PersistentData.instance.abcStructure.isValidWord(word);
+		}
+
+		public bool wordExistInPreviousLevels(string word)
+		{
+			word = word.ToLowerInvariant();
+			word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+
+			foreach(Level lvl in PersistentData.instance.levelsData.levels)
+			{
+				if(lvl.winCondition != null && lvl.winCondition.Length != 0)
+				{
+					string[] goal = lvl.winCondition.Split('-');
+
+					if(goal[0] == "word" && goal[1] == word)
+					{
+						return true;
+					}
+				}	
+			}
+
+			return false;
+		}
+
+		public void addWordToDictionary(string word)
+		{
+			word = word.ToLowerInvariant();
+			word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+			PersistentData.instance.addWordToDictionary(word,languageSelector.options[languageSelector.value].text);
+			PersistentData.instance.abcStructure.registerNewWord(word);
 		}
 	}
 }
