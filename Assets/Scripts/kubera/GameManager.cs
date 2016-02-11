@@ -263,7 +263,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		uiChar.typeOfLetter = abcChar.typeOfLetter;
-		uiChar.changeSpriteRendererTexture(wordManager.changeTexture (abcChar.character.ToLower ()));
+		uiChar.changeColorAndSetValues(abcChar.character.ToLower ());
 
 		pieceManager.listChar.Add(abcChar);
 	}
@@ -488,13 +488,14 @@ public class GameManager : MonoBehaviour
 	IEnumerator addWinLetterAfterBlockMore()
 	{
 		int random = Random.Range (0, cellToLetter.Count);
-		cellManager.turnPieceToLetterByWinNotification (cellToLetter[random]);
-		cellToLetter [random].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
-		cellToLetter.RemoveAt (random);
 
-		yield return new WaitForSeconds (.2f);
 		if (cellToLetter.Count > 0) 
 		{
+			cellManager.turnPieceToLetterByWinNotification (cellToLetter [random]);
+			cellToLetter [random].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
+			cellToLetter.RemoveAt (random);
+
+			yield return new WaitForSeconds (.2f);
 			StartCoroutine (addWinLetterAfterBlockMore ());
 		}
 		else

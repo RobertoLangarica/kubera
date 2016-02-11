@@ -198,8 +198,9 @@ public class PieceManager : MonoBehaviour {
 
 	public ScriptableABCChar giveBlackLetterInfo()
 	{
-		ScriptableABCChar letter = XMLPoolBlackLeters[0];
-		XMLPoolBlackLeters.RemoveAt (0);
+		int random = UnityEngine.Random.Range (0, XMLPoolBlackLeters.Count);
+		ScriptableABCChar letter = XMLPoolBlackLeters[random];
+		XMLPoolBlackLeters.RemoveAt (random);
 		return letter;
 	}
 
@@ -208,7 +209,7 @@ public class PieceManager : MonoBehaviour {
 	{
 		if (piece.rotatePieces.Length > 0) 
 		{
-			GameObject go = Instantiate (piece.rotatePieces [0]);
+			GameObject go = Instantiate (piece.rotatePieces [0]) as GameObject;
 			go.transform.localScale = new Vector3 (0, 0, 0);
 
 			go.transform.position = piece.gameObject.transform.position;
@@ -222,7 +223,13 @@ public class PieceManager : MonoBehaviour {
 				go.GetComponent<Piece> ().howManyHasBeenRotated = 0;
 				piece.howManyHasBeenRotated = 0;
 			}
-			piece.gameObject.transform.DOScale(new Vector3(0,0),.25f).OnComplete(()=>{go.transform.DOScale (new Vector3 (2.5f, 2.5f), .25f).OnComplete(()=>{DestroyImmediate (piece.gameObject);});});
+			piece.gameObject.transform.DOScale(new Vector3(0,0),.25f).OnComplete(()=>
+				{
+					go.transform.DOScale (new Vector3 (2.5f, 2.5f), .25f).OnComplete(()=>
+					{
+							DestroyImmediate (piece.gameObject);
+					});
+				});
 
 			checkIfExistRotatedPiezes ();
 			//go.transform.DOScale (new Vector3 (2.5f, 2.5f), .5f);

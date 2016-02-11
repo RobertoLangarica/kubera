@@ -33,6 +33,8 @@ public class CellsManager : MonoBehaviour
 	//Todas las celdas del grid
 	protected List<Cell> cells = new List<Cell>();
 
+	public GameObject uiLetter;
+
 	void Start () 
 	{
 		CreateGrid();
@@ -53,6 +55,7 @@ public class CellsManager : MonoBehaviour
 			for(int j = 0;j < width;j++)
 			{
 				go = GameObject.Instantiate(cellPrefab,nPos,Quaternion.identity) as GameObject;
+				go.GetComponent<SpriteRenderer> ().sortingOrder = -1;
 				go.transform.SetParent(transform);
 				cells.Add(go.GetComponent<Cell>());
 
@@ -327,9 +330,20 @@ public class CellsManager : MonoBehaviour
 		cells[newIndex].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
 		if(cells[newIndex].piece != null)
 		{
-			ABCChar tempAbcChar = cells[newIndex].piece.AddComponent<ABCChar>();
+			Transform tempTransform = cells [newIndex].transform;
+		
+			Destroy (cells [newIndex].piece);
 
-			UIChar tempUiChar = cells[newIndex].piece.AddComponent<UIChar>();
+
+			tempTransform.position = new Vector3 (tempTransform.position.x, tempTransform.position.y, 0);
+			GameObject go = Instantiate (uiLetter, tempTransform.position,tempTransform.rotation)as GameObject;
+
+			go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
+
+			cells [newIndex].piece = go;
+			ABCChar tempAbcChar = cells[newIndex].piece.GetComponent<ABCChar>();
+			
+			UIChar tempUiChar = cells[newIndex].piece.GetComponent<UIChar>();
 
 			cells[newIndex].piece.GetComponent<BoxCollider2D>().enabled = true;
 
@@ -342,21 +356,18 @@ public class CellsManager : MonoBehaviour
 
 	protected void turnPiecesToBlackLetters(Cell cell)
 	{
-		Vector3 tempV3 = cell.transform.position + new Vector3(cell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
-			-cell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
-		
-		GameObject go = GameObject.Instantiate(letterFromBeginingPrefab) as GameObject;
-		go.GetComponent<BoxCollider2D>().enabled = false;
-		Piece goPiece = go.GetComponent<Piece>();
-		goPiece.typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
-		cell.piece = goPiece.pieces[0];
-		cell.typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
-		tempV3.z = 0;
-		go.transform.position = tempV3;
+		Transform tempTransform = cell.transform;
 
-		ABCChar tempAbcChar = cell.piece.AddComponent<ABCChar>();
+		tempTransform.position = new Vector3 (tempTransform.position.x, tempTransform.position.y, 0);
+		GameObject go = Instantiate (uiLetter, tempTransform.position,tempTransform.rotation)as GameObject;
 
-		UIChar tempUiChar = cell.piece.AddComponent<UIChar>();
+		go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
+
+		cell.piece = go;
+
+		ABCChar tempAbcChar = cell.piece.GetComponent<ABCChar>();
+
+		UIChar tempUiChar = cell.piece.GetComponent<UIChar>();
 
 		cell.piece.GetComponent<BoxCollider2D>().enabled = true;
 
@@ -658,6 +669,12 @@ public class CellsManager : MonoBehaviour
 				index = i;
 				amount = quantity[i];
 			}
+		}
+
+		//para regresar un color valido
+		if(index == -1)
+		{
+			index = Random.Range (0, 8);
 		}
 
 		switch(index)
