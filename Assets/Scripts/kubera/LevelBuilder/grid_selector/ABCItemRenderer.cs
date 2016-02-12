@@ -46,9 +46,9 @@ namespace LevelBuilder
 			showData();
 		}
 		
-		public override void showData()
+		public override void notifyAndShowData()
 		{
-			base.showData();
+			base.notifyAndShowData();
 
 			if(txtPoints != null)txtPoints.text = data.points.ToString("00");
 			if(txtX2Count != null)txtX2Count.text = data.x2Count.ToString("00");

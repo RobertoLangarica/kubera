@@ -72,6 +72,9 @@ namespace LevelBuilder
 
 			//HUD por default
 			resetEditorToDefaultState(UserDataManager.instance.language);
+
+			//Nombre del siguiente nivel (el inmediato siguiente)
+			setcurrentEditingNameToTheLast();
 		}
 			
 		/**
@@ -81,10 +84,6 @@ namespace LevelBuilder
 		{
 			//opciones de niveles en el dropdown de cargar
 			updateLevelSelectorOptions();
-			//Nombre del siguiente nivel (el inmediato siguiente)
-			setcurrentEditingNameToTheLast();
-			//Mostrando el nombre correcto
-			updateShowedName();
 
 			setAlfabetToABCSelectors();
 
@@ -149,6 +148,9 @@ namespace LevelBuilder
 			{
 				currentEditingLevelName = (int.Parse(lvlSelector.options[lvlSelector.options.Count-1].text)+1).ToString("0000");
 			}
+
+			//Mostrando el nombre correcto
+			updateShowedName();
 		}
 
 		/*+
@@ -432,5 +434,18 @@ namespace LevelBuilder
 			PersistentData.instance.addWordToDictionary(word,languageSelector.options[languageSelector.value].text);
 			PersistentData.instance.abcStructure.registerNewWord(word);
 		}
+
+		public void OnReset()
+		{
+			resetEditorToDefaultState(languageSelector.options[languageSelector.value].text);
+		}
+
+		public void OnNew()
+		{
+			resetEditorToDefaultState(languageSelector.options[languageSelector.value].text);
+			setcurrentEditingNameToTheLast();
+		}
+
+		public void OnPlay(){}
 	}
 }
