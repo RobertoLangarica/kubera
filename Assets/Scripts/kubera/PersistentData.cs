@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
 using ABC;
 
 /**
@@ -79,6 +80,21 @@ public class PersistentData : MonoBehaviour
 
 		//CurrentLevel
 		currentLevel = levelsData.getLevelByName(currentLevelName);
+	}
+
+	public void addWordToDictionary(string word, string language = "")
+	{
+		if(language == "")
+		{
+			language = UserDataManager.instance.language;
+		}
+
+		//Diccionario
+		TextAsset abc = Resources.Load("ABCData/WORDS_"+language) as TextAsset;
+		StreamWriter writer = new StreamWriter(Application.dataPath+"/Resources/"+"ABCData/WORDS_"+language+".txt",true);
+		writer.Write("\n"+word);
+		writer.Close();
+		writer.Dispose();
 	}
 
 	/**

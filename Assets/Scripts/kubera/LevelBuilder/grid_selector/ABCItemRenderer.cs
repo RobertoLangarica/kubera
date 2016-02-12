@@ -46,13 +46,13 @@ namespace LevelBuilder
 			showData();
 		}
 		
-		public override void showData()
+		public override void notifyAndShowData()
 		{
-			base.showData();
+			base.notifyAndShowData();
 
-			txtPoints.text = data.points.ToString("00");
-			txtX2Count.text = data.x2Count.ToString("00");
-			txtX3Count.text = data.x3Count.ToString("00");
+			if(txtPoints != null)txtPoints.text = data.points.ToString("00");
+			if(txtX2Count != null)txtX2Count.text = data.x2Count.ToString("00");
+			if(txtX3Count != null)txtX3Count.text = data.x3Count.ToString("00");
 		}
 
 		public int getPoints()

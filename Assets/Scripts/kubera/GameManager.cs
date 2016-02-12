@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
 	protected InputGameController inputGameController;
 	protected PieceManager pieceManager;
 
+	protected GameObject fingerGestures;
+
 	void Awake () 
 	{
 		persistentData = FindObjectOfType<PersistentData>();
@@ -53,6 +55,7 @@ public class GameManager : MonoBehaviour
 		powerUpManager = FindObjectOfType<PowerUpManager> ();
 		inputGameController = FindObjectOfType<InputGameController> ();
 		pieceManager = FindObjectOfType<PieceManager>();
+		fingerGestures = GameObject.Find ("FingerGestures");
 
 		cellManager.OnlinesCounted += linesCreated;
 		cellManager.OnLetterCreated += registerNewLetterCreated;
@@ -62,6 +65,7 @@ public class GameManager : MonoBehaviour
 		inputGameController.pointsAtPieceSetCorrectly += piecePositionatedCorrectly;
 		inputGameController.OnPowerUpBackToNormal += deactivateCurrentPowerUp;
 		inputGameController.OnPowerUpUsed += useGems;
+
 	}
 
 	void Start()
@@ -161,7 +165,14 @@ public class GameManager : MonoBehaviour
 			GemsChargeGO.SetActive (true);
 			if(GemsChargeGO.transform.FindChild("Charge") != null)
 			{
-				GemsChargeGO.transform.FindChild ("Charge").GetComponentInChildren<Text> ().text = "-"+howMany.ToString ();
+				if (howMany == 0) 
+				{
+					GemsChargeGO.transform.FindChild ("Charge").GetComponentInChildren<Text> ().text = " " + howMany.ToString ();
+				}
+				else
+				{
+					GemsChargeGO.transform.FindChild ("Charge").GetComponentInChildren<Text> ().text = "-" + howMany.ToString ();
+				}
 			}
 		}
 		else
@@ -180,10 +191,10 @@ public class GameManager : MonoBehaviour
 		currentWildCardsActivated = 0;
 		return true;
 		#endif*/
-		if(UserDataManager.instance.playerGems >= (powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated))
+		if(UserDataManager.instance.playerGems >= (powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated) && activatedPowerUp)
 		{
 			UserDataManager.instance.playerGems -= (powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
-			Debug.Log("Aqui");
+
 			if(activatedPowerUp.typeOfPowerUp == EPOWERUPS.WILDCARD_POWERUP)
 			{
 				deactivateCurrentPowerUp();
@@ -333,7 +344,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		uiChar.typeOfLetter = abcChar.typeOfLetter;
-		uiChar.changeSpriteRendererTexture(wordManager.changeTexture (abcChar.character.ToLower ()));
+		uiChar.changeColorAndSetValues(abcChar.character.ToLower ());
 
 		pieceManager.listChar.Add(abcChar);
 	}
@@ -344,7 +355,6 @@ public class GameManager : MonoBehaviour
 	public void activateRotationByPowerUp()
 	{
 		deactivateCurrentPowerUp();
-
 		canRotate = true;
 		inputGameController.setCanRotate (canRotate);
 		activatedPowerUp = powerUpManager.getPowerUp(EPOWERUPS.ROTATE_POWERUP);
@@ -425,6 +435,10 @@ public class GameManager : MonoBehaviour
 	protected void setRotationOfPieces(bool activate)
 	{
 		canRotate = activate;
+		if (!activate) 
+		{
+			activeMoney (false);
+		}
 	}
 
 	protected void checkWinCondition ()
@@ -511,7 +525,6 @@ public class GameManager : MonoBehaviour
 	protected void winBonification()
 	{
 		setInput (false);
-
 		//Se limpian las letras
 		verifyWord();
 
@@ -572,13 +585,14 @@ public class GameManager : MonoBehaviour
 	IEnumerator addWinLetterAfterBlockMore()
 	{
 		int random = Random.Range (0, cellToLetter.Count);
-		cellManager.turnPieceToLetterByWinNotification (cellToLetter[random]);
-		cellToLetter [random].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
-		cellToLetter.RemoveAt (random);
 
-		yield return new WaitForSeconds (.2f);
 		if (cellToLetter.Count > 0) 
 		{
+			cellManager.turnPieceToLetterByWinNotification (cellToLetter [random]);
+			cellToLetter [random].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
+			cellToLetter.RemoveAt (random);
+
+			yield return new WaitForSeconds (.2f);
 			StartCoroutine (addWinLetterAfterBlockMore ());
 		}
 		else
@@ -665,7 +679,7 @@ public class GameManager : MonoBehaviour
 	{
 		if (active) 
 		{
-			GameObject.Find ("FingerGestures").SetActive (true);
+			fingerGestures.SetActive (true);
 			for (int i = 0; i < GameObject.Find ("PanelPowerUp").transform.childCount; i++) 
 			{
 				GameObject.Find ("PanelPowerUp").transform.GetChild(i).GetComponent<Button> ().interactable = true;
@@ -673,7 +687,7 @@ public class GameManager : MonoBehaviour
 		}
 		else 
 		{
-			GameObject.Find ("FingerGestures").SetActive (false);
+			fingerGestures.SetActive (false);
 			for (int i = 0; i < GameObject.Find ("PanelPowerUp").transform.childCount; i++) 
 			{
 				GameObject.Find ("PanelPowerUp").transform.GetChild(i).GetComponent<Button> ().interactable = false;

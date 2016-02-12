@@ -35,7 +35,7 @@ public class InputGameController : MonoBehaviour
 	protected bool isLeterOfPice;
 	protected bool isLetterSelected;
 	protected bool isPiece;
-
+	protected bool isActivatingRotate;
 
 	public float movingSpeed = .5f;
 	public float movingUpFinger = 1.5f;
@@ -50,7 +50,7 @@ public class InputGameController : MonoBehaviour
 	public rotateState deactivateRotateMode;
 
 	public delegate void destroyByColorState (bool destroyByColor);
-	public rotateState deactivateDestroyMode;
+	public destroyByColorState deactivateDestroyMode;
 
 	public delegate void pieceSetCorrectly (int sizeOfPiece);
 	public pieceSetCorrectly pointsAtPieceSetCorrectly;
@@ -81,6 +81,11 @@ public class InputGameController : MonoBehaviour
 	
 	void OnDrag(DragGesture gesture) 
 	{
+		if (pieceManager.isRotating) 
+		{
+			return;
+		}
+
 		//Solo se ejecuta una vez por frame (para que el multifinger funcione sin encimarse)
 		if(lastDragFrame == Time.frameCount)
 		{
@@ -293,6 +298,7 @@ public class InputGameController : MonoBehaviour
 					//piece.transform.position = tempV3;
 					piece.transform.DOMove(tempV3,.1f);
 					piece.transform.DOScale(selectedScale,.1f);
+
 				}
 
 			}
@@ -321,6 +327,7 @@ public class InputGameController : MonoBehaviour
 					{
 						gesture.Raycast.Hit2D.transform.gameObject.GetComponent<UIChar>().ShootLetter();
 						FindObjectOfType<ShowNext>().ShowingNext(true);
+						print ("S");
 						gameObject.GetComponent<AudioSource>().Play();
 					}
 				}
@@ -330,10 +337,22 @@ public class InputGameController : MonoBehaviour
 
 	void OnFingerUp()
 	{
-		if(piece&&!hasMoved && !isLeterOfPice && !isLetterSelected)
+		if (!isPiece && canRotate && !isActivatingRotate) 
 		{
+			pieceManager.returnRotatePiecesToNormalRotation ();
+			canRotate = false;
+			deactivateRotateMode (canRotate);
+		}
+		else
+		{
+			isActivatingRotate = false;
+		}
+
+		if(piece&&!hasMoved && !isLeterOfPice && !isLetterSelected)
+		{				
 			backToNormal();
 		}
+
 		//pieceManager.returnRotatePiecesToNormalRotation ();
 	}
 
@@ -358,7 +377,7 @@ public class InputGameController : MonoBehaviour
 				OnPowerUpBackToNormal();
 			}
 		}
-		else
+		else if(!pieceManager.isRotating)
 		{
 			Vector3 tempV3 = piece.GetComponent<Piece>().myFirstPos.position;
 			piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f);
@@ -375,7 +394,7 @@ public class InputGameController : MonoBehaviour
 	//hacemos que la pieza nos siga de manera mas suave
 	public void movingLerping(Vector3 end,GameObject piece)
 	{
-		if (hasMoved) 
+		if (hasMoved && !pieceManager.isRotating) 
 		{
 			if(isLetterSelected)
 			{
@@ -417,7 +436,7 @@ public class InputGameController : MonoBehaviour
 
 	protected void choseToRotate(Piece piece)
 	{
-		pieceManager.setRotatePieces(piece);
+		pieceManager.setRotatePiece(piece);
 	}
 
 	/*
@@ -463,10 +482,12 @@ public class InputGameController : MonoBehaviour
 		if (rotate) 
 		{
 			canRotate = true;
+			isActivatingRotate = true;
 		}
 		else 
 		{
 			canRotate = false;
+			isActivatingRotate = false;
 		}
 	}
 

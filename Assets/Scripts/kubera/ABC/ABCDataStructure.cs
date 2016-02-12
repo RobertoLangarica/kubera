@@ -262,7 +262,7 @@ namespace ABC
 				}
 
 				//Checamos si ya se completo una palabra
-				checkAndupdateForcompleteWord();
+				checkAndUpdateForCompleteWord();
 
 				return isValid;
 			}
@@ -324,10 +324,10 @@ namespace ABC
 			}
 
 			//Checamos si ya se completo una palabra
-			checkAndupdateForcompleteWord();
+			checkAndUpdateForCompleteWord();
 		}
 
-		public void checkAndupdateForcompleteWord()
+		public void checkAndUpdateForCompleteWord()
 		{
 			if(isValid)
 			{
