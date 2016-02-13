@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 	public Text movementsText;
 	public Text gemsText;
 
-	public GameObject MoneyGameObject;
+	public GameObject GemsChargeGO;
 	public GameObject bonificationPiece;
 
 	protected int pointsCount =0;
@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 	protected int currentMoves;
 
 	protected int winBombs;
+
+	protected int secondWindTimes;
 
 	public bool canRotate;
 	public bool destroyByColor;
@@ -128,15 +130,20 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	protected bool useGems()
+	protected bool useGems(int gemsPrice = 0)
 	{
+		if(gemsPrice == 0)
+		{
+			gemsPrice = activatedPowerUp.gemsPrice;
+		}
+
 		#if UNITY_EDITOR
 		deactivateCurrentPowerUp();
 		return true;
 		#endif
-		if(UserDataManager.instance.playerGems >= activatedPowerUp.gemsPrice)
+		if(UserDataManager.instance.playerGems >= gemsPrice)
 		{
-			UserDataManager.instance.playerGems -= activatedPowerUp.gemsPrice;
+			UserDataManager.instance.playerGems -= gemsPrice;
 			gemsText.text = UserDataManager.instance.playerGems.ToString();
 			deactivateCurrentPowerUp();
 
@@ -160,22 +167,22 @@ public class GameManager : MonoBehaviour
 	{
 		if(show)
 		{
-			MoneyGameObject.SetActive (true);
-			if(MoneyGameObject.transform.FindChild("Charge") != null)
+			GemsChargeGO.SetActive (true);
+			if(GemsChargeGO.transform.FindChild("Charge") != null)
 			{
 				if (howMany == 0) 
 				{
-					MoneyGameObject.transform.FindChild ("Charge").GetComponentInChildren<Text> ().text = " ";
+					GemsChargeGO.transform.FindChild ("Charge").GetComponentInChildren<Text> ().text = " " + howMany.ToString ();
 				}
 				else
 				{
-					MoneyGameObject.transform.FindChild ("Charge").GetComponentInChildren<Text> ().text = "-" + howMany.ToString ();
+					GemsChargeGO.transform.FindChild ("Charge").GetComponentInChildren<Text> ().text = "-" + howMany.ToString ();
 				}
 			}
 		}
 		else
 		{
-			MoneyGameObject.SetActive(false);	
+			GemsChargeGO.SetActive(false);	
 		}
 	}
 
@@ -222,8 +229,10 @@ public class GameManager : MonoBehaviour
 
 		if(wordManager.words.completeWord && canUseAllWildCards)
 		{
-			print ("isConpkete");
 			useGems();
+
+			useGems(powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
+
 			for(int i = 0;i < wordManager.chars.Count;i++)
 			{
 				letterFound = false;
@@ -313,21 +322,25 @@ public class GameManager : MonoBehaviour
 		case(3):
 			{
 				addPoints(30);
+				UserDataManager.instance.playerGems += 1;
 			}
 			break;
 		case(4):
 			{
 				addPoints(50);
+				UserDataManager.instance.playerGems += 2;
 			}
 			break;
 		case(5):
 			{
 				addPoints(75);
+				UserDataManager.instance.playerGems += 4;
 			}
 			break;
 		case(6):
 			{
 				addPoints(105);
+				UserDataManager.instance.playerGems += 6;
 			}
 			break;
 		}
@@ -774,5 +787,10 @@ public class GameManager : MonoBehaviour
 		{
 			UserDataManager.instance.wildCardPowerUpAvailable = true;
 		}
+	}
+
+	protected void secondWind()
+	{
+		
 	}
 }
