@@ -27,6 +27,9 @@ namespace ABC
 
 		public bool isSelected;
 
+		public Text letter;
+		public Text pointsValueText;
+
 		void Start () 
 		{
 			//si es comodin lo dejamos en blanco y sino le dejamos el texto adecuado
@@ -42,12 +45,11 @@ namespace ABC
 			}
 
 
-			//Si se encuentra un componente texto le actualizamos el texto.
-			Text txt = GetComponentInChildren<Text>();
-
-			if(txt != null)
+			//Actualizamos el texto.
+			if(letter != null && pointsValueText != null)
 			{
-				txt.text = character;
+				letter.text = character;
+				pointsValueText.text = pointsValue;
 			}
 		}
 
@@ -56,7 +58,8 @@ namespace ABC
 			character = scriptAbcVals.character;
 			pointsValue = scriptAbcVals.pointsValue;
 			typeOfLetter = scriptAbcVals.typeOfLetter;
-			
+
+			print (character + " " + pointsValue + " " + typeOfLetter);
 			if(character == ".")
 			{
 				wildcard = true;

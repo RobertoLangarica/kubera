@@ -358,6 +358,7 @@ public class CellsManager : MonoBehaviour
 			{
 				OnLetterCreated(tempAbcChar,tempUiChar,false);
 			}
+			tempUiChar.isFromGrid = true;
 		}
 	}
 
@@ -382,6 +383,7 @@ public class CellsManager : MonoBehaviour
 		{
 			OnLetterCreated(tempAbcChar,tempUiChar,true);
 		}
+		tempUiChar.isFromGrid = true;
 	}
 
 	protected void addBlockToInitialOccupiedCell(Cell cell)
