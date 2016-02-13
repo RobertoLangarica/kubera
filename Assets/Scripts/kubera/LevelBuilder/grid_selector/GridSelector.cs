@@ -7,6 +7,9 @@ namespace LevelBuilder
 {
 	public class GridSelector : MonoBehaviour 
 	{
+		public delegate void DNotification();
+		public DNotification OnDataChange;
+
 		public GameObject ItemRendererPrefab;
 		public Text txtTitle;
 		public Transform gridContainer;
@@ -30,6 +33,7 @@ namespace LevelBuilder
 			{
 				foreach(GridItemRenderer item in itemRenderers)
 				{
+					item.OnDataChange -= onRendererDataChange;
 					GameObject.DestroyImmediate(item.gameObject);
 				}	
 			}
@@ -46,8 +50,14 @@ namespace LevelBuilder
 				item.setData(data[i]);
 				item.setObjectToShow(data[i].objectToShow);
 				item.showData();
+				item.OnDataChange += onRendererDataChange;
 				itemRenderers.Add(item);
 			}
+		}
+
+		private void onRendererDataChange()
+		{
+			OnDataChange();
 		}
 
 		private GridItemRenderer instantiateItemRenderer()
