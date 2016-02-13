@@ -177,8 +177,14 @@ public class InputGameController : MonoBehaviour
 				if(isLetterSelected)
 				{
 					//Lo habilitamos y ajustamos
-			
-					swappingLetter();
+					if (piece.transform.localPosition.x > wordManager.positionOfButton.x- 50 && piece.transform.localPosition.x < wordManager.positionOfButton.x+ 50) 
+					{
+						swappingLetter (true,piece);
+					} 
+					else 
+					{
+						swappingLetter ();
+					}
 					piece = null;
 					break;
 				}
@@ -327,7 +333,6 @@ public class InputGameController : MonoBehaviour
 					{
 						gesture.Raycast.Hit2D.transform.gameObject.GetComponent<UIChar>().ShootLetter();
 						FindObjectOfType<ShowNext>().ShowingNext(true);
-						print ("S");
 						gameObject.GetComponent<AudioSource>().Play();
 					}
 				}
@@ -367,7 +372,6 @@ public class InputGameController : MonoBehaviour
 		 */
 		if(piece.GetComponent<Piece>().powerUp)
 		{
-			print(piece.GetComponent<Piece>().myFirstPos.position);
 			Vector3 tempV3 = piece.GetComponent<Piece>().myFirstPos.position;
 			piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f).OnComplete(()=>{DestroyImmediate(gotemp);});
 			piece.transform.DOScale (new Vector3 (0, 0, 0), .2f);
@@ -470,11 +474,14 @@ public class InputGameController : MonoBehaviour
 		}
 	}
 
-	protected void swappingLetter()
+	protected void swappingLetter(bool destroy = false, GameObject letter = null)
 	{
 		DOTween.KillAll();
-
-		wordManager.canSwappLetters(false,piece);
+		if (letter == null) 
+		{
+			letter = piece;
+		}
+		wordManager.canSwappLetters(false,letter,destroy);
 	}
 
 	public void setCanRotate(bool rotate)
@@ -516,7 +523,7 @@ public class InputGameController : MonoBehaviour
 		if (go.GetComponent<UIChar> ()) 
 		{
 			isPiece = false;
-			if (go.GetComponent<ABCChar> ().isSelected) 
+			if (!go.GetComponent<UIChar> ().isFromGrid) 
 			{
 				isLetterSelected = true;
 			} 

@@ -12,13 +12,16 @@ namespace ABC
 		public string typeOfLetter;
 
 		protected Text textfield;
-		protected Image myImage;
+		public Image myImage;
 
-		[HideInInspector]
+		//[HideInInspector]
 		public GameObject piece;
 
 		protected WordManager wordManager;
 		protected bool usedFromGrid;
+
+		[HideInInspector]
+		public bool isFromGrid;
 
 		// Use this for initialization
 		void Start () 
@@ -47,6 +50,12 @@ namespace ABC
 		public void DestroyPiece()
 		{
 			Destroy (piece);
+		}
+	
+		public void destroyLetter()
+		{
+			piece.GetComponent<UIChar> ().backToNormal ();
+			DestroyImmediate (gameObject);
 		}
 
 		protected void setColorToSpriteRendererTextureByType()
@@ -78,7 +87,7 @@ namespace ABC
 				setColorToSpriteRendererTextureByType ();
 				return;
 			}
-
+				
 			switch(typeOfLetter)
 			{
 			case("0")://Son las letras que estan desde el inicio y bloquean las lineas
