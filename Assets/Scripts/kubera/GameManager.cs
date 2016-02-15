@@ -270,15 +270,15 @@ public class GameManager : MonoBehaviour
 						}
 					}
 				}
+			}
 
-				if (myWinCondition [0] == "word") 
+			if (myWinCondition [0] == "word") 
+			{
+				for (int j = 0; j < words.Length; j++) 
 				{
-					for (int j = 0; j < words.Length; j++) 
+					if(wordManager.getFullWord().ToLower() == words[j].ToLower())
 					{
-						if(wordManager.getFullWord() == words[j])
-						{
-							wordFound = true;
-						}
+						wordFound = true;
 					}
 				}
 			}
