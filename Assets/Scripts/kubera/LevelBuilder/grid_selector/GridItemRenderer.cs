@@ -6,7 +6,8 @@ namespace LevelBuilder
 {
 	public class GridItemRenderer : MonoBehaviour 
 	{
-		public delegate void DNotification(void);
+		public delegate void DNotification();
+		public DNotification OnDataChange;
 		public Text txtQuantity;
 		public GameObject container;
 
@@ -19,18 +20,25 @@ namespace LevelBuilder
 		public void addQuantity()
 		{
 			data.quantity++;
-			notifyAndShowData();
+			showData();
+			notifyDataChange();
 		}
 
 		public void substractQuantity()
 		{
 			data.quantity = data.quantity == 0 ? 0 : data.quantity-1;
-			notifyAndShowData();
+			showData();
+			notifyDataChange();
 		}
 
-		public virtual void notifyAndShowData()
+		public virtual void showData()
 		{
 			txtQuantity.text = data.quantity.ToString("00");
+		}
+
+		public void notifyDataChange()
+		{
+			OnDataChange();
 		}
 
 		public virtual void setData(GridDataItem newData)

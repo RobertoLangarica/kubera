@@ -11,6 +11,7 @@ namespace LevelBuilder
 	{
 		public GridSelector selector;
 		public GameObject LetterPrefab;
+		public Text txtInfo;
 		public string title;
 
 		private List<AlfabetUnit> alfabet;
@@ -25,8 +26,10 @@ namespace LevelBuilder
 		{
 			alfabet = newAlfabet;
 
+			selector.OnDataChange += onSelectorDataChange;
 			createDataItems();
 			setSelectorData();
+			updateShowedData();
 		}
 
 		private void createDataItems()
@@ -47,12 +50,45 @@ namespace LevelBuilder
 			selector.setData(items);
 		}
 
+		private void onSelectorDataChange()
+		{
+			txtInfo.text = getInfoString();
+		}
+
+		public string getInfoString()
+		{
+			StringBuilder builder = new StringBuilder();
+			int count = 0;
+			int localCount;
+			for(int i = 0; i < items.Count; i++)
+			{
+				localCount = items[i].quantity+items[i].x2Count + items[i].x3Count;
+				count += localCount;
+				
+				if(localCount > 0)
+				{
+					if(builder.Length != 0)
+					{
+						builder.Append(", ");
+					}
+
+					builder.Append((items[i].data as AlfabetUnit).cvalue);
+					builder.Append(":");
+					builder.Append(localCount);
+				}
+			}
+
+			builder.Insert(0,"T:"+count.ToString()+ (builder.Length == 0 ? "":", "));
+
+			return builder.ToString();
+		}
+
 		public void sincronizeDataWithCSV(string csv)
 		{
 			if(csv.Length == 0)
 			{
 				resetDataItems();
-				selector.updateAllRenderersShowedData();
+				updateShowedData();
 				return;
 			}
 
@@ -85,7 +121,7 @@ namespace LevelBuilder
 				}
 			}
 
-			selector.updateAllRenderersShowedData();
+			updateShowedData();
 		}
 
 		private void resetDataItems()
@@ -163,6 +199,7 @@ namespace LevelBuilder
 		public void updateShowedData()
 		{
 			selector.updateAllRenderersShowedData();
+			txtInfo.text = getInfoString();	
 		}
 	}
 
