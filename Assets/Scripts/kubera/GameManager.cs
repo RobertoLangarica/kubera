@@ -18,7 +18,10 @@ public class GameManager : MonoBehaviour
 
 	protected int pointsCount =0;
 	protected int wordsMade =0;
+	protected bool wordFound;
 	protected List<string> letters;
+	protected string[] words;
+		
 	protected int blackLettersUsed =0;
 
 	protected string[] myWinCondition;
@@ -86,6 +89,7 @@ public class GameManager : MonoBehaviour
 		powerUpManager.activateAvailablePowers();
 		checkIfNeedToUnlockPowerUp();
 
+		print (myWinCondition [0]);
 		letters = new List<string> ();
 		if(myWinCondition[0] == "letters")
 		{
@@ -104,6 +108,10 @@ public class GameManager : MonoBehaviour
 					letters.Add (temp [1]);
 				}
 			}
+		}
+		if(myWinCondition[0] == "word")
+		{
+			words = myWinCondition [1].Split (new char[1]{ '_' });
 		}
 	}
 
@@ -252,12 +260,25 @@ public class GameManager : MonoBehaviour
 				{
 					blackLettersUsed++;
 				}
-				for (int j = 0; j < letters.Count; j++) 
+
+				if (myWinCondition [0] == "letters") 
 				{
-					if (letters [j].ToLower() == wordManager.chars [i].character.ToLower() && !letterFound) 
+					for (int j = 0; j < letters.Count; j++) {
+						if (letters [j].ToLower () == wordManager.chars [i].character.ToLower () && !letterFound) {
+							letters.RemoveAt (j);
+							letterFound = true;
+						}
+					}
+				}
+
+				if (myWinCondition [0] == "word") 
+				{
+					for (int j = 0; j < words.Length; j++) 
 					{
-						letters.RemoveAt (j);
-						letterFound = true;
+						if(wordManager.getFullWord() == words[j])
+						{
+							wordFound = true;
+						}
 					}
 				}
 			}
@@ -276,7 +297,6 @@ public class GameManager : MonoBehaviour
 			{
 				if(wordManager.words.completeWord && canUseAllWildCards)
 				{
-					print (uiChar.piece.transform.localPosition);
 					cellManager.getCellOnVec(uiChar.piece.transform.position).clearCell();
 					uiChar.DestroyPiece();
 				}
@@ -499,6 +519,13 @@ public class GameManager : MonoBehaviour
 			break;
 		case "blackLetters":
 			if (blackLettersUsed >= int.Parse (myWinCondition [1])) 
+			{
+				print ("win");
+				win = true;
+			}
+			break;
+		case "word":
+			if (wordFound) 
 			{
 				print ("win");
 				win = true;
