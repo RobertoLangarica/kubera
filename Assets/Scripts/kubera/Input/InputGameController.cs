@@ -62,7 +62,8 @@ public class InputGameController : MonoBehaviour
 	public PowerUpUsed OnPowerUpUsed;
 
 	public GameObject secondChanceLock;
-	protected bool secondChanceBombsOnly;
+	[HideInInspector]
+	public bool secondChanceBombsOnly;
 
 	void Start () 
 	{
@@ -97,11 +98,6 @@ public class InputGameController : MonoBehaviour
 		{
 			return;
 		}
-
-		if(secondChanceBombsOnly)
-		{
-			return;
-		}
 		
 		lastDragFrame = Time.frameCount;
 		
@@ -121,9 +117,13 @@ public class InputGameController : MonoBehaviour
 					wordManager.setPositionToLetters();
 					wordManager.canSwappLetters(true,piece);
 				}
-
 				if (isPiece) 
 				{
+					if(secondChanceBombsOnly && !piece.GetComponent<Piece>().powerUp)
+					{
+						return;
+					}
+
 					Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 					tempV3.z = -1;
 					hasMoved = false;
@@ -188,14 +188,8 @@ public class InputGameController : MonoBehaviour
 				if(isLetterSelected)
 				{
 					//Lo habilitamos y ajustamos
-					if (piece.transform.localPosition.x > wordManager.positionOfButton.x- 50 && piece.transform.localPosition.x < wordManager.positionOfButton.x+ 50) 
-					{
-						swappingLetter (true,piece);
-					} 
-					else 
-					{
-						swappingLetter ();
-					}
+			
+					swappingLetter();
 					piece = null;
 					break;
 				}
@@ -395,6 +389,7 @@ public class InputGameController : MonoBehaviour
 		 */
 		if(piece.GetComponent<Piece>().powerUp)
 		{
+			print(piece.GetComponent<Piece>().myFirstPos.position);
 			Vector3 tempV3 = piece.GetComponent<Piece>().myFirstPos.position;
 			piece.transform.DOMove (new Vector3 (tempV3.x, tempV3.y, 1), .2f).OnComplete(()=>{DestroyImmediate(gotemp);});
 			piece.transform.DOScale (new Vector3 (0, 0, 0), .2f);
@@ -497,14 +492,11 @@ public class InputGameController : MonoBehaviour
 		}
 	}
 
-	protected void swappingLetter(bool destroy = false, GameObject letter = null)
+	protected void swappingLetter()
 	{
 		DOTween.KillAll();
-		if (letter == null) 
-		{
-			letter = piece;
-		}
-		wordManager.canSwappLetters(false,letter,destroy);
+
+		wordManager.canSwappLetters(false,piece);
 	}
 
 	public void setCanRotate(bool rotate)
@@ -546,7 +538,7 @@ public class InputGameController : MonoBehaviour
 		if (go.GetComponent<UIChar> ()) 
 		{
 			isPiece = false;
-			if (!go.GetComponent<UIChar> ().isFromGrid) 
+			if (go.GetComponent<ABCChar> ().isSelected) 
 			{
 				isLetterSelected = true;
 			} 
@@ -561,8 +553,17 @@ public class InputGameController : MonoBehaviour
 		isLetterSelected = false;
 	}
 
-	protected void activateSecondChanceLocked()
+	public void activateSecondChanceLocked()
 	{
 		secondChanceLock.SetActive(true);
+
+		secondChanceBombsOnly = true;
+	}
+
+	public void deactivateSecondChanceLock()
+	{
+		secondChanceLock.SetActive(false);
+
+		secondChanceBombsOnly = false;
 	}
 }

@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 	public int secondChanceMovements = 5;
 	public int secondChanceBombs = 2;
 	protected int secondChanceTimes = 0;
+	protected int bombsUsed = 0;
 
 	public bool canRotate;
 	public bool destroyByColor;
@@ -48,8 +49,6 @@ public class GameManager : MonoBehaviour
 	protected PieceManager pieceManager;
 
 	protected GameObject fingerGestures;
-
-	protected bool playerWin;
 
 	void Awake () 
 	{
@@ -80,6 +79,7 @@ public class GameManager : MonoBehaviour
 		currentMoves = totalMoves = persistentData.currentLevel.moves;
 		movementsText.text = currentMoves.ToString();
 
+		UserDataManager.instance.playerGems = 300;
 		gemsText.text = UserDataManager.instance.playerGems.ToString();
 
 		//UnlockPowerUp();
@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
 
 		letters = new List<string> ();
 		if(myWinCondition[0] == "letters")
-		{			
+		{
 			int i;
 			string[] s = myWinCondition [1].Split (new char[1]{ ',' });
 			string[] temp;
@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(Input.GetKeyUp(KeyCode.A))
 		{
-			winBonification();
+			secondWind();
 		}
 	}
 
@@ -126,26 +126,31 @@ public class GameManager : MonoBehaviour
 
 		points.text = pointsCount.ToString();
 
-		if(!playerWin)
-		{
-			checkWinCondition ();
-		}
+		checkWinCondition ();
 	}
 
 	protected bool useGems(int gemsPrice = 0)
 	{
-		if(gemsPrice == 0)
+		
+		if(gemsPrice == 0 && activatedPowerUp != null)
 		{
 			gemsPrice = activatedPowerUp.gemsPrice;
 		}
 
-		#if UNITY_EDITOR
-		deactivateCurrentPowerUp();
-		return true;
-		#endif
+		if(inputGameController.secondChanceBombsOnly && activatedPowerUp.typeOfPowerUp == EPOWERUPS.DESTROY_NEIGHBORS_POWERUP)
+		{
+			gemsPrice = 0;
+			bombsUsed++;
+			if(bombsUsed == secondChanceBombs)
+			{
+				inputGameController.deactivateSecondChanceLock();
+			}
+		}
+
 		if(UserDataManager.instance.playerGems >= gemsPrice)
 		{
 			UserDataManager.instance.playerGems -= gemsPrice;
+
 			gemsText.text = UserDataManager.instance.playerGems.ToString();
 			deactivateCurrentPowerUp();
 
@@ -190,19 +195,6 @@ public class GameManager : MonoBehaviour
 
 	protected bool canCompleteWordWithWildCards()
 	{
-		/*#if UNITY_EDITOR
-		if(activatedPowerUp.typeOfPowerUp == EPOWERUPS.WILDCARD_POWERUP)
-		{
-			deactivateCurrentPowerUp();
-		}
-		currentWildCardsActivated = 0;
-		return true;
-		#endif*/
-		if(currentWildCardsActivated == 0)
-		{
-			return true;
-		}
-
 		if(UserDataManager.instance.playerGems >= (powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated) && activatedPowerUp)
 		{
 			UserDataManager.instance.playerGems -= (powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
@@ -231,10 +223,7 @@ public class GameManager : MonoBehaviour
 
 		if(wordManager.words.completeWord && canUseAllWildCards)
 		{
-			useGems();
-
 			useGems(powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
-
 			for(int i = 0;i < wordManager.chars.Count;i++)
 			{
 				letterFound = false;
@@ -297,8 +286,7 @@ public class GameManager : MonoBehaviour
 					}
 					else
 					{
-						uiChar.piece.GetComponent<UIChar>().backToNormal();
-						abcChar.isSelected = false;
+						uiChar.piece.GetComponent<UIChar>().backToNormal();						
 					}
 
 				}
@@ -370,6 +358,11 @@ public class GameManager : MonoBehaviour
 	 **/
 	public void activateRotationByPowerUp()
 	{
+		if(inputGameController.secondChanceBombsOnly)
+		{
+			return;
+		}
+
 		deactivateCurrentPowerUp();
 		canRotate = true;
 		inputGameController.setCanRotate (canRotate);
@@ -380,7 +373,11 @@ public class GameManager : MonoBehaviour
 
 	public void addWildCardInCurrentWord()
 	{
-		int currentPrice = 0;
+		if(inputGameController.secondChanceBombsOnly)
+		{
+			return;
+		}
+
 		deactivateCurrentPowerUp();
 
 		currentWildCardsActivated++;
@@ -388,16 +385,16 @@ public class GameManager : MonoBehaviour
 		FindObjectOfType<ShowNext>().ShowingNext(true);
 		activatedPowerUp = powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP);
 
-		for(int i =0; i<currentWildCardsActivated; i++)
-		{
-			currentPrice += 2;//activatedPowerUp.gemsPrice;
-		}
-
-		activeMoney(true,currentPrice);
+		activeMoney(true,activatedPowerUp.gemsPrice);
 	}
 
 	public void createOneSquareBlock(Transform myButtonPosition)
 	{
+		if(inputGameController.secondChanceBombsOnly)
+		{
+			return;
+		}
+
 		deactivateCurrentPowerUp();
 
 		inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.BLOCK_POWERUP).oneTilePower(myButtonPosition));
@@ -408,6 +405,11 @@ public class GameManager : MonoBehaviour
 
 	public void activateDestroyAColorPowerUp(Transform myButtonPosition)
 	{
+		if(inputGameController.secondChanceBombsOnly)
+		{
+			return;
+		}
+
 		deactivateCurrentPowerUp();
 
 		destroyByColor = true;
@@ -431,7 +433,10 @@ public class GameManager : MonoBehaviour
 		inputGameController.setDestroyByColor (destroyByColor);
 		activatedPowerUp = powerUpManager.getPowerUp(EPOWERUPS.DESTROY_NEIGHBORS_POWERUP);
 
-		activeMoney(true,activatedPowerUp.gemsPrice);
+		if(!inputGameController.secondChanceBombsOnly)
+		{
+			activeMoney(true,activatedPowerUp.gemsPrice);
+		}
 	}
 
 	protected void deactivateCurrentPowerUp()
@@ -504,7 +509,6 @@ public class GameManager : MonoBehaviour
 		{
 			UnlockPowerUp();
 			winBonification ();
-			playerWin = true;
 		}
 		else
 		{
@@ -515,11 +519,7 @@ public class GameManager : MonoBehaviour
 	IEnumerator check()
 	{
 		yield return new WaitForSeconds (.2f);
-		if (!wordManager.checkIfAWordisPossible (pieceManager.listChar)) 
-		{
-			Debug.Log ("Perdio Perdio ");
-			setInput (false);
-		}
+		FindObjectOfType<WordManager>().checkIfAWordisPossible(pieceManager.listChar);
 	}
 
 	public void checkToLoose()
@@ -673,7 +673,6 @@ public class GameManager : MonoBehaviour
 
 		for (int i = 0; i < cellToLetter.Count; i++) 
 		{
-			print(cellToLetter[i].piece);
 			switch (cellToLetter[i].piece.GetComponent<ABCChar>().pointsValue) 
 			{
 			case("x2"):
@@ -813,7 +812,11 @@ public class GameManager : MonoBehaviour
 
 		if(useGems(secondChancePrice))
 		{
+			secondChanceTimes++;
+
 			currentMoves += secondChanceMovements;
+
+			inputGameController.activateSecondChanceLocked();
 		}
 	}
 }
