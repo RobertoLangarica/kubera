@@ -426,6 +426,7 @@ namespace ABC
 		/*
 		 * activa o desactiva el poder mover las letras
 		 * a la letra que se movera se mueve su index para que este arriba de las otras letras
+		 * destruye la letra seleccionada si la arrojaron a la basura
 		 */
 		public void canSwappLetters(bool deActivate,GameObject letter,bool destroy = false)
 		{
@@ -500,7 +501,20 @@ namespace ABC
 				{
 					container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding = padding+50;
 				}
+				if (container.transform.childCount == 0) 
+				{
+					resetValidation ();
+					activateButtonOfWordsActions (false);
+				}
 			}
+		}
+
+		/**
+		 * Activar boton que aparece cuando ponen una letra y muestra si ya esta completa una palabra y al mover letras se convierte en bote de basura 
+		 **/
+		public void activateButtonOfWordsActions(bool activate)
+		{
+			buttonNext.ShowingNext (activate);
 		}
 	}
 }

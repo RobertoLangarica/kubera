@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
 
 	protected bool useGems(int gemsPrice = 0)
 	{
-		if(gemsPrice == 0)
+		if(gemsPrice == 0 && activatedPowerUp != null)
 		{
 			gemsPrice = activatedPowerUp.gemsPrice;
 		}
@@ -218,19 +218,16 @@ public class GameManager : MonoBehaviour
 
 	public void verifyWord()
 	{
-		//FindObjectOfType<ShowNext>().ShowingNext(false);
-
 		int amount = 0;
 		int multiplierHelper = 1;
 		bool letterFound;
 		bool canUseAllWildCards;
-
+		print ("1");
 		canUseAllWildCards = canCompleteWordWithWildCards();
 
 		if(wordManager.words.completeWord && canUseAllWildCards)
 		{
-			useGems();
-
+			print ("2");
 			useGems(powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
 
 			for(int i = 0;i < wordManager.chars.Count;i++)
@@ -267,16 +264,18 @@ public class GameManager : MonoBehaviour
 					}
 				}
 			}
-
 			amount *= multiplierHelper;
 			addPoints(amount);
 			wordsMade++;
 			//FindObjectOfType<InputGameController>().checkToLoose();
-
 		}
+
+		print ("2A");
 
 		for(int i = 0;i < wordManager.chars.Count;i++)
 		{
+
+			print ("3"+" "+ i);
 			ABCChar abcChar = wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<ABCChar>();
 			UIChar uiChar = wordManager.chars [i].gameObject.GetComponent<UIChar> ();
 
@@ -302,6 +301,8 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
+
+		print ("4");
 		wordManager.resetValidation();
 	}
 
@@ -383,7 +384,7 @@ public class GameManager : MonoBehaviour
 
 		currentWildCardsActivated++;
 		wordManager.addCharacter(".",gameObject);
-		FindObjectOfType<ShowNext>().ShowingNext(true);
+		wordManager.activateButtonOfWordsActions (true);
 		activatedPowerUp = powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP);
 
 		for(int i =0; i<currentWildCardsActivated; i++)

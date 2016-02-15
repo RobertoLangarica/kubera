@@ -59,7 +59,6 @@ namespace ABC
 			pointsValue = scriptAbcVals.pointsValue;
 			typeOfLetter = scriptAbcVals.typeOfLetter;
 
-			print (character + " " + pointsValue + " " + typeOfLetter);
 			if(character == ".")
 			{
 				wildcard = true;
