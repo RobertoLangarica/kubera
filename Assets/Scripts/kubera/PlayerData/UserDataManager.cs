@@ -7,6 +7,8 @@ public class UserDataManager
 
 	//Version para controlar cambios a los datos en el futuro
 	public const int version = 0;
+	//Maximo de vida que puede tener el jugador
+	public int maximumLifes = 5;
 
 	public static UserDataManager instance 
 	{
@@ -208,6 +210,33 @@ public class UserDataManager
 		{
 			PlayerPrefs.SetInt("playerGems",value);
 		}
+	}
+
+	public int playerLifes
+	{
+		get
+		{
+			return PlayerPrefs.GetInt("playerLifes");
+		}		
+		protected set
+		{
+			PlayerPrefs.SetInt("playerLifes",value);
+		}
+	}
+
+	public void giveLifeToPlayer()
+	{
+		playerLifes++;
+	}
+
+	public void takeLifeFromPlayer()
+	{
+		playerLifes--;
+	}
+
+	public void refillAllPlayerLifes()
+	{
+		playerLifes = maximumLifes;
 	}
 }
 
