@@ -188,8 +188,14 @@ public class InputGameController : MonoBehaviour
 				if(isLetterSelected)
 				{
 					//Lo habilitamos y ajustamos
-			
-					swappingLetter();
+					if(piece.transform.localPosition.x > wordManager.positionOfButton.x -50 && piece.transform.localPosition.x < wordManager.positionOfButton.x +50)
+					{
+						swappingLetter(true,piece);
+					}
+					else
+					{
+						swappingLetter();	
+					}
 					piece = null;
 					break;
 				}
@@ -492,11 +498,15 @@ public class InputGameController : MonoBehaviour
 		}
 	}
 
-	protected void swappingLetter()
+	protected void swappingLetter(bool destroy = false, GameObject letter = null)
 	{
 		DOTween.KillAll();
 
-		wordManager.canSwappLetters(false,piece);
+		if (letter == null) 
+		{
+			letter = piece;
+		}
+		wordManager.canSwappLetters(false,piece,destroy);
 	}
 
 	public void setCanRotate(bool rotate)
@@ -538,7 +548,7 @@ public class InputGameController : MonoBehaviour
 		if (go.GetComponent<UIChar> ()) 
 		{
 			isPiece = false;
-			if (go.GetComponent<ABCChar> ().isSelected) 
+			if (!go.GetComponent<UIChar> ().isFromGrid) 
 			{
 				isLetterSelected = true;
 			} 
