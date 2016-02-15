@@ -28,7 +28,9 @@ public class GameManager : MonoBehaviour
 
 	protected int winBombs;
 
-	protected int secondWindTimes;
+	public int secondChanceMovements = 5;
+	public int secondChanceBombs = 2;
+	protected int secondChanceTimes = 0;
 
 	public bool canRotate;
 	public bool destroyByColor;
@@ -765,6 +767,27 @@ public class GameManager : MonoBehaviour
 
 	protected void secondWind()
 	{
-		
+		int secondChancePrice = 0;
+
+		switch(secondChanceTimes)
+		{
+		case(0):
+			secondChancePrice = 10;
+			break;
+		case(1):
+			secondChancePrice = 15;
+			break;
+		case(2):
+			secondChancePrice = 20;
+			break;
+		default:
+			secondChancePrice = 30;
+			break;
+		}
+
+		if(useGems(secondChancePrice))
+		{
+			currentMoves += secondChanceMovements;
+		}
 	}
 }

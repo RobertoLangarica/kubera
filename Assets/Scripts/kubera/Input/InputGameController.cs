@@ -61,6 +61,9 @@ public class InputGameController : MonoBehaviour
 	public delegate bool PowerUpUsed();
 	public PowerUpUsed OnPowerUpUsed;
 
+	public GameObject secondChanceLock;
+	protected bool secondChanceBombsOnly;
+
 	void Start () 
 	{
 		wordManager = GameObject.FindObjectOfType<WordManager>();
@@ -69,6 +72,9 @@ public class InputGameController : MonoBehaviour
 		onDragFinish = foo;
 		onAnyDrag	 = foo;
 		onDragStart	 = foo;
+
+		secondChanceLock.SetActive(false);
+		secondChanceBombsOnly = false;
 
 	}
 	
@@ -88,6 +94,11 @@ public class InputGameController : MonoBehaviour
 
 		//Solo se ejecuta una vez por frame (para que el multifinger funcione sin encimarse)
 		if(lastDragFrame == Time.frameCount)
+		{
+			return;
+		}
+
+		if(secondChanceBombsOnly)
 		{
 			return;
 		}
@@ -280,6 +291,10 @@ public class InputGameController : MonoBehaviour
 
 	void OnFingerDown(FingerDownEvent  gesture)
 	{
+		if(secondChanceBombsOnly)
+		{
+			return;
+		}
 		if(gesture.Raycast.Hits2D != null)
 		{
 			checkWhatIs (gesture.Raycast.Hit2D.transform.gameObject);
@@ -312,6 +327,10 @@ public class InputGameController : MonoBehaviour
 
 	void OnTap(TapGesture gesture)
 	{
+		if(secondChanceBombsOnly)
+		{
+			return;
+		}
 		if(gesture.Raycast.Hits2D != null)
 		{
 			if(gesture.Raycast.Hit2D.transform)
@@ -337,6 +356,10 @@ public class InputGameController : MonoBehaviour
 
 	void OnFingerUp()
 	{
+		if(secondChanceBombsOnly)
+		{
+			return;
+		}
 		if (!isPiece && canRotate && !isActivatingRotate) 
 		{
 			pieceManager.returnRotatePiecesToNormalRotation ();
@@ -529,5 +552,10 @@ public class InputGameController : MonoBehaviour
 		isPiece = false;
 		isLeterOfPice = false;
 		isLetterSelected = false;
+	}
+
+	protected void activateSecondChanceLocked()
+	{
+		secondChanceLock.SetActive(true);
 	}
 }
