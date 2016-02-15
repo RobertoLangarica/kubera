@@ -341,18 +341,23 @@ public class CellsManager : MonoBehaviour
 		
 			Destroy (cells [newIndex].piece);
 
-
-			tempTransform.position = new Vector3 (tempTransform.position.x, tempTransform.position.y, 0);
-			GameObject go = Instantiate (uiLetter, tempTransform.position,tempTransform.rotation)as GameObject;
+			GameObject go = Instantiate (uiLetter)as GameObject;
 
 			go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
 
+			Vector3 nVec = new Vector3(cells [newIndex].gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
+				-cells [newIndex].gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
+			
+			go.GetComponent<RectTransform> ().transform.position = tempTransform.position+ nVec;
 			cells [newIndex].piece = go;
+
 			ABCChar tempAbcChar = cells[newIndex].piece.GetComponent<ABCChar>();
 			
 			UIChar tempUiChar = cells[newIndex].piece.GetComponent<UIChar>();
 
 			cells[newIndex].piece.GetComponent<BoxCollider2D>().enabled = true;
+
+			go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
 
 			if(OnLetterCreated != null)
 			{
@@ -366,11 +371,16 @@ public class CellsManager : MonoBehaviour
 	{
 		Transform tempTransform = cell.transform;
 
-		tempTransform.position = new Vector3 (tempTransform.position.x, tempTransform.position.y, 0);
-		GameObject go = Instantiate (uiLetter, tempTransform.position,tempTransform.rotation)as GameObject;
+		//tempTransform.position = new Vector3 (tempTransform.position.x, tempTransform.position.y, 0);
+		GameObject go = Instantiate (uiLetter)as GameObject;
+
 
 		go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
 
+		Vector3 nVec = new Vector3(cell.transform.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
+			-cell.transform.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
+		
+		go.GetComponent<RectTransform> ().transform.position = tempTransform.position + nVec;
 		cell.piece = go;
 
 		ABCChar tempAbcChar = cell.piece.GetComponent<ABCChar>();
@@ -378,6 +388,8 @@ public class CellsManager : MonoBehaviour
 		UIChar tempUiChar = cell.piece.GetComponent<UIChar>();
 
 		cell.piece.GetComponent<BoxCollider2D>().enabled = true;
+
+		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
 
 		if(OnLetterCreated != null)
 		{

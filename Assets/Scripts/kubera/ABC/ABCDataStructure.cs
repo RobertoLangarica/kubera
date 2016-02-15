@@ -29,8 +29,12 @@ namespace ABC
 		//Inicio de la estructura
 		[HideInInspector]public IntList data;
 
-		//public delegate void DOnWordComplete();
-		//public DOnWordComplete OnWordComplete;
+		/**Para el proecsamiento del diccionario**/
+		public delegate void DNotify();
+		public DNotify onDictionaryFinished;
+		private string[] dictionaryWords;
+		private int processCount;
+		/**********/
 		
 		[HideInInspector]public int wordCount = 0;//Conteo de palabras presentes en el diccionario
 
@@ -766,7 +770,7 @@ namespace ABC
 				alfabet.Add(new AlfabetUnit(++counter,schar));
 			}
 		}
-
+			
 		/**
 		 * Procesa el diccionario recibido registrando todas las palabras:
 		 * Cada palabra viene en su propia linea
@@ -778,22 +782,68 @@ namespace ABC
 			text = regex.Replace(text,"\n");
 
 			//Quitamos toda la acentuacion y obtenemos un arreglo
-			string[]words = text.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u').Split('\n');
-			int count = words.Length;
+			dictionaryWords = text.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u').Split('\n');
 
 			//Inicializamos la data de la estrcutura en blanco
 			data = new IntList();
 			data.content = new List<IntList>();
 
+			//StartCoroutine("registerDictionaryWords");
+
+			processCount = 0;
+			int l = dictionaryWords.Length;
 			//Registramos todas las palabras
-			for(int i =0; i < count; i++)
+			for(int i = 0; i < l; i++)
 			{
-				//Palabras de menos de 3 caracteres se ignoran
-				if(words[i].Length >= 3)
+				/*if(processCount >= 2000)
 				{
-					registerNewWord(words[i]);
+					processCount = 0;
+					//yield return null;
+				}*/
+
+				//Palabras de menos de 3 caracteres se ignoran
+				if(dictionaryWords[i].Length >= 3)
+				{
+					//processCount++;
+					registerNewWord(dictionaryWords[i]);
+					//Debug.Log("remaining: "+(dictionaryWords.Length-i).ToString());
 				}
 			}
+
+			if(onDictionaryFinished != null)
+			{
+				onDictionaryFinished();
+			}
+		}
+
+		protected IEnumerator registerDictionaryWords()
+		{
+			processCount = 0;
+
+			//Registramos todas las palabras
+			for(int i = 0; i < dictionaryWords.Length; i++)
+			{
+				if(processCount >= 2000)
+				{
+					processCount = 0;
+					//yield return null;
+				}
+
+				//Palabras de menos de 3 caracteres se ignoran
+				if(dictionaryWords[i].Length >= 3)
+				{
+					processCount++;
+					registerNewWord(dictionaryWords[i]);
+					Debug.Log("remaining: "+(dictionaryWords.Length-i).ToString());
+				}
+			}
+
+			if(onDictionaryFinished != null)
+			{
+				onDictionaryFinished();
+			}
+
+			yield break;
 		}
 
 		public List<AlfabetUnit> getAlfabet()
