@@ -358,6 +358,7 @@ public class CellsManager : MonoBehaviour
 			{
 				OnLetterCreated(tempAbcChar,tempUiChar,false);
 			}
+			tempUiChar.isFromGrid = true;
 		}
 	}
 
@@ -382,6 +383,7 @@ public class CellsManager : MonoBehaviour
 		{
 			OnLetterCreated(tempAbcChar,tempUiChar,true);
 		}
+		tempUiChar.isFromGrid = true;
 	}
 
 	protected void addBlockToInitialOccupiedCell(Cell cell)
@@ -703,34 +705,36 @@ public class CellsManager : MonoBehaviour
 			index = Random.Range (0, 8);
 		}
 
+		ETYPEOFPIECE_ID result = ETYPEOFPIECE_ID.NONE;
+
 		switch(index)
 		{
 		case 0:
-			return ETYPEOFPIECE_ID.AQUA;
+			result = ETYPEOFPIECE_ID.AQUA;
 			break;
 		case 1:
-			return ETYPEOFPIECE_ID.BLACK;
+			result = ETYPEOFPIECE_ID.BLACK;
 			break;
 		case 2:
-			return ETYPEOFPIECE_ID.BLUE;
+			result = ETYPEOFPIECE_ID.BLUE;
 			break;
 		case 3:
-			return ETYPEOFPIECE_ID.GREEN;
+			result = ETYPEOFPIECE_ID.GREEN;
 			break;
 		case 4:
-			return ETYPEOFPIECE_ID.GREY;
+			result = ETYPEOFPIECE_ID.GREY;
 			break;
 		case 5:
-			return ETYPEOFPIECE_ID.MAGENTA;
+			result = ETYPEOFPIECE_ID.MAGENTA;
 			break;
 		case 6:
-			return ETYPEOFPIECE_ID.RED;
+			result = ETYPEOFPIECE_ID.RED;
 			break;
 		case 7:
-			return ETYPEOFPIECE_ID.YELLOW;
+			result = ETYPEOFPIECE_ID.YELLOW;
 			break;
 		}
 
-		return ETYPEOFPIECE_ID.NONE;
+		return result;
 	}
 }

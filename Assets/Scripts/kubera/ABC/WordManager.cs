@@ -28,6 +28,10 @@ namespace ABC
 		protected UnityEngine.Object[] textureObject;
 		protected string[] names;
 
+		protected ShowNext buttonNext;
+
+		[HideInInspector]
+		public Vector3 positionOfButton;
 
 		void Start()
 		{
@@ -36,6 +40,10 @@ namespace ABC
 			readTextures();
 
 			chars = new List<ABCChar>();
+
+			buttonNext = FindObjectOfType<ShowNext> ();
+			positionOfButton = buttonNext.next.transform.localPosition;
+
 			container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding;
 			words = FindObjectOfType<ABCDataStructure>();
 			//words.OnWordComplete += onWordComplete;
@@ -183,7 +191,7 @@ namespace ABC
 					}
 					else
 					{
-						FindObjectOfType<ShowNext>().isWordCompleted(false);
+						buttonNext.isCompletedNotCompletedOrMoving(1);
 					}
 				}
 			}
@@ -199,7 +207,7 @@ namespace ABC
 				}
 				else
 				{
-					FindObjectOfType<ShowNext>().isWordCompleted(false);
+					buttonNext.isCompletedNotCompletedOrMoving(1);
 				}
 			}
 		}
@@ -235,7 +243,7 @@ namespace ABC
 		protected void onWordComplete()
 		{
 			Debug.Log("Se completo: "+getFullWord());
-			FindObjectOfType<ShowNext>().isWordCompleted(true);
+			buttonNext.isCompletedNotCompletedOrMoving(0);
 		}
 
 		/**
@@ -359,13 +367,15 @@ namespace ABC
 		/**
 		 * Revisa si es posible armar una palabra con los caracteres que se tienen
 		 **/
-		public void checkIfAWordisPossible(List<ABCChar> pool)
+		public bool checkIfAWordisPossible(List<ABCChar> pool)
 		{
 			//Debug.Log ("Possible word: "+words.isAWordPossible(pool));
 			if(!words.isAWordPossible(pool))
 			{
 				print("perdio de verdad");
+				return false;
 			}
+			return true;
 		}
 
 		/**
@@ -408,6 +418,7 @@ namespace ABC
 					}
 				}
 			}
+			buttonNext.isCompletedNotCompletedOrMoving(2);
 		}
 
 
@@ -416,7 +427,7 @@ namespace ABC
 		 * activa o desactiva el poder mover las letras
 		 * a la letra que se movera se mueve su index para que este arriba de las otras letras
 		 */
-		public void canSwappLetters(bool deActivate,GameObject letter)
+		public void canSwappLetters(bool deActivate,GameObject letter,bool destroy = false)
 		{
 			if(deActivate)
 			{
@@ -427,7 +438,16 @@ namespace ABC
 			else
 			{
 				container.GetComponent<HorizontalLayoutGroup>().enabled = true;
-				letter.transform.SetSiblingIndex(sortingAfterSwap);
+				if(destroy)
+				{
+					letter.GetComponent<UIChar> ().piece.GetComponent<ABCChar> ().isSelected = false;
+					letter.GetComponent<UIChar> ().destroyLetter();
+					actualizePadding (false);
+				}
+				else
+				{
+					letter.transform.SetSiblingIndex(sortingAfterSwap);
+				}
 				chars.Clear();
 				for(int i=0; i<container.transform.childCount; i++)
 				{
@@ -445,7 +465,7 @@ namespace ABC
 				}
 				else
 				{
-					FindObjectOfType<ShowNext>().isWordCompleted(false);
+					buttonNext.isCompletedNotCompletedOrMoving(1);
 				}
 			}
 		}

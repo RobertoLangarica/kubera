@@ -124,8 +124,8 @@ public class PieceManager : MonoBehaviour {
 				{
 					newLetter = new ScriptableABCChar();
 					newLetter.character = piecesInfo[1];
-					newLetter.pointsValue = piecesInfo[2];
-					newLetter.typeOfLetter = piecesInfo[3];
+					newLetter.typeOfLetter = piecesInfo[2];
+					newLetter.pointsValue = piecesInfo[3];
 					XMLPoolLeters.Add(newLetter);
 				}
 			}

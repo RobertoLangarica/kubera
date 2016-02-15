@@ -10,6 +10,7 @@ namespace LevelBuilder
 	{
 		public GridSelector selector;
 		public GameObject PiecePrefab;
+		public Text txtInfo;
 		public Sprite[] sprites;
 
 		public	List<GridDataItem> items;
@@ -28,6 +29,8 @@ namespace LevelBuilder
 		public void Initialize()
 		{
 			Start();
+			selector.OnDataChange += onSelectorDataChange;
+			updateShowedData();
 		}
 
 		private void createDataItems()
@@ -49,9 +52,43 @@ namespace LevelBuilder
 			selector.setData(items);
 		}
 
+		private void onSelectorDataChange()
+		{
+			txtInfo.text = getInfoString();
+		}
+
 		public void updateShowedData()
 		{
 			selector.updateAllRenderersShowedData();
+			txtInfo.text = getInfoString();
+		}
+
+		public string getInfoString()
+		{
+			StringBuilder builder = new StringBuilder();
+
+			int count = 0;
+
+			for(int i = 0; i < items.Count; i++)
+			{
+				count += items[i].quantity;
+
+				if(items[i].quantity > 0)
+				{
+					if(builder.Length != 0)
+					{
+						builder.Append(", ");
+					}
+
+					builder.Append(items[i].data as string);
+					builder.Append(":");
+					builder.Append(items[i].quantity);
+				}
+			}
+
+			builder.Insert(0, "T:"+count.ToString()+ (builder.Length == 0 ? "":", "));
+
+			return builder.ToString();
 		}
 
 		public void sincronizeDataWithCSV(string csv)
@@ -59,7 +96,7 @@ namespace LevelBuilder
 			if(csv.Length == 0)
 			{
 				resetDataItems();
-				selector.updateAllRenderersShowedData();
+				updateShowedData();
 				return;
 			}
 
@@ -80,7 +117,7 @@ namespace LevelBuilder
 				}
 			}
 
-			selector.updateAllRenderersShowedData();
+			updateShowedData();
 		}
 
 		public void resetDataItems()

@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
 
 	protected GameObject fingerGestures;
 
+	protected bool playerWin;
+
 	void Awake () 
 	{
 		persistentData = FindObjectOfType<PersistentData>();
@@ -84,9 +86,9 @@ public class GameManager : MonoBehaviour
 		powerUpManager.activateAvailablePowers();
 		checkIfNeedToUnlockPowerUp();
 
+		letters = new List<string> ();
 		if(myWinCondition[0] == "letters")
-		{
-			letters = new List<string> ();
+		{			
 			int i;
 			string[] s = myWinCondition [1].Split (new char[1]{ ',' });
 			string[] temp;
@@ -124,7 +126,10 @@ public class GameManager : MonoBehaviour
 
 		points.text = pointsCount.ToString();
 
-		checkWinCondition ();
+		if(!playerWin)
+		{
+			checkWinCondition ();
+		}
 	}
 
 	protected bool useGems(int gemsPrice = 0)
@@ -193,6 +198,11 @@ public class GameManager : MonoBehaviour
 		currentWildCardsActivated = 0;
 		return true;
 		#endif*/
+		if(currentWildCardsActivated == 0)
+		{
+			return true;
+		}
+
 		if(UserDataManager.instance.playerGems >= (powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated) && activatedPowerUp)
 		{
 			UserDataManager.instance.playerGems -= (powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
@@ -221,7 +231,10 @@ public class GameManager : MonoBehaviour
 
 		if(wordManager.words.completeWord && canUseAllWildCards)
 		{
+			useGems();
+
 			useGems(powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
+
 			for(int i = 0;i < wordManager.chars.Count;i++)
 			{
 				letterFound = false;
@@ -284,7 +297,8 @@ public class GameManager : MonoBehaviour
 					}
 					else
 					{
-						uiChar.piece.GetComponent<UIChar>().backToNormal();						
+						uiChar.piece.GetComponent<UIChar>().backToNormal();
+						abcChar.isSelected = false;
 					}
 
 				}
@@ -366,6 +380,7 @@ public class GameManager : MonoBehaviour
 
 	public void addWildCardInCurrentWord()
 	{
+		int currentPrice = 0;
 		deactivateCurrentPowerUp();
 
 		currentWildCardsActivated++;
@@ -373,7 +388,12 @@ public class GameManager : MonoBehaviour
 		FindObjectOfType<ShowNext>().ShowingNext(true);
 		activatedPowerUp = powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP);
 
-		activeMoney(true,activatedPowerUp.gemsPrice);
+		for(int i =0; i<currentWildCardsActivated; i++)
+		{
+			currentPrice += 2;//activatedPowerUp.gemsPrice;
+		}
+
+		activeMoney(true,currentPrice);
 	}
 
 	public void createOneSquareBlock(Transform myButtonPosition)
@@ -484,6 +504,7 @@ public class GameManager : MonoBehaviour
 		{
 			UnlockPowerUp();
 			winBonification ();
+			playerWin = true;
 		}
 		else
 		{
@@ -494,7 +515,11 @@ public class GameManager : MonoBehaviour
 	IEnumerator check()
 	{
 		yield return new WaitForSeconds (.2f);
-		FindObjectOfType<WordManager>().checkIfAWordisPossible(pieceManager.listChar);
+		if (!wordManager.checkIfAWordisPossible (pieceManager.listChar)) 
+		{
+			Debug.Log ("Perdio Perdio ");
+			setInput (false);
+		}
 	}
 
 	public void checkToLoose()
@@ -648,6 +673,7 @@ public class GameManager : MonoBehaviour
 
 		for (int i = 0; i < cellToLetter.Count; i++) 
 		{
+			print(cellToLetter[i].piece);
 			switch (cellToLetter[i].piece.GetComponent<ABCChar>().pointsValue) 
 			{
 			case("x2"):

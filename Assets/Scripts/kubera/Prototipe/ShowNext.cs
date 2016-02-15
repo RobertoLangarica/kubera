@@ -24,17 +24,20 @@ public class ShowNext : MonoBehaviour {
 		}
 	}
 
-	public void isWordCompleted(bool isCompleted)
+	public void isCompletedNotCompletedOrMoving(int imageValue)
 	{
-		if(isCompleted)
-		{
-			//print("completed");
-			next.GetComponent<Image>().sprite = image[0];
-		}
-		else
-		{
-			//print("NOTcompleted");
-			next.GetComponent<Image>().sprite = image[1];
+		switch (imageValue) {
+		case 0:
+			next.GetComponent<Image> ().sprite = image [0];//completed
+			break;
+		case 1:
+			next.GetComponent<Image> ().sprite = image [1];//notCompleted
+			break;
+		case 2:
+			next.GetComponent<Image> ().sprite = image [2];//Moving
+			break;
+		default:
+			break;
 		}
 	}
 }
