@@ -815,6 +815,7 @@ public class GameManager : MonoBehaviour
 			secondChanceTimes++;
 
 			currentMoves += secondChanceMovements;
+			movementsText.text = currentMoves.ToString();
 
 			inputGameController.activateSecondChanceLocked();
 		}
