@@ -32,6 +32,7 @@ namespace LevelBuilder
 		public PiecesSelector piecesSelector;
 		public TileGridEditor gridEditor;
 		public Toggle[] powerupToggles;
+		public LoadingIndicator loadingIndicator;
 
 		public GameObject saveAsPopUp;
 		private InputField saveAsInput;
@@ -50,6 +51,10 @@ namespace LevelBuilder
 			//Esperamos 1 frame para evitar los problemas de sincronia entre 
 			//quien manda llamar primero su Start o su Awake
 			StartCoroutine("Initialization");
+
+			//Mientras se procesa el diccionario por primera vez
+			showLoadingIndicator();
+			PersistentData.instance.onDictionaryFinished += hideLoadingIndicatorandRemoveCallback;
 		}
 
 		private IEnumerator Initialization()
@@ -62,6 +67,7 @@ namespace LevelBuilder
 			saveAsAccept = saveAsPopUp.GetComponentsInChildren<Button>(true)[1];
 			saveAsAccept.interactable = false;
 			saveAsPopUp.SetActive(false);
+			hideLoadingIndicator();
 
 			levelGoalSelector.isValidWord += wordExistInDictionary;
 			levelGoalSelector.isPreviouslyUsedWord += wordExistInPreviousLevels;
@@ -242,21 +248,27 @@ namespace LevelBuilder
 			
 		public void OnLanguageSelected()
 		{
-			//[TODO] show loading
 
-			//Que se carguen los niveles adecuados
+			//Procesamos niveles y diccionario en el lenguaje indicado
+			showLoadingIndicator();
+			PersistentData.instance.onDictionaryFinished += onDiccionaryFinished;
 			PersistentData.instance.configureGameForLanguage(languageSelector.options[languageSelector.value].text);
+		}
 
-
+		private void onDiccionaryFinished()
+		{
+			PersistentData.instance.onDictionaryFinished -= onDiccionaryFinished;
 			resetEditorToDefaultState(languageSelector.options[languageSelector.value].text);
+			Invoke("hideLoadingIndicator",0.5f);
 		}
 
 		public void OnLeveleSelectedToLoad()
 		{
 			if(lvlSelector.value != 0)
 			{
-				//[TODO] show loading
 				configureHUDFromLevel(lvlSelector.options[lvlSelector.value].text);
+				showLoadingIndicator();
+				Invoke("hideLoadingIndicator",0.5f);
 			}
 		}
 			
@@ -304,14 +316,17 @@ namespace LevelBuilder
 			currentEditingLevelName = int.Parse(saveAsInput.text).ToString("0000");
 			updateShowedName();
 
-			//[TODO] show loading
 			writeLevelToXML();
+			showLoadingIndicator();
+			Invoke("hideLoadingIndicator",0.5f);
+
 		}
 
 		public void OnSave()
 		{
-			//[TODO] show loading
 			writeLevelToXML();
+			showLoadingIndicator();
+			Invoke("hideLoadingIndicator",0.5f);
 		}
 
 		public void OnShowABCSelector()
@@ -438,14 +453,34 @@ namespace LevelBuilder
 		public void OnReset()
 		{
 			resetEditorToDefaultState(languageSelector.options[languageSelector.value].text);
+			showLoadingIndicator();
+			Invoke("hideLoadingIndicator",0.5f);
 		}
 
 		public void OnNew()
 		{
 			resetEditorToDefaultState(languageSelector.options[languageSelector.value].text);
 			setcurrentEditingNameToTheLast();
+			showLoadingIndicator();
+			Invoke("hideLoadingIndicator",0.5f);
 		}
 
 		public void OnPlay(){}
+
+		private void hideLoadingIndicator()
+		{
+			loadingIndicator.gameObject.SetActive(false);
+		}
+
+		private void hideLoadingIndicatorandRemoveCallback()
+		{
+			hideLoadingIndicator();
+			PersistentData.instance.onDictionaryFinished += hideLoadingIndicatorandRemoveCallback;
+		}
+
+		private void showLoadingIndicator()
+		{
+			loadingIndicator.gameObject.SetActive(true);
+		}
 	}
 }

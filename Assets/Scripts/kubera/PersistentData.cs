@@ -14,6 +14,9 @@ public class PersistentData : MonoBehaviour
 	//Solo existe una sola instancia en todo el juego de este objeto
 	public static PersistentData instance;
 
+	public delegate void DNotify();
+	public DNotify onDictionaryFinished;
+
 	[HideInInspector]public string currentLevelName;
 	[HideInInspector]public Level currentLevel;
 	[HideInInspector]public Levels levelsData;
@@ -50,9 +53,11 @@ public class PersistentData : MonoBehaviour
 		}
 
 		abcStructure = FindObjectOfType<ABCDataStructure>();
-		
+		onDictionaryFinished += foo;
 		configureGameForLanguage();
 	}
+
+	private void foo(){}
 
 	/**
 	 * Configura el juego para el lenguaje que tiene UserDataManager
@@ -75,11 +80,18 @@ public class PersistentData : MonoBehaviour
 
 		//Diccionario
 		abc = Resources.Load("ABCData/WORDS_"+language) as TextAsset;
+		abcStructure.onDictionaryFinished += onDictionaryFinishedCallback;	
 		abcStructure.processDictionary(abc.text);
 
 
 		//CurrentLevel
 		currentLevel = levelsData.getLevelByName(currentLevelName);
+	}
+
+	private void onDictionaryFinishedCallback()
+	{
+		abcStructure.onDictionaryFinished -= onDictionaryFinishedCallback;	
+		onDictionaryFinished();
 	}
 
 	public void addWordToDictionary(string word, string language = "")
