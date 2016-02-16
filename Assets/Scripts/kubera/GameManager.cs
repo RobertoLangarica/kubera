@@ -194,6 +194,11 @@ public class GameManager : MonoBehaviour
 
 	protected bool canCompleteWordWithWildCards()
 	{
+		if (currentWildCardsActivated == 0) 
+		{
+			return true;
+		}
+
 		if(UserDataManager.instance.playerGems >= (powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated) && activatedPowerUp)
 		{
 			UserDataManager.instance.playerGems -= (powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
@@ -215,14 +220,13 @@ public class GameManager : MonoBehaviour
 		int multiplierHelper = 1;
 		bool letterFound;
 		bool canUseAllWildCards;
-		print ("1");
+
 		canUseAllWildCards = canCompleteWordWithWildCards();
 
 		if(wordManager.words.completeWord && canUseAllWildCards)
 		{
-			print ("2");
-
 			useGems(powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
+
 			for(int i = 0;i < wordManager.chars.Count;i++)
 			{
 				letterFound = false;
@@ -262,20 +266,17 @@ public class GameManager : MonoBehaviour
 			wordsMade++;
 			//FindObjectOfType<InputGameController>().checkToLoose();
 		}
-
-		print ("2A");
-
+		
 		for(int i = 0;i < wordManager.chars.Count;i++)
 		{
-
-			print ("3"+" "+ i);
 			ABCChar abcChar = wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<ABCChar>();
 			UIChar uiChar = wordManager.chars [i].gameObject.GetComponent<UIChar> ();
-
+		
 			if(uiChar != null && abcChar != null)
 			{
 				if(wordManager.words.completeWord && canUseAllWildCards)
 				{
+					print (uiChar.piece.transform.localPosition);
 					cellManager.getCellOnVec(uiChar.piece.transform.position).clearCell();
 					uiChar.DestroyPiece();
 				}
@@ -287,14 +288,13 @@ public class GameManager : MonoBehaviour
 					}
 					else
 					{
-						uiChar.piece.GetComponent<UIChar>().backToNormal();						
+						uiChar.piece.GetComponent<UIChar>().backToNormal();
+						abcChar.isSelected = false;
 					}
-
+		
 				}
 			}
 		}
-
-		print ("4");
 		wordManager.resetValidation();
 	}
 
@@ -818,6 +818,7 @@ public class GameManager : MonoBehaviour
 			secondChanceTimes++;
 
 			currentMoves += secondChanceMovements;
+			movementsText.text = currentMoves.ToString();
 
 			inputGameController.activateSecondChanceLocked();
 		}
