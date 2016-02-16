@@ -419,9 +419,23 @@ public class CellsManager : MonoBehaviour
 
 	public void turnPieceToLetterByWinNotification(Cell cell)
 	{
-		ABCChar tempAbcChar = cell.piece.AddComponent<ABCChar>();
+		cell.destroyCell ();
+		Transform tempTransform = cell.transform;
 
-		UIChar tempUiChar = cell.piece.AddComponent<UIChar>();
+		GameObject go = Instantiate (uiLetter)as GameObject;
+
+
+		go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
+
+		Vector3 nVec = new Vector3(cell.transform.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
+			-cell.transform.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
+
+		go.GetComponent<RectTransform> ().transform.position = tempTransform.position + nVec;
+		cell.piece = go;
+
+		ABCChar tempAbcChar = cell.piece.GetComponent<ABCChar>();
+
+		UIChar tempUiChar = cell.piece.GetComponent<UIChar>();
 
 		cell.piece.GetComponent<BoxCollider2D>().enabled = true;
 
@@ -746,7 +760,6 @@ public class CellsManager : MonoBehaviour
 			result = ETYPEOFPIECE_ID.YELLOW;
 			break;
 		}
-
 		return result;
 	}
 }

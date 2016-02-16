@@ -14,6 +14,7 @@ namespace ABC
 
 	public class ABCChar : MonoBehaviour 
 	{
+		protected bool textActualized; //texto actualizado
 		public int value;//Valor del caracter que se utiliza dentro de ABCDataStructure
 		public bool wildcard = false;//Indica si este caracter es un comodin
 		
@@ -45,7 +46,14 @@ namespace ABC
 			}
 
 
-			//Actualizamos el texto.
+			//initializeText ();
+		}
+
+		/**
+		 * Inicializamos el texto
+		 **/
+		protected void initializeText()
+		{
 			if(letter != null && pointsValueText != null)
 			{
 				letter.text = character;
@@ -58,6 +66,8 @@ namespace ABC
 			character = scriptAbcVals.character;
 			pointsValue = scriptAbcVals.pointsValue;
 			typeOfLetter = scriptAbcVals.typeOfLetter;
+
+			initializeText ();
 
 			if(character == ".")
 			{
