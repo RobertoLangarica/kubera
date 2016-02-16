@@ -105,7 +105,7 @@ namespace LevelBuilder
 
 				if(item != null)
 				{
-					switch(handler.type)
+					switch(handler.points)
 					{
 					case "x2":
 						item.x2Count = handler.quantity;
@@ -114,10 +114,10 @@ namespace LevelBuilder
 						item.x3Count = handler.quantity;
 						break;
 					default:
+						item.points = int.Parse(handler.points);
 						item.quantity = handler.quantity;
 						break;
 					}
-					item.points = handler.points;
 				}
 			}
 
@@ -157,11 +157,12 @@ namespace LevelBuilder
 			{
 				handler.quantity = items[i].quantity;
 				handler.type = forcedType;
-				handler.points = items[i].points;
 				handler.letter = (items[i].data as AlfabetUnit).cvalue;
 
 				if(handler.quantity != 0)
 				{
+					handler.points = items[i].points.ToString();	
+
 					if(builder.Length != 0)
 					{
 						builder.Append(",");
@@ -172,7 +173,7 @@ namespace LevelBuilder
 
 				if(items[i].x2Count > 0)
 				{
-					handler.type = "x2";
+					handler.points = "x2";
 					handler.quantity = items[i].x2Count;
 					if(builder.Length != 0)
 					{
@@ -183,7 +184,7 @@ namespace LevelBuilder
 
 				if(items[i].x3Count > 0)
 				{
-					handler.type = "x3";
+					handler.points = "x3";
 					handler.quantity = items[i].x3Count;
 					if(builder.Length != 0)
 					{
@@ -207,7 +208,7 @@ namespace LevelBuilder
 	{
 		public int quantity;
 		public char letter;
-		public int points;
+		public string points;
 		public string type;
 
 		public ABCStringHandler()
@@ -225,7 +226,7 @@ namespace LevelBuilder
 			string[] splitted = value.Split('_');
 			quantity = int.Parse(splitted[0]);
 			letter = splitted[1].ToCharArray()[0];
-			points = int.Parse(splitted[2]);
+			points = splitted[2];
 			type = splitted[3];
 		}
 
@@ -238,7 +239,7 @@ namespace LevelBuilder
 			builder.Append("_");
 			builder.Append(letter);
 			builder.Append("_");
-			builder.Append(points.ToString("00"));
+			builder.Append(points);
 			builder.Append("_");
 			builder.Append(type);
 
