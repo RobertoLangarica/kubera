@@ -49,6 +49,11 @@ public class Levels
 		return null;
 	}
 
+	public Level getLevelByNumber(int levelNumber)
+	{
+		return getLevelByName(levelNumber.ToString("0000"));
+	}
+
 	/**
 	 * Devuelve una lista con los nombres de los niveles cargados en el xml
 	 **/ 

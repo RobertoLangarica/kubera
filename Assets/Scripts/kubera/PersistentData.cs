@@ -17,12 +17,10 @@ public class PersistentData : MonoBehaviour
 	public delegate void DNotify();
 	public DNotify onDictionaryFinished;
 
-	[HideInInspector]public string currentLevelName;
+	public int levelNumber = 1;
 	[HideInInspector]public Level currentLevel;
 	[HideInInspector]public Levels levelsData;
 	[HideInInspector]public ABCDataStructure abcStructure;
-
-	private int m_currentLevelIndex;
 
 	//El idioma en que se encuentra configurado actualmente el juego
 	private string currentLanguage;
@@ -42,7 +40,7 @@ public class PersistentData : MonoBehaviour
 
 		DontDestroyOnLoad(this);
 
-		currentLevelIndex = 1;
+		setLevelNumber(levelNumber);
 	}
 
 	void Start()
@@ -85,7 +83,7 @@ public class PersistentData : MonoBehaviour
 
 
 		//CurrentLevel
-		currentLevel = levelsData.getLevelByName(currentLevelName);
+		currentLevel = levelsData.getLevelByNumber(levelNumber);
 	}
 
 	private void onDictionaryFinishedCallback()
@@ -112,22 +110,13 @@ public class PersistentData : MonoBehaviour
 	/**
 	 * Indica el indice de nivel que el usuario va jugar
 	 **/ 
-	public int currentLevelIndex
+	public void setLevelNumber(int value)
 	{
-		set
-		{
-			m_currentLevelIndex = value;
-			currentLevelName = m_currentLevelIndex.ToString("0000");
+		levelNumber = value;
 
-			if(levelsData != null)
-			{
-				currentLevel = levelsData.getLevelByName(currentLevelName);
-			}
-		}
-
-		get
+		if(levelsData != null)
 		{
-			return m_currentLevelIndex;
+			currentLevel = levelsData.getLevelByNumber(levelNumber);
 		}
 	}
 }
