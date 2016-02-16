@@ -550,10 +550,12 @@ public class InputGameController : MonoBehaviour
 			isPiece = false;
 			if (!go.GetComponent<UIChar> ().isFromGrid) 
 			{
+				isLeterOfPice = false;
 				isLetterSelected = true;
 			} 
 			else 
 			{
+				isLetterSelected = false;
 				isLeterOfPice = true;
 			}
 			return;

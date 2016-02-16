@@ -234,7 +234,7 @@ public class GameManager : MonoBehaviour
 		if(wordManager.words.completeWord && canUseAllWildCards)
 		{
 			useGems(powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
-
+			
 			for(int i = 0;i < wordManager.chars.Count;i++)
 			{
 				letterFound = false;
@@ -260,7 +260,7 @@ public class GameManager : MonoBehaviour
 				{
 					blackLettersUsed++;
 				}
-
+				
 				if (myWinCondition [0] == "letters") 
 				{
 					for (int j = 0; j < letters.Count; j++) {
@@ -282,10 +282,11 @@ public class GameManager : MonoBehaviour
 					}
 				}
 			}
+
 			amount *= multiplierHelper;
-			addPoints(amount);
+
 			wordsMade++;
-			//FindObjectOfType<InputGameController>().checkToLoose();
+			////FindObjectOfType<InputGameController>().checkToLoose();
 		}
 		
 		for(int i = 0;i < wordManager.chars.Count;i++)
@@ -316,6 +317,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 		wordManager.resetValidation();
+		addPoints(amount);
 	}
 
 	public void linesCreated(int totalLines)
@@ -582,8 +584,9 @@ public class GameManager : MonoBehaviour
 	protected void winBonification()
 	{
 		setInput (false);
-		//Se limpian las letras
-		verifyWord();
+
+		//Se limpian las letras 
+		//verifyWord();
 
 		bombsForWinBonification();
 
@@ -602,7 +605,8 @@ public class GameManager : MonoBehaviour
 		Cell[] emptyCells = cellManager.allEmptyCells();
 		Cell cell;
 
-		if (currentMoves != 0) {
+		if (currentMoves != 0 && emptyCells.Length > 0) 
+		{
 			cell = emptyCells [Random.Range (0, emptyCells.Length - 1)];
 
 
@@ -662,6 +666,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(winBombs > 0 && cellManager.colorOfMoreQuantity() != ETYPEOFPIECE_ID.NONE)
 		{
+			print ("usingBombs");
 			cellToLetter = new List<Cell>();
 			cellToLetter = cellManager.searchCellsOfSameColor(cellManager.colorOfMoreQuantity());
 			winBombs--;
@@ -690,8 +695,7 @@ public class GameManager : MonoBehaviour
 
 		yield return new WaitForSeconds (.2f);
 		if (cellToLetter.Count > 0) 
-		{
-			
+		{			
 			StartCoroutine (destroyLetter ());
 		}
 	}
@@ -770,6 +774,7 @@ public class GameManager : MonoBehaviour
 		{
 			winBombs = 5;
 		}
+		print (winBombs);
 	}
 
 	protected void checkIfNeedToUnlockPowerUp()
