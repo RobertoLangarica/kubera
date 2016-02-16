@@ -89,6 +89,13 @@ public class GameManager : MonoBehaviour
 		powerUpManager.activateAvailablePowers();
 		checkIfNeedToUnlockPowerUp();
 
+
+		float[] scoreToStar = new float[3];
+		scoreToStar [0] = PersistentData.instance.currentLevel.scoreToStar1;
+		scoreToStar [1] = PersistentData.instance.currentLevel.scoreToStar2;
+		scoreToStar [2] = PersistentData.instance.currentLevel.scoreToStar3;
+		hud.setMeterData (scoreToStar);
+
 		//print (myWinCondition [0]);
 		letters = new List<string> ();
 		if(myWinCondition[0] == "letters")
