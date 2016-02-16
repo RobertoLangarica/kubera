@@ -725,11 +725,11 @@ public class CellsManager : MonoBehaviour
 			}
 		}
 
-		////para regresar un color valido
-		//if(index == -1)
-		//{
-		//	index = Random.Range (0, 8);
-		//}
+		//para regresar un color valido
+		if(index == -1)
+		{
+			index = Random.Range (0, 8);
+		}
 
 		ETYPEOFPIECE_ID result = ETYPEOFPIECE_ID.NONE;
 

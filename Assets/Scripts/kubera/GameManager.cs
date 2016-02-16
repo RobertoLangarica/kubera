@@ -9,11 +9,6 @@ public class GameManager : MonoBehaviour
 	//Texto del PoUp
 	public Text scoreText;
 
-	public Text points;
-	public Text movementsText;
-	public Text gemsText;
-
-	public GameObject GemsChargeGO;
 	public GameObject bonificationPiece;
 
 	protected int pointsCount =0;
@@ -50,6 +45,7 @@ public class GameManager : MonoBehaviour
 	protected PowerUpManager powerUpManager;
 	protected InputGameController inputGameController;
 	protected PieceManager pieceManager;
+	protected HUD hud;
 
 	protected GameObject fingerGestures;
 
@@ -61,6 +57,7 @@ public class GameManager : MonoBehaviour
 		powerUpManager = FindObjectOfType<PowerUpManager> ();
 		inputGameController = FindObjectOfType<InputGameController> ();
 		pieceManager = FindObjectOfType<PieceManager>();
+		hud = FindObjectOfType<HUD> ();
 		fingerGestures = GameObject.Find ("FingerGestures");
 
 		cellManager.OnlinesCounted += linesCreated;
@@ -80,16 +77,19 @@ public class GameManager : MonoBehaviour
 		cellToLetter = new List<Cell> ();
 
 		currentMoves = totalMoves = persistentData.currentLevel.moves;
-		movementsText.text = currentMoves.ToString();
+		hud.setMovments (currentMoves);
+
 
 		UserDataManager.instance.playerGems = 300;
-		gemsText.text = UserDataManager.instance.playerGems.ToString();
+
+		hud.setGems(UserDataManager.instance.playerGems);
+		hud.setLevel (2);//PASAR EL NIVEL EN EL QUE ESTA
 
 		//UnlockPowerUp();
 		powerUpManager.activateAvailablePowers();
 		checkIfNeedToUnlockPowerUp();
 
-		print (myWinCondition [0]);
+		//print (myWinCondition [0]);
 		letters = new List<string> ();
 		if(myWinCondition[0] == "letters")
 		{
@@ -128,13 +128,16 @@ public class GameManager : MonoBehaviour
 	 * 
 	 * @params point{int}: La cantidad de puntos que se le entregara al jugador
 	 */
-	protected void addPoints(int point)
+	protected void addPoints(int point,bool checkWinConditionBolean = true)
 	{
 		pointsCount += point;
 
-		points.text = pointsCount.ToString();
+		hud.setPoints (pointsCount);
 
-		checkWinCondition ();
+		if (checkWinConditionBolean) 
+		{
+			checkWinCondition ();
+		}
 	}
 
 	protected bool useGems(int gemsPrice = 0)
@@ -158,7 +161,8 @@ public class GameManager : MonoBehaviour
 		{
 			UserDataManager.instance.playerGems -= gemsPrice;
 
-			gemsText.text = UserDataManager.instance.playerGems.ToString();
+			hud.setGems(UserDataManager.instance.playerGems);
+
 			deactivateCurrentPowerUp();
 
 			Debug.Log("Se cobrara");
@@ -172,7 +176,7 @@ public class GameManager : MonoBehaviour
 	{
 		currentMoves--;
 
-		movementsText.text = currentMoves.ToString();
+		hud.setMovments (currentMoves);
 
 		addPoints(length);
 	}
@@ -181,22 +185,12 @@ public class GameManager : MonoBehaviour
 	{
 		if(show)
 		{
-			GemsChargeGO.SetActive (true);
-			if(GemsChargeGO.transform.FindChild("Charge") != null)
-			{
-				if (howMany == 0) 
-				{
-					GemsChargeGO.transform.FindChild ("Charge").GetComponentInChildren<Text> ().text = " " + howMany.ToString ();
-				}
-				else
-				{
-					GemsChargeGO.transform.FindChild ("Charge").GetComponentInChildren<Text> ().text = "-" + howMany.ToString ();
-				}
-			}
+			hud.activateChargeGems (true);
+			hud.setChargeGems (howMany);
 		}
 		else
 		{
-			GemsChargeGO.SetActive(false);	
+			hud.activateChargeGems (false);	
 		}
 	}
 
@@ -500,7 +494,6 @@ public class GameManager : MonoBehaviour
 		case "points":
 			if(pointsCount >= int.Parse( myWinCondition[1]))
 			{
-				print ("win");
 				win = true;
 			}
 			break;
@@ -508,28 +501,24 @@ public class GameManager : MonoBehaviour
 		case "words":
 			if (wordsMade >= int.Parse (myWinCondition [1])) 
 			{
-				print ("win");
 				win = true;
 			}
 			break;
 		case "letters":
 			if (letters.Count == 0) 
 			{
-				print ("win");
 				win = true;
 			}
 			break;
 		case "blackLetters":
 			if (blackLettersUsed >= int.Parse (myWinCondition [1])) 
 			{
-				print ("win");
 				win = true;
 			}
 			break;
 		case "word":
 			if (wordFound) 
 			{
-				print ("win");
 				win = true;
 			}
 			break;
@@ -539,6 +528,7 @@ public class GameManager : MonoBehaviour
 
 		if (win) 
 		{
+			print ("win");
 			UnlockPowerUp();
 			winBonification ();
 		}
@@ -611,7 +601,7 @@ public class GameManager : MonoBehaviour
 
 
 			currentMoves--;
-			movementsText.text = currentMoves.ToString();
+			hud.setMovments (currentMoves);
 
 			GameObject go = GameObject.Instantiate (bonificationPiece) as GameObject;
 			SpriteRenderer sprite = go.GetComponent<Piece> ().pieces [0].GetComponent<SpriteRenderer> ();
@@ -666,7 +656,6 @@ public class GameManager : MonoBehaviour
 	{
 		if(winBombs > 0 && cellManager.colorOfMoreQuantity() != ETYPEOFPIECE_ID.NONE)
 		{
-			print ("usingBombs");
 			cellToLetter = new List<Cell>();
 			cellToLetter = cellManager.searchCellsOfSameColor(cellManager.colorOfMoreQuantity());
 			winBombs--;
@@ -733,7 +722,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		amount *= multiplierHelper;
-		addPoints(amount);
+		addPoints(amount,false);
 	}
 
 	protected void setInput(bool active)
@@ -774,7 +763,6 @@ public class GameManager : MonoBehaviour
 		{
 			winBombs = 5;
 		}
-		print (winBombs);
 	}
 
 	protected void checkIfNeedToUnlockPowerUp()
@@ -850,7 +838,7 @@ public class GameManager : MonoBehaviour
 			secondChanceTimes++;
 
 			currentMoves += secondChanceMovements;
-			movementsText.text = currentMoves.ToString();
+			hud.setMovments (currentMoves);
 
 			inputGameController.activateSecondChanceLocked();
 		}
