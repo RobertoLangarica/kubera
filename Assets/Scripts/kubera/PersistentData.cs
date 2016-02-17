@@ -32,12 +32,15 @@ public class PersistentData : MonoBehaviour
 	public bool fromGameToEdit;
 
 	void Awake() 
-	{
-		if(instance != null)
+	{		
+		GameObject[] go = GameObject.FindGameObjectsWithTag ("persistentData");
+		for(int i=1; i< go.Length; i++)
 		{
+			DestroyImmediate (go [i]);
+		
 			//No se si al mandar destroyed en el awake llegue entrar a start pero no corremos riesgos
 			destroyed = true;
-			DestroyImmediate(instance);
+			//DestroyImmediate(instance);
 			return;
 		}
 
