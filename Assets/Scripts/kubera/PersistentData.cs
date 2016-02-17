@@ -12,7 +12,7 @@ using ABC;
 public class PersistentData : MonoBehaviour 
 {
 	//Solo existe una sola instancia en todo el juego de este objeto
-	public static PersistentData instance;
+	public static PersistentData instance = null;
 
 	public delegate void DNotify();
 	public DNotify onDictionaryFinished;
@@ -28,11 +28,11 @@ public class PersistentData : MonoBehaviour
 
 	void Awake() 
 	{
-		if(instance)
+		if(instance != null)
 		{
 			//No se si al mandar destroyed en el awake llegue entrar a start pero no corremos riesgos
 			destroyed = true;
-			Destroy(instance);
+			DestroyImmediate(instance);
 			return;
 		}
 

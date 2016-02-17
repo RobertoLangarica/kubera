@@ -465,7 +465,14 @@ namespace LevelBuilder
 			Invoke("hideLoadingIndicator",0.5f);
 		}
 
-		public void OnPlay(){}
+		public void OnPlay()
+		{
+			writeLevelToXML();
+
+			PersistentData.instance.setLevelNumber(int.Parse(currentEditingLevelName));
+
+			ScreenManager.instance.GoToScene("Game");
+		}
 
 		private void hideLoadingIndicator()
 		{
