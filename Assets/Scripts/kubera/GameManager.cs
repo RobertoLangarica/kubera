@@ -54,7 +54,6 @@ public class GameManager : MonoBehaviour
 
 	void Awake () 
 	{
-		persistentData = FindObjectOfType<PersistentData>();
 		wordManager = FindObjectOfType<WordManager>();
 		cellManager = FindObjectOfType<CellsManager>();
 		powerUpManager = FindObjectOfType<PowerUpManager> ();
@@ -76,6 +75,8 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
+		persistentData = FindObjectOfType<PersistentData>();
+
 		myWinCondition = persistentData.currentLevel.winCondition.Split (new char[1]{ '-' });
 		cellToLetter = new List<Cell> ();
 
