@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
 
 	public GameObject bonificationPiece;
 
+	public GameObject retryPopUp;
+	public GameObject notEnoughLifesPopUp;
+
 	protected int pointsCount =0;
 	protected int wordsMade =0;
 	protected bool wordFound;
@@ -849,5 +852,20 @@ public class GameManager : MonoBehaviour
 
 			inputGameController.activateSecondChanceLocked();
 		}
+	}
+
+	public void CancelRetry()
+	{
+		UserDataManager.instance.takeLifeFromPlayer();
+	}
+
+	public void Retry()
+	{
+		
+	}
+
+	public void RefillLifes()
+	{
+		UserDataManager.instance.refillAllPlayerLifes();
 	}
 }
