@@ -8,8 +8,12 @@ public class HUD : MonoBehaviour {
 	public Text movementsText;
 	public Text gemsText;
 	public Text levelText;
+	public Image pointsMeter;
+	public Image[] Stars;
 
 	public GameObject GemsChargeGO;
+
+	protected float[] scoreToStar;
 
 	void Start () {
 	
@@ -21,6 +25,7 @@ public class HUD : MonoBehaviour {
 	public void setPoints(int pointsCount)
 	{
 		points.text = pointsCount.ToString();
+		setMeterPoints (pointsCount);
 	}
 
 	/**
@@ -66,6 +71,55 @@ public class HUD : MonoBehaviour {
 	}
 
 	/**
+	 * setea los datos para obtener estrellas
+	 **/
+	public void setMeterData(float[] scoreToStarData)
+	{
+		scoreToStar = scoreToStarData;
+		setPositionOfStars ();
+		setPoints (0);
+	}
+
+
+	/**
+	 * setea el medidor de puntos
+	 **/
+	public void setMeterPoints(int points)
+	{
+		pointsMeter.fillAmount = (float) points / scoreToStar [2];
+		actualizeStars (points);
+	}
+
+	/**
+	 * actualiza las estrellas
+	 **/
+	protected void actualizeStars(int points)
+	{
+		if(points >= scoreToStar[0])
+		{
+			Stars [0].color = Color.yellow;
+		}
+		if(points >= scoreToStar[1])
+		{
+			Stars [1].color = Color.yellow;
+		}
+		if(points >= scoreToStar[2])
+		{
+			Stars [2].color = Color.yellow;
+		}
+	}
+
+	/**
+	 * setea las posiciones de las estrellas
+	 **/
+	protected void setPositionOfStars()
+	{
+		Stars[0].rectTransform.localPosition = new Vector3(Stars[0].rectTransform.localPosition.x, scoreToStar[0] / scoreToStar [2] * pointsMeter.rectTransform.rect.height );
+		Stars[1].rectTransform.localPosition = new Vector3(Stars[1].rectTransform.localPosition.x, scoreToStar[1] / scoreToStar [2] * pointsMeter.rectTransform.rect.height);
+		Stars[2].rectTransform.localPosition = new Vector3(Stars[2].rectTransform.localPosition.x, scoreToStar[2] / scoreToStar [2] * pointsMeter.rectTransform.rect.height );
+	}
+
+	/**
 	 * Setea el nivel en la hud
 	 **/
 	public void setLevel(int chargeMoney)
@@ -76,7 +130,7 @@ public class HUD : MonoBehaviour {
 	/**
 	 * Setea la condicion de victoria
 	 **/
-	public void setWinCondition(int chargeMoney)
+	public void setWinCondition(string winCondition)
 	{
 
 	}	
