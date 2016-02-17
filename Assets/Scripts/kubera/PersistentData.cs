@@ -26,6 +26,11 @@ public class PersistentData : MonoBehaviour
 	private string currentLanguage;
 	private bool destroyed = false;//Indica si el objeto ya se destruyo
 
+	[HideInInspector]
+	public bool fromLevelBuilder;
+	[HideInInspector]
+	public bool fromGameToEdit;
+
 	void Awake() 
 	{
 		if(instance != null)
@@ -110,13 +115,18 @@ public class PersistentData : MonoBehaviour
 	/**
 	 * Indica el indice de nivel que el usuario va jugar
 	 **/ 
-	public void setLevelNumber(int value)
+	public void setLevelNumber(int value,bool fromBuilder = false)
 	{
 		levelNumber = value;
 
 		if(levelsData != null)
 		{
 			currentLevel = levelsData.getLevelByNumber(levelNumber);
+
+			if(fromBuilder)
+			{
+				fromLevelBuilder = true;
+			}
 		}
 	}
 }

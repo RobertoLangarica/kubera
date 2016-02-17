@@ -469,7 +469,7 @@ namespace LevelBuilder
 		{
 			writeLevelToXML();
 
-			PersistentData.instance.setLevelNumber(int.Parse(currentEditingLevelName));
+			PersistentData.instance.setLevelNumber(int.Parse(currentEditingLevelName),true);
 
 			ScreenManager.instance.GoToScene("Game");
 		}
@@ -483,6 +483,12 @@ namespace LevelBuilder
 		{
 			hideLoadingIndicator();
 			PersistentData.instance.onDictionaryFinished += hideLoadingIndicatorandRemoveCallback;
+
+			if(PersistentData.instance.fromGameToEdit)
+			{
+				PersistentData.instance.fromGameToEdit = false;
+				configureHUDFromLevel(PersistentData.instance.currentLevel.name);
+			}
 		}
 
 		private void showLoadingIndicator()
