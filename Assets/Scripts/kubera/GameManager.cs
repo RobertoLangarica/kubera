@@ -167,7 +167,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		if(UserDataManager.instance.playerGems >= gemsPrice)
+		if(checkIfExistEnoughGems(gemsPrice))
 		{
 			UserDataManager.instance.playerGems -= gemsPrice;
 
@@ -179,6 +179,18 @@ public class GameManager : MonoBehaviour
 			return true;
 		}
 		Debug.Log("Fondos insuficientes");
+		return false;
+	}
+
+	/**
+	 * checa si existen suficientes gemas para hacer la transaccion
+	 **/
+	public bool checkIfExistEnoughGems(int gemsPrice)
+	{
+		if(UserDataManager.instance.playerGems >= gemsPrice)
+		{
+			return true;
+		}
 		return false;
 	}
 
@@ -237,7 +249,7 @@ public class GameManager : MonoBehaviour
 
 		if(wordManager.words.completeWord && canUseAllWildCards)
 		{
-			useGems(powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
+			//useGems(powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
 			
 			for(int i = 0;i < wordManager.chars.Count;i++)
 			{
@@ -295,7 +307,16 @@ public class GameManager : MonoBehaviour
 		
 		for(int i = 0;i < wordManager.chars.Count;i++)
 		{
-			ABCChar abcChar = wordManager.chars[i].gameObject.GetComponent<UIChar>().piece.GetComponent<ABCChar>();
+			ABCChar abcChar;
+			if (wordManager.chars [i].gameObject.GetComponent<UIChar> ().piece != null) 
+			{
+				abcChar = wordManager.chars [i].gameObject.GetComponent<UIChar> ().piece.GetComponent<ABCChar> ();
+			}
+			else 
+			{
+				abcChar = wordManager.chars [i].gameObject.GetComponent<ABCChar> ();
+			}
+
 			UIChar uiChar = wordManager.chars [i].gameObject.GetComponent<UIChar> ();
 		
 			if(uiChar != null && abcChar != null)
@@ -309,6 +330,7 @@ public class GameManager : MonoBehaviour
 				{
 					if(abcChar.wildcard)
 					{
+						activeMoney (false);
 						//GameObject.Find("WildCard").GetComponent<PowerUpBase>().returnPower();
 					}
 					else
@@ -392,12 +414,14 @@ public class GameManager : MonoBehaviour
 			return;
 		}
 
+		pieceManager.activateRotation (true);
+
 		deactivateCurrentPowerUp();
 		canRotate = true;
 		inputGameController.setCanRotate (canRotate);
 		activatedPowerUp = powerUpManager.getPowerUp(EPOWERUPS.ROTATE_POWERUP);
 
-		activeMoney(true,activatedPowerUp.gemsPrice);
+		activeMoney(true,0);
 	}
 
 	public void addWildCardInCurrentWord()
@@ -407,14 +431,19 @@ public class GameManager : MonoBehaviour
 			return;
 		}
 
+		if (!useGems (powerUpManager.getPowerUp (EPOWERUPS.WILDCARD_POWERUP).gemsPrice)) 
+		{
+			return;
+		}
+
 		deactivateCurrentPowerUp();
 
 		currentWildCardsActivated++;
-		wordManager.addCharacter(".",gameObject);
+		wordManager.addCharacter(".");
 		wordManager.activateButtonOfWordsActions (true);
 		activatedPowerUp = powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP);
 
-		activeMoney(true,activatedPowerUp.gemsPrice);
+		//activeMoney(true,activatedPowerUp.gemsPrice);
 	}
 
 	public void createOneSquareBlock(Transform myButtonPosition)

@@ -5,7 +5,6 @@ using ABC;
 
 public class PowerUpBase : MonoBehaviour 
 {
-	public delegate void rotateActive(bool activate);
 	public delegate void powerUpUsed();
 
 	public int gemsPrice;
@@ -15,8 +14,6 @@ public class PowerUpBase : MonoBehaviour
 	public EPOWERUPS typeOfPowerUp;
 
 	protected CellsManager cellsManager;
-
-	public static rotateActive onRotateActive;
 
 	public powerUpUsed OnPowerUpUsed;
 

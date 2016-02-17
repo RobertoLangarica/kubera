@@ -87,7 +87,7 @@ namespace ABC
 		 * Instancia UICHar y con la cadena que recibe crea un ABCChar que se
 		 * agrega como componente a la nueva pieza
 		 * */
-		public void addCharacter(string value,GameObject piece)
+		public void addCharacter(string value,GameObject piece = null)
 		{
 			GameObject letter =  Instantiate(letterPrefab);
 			ABCChar character = letter.AddComponent<ABCChar>();

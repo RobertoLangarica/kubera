@@ -49,15 +49,15 @@ public class HUD : MonoBehaviour {
 	 **/
 	public void setChargeGems(int chargeGems)
 	{
-		if(GemsChargeGO.transform.FindChild("Charge") != null)
+		if(GemsChargeGO != null)
 		{
 			if (chargeGems == 0) 
 			{
-				GemsChargeGO.transform.FindChild ("Charge").GetComponentInChildren<Text> ().text = " " + chargeGems.ToString ();
+				GemsChargeGO.GetComponentInChildren<Text> ().text = " " + chargeGems.ToString ();
 			}
 			else
 			{
-				GemsChargeGO.transform.FindChild ("Charge").GetComponentInChildren<Text> ().text = "-" + chargeGems.ToString ();
+				GemsChargeGO.GetComponentInChildren<Text> ().text = "-" + chargeGems.ToString ();
 			}
 		}
 	}
