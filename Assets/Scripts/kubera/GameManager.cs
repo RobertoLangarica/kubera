@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour 
 {
+	public GameObject toBuilderButton;
+
 	//Texto del PoUp
 	public Text scoreText;
 
@@ -123,6 +125,13 @@ public class GameManager : MonoBehaviour
 		if(myWinCondition[0] == "word")
 		{
 			words = myWinCondition [1].Split (new char[1]{ '_' });
+		}
+
+		toBuilderButton.SetActive(false);
+		if(persistentData.fromLevelBuilder)
+		{
+			PersistentData.instance.fromLevelBuilder = false;
+			toBuilderButton.SetActive(true);
 		}
 	}
 
@@ -868,5 +877,12 @@ public class GameManager : MonoBehaviour
 	public void RefillLifes()
 	{
 		UserDataManager.instance.refillAllPlayerLifes();
+	}
+
+	public void goBackToBuilder()
+	{
+		PersistentData.instance.fromGameToEdit = true;
+
+		ScreenManager.instance.GoToScene("LevelBuilder");
 	}
 }
