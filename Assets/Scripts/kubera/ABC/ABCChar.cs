@@ -26,8 +26,6 @@ namespace ABC
 		public string pointsValue;//Cantidad de puntos que entraga la letra al ser usada
 		public string typeOfLetter;//El tpo de letra que es, puede ntregar powerUps al momento de usarse
 
-		public bool isSelected;
-
 		public Text letter;
 		public Text pointsValueText;
 

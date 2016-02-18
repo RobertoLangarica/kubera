@@ -7,21 +7,22 @@ namespace ABC
 	public class UIChar : MonoBehaviour 
 	{
 		[HideInInspector]
-		public ABCChar character;
-		[HideInInspector]
 		public string typeOfLetter;
 
-		protected Text textfield;
 		public Image myImage;
 
 		//[HideInInspector]
 		public GameObject piece;
 
 		protected WordManager wordManager;
-		protected bool usedFromGrid;
 
 		[HideInInspector]
+		public bool usedFromGrid;
+
+		//[HideInInspector]
 		public bool isFromGrid;
+
+		public Color usedColor = new Color(1,1,1,0.2f);
 
 		// Use this for initialization
 		void Start () 
@@ -99,15 +100,21 @@ namespace ABC
 			}
 		}
 
-		public void ShootLetter()
+		public bool checkIfLetterCanBeUsedFromGrid()
 		{
 			if(!usedFromGrid)
 			{
-				wordManager.addCharacter(gameObject.GetComponent<ABCChar>(),gameObject);
 				usedFromGrid=true;
-				//gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,.2f);
-				gameObject.GetComponent<Image>().color = new Color(1,1,1,.2f);
+				changeColorToUsed ();
+
+				return true;
 			}
+			return false;
+		}
+
+		protected void changeColorToUsed()
+		{
+			gameObject.GetComponent<Image> ().color = usedColor;
 		}
 
 		public void backToNormal()

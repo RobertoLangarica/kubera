@@ -348,7 +348,6 @@ public class GameManager : MonoBehaviour
 					else
 					{
 						uiChar.piece.GetComponent<UIChar>().backToNormal();
-						abcChar.isSelected = false;
 					}
 		
 				}

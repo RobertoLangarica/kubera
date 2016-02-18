@@ -41,6 +41,8 @@ namespace ABC
 			inputWords.onDragUpdate += swappingLetters;
 			inputWords.onDragFinish += swappEnding;
 			inputWords.onDragStart  += activateSwapp;
+			inputWords.onTap += sendLetterToWord;
+			inputWords.checkIfObjectExist += checkIfHasUiChar;
 
 			textureObject = Resources.LoadAll("Letters");
 			names = new string[textureObject.Length];
@@ -83,10 +85,9 @@ namespace ABC
 			char2.index = character.index;
 			char2.used = character.used;
 			char2.wildcard = character.wildcard;
-			letter.GetComponent<UIChar>().character = char2; 
 			addLetterToCorrectSpace(letter);
 			letter.transform.localScale = new Vector3 (1, 1, 1);
-			letter.GetComponent<ABCChar>().isSelected = true;
+			
 			validateCharacter(char2);
 		}
 
@@ -105,12 +106,11 @@ namespace ABC
 			}
 			character.value = words.getCharValue(value);
 			character.character = value.ToUpperInvariant();
-			letter.GetComponent<UIChar>().character = character; 
 			addLetterToCorrectSpace(letter);
 			letter.transform.localScale = new Vector3 (1, 1, 1);
 			letter.GetComponent<UIChar> ().piece = piece;
 			letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
-			letter.GetComponent<ABCChar>().isSelected = true;
+			
 			validateCharacter(character);
 			
 			//para que las letras esten centradas HardCoding
@@ -127,13 +127,12 @@ namespace ABC
 			character.character = pieceABCChar.character.ToUpperInvariant();
 			character.pointsValue = pieceABCChar.pointsValue;
 			character.typeOfLetter = pieceABCChar.typeOfLetter;
-			letter.GetComponent<UIChar>().character = character; 
-			letter.GetComponent<ABCChar>().isSelected = true;
+			
 			addLetterToCorrectSpace(letter);
 			letter.transform.localScale = new Vector3 (1, 1, 1);
 			letter.GetComponent<UIChar> ().piece = piece;
 			letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
-			piece.GetComponent<ABCChar> ().isSelected = true;
+
 			validateCharacter(character);
 
 			//para que las letras esten centradas HardCoding
@@ -312,11 +311,6 @@ namespace ABC
 			deleteCharFromSearch(abcChar.index);
 		}
 
-		public void deleteCharFromSearch(UIChar uiChar)
-		{
-			deleteCharFromSearch(uiChar.character);
-		}
-
 		/**
 		 * Indica si todos los caracteres en la busqueda los elimino 
 		 * el usuario y se marcaron como empty = true
@@ -404,8 +398,6 @@ namespace ABC
 
 							for(int j=container.transform.childCount-2; j>=i; j--)
 							{
-								//print(container.transform.GetChild(j).GetComponent<ABCChar>().character + "       "+j);
-								//print(position[j+1]);
 								container.transform.GetChild(j).GetComponent<RectTransform>().anchoredPosition = positionOfLetters[j+1];
 							}
 						}
@@ -416,8 +408,6 @@ namespace ABC
 
 							for(int j =0; j<=i; j++)
 							{
-								//print(container.transform.GetChild(j).GetComponent<ABCChar>().character);
-								//print(position[j]);
 								container.transform.GetChild(j).GetComponent<RectTransform>().anchoredPosition = positionOfLetters[j];
 							}
 						}
@@ -449,6 +439,7 @@ namespace ABC
 		protected void activateSwapp(GameObject letter)
 		{
 			container.GetComponent<HorizontalLayoutGroup>().enabled = false;
+			setPositionToLetters ();
 			sortingAfterSwap = letter.transform.GetSiblingIndex();
 			letter.transform.SetSiblingIndex(100);
 		}
@@ -463,7 +454,6 @@ namespace ABC
 			container.GetComponent<HorizontalLayoutGroup>().enabled = true;
 			if(destroy)
 			{
-				letter.GetComponent<UIChar> ().piece.GetComponent<ABCChar> ().isSelected = false;
 				letter.GetComponent<UIChar> ().destroyLetter();
 				actualizePadding (false);
 			}
@@ -474,7 +464,6 @@ namespace ABC
 			chars.Clear();
 			for(int i=0; i<container.transform.childCount; i++)
 			{
-				//print(container.transform.GetChild(i).GetComponent<ABCChar>().character);
 				chars.Add(container.transform.GetChild(i).GetComponent<ABCChar>());
 			}
 			words.initCharByCharValidation();
@@ -495,7 +484,7 @@ namespace ABC
 		/*
 		 * llena el arreglo de vectores de las posiciones de las letras para poder moverlas
 		 */
-		public void setPositionToLetters()
+		protected void setPositionToLetters()
 		{
 			positionOfLetters = new Vector2[container.transform.childCount];
 			for(int i=0; i<container.transform.childCount; i++)
@@ -536,6 +525,34 @@ namespace ABC
 		public void activateButtonOfWordsActions(bool activate)
 		{
 			buttonNext.ShowingNext (activate);
+		}
+
+		/**
+		 * Manda a llamar la letra
+		 **/
+		public void sendLetterToWord(GameObject go)
+		{
+			if (go.GetComponent<UIChar>().checkIfLetterCanBeUsedFromGrid ()) 
+			{
+				addCharacter (go.GetComponent<ABCChar> (), go);
+				activateButtonOfWordsActions (true);
+			}
+		}
+
+		/**
+		 * checa si tiene uiChar y es seleccionable
+		 **/
+		public int checkIfHasUiChar(GameObject go)
+		{
+			if (go.GetComponent<UIChar> ()) 
+			{
+				if (go.GetComponent<UIChar> ().isFromGrid) 
+				{
+					return 1;
+				}
+				return 2;
+			}
+			return 0;
 		}
 	}
 }

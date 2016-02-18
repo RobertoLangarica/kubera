@@ -9,15 +9,23 @@ public class InputWords : MonoBehaviour
 	protected GameObject letter;
 
 	//Para notificar estados del drag a otros objetos
-	public delegate void DDragWordNotification(GameObject letter);
+	public delegate void DInputWordNotification(GameObject letter);
 	[HideInInspector]
-	public DDragWordNotification onDragFinish;
+	public DInputWordNotification onDragFinish;
 	[HideInInspector]
-	public DDragWordNotification onDragUpdate;
+	public DInputWordNotification onDragUpdate;
 	[HideInInspector]
-	public DDragWordNotification onDragStart;
+	public DInputWordNotification onDragStart;
+	[HideInInspector]
+	public DInputWordNotification onTap;
+
+	// 0 nada 1 con uicharFromGrid,  2 conuiCharSinFromGrid
+	public delegate int DCheckIfObjectExist(GameObject Go);
+	[HideInInspector]
+	public DCheckIfObjectExist checkIfObjectExist;
 
 	public float velocityOfMovmentOfTheLetter = 0.8f;
+	public bool stopInput;
 
 	/**
 	 * chequeo del drag
@@ -37,7 +45,11 @@ public class InputWords : MonoBehaviour
 		{
 		case (ContinuousGesturePhase.Started):
 			{	
-				if(gesture.Raycast.Hit2D.transform.gameObject.GetComponent<UIChar> ())
+				if (!gesture.Raycast.Hit2D && !stopInput) {
+					return;
+				}
+
+				if(checkIfObjectExist(gesture.Raycast.Hit2D.transform.gameObject) == 2)
 				{
 					letter = gesture.Raycast.Hit2D.transform.gameObject;
 				}
@@ -54,7 +66,7 @@ public class InputWords : MonoBehaviour
 		case (ContinuousGesturePhase.Updated):
 			{
 				
-				if (!letter) 
+				if (!letter && !stopInput ) 
 				{
 					return;
 				}
@@ -70,16 +82,14 @@ public class InputWords : MonoBehaviour
 				tempV3.z = z;
 				movingLerping(tempV3,letter);
 
-				onDragUpdate (letter);
-				//wordManager.swappingLetters(letter);
-							
+				onDragUpdate (letter);							
 			}
 			break;
 
 		case (ContinuousGesturePhase.Ended):
 			{	
 				//si no hay pieza terminamos
-				if (!letter) 
+				if (!letter && !stopInput ) 
 				{
 					return;
 				}
@@ -91,6 +101,22 @@ public class InputWords : MonoBehaviour
 				DOTween.Kill ("MovingPiece");
 			}
 			break;
+		}
+	}
+
+	/**
+	 * tap de la letra en el tablero
+	 **/
+	void OnTap(TapGesture gesture)
+	{
+		if(gesture.Raycast.Hit2D && !stopInput)
+		{				
+			if (checkIfObjectExist(gesture.Raycast.Hit2D.transform.gameObject) == 1) 
+			{
+				onTap (gesture.Raycast.Hit2D.transform.gameObject);
+					//wordManager.activateButtonOfWordsActions (true);
+					//gameObject.GetComponent<AudioSource> ().Play ();
+			}
 		}
 	}
 
