@@ -5,59 +5,48 @@ using ABC;
 
 public class InputWords : MonoBehaviour 
 {
-	protected int lastDragFrame;
+	protected int lastTimeDraggedFrame;
 	protected GameObject letter;
 
 	//Para notificar estados del drag a otros objetos
 	public delegate void DInputWordNotification(GameObject letter);
-	[HideInInspector]
+
 	public DInputWordNotification onDragFinish;
-	[HideInInspector]
 	public DInputWordNotification onDragUpdate;
-	[HideInInspector]
 	public DInputWordNotification onDragStart;
-	[HideInInspector]
 	public DInputWordNotification onTap;
 
-	// 0 nada 1 con uicharFromGrid,  2 conuiCharSinFromGrid
-	public delegate int DCheckIfObjectExist(GameObject Go);
-	[HideInInspector]
-	public DCheckIfObjectExist checkIfObjectExist;
-
-	public float velocityOfMovmentOfTheLetter = 0.8f;
-	public bool stopInput;
-
 	/**
-	 * chequeo del drag
-	 **/
+	 * @return 0:nada,  1:uicharFromGrid,  2:conuiCharSinFromGrid
+	 */ 
+	public delegate int DCheckIfObjectExist(GameObject Go);
+
+	public DCheckIfObjectExist checkIfObjectExist;
+	public float letterSpeed = 0.8f;
+	public bool allowInput = true;
+
 	void OnDrag(DragGesture gesture) 
 	{
 		//Solo se ejecuta una vez por frame (para que el multifinger funcione sin encimarse)
-		if(lastDragFrame == Time.frameCount)
+		if(!allowInput || lastTimeDraggedFrame == Time.frameCount)
 		{
 			return;
 		}
 
-		lastDragFrame = Time.frameCount;
+		lastTimeDraggedFrame = Time.frameCount;
 
 
 		switch(gesture.Phase)
 		{
 		case (ContinuousGesturePhase.Started):
 			{	
-				if (!gesture.Raycast.Hit2D && !stopInput) {
+				if (!gesture.Raycast.Hit2D) 
+				{
 					return;
 				}
 
-				if(checkIfObjectExist(gesture.Raycast.Hit2D.transform.gameObject) == 2)
-				{
-					letter = gesture.Raycast.Hit2D.transform.gameObject;
-				}
-				
-				if (!letter) 
-				{
-					return;
-				}
+
+				letter = gesture.Raycast.Hit2D.transform.gameObject;
 
 				onDragStart(letter);
 			}	
@@ -65,8 +54,7 @@ public class InputWords : MonoBehaviour
 
 		case (ContinuousGesturePhase.Updated):
 			{
-				
-				if (!letter && !stopInput ) 
+				if (!letter) 
 				{
 					return;
 				}
@@ -88,8 +76,7 @@ public class InputWords : MonoBehaviour
 
 		case (ContinuousGesturePhase.Ended):
 			{	
-				//si no hay pieza terminamos
-				if (!letter && !stopInput ) 
+				if (!letter) 
 				{
 					return;
 				}
@@ -109,14 +96,12 @@ public class InputWords : MonoBehaviour
 	 **/
 	void OnTap(TapGesture gesture)
 	{
-		if(gesture.Raycast.Hit2D && !stopInput)
-		{				
-			if (checkIfObjectExist(gesture.Raycast.Hit2D.transform.gameObject) == 1) 
-			{
-				onTap (gesture.Raycast.Hit2D.transform.gameObject);
-					//wordManager.activateButtonOfWordsActions (true);
-					//gameObject.GetComponent<AudioSource> ().Play ();
-			}
+		if(allowInput && gesture.Raycast.Hit2D)
+		{		
+			onTap (gesture.Raycast.Hit2D.transform.gameObject);
+			//[TODO]
+			//wordManager.activateButtonOfWordsActions (true);
+			//gameObject.GetComponent<AudioSource> ().Play ();
 		}
 	}
 
@@ -125,7 +110,7 @@ public class InputWords : MonoBehaviour
 	 **/
 	public void movingLerping(Vector3 end,GameObject piece)
 	{		
-		piece.transform.DOMove (end, velocityOfMovmentOfTheLetter).SetId("MovingPiece");
+		piece.transform.DOMove (end, letterSpeed).SetId("MovingPiece");
 	}
 
 }

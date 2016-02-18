@@ -538,21 +538,5 @@ namespace ABC
 				activateButtonOfWordsActions (true);
 			}
 		}
-
-		/**
-		 * checa si tiene uiChar y es seleccionable
-		 **/
-		public int checkIfHasUiChar(GameObject go)
-		{
-			if (go.GetComponent<UIChar> ()) 
-			{
-				if (go.GetComponent<UIChar> ().isFromGrid) 
-				{
-					return 1;
-				}
-				return 2;
-			}
-			return 0;
-		}
 	}
 }

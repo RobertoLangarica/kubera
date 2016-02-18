@@ -102,8 +102,8 @@ public class InputGameController : MonoBehaviour
 
 				if(isLetterSelected)
 				{
-					wordManager.setPositionToLetters();
-					wordManager.canSwappLetters(true,piece);
+					//wordManager.setPositionToLetters();
+					//wordManager.canSwappLetters(true,piece);
 				}
 
 				if (isPiece) 
@@ -152,7 +152,7 @@ public class InputGameController : MonoBehaviour
 
 						tempV3.y = y;
 						tempV3.z = z;
-						wordManager.swappingLetters(piece);
+						//wordManager.swappingLetters(piece);
 						movingLerping(tempV3,piece);
 					}
 				}
@@ -177,14 +177,14 @@ public class InputGameController : MonoBehaviour
 				if(isLetterSelected)
 				{
 					//Lo habilitamos y ajustamos
-					if(piece.transform.localPosition.x > wordManager.positionOfButton.x -50 && piece.transform.localPosition.x < wordManager.positionOfButton.x +50)
+					/*if(piece.transform.localPosition.x > wordManager.positionOfButton.x -50 && piece.transform.localPosition.x < wordManager.positionOfButton.x +50)
 					{
 						swappingLetter(true,piece);
 					}
 					else
 					{
 						swappingLetter();	
-					}
+					}*/
 					piece = null;
 					break;
 				}
@@ -337,12 +337,12 @@ public class InputGameController : MonoBehaviour
 				}
 				if(isLeterOfPice)
 				{
-					if(!gesture.Raycast.Hit2D.transform.gameObject.GetComponent<ABCChar>().isSelected)
+					/*if(!gesture.Raycast.Hit2D.transform.gameObject.GetComponent<ABCChar>().isSelected)
 					{
 						gesture.Raycast.Hit2D.transform.gameObject.GetComponent<UIChar>().ShootLetter();
-						wordManager.activateButtonOfWordsActions (true);
+						//wordManager.activateButtonOfWordsActions (true);
 						gameObject.GetComponent<AudioSource>().Play();
-					}
+					}*/
 				}
 			}
 		}
@@ -495,7 +495,7 @@ public class InputGameController : MonoBehaviour
 		{
 			letter = piece;
 		}
-		wordManager.canSwappLetters(false,piece,destroy);
+		//wordManager.canSwappLetters(false,piece,destroy);
 	}
 
 	public void setCanRotate(bool rotate)
