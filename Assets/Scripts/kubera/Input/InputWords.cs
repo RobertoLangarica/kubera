@@ -16,12 +16,6 @@ public class InputWords : MonoBehaviour
 	public DInputWordNotification onDragStart;
 	public DInputWordNotification onTap;
 
-	/**
-	 * @return 0:nada,  1:uicharFromGrid,  2:conuiCharSinFromGrid
-	 */ 
-	public delegate int DCheckIfObjectExist(GameObject Go);
-
-	public DCheckIfObjectExist checkIfObjectExist;
 	public float letterSpeed = 0.8f;
 	public bool allowInput = true;
 
