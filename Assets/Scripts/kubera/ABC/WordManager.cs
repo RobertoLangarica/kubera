@@ -8,7 +8,8 @@ namespace ABC
 {
 	public class WordManager : MonoBehaviour 
 	{
-
+		protected InputWords inputWords;
+		
 		public GameObject letterPrefab;
 		public GameObject empty;
 		public GameObject container;
@@ -35,6 +36,12 @@ namespace ABC
 
 		void Start()
 		{
+			inputWords = FindObjectOfType<InputWords> ();
+
+			inputWords.onDragUpdate += swappingLetters;
+			inputWords.onDragFinish += swappEnding;
+			inputWords.onDragStart  += activateSwapp;
+
 			textureObject = Resources.LoadAll("Letters");
 			names = new string[textureObject.Length];
 			readTextures();
@@ -421,53 +428,67 @@ namespace ABC
 			buttonNext.isCompletedNotCompletedOrMoving(2);
 		}
 
+		/**
+		 * checa si debe borrar la imagen y mandar a reacomodar
+		 **/
+		protected void swappEnding(GameObject letter)
+		{
+			if(letter.transform.localPosition.x > positionOfButton.x -50 && letter.transform.localPosition.x < positionOfButton.x +50)
+			{
+				canSwappLetters(letter,true);
+			}
+			else
+			{
+				canSwappLetters(letter);	
+			}
+		}
 
-		
+		/**
+		 * activa el poder mover las letras
+		 **/
+		protected void activateSwapp(GameObject letter)
+		{
+			container.GetComponent<HorizontalLayoutGroup>().enabled = false;
+			sortingAfterSwap = letter.transform.GetSiblingIndex();
+			letter.transform.SetSiblingIndex(100);
+		}
+
 		/*
 		 * activa o desactiva el poder mover las letras
 		 * a la letra que se movera se mueve su index para que este arriba de las otras letras
 		 * destruye la letra seleccionada si la arrojaron a la basura
 		 */
-		public void canSwappLetters(bool deActivate,GameObject letter,bool destroy = false)
-		{
-			if(deActivate)
+		public void canSwappLetters(GameObject letter,bool destroy = false)
+		{			
+			container.GetComponent<HorizontalLayoutGroup>().enabled = true;
+			if(destroy)
 			{
-				container.GetComponent<HorizontalLayoutGroup>().enabled = false;
-				sortingAfterSwap = letter.transform.GetSiblingIndex();
-				letter.transform.SetSiblingIndex(100);
+				letter.GetComponent<UIChar> ().piece.GetComponent<ABCChar> ().isSelected = false;
+				letter.GetComponent<UIChar> ().destroyLetter();
+				actualizePadding (false);
 			}
 			else
 			{
-				container.GetComponent<HorizontalLayoutGroup>().enabled = true;
-				if(destroy)
-				{
-					letter.GetComponent<UIChar> ().piece.GetComponent<ABCChar> ().isSelected = false;
-					letter.GetComponent<UIChar> ().destroyLetter();
-					actualizePadding (false);
-				}
-				else
-				{
-					letter.transform.SetSiblingIndex(sortingAfterSwap);
-				}
-				chars.Clear();
-				for(int i=0; i<container.transform.childCount; i++)
-				{
-					//print(container.transform.GetChild(i).GetComponent<ABCChar>().character);
-					chars.Add(container.transform.GetChild(i).GetComponent<ABCChar>());
-				}
-				words.initCharByCharValidation();
-				foreach(ABCChar c in chars)
-				{
-					words.validateChar(c);
-				}
-				if(words.completeWord)
-				{
-					onWordComplete();
-				}
-				else
-				{
-					buttonNext.isCompletedNotCompletedOrMoving(1);
-				}
+				letter.transform.SetSiblingIndex(sortingAfterSwap);
+			}
+			chars.Clear();
+			for(int i=0; i<container.transform.childCount; i++)
+			{
+				//print(container.transform.GetChild(i).GetComponent<ABCChar>().character);
+				chars.Add(container.transform.GetChild(i).GetComponent<ABCChar>());
+			}
+			words.initCharByCharValidation();
+			foreach(ABCChar c in chars)
+			{
+				words.validateChar(c);
+			}
+			if(words.completeWord)
+			{
+				onWordComplete();
+			}
+			else
+			{
+				buttonNext.isCompletedNotCompletedOrMoving(1);
 			}
 		}
 
