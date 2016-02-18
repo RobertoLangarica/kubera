@@ -4,7 +4,7 @@ using ABC;
 
 public class Cell : MonoBehaviour 
 {
-	public ETYPEOFPIECE_ID typeOfPiece;
+	public EPieceType pieceType;
 	public bool available;
 	public bool occupied;
 	public GameObject piece;
@@ -29,7 +29,7 @@ public class Cell : MonoBehaviour
 	 */
 	public void clearCell()
 	{
-		typeOfPiece = ETYPEOFPIECE_ID.NONE;
+		pieceType = EPieceType.NONE;
 		occupied = false;
 		piece = null;
 
@@ -66,7 +66,7 @@ public class Cell : MonoBehaviour
 		cellType = newCellType;
 		if((cellType & 0x1) == 0x1)
 		{
-			typeOfPiece = ETYPEOFPIECE_ID.NONE;
+			pieceType = EPieceType.NONE;
 			occupied = false;
 			available = true;
 			piece = null;
@@ -81,7 +81,7 @@ public class Cell : MonoBehaviour
 		}
 		if((cellType & 0x4) == 0x4)
 		{
-			typeOfPiece = ETYPEOFPIECE_ID.NONE;
+			pieceType = EPieceType.NONE;
 			occupied = true;
 			available = true;
 			piece = null;
@@ -91,7 +91,7 @@ public class Cell : MonoBehaviour
 		}
 		if((cellType & 0x8) == 0x8)
 		{
-			typeOfPiece = ETYPEOFPIECE_ID.LETTER_FROM_BEGINING;
+			pieceType = EPieceType.LETTER_OBSTACLE;
 			occupied = true;
 			available = false;
 		}
@@ -101,31 +101,31 @@ public class Cell : MonoBehaviour
 			switch(tempType)
 			{
 			case(1):
-				typeOfPiece = ETYPEOFPIECE_ID.AQUA;
+				pieceType = EPieceType.AQUA;
 				//Debug.Log(typeOfPiece);
 				break;
 			case(2):
-				typeOfPiece = ETYPEOFPIECE_ID.BLUE;
+				pieceType = EPieceType.BLUE;
 				//Debug.Log(typeOfPiece);
 				break;
 			case(3):
-				typeOfPiece = ETYPEOFPIECE_ID.GREEN;
+				pieceType = EPieceType.GREEN;
 				//Debug.Log(typeOfPiece);
 				break;
 			case(4):
-				typeOfPiece = ETYPEOFPIECE_ID.MAGENTA;
+				pieceType = EPieceType.MAGENTA;
 				//Debug.Log(typeOfPiece);
 				break;
 			case(5):
-				typeOfPiece = ETYPEOFPIECE_ID.RED;
+				pieceType = EPieceType.RED;
 				//Debug.Log(typeOfPiece);
 				break;
 			case(6):
-				typeOfPiece = ETYPEOFPIECE_ID.YELLOW;
+				pieceType = EPieceType.YELLOW;
 				//Debug.Log(typeOfPiece);
 				break;
 			case(7):
-				typeOfPiece = ETYPEOFPIECE_ID.GREY;
+				pieceType = EPieceType.GREY;
 				//Debug.Log(typeOfPiece);
 				break;
 			}

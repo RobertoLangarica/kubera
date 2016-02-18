@@ -14,18 +14,18 @@ public class GameManager : MonoBehaviour
 	public GameObject retryPopUp;
 	public GameObject notEnoughLifesPopUp;
 
-	protected int pointsCount =0;
-	protected int wordsMade =0;
+	protected int pointsCount = 0;
+	protected int wordsMade = 0;
 	protected bool wordFound;
 	protected List<string> letters;
 	protected string[] words;
 		
-	protected int blackLettersUsed =0;
+	protected int blackLettersUsed = 0;
 
 	protected string[] myWinCondition;
 
 	protected int totalMoves;
-	protected int currentMoves;
+	protected int remainingMoves;
 
 	protected int winBombs;
 
@@ -76,19 +76,19 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
-		myWinCondition = persistentData.currentLevel.winCondition.Split (new char[1]{ '-' });
 		cellToLetter = new List<Cell> ();
 
-		currentMoves = totalMoves = persistentData.currentLevel.moves;
-		hud.setMovments (currentMoves);
+		myWinCondition = persistentData.currentLevel.winCondition.Split ('-');
+		remainingMoves = totalMoves = persistentData.currentLevel.moves;
+
+		hud.setMovments (remainingMoves);
 
 
 		UserDataManager.instance.playerGems = 300;
 
 		hud.setGems(UserDataManager.instance.playerGems);
-		hud.setLevel (2);//PASAR EL NIVEL EN EL QUE ESTA
+		hud.setLevel (persistentData.levelNumber);
 
-		//UnlockPowerUp();
 		powerUpManager.activateAvailablePowers();
 		checkIfNeedToUnlockPowerUp();
 
@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
 		if(myWinCondition[0] == "letters")
 		{
 			int i;
-			string[] s = myWinCondition [1].Split (new char[1]{ ',' });
+			string[] s = myWinCondition [1].Split (',');
 			string[] temp;
 
 			for(i=0; i< s.Length; i++)
@@ -114,9 +114,10 @@ public class GameManager : MonoBehaviour
 		}
 		if(myWinCondition[0] == "word")
 		{
-			words = myWinCondition [1].Split (new char[1]{ '_' });
+			words = myWinCondition [1].Split ('_');
 		}
 	}
+
 
 	void Update()
 	{
@@ -177,9 +178,9 @@ public class GameManager : MonoBehaviour
 
 	protected void piecePositionatedCorrectly(int length)
 	{
-		currentMoves--;
+		remainingMoves--;
 
-		hud.setMovments (currentMoves);
+		hud.setMovments (remainingMoves);
 
 		addPoints(length);
 	}
@@ -435,7 +436,7 @@ public class GameManager : MonoBehaviour
 		deactivateCurrentPowerUp();
 
 		destroyByColor = true;
-		cellManager.selectNeighbours = false;
+		cellManager.selectNeighbors = false;
 
 		inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP).activateDestroyMode(myButtonPosition));
 		inputGameController.setDestroyByColor (destroyByColor);
@@ -449,7 +450,7 @@ public class GameManager : MonoBehaviour
 		deactivateCurrentPowerUp();
 
 		destroyByColor = true;
-		cellManager.selectNeighbours = true;
+		cellManager.selectNeighbors = true;
 
 		inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.DESTROY_NEIGHBORS_POWERUP).activateDestroyMode(myButtonPosition));
 		inputGameController.setDestroyByColor (destroyByColor);
@@ -468,6 +469,7 @@ public class GameManager : MonoBehaviour
 			canRotate = false;
 			inputGameController.setCanRotate (canRotate);
 		}
+
 		if(destroyByColor)
 		{
 			destroyByColor = false;
@@ -549,7 +551,7 @@ public class GameManager : MonoBehaviour
 
 	public void checkToLoose()
 	{
-		if(!cellManager.VerifyPosibility(pieceManager.piecesInBar) || currentMoves == 0)
+		if(!cellManager.VerifyPosibility(pieceManager.piecesInBar) || remainingMoves == 0)
 		{
 			Debug.Log ("Perdio");
 			while(true)
@@ -583,7 +585,7 @@ public class GameManager : MonoBehaviour
 
 		bombsForWinBonification();
 
-		if(cellManager.colorOfMoreQuantity() != ETYPEOFPIECE_ID.NONE)
+		if(cellManager.colorOfMoreQuantity() != EPieceType.NONE)
 		{
 			add1x1Block();
 		}
@@ -598,13 +600,13 @@ public class GameManager : MonoBehaviour
 		Cell[] emptyCells = cellManager.allEmptyCells();
 		Cell cell;
 
-		if (currentMoves != 0 && emptyCells.Length > 0) 
+		if (remainingMoves != 0 && emptyCells.Length > 0) 
 		{
 			cell = emptyCells [Random.Range (0, emptyCells.Length - 1)];
 
 
-			currentMoves--;
-			hud.setMovments (currentMoves);
+			remainingMoves--;
+			hud.setMovments (remainingMoves);
 
 			GameObject go = GameObject.Instantiate (bonificationPiece) as GameObject;
 			SpriteRenderer sprite = go.GetComponent<Piece> ().pieces [0].GetComponent<SpriteRenderer> ();
@@ -614,9 +616,7 @@ public class GameManager : MonoBehaviour
 
 			go.transform.position = nVec;
 
-			//Debug.Log(cellManager.colorOfMoreQuantity());
-			go.GetComponent<Piece> ().colorToSet = 0;
-			go.GetComponent<Piece> ().typeOfPiece = cellManager.colorOfMoreQuantity ();
+			go.GetComponent<Piece> ().currentType = cellManager.colorOfMoreQuantity ();
 
 			go.transform.position = cellManager.Positionate (go.GetComponent<Piece> ());
 
@@ -643,7 +643,7 @@ public class GameManager : MonoBehaviour
 		if (cellToLetter.Count > 0) 
 		{
 			cellManager.turnPieceToLetterByWinNotification (cellToLetter [random]);
-			cellToLetter [random].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
+			cellToLetter [random].pieceType = EPieceType.LETTER;
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
@@ -657,7 +657,7 @@ public class GameManager : MonoBehaviour
 
 	protected void useBombs()
 	{
-		if(winBombs > 0 && cellManager.colorOfMoreQuantity() != ETYPEOFPIECE_ID.NONE)
+		if(winBombs > 0 && cellManager.colorOfMoreQuantity() != EPieceType.NONE)
 		{
 			cellToLetter = new List<Cell>();
 			cellToLetter = cellManager.searchCellsOfSameColor(cellManager.colorOfMoreQuantity());
@@ -673,8 +673,8 @@ public class GameManager : MonoBehaviour
 	protected void destroyAndCountAllLetters()
 	{
 		cellToLetter = new List<Cell>();
-		cellToLetter.AddRange (cellManager.searchCellsOfSameColor (ETYPEOFPIECE_ID.LETTER));
-		cellToLetter.AddRange (cellManager.searchCellsOfSameColor (ETYPEOFPIECE_ID.LETTER_FROM_BEGINING));
+		cellToLetter.AddRange (cellManager.searchCellsOfSameColor (EPieceType.LETTER));
+		cellToLetter.AddRange (cellManager.searchCellsOfSameColor (EPieceType.LETTER_OBSTACLE));
 		winPoints ();
 		StartCoroutine (destroyLetter ());
 	}
@@ -750,19 +750,19 @@ public class GameManager : MonoBehaviour
 
 	protected void bombsForWinBonification()
 	{
-		if(currentMoves > 0 && currentMoves < 4)
+		if(remainingMoves > 0 && remainingMoves < 4)
 		{
 			winBombs = 1;
 		}
-		else if(currentMoves > 3 && currentMoves < 7)
+		else if(remainingMoves > 3 && remainingMoves < 7)
 		{
 			winBombs = 2;
 		}
-		else if(currentMoves > 6 && currentMoves < 10)
+		else if(remainingMoves > 6 && remainingMoves < 10)
 		{
 			winBombs = 3;
 		}
-		else if(currentMoves > 10)
+		else if(remainingMoves > 10)
 		{
 			winBombs = 5;
 		}
@@ -840,8 +840,8 @@ public class GameManager : MonoBehaviour
 		{
 			secondChanceTimes++;
 
-			currentMoves += secondChanceMovements;
-			hud.setMovments (currentMoves);
+			remainingMoves += secondChanceMovements;
+			hud.setMovments (remainingMoves);
 
 			inputGameController.activateSecondChanceLocked();
 		}
