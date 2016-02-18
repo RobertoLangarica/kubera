@@ -55,6 +55,8 @@ namespace LevelBuilder
 			//Mientras se procesa el diccionario por primera vez
 			showLoadingIndicator();
 			PersistentData.instance.onDictionaryFinished += hideLoadingIndicatorandRemoveCallback;
+
+			StartCoroutine (initializeAfterGame());
 		}
 
 		private IEnumerator Initialization()
@@ -481,13 +483,20 @@ namespace LevelBuilder
 
 		private void hideLoadingIndicatorandRemoveCallback()
 		{
-			hideLoadingIndicator();
+			//hideLoadingIndicator();
 			PersistentData.instance.onDictionaryFinished += hideLoadingIndicatorandRemoveCallback;
+		}
 
+		IEnumerator initializeAfterGame()
+		{
+			yield return new WaitForSeconds (.5f);
+			print (PersistentData.instance.fromGameToEdit);
 			if(PersistentData.instance.fromGameToEdit)
 			{
 				PersistentData.instance.fromGameToEdit = false;
-				configureHUDFromLevel(PersistentData.instance.currentLevel.name);
+
+				configureHUDFromLevel (PersistentData.instance.currentLevel.name);
+
 			}
 		}
 
