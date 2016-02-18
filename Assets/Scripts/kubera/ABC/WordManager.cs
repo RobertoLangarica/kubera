@@ -42,7 +42,6 @@ namespace ABC
 			inputWords.onDragFinish += swappEnding;
 			inputWords.onDragStart  += activateSwapp;
 			inputWords.onTap += sendLetterToWord;
-			inputWords.checkIfObjectExist += checkIfHasUiChar;
 
 			textureObject = Resources.LoadAll("Letters");
 			names = new string[textureObject.Length];
