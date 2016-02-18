@@ -12,13 +12,9 @@ public class CellsManager : MonoBehaviour
 	public delegate void letterCreated(ABCChar abcChar,UIChar uiChar,bool isBlackLetter);
 	[HideInInspector]public letterCreated OnLetterCreated;
 
-	//Es el prefab que se va a utilizar para la grid
 	public GameObject cellPrefab;
-
-	public GameObject letterFromBeginingPrefab;
-
-	//El prefab que se instanciara para ocupar celdas desde el inicio
-	public GameObject initialPiece;
+	public GameObject obstacleLetterPrefab;
+	public GameObject singleSquarePiece;
 
 	//Medidas del grid
 	public int width;
@@ -29,7 +25,7 @@ public class CellsManager : MonoBehaviour
 	//Bandera para el powerUp de Destruccion por color
 	//false: destruye todos los del mismo color en la escena
 	//true: destruye todos los del mismo color que este juntos
-	public bool selectNeighbours;
+	public bool selectNeighbors;
 
 	//Las celdas seleccionadas por color
 	protected List<Cell> selected = new List<Cell>();
@@ -64,11 +60,11 @@ public class CellsManager : MonoBehaviour
 
 				cells[cells.Count-1].setTypeToCell(int.Parse(levelGridData[cells.Count-1]));
 
-				if(cells[cells.Count-1].typeOfPiece == ETYPEOFPIECE_ID.LETTER_FROM_BEGINING)
+				if(cells[cells.Count-1].pieceType == EPieceType.LETTER_OBSTACLE)
 				{
 					turnPiecesToBlackLetters(cells[cells.Count-1]);
 				}
-				else if(cells[cells.Count-1].typeOfPiece != ETYPEOFPIECE_ID.NONE)
+				else if(cells[cells.Count-1].pieceType != EPieceType.NONE)
 				{
 					addBlockToInitialOccupiedCell(cells[cells.Count-1]);
 				}
@@ -161,7 +157,7 @@ public class CellsManager : MonoBehaviour
 
 		for(int i = 0;i < cells.Count;i++)
 		{
-			if(cells[i].occupied && cells[i].typeOfPiece != ETYPEOFPIECE_ID.LETTER && cells[i].available)
+			if(cells[i].occupied && cells[i].pieceType != EPieceType.LETTER && cells[i].available)
 			{
 				widthCount[wIndex]++;
 				heightCount[hIndex]++;
@@ -173,6 +169,7 @@ public class CellsManager : MonoBehaviour
 				wIndex++;
 			}
 		}
+
 		for(int i = 0;i < height;i++)
 		{
 			if(widthCount[i] == width)
@@ -182,6 +179,7 @@ public class CellsManager : MonoBehaviour
 				linesCount++;
 			}
 		}
+
 		for(int i = 0;i < width;i++)
 		{
 			if(heightCount[i] == height)
@@ -290,7 +288,7 @@ public class CellsManager : MonoBehaviour
 			tempC = getCellOnVec(piece.pieces[i].transform.position);
 			tempC.occupied = true;
 			tempC.piece=piece.pieces[i];
-			tempC.typeOfPiece = piece.typeOfPiece;
+			tempC.pieceType = piece.currentType;
 		}
 		
 		tempC = getCellOnVec(piece.pieces[0].transform.position);
@@ -306,10 +304,9 @@ public class CellsManager : MonoBehaviour
 	}
 
 	/*
-	 * Cambi las piezas por letras de la linea que se le envia
+	 * Cambia las piezas por letras de la linea que se le envia.
 	 * 
 	 * @params isHorizontal{bool}: Es una bandera para indicar si la linea que se cambiara es horizontal o no
-	 * 
 	 * @params index{int}: Es el indice de en donde inicia la linea, este indice corresponde al de la lista de cells
 	 */
 	protected void createLettersOn(bool isHorizontal,int index)
@@ -334,10 +331,10 @@ public class CellsManager : MonoBehaviour
 	{
 		int newIndex = lineIndex+cellIndex;
 
-		cells[newIndex].typeOfPiece = ETYPEOFPIECE_ID.LETTER;
+		cells[newIndex].pieceType = EPieceType.LETTER;
 		if(cells[newIndex].piece != null)
 		{
-			Transform tempTransform = cells [newIndex].transform;
+			Transform tempTransform = cells[newIndex].transform;
 		
 			Destroy (cells [newIndex].piece);
 
@@ -400,7 +397,7 @@ public class CellsManager : MonoBehaviour
 
 	protected void addBlockToInitialOccupiedCell(Cell cell)
 	{
-		GameObject go = GameObject.Instantiate (initialPiece) as GameObject;
+		GameObject go = GameObject.Instantiate (singleSquarePiece) as GameObject;
 		SpriteRenderer sprite = go.GetComponent<Piece> ().pieces [0].GetComponent<SpriteRenderer> ();
 
 		Vector3 nVec = new Vector3 (sprite.bounds.size.x * 0.5f,
@@ -408,9 +405,7 @@ public class CellsManager : MonoBehaviour
 
 		go.transform.position = nVec;
 
-		//Debug.Log(cellManager.colorOfMoreQuantity());
-		go.GetComponent<Piece> ().colorToSet = 0;
-		go.GetComponent<Piece> ().typeOfPiece = cell.typeOfPiece;
+		go.GetComponent<Piece> ().currentType = cell.pieceType;
 
 		go.transform.position = Positionate (go.GetComponent<Piece> ());
 
@@ -516,7 +511,7 @@ public class CellsManager : MonoBehaviour
 		List<Cell> finalList = new List<Cell>();
 		List<Cell> pendingList = new List<Cell>();
 
-		if(selectNeighbours)
+		if(selectNeighbors)
 		{
 			pendingList.Add(cell);
 				
@@ -601,7 +596,7 @@ public class CellsManager : MonoBehaviour
 		tempC = getCellAt(cX,cY-1);
 		if(tempC != null)
 		{
-			if(tempC.typeOfPiece == cell.typeOfPiece && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			if(tempC.pieceType == cell.pieceType && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
 			{
 				pending.Add(tempC);
 			}
@@ -609,7 +604,7 @@ public class CellsManager : MonoBehaviour
 		tempC = getCellAt(cX-1,cY);
 		if(tempC != null)
 		{
-			if(tempC.typeOfPiece == cell.typeOfPiece && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			if(tempC.pieceType == cell.pieceType && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
 			{
 				pending.Add(tempC);
 			}
@@ -617,7 +612,7 @@ public class CellsManager : MonoBehaviour
 		tempC = getCellAt(cX+1,cY);
 		if(tempC != null)
 		{
-			if(tempC.typeOfPiece == cell.typeOfPiece && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			if(tempC.pieceType == cell.pieceType && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
 			{
 				pending.Add(tempC);
 			}
@@ -625,7 +620,7 @@ public class CellsManager : MonoBehaviour
 		tempC = getCellAt(cX,cY+1);
 		if(tempC != null)
 		{
-			if(tempC.typeOfPiece == cell.typeOfPiece && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			if(tempC.pieceType == cell.pieceType && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
 			{
 				pending.Add(tempC);
 			}
@@ -644,7 +639,7 @@ public class CellsManager : MonoBehaviour
 		selected.Clear();
 		for(int i = 0;i < cells.Count;i++)
 		{
-			if(cells[i].typeOfPiece == cell.typeOfPiece)
+			if(cells[i].pieceType == cell.pieceType)
 			{
 				selected.Add(cells[i]);
 			}
@@ -652,12 +647,12 @@ public class CellsManager : MonoBehaviour
 		return selected;
 	}
 
-	public List<Cell> searchCellsOfSameColor(ETYPEOFPIECE_ID cellType)
+	public List<Cell> searchCellsOfSameColor(EPieceType cellType)
 	{
 		selected.Clear();
 		for(int i = 0;i < cells.Count;i++)
 		{
-			if(cells[i].typeOfPiece == cellType)
+			if(cells[i].pieceType == cellType)
 			{
 				selected.Add(cells[i]);
 			}
@@ -679,7 +674,7 @@ public class CellsManager : MonoBehaviour
 		return result.ToArray();
 	}
 
-	public ETYPEOFPIECE_ID colorOfMoreQuantity()
+	public EPieceType colorOfMoreQuantity()
 	{
 		int[] quantity = new int[8];
 		int index = -1;
@@ -687,30 +682,30 @@ public class CellsManager : MonoBehaviour
 
 		for(int i = 0;i < cells.Count;i++)
 		{
-			switch(cells[i].typeOfPiece)
+			switch(cells[i].pieceType)
 			{
-			case ETYPEOFPIECE_ID.AQUA:
+			case EPieceType.AQUA:
 				quantity[0]++;
 				break;
-			case ETYPEOFPIECE_ID.BLACK:
+			case EPieceType.BLACK:
 				quantity[1]++;
 				break;
-			case ETYPEOFPIECE_ID.BLUE:
+			case EPieceType.BLUE:
 				quantity[2]++;
 				break;
-			case ETYPEOFPIECE_ID.GREEN:
+			case EPieceType.GREEN:
 				quantity[3]++;
 				break;
-			case ETYPEOFPIECE_ID.GREY:
+			case EPieceType.GREY:
 				quantity[4]++;
 				break;
-			case ETYPEOFPIECE_ID.MAGENTA:
+			case EPieceType.MAGENTA:
 				quantity[5]++;
 				break;
-			case ETYPEOFPIECE_ID.RED:
+			case EPieceType.RED:
 				quantity[6]++;
 				break;
-			case ETYPEOFPIECE_ID.YELLOW:
+			case EPieceType.YELLOW:
 				quantity[7]++;
 				break;
 			}
@@ -731,33 +726,33 @@ public class CellsManager : MonoBehaviour
 			index = Random.Range (0, 8);
 		}
 
-		ETYPEOFPIECE_ID result = ETYPEOFPIECE_ID.NONE;
+		EPieceType result = EPieceType.NONE;
 
 		switch(index)
 		{
 		case 0:
-			result = ETYPEOFPIECE_ID.AQUA;
+			result = EPieceType.AQUA;
 			break;
 		case 1:
-			result = ETYPEOFPIECE_ID.BLACK;
+			result = EPieceType.BLACK;
 			break;
 		case 2:
-			result = ETYPEOFPIECE_ID.BLUE;
+			result = EPieceType.BLUE;
 			break;
 		case 3:
-			result = ETYPEOFPIECE_ID.GREEN;
+			result = EPieceType.GREEN;
 			break;
 		case 4:
-			result = ETYPEOFPIECE_ID.GREY;
+			result = EPieceType.GREY;
 			break;
 		case 5:
-			result = ETYPEOFPIECE_ID.MAGENTA;
+			result = EPieceType.MAGENTA;
 			break;
 		case 6:
-			result = ETYPEOFPIECE_ID.RED;
+			result = EPieceType.RED;
 			break;
 		case 7:
-			result = ETYPEOFPIECE_ID.YELLOW;
+			result = EPieceType.YELLOW;
 			break;
 		}
 		return result;

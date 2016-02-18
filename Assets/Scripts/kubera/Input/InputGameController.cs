@@ -15,15 +15,10 @@ public class InputGameController : MonoBehaviour
 	protected int fingerCount = 0;
 	
 	//Para notificar estados del drag a otros objetos
-	public delegate void DOnDragFinish();
-	public delegate void DOnDrag();
-	public delegate void DOnDragStart();
-	[HideInInspector]
-	public DOnDragFinish onDragFinish;
-	[HideInInspector]
-	public DOnDrag onAnyDrag;
-	[HideInInspector]
-	public DOnDragStart onDragStart;
+	public delegate void DOnDragNotification();
+	public DOnDragNotification OnDragFinish;
+	public DOnDragNotification OnDragAny;
+	public DOnDragNotification OnDragStart;
 
 	protected WordManager wordManager;
 	protected PieceManager pieceManager;
@@ -42,7 +37,6 @@ public class InputGameController : MonoBehaviour
 
 	protected Vector3 selectedScale = new Vector3 (4.5f, 4.5f, 4.5f);
 
-	[HideInInspector]
 	protected bool canRotate;
 	protected bool destroyByColor;
 
@@ -62,26 +56,19 @@ public class InputGameController : MonoBehaviour
 	public PowerUpUsed OnPowerUpUsed;
 
 	public GameObject secondChanceLock;
-	[HideInInspector]
-	public bool secondChanceBombsOnly;
+	[HideInInspector]public bool secondChanceBombsOnly;
 
 	void Start () 
 	{
 		wordManager = GameObject.FindObjectOfType<WordManager>();
 		pieceManager = GameObject.FindObjectOfType<PieceManager>();
 
-		onDragFinish = foo;
-		onAnyDrag	 = foo;
-		onDragStart	 = foo;
+		OnDragFinish += foo;
+		OnDragAny	 += foo;
+		OnDragStart	 += foo;
 
 		secondChanceLock.SetActive(false);
 		secondChanceBombsOnly = false;
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	protected void foo(){}
@@ -101,7 +88,7 @@ public class InputGameController : MonoBehaviour
 		
 		lastDragFrame = Time.frameCount;
 		
-		onAnyDrag();
+		OnDragAny();
 		
 		switch(gesture.Phase)
 		{
@@ -109,7 +96,8 @@ public class InputGameController : MonoBehaviour
 			{
 				isDragging = true;
 				hasMoved = true;
-				onDragStart();
+				OnDragStart();
+
 				if (!piece) {return;}
 
 				if(isLetterSelected)
@@ -117,6 +105,7 @@ public class InputGameController : MonoBehaviour
 					wordManager.setPositionToLetters();
 					wordManager.canSwappLetters(true,piece);
 				}
+
 				if (isPiece) 
 				{
 					if(secondChanceBombsOnly && !piece.GetComponent<Piece>().powerUp)
@@ -176,7 +165,7 @@ public class InputGameController : MonoBehaviour
 			{				
 				isDragging = false;
 				hasMoved = false;
-				onDragFinish();
+				OnDragFinish();
 			
 			
 				//si no hay pieza terminamos
@@ -210,8 +199,8 @@ public class InputGameController : MonoBehaviour
 						{
 							if(tempCell.occupied)
 							{
-								if(tempCell.typeOfPiece != ETYPEOFPIECE_ID.LETTER 
-									&& tempCell.typeOfPiece != ETYPEOFPIECE_ID.LETTER_FROM_BEGINING
+								if(tempCell.pieceType != EPieceType.LETTER 
+									&& tempCell.pieceType != EPieceType.LETTER_OBSTACLE
 									&& OnPowerUpUsed())
 								{	
 									cellManager.selectCellsOfColor(tempCell);
