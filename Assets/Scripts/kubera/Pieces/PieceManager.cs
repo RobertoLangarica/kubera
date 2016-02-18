@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +15,6 @@ public class PieceManager : MonoBehaviour {
 	public List<ABCChar> listChar = new List<ABCChar>();
 
 	public Transform[] firstPos;
-	public Transform[] rotatePos;
 
 	protected int sizeOfBar =3;
 
@@ -40,7 +40,6 @@ public class PieceManager : MonoBehaviour {
 		piecesStock = temp.transform;
 		temp.name = "PiecesStock";
 
-		PowerUpBase.onRotateActive += activateRotation;
 		//Debug.Log (textures.Length);
 
 		fillPoolLetter ();
@@ -324,15 +323,22 @@ public class PieceManager : MonoBehaviour {
 		return OneWasRotated;
 	}
 
-	protected void activateRotation(bool activate)
+	public void activateRotation(bool activate)
 	{
 		if(activate)
 		{
 			//Activar las imagenes de rotar
-			print("activateRotation");
+			for (int i = 0; i < firstPos.Length; i++) 
+			{
+				firstPos [i].GetComponent<Image> ().enabled = true;
+			}
 		}
 		else
 		{
+			for (int i = 0; i < firstPos.Length; i++) 
+			{
+				firstPos [i].GetComponent<Image> ().enabled = false;
+			}
 			returnRotatePiecesToNormalRotation ();
 		}
 	}

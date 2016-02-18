@@ -356,7 +356,7 @@ public class InputGameController : MonoBehaviour
 		}
 		if (!isPiece && canRotate && !isActivatingRotate) 
 		{
-			pieceManager.returnRotatePiecesToNormalRotation ();
+			pieceManager.activateRotation (false);
 			canRotate = false;
 			deactivateRotateMode (canRotate);
 		}

@@ -17,6 +17,7 @@ public class ScreenManager : MonoBehaviour {
 
 	protected float waitTime;
 	protected string waitScreen;
+	private bool destroyed = false;//Indica si el objeto ya se destruyo
 
 	protected bool isAudioPlaying = true;
 	protected Dictionary<string,string> backScreens;
@@ -27,6 +28,17 @@ public class ScreenManager : MonoBehaviour {
 
 	void Awake()
 	{
+		GameObject[] go = GameObject.FindGameObjectsWithTag ("screenManager");
+		for(int i=1; i< go.Length; i++)
+		{
+			DestroyImmediate (go [i]);
+
+			//No se si al mandar destroyed en el awake llegue entrar a start pero no corremos riesgos
+			destroyed = true;
+			//DestroyImmediate(instance);
+			return;
+		}
+
 		DontDestroyOnLoad(this);
 		instance = this;
 
@@ -37,6 +49,11 @@ public class ScreenManager : MonoBehaviour {
 
 	void Start()
 	{
+		if(destroyed)
+		{
+			return;
+		}
+
 		//Cliente
 		#if UNITY_EDITOR
 		GoToScene(firstEditorScreen);
@@ -47,7 +64,12 @@ public class ScreenManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		
+
+		if(destroyed)
+		{
+			return;
+		}
+
 		#if UNITY_ANDROID
 		//Back nativo de android
 		if (Input.GetKey(KeyCode.Escape))
