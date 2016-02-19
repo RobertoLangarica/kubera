@@ -16,9 +16,8 @@ public class CellsManager : MonoBehaviour
 	public GameObject obstacleLetterPrefab;
 	public GameObject singleSquarePiece;
 
-	//Medidas del grid
-	public int matrixWidth;
-	public int matrixHeight;
+	public int columns = 0;
+	public int rows = 0;
 
 	public int pointPerLine = 10;
 
@@ -29,9 +28,9 @@ public class CellsManager : MonoBehaviour
 	public bool selectNeighbors;
 
 	//Las celdas seleccionadas por color
-	protected List<Cell> selected = new List<Cell>();
+	protected List<Cell> selected;
 	//Todas las celdas del grid
-	protected List<Cell> cells = new List<Cell>();
+	protected List<Cell> cells;
 
 	protected int totalLinesCreated;
 
@@ -39,44 +38,61 @@ public class CellsManager : MonoBehaviour
 
 	void Start () 
 	{
-		CreateGrid(10,10,PersistentData.instance.currentLevel.grid);
+		selected = new List<Cell>();
+		cells = new List<Cell>();
+
+		resizeGrid(10,10,PersistentData.instance.currentLevel.grid);
 	}
 
 	/*
 	 * Se crea la grid y se asigna cada celda como hijo de este gameObject.
 	 * Las celdas tienen un espacio de 3% de su tamaño de espacio en tre ellas
+	 * 
+	 * @return true:Si hubo resize, false: Si no hubo resize
 	 */
-	protected void CreateGrid(int width, int height,string cellsMatrix)
+	protected bool resizeGrid(int _columns, int _rows,string cellsMatrix)
 	{
-		Vector3 nPos = transform.position;
-		GameObject go = null;
-		string[] levelGridData = cellsMatrix.Split(',');
-
-		for(int i = 0;i < height;i++)
+		if(_columns != columns || _rows != rows)
 		{
-			for(int j = 0;j < width;j++)
+			DestroyGrid();
+
+			columns = _columns;
+			rows = _rows;
+
+			Vector3 cellInitialPosition = transform.position;
+			GameObject cellInstance = null;
+			string[] levelGridData = cellsMatrix.Split(',');
+
+			for(int i = 0;i < _rows;i++)
 			{
-				go = GameObject.Instantiate(cellPrefab,nPos,Quaternion.identity) as GameObject;
-				go.GetComponent<SpriteRenderer> ().sortingOrder = -1;
-				go.transform.SetParent(transform);
-				cells.Add(go.GetComponent<Cell>());
-
-				cells[cells.Count-1].setTypeToCell(int.Parse(levelGridData[cells.Count-1]));
-
-				if(cells[cells.Count-1].pieceType == EPieceType.LETTER_OBSTACLE)
+				for(int j = 0;j < _columns;j++)
 				{
-					turnPiecesToBlackLetters(cells[cells.Count-1]);
-				}
-				else if(cells[cells.Count-1].pieceType != EPieceType.NONE)
-				{
-					addBlockToInitialOccupiedCell(cells[cells.Count-1]);
-				}
+					cellInstance = GameObject.Instantiate(cellPrefab,cellInitialPosition,Quaternion.identity) as GameObject;
+					cellInstance.GetComponent<SpriteRenderer> ().sortingOrder = -1;
+					cellInstance.transform.SetParent(transform);
+					cells.Add(cellInstance.GetComponent<Cell>());
 
-				nPos.x += cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x + 0.03f;
+					cells[cells.Count-1].setTypeToCell(int.Parse(levelGridData[cells.Count-1]));
+
+					if(cells[cells.Count-1].pieceType == EPieceType.LETTER_OBSTACLE)
+					{
+						turnPiecesToBlackLetters(cells[cells.Count-1]);
+					}
+					else if(cells[cells.Count-1].pieceType != EPieceType.NONE)
+					{
+						addBlockToInitialOccupiedCell(cells[cells.Count-1]);
+					}
+
+					cellInitialPosition.x += cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x + 0.03f;
+				}
+				cellInitialPosition.y -= cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y + 0.03f;
+				cellInitialPosition.x = transform.position.x;
 			}
-			nPos.y -= cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y + 0.03f;
-			nPos.x = transform.position.x;
+
+			return true;
 		}
+
+		return false;
 	}
 
 	/*
@@ -90,18 +106,30 @@ public class CellsManager : MonoBehaviour
 		}
 		cells.Clear();
 	}
-	public void resetGrid(int columns, int rows)
+
+	public void setAllCellsToType(EPieceType type)
 	{
-		matrixWidth = columns;
-		matrixHeight = rows;
-		
-		resetGrid();
+		for(int i = 0;i < rows;i++)
+		{
+			for(int j = 0;j < columns;j++)
+			{
+				//[TODO] asignarle tipo
+				//getCellAt(j,i).setTypeToCell();
+			}
+		}
+	}
+
+	public void resetGrid(int _columns, int _rows)
+	{
+		if(!resizeGrid(columns,rows))
+		{
+			setAllCellsToType(EPieceType.NONE);
+		}
 	}
 	
 	public void resetGrid()
 	{
-		DestroyGrid();
-		CreateGrid(10,10,PersistentData.instance.currentLevel.grid);
+		setAllCellsToType(EPieceType.NONE);
 	}
 
 	/*
@@ -137,16 +165,16 @@ public class CellsManager : MonoBehaviour
 	 */
 	protected Cell getCellAt(int xPos,int yPos)
 	{
-		if(xPos < 0 || yPos < 0 || xPos >= matrixWidth || yPos >= matrixHeight)
+		if(xPos < 0 || yPos < 0 || xPos >= columns || yPos >= rows)
 		{
 			return null;
 		}
-		return cells[(matrixWidth*yPos)+xPos];
+		return cells[(columns*yPos)+xPos];
 	}
 
-	public Cell[] evaluateHorizontalLines()
+	public Cell[] getCompletedHorizontalLines()
 	{
-		int[] widthCount = new int[matrixWidth];
+		int[] widthCount = new int[columns];
 		int wIndex = 0;
 
 		List<Cell> result = new List<Cell>();
@@ -157,16 +185,16 @@ public class CellsManager : MonoBehaviour
 			{
 				widthCount[wIndex]++;
 			}
-			if(wIndex == matrixWidth)
+			if(wIndex == columns)
 			{
 				wIndex++;
 			}
 		}
-		for(int i = 0;i < matrixHeight;i++)
+		for(int i = 0;i < rows;i++)
 		{
-			if(widthCount[i] == matrixWidth)
+			if(widthCount[i] == columns)
 			{
-				for(int j = (i*matrixWidth);j < (matrixWidth*(i+1));j++)
+				for(int j = (i*columns);j < (columns*(i+1));j++)
 				{
 					result.Add(cells[j]);
 				}
@@ -179,9 +207,9 @@ public class CellsManager : MonoBehaviour
 		return result.ToArray();
 	}
 
-	public Cell[] evaluateVerticalLines()
+	public Cell[] getCompletedVerticalLines()
 	{
-		int[] heightCount = new int[matrixHeight];
+		int[] heightCount = new int[rows];
 
 		int hIndex = 0;
 
@@ -194,19 +222,19 @@ public class CellsManager : MonoBehaviour
 				heightCount[hIndex]++;
 			}
 			hIndex ++;
-			if(hIndex == matrixWidth)
+			if(hIndex == columns)
 			{
 				hIndex = 0;
 			}
 		}
 
-		for(int i = 0;i < matrixWidth;i++)
+		for(int i = 0;i < columns;i++)
 		{
-			if(heightCount[i] == matrixHeight)
+			if(heightCount[i] == rows)
 			{
-				for(int j = 0;j < matrixHeight;j++)
+				for(int j = 0;j < rows;j++)
 				{
-					result.Add(cells[j*matrixHeight]);
+					result.Add(cells[j*rows]);
 				}
 				totalLinesCreated++;
 			}
@@ -220,13 +248,13 @@ public class CellsManager : MonoBehaviour
 	/*
 	 * Evalua el estado de la grid para determinar si se ha creado o no una linea de piezas
 	 */
-	public Cell[] evaluateVerticalAndHorizontalLines()
+	public Cell[] getCompletedVerticalAndHorizontalLines()
 	{
 		List<Cell> result = new List<Cell>();
 
-		result.AddRange(evaluateHorizontalLines());
+		result.AddRange(getCompletedHorizontalLines());
 
-		result.AddRange(evaluateVerticalLines());
+		result.AddRange(getCompletedVerticalLines());
 
 		return result.ToArray();
 	}
@@ -248,7 +276,7 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @return {bool}: Regresa verdadero si es posible colocarla, de lo contrario regresa falso
 	 */
-	public bool CanPositionate(GameObject[] arr)
+	public bool canPositionate(GameObject[] arr)
 	{
 		Cell tempC = null;
 
@@ -282,7 +310,7 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @return {bool}: Regresa verdadero si es posible colocarla, de lo contrario regresa falso
 	 */
-	public bool CanPositionate(Vector3[] arr)
+	public bool canPositionate(Vector3[] arr)
 	{
 		Cell tempC = null;
 		
@@ -317,7 +345,7 @@ public class CellsManager : MonoBehaviour
 	 * @return {Vector3}: La posicion del a celda a la cuaal se tiene que mover la pieza. Se regresa para separa las logicas del Tween de movimiento
 	 * 					  con la asignacion de valores
 	 */
-	public Vector3 Positionate(Piece piece)
+	public Vector3 positionate(Piece piece)
 	{
 		Cell tempC = null;
 
@@ -351,11 +379,11 @@ public class CellsManager : MonoBehaviour
 	{
 		for(int i = 0;i < cellsToTransform.Length;i++)
 		{
-			turnPiecesToLetters(cellsToTransform[i]);
+			turnPieceToLetter(cellsToTransform[i]);
 		}
 	}
 
-	protected void turnPiecesToLetters(Cell newCell)
+	protected void turnPieceToLetter(Cell newCell)
 	{
 		newCell.pieceType = EPieceType.LETTER;
 
@@ -434,7 +462,7 @@ public class CellsManager : MonoBehaviour
 
 		go.GetComponent<Piece> ().currentType = cell.pieceType;
 
-		go.transform.position = Positionate (go.GetComponent<Piece> ());
+		go.transform.position = positionate (go.GetComponent<Piece> ());
 
 		go.GetComponent<BoxCollider2D> ().enabled = false;
 	}
@@ -471,11 +499,11 @@ public class CellsManager : MonoBehaviour
 	/*
 	 * Analiza si aun es posible colocar alguna de las piezas disponibles en la grid
 	 * 
-	 * @params listPieces{List<GameObject>}: La lista de las piezas restantes, disponibles para el jugador
+	 * @params listPieces{List<GameObject>}: Objetos a evaluar
 	 * 
-	 * @return {bool}: Regresa verdadero si aun se puede colocar una pieza, de lo contrario regresa falso
+	 * @return true: Si una cabe. false: Si ninguna cabe
 	 */
-	public bool VerifyPosibility(List<GameObject> listPieces)
+	public bool checkIfOneCanFit(List<GameObject> listPieces)
 	{
 		Vector3 ofset = Vector3.zero;
 		float size = cellPrefab.gameObject.GetComponent<SpriteRenderer>().bounds.size.x *0.5f;
@@ -496,7 +524,7 @@ public class CellsManager : MonoBehaviour
 					{
 						vecArr[j] = lPPiece.pieces[j].transform.position + ofset;
 					}
-					if(CanPositionate(vecArr))
+					if(canPositionate(vecArr))
 					{
 						return true;
 					}
@@ -599,7 +627,7 @@ public class CellsManager : MonoBehaviour
 	{
 		for(int i = 0;i < selected.Count;i++)
 		{
-			turnPiecesToLetters(selected[i]);
+			turnPieceToLetter(selected[i]);
 		}
 
 		selected = new List<Cell>();
@@ -616,8 +644,8 @@ public class CellsManager : MonoBehaviour
 	 */
 	protected void searchNeigboursOfSameColor(Cell cell,ref List<Cell> final, ref List<Cell> pending)
 	{
-		int cX = cells.IndexOf(cell)%matrixWidth;
-		int cY = cells.IndexOf(cell)/matrixWidth;
+		int cX = cells.IndexOf(cell)%columns;
+		int cY = cells.IndexOf(cell)/columns;
 		Cell tempC = null;
 
 		tempC = getCellAt(cX,cY-1);
