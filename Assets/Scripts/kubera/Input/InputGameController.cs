@@ -275,7 +275,7 @@ public class InputGameController : MonoBehaviour
 							pointsAtPieceSetCorrectly (piece.GetComponent<Piece> ().pieces.Length);
 	
 							afterDragEnded();
-							cellManager.LineCreated();
+							cellManager.evaluateVerticalAndHorizontalLines();
 
 	
 							FlashColor[] flash = piece.GetComponentsInChildren<FlashColor>();
