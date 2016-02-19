@@ -38,10 +38,13 @@ namespace ABC
 		{
 			inputWords = FindObjectOfType<InputWords> ();
 
-			inputWords.onDragUpdate += swappingLetters;
-			inputWords.onDragFinish += swappEnding;
-			inputWords.onDragStart  += activateSwapp;
-			inputWords.onTap += sendLetterToWord;
+			if(inputWords)
+			{
+				inputWords.onDragUpdate += swappingLetters;
+				inputWords.onDragFinish += swappEnding;
+				inputWords.onDragStart  += activateSwapp;
+				inputWords.onTap += sendLetterToWord;
+			}
 
 			textureObject = Resources.LoadAll("Letters");
 			names = new string[textureObject.Length];
