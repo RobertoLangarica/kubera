@@ -16,7 +16,7 @@ public class InputWords : MonoBehaviour
 	public DInputWordNotification onDragStart;
 	public DInputWordNotification onTap;
 
-	public float letterSpeed = 0.8f;
+	public float letterSpeed = 0.5f;
 	public bool allowInput = true;
 
 	void OnDrag(DragGesture gesture) 
@@ -54,7 +54,7 @@ public class InputWords : MonoBehaviour
 				Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 				tempV3.y = letter.transform.position.y;
 				tempV3.z = letter.transform.position.z;
-				moveTo(letter,tempV3);
+				moveTo(letter,tempV3,letterSpeed);
 
 				onDragUpdate (letter);							
 			}
@@ -86,7 +86,6 @@ public class InputWords : MonoBehaviour
 		{		
 			onTap (gesture.Raycast.Hit2D.transform.gameObject);
 			//[TODO]
-			//wordManager.activateButtonOfWordsActions (true);
 			//gameObject.GetComponent<AudioSource> ().Play ();
 		}
 	}

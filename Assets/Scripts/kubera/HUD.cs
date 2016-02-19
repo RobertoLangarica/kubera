@@ -12,6 +12,7 @@ public class HUD : MonoBehaviour {
 	public Image[] Stars;
 
 	public GameObject GemsChargeGO;
+	public GameObject secondChanceLock;
 
 	protected float[] scoreToStar;
 
@@ -132,6 +133,14 @@ public class HUD : MonoBehaviour {
 	 **/
 	public void setWinCondition(string winCondition)
 	{
+		
+	}	
 
+	/**
+	 * Setea la condicion de victoria
+	 **/
+	public void setSecondChanceLock(bool activate)
+	{
+		secondChanceLock.SetActive(activate);
 	}	
 }

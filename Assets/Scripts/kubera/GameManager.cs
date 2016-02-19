@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
 		inputPiece = FindObjectOfType<InputPieceController>();
 		inputPiece.OnDrop += OnPieceDropped;
 
+		wordManager.OnSend += sendVectorToCellManager;
 	}
 
 	void Start()
@@ -86,6 +87,7 @@ public class GameManager : MonoBehaviour
 
 		hud.setGems(UserDataManager.instance.playerGems);
 		hud.setLevel (persistentData.levelNumber);
+		hud.setSecondChanceLock (false);
 
 		powerUpManager.activateAvailablePowers();
 		checkIfNeedToUnlockPowerUp();
@@ -315,45 +317,14 @@ public class GameManager : MonoBehaviour
 			wordsMade++;
 			////FindObjectOfType<InputGameController>().checkToLoose();
 		}
-		
-		for(int i = 0;i < wordManager.chars.Count;i++)
-		{
-			ABCChar abcChar;
-			if (wordManager.chars [i].gameObject.GetComponent<UIChar> ().piece != null) 
-			{
-				abcChar = wordManager.chars [i].gameObject.GetComponent<UIChar> ().piece.GetComponent<ABCChar> ();
-			}
-			else 
-			{
-				abcChar = wordManager.chars [i].gameObject.GetComponent<ABCChar> ();
-			}
 
-			UIChar uiChar = wordManager.chars [i].gameObject.GetComponent<UIChar> ();
-		
-			if(uiChar != null && abcChar != null)
-			{
-				if(wordManager.words.completeWord && canUseAllWildCards)
-				{
-					cellManager.getCellOnVec(uiChar.piece.transform.position).clearCell();
-					uiChar.DestroyPiece();
-				}
-				else
-				{
-					if(abcChar.wildcard)
-					{
-						activeMoney (false);
-						//GameObject.Find("WildCard").GetComponent<PowerUpBase>().returnPower();
-					}
-					else
-					{
-						uiChar.piece.GetComponent<UIChar>().backToNormal();
-					}
-		
-				}
-			}
-		}
 		wordManager.resetValidation();
 		addPoints(amount);
+	}
+
+	protected void sendVectorToCellManager(Vector3 vector3)
+	{
+		cellManager.getCellOnVec(vector3).clearCell();
 	}
 
 	public void linesCreated(int totalLines)

@@ -17,10 +17,11 @@ public class CellsManager : MonoBehaviour
 	public GameObject singleSquarePiece;
 
 	//Medidas del grid
-	public int width;
-	public int height;
+	public int matrixWidth;
+	public int matrixHeight;
 
 	public int pointPerLine = 10;
+
 
 	//Bandera para el powerUp de Destruccion por color
 	//false: destruye todos los del mismo color en la escena
@@ -32,22 +33,24 @@ public class CellsManager : MonoBehaviour
 	//Todas las celdas del grid
 	protected List<Cell> cells = new List<Cell>();
 
+	protected int totalLinesCreated;
+
 	public GameObject uiLetter;
 
 	void Start () 
 	{
-		CreateGrid();
+		CreateGrid(10,10,PersistentData.instance.currentLevel.grid);
 	}
 
 	/*
 	 * Se crea la grid y se asigna cada celda como hijo de este gameObject.
 	 * Las celdas tienen un espacio de 3% de su tamaño de espacio en tre ellas
 	 */
-	protected void CreateGrid()
+	protected void CreateGrid(int width, int height,string cellsMatrix)
 	{
 		Vector3 nPos = transform.position;
 		GameObject go = null;
-		string[] levelGridData = PersistentData.instance.currentLevel.grid.Split(',');
+		string[] levelGridData = cellsMatrix.Split(',');
 
 		for(int i = 0;i < height;i++)
 		{
@@ -89,8 +92,8 @@ public class CellsManager : MonoBehaviour
 	}
 	public void resetGrid(int columns, int rows)
 	{
-		width = columns;
-		height = rows;
+		matrixWidth = columns;
+		matrixHeight = rows;
 		
 		resetGrid();
 	}
@@ -98,7 +101,7 @@ public class CellsManager : MonoBehaviour
 	public void resetGrid()
 	{
 		DestroyGrid();
-		CreateGrid();
+		CreateGrid(10,10,PersistentData.instance.currentLevel.grid);
 	}
 
 	/*
@@ -134,71 +137,106 @@ public class CellsManager : MonoBehaviour
 	 */
 	protected Cell getCellAt(int xPos,int yPos)
 	{
-		if(xPos < 0 || yPos < 0 || xPos >= width || yPos >= height)
+		if(xPos < 0 || yPos < 0 || xPos >= matrixWidth || yPos >= matrixHeight)
 		{
 			return null;
 		}
-		return cells[(width*yPos)+xPos];
+		return cells[(matrixWidth*yPos)+xPos];
 	}
 
-	/*
-	 * Evalua el estado de la grid para determinar si se ha creado o no una linea de piezas
-	 */
-	public void LineCreated()
+	public Cell[] evaluateHorizontalLines()
 	{
-		int[] widthCount = new int[height];
-		int[] heightCount = new int[width];
-		bool foundLine = false;
-
+		int[] widthCount = new int[matrixWidth];
 		int wIndex = 0;
-		int hIndex = 0;
 
-		int linesCount = 0;
+		List<Cell> result = new List<Cell>();
 
 		for(int i = 0;i < cells.Count;i++)
 		{
 			if(cells[i].occupied && cells[i].pieceType != EPieceType.LETTER && cells[i].available)
 			{
 				widthCount[wIndex]++;
-				heightCount[hIndex]++;
 			}
-			hIndex ++;
-			if(hIndex == width)
+			if(wIndex == matrixWidth)
 			{
-				hIndex = 0;
 				wIndex++;
 			}
 		}
-
-		for(int i = 0;i < height;i++)
+		for(int i = 0;i < matrixHeight;i++)
 		{
-			if(widthCount[i] == width)
+			if(widthCount[i] == matrixWidth)
 			{
-				createLettersOn(true,i);
-				foundLine = true;
-				linesCount++;
+				for(int j = (i*matrixWidth);j < (matrixWidth*(i+1));j++)
+				{
+					result.Add(cells[j]);
+				}
+				totalLinesCreated++;
 			}
 		}
 
-		for(int i = 0;i < width;i++)
+		notifyLinesCount();
+
+		return result.ToArray();
+	}
+
+	public Cell[] evaluateVerticalLines()
+	{
+		int[] heightCount = new int[matrixHeight];
+
+		int hIndex = 0;
+
+		List<Cell> result = new List<Cell>();
+
+		for(int i = 0;i < cells.Count;i++)
 		{
-			if(heightCount[i] == height)
+			if(cells[i].occupied && cells[i].pieceType != EPieceType.LETTER && cells[i].available)
 			{
-				createLettersOn(false,i);
-				foundLine = true;
-				linesCount++;
+				heightCount[hIndex]++;
+			}
+			hIndex ++;
+			if(hIndex == matrixWidth)
+			{
+				hIndex = 0;
 			}
 		}
 
+		for(int i = 0;i < matrixWidth;i++)
+		{
+			if(heightCount[i] == matrixHeight)
+			{
+				for(int j = 0;j < matrixHeight;j++)
+				{
+					result.Add(cells[j*matrixHeight]);
+				}
+				totalLinesCreated++;
+			}
+		}
+
+		notifyLinesCount();
+
+		return result.ToArray();
+	}
+
+	/*
+	 * Evalua el estado de la grid para determinar si se ha creado o no una linea de piezas
+	 */
+	public Cell[] evaluateVerticalAndHorizontalLines()
+	{
+		List<Cell> result = new List<Cell>();
+
+		result.AddRange(evaluateHorizontalLines());
+
+		result.AddRange(evaluateVerticalLines());
+
+		return result.ToArray();
+	}
+
+	public void notifyLinesCount()
+	{
 		if(OnlinesCounted != null)
 		{
-			OnlinesCounted(linesCount);
-		}
-
-		if(foundLine)
-		{
-			//***********************************************Crear AudioManager
-			//FindObjectOfType<GameManager>().GetComponent<AudioSource>().Play();
+			OnlinesCounted(totalLinesCreated);
+			totalLinesCreated = 0;
 		}
 	}
 
@@ -309,50 +347,39 @@ public class CellsManager : MonoBehaviour
 	 * @params isHorizontal{bool}: Es una bandera para indicar si la linea que se cambiara es horizontal o no
 	 * @params index{int}: Es el indice de en donde inicia la linea, este indice corresponde al de la lista de cells
 	 */
-	protected void createLettersOn(bool isHorizontal,int index)
+	protected void createLettersOn(Cell[] cellsToTransform)
 	{
-		if(isHorizontal)
+		for(int i = 0;i < cellsToTransform.Length;i++)
 		{
-			for(int i = (index*width);i < (width*(index+1));i++)
-			{
-				turnPiecesToLetters(i,0);
-			}
-		}
-		else
-		{
-			for(int i = 0;i < height;i++)
-			{
-				turnPiecesToLetters((i*width),index);
-			}
+			turnPiecesToLetters(cellsToTransform[i]);
 		}
 	}
 
-	protected void turnPiecesToLetters(int cellIndex,int lineIndex)
+	protected void turnPiecesToLetters(Cell newCell)
 	{
-		int newIndex = lineIndex+cellIndex;
+		newCell.pieceType = EPieceType.LETTER;
 
-		cells[newIndex].pieceType = EPieceType.LETTER;
-		if(cells[newIndex].piece != null)
+		if(newCell.piece != null)
 		{
-			Transform tempTransform = cells[newIndex].transform;
+			Transform tempTransform = newCell.transform;
 		
-			Destroy (cells [newIndex].piece);
+			Destroy (newCell.piece);
 
 			GameObject go = Instantiate (uiLetter)as GameObject;
 
 			go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
 
-			Vector3 nVec = new Vector3(cells [newIndex].gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
-				-cells [newIndex].gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
+			Vector3 nVec = new Vector3(newCell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
+				-newCell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
 			
 			go.GetComponent<RectTransform> ().transform.position = tempTransform.position+ nVec;
-			cells [newIndex].piece = go;
+			newCell.piece = go;
 
-			ABCChar tempAbcChar = cells[newIndex].piece.GetComponent<ABCChar>();
+			ABCChar tempAbcChar = newCell.piece.GetComponent<ABCChar>();
 			
-			UIChar tempUiChar = cells[newIndex].piece.GetComponent<UIChar>();
+			UIChar tempUiChar = newCell.piece.GetComponent<UIChar>();
 
-			cells[newIndex].piece.GetComponent<BoxCollider2D>().enabled = true;
+			newCell.piece.GetComponent<BoxCollider2D>().enabled = true;
 
 			go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
 
@@ -572,7 +599,7 @@ public class CellsManager : MonoBehaviour
 	{
 		for(int i = 0;i < selected.Count;i++)
 		{
-			turnPiecesToLetters(cells.IndexOf(selected[i]),0);
+			turnPiecesToLetters(selected[i]);
 		}
 
 		selected = new List<Cell>();
@@ -589,8 +616,8 @@ public class CellsManager : MonoBehaviour
 	 */
 	protected void searchNeigboursOfSameColor(Cell cell,ref List<Cell> final, ref List<Cell> pending)
 	{
-		int cX = cells.IndexOf(cell)%width;
-		int cY = cells.IndexOf(cell)/width;
+		int cX = cells.IndexOf(cell)%matrixWidth;
+		int cY = cells.IndexOf(cell)/matrixWidth;
 		Cell tempC = null;
 
 		tempC = getCellAt(cX,cY-1);
