@@ -49,20 +49,12 @@ public class InputWords : MonoBehaviour
 		case (ContinuousGesturePhase.Updated):
 			{
 				if (!letter) 
-				{
-					return;
-				}
-
-				// si existe la pieza la movemos con movingLerping de acuerdo a la posicion del mouse
-
-				float y = letter.transform.position.y;
-				float z = letter.transform.position.z;
+				{return;}
+					
 				Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-				tempV3.z = -1;
-
-				tempV3.y = y;
-				tempV3.z = z;
-				movingLerping(tempV3,letter);
+				tempV3.y = letter.transform.position.y;
+				tempV3.z = letter.transform.position.z;
+				moveTo(letter,tempV3);
 
 				onDragUpdate (letter);							
 			}
@@ -79,7 +71,7 @@ public class InputWords : MonoBehaviour
 
 				letter = null;
 
-				DOTween.Kill ("MovingPiece");
+				DOTween.Kill ("InputW_Dragging");
 			}
 			break;
 		}
@@ -99,12 +91,10 @@ public class InputWords : MonoBehaviour
 		}
 	}
 
-	/**
-	 * Movimiento y velocidad de la letra
-	 **/
-	public void movingLerping(Vector3 end,GameObject piece)
-	{		
-		piece.transform.DOMove (end, letterSpeed).SetId("MovingPiece");
+	public void moveTo(GameObject target, Vector3 to, float delay = 0.1f)
+	{
+		DOTween.Kill("InputW_Dragging",false);
+		target.transform.DOMove (to, delay).SetId("InputW_Dragging");
 	}
 
 }
