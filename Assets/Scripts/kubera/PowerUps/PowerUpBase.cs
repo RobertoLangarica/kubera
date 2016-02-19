@@ -24,11 +24,8 @@ public class PowerUpBase : MonoBehaviour
 
 	public GameObject oneTilePower(Transform myButtonPosition)
 	{
-		Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-		GameObject go = Instantiate (powerUpCursor,myButtonPosition.position,myButtonPosition.rotation)as GameObject; //,new Vector3(pos.x,pos.y+1.5f,1),Quaternion.identity);
+		GameObject go = Instantiate (powerUpCursor,myButtonPosition.position,myButtonPosition.rotation)as GameObject;
 		go.GetComponent<Piece>().myFirstPos = myButtonPosition;
-		//go.GetComponent<Piece>().myFirstPos.position = pos;
 		go.name = "PowerOne";
 		go.GetComponent<Piece> ().powerUp = true;
 		return go;
@@ -39,8 +36,6 @@ public class PowerUpBase : MonoBehaviour
 	 */
 	public GameObject activateDestroyMode(Transform myButtonPosition)
 	{
-		Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
 		GameObject go = Instantiate (powerUpCursor,myButtonPosition.position,myButtonPosition.rotation) as GameObject;
 
 		go.GetComponent<Piece>().myFirstPos = myButtonPosition;
