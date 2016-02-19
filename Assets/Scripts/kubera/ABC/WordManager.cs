@@ -14,16 +14,15 @@ namespace ABC
 		public GameObject empty;
 		public GameObject container;
 
-		public string wildCardPointValue;
-
 		[HideInInspector]public ABCDataStructure words;
 		[HideInInspector]public List<ABCChar> chars;
 		protected bool invalidCharlist;//Indica que la lista de caracteres tuvo o tiene uno invalido
 
-		protected int padding = 300;
 		protected int sortingAfterSwap;
 		protected Vector2[] positionOfLetters; //los vectores de las letras 
 
+		protected float widhtOfContainer;
+		protected float heightOfLetterPrefab = 0;
 
 		//texturas de las letras en juego
 		protected UnityEngine.Object[] textureObject;
@@ -33,6 +32,9 @@ namespace ABC
 
 		[HideInInspector]
 		public Vector3 positionOfButton;
+
+		public delegate void DSendVector3ToCellManager(Vector3 vector3);
+		public DSendVector3ToCellManager OnSend;
 
 		void Start()
 		{
@@ -52,7 +54,10 @@ namespace ABC
 			buttonNext = FindObjectOfType<ShowNext> ();
 			positionOfButton = buttonNext.next.transform.localPosition;
 
-			container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding;
+			//container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding;
+			print(container.GetComponent<RectTransform>().rect.width);
+			widhtOfContainer = container.GetComponent<RectTransform>().rect.width;
+
 			words = FindObjectOfType<ABCDataStructure>();
 			//words.OnWordComplete += onWordComplete;
 		}
@@ -112,8 +117,8 @@ namespace ABC
 			
 			validateCharacter(character);
 			
-			//para que las letras esten centradas HardCoding
-			actualizePadding(true);
+			//para que las letras esten centradas
+			StartCoroutine (actualizePaddingCoroutine (letter));
 		}
 
 		public void addCharacter(ABCChar pieceABCChar,GameObject piece)
@@ -134,8 +139,49 @@ namespace ABC
 
 			validateCharacter(character);
 
-			//para que las letras esten centradas HardCoding
-			actualizePadding(true);
+			//para que las letras esten centradas
+			StartCoroutine (actualizePaddingCoroutine (letter));
+		}
+
+		/**
+		 *Actualiza el tamaño necesario del padding y guarda ciertos datos para mejorar procesamiento 
+		 **/
+		IEnumerator actualizePaddingCoroutine(GameObject letter)
+		{
+			if (heightOfLetterPrefab != 0) 
+			{
+				actualizePadding ();
+
+			} 
+			else {		
+				yield return new WaitForSeconds (0);
+				heightOfLetterPrefab = letter.GetComponent<Image> ().rectTransform.rect.height;
+				int paddingSize = (int)((widhtOfContainer - (heightOfLetterPrefab) * container.transform.childCount) * .5f);
+
+				if (paddingSize > 0) {
+					container.GetComponent<HorizontalLayoutGroup> ().padding = new RectOffset (paddingSize, paddingSize, 0, 0);
+				} else {
+					if (container.transform.childCount == 0) {
+						resetValidation ();
+						activateButtonOfWordsActions (false);
+					}
+				}
+			}
+		}
+
+		protected void actualizePadding()
+		{
+			int paddingSize = (int)((widhtOfContainer - (heightOfLetterPrefab) * container.transform.childCount) * .5f);
+			if (paddingSize > 0) 
+			{
+				container.GetComponent<HorizontalLayoutGroup> ().padding = new RectOffset (paddingSize, paddingSize, 0, 0);
+			} 
+
+			if (container.transform.childCount == 0) 
+			{
+				resetValidation ();
+				activateButtonOfWordsActions (false);
+			}
 		}
 
 		/**
@@ -205,7 +251,8 @@ namespace ABC
 				character.index = chars.Count;
 				chars.Add(character);
 				words.validateChar(character);
-				
+
+				print (container.transform.childCount);
 				if(words.completeWord)
 				{
 					onWordComplete();
@@ -223,12 +270,52 @@ namespace ABC
 		 **/ 
 		public void resetValidation()
 		{
+			for(int i = 0;i < chars.Count;i++)
+			{
+				ABCChar abcChar;
+				if (chars [i].gameObject.GetComponent<UIChar> ().piece != null) 
+				{
+					abcChar = chars [i].gameObject.GetComponent<UIChar> ().piece.GetComponent<ABCChar> ();
+				}
+				else 
+				{
+					abcChar = chars [i].gameObject.GetComponent<ABCChar> ();
+				}
+
+				UIChar uiChar = chars [i].gameObject.GetComponent<UIChar> ();
+
+				if(uiChar != null && abcChar != null)
+				{
+					if(words.completeWord)
+					{
+						OnSend(uiChar.piece.transform.position);
+						uiChar.DestroyPiece();
+					}
+					else
+					{
+						if(abcChar.wildcard)
+						{
+							//activeMoney (false);
+							//GameObject.Find("WildCard").GetComponent<PowerUpBase>().returnPower();
+						}
+						else
+						{
+							uiChar.piece.GetComponent<UIChar>().backToNormal();
+						}
+
+					}
+				}
+			}
+
 			invalidCharlist = false;
 
 			int l = container.transform.childCount;
 			while(--l >= 0)
 			{
-				GameObject.Destroy(container.transform.GetChild(l).gameObject);
+				if (!container.transform.GetChild (l).gameObject.GetComponent<ABCChar> ().wildcard) 
+				{
+					GameObject.Destroy (container.transform.GetChild (l).gameObject);
+				}
 			}
 
 			foreach(ABCChar c in chars)
@@ -236,9 +323,7 @@ namespace ABC
 				c.empty = false;
 			}
 
-			chars.Clear();
-
-			container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding = 300;
+			actualizeIfExistLettersOn ();
 
 		}
 
@@ -276,7 +361,7 @@ namespace ABC
 				//El usuairo elimino el ultimo caracter
 				words.deleteLvlOfSearch(lvlIndex);
 				chars.RemoveAt(lvlIndex);
-				actualizePadding(false);
+				actualizePadding();
 			}
 			else
 			{
@@ -292,7 +377,7 @@ namespace ABC
 			if(everythingIsEmpty())
 			{
 				resetValidation();
-				container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding = 300;
+				//container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding = 300;
 			}
 			else if(lvlIndex != chars.Count)
 			{
@@ -422,13 +507,13 @@ namespace ABC
 		 **/
 		protected void swappEnding(GameObject letter)
 		{
-			if(letter.transform.localPosition.x > positionOfButton.x -50 && letter.transform.localPosition.x < positionOfButton.x +50)
+			if(!letter.GetComponent<ABCChar> ().wildcard && letter.transform.localPosition.x > positionOfButton.x -50 && letter.transform.localPosition.x < positionOfButton.x +50)
 			{
-				canSwappLetters(letter,true);
+				checkSwappLetters (letter, true);
 			}
 			else
 			{
-				canSwappLetters(letter);	
+				checkSwappLetters(letter);	
 			}
 		}
 
@@ -443,23 +528,30 @@ namespace ABC
 			letter.transform.SetSiblingIndex(100);
 		}
 
-		/*
-		 * activa o desactiva el poder mover las letras
-		 * a la letra que se movera se mueve su index para que este arriba de las otras letras
-		 * destruye la letra seleccionada si la arrojaron a la basura
-		 */
-		public void canSwappLetters(GameObject letter,bool destroy = false)
+		/**
+		  * activa o desactiva el poder mover las letras
+		  * a la letra que se movera se mueve su index para que este arriba de las otras letras
+		  * destruye la letra seleccionada si la arrojaron a la basura
+		  **/
+		public void checkSwappLetters(GameObject letter,bool destroy = false)
 		{			
 			container.GetComponent<HorizontalLayoutGroup>().enabled = true;
 			if(destroy)
 			{
 				letter.GetComponent<UIChar> ().destroyLetter();
-				actualizePadding (false);
+				actualizePadding ();
 			}
 			else
 			{
 				letter.transform.SetSiblingIndex(sortingAfterSwap);
 			}
+
+			actualizeIfExistLettersOn ();
+
+		}
+			
+		protected void actualizeIfExistLettersOn ()
+		{
 			chars.Clear();
 			for(int i=0; i<container.transform.childCount; i++)
 			{
@@ -489,32 +581,6 @@ namespace ABC
 			for(int i=0; i<container.transform.childCount; i++)
 			{
 				positionOfLetters[i] = container.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition;
-			}
-		}
-
-		/**
-		 * actualiza el padding de la estructura de letras mostradas para que se vean centradas
-		 **/
-		protected void actualizePadding(bool adding)
-		{
-			if(adding)
-			{
-				if(container.GetComponent<HorizontalLayoutGroup>().padding.left > 0)
-				{
-					container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding = padding-50;
-				}
-			}
-			else
-			{
-				if(container.GetComponent<HorizontalLayoutGroup>().padding.left < 300)
-				{
-					container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding = padding+50;
-				}
-				if (container.transform.childCount == 0) 
-				{
-					resetValidation ();
-					activateButtonOfWordsActions (false);
-				}
 			}
 		}
 

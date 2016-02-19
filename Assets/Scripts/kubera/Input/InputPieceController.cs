@@ -18,6 +18,8 @@ public class InputPieceController : MonoBehaviour
 	protected Vector3 selectedInitialScale;
 	protected Vector3 selectedInitialPosition;
 
+	public float pieceSpeed = 0.3f;
+
 	void OnDrag(DragGesture gesture) 
 	{
 		//Solo se ejecuta una vez por frame (multifinger puede llamarlo mas de una vez)
@@ -44,7 +46,7 @@ public class InputPieceController : MonoBehaviour
 					Vector3 posOverFinger = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 					posOverFinger.z = selectedInitialPosition.z;
 					posOverFinger += offsetPositionOverFinger;
-					moveTo(currentSelected,posOverFinger,0.1f);
+					moveTo(currentSelected,posOverFinger,pieceSpeed);
 				}
 			}	
 			break;
@@ -56,7 +58,7 @@ public class InputPieceController : MonoBehaviour
 					Vector3 posOverFinger = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 					posOverFinger.z = selectedInitialPosition.z;
 					posOverFinger += offsetPositionOverFinger;
-					moveTo(currentSelected,posOverFinger,0.1f);
+					moveTo(currentSelected,posOverFinger,pieceSpeed);
 				}
 			}
 			break;
