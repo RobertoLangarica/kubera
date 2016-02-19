@@ -45,8 +45,9 @@ public class Piece : MonoBehaviour
 	[HideInInspector]public int myFirstPosInt;
 	[HideInInspector]public GameObject parent;
 
-	public GameObject[] rotatePieces;
+	public int rotateTimes = 0;
 
+	[HideInInspector]
 	public int howManyHasBeenRotated = 0;
 
 	void Start () 

@@ -478,7 +478,7 @@ public class InputGameController : MonoBehaviour
 
 			}
 
-			pieceManager.checkBarr(piece);
+			pieceManager.checkPiecesToPosisionate(piece);
 			piece.transform.SetParent (null);
 		}
 		else

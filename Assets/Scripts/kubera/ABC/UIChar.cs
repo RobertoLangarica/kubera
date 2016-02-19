@@ -14,8 +14,6 @@ namespace ABC
 		//[HideInInspector]
 		public GameObject piece;
 
-		protected WordManager wordManager;
-
 		[HideInInspector]
 		public bool usedFromGrid;
 
@@ -23,12 +21,6 @@ namespace ABC
 		public bool isFromGrid;
 
 		public Color usedColor = new Color(1,1,1,0.2f);
-
-		// Use this for initialization
-		void Start () 
-		{
-			wordManager = FindObjectOfType<WordManager>();
-		}
 
 		public void changeSpriteRendererTexture(Sprite newSprite)
 		{

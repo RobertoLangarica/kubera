@@ -53,6 +53,12 @@ public class GameManager : MonoBehaviour
 
 	protected InputPieceController inputPiece;
 
+	protected List<GameObject> XMLPoolPiecesList = new List<GameObject>();
+	protected List<ScriptableABCChar> XMLPoolLetersList = new List<ScriptableABCChar>();
+	protected List<ScriptableABCChar> XMLPoolBlackLetersList = new List<ScriptableABCChar>();
+	protected List<ScriptableABCChar> randomizedPoolLeters = new List<ScriptableABCChar>();
+	protected List<ABCChar> listChar = new List<ABCChar>();
+
 	void Awake () 
 	{
 		wordManager = FindObjectOfType<WordManager>();
@@ -73,6 +79,9 @@ public class GameManager : MonoBehaviour
 	void Start()
 	{
 		persistentData = FindObjectOfType<PersistentData>();
+
+		fillLettersPoolList ();
+		fillPiecesPoolList ();
 
 		myWinCondition = persistentData.currentLevel.winCondition.Split (new char[1]{ '-' });
 		cellToLetter = new List<Cell> ();
@@ -372,17 +381,17 @@ public class GameManager : MonoBehaviour
 	{
 		if(isBlackLetter)
 		{
-			abcChar.initializeFromScriptableABCChar(pieceManager.giveBlackLetterInfo());
+			abcChar.initializeFromScriptableABCChar(giveBlackLetterInfo());
 		}
 		else
 		{
-			abcChar.initializeFromScriptableABCChar(pieceManager.giveLetterInfo());
+			abcChar.initializeFromScriptableABCChar(giveLetterInfo());
 		}
 
 		uiChar.typeOfLetter = abcChar.typeOfLetter;
 		uiChar.changeColorAndSetValues(abcChar.character.ToLower ());
 
-		pieceManager.listChar.Add(abcChar);
+		listChar.Add(abcChar);
 	}
 
 	/**
@@ -562,7 +571,7 @@ public class GameManager : MonoBehaviour
 	IEnumerator check()
 	{
 		yield return new WaitForSeconds (.2f);
-		FindObjectOfType<WordManager>().checkIfAWordisPossible(pieceManager.listChar);
+		FindObjectOfType<WordManager>().checkIfAWordisPossible(listChar);
 	}
 
 	public void checkToLoose()
@@ -573,11 +582,11 @@ public class GameManager : MonoBehaviour
 			while(true)
 			{
 				bool pass = true;
-				for(int i=0; i < pieceManager.listChar.Count; i++)
+				for(int i=0; i < listChar.Count; i++)
 				{
-					if(!pieceManager.listChar[i])
+					if(!listChar[i])
 					{
-						pieceManager.listChar.RemoveAt(i);
+						listChar.RemoveAt(i);
 						i--;
 						pass = false;
 					}
@@ -868,5 +877,109 @@ public class GameManager : MonoBehaviour
 		PersistentData.instance.fromGameToEdit = true;
 
 		ScreenManager.instance.GoToScene("LevelBuilder");
+	}
+
+	protected void fillPiecesPoolList()
+	{
+		string[] piecesInfo;
+		int amout = 0;
+
+		string[] myPieces = PersistentData.instance.currentLevel.pieces.Split(new char[1]{','});
+
+		for(int i =0; i<myPieces.Length; i++)
+		{
+			piecesInfo = myPieces[i].Split(new char[1]{'_'});
+			amout = int.Parse(piecesInfo[0]);
+
+			for(int j=0; j<amout; j++)
+			{
+				XMLPoolPiecesList.Add ((GameObject)(Resources.Load (piecesInfo[1])));
+			}
+		}
+
+		pieceManager.setPiecesPoolList (XMLPoolPiecesList);
+	}
+
+	protected void fillLettersPoolList()
+	{
+		string[] lettersPool = PersistentData.instance.currentLevel.lettersPool.Split(new char[1]{','});
+		string[] piecesInfo;
+
+		/*Aqui diseccionar el XML****************/
+		int amout = 0;
+		ScriptableABCChar newLetter = null;
+
+		if(XMLPoolLetersList.Count == 0)
+		{
+			for(int i =0; i<lettersPool.Length; i++)
+			{
+				piecesInfo = lettersPool[i].Split(new char[1]{'_'});
+				amout = int.Parse(piecesInfo[0]);
+				for(int j = 0;j < amout;j++)
+				{
+					newLetter = new ScriptableABCChar();
+					newLetter.character = piecesInfo[1];
+					newLetter.pointsValue = piecesInfo[2];
+					newLetter.typeOfLetter = piecesInfo[3];
+
+					XMLPoolLetersList.Add(newLetter);
+				}
+			}
+
+			if(PersistentData.instance.currentLevel.obstacleLettersPool.Length > 0)
+			{
+				lettersPool = PersistentData.instance.currentLevel.obstacleLettersPool.Split(new char[1]{','});
+
+				for(int i =0; i<lettersPool.Length; i++)
+				{
+					piecesInfo = lettersPool[i].Split(new char[1]{'_'});
+					amout = int.Parse(piecesInfo[0]);
+					for(int j = 0;j < amout;j++)
+					{
+						newLetter = new ScriptableABCChar();
+						newLetter.character = piecesInfo[1];
+						newLetter.pointsValue = piecesInfo[2];
+						newLetter.typeOfLetter = piecesInfo[3];
+						XMLPoolBlackLetersList.Add(newLetter);
+					}
+				}
+			}
+		}
+		/*****/
+
+		randomizedPoolLeters = new List<ScriptableABCChar>();
+		for(int i = 0;i < XMLPoolLetersList.Count;i++)
+		{
+			randomizedPoolLeters.Add(XMLPoolLetersList[i]);
+		}
+		XMLPoolLetersList.Clear();
+
+		while(randomizedPoolLeters.Count >0)
+		{
+			int val = UnityEngine.Random.Range(0,randomizedPoolLeters.Count);
+			XMLPoolLetersList.Add(randomizedPoolLeters[val]);
+			randomizedPoolLeters.RemoveAt(val);
+		}
+
+		randomizedPoolLeters = XMLPoolLetersList;
+	}
+
+	public ScriptableABCChar giveLetterInfo()
+	{
+		ScriptableABCChar letter = randomizedPoolLeters[0];
+		randomizedPoolLeters.RemoveAt (0);
+		if(randomizedPoolLeters.Count==0)
+		{
+			fillLettersPoolList();
+		}
+		return letter;
+	}
+
+	public ScriptableABCChar giveBlackLetterInfo()
+	{
+		int random = UnityEngine.Random.Range (0, XMLPoolBlackLetersList.Count);
+		ScriptableABCChar letter = XMLPoolBlackLetersList[random];
+		XMLPoolBlackLetersList.RemoveAt (random);
+		return letter;
 	}
 }
