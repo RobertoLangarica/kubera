@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using ABC;
 
-//[ExecuteInEditMode]
 public class CellsManager : MonoBehaviour 
 {
 	public delegate void linesCreated(int lines);
@@ -15,26 +14,22 @@ public class CellsManager : MonoBehaviour
 	public GameObject cellPrefab;
 	public GameObject obstacleLetterPrefab;
 	public GameObject singleSquarePiece;
+	public GameObject uiLetter;
 
-	public int columns = 0;
-	public int rows = 0;
-
-	public int pointPerLine = 10;
+	[HideInInspector]public int columns = 0;
+	[HideInInspector]public int rows = 0;
 
 
 	//Bandera para el powerUp de Destruccion por color
 	//false: destruye todos los del mismo color en la escena
 	//true: destruye todos los del mismo color que este juntos
 	public bool selectNeighbors;
-
 	//Las celdas seleccionadas por color
 	protected List<Cell> selected;
-	//Todas las celdas del grid
-	protected List<Cell> cells;
-
 	protected int totalLinesCreated;
 
-	public GameObject uiLetter;
+	//Todas las celdas del grid
+	protected List<Cell> cells;
 
 	void Start () 
 	{
@@ -54,7 +49,7 @@ public class CellsManager : MonoBehaviour
 	{
 		if(_columns != columns || _rows != rows)
 		{
-			DestroyGrid();
+			destroyGrid();
 
 			columns = _columns;
 			rows = _rows;
@@ -98,13 +93,26 @@ public class CellsManager : MonoBehaviour
 	/*
 	 * Destruye los objetos del Grid y limpia las celdas
 	 */
-	protected void DestroyGrid()
+	protected void destroyGrid()
 	{
 		foreach(Cell val in cells)
 		{
 			DestroyImmediate(val.gameObject);
 		}
 		cells.Clear();
+	}
+
+	public void resetGrid(int _columns, int _rows)
+	{
+		if(!resizeGrid(columns,rows,""))
+		{
+			setAllCellsToType(EPieceType.NONE);
+		}
+	}
+	
+	public void resetGrid()
+	{
+		setAllCellsToType(EPieceType.NONE);
 	}
 
 	public void setAllCellsToType(EPieceType type)
@@ -119,49 +127,47 @@ public class CellsManager : MonoBehaviour
 		}
 	}
 
-	public void resetGrid(int _columns, int _rows)
-	{
-		if(!resizeGrid(columns,rows))
-		{
-			setAllCellsToType(EPieceType.NONE);
-		}
-	}
-	
-	public void resetGrid()
-	{
-		setAllCellsToType(EPieceType.NONE);
-	}
-
 	/*
-	 * Regresa la celda dependiendo la posicion del mundo que se le manda
+	 * Regresa la celda debajo del punto (aquella celda que dentro de sus boundaries contenga al punto)
 	 * 
-	 * @params vec{Vector3}: Un punto en el mundo del cual se toman su 'x' y su 'y' para buscar la celda
+	 * @param point Punto sobre el que se evaluan las celdas a ver si alguna esta debajo
 	 * 
-	 * @return {Cell}: La celda que tiene la posicion de mundo que se le envio dentro de sus limites
+	 * @return Celda bajo el punto o nulo si no existe
 	 */
-	public Cell getCellOnVec(Vector3 vec)
+	public Cell getCellUnderPoint(Vector2 point)
 	{
-		Vector3 tempV2 = Vector3.zero;
-		float size = 0;
+		Vector3 cellPos;
+		float cellWidth, cellHeight;
+		SpriteRenderer renderer;
 
-		foreach(Cell val in cells)
+		foreach(Cell cell in cells)
 		{
-			tempV2 = val.transform.position;
-			size = val.gameObject.GetComponent<SpriteRenderer>().bounds.size.x;
-			if(vec.x > tempV2.x && vec.x < (tempV2.x + size) &&
-			   vec.y < tempV2.y && vec.y > (tempV2.y - size))
+			cellPos		= cell.transform.position;
+			renderer	= cell.gameObject.GetComponent<SpriteRenderer>();
+			cellWidth	= renderer.bounds.size.x;
+			cellHeight	= renderer.bounds.size.y;
+
+			if(point.x > cellPos.x && point.x < (cellPos.x + cellWidth) &&
+				point.y < cellPos.y && point.y > (cellPos.y - cellHeight))
 			{
-				return val;
+				return cell;
 			}
 		}
 		return null;
 	}
 
+	public Cell getCellUnderPoint(Vector3 point)
+	{
+		return getCellUnderPoint(new Vector2(point.x, point.y));
+	}
+
 	/*
 	 * Regresa una Celda dependiendo la posicion (x,y) dentro del grid
 	 * 
-	 * @params xPos{int}: Posicion 'x' del grid para buscar la celda
-	 * @params yPos{int}: Posicion 'y' del grid para buscar la celda
+	 * @param xPos{int}: Posicion 'x' del grid para buscar la celda
+	 * @param yPos{int}: Posicion 'y' del grid para buscar la celda
+	 * 
+	 * @return La celda en la posicion especificada o nulo si no existe
 	 */
 	protected Cell getCellAt(int xPos,int yPos)
 	{
@@ -246,7 +252,7 @@ public class CellsManager : MonoBehaviour
 	}
 
 	/*
-	 * Evalua el estado de la grid para determinar si se ha creado o no una linea de piezas
+	 * Devuelve una lista con las lineas verticales y horizontales que se crearon
 	 */
 	public Cell[] getCompletedVerticalAndHorizontalLines()
 	{
@@ -269,104 +275,111 @@ public class CellsManager : MonoBehaviour
 	}
 
 	/*
-	 * Evalua si la figura se puede colocar donde se esta soltando la figura
+	 * Evalua si los objetos se pueden posicionar dentro de la grid.
+	 * Se evaluan en la posicion donde se encuentran
 	 * 
-	 * @params arr{GameObject[]}: El arreglo de las piezas que conforman la figura. 
-	 * 							  Estas piezas se evaluaran de manera individual para saber si la pieza puede ser posicionada
+	 * @param objects{GameObject[]}: Objetos a evaluar
 	 * 
-	 * @return {bool}: Regresa verdadero si es posible colocarla, de lo contrario regresa falso
+	 * @return true:si es posible colocarla, false:No se pudo posicionar alguna o todas
 	 */
-	public bool canPositionate(GameObject[] arr)
+	public bool canPositionateAll(GameObject[] objects)
 	{
-		Cell tempC = null;
+		List<Vector3> positions = new List<Vector3>(objects.Length);
 
-		for(int i = 0;i < arr.Length;i++)
+		for(int i = 0;i < objects.Length;i++)
 		{
-			tempC = getCellOnVec(arr[i].transform.position);
-			if(tempC == null)
-			{
-				return false;
-			}
-			else
-			{
-				if(tempC.occupied)
-				{
-					return false;
-				}
-				if(!tempC.canPositionateOnThisCell())
-				{
-					return false;
-				}
-			}
+			positions.Add(objects[i].transform.position);	
 		}
-		return true;
+
+		return canPositionateAll(positions.ToArray());
 	}
 	
 	/*
-	 * Evalua si la figura se puede colocar donde se esta soltando la figura
+	 * Evalua si todas las posicions son celdas validas y vacias.
 	 * 
-	 * @params arr{Vecto3[]}: El arreglo de las posiciones de las piezas que conforman la figura. 
-	 * 							  Estas piezas se evaluaran de manera individual para saber si la pieza puede ser posicionada
+	 * @params positions{Vecto3[]}: Posiciones a evaluar
 	 * 
-	 * @return {bool}: Regresa verdadero si es posible colocarla, de lo contrario regresa falso
+	 * @return true: Si es posible colocarlas, false:No se puede posicionar alguna o ninguna
 	 */
-	public bool canPositionate(Vector3[] arr)
+	public bool canPositionateAll(Vector3[] positions)
 	{
-		Cell tempC = null;
+		Cell cell;
 		
-		for(int i = 0;i < arr.Length;i++)
+		for(int i = 0;i < positions.Length;i++)
 		{
-			tempC = getCellOnVec(arr[i]);
-			if(tempC == null)
+			cell = getCellUnderPoint(positions[i]);
+
+			if(cell == null)
 			{
 				return false;
 			}
 			else
 			{
-				if(tempC.occupied)
-				{
-					return false;
-				}
-				if(!tempC.canPositionateOnThisCell())
+				if(cell.occupied || !cell.canPositionateOnThisCell())
 				{
 					return false;
 				}
 			}
 		}
+
 		return true;
 	}
-
-	/*
-	 * Coloca la pieza que se le envia en la celda que esta debajo de cada pieza.
-	 * Asihgna la pieza a la celda, la ocupa y le cambia el color; todos los cambios para evaluar sobre las celdas y no sobre los objetos
-	 * 
-	 * @params piece{Piece}: La pieza que se colocara dentro e la grid. De esta misma se toman los datos para la celda
-	 * 
-	 * @return {Vector3}: La posicion del a celda a la cuaal se tiene que mover la pieza. Se regresa para separa las logicas del Tween de movimiento
-	 * 					  con la asignacion de valores
-	 */
-	public Vector3 positionate(Piece piece)
+		
+	/**
+	 * Devuelve las celdas debajo de una pieza
+	 **/ 
+	public List<Cell> getCellsUnderPiece(Piece piece)
 	{
-		Cell tempC = null;
+		List<Cell> result = new List<Cell>();
 
 		for(int i = 0;i < piece.pieces.Length;i++)
 		{
-			tempC = getCellOnVec(piece.pieces[i].transform.position);
-			tempC.occupied = true;
-			tempC.piece=piece.pieces[i];
-			tempC.pieceType = piece.currentType;
+			result.Add(getCellUnderPoint(piece.pieces[i].transform.position));
 		}
+
+		return result;
+	}
+
+	/**
+	 * Ocupa la celda indicada y le asigna el contenido y tipo indicado
+	 **/ 
+	public void occupyAndConfigureCell(Cell cell,GameObject content, EPieceType type)
+	{
+		cell.occupied = true;
+
+		setCellContent(cell, content, true);//destroy
+		setCellType(cell, type);
+	}
+
+	/**
+	 * Cambia el contenido de la celda y destruye el anterior si se necesita
+	 **/ 
+	public void setCellContent(int x, int y,GameObject content, bool destroyOldContent = true)
+	{
+		setCellContent(getCellAt(x,y),content,destroyOldContent);
+	}
+
+	/**
+	 * Cambia el contenido de la celda y destruye el anterior si se necesita
+	 **/ 
+	public void setCellContent(Cell cell,GameObject content, bool destroyOldContent = true)
+	{
+		if(destroyOldContent)
+		{
+			DestroyImmediate(cell.piece);
+		}
+
+		cell.piece = content;
+	}
 		
-		tempC = getCellOnVec(piece.pieces[0].transform.position);
+	public void setCellType(int x, int y, EPieceType type)
+	{
+		setCellType(getCellAt(x,y),type);
+	}
 
-		Vector3 ofsetBetweenPieces = piece.pieces[0].transform.position - piece.transform.position;
-
-		Vector3 nVec = new Vector3(tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
-		                           -tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
-
-		//***********************************************Crear AudioManager
-		//gameObject.GetComponent<AudioSource>().Play();
-		return (tempC).transform.position + nVec - ofsetBetweenPieces;
+	public void setCellType(Cell cell, EPieceType type)
+	{
+		cell.pieceType = type;
 	}
 
 	/*
@@ -462,7 +475,7 @@ public class CellsManager : MonoBehaviour
 
 		go.GetComponent<Piece> ().currentType = cell.pieceType;
 
-		go.transform.position = positionate (go.GetComponent<Piece> ());
+		go.transform.position = configureCellUnderAndReturnPosition (go.GetComponent<Piece> ());
 
 		go.GetComponent<BoxCollider2D> ().enabled = false;
 	}
@@ -503,11 +516,11 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @return true: Si una cabe. false: Si ninguna cabe
 	 */
-	public bool checkIfOneCanFit(List<GameObject> listPieces)
+	public bool checkIfOneCanFit(List<GameObject> piecesList)
 	{
 		Vector3 ofset = Vector3.zero;
-		float size = cellPrefab.gameObject.GetComponent<SpriteRenderer>().bounds.size.x *0.5f;
-		Vector3 moveLittle = new Vector3(size,-size,0);
+		float extentsX = cellPrefab.gameObject.GetComponent<SpriteRenderer>().bounds.extents.x;
+		Vector3 moveLittle = new Vector3(extentsX,-extentsX,0);
 		Vector3[] vecArr;
 		Piece lPPiece = null;
 
@@ -515,16 +528,16 @@ public class CellsManager : MonoBehaviour
 		{
 			if(!val.occupied)
 			{
-				for(int i = 0;i < listPieces.Count;i++)
+				for(int i = 0;i < piecesList.Count;i++)
 				{
-					lPPiece = listPieces[i].GetComponent<Piece>();
+					lPPiece = piecesList[i].GetComponent<Piece>();
 					ofset = (val.transform.position + moveLittle) - lPPiece.pieces[0].transform.position;
 					vecArr = new Vector3[lPPiece.pieces.Length];
 					for(int j = 0;j < lPPiece.pieces.Length;j++)
 					{
 						vecArr[j] = lPPiece.pieces[j].transform.position + ofset;
 					}
-					if(canPositionate(vecArr))
+					if(canPositionateAll(vecArr))
 					{
 						return true;
 					}

@@ -190,11 +190,11 @@ public class InputGameController : MonoBehaviour
 				}
 			
 				//checamos que podamos poner la pieza
-				if(!cellManager.CanPositionate(piece.GetComponent<Piece>().pieces))
+				if(!cellManager.canPositionateAll(piece.GetComponent<Piece>().pieces))
 				{
 					if(destroyByColor)
 					{
-						Cell tempCell = cellManager.getCellOnVec(piece.transform.position);
+						Cell tempCell = cellManager.getCellUnderPoint(piece.transform.position);
 						if(tempCell != null)
 						{
 							if(tempCell.occupied)
@@ -254,7 +254,7 @@ public class InputGameController : MonoBehaviour
 						if(conPositionatePiece)
 						{
 							//ponemos la pieza en su posicion correcta de manera suave y le quitamos el colider a la pieza completa
-							Vector3 myNewPosition = cellManager.Positionate(piece.GetComponent<Piece>());
+							Vector3 myNewPosition = cellManager.positionate(piece.GetComponent<Piece>());
 							DOTween.KillAll();
 							piece.transform.DOMove(new Vector3(myNewPosition.x,myNewPosition.y,1),.1f);
 							piece.GetComponent<BoxCollider2D>().enabled = false;
@@ -264,7 +264,7 @@ public class InputGameController : MonoBehaviour
 							pointsAtPieceSetCorrectly (piece.GetComponent<Piece> ().pieces.Length);
 	
 							afterDragEnded();
-							cellManager.evaluateVerticalAndHorizontalLines();
+							cellManager.getCompletedVerticalAndHorizontalLines();
 
 	
 							FlashColor[] flash = piece.GetComponentsInChildren<FlashColor>();

@@ -324,7 +324,7 @@ public class GameManager : MonoBehaviour
 
 	protected void sendVectorToCellManager(Vector3 vector3)
 	{
-		cellManager.getCellOnVec(vector3).clearCell();
+		cellManager.getCellUnderPoint(vector3).clearCell();
 	}
 
 	public void linesCreated(int totalLines)
@@ -567,7 +567,7 @@ public class GameManager : MonoBehaviour
 
 	public void checkToLoose()
 	{
-		if(!cellManager.VerifyPosibility(pieceManager.piecesInBar) || remainingMoves == 0)
+		if(!cellManager.checkIfOneCanFit(pieceManager.piecesInBar) || remainingMoves == 0)
 		{
 			Debug.Log ("Perdio");
 			while(true)
@@ -634,7 +634,7 @@ public class GameManager : MonoBehaviour
 
 			go.GetComponent<Piece> ().currentType = cellManager.colorOfMoreQuantity ();
 
-			go.transform.position = cellManager.Positionate (go.GetComponent<Piece> ());
+			go.transform.position = cellManager.positionate (go.GetComponent<Piece> ());
 
 			//cellManager.turnPieceToLetterByWinNotification (cell);
 			StartCoroutine (add1x1BlockMore ());
