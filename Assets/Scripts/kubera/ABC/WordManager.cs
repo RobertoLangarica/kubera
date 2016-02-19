@@ -151,22 +151,26 @@ namespace ABC
 			if (heightOfLetterPrefab != 0) 
 			{
 				actualizePadding ();
-
 			} 
 			else {		
 				yield return new WaitForSeconds (0);
 				heightOfLetterPrefab = letter.GetComponent<Image> ().rectTransform.rect.height;
 				int paddingSize = (int)((widhtOfContainer - (heightOfLetterPrefab) * container.transform.childCount) * .5f);
 
-				if (paddingSize > 0) {
+				if (paddingSize > 0) 
+				{
 					container.GetComponent<HorizontalLayoutGroup> ().padding = new RectOffset (paddingSize, paddingSize, 0, 0);
-				} else {
+				} 
+				else 
+				{
 					if (container.transform.childCount == 0) {
 						resetValidation ();
 						activateButtonOfWordsActions (false);
 					}
 				}
 			}
+			yield return new WaitForSeconds (0);
+			actualizeBoxColliderOfLetters ();
 		}
 
 		protected void actualizePadding()
@@ -181,6 +185,14 @@ namespace ABC
 			{
 				resetValidation ();
 				activateButtonOfWordsActions (false);
+			}
+		}
+
+		protected void actualizeBoxColliderOfLetters()
+		{
+			for (int i = 0; i < container.transform.childCount; i++) 
+			{
+				container.transform.GetChild(i).GetComponent<BoxCollider2D> ().size = container.transform.GetChild(i).GetComponent<Image> ().rectTransform.rect.size;
 			}
 		}
 
