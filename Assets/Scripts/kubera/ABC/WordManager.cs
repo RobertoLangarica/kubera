@@ -57,8 +57,7 @@ namespace ABC
 			buttonNext = FindObjectOfType<ShowNext> ();
 			positionOfButton = buttonNext.next.transform.localPosition;
 
-			//container.GetComponent<HorizontalLayoutGroup>().padding.left = container.GetComponent<HorizontalLayoutGroup>().padding.right = padding;
-			print(container.GetComponent<RectTransform>().rect.width);
+
 			widhtOfContainer = container.GetComponent<RectTransform>().rect.width;
 
 			words = FindObjectOfType<ABCDataStructure>();
@@ -267,7 +266,6 @@ namespace ABC
 				chars.Add(character);
 				words.validateChar(character);
 
-				print (container.transform.childCount);
 				if(words.completeWord)
 				{
 					onWordComplete();
@@ -285,39 +283,42 @@ namespace ABC
 		 **/ 
 		public void resetValidation()
 		{
-			for(int i = 0;i < chars.Count;i++)
+			if (container.transform.childCount != 0) 
 			{
-				ABCChar abcChar;
-				if (chars [i].gameObject.GetComponent<UIChar> ().piece != null) 
+				for (int i = 0; i < chars.Count; i++)
 				{
-					abcChar = chars [i].gameObject.GetComponent<UIChar> ().piece.GetComponent<ABCChar> ();
-				}
-				else 
-				{
-					abcChar = chars [i].gameObject.GetComponent<ABCChar> ();
-				}
-
-				UIChar uiChar = chars [i].gameObject.GetComponent<UIChar> ();
-
-				if(uiChar != null && abcChar != null)
-				{
-					if(words.completeWord)
+					ABCChar abcChar;
+					if (chars [i].gameObject.GetComponent<UIChar> ().piece != null)
 					{
-						OnSend(uiChar.piece.transform.position);
-						uiChar.DestroyPiece();
+						abcChar = chars [i].gameObject.GetComponent<UIChar> ().piece.GetComponent<ABCChar> ();
+					} 
+					else 
+					{
+						abcChar = chars [i].gameObject.GetComponent<ABCChar> ();
 					}
-					else
-					{
-						if(abcChar.wildcard)
-						{
-							//activeMoney (false);
-							//GameObject.Find("WildCard").GetComponent<PowerUpBase>().returnPower();
-						}
-						else
-						{
-							uiChar.piece.GetComponent<UIChar>().backToNormal();
-						}
 
+					UIChar uiChar = chars [i].gameObject.GetComponent<UIChar> ();
+
+					if (uiChar != null && abcChar != null) 
+					{
+						if (words.completeWord) 
+						{
+							OnSend (uiChar.piece.transform.position);
+							uiChar.DestroyPiece ();
+						} 
+						else 
+						{
+							if (abcChar.wildcard) 
+							{
+								//activeMoney (false);
+								//GameObject.Find("WildCard").GetComponent<PowerUpBase>().returnPower();
+							} 
+							else 
+							{
+								uiChar.piece.GetComponent<UIChar> ().backToNormal ();
+							}
+
+						}
 					}
 				}
 			}
