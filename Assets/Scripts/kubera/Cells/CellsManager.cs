@@ -516,13 +516,12 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @return true: Si una cabe. false: Si ninguna cabe
 	 */
-	public bool checkIfOneCanFit(List<GameObject> piecesList)
+	public bool checkIfOneCanFit(List<Piece> piecesList)
 	{
-		Vector3 ofset = Vector3.zero;
+		Vector3 offset = Vector3.zero;
 		float extentsX = cellPrefab.gameObject.GetComponent<SpriteRenderer>().bounds.extents.x;
 		Vector3 moveLittle = new Vector3(extentsX,-extentsX,0);
 		Vector3[] vecArr;
-		Piece lPPiece = null;
 
 		foreach(Cell val in cells)
 		{
@@ -530,12 +529,12 @@ public class CellsManager : MonoBehaviour
 			{
 				for(int i = 0;i < piecesList.Count;i++)
 				{
-					lPPiece = piecesList[i].GetComponent<Piece>();
-					ofset = (val.transform.position + moveLittle) - lPPiece.pieces[0].transform.position;
-					vecArr = new Vector3[lPPiece.pieces.Length];
-					for(int j = 0;j < lPPiece.pieces.Length;j++)
+					
+					offset = (val.transform.position + moveLittle) - piecesList[0].transform.position;
+					vecArr = new Vector3[piecesList[i].pieces.Length];
+					for(int j = 0;j < piecesList[i].pieces.Length;j++)
 					{
-						vecArr[j] = lPPiece.pieces[j].transform.position + ofset;
+						vecArr[j] = piecesList[i].pieces[j].transform.position + offset;
 					}
 					if(canPositionateAll(vecArr))
 					{
