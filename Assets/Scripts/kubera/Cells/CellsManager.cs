@@ -475,7 +475,7 @@ public class CellsManager : MonoBehaviour
 
 		go.GetComponent<Piece> ().currentType = cell.pieceType;
 
-		go.transform.position = configureCellUnderAndReturnPosition (go.GetComponent<Piece> ());
+		//go.transform.position = configureCellUnderAndReturnPosition (go.GetComponent<Piece> ());
 
 		go.GetComponent<BoxCollider2D> ().enabled = false;
 	}
@@ -728,7 +728,7 @@ public class CellsManager : MonoBehaviour
 		return selected;
 	}
 
-	public Cell[] allEmptyCells()
+	public Cell[] getAllEmptyCells()
 	{
 		List<Cell> result = new List<Cell>();
 

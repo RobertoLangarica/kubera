@@ -643,7 +643,7 @@ public class GameManager : MonoBehaviour
 
 			go.GetComponent<Piece> ().currentType = cellManager.colorOfMoreQuantity ();
 
-			go.transform.position = cellManager.positionate (go.GetComponent<Piece> ());
+			//go.transform.position = cellManager.positionate (go.GetComponent<Piece> ());
 
 			//cellManager.turnPieceToLetterByWinNotification (cell);
 			StartCoroutine (add1x1BlockMore ());
