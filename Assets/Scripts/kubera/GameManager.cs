@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
 	protected PieceManager pieceManager;
 	protected HUD hud;
 
-	protected InputPieceController inputPiece;
+	protected InputPiece inputPiece;
 
 	protected List<GameObject> XMLPoolPiecesList = new List<GameObject>();
 	protected List<ScriptableABCChar> XMLPoolLetersList = new List<ScriptableABCChar>();
@@ -70,10 +70,10 @@ public class GameManager : MonoBehaviour
 		cellManager.OnlinesCounted += linesCreated;
 		cellManager.OnLetterCreated += registerNewLetterCreated;
 
-		inputPiece = FindObjectOfType<InputPieceController>();
+		inputPiece = FindObjectOfType<InputPiece>();
 		inputPiece.OnDrop += OnPieceDropped;
 
-		wordManager.OnSend += sendVectorToCellManager;
+		wordManager.OnSendVector3 += sendVectorToCellManager;
 	}
 
 	void Start()
@@ -269,14 +269,14 @@ public class GameManager : MonoBehaviour
 
 		canUseAllWildCards = canCompleteWordWithWildCards();
 
-		if(wordManager.words.completeWord && canUseAllWildCards)
+		if(wordManager.wordsValidator.completeWord && canUseAllWildCards)
 		{
 			//useGems(powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
 			
 			for(int i = 0;i < wordManager.chars.Count;i++)
 			{
 				letterFound = false;
-				switch(wordManager.chars[i].pointsValue)
+				switch(wordManager.chars[i].pointsOrMultiple)
 				{
 				case("x2"):
 					{multiplierHelper *= 2;}
@@ -291,10 +291,10 @@ public class GameManager : MonoBehaviour
 					{multiplierHelper *= 5;}
 					break;
 				default:
-					{amount += int.Parse(wordManager.chars[i].pointsValue);}
+					{amount += int.Parse(wordManager.chars[i].pointsOrMultiple);}
 					break;
 				}
-				if (wordManager.chars [i].typeOfLetter == "0") 
+				if (wordManager.chars [i].type == ABCChar.EType.OBSTACLE) 
 				{
 					blackLettersUsed++;
 				}
@@ -388,7 +388,7 @@ public class GameManager : MonoBehaviour
 			abcChar.initializeFromScriptableABCChar(giveLetterInfo());
 		}
 
-		uiChar.typeOfLetter = abcChar.typeOfLetter;
+		uiChar.type = abcChar.type;
 		uiChar.changeColorAndSetValues(abcChar.character.ToLower ());
 
 		listChar.Add(abcChar);
@@ -416,11 +416,6 @@ public class GameManager : MonoBehaviour
 
 	public void addWildCardInCurrentWord()
 	{
-		/*if(inputGameController.secondChanceBombsOnly)
-		{
-			return;
-		}*/
-
 		if (!useGems (powerUpManager.getPowerUp (EPOWERUPS.WILDCARD_POWERUP).gemsPrice)) 
 		{
 			return;
@@ -429,7 +424,8 @@ public class GameManager : MonoBehaviour
 		deactivateCurrentPowerUp();
 
 		currentWildCardsActivated++;
-		wordManager.addCharacter(".");
+		//[TODO] leer el valor del wildcard de algun lado
+		wordManager.addCharacter(wordManager.getWildcard("10"), null);
 		wordManager.activateButtonOfWordsActions (true);
 		activatedPowerUp = powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP);
 
@@ -622,7 +618,7 @@ public class GameManager : MonoBehaviour
 
 	protected void add1x1Block()
 	{
-		Cell[] emptyCells = cellManager.allEmptyCells();
+		Cell[] emptyCells = cellManager.getAllEmptyCells();
 		Cell cell;
 
 		if (remainingMoves != 0 && emptyCells.Length > 0) 
@@ -724,7 +720,7 @@ public class GameManager : MonoBehaviour
 
 		for (int i = 0; i < cellToLetter.Count; i++) 
 		{
-			switch (cellToLetter[i].piece.GetComponent<ABCChar>().pointsValue) 
+			switch (cellToLetter[i].piece.GetComponent<ABCChar>().pointsOrMultiple) 
 			{
 			case("x2"):
 				{
@@ -744,7 +740,7 @@ public class GameManager : MonoBehaviour
 				break;
 			default:
 				{
-					amount += int.Parse (cellToLetter[i].piece.GetComponent<ABCChar>().pointsValue);}
+					amount += int.Parse (cellToLetter[i].piece.GetComponent<ABCChar>().pointsOrMultiple);}
 				break;
 			}
 		}
@@ -919,8 +915,8 @@ public class GameManager : MonoBehaviour
 				{
 					newLetter = new ScriptableABCChar();
 					newLetter.character = piecesInfo[1];
-					newLetter.pointsValue = piecesInfo[2];
-					newLetter.typeOfLetter = piecesInfo[3];
+					newLetter.pointsOrMultiple = piecesInfo[2];
+					newLetter.type = int.Parse(piecesInfo[3]);
 
 					XMLPoolLetersList.Add(newLetter);
 				}
@@ -938,8 +934,8 @@ public class GameManager : MonoBehaviour
 					{
 						newLetter = new ScriptableABCChar();
 						newLetter.character = piecesInfo[1];
-						newLetter.pointsValue = piecesInfo[2];
-						newLetter.typeOfLetter = piecesInfo[3];
+						newLetter.pointsOrMultiple = piecesInfo[2];
+						newLetter.type = int.Parse(piecesInfo[3]);
 						XMLPoolBlackLetersList.Add(newLetter);
 					}
 				}

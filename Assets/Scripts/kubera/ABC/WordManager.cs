@@ -8,33 +8,33 @@ namespace ABC
 {
 	public class WordManager : MonoBehaviour 
 	{
-		protected InputWords inputWords;
-		
-		public GameObject letterPrefab;
-		public GameObject empty;
-		public GameObject container;
 
-		[HideInInspector]public ABCDataStructure words;
+		public GameObject letterPrefab;
+		public GameObject emptyChild;
+		public GameObject letterContainer;
+		public int maxLetters = 12;
+
+		protected InputWords inputWords;
+
+		[HideInInspector]public ABCDataStructure wordsValidator;
 		[HideInInspector]public List<ABCChar> chars;
 		protected bool invalidCharlist;//Indica que la lista de caracteres tuvo o tiene uno invalido
 
 		protected int sortingAfterSwap;
-		protected Vector2[] positionOfLetters; //los vectores de las letras 
+		protected Vector2[] lettersPositions; //los vectores de las letras 
 
-		protected float widhtOfContainer;
-		protected float heightOfLetterPrefab = 0;
+		protected float containerWidth;
+		protected float letterPrefabHeight = 0;
 
 		//texturas de las letras en juego
 		protected UnityEngine.Object[] textureObject;
-		protected string[] names;
+		protected string[] textureNames;
 
 		protected ShowNext buttonNext;
+		[HideInInspector]public Vector3 buttonNextPos;
 
-		[HideInInspector]
-		public Vector3 positionOfButton;
-
-		public delegate void DSendVector3ToCellManager(Vector3 vector3);
-		public DSendVector3ToCellManager OnSend;
+		public delegate void DSendVector3(Vector3 vector3);
+		public DSendVector3 OnSendVector3;
 
 		void Start()
 		{
@@ -49,78 +49,53 @@ namespace ABC
 			}
 
 			textureObject = Resources.LoadAll("Letters");
-			names = new string[textureObject.Length];
+			textureNames = new string[textureObject.Length];
 			readTextures();
 
 			chars = new List<ABCChar>();
 
 			buttonNext = FindObjectOfType<ShowNext> ();
-			positionOfButton = buttonNext.next.transform.localPosition;
+			buttonNextPos = buttonNext.next.transform.localPosition;
 
 
-			widhtOfContainer = container.GetComponent<RectTransform>().rect.width;
+			containerWidth = letterContainer.GetComponent<RectTransform>().rect.width;
 
-			words = FindObjectOfType<ABCDataStructure>();
-			//words.OnWordComplete += onWordComplete;
+
+			GridLayoutGroup gridLayout = letterContainer.GetComponent<GridLayoutGroup>();
+			gridLayout.cellSize = new Vector2(letterContainer.GetComponent<RectTransform>().rect.width/maxLetters
+				,letterContainer.GetComponent<RectTransform>().rect.height*.9f);
+
+
+			wordsValidator = FindObjectOfType<ABCDataStructure>();
 		}
 
 		public Sprite changeTexture(string nTextureName)
 		{
 			Sprite sprite;
 
-			sprite = (Sprite)textureObject[Array.IndexOf(names, nTextureName.ToLower())];		
+			sprite = (Sprite)textureObject[Array.IndexOf(textureNames, nTextureName.ToLower())];		
 			return sprite;
 		}
 
 		protected void readTextures()
 		{
-			for(int i=0; i< names.Length; i++)
+			for(int i=0; i< textureNames.Length; i++)
 			{
-				names[i] = textureObject[i].name;
+				textureNames[i] = textureObject[i].name;
 			}
 		}
 
-		/**
-		 * SOLO PARA TEST
-		 * */
-		public void addAndCloneCharacter(ABCChar character)
+		public ABCChar getWildcard(string pointsOrMultiple)
 		{
-			GameObject letter =  Instantiate(letterPrefab);
-			ABCChar char2 = letter.AddComponent<ABCChar>();
-			char2.value = character.value;
-			char2.index = character.index;
-			char2.used = character.used;
-			char2.wildcard = character.wildcard;
-			addLetterToCorrectSpace(letter);
-			letter.transform.localScale = new Vector3 (1, 1, 1);
-			
-			validateCharacter(char2);
-		}
+			ABCChar result = new ABCChar();
+			string wildcardValue = ".";
+			result.value = wordsValidator.getCharValue(wildcardValue);
+			result.wildcard = true;
+			result.character = wildcardValue;
+			result.pointsOrMultiple = pointsOrMultiple;
+			result.type = ABCChar.EType.NORMAL;
 
-		/**
-		 * Instancia UICHar y con la cadena que recibe crea un ABCChar que se
-		 * agrega como componente a la nueva pieza
-		 * */
-		public void addCharacter(string value,GameObject piece = null)
-		{
-			GameObject letter =  Instantiate(letterPrefab);
-			ABCChar character = letter.AddComponent<ABCChar>();
-			value = value.ToUpper ();
-			if (value == ".")
-			{
-				character.wildcard = true;
-			}
-			character.value = words.getCharValue(value);
-			character.character = value.ToUpperInvariant();
-			addLetterToCorrectSpace(letter);
-			letter.transform.localScale = new Vector3 (1, 1, 1);
-			letter.GetComponent<UIChar> ().piece = piece;
-			letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
-			
-			validateCharacter(character);
-			
-			//para que las letras esten centradas
-			StartCoroutine (actualizePaddingCoroutine (letter));
+			return result;
 		}
 
 		public void addCharacter(ABCChar pieceABCChar,GameObject piece)
@@ -129,12 +104,13 @@ namespace ABC
 			ABCChar character = letter.AddComponent<ABCChar>();
 
 			character.wildcard = pieceABCChar.wildcard;
-			character.value = words.getCharValue(pieceABCChar.character.ToUpper());
+			character.value = wordsValidator.getCharValue(pieceABCChar.character.ToUpper());
 			character.character = pieceABCChar.character.ToUpperInvariant();
-			character.pointsValue = pieceABCChar.pointsValue;
-			character.typeOfLetter = pieceABCChar.typeOfLetter;
+			character.pointsOrMultiple = pieceABCChar.pointsOrMultiple;
+			character.type = pieceABCChar.type;
 			
-			addLetterToCorrectSpace(letter);
+			addLetterToFirstEmptySpace(letter);
+
 			letter.transform.localScale = new Vector3 (1, 1, 1);
 			letter.GetComponent<UIChar> ().piece = piece;
 			letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
@@ -142,30 +118,30 @@ namespace ABC
 			validateCharacter(character);
 
 			//para que las letras esten centradas
-			StartCoroutine (actualizePaddingCoroutine (letter));
+			//StartCoroutine (actualizePaddingCoroutine (letter));
 		}
 
 		/**
 		 *Actualiza el tamaño necesario del padding y guarda ciertos datos para mejorar procesamiento 
 		 **/
-		IEnumerator actualizePaddingCoroutine(GameObject letter)
+		/*IEnumerator actualizePaddingCoroutine(GameObject letter)
 		{
-			if (heightOfLetterPrefab != 0) 
+			if (letterPrefabHeight != 0) 
 			{
 				actualizePadding ();
 			} 
 			else {		
 				yield return new WaitForSeconds (0);
-				heightOfLetterPrefab = letter.GetComponent<Image> ().rectTransform.rect.height;
-				int paddingSize = (int)((widhtOfContainer - (heightOfLetterPrefab) * container.transform.childCount) * .5f);
+				letterPrefabHeight = letter.GetComponent<Image> ().rectTransform.rect.height;
+				int paddingSize = (int)((containerWidth - (letterPrefabHeight) * letterContainer.transform.childCount) * .5f);
 
 				if (paddingSize > 0) 
 				{
-					container.GetComponent<HorizontalLayoutGroup> ().padding = new RectOffset (paddingSize, paddingSize, 0, 0);
+					letterContainer.GetComponent<HorizontalLayoutGroup> ().padding = new RectOffset (paddingSize, paddingSize, 0, 0);
 				} 
 				else 
 				{
-					if (container.transform.childCount == 0) {
+					if (letterContainer.transform.childCount == 0) {
 						resetValidation ();
 						activateButtonOfWordsActions (false);
 					}
@@ -173,50 +149,50 @@ namespace ABC
 			}
 			yield return new WaitForSeconds (0);
 			actualizeBoxColliderOfLetters ();
-		}
+		}*/
 
 		protected void actualizePadding()
 		{
-			int paddingSize = (int)((widhtOfContainer - (heightOfLetterPrefab) * container.transform.childCount) * .5f);
+			int paddingSize = (int)((containerWidth - (letterPrefabHeight) * letterContainer.transform.childCount) * .5f);
 			if (paddingSize > 0) 
 			{
-				container.GetComponent<HorizontalLayoutGroup> ().padding = new RectOffset (paddingSize, paddingSize, 0, 0);
+				letterContainer.GetComponent<HorizontalLayoutGroup> ().padding = new RectOffset (paddingSize, paddingSize, 0, 0);
 			} 
 
-			if (container.transform.childCount == 0) 
+			if (letterContainer.transform.childCount == 0) 
 			{
 				resetValidation ();
 				activateButtonOfWordsActions (false);
 			}
 		}
 
-		protected void actualizeBoxColliderOfLetters()
+		/*protected void actualizeBoxColliderOfLetters()
 		{
-			for (int i = 0; i < container.transform.childCount; i++) 
+			for (int i = 0; i < letterContainer.transform.childCount; i++) 
 			{
-				container.transform.GetChild(i).GetComponent<BoxCollider2D> ().size = container.transform.GetChild(i).GetComponent<Image> ().rectTransform.rect.size;
+				letterContainer.transform.GetChild(i).GetComponent<BoxCollider2D> ().size = letterContainer.transform.GetChild(i).GetComponent<Image> ().rectTransform.rect.size;
 			}
-		}
+		}*/
 
 		/**
 		 * Agrega la siguiente letra tomando en cuenta los espacios vacios
 		 **/ 
-		protected void addLetterToCorrectSpace(GameObject letter)
+		protected void addLetterToFirstEmptySpace(GameObject letter)
 		{
 			//Agregamos la letra al primer lugar vacio
 			for(int i = 0; i < chars.Count; i++)
 			{
 				if(chars[i].empty)
 				{
-					DestroyImmediate(container.transform.GetChild(i).gameObject);
-					letter.transform.SetParent(container.transform);
+					DestroyImmediate(letterContainer.transform.GetChild(i).gameObject);
+					letter.transform.SetParent(letterContainer.transform);
 					letter.transform.SetSiblingIndex(i);
 					return;
 				}
 			}
 
 			//Agregamos la letra al ultimo
-			letter.transform.SetParent(container.transform);
+			letter.transform.SetParent(letterContainer.transform);
 		}
 
 		/**
@@ -226,7 +202,7 @@ namespace ABC
 		{
 			if(chars.Count == 0)
 			{
-				words.initCharByCharValidation();
+				wordsValidator.initCharByCharValidation();
 			}
 
 			if(invalidCharlist)
@@ -241,16 +217,16 @@ namespace ABC
 				if(!hasEmptyChars())
 				{
 					//Se completaron los vacios y los validamos
-					words.initCharByCharValidation();
+					wordsValidator.initCharByCharValidation();
 
 					foreach(ABCChar c in chars)
 					{
-						words.validateChar(c);
+						wordsValidator.validateChar(c);
 					}
 
 					invalidCharlist = false;
 
-					if(words.completeWord)
+					if(wordsValidator.completeWord)
 					{
 						onWordComplete();
 					}
@@ -264,9 +240,9 @@ namespace ABC
 			{
 				character.index = chars.Count;
 				chars.Add(character);
-				words.validateChar(character);
+				wordsValidator.validateChar(character);
 
-				if(words.completeWord)
+				if(wordsValidator.completeWord)
 				{
 					onWordComplete();
 				}
@@ -283,7 +259,7 @@ namespace ABC
 		 **/ 
 		public void resetValidation()
 		{
-			if (container.transform.childCount != 0) 
+			if (letterContainer.transform.childCount != 0) 
 			{
 				for (int i = 0; i < chars.Count; i++)
 				{
@@ -301,10 +277,10 @@ namespace ABC
 
 					if (uiChar != null && abcChar != null) 
 					{
-						if (words.completeWord) 
+						if (wordsValidator.completeWord) 
 						{
-							OnSend (uiChar.piece.transform.position);
-							uiChar.DestroyPiece ();
+							OnSendVector3 (uiChar.piece.transform.position);
+							uiChar.destroyPiece ();
 						} 
 						else 
 						{
@@ -325,12 +301,12 @@ namespace ABC
 
 			invalidCharlist = false;
 
-			int l = container.transform.childCount;
+			int l = letterContainer.transform.childCount;
 			while(--l >= 0)
 			{
-				if (!container.transform.GetChild (l).gameObject.GetComponent<ABCChar> ().wildcard) 
+				if (!letterContainer.transform.GetChild (l).gameObject.GetComponent<ABCChar> ().wildcard) 
 				{
-					GameObject.Destroy (container.transform.GetChild (l).gameObject);
+					GameObject.Destroy (letterContainer.transform.GetChild (l).gameObject);
 				}
 			}
 
@@ -375,19 +351,19 @@ namespace ABC
 			if(lvlIndex == chars.Count-1)
 			{
 				//El usuairo elimino el ultimo caracter
-				words.deleteLvlOfSearch(lvlIndex);
+				wordsValidator.deleteLvlOfSearch(lvlIndex);
 				chars.RemoveAt(lvlIndex);
 				actualizePadding();
 			}
 			else
 			{
-				words.cleanCharByCharValidation();
+				wordsValidator.cleanCharByCharValidation();
 				chars[lvlIndex].empty = true;
 				invalidCharlist = true;
 			}
 
 			//Eliminamos la letra anterior
-			DestroyImmediate(container.transform.GetChild(lvlIndex).gameObject);
+			DestroyImmediate(letterContainer.transform.GetChild(lvlIndex).gameObject);
 
 			
 			if(everythingIsEmpty())
@@ -398,9 +374,9 @@ namespace ABC
 			else if(lvlIndex != chars.Count)
 			{
 				//agregar hijo vacio para indicar el espacio
-				GameObject letter =  Instantiate(empty);
+				GameObject letter =  Instantiate(emptyChild);
 
-				letter.transform.SetParent(container.transform);
+				letter.transform.SetParent(letterContainer.transform);
 				letter.transform.SetSiblingIndex(lvlIndex);
 				letter.transform.localScale = new Vector3(1,1,1);
 			}
@@ -471,7 +447,7 @@ namespace ABC
 		public bool checkIfAWordisPossible(List<ABCChar> pool)
 		{
 			//Debug.Log ("Possible word: "+words.isAWordPossible(pool));
-			if(!words.isAWordPossible(pool))
+			if(!wordsValidator.isAWordPossible(pool))
 			{
 				print("perdio de verdad");
 				return false;
@@ -484,21 +460,21 @@ namespace ABC
 		 **/
 		public void swappingLetters(GameObject letter)
 		{
-			for(int i=0; i<container.transform.childCount; i++)
+			for(int i=0; i<letterContainer.transform.childCount; i++)
 			{			
-				if(container.transform.GetChild(i).gameObject != letter)
+				if(letterContainer.transform.GetChild(i).gameObject != letter)
 				{
-					if((int)container.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition.x > ((int)letter.GetComponent<RectTransform>().anchoredPosition.x - ((int)letter.GetComponent<RectTransform>().rect.width * 0.5f)) 
-					   && (int)container.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition.x < ((int)letter.GetComponent<RectTransform>().anchoredPosition.x + ((int)letter.GetComponent<RectTransform>().rect.width * 0.5f)))
+					if((int)letterContainer.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition.x > ((int)letter.GetComponent<RectTransform>().anchoredPosition.x - ((int)letter.GetComponent<RectTransform>().rect.width * 0.5f)) 
+					   && (int)letterContainer.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition.x < ((int)letter.GetComponent<RectTransform>().anchoredPosition.x + ((int)letter.GetComponent<RectTransform>().rect.width * 0.5f)))
 					{
-						if(letter.GetComponent<RectTransform>().anchoredPosition.x > container.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition.x)
+						if(letter.GetComponent<RectTransform>().anchoredPosition.x > letterContainer.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition.x)
 						{
 							//izquierda a derecha
 							sortingAfterSwap = i;
 
-							for(int j=container.transform.childCount-2; j>=i; j--)
+							for(int j=letterContainer.transform.childCount-2; j>=i; j--)
 							{
-								container.transform.GetChild(j).GetComponent<RectTransform>().anchoredPosition = positionOfLetters[j+1];
+								letterContainer.transform.GetChild(j).GetComponent<RectTransform>().anchoredPosition = lettersPositions[j+1];
 							}
 						}
 						else
@@ -508,7 +484,7 @@ namespace ABC
 
 							for(int j =0; j<=i; j++)
 							{
-								container.transform.GetChild(j).GetComponent<RectTransform>().anchoredPosition = positionOfLetters[j];
+								letterContainer.transform.GetChild(j).GetComponent<RectTransform>().anchoredPosition = lettersPositions[j];
 							}
 						}
 						break;
@@ -523,7 +499,7 @@ namespace ABC
 		 **/
 		protected void swappEnding(GameObject letter)
 		{
-			if(!letter.GetComponent<ABCChar> ().wildcard && letter.transform.localPosition.x > positionOfButton.x -50 && letter.transform.localPosition.x < positionOfButton.x +50)
+			if(!letter.GetComponent<ABCChar> ().wildcard && letter.transform.localPosition.x > buttonNextPos.x -50 && letter.transform.localPosition.x < buttonNextPos.x +50)
 			{
 				checkSwappLetters (letter, true);
 			}
@@ -538,7 +514,7 @@ namespace ABC
 		 **/
 		protected void activateSwapp(GameObject letter)
 		{
-			container.GetComponent<HorizontalLayoutGroup>().enabled = false;
+			letterContainer.GetComponent<HorizontalLayoutGroup>().enabled = false;
 			setPositionToLetters ();
 			sortingAfterSwap = letter.transform.GetSiblingIndex();
 			letter.transform.SetSiblingIndex(100);
@@ -551,7 +527,7 @@ namespace ABC
 		  **/
 		public void checkSwappLetters(GameObject letter,bool destroy = false)
 		{			
-			container.GetComponent<HorizontalLayoutGroup>().enabled = true;
+			letterContainer.GetComponent<HorizontalLayoutGroup>().enabled = true;
 			if(destroy)
 			{
 				letter.GetComponent<UIChar> ().destroyLetter();
@@ -569,16 +545,16 @@ namespace ABC
 		protected void actualizeIfExistLettersOn ()
 		{
 			chars.Clear();
-			for(int i=0; i<container.transform.childCount; i++)
+			for(int i=0; i<letterContainer.transform.childCount; i++)
 			{
-				chars.Add(container.transform.GetChild(i).GetComponent<ABCChar>());
+				chars.Add(letterContainer.transform.GetChild(i).GetComponent<ABCChar>());
 			}
-			words.initCharByCharValidation();
+			wordsValidator.initCharByCharValidation();
 			foreach(ABCChar c in chars)
 			{
-				words.validateChar(c);
+				wordsValidator.validateChar(c);
 			}
-			if(words.completeWord)
+			if(wordsValidator.completeWord)
 			{
 				onWordComplete();
 			}
@@ -593,10 +569,10 @@ namespace ABC
 		 */
 		protected void setPositionToLetters()
 		{
-			positionOfLetters = new Vector2[container.transform.childCount];
-			for(int i=0; i<container.transform.childCount; i++)
+			lettersPositions = new Vector2[letterContainer.transform.childCount];
+			for(int i=0; i<letterContainer.transform.childCount; i++)
 			{
-				positionOfLetters[i] = container.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition;
+				lettersPositions[i] = letterContainer.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition;
 			}
 		}
 

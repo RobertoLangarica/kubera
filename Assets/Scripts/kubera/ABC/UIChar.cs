@@ -6,21 +6,13 @@ namespace ABC
 {
 	public class UIChar : MonoBehaviour 
 	{
-		[HideInInspector]
-		public string typeOfLetter;
-
 		public Image myImage;
-
-		//[HideInInspector]
 		public GameObject piece;
-
-		[HideInInspector]
-		public bool usedFromGrid;
-
-		//[HideInInspector]
 		public bool isFromGrid;
-
 		public Color usedColor = new Color(1,1,1,0.2f);
+
+		[HideInInspector]public ABCChar.EType type;
+		[HideInInspector]public bool usedFromGrid;
 
 		public void changeSpriteRendererTexture(Sprite newSprite)
 		{
@@ -40,7 +32,7 @@ namespace ABC
 			setColorToImage();
 		}
 
-		public void DestroyPiece()
+		public void destroyPiece()
 		{
 			Destroy (piece);
 		}
@@ -60,15 +52,7 @@ namespace ABC
 				return;
 			}
 
-			switch(typeOfLetter)
-			{
-			case("0")://Son las letras que estan desde el inicio y bloquean las lineas
-				spriteRenderer.color = Color.grey;
-				break;
-			case("1")://Letras normales
-				spriteRenderer.color = Color.white;
-				break;
-			}
+			spriteRenderer.color = getColorBasedOnType(type);
 		}
 
 		protected void setColorToImage()
@@ -81,15 +65,19 @@ namespace ABC
 				return;
 			}
 				
-			switch(typeOfLetter)
+			image.color = getColorBasedOnType(type);
+		}
+
+		public Color getColorBasedOnType(ABCChar.EType type)
+		{
+			switch(type)
 			{
-			case("0")://Son las letras que estan desde el inicio y bloquean las lineas
-				image.color = Color.grey;
-				break;
-			case("1")://Letras normales
-				image.color = Color.white;
-				break;
+			case ABCChar.EType.OBSTACLE:
+				return Color.grey;
+			case ABCChar.EType.NORMAL:
+				return Color.white;
 			}
+			return Color.white;
 		}
 
 		public bool checkIfLetterCanBeUsedFromGrid()

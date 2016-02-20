@@ -2,7 +2,7 @@
 using System.Collections;
 using DG.Tweening;
 
-public class InputPieceController : MonoBehaviour 
+public class InputPiece : MonoBehaviour 
 {
 	public Vector3 offsetPositionOverFinger = new Vector3(0,1.5f,0);
 	public Vector3 selectedScale = new Vector3 (4.5f, 4.5f, 4.5f);

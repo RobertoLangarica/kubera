@@ -4,30 +4,33 @@ using System.Collections;
 
 namespace ABC
 {
-	//Clase creada para poder crear listas de objetos que inicializaran loas ABCChar
+	//Clase creada para poder crear listas de objetos que inicializaran los ABCChar
 	public class ScriptableABCChar
 	{
-		public string pointsValue;
-		public string typeOfLetter;
+		public string pointsOrMultiple;
+		public int type;
 		public string character;
 	}
 
 	public class ABCChar : MonoBehaviour 
 	{
-		protected bool textActualized; //texto actualizado
-		public int value;//Valor del caracter que se utiliza dentro de ABCDataStructure
+		public enum EType
+		{
+			OBSTACLE, NORMAL	
+		}
+
+		public Text txtLetter;
+		public Text txtPoints;
 		public bool wildcard = false;//Indica si este caracter es un comodin
-		
 		public string character = "A";//La cadena que representa al caracter
+		public string pointsOrMultiple;
+		public EType type;
+
+		protected bool textActualized; //texto actualizado
+		[HideInInspector]public int value;//Valor del caracter que se utiliza dentro de ABCDataStructure
 		[HideInInspector]public bool empty = false;//Lo usa WordManager al eliminar caracteres
 		[HideInInspector]public bool used;//Se usa por ABCDataStructure cuando averigua si se pueden armar palabras
 		[HideInInspector]public int index;//Indice del caracter en WordManager
-
-		public string pointsValue;//Cantidad de puntos que entraga la letra al ser usada
-		public string typeOfLetter;//El tpo de letra que es, puede ntregar powerUps al momento de usarse
-
-		public Text letter;
-		public Text pointsValueText;
 
 		void Start () 
 		{
@@ -42,9 +45,6 @@ namespace ABC
 			{
 				character = "";
 			}
-
-
-			//initializeText ();
 		}
 
 		/**
@@ -52,18 +52,18 @@ namespace ABC
 		 **/
 		protected void initializeText()
 		{
-			if(letter != null && pointsValueText != null)
+			if(txtLetter != null && txtPoints != null)
 			{
-				letter.text = character;
-				pointsValueText.text = pointsValue;
+				txtLetter.text = character;
+				txtPoints.text = pointsOrMultiple;
 			}
 		}
 
 		public void initializeFromScriptableABCChar(ScriptableABCChar scriptAbcVals)
 		{
 			character = scriptAbcVals.character;
-			pointsValue = scriptAbcVals.pointsValue;
-			typeOfLetter = scriptAbcVals.typeOfLetter;
+			pointsOrMultiple = scriptAbcVals.pointsOrMultiple;
+			type = (EType)scriptAbcVals.type;
 
 			initializeText ();
 

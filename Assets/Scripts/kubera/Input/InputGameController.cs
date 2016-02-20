@@ -253,9 +253,34 @@ public class InputGameController : MonoBehaviour
 
 						if(conPositionatePiece)
 						{
-							//ponemos la pieza en su posicion correcta de manera suave y le quitamos el colider a la pieza completa
-							Vector3 myNewPosition = cellManager.positionate(piece.GetComponent<Piece>());
-							DOTween.KillAll();
+							//ponemos la pieza en su posicion correcta de manera suave y le quitamos el colider a la pieza completa 
+							//Vector3 myNewPosition = cellManager.positionate(piece.GetComponent<Piece>());
+							/*public Vector3 positionate(Piece piece)
+							{
+								Cell tempC = null;
+
+								for(int i = 0;i < piece.pieces.Length;i++)
+								{
+									tempC = getCellOnVec(piece.pieces[i].transform.position);
+									tempC.occupied = true;
+									tempC.piece=piece.pieces[i];
+									tempC.pieceType = piece.currentType;
+								}
+
+								tempC = getCellOnVec(piece.pieces[0].transform.position);
+
+								Vector3 ofsetBetweenPieces = piece.pieces[0].transform.position - piece.transform.position;
+
+								Vector3 nVec = new Vector3(tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
+									-tempC.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
+
+								//***********************************************Crear AudioManager
+								//gameObject.GetComponent<AudioSource>().Play();
+								return (tempC).transform.position + nVec - ofsetBetweenPieces;
+							}*/
+
+
+							/*DOTween.KillAll();
 							piece.transform.DOMove(new Vector3(myNewPosition.x,myNewPosition.y,1),.1f);
 							piece.GetComponent<BoxCollider2D>().enabled = false;
 
@@ -271,7 +296,7 @@ public class InputGameController : MonoBehaviour
 							foreach(FlashColor f in flash)
 							{
 								f.startFlash(f.GetComponent<SpriteRenderer>(),0.2f);
-							}
+							}*/
 						}
 					}
 
