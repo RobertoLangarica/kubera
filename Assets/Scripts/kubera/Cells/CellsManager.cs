@@ -36,7 +36,7 @@ public class CellsManager : MonoBehaviour
 		selected = new List<Cell>();
 		cells = new List<Cell>();
 
-		resizeGrid(10,10,PersistentData.instance.currentLevel.grid);
+		//resizeGrid(10,10,PersistentData.instance.currentLevel.grid);
 	}
 
 	/*
@@ -45,7 +45,7 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @return true:Si hubo resize, false: Si no hubo resize
 	 */
-	protected bool resizeGrid(int _columns, int _rows,string cellsMatrix)
+	protected bool resizeGrid(int _columns, int _rows)
 	{
 		if(_columns != columns || _rows != rows)
 		{
@@ -56,7 +56,6 @@ public class CellsManager : MonoBehaviour
 
 			Vector3 cellInitialPosition = transform.position;
 			GameObject cellInstance = null;
-			string[] levelGridData = cellsMatrix.Split(',');
 
 			for(int i = 0;i < _rows;i++)
 			{
@@ -66,17 +65,6 @@ public class CellsManager : MonoBehaviour
 					cellInstance.GetComponent<SpriteRenderer> ().sortingOrder = -1;
 					cellInstance.transform.SetParent(transform);
 					cells.Add(cellInstance.GetComponent<Cell>());
-
-					cells[cells.Count-1].setTypeToCell(int.Parse(levelGridData[cells.Count-1]));
-
-					if(cells[cells.Count-1].pieceType == EPieceType.LETTER_OBSTACLE)
-					{
-						turnPiecesToBlackLetters(cells[cells.Count-1]);
-					}
-					else if(cells[cells.Count-1].pieceType != EPieceType.NONE)
-					{
-						addBlockToInitialOccupiedCell(cells[cells.Count-1]);
-					}
 
 					cellInitialPosition.x += cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x + 0.03f;
 				}
@@ -104,7 +92,7 @@ public class CellsManager : MonoBehaviour
 
 	public void resetGrid(int _columns, int _rows)
 	{
-		if(!resizeGrid(columns,rows,""))
+		if(!resizeGrid(columns,rows))
 		{
 			setAllCellsToType(EPieceType.NONE);
 		}
@@ -354,6 +342,14 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Cambia el contenido de la celda y destruye el anterior si se necesita
 	 **/ 
+	public void setCellContent(int cellIndex,GameObject content, bool destroyOldContent = true)
+	{
+		setCellContent(cells[cellIndex],content,destroyOldContent);
+	}
+
+	/**
+	 * Cambia el contenido de la celda y destruye el anterior si se necesita
+	 **/ 
 	public void setCellContent(int x, int y,GameObject content, bool destroyOldContent = true)
 	{
 		setCellContent(getCellAt(x,y),content,destroyOldContent);
@@ -366,10 +362,15 @@ public class CellsManager : MonoBehaviour
 	{
 		if(destroyOldContent)
 		{
-			DestroyImmediate(cell.piece);
+			DestroyImmediate(cell.content);
 		}
 
-		cell.piece = content;
+		cell.content = content;
+	}
+
+	public void setCellType(int cellIndex,EPieceType type)
+	{
+		setCellType(cells[cellIndex],type);
 	}
 		
 	public void setCellType(int x, int y, EPieceType type)
@@ -400,11 +401,11 @@ public class CellsManager : MonoBehaviour
 	{
 		newCell.pieceType = EPieceType.LETTER;
 
-		if(newCell.piece != null)
+		if(newCell.content != null)
 		{
 			Transform tempTransform = newCell.transform;
 		
-			Destroy (newCell.piece);
+			Destroy (newCell.content);
 
 			GameObject go = Instantiate (uiLetter)as GameObject;
 
@@ -414,13 +415,13 @@ public class CellsManager : MonoBehaviour
 				-newCell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
 			
 			go.GetComponent<RectTransform> ().transform.position = tempTransform.position+ nVec;
-			newCell.piece = go;
+			newCell.content = go;
 
-			ABCChar tempAbcChar = newCell.piece.GetComponent<ABCChar>();
+			ABCChar tempAbcChar = newCell.content.GetComponent<ABCChar>();
 			
-			UIChar tempUiChar = newCell.piece.GetComponent<UIChar>();
+			UIChar tempUiChar = newCell.content.GetComponent<UIChar>();
 
-			newCell.piece.GetComponent<BoxCollider2D>().enabled = true;
+			newCell.content.GetComponent<BoxCollider2D>().enabled = true;
 
 			go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
 
@@ -446,13 +447,13 @@ public class CellsManager : MonoBehaviour
 			-cell.transform.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
 		
 		go.GetComponent<RectTransform> ().transform.position = tempTransform.position + nVec;
-		cell.piece = go;
+		cell.content = go;
 
-		ABCChar tempAbcChar = cell.piece.GetComponent<ABCChar>();
+		ABCChar tempAbcChar = cell.content.GetComponent<ABCChar>();
 
-		UIChar tempUiChar = cell.piece.GetComponent<UIChar>();
+		UIChar tempUiChar = cell.content.GetComponent<UIChar>();
 
-		cell.piece.GetComponent<BoxCollider2D>().enabled = true;
+		cell.content.GetComponent<BoxCollider2D>().enabled = true;
 
 		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
 
@@ -494,13 +495,13 @@ public class CellsManager : MonoBehaviour
 			-cell.transform.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
 
 		go.GetComponent<RectTransform> ().transform.position = tempTransform.position + nVec;
-		cell.piece = go;
+		cell.content = go;
 
-		ABCChar tempAbcChar = cell.piece.GetComponent<ABCChar>();
+		ABCChar tempAbcChar = cell.content.GetComponent<ABCChar>();
 
-		UIChar tempUiChar = cell.piece.GetComponent<UIChar>();
+		UIChar tempUiChar = cell.content.GetComponent<UIChar>();
 
-		cell.piece.GetComponent<BoxCollider2D>().enabled = true;
+		cell.content.GetComponent<BoxCollider2D>().enabled = true;
 
 		if(OnLetterCreated != null)
 		{
@@ -556,9 +557,9 @@ public class CellsManager : MonoBehaviour
 	{
 		for(int i = 0;i < cells.Count;i++)
 		{
-			if(cells[i].piece != null)
+			if(cells[i].content != null)
 			{
-				if(cells[i].piece.Equals(cellPiece))
+				if(cells[i].content.Equals(cellPiece))
 				{
 					selectCellsOfColor(cells[i]);
 					return;
@@ -601,9 +602,9 @@ public class CellsManager : MonoBehaviour
 	{
 		for(int i = 0;i < cells.Count;i++)
 		{
-			if(cells[i].piece != null)
+			if(cells[i].content != null)
 			{
-				cells[i].piece.GetComponent<Collider2D>().enabled = true;
+				cells[i].content.GetComponent<Collider2D>().enabled = true;
 			}
 		}
 	}
@@ -615,9 +616,9 @@ public class CellsManager : MonoBehaviour
 	{
 		for(int i = 0;i < cells.Count;i++)
 		{
-			if(cells[i].piece != null)
+			if(cells[i].content != null)
 			{
-				cells[i].piece.GetComponent<Collider2D>().enabled = false;
+				cells[i].content.GetComponent<Collider2D>().enabled = false;
 			}
 		}
 	}

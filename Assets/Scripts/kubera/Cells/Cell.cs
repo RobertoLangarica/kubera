@@ -7,7 +7,7 @@ public class Cell : MonoBehaviour
 	public EPieceType pieceType;
 	public bool available;
 	public bool occupied;
-	public GameObject piece;
+	public GameObject content;
 
 	/*
 	 * Valores en el XML para cada tipo de celda
@@ -31,7 +31,7 @@ public class Cell : MonoBehaviour
 	{
 		pieceType = EPieceType.NONE;
 		occupied = false;
-		piece = null;
+		content = null;
 
 		if((cellType & 0x2) == 0x2 || (cellType & 0x8) == 0x8)
 		{
@@ -45,7 +45,7 @@ public class Cell : MonoBehaviour
 	 */
 	public void destroyCell()
 	{
-		DestroyImmediate(piece);
+		DestroyImmediate(content);
 		clearCell();
 	}
 
@@ -60,7 +60,6 @@ public class Cell : MonoBehaviour
 
 	public void setTypeToCell(int newCellType = 1)
 	{
-		bool isAColorBlock = false;
 		int tempType = 0;
 
 		cellType = newCellType;
@@ -69,22 +68,23 @@ public class Cell : MonoBehaviour
 			pieceType = EPieceType.NONE;
 			occupied = false;
 			available = true;
-			piece = null;
+			content = null;
 		}
 		if((cellType & 0x2) == 0x2)
 		{
 			occupied = true;
 			available = true;
-			piece = null;
-			isAColorBlock = true;
+			content = null;
 			tempType = cellType >> 4;
+
+			updateCellColor(tempType);
 		}
 		if((cellType & 0x4) == 0x4)
 		{
 			pieceType = EPieceType.NONE;
 			occupied = true;
 			available = true;
-			piece = null;
+			content = null;
 
 			//Cambio Temporal
 			GetComponent<SpriteRenderer>().enabled = false;
@@ -95,40 +95,40 @@ public class Cell : MonoBehaviour
 			occupied = true;
 			available = false;
 		}
+	}
 
-		if(isAColorBlock)
+	public void updateCellColor(int color)
+	{
+		switch(color)
 		{
-			switch(tempType)
-			{
-			case(1):
-				pieceType = EPieceType.AQUA;
-				//Debug.Log(typeOfPiece);
-				break;
-			case(2):
-				pieceType = EPieceType.BLUE;
-				//Debug.Log(typeOfPiece);
-				break;
-			case(3):
-				pieceType = EPieceType.GREEN;
-				//Debug.Log(typeOfPiece);
-				break;
-			case(4):
-				pieceType = EPieceType.MAGENTA;
-				//Debug.Log(typeOfPiece);
-				break;
-			case(5):
-				pieceType = EPieceType.RED;
-				//Debug.Log(typeOfPiece);
-				break;
-			case(6):
-				pieceType = EPieceType.YELLOW;
-				//Debug.Log(typeOfPiece);
-				break;
-			case(7):
-				pieceType = EPieceType.GREY;
-				//Debug.Log(typeOfPiece);
-				break;
-			}
+		case(1):
+			pieceType = EPieceType.AQUA;
+			//Debug.Log(typeOfPiece);
+			break;
+		case(2):
+			pieceType = EPieceType.BLUE;
+			//Debug.Log(typeOfPiece);
+			break;
+		case(3):
+			pieceType = EPieceType.GREEN;
+			//Debug.Log(typeOfPiece);
+			break;
+		case(4):
+			pieceType = EPieceType.MAGENTA;
+			//Debug.Log(typeOfPiece);
+			break;
+		case(5):
+			pieceType = EPieceType.RED;
+			//Debug.Log(typeOfPiece);
+			break;
+		case(6):
+			pieceType = EPieceType.YELLOW;
+			//Debug.Log(typeOfPiece);
+			break;
+		case(7):
+			pieceType = EPieceType.GREY;
+			//Debug.Log(typeOfPiece);
+			break;
 		}
 	}
 }

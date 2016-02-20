@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
 	public GameObject retryPopUp;
 	public GameObject notEnoughLifesPopUp;
 
+	public GameObject singleSquarePiece;
+	public GameObject uiLetter;
+
 	protected int pointsCount = 0;
 	protected int wordsMade = 0;
 	protected bool wordFound;
@@ -154,6 +157,102 @@ public class GameManager : MonoBehaviour
 		inputPiece.returnSelectedToInitialState(0.1f);
 		inputPiece.reset();
 	}
+
+	protected void parseTheCellsOnGrid()
+	{
+		GameObject cellContent = null;
+		string[] levelGridData = PersistentData.instance.currentLevel.grid.Split(',');
+		int cellType = 0;
+
+		for(int i = 0;i < levelGridData.Length;i++)
+		{
+			cellType = int.Parse(levelGridData[i]);
+
+			if((cellType & 0x1) == 0x1)
+			{
+				cellManager.setCellType(i,EPieceType.NONE);
+			}
+			if((cellType & 0x2) == 0x2)
+			{
+				cellContent = createCellBlockContent(cellType);
+				cellManager.setCellType(i,cellContent.GetComponent<Piece> ().currentType);
+				cellManager.setCellContent(i,cellContent);
+			}
+			if((cellType & 0x4) == 0x4)
+			{
+				cellManager.setCellType(i,EPieceType.NONE);
+			}
+			if((cellType & 0x8) == 0x8)
+			{
+				cellContent = createCellObstacleContent();
+				cellManager.setCellType(i,EPieceType.LETTER_OBSTACLE);
+				cellManager.setCellContent(i,cellContent);
+			}
+		}
+	}
+
+	protected GameObject createCellBlockContent(int contentColor)
+	{
+		GameObject go = GameObject.Instantiate (singleSquarePiece) as GameObject;
+		SpriteRenderer sprite = go.GetComponent<Piece> ().pieces [0].GetComponent<SpriteRenderer> ();
+		int tempType = contentColor >> 4;
+
+		go.GetComponent<BoxCollider2D> ().enabled = false;
+
+
+		switch(tempType)
+		{
+		case(1):
+			go.GetComponent<Piece> ().currentType = EPieceType.AQUA;
+			//Debug.Log(typeOfPiece);
+			break;
+		case(2):
+			go.GetComponent<Piece> ().currentType = EPieceType.BLUE;
+			//Debug.Log(typeOfPiece);
+			break;
+		case(3):
+			go.GetComponent<Piece> ().currentType = EPieceType.GREEN;
+			//Debug.Log(typeOfPiece);
+			break;
+		case(4):
+			go.GetComponent<Piece> ().currentType = EPieceType.MAGENTA;
+			//Debug.Log(typeOfPiece);
+			break;
+		case(5):
+			go.GetComponent<Piece> ().currentType = EPieceType.RED;
+			//Debug.Log(typeOfPiece);
+			break;
+		case(6):
+			go.GetComponent<Piece> ().currentType = EPieceType.YELLOW;
+			//Debug.Log(typeOfPiece);
+			break;
+		case(7):
+			go.GetComponent<Piece> ().currentType = EPieceType.GREY;
+			//Debug.Log(typeOfPiece);
+			break;
+		}
+
+		return go;
+	}
+
+	protected GameObject createCellObstacleContent()
+	{
+		GameObject go = Instantiate (uiLetter)as GameObject;
+
+
+		go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
+
+		ABCChar tempAbcChar = go.GetComponent<ABCChar>();
+
+		UIChar tempUiChar = go.GetComponent<UIChar>();
+
+		go.GetComponent<BoxCollider2D>().enabled = true;
+
+		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
+
+		return go;
+	}
+
 
 	/*
 	 * Se incrementa el puntaje del jugador
@@ -720,7 +819,7 @@ public class GameManager : MonoBehaviour
 
 		for (int i = 0; i < cellToLetter.Count; i++) 
 		{
-			switch (cellToLetter[i].piece.GetComponent<ABCChar>().pointsOrMultiple) 
+			switch (cellToLetter[i].content.GetComponent<ABCChar>().pointsOrMultiple) 
 			{
 			case("x2"):
 				{
@@ -740,7 +839,7 @@ public class GameManager : MonoBehaviour
 				break;
 			default:
 				{
-					amount += int.Parse (cellToLetter[i].piece.GetComponent<ABCChar>().pointsOrMultiple);}
+					amount += int.Parse (cellToLetter[i].content.GetComponent<ABCChar>().pointsOrMultiple);}
 				break;
 			}
 		}
