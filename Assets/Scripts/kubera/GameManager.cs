@@ -111,30 +111,7 @@ public class GameManager : MonoBehaviour
 		scoreToStar [2] = PersistentData.instance.currentLevel.scoreToStar3;
 		hud.setMeterData (scoreToStar);
 
-		//print (myWinCondition [0]);
-		letters = new List<string> ();
-		if(myWinCondition[0] == "letters")
-		{
-			int i;
-			string[] s = myWinCondition [1].Split (',');
-			string[] temp;
-
-			for(i=0; i< s.Length; i++)
-			{
-				temp = s [i].Split (new char[1]{ '_' });
-				int amount = int.Parse (temp [0]);
-
-				for(int j=0; j<amount; j++)
-				{
-					//print (temp [1]);
-					letters.Add (temp [1]);
-				}
-			}
-		}
-		if(myWinCondition[0] == "word")
-		{
-			words = myWinCondition [1].Split ('_');
-		}
+		getWinCondition ();
 
 		toBuilderButton.SetActive(false);
 		if(persistentData.fromLevelBuilder)
@@ -148,7 +125,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(Input.GetKeyUp(KeyCode.A))
 		{
-			secondWind();
+			parseTheCellsOnGrid ();
 		}
 	}
 
@@ -194,7 +171,6 @@ public class GameManager : MonoBehaviour
 	protected GameObject createCellBlockContent(int contentColor)
 	{
 		GameObject go = GameObject.Instantiate (singleSquarePiece) as GameObject;
-		SpriteRenderer sprite = go.GetComponent<Piece> ().pieces [0].GetComponent<SpriteRenderer> ();
 		int tempType = contentColor >> 4;
 
 		go.GetComponent<BoxCollider2D> ().enabled = false;
@@ -241,10 +217,6 @@ public class GameManager : MonoBehaviour
 
 
 		go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
-
-		ABCChar tempAbcChar = go.GetComponent<ABCChar>();
-
-		UIChar tempUiChar = go.GetComponent<UIChar>();
 
 		go.GetComponent<BoxCollider2D>().enabled = true;
 
@@ -610,6 +582,35 @@ public class GameManager : MonoBehaviour
 		{
 			activeMoney (false);
 		}
+	}
+
+	protected void getWinCondition()
+	{
+		//print (myWinCondition [0]);
+		if(myWinCondition[0] == "letters")
+		{
+			letters = new List<string> ();
+			int i;
+			string[] s = myWinCondition [1].Split (',');
+			string[] temp;
+
+			for(i=0; i< s.Length; i++)
+			{
+				temp = s [i].Split ('_');
+				int amount = int.Parse (temp [0]);
+
+				for(int j=0; j<amount; j++)
+				{
+					//print (temp [1]);
+					letters.Add (temp [1]);
+				}
+			}
+		}
+		if(myWinCondition[0] == "word")
+		{
+			words = myWinCondition [1].Split ('_');
+		}
+		hud.setWinConditionOnHud (myWinCondition [0],words,int.Parse(myWinCondition [1]),letters);
 	}
 
 	protected void checkWinCondition ()
