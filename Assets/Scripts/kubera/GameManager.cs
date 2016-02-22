@@ -137,6 +137,18 @@ public class GameManager : MonoBehaviour
 	{
 		inputPiece.returnSelectedToInitialState(0.1f);
 		inputPiece.reset();
+
+
+	}
+
+	private void putPiecesOnGrid(GameObject piece)
+	{
+		
+	}
+
+	private void checkAndCompleteLines()
+	{
+		
 	}
 
 	protected void parseTheCellsOnGrid()
