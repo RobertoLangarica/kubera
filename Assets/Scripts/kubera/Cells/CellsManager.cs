@@ -45,7 +45,7 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @return true:Si hubo resize, false: Si no hubo resize
 	 */
-	protected bool resizeGrid(int _columns, int _rows)
+	public bool resizeGrid(int _columns, int _rows)
 	{
 		if(_columns != columns || _rows != rows)
 		{
@@ -53,6 +53,8 @@ public class CellsManager : MonoBehaviour
 
 			columns = _columns;
 			rows = _rows;
+
+			cells = new List<Cell>();
 
 			Vector3 cellInitialPosition = transform.position;
 			GameObject cellInstance = null;
@@ -83,6 +85,11 @@ public class CellsManager : MonoBehaviour
 	 */
 	protected void destroyGrid()
 	{
+		if(cells == null)
+		{
+			return;	
+		}
+
 		foreach(Cell val in cells)
 		{
 			DestroyImmediate(val.gameObject);

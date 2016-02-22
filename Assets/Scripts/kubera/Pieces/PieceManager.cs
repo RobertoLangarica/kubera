@@ -8,7 +8,7 @@ public class PieceManager : MonoBehaviour {
 	protected List<GameObject> piecesList = new List<GameObject>();
 	protected List<GameObject> safeList = new List<GameObject>();
 
-	public List<GameObject> piecesInBar = new List<GameObject>();
+	public List<Piece> piecesInBar = new List<Piece>();
 	public Transform[] firstPos;
 
 	protected int sizeOfBar = 3;
@@ -54,7 +54,7 @@ public class PieceManager : MonoBehaviour {
 			go.transform.localScale = new Vector3 (0, 0, 0);
 			go.transform.DOScale(initialPieceScale, 0.25f);
 			go.transform.SetParent (piecesStock);
-			piecesInBar.Add(go);
+			piecesInBar.Add(go.GetComponent<Piece>());
 		}
 	}
 

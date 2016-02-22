@@ -142,6 +142,9 @@ public class GameManager : MonoBehaviour
 			PersistentData.instance.fromLevelBuilder = false;
 			toBuilderButton.SetActive(true);
 		}
+
+		cellManager.resizeGrid(10,10);
+		parseTheCellsOnGrid();
 	}
 
 	void Update()
