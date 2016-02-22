@@ -34,9 +34,6 @@ public class CellsManager : MonoBehaviour
 	void Start () 
 	{
 		selected = new List<Cell>();
-		cells = new List<Cell>();
-
-		//resizeGrid(10,10,PersistentData.instance.currentLevel.grid);
 	}
 
 	/*
@@ -73,7 +70,6 @@ public class CellsManager : MonoBehaviour
 				cellInitialPosition.y -= cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y + 0.03f;
 				cellInitialPosition.x = transform.position.x;
 			}
-
 			return true;
 		}
 
@@ -141,7 +137,7 @@ public class CellsManager : MonoBehaviour
 			renderer	= cell.gameObject.GetComponent<SpriteRenderer>();
 			cellWidth	= renderer.bounds.size.x;
 			cellHeight	= renderer.bounds.size.y;
-
+			print (point +" //// "+cellPos);
 			if(point.x > cellPos.x && point.x < (cellPos.x + cellWidth) &&
 				point.y < cellPos.y && point.y > (cellPos.y - cellHeight))
 			{
@@ -269,6 +265,21 @@ public class CellsManager : MonoBehaviour
 		}
 	}
 
+	/**
+	 * Evalua si los objetos se pueden posicionar dentro de la grid.
+	 * Se evaluan en la posicion donde se encuentran
+	 * 
+	 * @param objects{GameObject}: Objeto a evaluar
+	 * 
+	 * @return true:si es posible colocarla, false:No se pudo posicionar alguna o todas
+	 */
+	public bool canPositionateAll(GameObject objects)
+	{
+		print (cells.Count);
+		return canPositionateAll(objects.GetComponent<Piece> ().pieces);
+	}
+
+
 	/*
 	 * Evalua si los objetos se pueden posicionar dentro de la grid.
 	 * Se evaluan en la posicion donde se encuentran
@@ -312,6 +323,7 @@ public class CellsManager : MonoBehaviour
 			{
 				if(cell.occupied || !cell.canPositionateOnThisCell())
 				{
+					print ("S");
 					return false;
 				}
 			}
@@ -376,7 +388,7 @@ public class CellsManager : MonoBehaviour
 
 		content.transform.position = cell.transform.position + (new Vector3(cell.GetComponent<SpriteRenderer>().bounds.extents.x,
 			-cell.GetComponent<SpriteRenderer>().bounds.extents.x,0));
-		Debug.Log(content.transform.position);
+		//Debug.Log(content.transform.position);
 	}
 
 	public void setCellType(int cellIndex,EPieceType type)

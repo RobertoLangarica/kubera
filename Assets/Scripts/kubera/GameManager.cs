@@ -135,10 +135,14 @@ public class GameManager : MonoBehaviour
 
 	private void OnPieceDropped(GameObject piece)
 	{
-		inputPiece.returnSelectedToInitialState(0.1f);
-		inputPiece.reset();
-
-
+		if (!cellManager.canPositionateAll (piece)) 
+		{
+			inputPiece.returnSelectedToInitialState (0.1f);
+			inputPiece.reset ();
+		}
+		else 
+		{
+		}
 	}
 
 	private void putPiecesOnGrid(GameObject piece)
