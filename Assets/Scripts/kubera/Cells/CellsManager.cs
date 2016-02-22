@@ -373,6 +373,10 @@ public class CellsManager : MonoBehaviour
 		}
 
 		cell.content = content;
+
+		content.transform.position = cell.transform.position + (new Vector3(cell.GetComponent<SpriteRenderer>().bounds.extents.x,
+			-cell.GetComponent<SpriteRenderer>().bounds.extents.x,0));
+		Debug.Log(content.transform.position);
 	}
 
 	public void setCellType(int cellIndex,EPieceType type)
