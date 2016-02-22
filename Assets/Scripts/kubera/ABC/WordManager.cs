@@ -116,47 +116,14 @@ namespace ABC
 			letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
 
 			validateCharacter(character);
-
-			//para que las letras esten centradas
-			//StartCoroutine (actualizePaddingCoroutine (letter));
 		}
-
-		/**
-		 *Actualiza el tamaño necesario del padding y guarda ciertos datos para mejorar procesamiento 
-		 **/
-		/*IEnumerator actualizePaddingCoroutine(GameObject letter)
-		{
-			if (letterPrefabHeight != 0) 
-			{
-				actualizePadding ();
-			} 
-			else {		
-				yield return new WaitForSeconds (0);
-				letterPrefabHeight = letter.GetComponent<Image> ().rectTransform.rect.height;
-				int paddingSize = (int)((containerWidth - (letterPrefabHeight) * letterContainer.transform.childCount) * .5f);
-
-				if (paddingSize > 0) 
-				{
-					letterContainer.GetComponent<HorizontalLayoutGroup> ().padding = new RectOffset (paddingSize, paddingSize, 0, 0);
-				} 
-				else 
-				{
-					if (letterContainer.transform.childCount == 0) {
-						resetValidation ();
-						activateButtonOfWordsActions (false);
-					}
-				}
-			}
-			yield return new WaitForSeconds (0);
-			actualizeBoxColliderOfLetters ();
-		}*/
 
 		protected void actualizePadding()
 		{
 			int paddingSize = (int)((containerWidth - (letterPrefabHeight) * letterContainer.transform.childCount) * .5f);
 			if (paddingSize > 0) 
 			{
-				letterContainer.GetComponent<HorizontalLayoutGroup> ().padding = new RectOffset (paddingSize, paddingSize, 0, 0);
+				letterContainer.GetComponent<GridLayoutGroup> ().padding = new RectOffset (paddingSize, paddingSize, 0, 0);
 			} 
 
 			if (letterContainer.transform.childCount == 0) 
@@ -353,7 +320,6 @@ namespace ABC
 				//El usuairo elimino el ultimo caracter
 				wordsValidator.deleteLvlOfSearch(lvlIndex);
 				chars.RemoveAt(lvlIndex);
-				actualizePadding();
 			}
 			else
 			{
@@ -514,7 +480,7 @@ namespace ABC
 		 **/
 		protected void activateSwapp(GameObject letter)
 		{
-			letterContainer.GetComponent<HorizontalLayoutGroup>().enabled = false;
+			letterContainer.GetComponent<GridLayoutGroup>().enabled = false;
 			setPositionToLetters ();
 			sortingAfterSwap = letter.transform.GetSiblingIndex();
 			letter.transform.SetSiblingIndex(100);
@@ -527,11 +493,10 @@ namespace ABC
 		  **/
 		public void checkSwappLetters(GameObject letter,bool destroy = false)
 		{			
-			letterContainer.GetComponent<HorizontalLayoutGroup>().enabled = true;
+			letterContainer.GetComponent<GridLayoutGroup>().enabled = true;
 			if(destroy)
 			{
 				letter.GetComponent<UIChar> ().destroyLetter();
-				actualizePadding ();
 			}
 			else
 			{

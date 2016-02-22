@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
 	protected List<ScriptableABCChar> XMLPoolLetersList = new List<ScriptableABCChar>();
 	protected List<ScriptableABCChar> XMLPoolBlackLetersList = new List<ScriptableABCChar>();
 	protected List<ScriptableABCChar> randomizedPoolLeters = new List<ScriptableABCChar>();
+	protected List<ScriptableABCChar> randomizedBlackPoolLeters = new List<ScriptableABCChar>();
 	protected List<ABCChar> listChar = new List<ABCChar>();
 
 	void Awake () 
@@ -178,7 +179,6 @@ public class GameManager : MonoBehaviour
 
 		go.GetComponent<BoxCollider2D> ().enabled = false;
 
-
 		switch(tempType)
 		{
 		case(1):
@@ -218,12 +218,13 @@ public class GameManager : MonoBehaviour
 	{
 		GameObject go = Instantiate (uiLetter)as GameObject;
 
-
 		go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
 
 		go.GetComponent<BoxCollider2D>().enabled = true;
 
 		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
+
+		registerNewLetterCreated (go.GetComponent<ABCChar> (), go.GetComponent<UIChar> (), true);
 
 		return go;
 	}
@@ -1045,40 +1046,62 @@ public class GameManager : MonoBehaviour
 			}
 		}
 		/*****/
+		fillLetterPoolRandomList ();
+		fillBlackLetterPoolRandomList ();
+	}
 
+	protected void fillLetterPoolRandomList()
+	{
+		List<ScriptableABCChar> tempList = new List<ScriptableABCChar> ();
 		randomizedPoolLeters = new List<ScriptableABCChar>();
-		for(int i = 0;i < XMLPoolLetersList.Count;i++)
-		{
-			randomizedPoolLeters.Add(XMLPoolLetersList[i]);
-		}
-		XMLPoolLetersList.Clear();
+		tempList = XMLPoolLetersList;
 
-		while(randomizedPoolLeters.Count >0)
-		{
-			int val = UnityEngine.Random.Range(0,randomizedPoolLeters.Count);
-			XMLPoolLetersList.Add(randomizedPoolLeters[val]);
-			randomizedPoolLeters.RemoveAt(val);
-		}
 
-		randomizedPoolLeters = XMLPoolLetersList;
+		while(tempList.Count >0)
+		{
+			int val = UnityEngine.Random.Range(0,tempList.Count);
+			randomizedBlackPoolLeters.Add(tempList[val]);
+			tempList.RemoveAt(val);
+		}
+	}
+
+	protected void fillBlackLetterPoolRandomList()
+	{
+		List<ScriptableABCChar> tempList = new List<ScriptableABCChar> ();
+		randomizedBlackPoolLeters = new List<ScriptableABCChar>();
+		tempList = XMLPoolBlackLetersList;
+
+
+		while(tempList.Count >0)
+		{
+			int val = UnityEngine.Random.Range(0,tempList.Count);
+			randomizedBlackPoolLeters.Add(tempList[val]);
+			tempList.RemoveAt(val);
+		}
 	}
 
 	public ScriptableABCChar giveLetterInfo()
 	{
-		ScriptableABCChar letter = randomizedPoolLeters[0];
-		randomizedPoolLeters.RemoveAt (0);
 		if(randomizedPoolLeters.Count==0)
 		{
-			fillLettersPoolList();
+			fillLetterPoolRandomList();
 		}
+
+		ScriptableABCChar letter = randomizedPoolLeters[0];
+		randomizedPoolLeters.RemoveAt (0);
+
 		return letter;
 	}
 
 	public ScriptableABCChar giveBlackLetterInfo()
 	{
-		int random = UnityEngine.Random.Range (0, XMLPoolBlackLetersList.Count);
-		ScriptableABCChar letter = XMLPoolBlackLetersList[random];
-		XMLPoolBlackLetersList.RemoveAt (random);
+		if(randomizedBlackPoolLeters.Count==0)
+		{
+			fillBlackLetterPoolRandomList();
+		}
+		ScriptableABCChar letter = randomizedBlackPoolLeters[0];
+		randomizedBlackPoolLeters.RemoveAt (0);
+
 		return letter;
 	}
 }

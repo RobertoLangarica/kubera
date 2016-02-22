@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class HUD : MonoBehaviour {
 
@@ -10,9 +11,11 @@ public class HUD : MonoBehaviour {
 	public Text levelText;
 	public Image pointsMeter;
 	public Image[] Stars;
+	public Text winConditionText;
 
 	public GameObject GemsChargeGO;
 	public GameObject secondChanceLock;
+	public GameObject uiLetter;
 
 	protected float[] scoreToStar;
 
@@ -142,5 +145,31 @@ public class HUD : MonoBehaviour {
 	public void setSecondChanceLock(bool activate)
 	{
 		secondChanceLock.SetActive(activate);
-	}	
+	}
+
+	/**
+	 * setea la condicion de victoria
+	 **/
+	public void setWinConditionOnHud(string winCondition, string[] words, int value=0,List<string> letters = null)
+	{
+		switch (winCondition) {
+		case "points":
+			winConditionText.text = "Obten: " + value +" puntos.";
+			break;
+		case "words":
+			winConditionText.text = "Forma: " + value +" palabras.";
+			break;
+		case "letters":
+		case "blackLetters":
+			winConditionText.text = "Usa: ";
+
+			break;
+		case "word":
+			winConditionText.text = "Forma: " + words;
+			break;
+
+		default:
+			break;
+		}
+	}
 }
