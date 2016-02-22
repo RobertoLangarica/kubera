@@ -5,9 +5,6 @@ using ABC;
 
 public class CellsManager : MonoBehaviour 
 {
-	public delegate void linesCreated(int lines);
-	[HideInInspector]public linesCreated OnlinesCounted;
-
 	public delegate void letterCreated(ABCChar abcChar,UIChar uiChar,bool isBlackLetter);
 	[HideInInspector]public letterCreated OnLetterCreated;
 
@@ -19,14 +16,12 @@ public class CellsManager : MonoBehaviour
 	[HideInInspector]public int columns = 0;
 	[HideInInspector]public int rows = 0;
 
-
 	//Bandera para el powerUp de Destruccion por color
 	//false: destruye todos los del mismo color en la escena
 	//true: destruye todos los del mismo color que este juntos
 	public bool selectNeighbors;
 	//Las celdas seleccionadas por color
 	protected List<Cell> selected;
-	protected int totalLinesCreated;
 
 	//Todas las celdas del grid
 	protected List<Cell> cells;
@@ -35,8 +30,6 @@ public class CellsManager : MonoBehaviour
 	{
 		selected = new List<Cell>();
 		cells = new List<Cell>();
-
-		//resizeGrid(10,10,PersistentData.instance.currentLevel.grid);
 	}
 
 	/*
@@ -173,102 +166,70 @@ public class CellsManager : MonoBehaviour
 		return cells[(columns*yPos)+xPos];
 	}
 
-	public Cell[] getCompletedHorizontalLines()
+	public List<List<Cell>> getCompletedHorizontalLines()
 	{
-		int[] widthCount = new int[columns];
-		int wIndex = 0;
+		List<List<Cell>> result = new List<List<Cell>>(rows);
+		Cell cell;
 
-		List<Cell> result = new List<Cell>();
-
-		for(int i = 0;i < cells.Count;i++)
+		for(int y = 0; y < rows; y++)
 		{
-			if(cells[i].occupied && cells[i].pieceType != EPieceType.LETTER && cells[i].available)
+			result.Add(new List<Cell>(columns));
+			for(int x = 0; x < columns; x++)
 			{
-				widthCount[wIndex]++;
-			}
-			if(wIndex == columns)
-			{
-				wIndex++;
-			}
-		}
-		for(int i = 0;i < rows;i++)
-		{
-			if(widthCount[i] == columns)
-			{
-				for(int j = (i*columns);j < (columns*(i+1));j++)
+				cell = getCellAt(x,y);
+				if(cell.available && cell.occupied && cell.pieceType != EPieceType.LETTER)
 				{
-					result.Add(cells[j]);
+					result[result.Count-1].Add(cell);
 				}
-				totalLinesCreated++;
+				else
+				{
+					//La linea no esta completa
+					result.RemoveAt(result.Count-1);
+					break;
+				}
 			}
 		}
 
-		notifyLinesCount();
-
-		return result.ToArray();
+		return result;
 	}
 
-	public Cell[] getCompletedVerticalLines()
+	public List<List<Cell>> getCompletedVerticalLines()
 	{
-		int[] heightCount = new int[rows];
+		List<List<Cell>> result = new List<List<Cell>>(columns);
+		Cell cell;
 
-		int hIndex = 0;
-
-		List<Cell> result = new List<Cell>();
-
-		for(int i = 0;i < cells.Count;i++)
+		for(int x = 0; x < columns; x++)
 		{
-			if(cells[i].occupied && cells[i].pieceType != EPieceType.LETTER && cells[i].available)
+			result.Add(new List<Cell>(rows));
+			for(int y = 0; y < rows; y++)
 			{
-				heightCount[hIndex]++;
-			}
-			hIndex ++;
-			if(hIndex == columns)
-			{
-				hIndex = 0;
-			}
-		}
-
-		for(int i = 0;i < columns;i++)
-		{
-			if(heightCount[i] == rows)
-			{
-				for(int j = 0;j < rows;j++)
+				cell = getCellAt(x,y);
+				if(cell.available && cell.occupied && cell.pieceType != EPieceType.LETTER)
 				{
-					result.Add(cells[j*rows]);
+					result[result.Count-1].Add(cell);
 				}
-				totalLinesCreated++;
+				else
+				{
+					//La linea no esta completa
+					result.RemoveAt(result.Count-1);
+					break;
+				}
 			}
 		}
 
-		notifyLinesCount();
-
-		return result.ToArray();
+		return result;
 	}
-
-	/*
-	 * Devuelve una lista con las lineas verticales y horizontales que se crearon
-	 */
-	public Cell[] getCompletedVerticalAndHorizontalLines()
+		
+	public List<List<Cell>> getCompletedVerticalAndHorizontalLines()
 	{
-		List<Cell> result = new List<Cell>();
+		List<List<Cell>> result = new List<List<Cell>>();
 
 		result.AddRange(getCompletedHorizontalLines());
-
 		result.AddRange(getCompletedVerticalLines());
 
-		return result.ToArray();
+		return result;
 	}
-
-	public void notifyLinesCount()
-	{
-		if(OnlinesCounted != null)
-		{
-			OnlinesCounted(totalLinesCreated);
-			totalLinesCreated = 0;
-		}
-	}
-
+		
 	/*
 	 * Evalua si los objetos se pueden posicionar dentro de la grid.
 	 * Se evaluan en la posicion donde se encuentran

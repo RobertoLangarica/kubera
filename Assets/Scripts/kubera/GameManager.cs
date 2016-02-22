@@ -71,7 +71,6 @@ public class GameManager : MonoBehaviour
 		pieceManager = FindObjectOfType<PieceManager>();
 		hud = FindObjectOfType<HUD> ();
 
-		cellManager.OnlinesCounted += linesCreated;
 		cellManager.OnLetterCreated += registerNewLetterCreated;
 
 		inputPiece = FindObjectOfType<InputPiece>();
@@ -141,7 +140,7 @@ public class GameManager : MonoBehaviour
 
 	}
 
-	private void putPiecesOnGrid(GameObject piece)
+	private void putPiecesOnGrid(GameObject obj)
 	{
 		
 	}
