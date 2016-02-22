@@ -12,26 +12,28 @@ namespace ABC
 		public GameObject letterPrefab;
 		public GameObject emptyChild;
 		public GameObject letterContainer;
+
+		public GameObject wordActiveButton;
+		public Sprite[] wordActiveButtonImagesStates;
+
 		public int maxLetters = 12;
 
 		protected InputWords inputWords;
 
 		[HideInInspector]public ABCDataStructure wordsValidator;
-		[HideInInspector]public List<ABCChar> chars;
+		public List<ABCChar> chars;
 		protected bool invalidCharlist;//Indica que la lista de caracteres tuvo o tiene uno invalido
 
 		protected int sortingAfterSwap;
 		protected Vector2[] lettersPositions; //los vectores de las letras 
 
-		protected float containerWidth;
 		protected float letterPrefabHeight = 0;
 
 		//texturas de las letras en juego
 		protected UnityEngine.Object[] textureObject;
 		protected string[] textureNames;
 
-		protected ShowNext buttonNext;
-		[HideInInspector]public Vector3 buttonNextPos;
+		[HideInInspector]public Vector3 wordActiveButtonPosition;
 
 		public delegate void DSendVector3(Vector3 vector3);
 		public DSendVector3 OnSendVector3;
@@ -54,12 +56,7 @@ namespace ABC
 
 			chars = new List<ABCChar>();
 
-			buttonNext = FindObjectOfType<ShowNext> ();
-			buttonNextPos = buttonNext.next.transform.localPosition;
-
-
-			containerWidth = letterContainer.GetComponent<RectTransform>().rect.width;
-
+			wordActiveButtonPosition = wordActiveButton.transform.localPosition;
 
 			GridLayoutGroup gridLayout = letterContainer.GetComponent<GridLayoutGroup>();
 			gridLayout.cellSize = new Vector2(letterContainer.GetComponent<RectTransform>().rect.width/maxLetters
@@ -67,6 +64,8 @@ namespace ABC
 
 
 			wordsValidator = FindObjectOfType<ABCDataStructure>();
+
+			wordActiveButton.SetActive(false);
 		}
 
 		public Sprite changeTexture(string nTextureName)
@@ -101,7 +100,7 @@ namespace ABC
 		public void addCharacter(ABCChar pieceABCChar,GameObject piece)
 		{
 			GameObject letter =  Instantiate(letterPrefab);
-			ABCChar character = letter.AddComponent<ABCChar>();
+			ABCChar character = letter.GetComponent<ABCChar>();
 
 			character.wildcard = pieceABCChar.wildcard;
 			character.value = wordsValidator.getCharValue(pieceABCChar.character.ToUpper());
@@ -113,22 +112,16 @@ namespace ABC
 
 			letter.transform.localScale = new Vector3 (1, 1, 1);
 			letter.GetComponent<UIChar> ().piece = piece;
-			letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
 
+			//letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
+			letter.GetComponent<ABCChar>().initializeText();
 			validateCharacter(character);
 		}
 
-		protected void actualizePadding()
+		protected void isThereAnyLetterOnContainer()
 		{
-			int paddingSize = (int)((containerWidth - (letterPrefabHeight) * letterContainer.transform.childCount) * .5f);
-			if (paddingSize > 0) 
-			{
-				letterContainer.GetComponent<GridLayoutGroup> ().padding = new RectOffset (paddingSize, paddingSize, 0, 0);
-			} 
-
 			if (letterContainer.transform.childCount == 0) 
 			{
-				resetValidation ();
 				activateButtonOfWordsActions (false);
 			}
 		}
@@ -199,7 +192,7 @@ namespace ABC
 					}
 					else
 					{
-						buttonNext.isCompletedNotCompletedOrMoving(1);
+						isCompletedNotCompletedOrMoving(1);
 					}
 				}
 			}
@@ -215,7 +208,7 @@ namespace ABC
 				}
 				else
 				{
-					buttonNext.isCompletedNotCompletedOrMoving(1);
+					isCompletedNotCompletedOrMoving(1);
 				}
 			}
 		}
@@ -273,7 +266,7 @@ namespace ABC
 			{
 				if (!letterContainer.transform.GetChild (l).gameObject.GetComponent<ABCChar> ().wildcard) 
 				{
-					GameObject.Destroy (letterContainer.transform.GetChild (l).gameObject);
+					GameObject.DestroyImmediate (letterContainer.transform.GetChild (l).gameObject);
 				}
 			}
 
@@ -292,7 +285,7 @@ namespace ABC
 		protected void onWordComplete()
 		{
 			Debug.Log("Se completo: "+getFullWord());
-			buttonNext.isCompletedNotCompletedOrMoving(0);
+			isCompletedNotCompletedOrMoving(0);
 		}
 
 		/**
@@ -457,7 +450,7 @@ namespace ABC
 					}
 				}
 			}
-			buttonNext.isCompletedNotCompletedOrMoving(2);
+			isCompletedNotCompletedOrMoving(2);
 		}
 
 		/**
@@ -465,7 +458,7 @@ namespace ABC
 		 **/
 		protected void swappEnding(GameObject letter)
 		{
-			if(!letter.GetComponent<ABCChar> ().wildcard && letter.transform.localPosition.x > buttonNextPos.x -50 && letter.transform.localPosition.x < buttonNextPos.x +50)
+			if(!letter.GetComponent<ABCChar> ().wildcard && letter.transform.localPosition.x > wordActiveButtonPosition.x -50 && letter.transform.localPosition.x < wordActiveButtonPosition.x +50)
 			{
 				checkSwappLetters (letter, true);
 			}
@@ -510,6 +503,7 @@ namespace ABC
 		protected void actualizeIfExistLettersOn ()
 		{
 			chars.Clear();
+
 			for(int i=0; i<letterContainer.transform.childCount; i++)
 			{
 				chars.Add(letterContainer.transform.GetChild(i).GetComponent<ABCChar>());
@@ -525,8 +519,9 @@ namespace ABC
 			}
 			else
 			{
-				buttonNext.isCompletedNotCompletedOrMoving(1);
+				isCompletedNotCompletedOrMoving(1);
 			}
+			isThereAnyLetterOnContainer ();
 		}
 
 		/*
@@ -546,7 +541,7 @@ namespace ABC
 		 **/
 		public void activateButtonOfWordsActions(bool activate)
 		{
-			buttonNext.ShowingNext (activate);
+			activeWordActiveButton (activate);
 		}
 
 		/**
@@ -558,6 +553,28 @@ namespace ABC
 			{
 				addCharacter (go.GetComponent<ABCChar> (), go);
 				activateButtonOfWordsActions (true);
+			}
+		}
+
+		public void activeWordActiveButton(bool showing)
+		{
+			wordActiveButton.SetActive(showing);
+		}
+
+		public void isCompletedNotCompletedOrMoving(int imageValue)
+		{
+			switch (imageValue) {
+			case 0:
+				wordActiveButton.GetComponent<Image> ().sprite = wordActiveButtonImagesStates [0];//completed
+				break;
+			case 1:
+				wordActiveButton.GetComponent<Image> ().sprite = wordActiveButtonImagesStates [1];//notCompleted
+				break;
+			case 2:
+				wordActiveButton.GetComponent<Image> ().sprite = wordActiveButtonImagesStates [2];//Moving
+				break;
+			default:
+				break;
 			}
 		}
 	}

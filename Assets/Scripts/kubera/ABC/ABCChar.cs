@@ -50,7 +50,7 @@ namespace ABC
 		/**
 		 * Inicializamos el texto
 		 **/
-		protected void initializeText()
+		public void initializeText()
 		{
 			if(txtLetter != null && txtPoints != null)
 			{
