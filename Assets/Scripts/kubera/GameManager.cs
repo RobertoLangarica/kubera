@@ -45,13 +45,13 @@ public class GameManager : MonoBehaviour
 
 	protected List<Cell> cellToLetter;
 
-	protected PowerUpBase activatedPowerUp;
+	protected PowerUpBase2 activatedPowerUp;
 	protected int currentWildCardsActivated;
 
 	protected PersistentData persistentData;
 	protected WordManager wordManager;
 	protected CellsManager cellManager;
-	protected PowerUpManager powerUpManager;
+	protected PowerUpManager2 powerUpManager;
 	protected PieceManager pieceManager;
 	protected HUD hud;
 
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
 	{
 		wordManager = FindObjectOfType<WordManager>();
 		cellManager = FindObjectOfType<CellsManager>();
-		powerUpManager = FindObjectOfType<PowerUpManager> ();
+		powerUpManager = FindObjectOfType<PowerUpManager2> ();
 		pieceManager = FindObjectOfType<PieceManager>();
 		hud = FindObjectOfType<HUD> ();
 
@@ -144,7 +144,6 @@ public class GameManager : MonoBehaviour
 		if (!cellManager.canPositionateAll (piece.pieces)) 
 		{
 			inputPiece.returnSelectedToInitialState (0.1f);
-			inputPiece.reset ();
 		}
 		else 
 		{
@@ -153,6 +152,8 @@ public class GameManager : MonoBehaviour
 			putPiecesOnGrid (piece);
 			checkAndCompleteLines ();
 		}
+
+		inputPiece.reset ();
 	}
 
 	private void putPiecesOnGrid(Piece piece)
@@ -197,6 +198,7 @@ public class GameManager : MonoBehaviour
 						
 						cellManager.occupyAndConfigureCell (cellList [i] [j], cellContent, EPieceType.LETTER);
 						cellContent.transform.DOMove (cellPosition, 0);
+
 					}
 				}
 			}

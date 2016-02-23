@@ -1,57 +1,38 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
-using ABC;
 
-public class PowerUpBase : MonoBehaviour 
+public class PowerupBase : MonoBehaviour 
 {
-	public delegate void powerUpUsed();
-
-	public int gemsPrice;
-
-	public GameObject powerUpCursor;
-
-	public EPOWERUPS typeOfPowerUp;
-
-	protected CellsManager cellsManager;
-
-	public powerUpUsed OnPowerUpUsed;
-
-	void Start () 
+	public enum EType
 	{
-		cellsManager = FindObjectOfType<CellsManager>();
+		BOMB,BLOCK,ROTATE,DESTROY,WILDCARD	
 	}
 
-	public GameObject oneTilePower(Transform myButtonPosition)
+	public delegate void DPowerUpNotification();
+	public DPowerUpNotification OnPowerupCanceled;
+	public DPowerUpNotification OnPowerupCompleted;
+
+	public EType type;
+
+	public virtual void activate()
 	{
-		GameObject go = Instantiate (powerUpCursor,myButtonPosition.position,myButtonPosition.rotation)as GameObject;
-		go.GetComponent<Piece>().myFirstPos = myButtonPosition;
-		go.name = "PowerOne";
-		go.GetComponent<Piece> ().powerUp = true;
-		return go;
+		
 	}
 
-	/*
-	 * Funcion del boton del PowerUp de Destruir por Color
-	 */
-	public GameObject activateDestroyMode(Transform myButtonPosition)
-	{
-		GameObject go = Instantiate (powerUpCursor,myButtonPosition.position,myButtonPosition.rotation) as GameObject;
 
-		go.GetComponent<Piece>().myFirstPos = myButtonPosition;
-		//go.GetComponent<Piece>().myFirstPos.position = pos;
-		go.name = "DestroyPowerUp";
-		go.GetComponent<Piece> ().powerUp = true;
-		return go;
+	protected void OnComplete()
+	{
+		if(OnPowerupCompleted != null)
+		{
+			OnPowerupCompleted();
+		}	
 	}
 
-	public void returnPower()
+	protected void OnCancel()
 	{
-		gameObject.GetComponent<Button>().interactable = true;
-	}
-
-	public void PowerUsed()
-	{
-		//El cobro de las gemas
+		if(OnPowerupCanceled != null)
+		{
+			OnPowerupCanceled();
+		}	
 	}
 }

@@ -492,7 +492,7 @@ public class InputGameController : MonoBehaviour
 			if (canRotate) 
 			{
 				//utilizo el powerUp de rotar
-				GameObject.Find ("PowerRotate").GetComponent<PowerUpBase> ().PowerUsed ();
+				GameObject.Find ("PowerRotate").GetComponent<PowerUpBase2> ().PowerUsed ();
 				if (pieceManager.setRotationPiecesAsNormalRotation ()) 
 				{
 					//ChargePower
@@ -508,7 +508,7 @@ public class InputGameController : MonoBehaviour
 		}
 		else
 		{
-			GameObject.Find(piece.name).GetComponent<PowerUpBase>().PowerUsed();
+			GameObject.Find(piece.name).GetComponent<PowerUpBase2>().PowerUsed();
 		}
 	}
 
