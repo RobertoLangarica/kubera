@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using ABC;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour 
 {
@@ -132,22 +133,67 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	private void OnPieceDropped(GameObject piece)
+	private void OnPieceDropped(GameObject obj)
 	{
-		inputPiece.returnSelectedToInitialState(0.1f);
-		inputPiece.reset();
+		Piece piece = obj.GetComponent<Piece>();
+		if (!piece) 
+		{
+			return;
+		}
 
-
+		if (!cellManager.canPositionateAll (piece.pieces)) 
+		{
+			inputPiece.returnSelectedToInitialState (0.1f);
+			inputPiece.reset ();
+		}
+		else 
+		{
+			pieceManager.checkPiecesToPosisionate (obj);
+			putPiecesOnGrid (piece);
+			checkAndCompleteLines ();
+		}
 	}
 
-	private void putPiecesOnGrid(GameObject obj)
+	private void putPiecesOnGrid(Piece piece)
 	{
-		
+		List<Cell> tempCell = new List<Cell> ();
+		tempCell = cellManager.getCellsUnderPiece (piece);
+		//damos puntos por las piezas en la pieza
+		addPoints(piece.pieces.Length);
+			
+		for(int i=0; i< tempCell.Count; i++)
+		{
+			piece.pieces [i].transform.DOMove (cellManager.occupyAndConfigureCell (tempCell [i], piece.pieces [i], piece.currentType), 0.5f);
+		}
+		piece.GetComponent<BoxCollider2D> ().enabled = false;
 	}
 
 	private void checkAndCompleteLines()
 	{
-		
+		List<List<Cell>> tempListListCell = new List<List<Cell>> ();
+		tempListListCell = cellManager.getCompletedVerticalAndHorizontalLines ();
+
+		//damos puntos por las lineas creadas
+		linesCreated (tempListListCell.Count);
+
+		if (tempListListCell.Count > 0) 
+		{			
+			for (int i = 0; i < tempListListCell.Count; i++) 
+			{
+				for(int j=0; j<tempListListCell[i].Count; j++)
+				{
+					if (tempListListCell [i] [j].pieceType != EPieceType.LETTER) 
+					{
+						cellManager.destroyCell (tempListListCell [i] [j]);
+
+						GameObject cellContent = createLetterContent();
+
+						cellManager.setCellType (tempListListCell [i] [j], EPieceType.LETTER);
+						cellManager.setCellContentAndGetContentPos(tempListListCell [i] [j],cellContent);
+					}
+				}
+			}
+		}
 	}
 
 	protected void parseTheCellsOnGrid()
@@ -160,6 +206,7 @@ public class GameManager : MonoBehaviour
 		{
 			cellType = int.Parse(levelGridData[i]);
 
+			cellManager.setCellToType (i, cellType);
 			if((cellType & 0x1) == 0x1)
 			{
 				cellManager.setCellType(i,EPieceType.NONE);
@@ -168,17 +215,17 @@ public class GameManager : MonoBehaviour
 			{
 				cellContent = createCellBlockContent(cellType);
 				cellManager.setCellType(i,cellContent.GetComponent<Piece> ().currentType);
-				cellManager.setCellContent(i,cellContent);
+				cellManager.setCellContentAndGetContentPos(i,cellContent);
 			}
 			if((cellType & 0x4) == 0x4)
 			{
 				cellManager.setCellType(i,EPieceType.NONE);
 			}
 			if((cellType & 0x8) == 0x8)
-			{
+			{	
 				cellContent = createCellObstacleContent();
 				cellManager.setCellType(i,EPieceType.LETTER_OBSTACLE);
-				cellManager.setCellContent(i,cellContent);
+				cellManager.setCellContentAndGetContentPos(i,cellContent);
 			}
 		}
 	}
@@ -236,6 +283,21 @@ public class GameManager : MonoBehaviour
 		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
 
 		registerNewLetterCreated (go.GetComponent<ABCChar> (), go.GetComponent<UIChar> (), true);
+
+		return go;
+	}
+
+	protected GameObject createLetterContent()
+	{
+		GameObject go = Instantiate (uiLetter)as GameObject;
+
+		go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
+
+		go.GetComponent<BoxCollider2D>().enabled = true;
+
+		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
+
+		registerNewLetterCreated (go.GetComponent<ABCChar> (), go.GetComponent<UIChar> (), false);
 
 		return go;
 	}
@@ -1064,8 +1126,9 @@ public class GameManager : MonoBehaviour
 	protected void fillLetterPoolRandomList()
 	{
 		List<ScriptableABCChar> tempList = new List<ScriptableABCChar> ();
-		randomizedPoolLeters = new List<ScriptableABCChar>();
-		tempList = XMLPoolLetersList;
+		randomizedPoolLeters = new List<ScriptableABCChar>(XMLPoolLetersList);
+
+		tempList = new List<ScriptableABCChar>(XMLPoolLetersList);
 
 
 		while(tempList.Count >0)
@@ -1079,8 +1142,9 @@ public class GameManager : MonoBehaviour
 	protected void fillBlackLetterPoolRandomList()
 	{
 		List<ScriptableABCChar> tempList = new List<ScriptableABCChar> ();
-		randomizedBlackPoolLeters = new List<ScriptableABCChar>();
-		tempList = XMLPoolBlackLetersList;
+		randomizedBlackPoolLeters = new List<ScriptableABCChar>(XMLPoolBlackLetersList);
+
+		tempList = new List<ScriptableABCChar>(XMLPoolBlackLetersList);
 
 
 		while(tempList.Count >0)

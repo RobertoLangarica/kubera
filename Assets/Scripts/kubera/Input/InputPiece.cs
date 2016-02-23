@@ -77,7 +77,7 @@ public class InputPiece : MonoBehaviour
 
 					//Para un autoreset hay que descomentar las siguientes lineas
 					//returnSelectedToInitialState();
-					//reset();
+					reset();
 				}
 			}
 			break;

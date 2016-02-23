@@ -6,7 +6,7 @@ using DG.Tweening;
 public class PieceManager : MonoBehaviour {
 
 	protected List<GameObject> piecesList = new List<GameObject>();
-	protected List<GameObject> safeList = new List<GameObject>();
+	protected List<GameObject> safeList;
 
 	public List<Piece> piecesInBar = new List<Piece>();
 	public Transform[] firstPos;
@@ -60,6 +60,7 @@ public class PieceManager : MonoBehaviour {
 
 	public void setPiecesPoolList(List<GameObject> piecesPoolList)
 	{
+		safeList = new List<GameObject>();
 		safeList = piecesPoolList;
 
 		initializeAvailablePieces ();
@@ -68,7 +69,7 @@ public class PieceManager : MonoBehaviour {
 	protected void fillList()
 	{
 		List<GameObject> newList = new List<GameObject>();
-		piecesList = safeList;
+		piecesList = new List<GameObject>(safeList);
 
 		while(piecesList.Count >0)
 		{
@@ -78,15 +79,16 @@ public class PieceManager : MonoBehaviour {
 		}
 
 		piecesList = newList;
+
 	}
 
-	public void checkPiecesToPosisionate(GameObject piecesSelected)
+	public void checkPiecesToPosisionate(GameObject pieceSelected)
 	{
 		piecesAvailable--;
 		int toDelete = 0;
 		for(int i=0; i<piecesInBar.Count; i++)
 		{
-			if(piecesSelected.name == piecesInBar[i].name)
+			if(pieceSelected.name == piecesInBar[i].name)
 			{
 				toDelete=i;
 				break;

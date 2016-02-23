@@ -29,10 +29,6 @@ namespace ABC
 
 		protected float letterPrefabHeight = 0;
 
-		//texturas de las letras en juego
-		protected UnityEngine.Object[] textureObject;
-		protected string[] textureNames;
-
 		[HideInInspector]public Vector3 wordActiveButtonPosition;
 
 		public delegate void DSendVector3(Vector3 vector3);
@@ -50,10 +46,6 @@ namespace ABC
 				inputWords.onTap += sendLetterToWord;
 			}
 
-			textureObject = Resources.LoadAll("Letters");
-			textureNames = new string[textureObject.Length];
-			readTextures();
-
 			chars = new List<ABCChar>();
 
 			wordActiveButtonPosition = wordActiveButton.transform.localPosition;
@@ -67,22 +59,7 @@ namespace ABC
 
 			wordActiveButton.SetActive(false);
 		}
-
-		public Sprite changeTexture(string nTextureName)
-		{
-			Sprite sprite;
-
-			sprite = (Sprite)textureObject[Array.IndexOf(textureNames, nTextureName.ToLower())];		
-			return sprite;
-		}
-
-		protected void readTextures()
-		{
-			for(int i=0; i< textureNames.Length; i++)
-			{
-				textureNames[i] = textureObject[i].name;
-			}
-		}
+			
 
 		public ABCChar getWildcard(string pointsOrMultiple)
 		{
