@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
 	protected PersistentData persistentData;
 	protected WordManager wordManager;
 	protected CellsManager cellManager;
-	protected PowerUpManager powerUpManager;
+	protected PowerUpManager2 powerUpManager;
 	protected PieceManager pieceManager;
 	protected HUD hud;
 
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
 	{
 		wordManager = FindObjectOfType<WordManager>();
 		cellManager = FindObjectOfType<CellsManager>();
-		powerUpManager = FindObjectOfType<PowerUpManager> ();
+		powerUpManager = FindObjectOfType<PowerUpManager2> ();
 		pieceManager = FindObjectOfType<PieceManager>();
 		hud = FindObjectOfType<HUD> ();
 
