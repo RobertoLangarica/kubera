@@ -13,9 +13,9 @@ public enum EPOWERUPS
 
 public class PowerUpManager : MonoBehaviour 
 {
-	public List<PowerUpBase> powersUpOnEditor = new List<PowerUpBase>();
+	public List<PowerUpBase2> powersUpOnEditor = new List<PowerUpBase2>();
 
-	public PowerUpBase getPowerUp(EPOWERUPS powerUp)
+	public PowerUpBase2 getPowerUp(EPOWERUPS powerUp)
 	{
 		for(int i = 0;i < powersUpOnEditor.Count;i++)
 		{

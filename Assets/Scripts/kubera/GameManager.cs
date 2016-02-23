@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
 	protected List<Cell> cellToLetter;
 
-	protected PowerUpBase activatedPowerUp;
+	protected PowerUpBase2 activatedPowerUp;
 	protected int currentWildCardsActivated;
 
 	protected PersistentData persistentData;
@@ -144,7 +144,6 @@ public class GameManager : MonoBehaviour
 		if (!cellManager.canPositionateAll (piece.pieces)) 
 		{
 			inputPiece.returnSelectedToInitialState (0.1f);
-			inputPiece.reset ();
 		}
 		else 
 		{
@@ -152,6 +151,8 @@ public class GameManager : MonoBehaviour
 			putPiecesOnGrid (piece);
 			checkAndCompleteLines ();
 		}
+
+		inputPiece.reset ();
 	}
 
 	private void putPiecesOnGrid(Piece piece)
@@ -165,31 +166,32 @@ public class GameManager : MonoBehaviour
 		{
 			piece.pieces [i].transform.DOMove (cellManager.occupyAndConfigureCell (tempCell [i], piece.pieces [i], piece.currentType), 0.5f);
 		}
+
 		piece.GetComponent<BoxCollider2D> ().enabled = false;
 	}
 
 	private void checkAndCompleteLines()
 	{
-		List<List<Cell>> tempListListCell = new List<List<Cell>> ();
-		tempListListCell = cellManager.getCompletedVerticalAndHorizontalLines ();
+		List<List<Cell>> cellsList = new List<List<Cell>> ();
+		cellsList = cellManager.getCompletedVerticalAndHorizontalLines ();
 
 		//damos puntos por las lineas creadas
-		linesCreated (tempListListCell.Count);
+		linesCreated (cellsList.Count);
 
-		if (tempListListCell.Count > 0) 
+		if (cellsList.Count > 0) 
 		{			
-			for (int i = 0; i < tempListListCell.Count; i++) 
+			for (int i = 0; i < cellsList.Count; i++) 
 			{
-				for(int j=0; j<tempListListCell[i].Count; j++)
+				for(int j=0; j<cellsList[i].Count; j++)
 				{
-					if (tempListListCell [i] [j].pieceType != EPieceType.LETTER) 
+					if (cellsList [i] [j].pieceType != EPieceType.LETTER) 
 					{
-						cellManager.destroyCell (tempListListCell [i] [j]);
+						cellManager.destroyCell (cellsList [i] [j]);
 
 						GameObject cellContent = createLetterContent();
 
-						cellManager.setCellType (tempListListCell [i] [j], EPieceType.LETTER);
-						cellManager.setCellContentAndGetContentPos(tempListListCell [i] [j],cellContent);
+						cellManager.setCellType (cellsList [i] [j], EPieceType.LETTER);
+						cellManager.setCellContentAndGetContentPos(cellsList [i] [j],cellContent);
 					}
 				}
 			}
