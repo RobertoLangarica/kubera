@@ -304,36 +304,34 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Ocupa la celda indicada y le asigna el contenido y tipo indicado
 	 **/ 
-	public Vector3 occupyAndConfigureCell(Cell cell,GameObject content, EPieceType type)
+	public void occupyAndConfigureCell(Cell cell,GameObject content, EPieceType type)
 	{
-		Vector3 tempV3 = new Vector3 ();
 		cell.occupied = true;
 
-		tempV3 = setCellContentAndGetContentPos(cell, content, true,false);//destroy
+		setCellContent(cell, content, true,false);//destroy
 		setCellType(cell, type);
-		return tempV3;
 	}
 
 	/**
 	 * Cambia el contenido de la celda y destruye el anterior si se necesita y posiciona si se necesita
 	 **/ 
-	public Vector3 setCellContentAndGetContentPos(int cellIndex,GameObject content, bool destroyOldContent = true, bool positionate = true)
+	public void setCellContent(int cellIndex,GameObject content, bool destroyOldContent = true, bool positionate = true)
 	{
-		return setCellContentAndGetContentPos(cells[cellIndex],content,destroyOldContent,positionate);
+		setCellContent(cells[cellIndex],content,destroyOldContent,positionate);
 	}
 
 	/**
 	 * Cambia el contenido de la celda y destruye el anterior si se necesita y posiciona si se necesita
 	 **/ 
-	public Vector3 setCellContentAndGetContentPos(int x, int y,GameObject content, bool destroyOldContent = true, bool positionate = true)
+	public void setCellContent(int x, int y,GameObject content, bool destroyOldContent = true, bool positionate = true)
 	{
-		return setCellContentAndGetContentPos(getCellAt(x,y),content,destroyOldContent,positionate);
+		setCellContent(getCellAt(x,y),content,destroyOldContent,positionate);
 	}
 
 	/**
 	 * Cambia el contenido de la celda y destruye el anterior si se necesita y posiciona si se necesita
 	 **/ 
-	public Vector3 setCellContentAndGetContentPos(Cell cell,GameObject content, bool destroyOldContent = true, bool positionate = true)
+	public void setCellContent(Cell cell,GameObject content, bool destroyOldContent = true, bool positionate = true)
 	{
 		if(destroyOldContent)
 		{
@@ -344,12 +342,9 @@ public class CellsManager : MonoBehaviour
 
 		if (positionate) 
 		{
-			return content.transform.position = cell.transform.position + (new Vector3 (cell.GetComponent<SpriteRenderer> ().bounds.extents.x,
+			content.transform.position = cell.transform.position + (new Vector3 (cell.GetComponent<SpriteRenderer> ().bounds.extents.x,
 				-cell.GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
 		}
-
-		return cell.transform.position + (new Vector3 (cell.GetComponent<SpriteRenderer> ().bounds.extents.x,
-			-cell.GetComponent<SpriteRenderer> ().bounds.extents.x, 0));	
 	}
 
 	public void setCellType(int cellIndex,EPieceType type)
