@@ -29,7 +29,6 @@ public class CellsManager : MonoBehaviour
 	void Start () 
 	{
 		selected = new List<Cell>();
-		cells = new List<Cell>();
 	}
 
 	/*

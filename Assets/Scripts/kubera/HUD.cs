@@ -152,6 +152,7 @@ public class HUD : MonoBehaviour {
 	 **/
 	public void setWinConditionOnHud(string winCondition, string[] words, int value=0,List<string> letters = null)
 	{
+		//[TODO] Jalar textos del xml de idiomas
 		switch (winCondition) {
 		case "points":
 			winConditionText.text = "Obten: " + value +" puntos.";
