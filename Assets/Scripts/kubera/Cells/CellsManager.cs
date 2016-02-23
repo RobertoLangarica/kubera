@@ -59,7 +59,7 @@ public class CellsManager : MonoBehaviour
 					cellInstance.GetComponent<SpriteRenderer> ().sortingOrder = -1;
 					cellInstance.transform.SetParent(transform);
 					cells.Add(cellInstance.GetComponent<Cell>());
-
+					
 					cellInitialPosition.x += cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x + 0.03f;
 				}
 				cellInitialPosition.y -= cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y + 0.03f;
@@ -132,7 +132,7 @@ public class CellsManager : MonoBehaviour
 			renderer	= cell.gameObject.GetComponent<SpriteRenderer>();
 			cellWidth	= renderer.bounds.size.x;
 			cellHeight	= renderer.bounds.size.y;
-			print (point +" //// "+cellPos);
+
 			if(point.x > cellPos.x && point.x < (cellPos.x + cellWidth) &&
 				point.y < cellPos.y && point.y > (cellPos.y - cellHeight))
 			{
@@ -177,7 +177,10 @@ public class CellsManager : MonoBehaviour
 				cell = getCellAt(x,y);
 				if(cell.available && cell.occupied && cell.pieceType != EPieceType.LETTER)
 				{
-					result[result.Count-1].Add(cell);
+					if (cell.content != null) 
+					{
+						result [result.Count - 1].Add (cell);
+					}
 				}
 				else
 				{
@@ -204,7 +207,10 @@ public class CellsManager : MonoBehaviour
 				cell = getCellAt(x,y);
 				if(cell.available && cell.occupied && cell.pieceType != EPieceType.LETTER)
 				{
-					result[result.Count-1].Add(cell);
+					if (cell.content != null) 
+					{
+						result [result.Count - 1].Add (cell);
+					}
 				}
 				else
 				{
@@ -226,20 +232,6 @@ public class CellsManager : MonoBehaviour
 		result.AddRange(getCompletedVerticalLines());
 
 		return result;
-	}
-
-	/**
-	 * Evalua si los objetos se pueden posicionar dentro de la grid.
-	 * Se evaluan en la posicion donde se encuentran
-	 * 
-	 * @param objects{GameObject}: Objeto a evaluar
-	 * 
-	 * @return true:si es posible colocarla, false:No se pudo posicionar alguna o todas
-	 */
-	public bool canPositionateAll(GameObject objects)
-	{
-		print (cells.Count);
-		return canPositionateAll(objects.GetComponent<Piece> ().pieces);
 	}
 
 
@@ -273,7 +265,7 @@ public class CellsManager : MonoBehaviour
 	public bool canPositionateAll(Vector3[] positions)
 	{
 		Cell cell;
-		
+
 		for(int i = 0;i < positions.Length;i++)
 		{
 			cell = getCellUnderPoint(positions[i]);
@@ -286,7 +278,6 @@ public class CellsManager : MonoBehaviour
 			{
 				if(cell.occupied || !cell.canPositionateOnThisCell())
 				{
-					print ("S");
 					return false;
 				}
 			}
@@ -313,34 +304,36 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Ocupa la celda indicada y le asigna el contenido y tipo indicado
 	 **/ 
-	public void occupyAndConfigureCell(Cell cell,GameObject content, EPieceType type)
+	public Vector3 occupyAndConfigureCell(Cell cell,GameObject content, EPieceType type)
 	{
+		Vector3 tempV3 = new Vector3 ();
 		cell.occupied = true;
 
-		setCellContent(cell, content, true);//destroy
+		tempV3 = setCellContentAndGetContentPos(cell, content, true,false);//destroy
 		setCellType(cell, type);
+		return tempV3;
 	}
 
 	/**
-	 * Cambia el contenido de la celda y destruye el anterior si se necesita
+	 * Cambia el contenido de la celda y destruye el anterior si se necesita y posiciona si se necesita
 	 **/ 
-	public void setCellContent(int cellIndex,GameObject content, bool destroyOldContent = true)
+	public Vector3 setCellContentAndGetContentPos(int cellIndex,GameObject content, bool destroyOldContent = true, bool positionate = true)
 	{
-		setCellContent(cells[cellIndex],content,destroyOldContent);
+		return setCellContentAndGetContentPos(cells[cellIndex],content,destroyOldContent,positionate);
 	}
 
 	/**
-	 * Cambia el contenido de la celda y destruye el anterior si se necesita
+	 * Cambia el contenido de la celda y destruye el anterior si se necesita y posiciona si se necesita
 	 **/ 
-	public void setCellContent(int x, int y,GameObject content, bool destroyOldContent = true)
+	public Vector3 setCellContentAndGetContentPos(int x, int y,GameObject content, bool destroyOldContent = true, bool positionate = true)
 	{
-		setCellContent(getCellAt(x,y),content,destroyOldContent);
+		return setCellContentAndGetContentPos(getCellAt(x,y),content,destroyOldContent,positionate);
 	}
 
 	/**
-	 * Cambia el contenido de la celda y destruye el anterior si se necesita
+	 * Cambia el contenido de la celda y destruye el anterior si se necesita y posiciona si se necesita
 	 **/ 
-	public void setCellContent(Cell cell,GameObject content, bool destroyOldContent = true)
+	public Vector3 setCellContentAndGetContentPos(Cell cell,GameObject content, bool destroyOldContent = true, bool positionate = true)
 	{
 		if(destroyOldContent)
 		{
@@ -349,9 +342,14 @@ public class CellsManager : MonoBehaviour
 
 		cell.content = content;
 
-		content.transform.position = cell.transform.position + (new Vector3(cell.GetComponent<SpriteRenderer>().bounds.extents.x,
-			-cell.GetComponent<SpriteRenderer>().bounds.extents.x,0));
-		//Debug.Log(content.transform.position);
+		if (positionate) 
+		{
+			return content.transform.position = cell.transform.position + (new Vector3 (cell.GetComponent<SpriteRenderer> ().bounds.extents.x,
+				-cell.GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
+		}
+
+		return cell.transform.position + (new Vector3 (cell.GetComponent<SpriteRenderer> ().bounds.extents.x,
+			-cell.GetComponent<SpriteRenderer> ().bounds.extents.x, 0));	
 	}
 
 	public void setCellType(int cellIndex,EPieceType type)
@@ -367,6 +365,16 @@ public class CellsManager : MonoBehaviour
 	public void setCellType(Cell cell, EPieceType type)
 	{
 		cell.pieceType = type;
+	}
+
+	public void setCellToType(int cellIndex, int cellType)
+	{
+		setCellToType (cells [cellIndex], cellType);
+	}
+
+	public void setCellToType(Cell cell, int cellType)
+	{
+		cell.setTypeToCell (cellType);
 	}
 
 	/*
@@ -607,6 +615,11 @@ public class CellsManager : MonoBehaviour
 				cells[i].content.GetComponent<Collider2D>().enabled = false;
 			}
 		}
+	}
+
+	public void destroyCell(Cell cell)
+	{
+		cell.destroyCell ();
 	}
 
 	/*
