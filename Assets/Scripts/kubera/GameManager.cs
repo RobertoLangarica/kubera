@@ -170,38 +170,44 @@ public class GameManager : MonoBehaviour
 		List<Cell> tempCell = new List<Cell> ();
 		tempCell = cellManager.getCellsUnderPiece (piece);
 		//damos puntos por las piezas en la pieza
-		addPoints(piece.pieces.Length);
-			
-		for(int i=0; i< tempCell.Count; i++)
-		{
-			piece.pieces [i].transform.DOMove (cellManager.occupyAndConfigureCell (tempCell [i], piece.pieces [i], piece.currentType), 0.5f);
-		}
 
-		piece.GetComponent<BoxCollider2D> ().enabled = false;
+		piecePositionatedCorrectly (piece.pieces.Length);
+
+		for(int i=0; i< tempCell.Count; i++)
+		{ 
+			Vector3 cellPosition =  tempCell[i].transform.position + (new Vector3 (tempCell[i].GetComponent<SpriteRenderer> ().bounds.extents.x,
+				-tempCell[i].GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
+
+			cellManager.occupyAndConfigureCell (tempCell [i], piece.pieces [i], piece.currentType);
+
+			piece.pieces [i].transform.DOMove (cellPosition, 0.5f);
+		}
+		piece.activeCollider (false);
 	}
 
 	private void checkAndCompleteLines()
 	{
-		List<List<Cell>> cellsList = new List<List<Cell>> ();
-		cellsList = cellManager.getCompletedVerticalAndHorizontalLines ();
+		List<List<Cell>> cellList = new List<List<Cell>> ();
+		cellList = cellManager.getCompletedVerticalAndHorizontalLines ();
 
 		//damos puntos por las lineas creadas
-		linesCreated (cellsList.Count);
+		linesCreated (cellList.Count);
 
-		if (cellsList.Count > 0) 
+		if (cellList.Count > 0) 
 		{			
-			for (int i = 0; i < cellsList.Count; i++) 
+			for (int i = 0; i < cellList.Count; i++) 
 			{
-				for(int j=0; j<cellsList[i].Count; j++)
+				for(int j=0; j<cellList[i].Count; j++)
 				{
-					if (cellsList [i] [j].pieceType != EPieceType.LETTER) 
+					if (cellList [i] [j].pieceType != EPieceType.LETTER) 
 					{
-						cellManager.destroyCell (cellsList [i] [j]);
-
 						GameObject cellContent = createLetterContent();
+						Vector3 cellPosition =  cellList [i] [j].transform.position + (new Vector3 (cellList [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x,
+							-cellList [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
+						
+						cellManager.occupyAndConfigureCell (cellList [i] [j], cellContent, EPieceType.LETTER);
+						cellContent.transform.DOMove (cellPosition, 0);
 
-						cellManager.setCellType (cellsList [i] [j], EPieceType.LETTER);
-						cellManager.setCellContentAndGetContentPos(cellsList [i] [j],cellContent);
 					}
 				}
 			}
@@ -227,7 +233,7 @@ public class GameManager : MonoBehaviour
 			{
 				cellContent = createCellBlockContent(cellType);
 				cellManager.setCellType(i,cellContent.GetComponent<Piece> ().currentType);
-				cellManager.setCellContentAndGetContentPos(i,cellContent);
+				cellManager.setCellContent(i,cellContent);
 			}
 			if((cellType & 0x4) == 0x4)
 			{
@@ -237,7 +243,7 @@ public class GameManager : MonoBehaviour
 			{	
 				cellContent = createCellObstacleContent();
 				cellManager.setCellType(i,EPieceType.LETTER_OBSTACLE);
-				cellManager.setCellContentAndGetContentPos(i,cellContent);
+				cellManager.setCellContent(i,cellContent);
 			}
 		}
 	}
