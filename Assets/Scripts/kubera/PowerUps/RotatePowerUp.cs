@@ -2,15 +2,19 @@
 using System.Collections;
 using DG.Tweening;
 
-public class InputPiece : MonoBehaviour 
+public class RotatePowerUp : PowerupBase
 {
+	protected PieceManager pieceManager;
 	public Vector3 offsetPositionOverFinger = new Vector3(0,1.5f,0);
 	public Vector3 selectedScale = new Vector3 (4.5f, 4.5f, 4.5f);
 	public bool allowInput = true;
 
 	public delegate void DOnDragNotification(GameObject target);
-	public DOnDragNotification OnDrop;
-	public DOnDragNotification OnDragStart;
+	public DOnDragNotification OnDropPieceRotated;
+	public DOnDragNotification OnDragStartPieceRotated;
+
+	public delegate bool DOnFingerNotification(GameObject target);
+	public DOnFingerNotification OnDown;
 
 	protected bool somethingDragged = false;
 	protected int lastTimeDraggedFrame;
@@ -19,6 +23,21 @@ public class InputPiece : MonoBehaviour
 	protected Vector3 selectedInitialPosition;
 
 	public float pieceSpeed = 0.3f;
+
+	protected bool rotate;
+
+	void Start()
+	{
+		pieceManager = FindObjectOfType<PieceManager> ();
+		this.gameObject.SetActive( false);
+	}
+
+	public override void activate ()
+	{
+		//pieceManager.activateRotation (true);
+		this.gameObject.SetActive( true);
+		//OnComplete ();
+	}
 
 	void OnDrag(DragGesture gesture) 
 	{
@@ -38,9 +57,9 @@ public class InputPiece : MonoBehaviour
 				{
 					somethingDragged = true;
 
-					if(OnDragStart != null)
+					if(OnDragStartPieceRotated != null)
 					{
-						OnDragStart(currentSelected);
+						OnDragStartPieceRotated(currentSelected);
 					}
 
 					Vector3 posOverFinger = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
@@ -68,17 +87,17 @@ public class InputPiece : MonoBehaviour
 			{	
 				if(currentSelected)
 				{
-					if(OnDrop != null)
+					if(OnDropPieceRotated != null)
 					{
-						OnDrop(currentSelected);	
+						OnDropPieceRotated(currentSelected);	
 					}
 
 					DOTween.Kill("Input_Dragging",false);
 
 
 					//Para un autoreset hay que descomentar las siguientes lineas
-					//returnSelectedToInitialState();
-					//reset();
+					returnSelectedToInitialState();
+					reset();
 				}
 			}
 			break;
@@ -87,8 +106,11 @@ public class InputPiece : MonoBehaviour
 
 	void OnFingerDown(FingerDownEvent  gesture)
 	{
+		print ("Star");
+
 		if(allowInput && gesture.Raycast.Hits2D != null)
 		{
+			print ("S");
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
 
 
@@ -111,8 +133,8 @@ public class InputPiece : MonoBehaviour
 	{
 		if(!somethingDragged && currentSelected != null)
 		{				
-			returnSelectedToInitialState(0.1f);
-			reset();
+			returnSelectedToInitialState (0.1f);
+			reset ();
 		}
 
 		somethingDragged = false;
@@ -146,4 +168,10 @@ public class InputPiece : MonoBehaviour
 		DOTween.Kill("Input_Dragging",false);
 		target.transform.DOMove (to, delay).SetId("Input_Dragging");
 	}
+
+	protected void completePowerUp()
+	{
+		this.enabled = false;
+	}
 }
+

@@ -17,8 +17,11 @@ public class PieceManager : MonoBehaviour {
 	protected int piecesAvailable;
 	protected Transform piecesStock;
 
-	public delegate void DShowMoney(bool show, int money);
-	public DShowMoney DOnShowMoney;
+	public delegate void DOnShowMoney(bool show, int money);
+	public DOnShowMoney OnShowMoney;
+
+	public delegate void DOnRotate(bool rotating);
+	public DOnRotate OnRotate;
 
 	[HideInInspector]
 	public bool isRotating = false;
@@ -103,6 +106,14 @@ public class PieceManager : MonoBehaviour {
 		}
 	}
 
+	public void setRotatePiece(GameObject go)
+	{
+		if (go.GetComponent<Piece> ()) 
+		{
+			setRotatePiece(go.GetComponent<Piece>());
+		}
+	}
+
 	//Se cambian las piezas por las rotadas
 	public void setRotatePiece(Piece piece)
 	{
@@ -113,6 +124,7 @@ public class PieceManager : MonoBehaviour {
 
 		if (piece.rotateTimes > 0) {
 			isRotating = true;
+			OnRotate (isRotating);
 
 			piece.howManyHasBeenRotated += 1;
 				
@@ -122,6 +134,7 @@ public class PieceManager : MonoBehaviour {
 			
 				piece.transform.DOScale (initialPieceScale, 0.25f).OnComplete (() => {
 					isRotating = false;
+					OnRotate (isRotating);
 				});
 			});
 
@@ -174,11 +187,11 @@ public class PieceManager : MonoBehaviour {
 			
 		if(OneWasRotated)
 		{
-			DOnShowMoney (true, 50);
+			OnShowMoney (true, 50);
 		}
 		else
 		{
-			DOnShowMoney (true, 0);
+			OnShowMoney (true, 0);
 		}
 	}
 
@@ -203,7 +216,6 @@ public class PieceManager : MonoBehaviour {
 			//Activar las imagenes de rotar
 			for (int i = 0; i < piecesInBar.Count; i++) 
 			{
-				print (piecesInBar [i].GetComponent<Piece> ().myFirstPosInt);
 				firstPos [piecesInBar[i].GetComponent<Piece>().myFirstPosInt].GetComponent<Image> ().enabled = true;
 			}
 		}

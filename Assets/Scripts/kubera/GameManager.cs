@@ -51,11 +51,14 @@ public class GameManager : MonoBehaviour
 	protected PersistentData persistentData;
 	protected WordManager wordManager;
 	protected CellsManager cellManager;
-	protected PowerUpManager2 powerUpManager;
+	protected PowerUpManager2 powerUpManager2;
+	protected PowerupManager powerUpManager;
+	protected PowerupBase powerupBase;
 	protected PieceManager pieceManager;
 	protected HUD hud;
 
 	protected InputPiece inputPiece;
+	protected InputWords inputWords;
 
 	protected List<GameObject> XMLPoolPiecesList = new List<GameObject>();
 	protected List<ScriptableABCChar> XMLPoolLetersList = new List<ScriptableABCChar>();
@@ -68,16 +71,22 @@ public class GameManager : MonoBehaviour
 	{
 		wordManager = FindObjectOfType<WordManager>();
 		cellManager = FindObjectOfType<CellsManager>();
-		powerUpManager = FindObjectOfType<PowerUpManager2> ();
+		powerUpManager = FindObjectOfType<PowerupManager> ();
 		pieceManager = FindObjectOfType<PieceManager>();
+		powerupBase = FindObjectOfType<PowerupBase> ();
+
 		hud = FindObjectOfType<HUD> ();
+		inputWords = FindObjectOfType<InputWords>();
+		inputPiece = FindObjectOfType<InputPiece>();
 
 		cellManager.OnLetterCreated += registerNewLetterCreated;
 
-		inputPiece = FindObjectOfType<InputPiece>();
 		inputPiece.OnDrop += OnPieceDropped;
 
 		wordManager.OnSendVector3 += sendVectorToCellManager;
+
+		pieceManager.OnShowMoney += activeMoney;
+		powerupBase.OnPowerupCompleted += powerupCompleted;
 	}
 
 	void Start()
@@ -102,7 +111,7 @@ public class GameManager : MonoBehaviour
 		hud.setLevel (persistentData.levelNumber);
 		hud.setSecondChanceLock (false);
 
-		powerUpManager.activateAvailablePowers();
+		//PowerUpManager.activateAvailablePowers();
 		checkIfNeedToUnlockPowerUp();
 
 
@@ -402,9 +411,9 @@ public class GameManager : MonoBehaviour
 			return true;
 		}
 
-		if(UserDataManager.instance.playerGems >= (powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated) && activatedPowerUp)
+		if(UserDataManager.instance.playerGems >= (powerUpManager2.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated) && activatedPowerUp)
 		{
-			UserDataManager.instance.playerGems -= (powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
+			UserDataManager.instance.playerGems -= (powerUpManager2.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
 
 			if(activatedPowerUp.typeOfPowerUp == EPOWERUPS.WILDCARD_POWERUP)
 			{
@@ -566,14 +575,14 @@ public class GameManager : MonoBehaviour
 		deactivateCurrentPowerUp();
 		canRotate = true;
 		//inputGameController.setCanRotate (canRotate);
-		activatedPowerUp = powerUpManager.getPowerUp(EPOWERUPS.ROTATE_POWERUP);
+		activatedPowerUp = powerUpManager2.getPowerUp(EPOWERUPS.ROTATE_POWERUP);
 
 		activeMoney(true,0);
 	}
 
 	public void addWildCardInCurrentWord()
 	{
-		if (!useGems (powerUpManager.getPowerUp (EPOWERUPS.WILDCARD_POWERUP).gemsPrice)) 
+		if (!useGems (powerUpManager2.getPowerUp (EPOWERUPS.WILDCARD_POWERUP).gemsPrice)) 
 		{
 			return;
 		}
@@ -584,7 +593,7 @@ public class GameManager : MonoBehaviour
 		//[TODO] leer el valor del wildcard de algun lado
 		wordManager.addCharacter(wordManager.getWildcard("10"), null);
 		wordManager.activateButtonOfWordsActions (true);
-		activatedPowerUp = powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP);
+		activatedPowerUp = powerUpManager2.getPowerUp(EPOWERUPS.WILDCARD_POWERUP);
 
 		//activeMoney(true,activatedPowerUp.gemsPrice);
 	}
@@ -599,7 +608,7 @@ public class GameManager : MonoBehaviour
 		deactivateCurrentPowerUp();
 
 		//inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.BLOCK_POWERUP).oneTilePower(myButtonPosition));
-		activatedPowerUp = powerUpManager.getPowerUp(EPOWERUPS.BLOCK_POWERUP);
+		activatedPowerUp = powerUpManager2.getPowerUp(EPOWERUPS.BLOCK_POWERUP);
 
 		activeMoney(true,activatedPowerUp.gemsPrice);
 	}
@@ -618,7 +627,7 @@ public class GameManager : MonoBehaviour
 
 		//inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP).activateDestroyMode(myButtonPosition));
 		//inputGameController.setDestroyByColor (destroyByColor);
-		activatedPowerUp = powerUpManager.getPowerUp(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP);
+		activatedPowerUp = powerUpManager2.getPowerUp(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP);
 
 		activeMoney(true,activatedPowerUp.gemsPrice);
 	}
@@ -632,7 +641,7 @@ public class GameManager : MonoBehaviour
 
 		//inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.DESTROY_NEIGHBORS_POWERUP).activateDestroyMode(myButtonPosition));
 		//inputGameController.setDestroyByColor (destroyByColor);
-		activatedPowerUp = powerUpManager.getPowerUp(EPOWERUPS.DESTROY_NEIGHBORS_POWERUP);
+		activatedPowerUp = powerUpManager2.getPowerUp(EPOWERUPS.DESTROY_NEIGHBORS_POWERUP);
 
 		/*if(!inputGameController.secondChanceBombsOnly)
 		{
@@ -964,23 +973,23 @@ public class GameManager : MonoBehaviour
 	{
 		if(persistentData.currentLevel.unblockBlock)
 		{
-			powerUpManager.activatePower(EPOWERUPS.BLOCK_POWERUP);
+			powerUpManager2.activatePower(EPOWERUPS.BLOCK_POWERUP);
 		}
 		if(persistentData.currentLevel.unblockBomb)
 		{
-			powerUpManager.activatePower(EPOWERUPS.DESTROY_NEIGHBORS_POWERUP);
+			powerUpManager2.activatePower(EPOWERUPS.DESTROY_NEIGHBORS_POWERUP);
 		}
 		if(persistentData.currentLevel.unblockDestroy)
 		{
-			powerUpManager.activatePower(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP);
+			powerUpManager2.activatePower(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP);
 		}
 		if(persistentData.currentLevel.unblockRotate)
 		{
-			powerUpManager.activatePower(EPOWERUPS.ROTATE_POWERUP);
+			powerUpManager2.activatePower(EPOWERUPS.ROTATE_POWERUP);
 		}
 		if(persistentData.currentLevel.unblockWildcard)
 		{
-			powerUpManager.activatePower(EPOWERUPS.WILDCARD_POWERUP);
+			powerUpManager2.activatePower(EPOWERUPS.WILDCARD_POWERUP);
 		}
 	}
 
@@ -1187,5 +1196,27 @@ public class GameManager : MonoBehaviour
 		randomizedBlackPoolLeters.RemoveAt (0);
 
 		return letter;
+	}
+
+	public void tryActivatePowerUp(int powerUpIndex)
+	{
+		powerUpManager.powerups [powerUpIndex].activate ();
+		powerupStarted ();
+		if (powerUpIndex == 2) 
+		{
+			canRotate = true;
+		}
+	}
+
+	protected void powerupStarted()
+	{
+		inputPiece.gameObject.SetActive(false);
+		inputWords.gameObject.SetActive (false);
+	}
+
+	protected void powerupCompleted()
+	{
+		inputPiece.gameObject.SetActive(true);
+		inputWords.gameObject.SetActive (true);
 	}
 }
