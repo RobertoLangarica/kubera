@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 
@@ -140,8 +141,6 @@ public class PieceManager : MonoBehaviour {
 
 			if (piece.howManyHasBeenRotated > piece.rotateTimes) {
 				piece.howManyHasBeenRotated = 0;
-				//piece.transform.localRotation = Quaternion.Euler(new Vector3(0,0,0));
-				piece.howManyHasBeenRotated = 0;
 			}
 
 			checkIfExistRotatedPiezes ();
@@ -156,25 +155,28 @@ public class PieceManager : MonoBehaviour {
 			return;
 		}
 
-		for (int i = 0; i < piecesStock.childCount; i++) 
+		for (int i = 0; i < piecesInBar.Count; i++) 
 		{
-			if (piecesStock.GetChild (i).GetComponent<Piece> ().howManyHasBeenRotated != 0) 
+			if (piecesInBar[i].howManyHasBeenRotated != 0) 
 			{				
-				int temp = piecesStock.GetChild (i).GetComponent<Piece>().rotateTimes - piecesStock.GetChild (i).GetComponent<Piece> ().howManyHasBeenRotated;
+				int temp = piecesInBar[i].howManyHasBeenRotated;
 
-				piecesStock.GetChild (i).transform.DOScale(new Vector3(0,0),.25f).OnComplete(()=>
-					{
-						piecesStock.GetChild (i).transform.localRotation = Quaternion.Euler(new Vector3(0,0,90*temp));
-
-						piecesStock.GetChild (i).transform.DOScale (initialPieceScale, .25f);
-					});
+				piecesInBar [i].transform.DOScale (new Vector3 (0.1f, 0.1f), 0.25f);
+				StartCoroutine(pos(i,temp));
 			}
 		}
 		checkIfExistRotatedPiezes ();
 	}
 
+	IEnumerator pos(int i,int rotateTimes)
+	{
+		yield return new WaitForSeconds (0.25f);
+		piecesInBar [i].transform.localRotation = Quaternion.Euler(new Vector3(0,0,piecesInBar [i].transform.rotation.eulerAngles.z-(90 * rotateTimes)));
+		piecesInBar [i].transform.DOScale (initialPieceScale, 0.25f);
+	}
+
 	//checamos si una pieza esta rotada
-	public void checkIfExistRotatedPiezes()
+	public bool checkIfExistRotatedPiezes()
 	{
 		bool OneWasRotated = false;
 		for (int i = 0; i < piecesStock.childCount; i++) 
@@ -182,17 +184,11 @@ public class PieceManager : MonoBehaviour {
 			if (piecesStock.GetChild (i).GetComponent<Piece> ().howManyHasBeenRotated != 0) 
 			{	
 				OneWasRotated =  true;
+				return true;
 			}
 		}
 			
-		if(OneWasRotated)
-		{
-			OnShowMoney (true, 50);
-		}
-		else
-		{
-			OnShowMoney (true, 0);
-		}
+		return false;
 	}
 
 	public bool setRotationPiecesAsNormalRotation()

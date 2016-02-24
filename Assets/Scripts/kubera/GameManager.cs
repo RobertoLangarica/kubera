@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 	protected WordManager wordManager;
 	protected CellsManager cellManager;
 	protected PowerUpManager2 powerUpManager2;
-	protected PowerupManager powerupManager;
+	protected PowerUpManager powerupManager;
 	protected PieceManager pieceManager;
 	protected HUD hud;
 
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
 	{
 		wordManager = FindObjectOfType<WordManager>();
 		cellManager = FindObjectOfType<CellsManager>();
-
+		powerupManager = FindObjectOfType<PowerUpManager> ();
 		powerUpManager2 = FindObjectOfType<PowerUpManager2> ();
 
 		pieceManager = FindObjectOfType<PieceManager>();
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
 		wordManager = FindObjectOfType<WordManager>();
 		wordManager.OnSendVector3 += sendVectorToCellManager;
 
-		powerupManager = FindObjectOfType<PowerupManager>();
+		powerupManager = FindObjectOfType<PowerUpManager>();
 		powerupManager.OnPowerupCanceled = OnPowerupCanceled;
 		powerupManager.OnPowerupCompleted = OnPowerupCompleted;
 
@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
 		hud.setLevel (persistentData.levelNumber);
 		hud.setSecondChanceLock (false);
 
-		powerUpManager2.activateAvailablePowers();
+		//powerUpManager2.activateAvailablePowers();
 
 		checkIfNeedToUnlockPowerUp();
 

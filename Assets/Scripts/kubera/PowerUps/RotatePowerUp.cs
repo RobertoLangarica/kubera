@@ -5,6 +5,7 @@ using DG.Tweening;
 public class RotatePowerUp : PowerupBase
 {
 	protected PieceManager pieceManager;
+	protected GameManager gameManager;
 	public Vector3 offsetPositionOverFinger = new Vector3(0,1.5f,0);
 	public Vector3 selectedScale = new Vector3 (4.5f, 4.5f, 4.5f);
 	public bool allowInput = true;
@@ -19,30 +20,32 @@ public class RotatePowerUp : PowerupBase
 	protected bool somethingDragged = false;
 	protected int lastTimeDraggedFrame;
 	protected GameObject currentSelected = null;
-	protected Vector3 selectedInitialScale;
+	protected Vector3 selectedInitialScale   = new Vector3(2.5f,2.5f,2.5f);
 	protected Vector3 selectedInitialPosition;
 
 	public float pieceSpeed = 0.3f;
 
-	protected bool rotate;
+	protected bool allowInputDuringRotate = true;
 
 	void Start()
 	{
 		pieceManager = FindObjectOfType<PieceManager> ();
+		gameManager = FindObjectOfType<GameManager> ();
+		pieceManager.OnRotate += isRotating;
+
 		this.gameObject.SetActive( false);
 	}
 
 	public override void activate ()
 	{
-		//pieceManager.activateRotation (true);
+		pieceManager.activateRotation (true);
 		this.gameObject.SetActive( true);
-		//OnComplete ();
 	}
 
 	void OnDrag(DragGesture gesture) 
 	{
 		//Solo se ejecuta una vez por frame (multifinger puede llamarlo mas de una vez)
-		if(!allowInput || lastTimeDraggedFrame == Time.frameCount)
+		if(!allowInput || lastTimeDraggedFrame == Time.frameCount || !allowInputDuringRotate)
 		{
 			return;
 		}
@@ -87,17 +90,19 @@ public class RotatePowerUp : PowerupBase
 			{	
 				if(currentSelected)
 				{
-					if(OnDropPieceRotated != null)
+					if (gameManager.dropPieceOnGrid (currentSelected.GetComponent<Piece> ())) 
 					{
-						OnDropPieceRotated(currentSelected);	
+						pieceManager.setRotationPiecesAsNormalRotation ();
+						print ("S");
+						completePowerUp ();
+					}
+					else
+					{
+						returnSelectedToInitialState();
+						reset();
 					}
 
 					DOTween.Kill("Input_Dragging",false);
-
-
-					//Para un autoreset hay que descomentar las siguientes lineas
-					returnSelectedToInitialState();
-					reset();
 				}
 			}
 			break;
@@ -106,26 +111,26 @@ public class RotatePowerUp : PowerupBase
 
 	void OnFingerDown(FingerDownEvent  gesture)
 	{
-		print ("Star");
-
-		if(allowInput && gesture.Raycast.Hits2D != null)
+		if (allowInput && gesture.Raycast.Hits2D != null) 
 		{
-			print ("S");
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
 
-
-			DOTween.Kill("Input_InitialPosition",true);
-			DOTween.Kill("Input_ScalePosition",true);
+			DOTween.Kill ("Input_InitialPosition", true);
+			DOTween.Kill ("Input_ScalePosition", true);
 
 			selectedInitialPosition = currentSelected.transform.position;
 			selectedInitialScale = currentSelected.transform.localScale;
 
-			Vector3 overFingerPosition = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
+			Vector3 overFingerPosition = Camera.main.ScreenToWorldPoint (new Vector3 (gesture.Position.x, gesture.Position.y, 0));
 			overFingerPosition.z = selectedInitialPosition.z;
 			overFingerPosition += offsetPositionOverFinger;
 
 			//currentSelected.transform.DOMove(overFingerPosition,.1f).SetId("Input_SelectedPosition");
-
+		}
+		else if(!allowInput)
+		{
+			print ("entering");
+			allowInputDuringRotate = false;
 		}
 	}
 
@@ -133,9 +138,16 @@ public class RotatePowerUp : PowerupBase
 	{
 		if(!somethingDragged && currentSelected != null)
 		{				
-			returnSelectedToInitialState (0.1f);
+			pieceManager.setRotatePiece (currentSelected);
 			reset ();
+			//returnSelectedToInitialState (0.1f);
 		}
+		else if(!somethingDragged && allowInputDuringRotate)
+		{
+			print ("ended");
+			completePowerUp ();
+		}
+		allowInputDuringRotate = true;
 
 		somethingDragged = false;
 	}
@@ -147,6 +159,9 @@ public class RotatePowerUp : PowerupBase
 
 		if(delay == 0)
 		{
+			print (selectedInitialPosition);
+			print (selectedInitialScale);
+
 			currentSelected.transform.position = selectedInitialPosition;
 			currentSelected.transform.localScale = selectedInitialScale;
 		}
@@ -169,9 +184,25 @@ public class RotatePowerUp : PowerupBase
 		target.transform.DOMove (to, delay).SetId("Input_Dragging");
 	}
 
+	protected void isRotating(bool isRotating)
+	{
+		allowInput = !isRotating;
+	}
+
 	protected void completePowerUp()
 	{
-		this.enabled = false;
+		DOTween.Kill ("Input_Dragging");
+		pieceManager.activateRotation (false);
+		this.gameObject.SetActive( false);
+
+		if (pieceManager.checkIfExistRotatedPiezes ()) 
+		{
+			OnComplete ();	
+		}
+		else
+		{
+			OnCancel ();
+		}
 	}
 }
 

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PowerupManager : MonoBehaviour 
+public class PowerUpManager : MonoBehaviour 
 {
 	public List<PowerupBase> powerups;
 
@@ -14,8 +14,10 @@ public class PowerupManager : MonoBehaviour
 	{
 		foreach(PowerupBase powerup in powerups)
 		{
-			powerup.OnPowerupCanceled += cancelPowerup;
-			powerup.OnPowerupCompleted += completePowerup;
+			if (powerup != null) {
+				powerup.OnPowerupCanceled += cancelPowerup;
+				powerup.OnPowerupCompleted += completePowerup;
+			}
 		}
 	}
 
@@ -23,7 +25,7 @@ public class PowerupManager : MonoBehaviour
 	{
 		PowerupBase powerup = getPowerupByType(wichOne);
 
-		if(powerup != null)
+		if(powerup == null)
 		{
 			cancelPowerup();
 		}
@@ -37,9 +39,11 @@ public class PowerupManager : MonoBehaviour
 	{
 		foreach(PowerupBase powerup in powerups)
 		{
-			if(powerup.type == type)
+			if (powerup != null) 
 			{
-				return powerup;
+				if (powerup.type == type) {
+					return powerup;
+				}
 			}
 		}
 
