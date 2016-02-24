@@ -143,18 +143,26 @@ public class GameManager : MonoBehaviour
 			return;
 		}
 
-		if (!cellManager.canPositionateAll (piece.pieces)) 
+		if(!dropPieceOnGrid(piece))
 		{
 			inputPiece.returnSelectedToInitialState (0.1f);
 		}
-		else 
-		{
-			pieceManager.checkPiecesToPosisionate (obj);
-			putPiecesOnGrid (piece);
-			checkAndCompleteLines ();
-		}
 
 		inputPiece.reset ();
+	}
+
+	public bool dropPieceOnGrid(Piece piece)
+	{
+		if (!cellManager.canPositionateAll (piece.pieces)) 
+		{
+			return false;
+		}
+
+		pieceManager.checkPiecesToPosisionate (piece);
+		putPiecesOnGrid (piece);
+		checkAndCompleteLines ();
+
+		return true;
 	}
 
 	private void putPiecesOnGrid(Piece piece)
