@@ -22,7 +22,7 @@ public class BombPowerUp : PowerupBase
 		GameObject bombGO = Instantiate (powerUpBlock,transform.position,Quaternion.identity) as GameObject;
 		bombGO.name = "BombPowerUp";
 
-		bombInput.gameObject.SetActive(true);
+		bombInput.enabled = true;
 	}
 
 	public void powerUPPositionated()
