@@ -70,7 +70,6 @@ public class GameManager : MonoBehaviour
 	{
 		wordManager = FindObjectOfType<WordManager>();
 		cellManager = FindObjectOfType<CellsManager>();
-		powerUpManager = FindObjectOfType<PowerupManager> ();
 
 		powerUpManager2 = FindObjectOfType<PowerUpManager2> ();
 
