@@ -14,8 +14,8 @@ public class PowerupManager : MonoBehaviour
 	{
 		foreach(PowerupBase powerup in powerups)
 		{
-			//powerup.OnPowerupCanceled += OnPowerupCanceled;
-			//powerup.OnPowerupCompleted += OnPowerupCompleted;
+			powerup.OnPowerupCanceled += cancelPowerup;
+			powerup.OnPowerupCompleted += completePowerup;
 		}
 	}
 
@@ -25,7 +25,7 @@ public class PowerupManager : MonoBehaviour
 
 		if(powerup != null)
 		{
-			OnPowerupCanceled();
+			cancelPowerup();
 		}
 		else
 		{
@@ -44,5 +44,21 @@ public class PowerupManager : MonoBehaviour
 		}
 
 		return null;
+	}
+
+	private void cancelPowerup()
+	{
+		if(OnPowerupCanceled != null)
+		{
+			OnPowerupCanceled();
+		}
+	}
+
+	private void completePowerup()
+	{
+		if(OnPowerupCompleted != null)
+		{
+			OnPowerupCompleted();
+		}
 	}
 }

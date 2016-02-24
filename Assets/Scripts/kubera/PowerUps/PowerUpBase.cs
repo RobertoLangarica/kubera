@@ -18,8 +18,7 @@ public class PowerupBase : MonoBehaviour
 	{
 		
 	}
-
-
+		
 	protected void OnComplete()
 	{
 		if(OnPowerupCompleted != null)
