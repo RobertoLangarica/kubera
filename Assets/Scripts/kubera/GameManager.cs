@@ -72,6 +72,9 @@ public class GameManager : MonoBehaviour
 		wordManager = FindObjectOfType<WordManager>();
 		cellManager = FindObjectOfType<CellsManager>();
 		powerUpManager = FindObjectOfType<PowerupManager> ();
+
+		powerUpManager2 = FindObjectOfType<PowerUpManager2> ();
+
 		pieceManager = FindObjectOfType<PieceManager>();
 		powerupBase = FindObjectOfType<PowerupBase> ();
 
@@ -79,10 +82,12 @@ public class GameManager : MonoBehaviour
 		inputWords = FindObjectOfType<InputWords>();
 		inputPiece = FindObjectOfType<InputPiece>();
 
+		cellManager = FindObjectOfType<CellsManager>();
 		cellManager.OnLetterCreated += registerNewLetterCreated;
 
 		inputPiece.OnDrop += OnPieceDropped;
 
+		wordManager = FindObjectOfType<WordManager>();
 		wordManager.OnSendVector3 += sendVectorToCellManager;
 
 		pieceManager.OnShowMoney += activeMoney;
@@ -150,19 +155,26 @@ public class GameManager : MonoBehaviour
 			return;
 		}
 
-		if (!cellManager.canPositionateAll (piece.pieces)) 
+		if(!dropPieceOnGrid(piece))
 		{
 			inputPiece.returnSelectedToInitialState (0.1f);
 		}
-		else 
-		{
-			
-			pieceManager.checkPiecesToPosisionate (obj);
-			putPiecesOnGrid (piece);
-			checkAndCompleteLines ();
-		}
 
 		inputPiece.reset ();
+	}
+
+	public bool dropPieceOnGrid(Piece piece)
+	{
+		if (!cellManager.canPositionateAll (piece.pieces)) 
+		{
+			return false;
+		}
+
+		pieceManager.checkPiecesToPosisionate (piece.gameObject);
+		putPiecesOnGrid (piece);
+		checkAndCompleteLines ();
+
+		return true;
 	}
 
 	private void putPiecesOnGrid(Piece piece)
@@ -1198,11 +1210,11 @@ public class GameManager : MonoBehaviour
 		return letter;
 	}
 
-	public void tryActivatePowerUp(int powerUpIndex)
+	public void tryToActivatePowerup(int powerupTypeIndex)
 	{
-		powerUpManager.powerups [powerUpIndex].activate ();
+		powerUpManager.powerups [powerupTypeIndex].activate ();
 		powerupStarted ();
-		if (powerUpIndex == 2) 
+		if (powerupTypeIndex == 2) 
 		{
 			canRotate = true;
 		}
@@ -1216,7 +1228,7 @@ public class GameManager : MonoBehaviour
 
 	protected void powerupCompleted()
 	{
-		inputPiece.gameObject.SetActive(true);
+		inputPiece.gameObject.SetActive (true);
 		inputWords.gameObject.SetActive (true);
 	}
 }

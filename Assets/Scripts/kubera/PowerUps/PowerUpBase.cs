@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PowerupBase : MonoBehaviour 
 {
+	public EType type;
+
 	public enum EType
 	{
 		BOMB,BLOCK,ROTATE,DESTROY,WILDCARD	
@@ -11,8 +13,6 @@ public class PowerupBase : MonoBehaviour
 	public delegate void DPowerUpNotification();
 	public DPowerUpNotification OnPowerupCanceled;
 	public DPowerUpNotification OnPowerupCompleted;
-
-	public EType type;
 
 	public virtual void activate()
 	{
