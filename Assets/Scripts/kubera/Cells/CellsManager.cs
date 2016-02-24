@@ -16,10 +16,6 @@ public class CellsManager : MonoBehaviour
 	[HideInInspector]public int columns = 0;
 	[HideInInspector]public int rows = 0;
 
-	//Bandera para el powerUp de Destruccion por color
-	//false: destruye todos los del mismo color en la escena
-	//true: destruye todos los del mismo color que este juntos
-	public bool selectNeighbors;
 	//Las celdas seleccionadas por color
 	protected List<Cell> selected;
 
@@ -372,104 +368,6 @@ public class CellsManager : MonoBehaviour
 		cell.setTypeToCell (cellType);
 	}
 
-	/*
-	 * Cambia las piezas por letras de la linea que se le envia.
-	 * 
-	 * @params isHorizontal{bool}: Es una bandera para indicar si la linea que se cambiara es horizontal o no
-	 * @params index{int}: Es el indice de en donde inicia la linea, este indice corresponde al de la lista de cells
-	 */
-	protected void createLettersOn(Cell[] cellsToTransform)
-	{
-		for(int i = 0;i < cellsToTransform.Length;i++)
-		{
-			turnPieceToLetter(cellsToTransform[i]);
-		}
-	}
-
-	protected void turnPieceToLetter(Cell newCell)
-	{
-		newCell.pieceType = EPieceType.LETTER;
-
-		if(newCell.content != null)
-		{
-			Transform tempTransform = newCell.transform;
-		
-			Destroy (newCell.content);
-
-			GameObject go = Instantiate (uiLetter)as GameObject;
-
-			go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
-
-			Vector3 nVec = new Vector3(newCell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
-				-newCell.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
-			
-			go.GetComponent<RectTransform> ().transform.position = tempTransform.position+ nVec;
-			newCell.content = go;
-
-			ABCChar tempAbcChar = newCell.content.GetComponent<ABCChar>();
-			
-			UIChar tempUiChar = newCell.content.GetComponent<UIChar>();
-
-			newCell.content.GetComponent<BoxCollider2D>().enabled = true;
-
-			go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
-
-			if(OnLetterCreated != null)
-			{
-				OnLetterCreated(tempAbcChar,tempUiChar,false);
-			}
-			tempUiChar.isFromGrid = true;
-		}
-	}
-
-	protected void turnPiecesToBlackLetters(Cell cell)
-	{
-		Transform tempTransform = cell.transform;
-
-		//tempTransform.position = new Vector3 (tempTransform.position.x, tempTransform.position.y, 0);
-		GameObject go = Instantiate (uiLetter)as GameObject;
-
-
-		go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
-
-		Vector3 nVec = new Vector3(cell.transform.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
-			-cell.transform.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
-		
-		go.GetComponent<RectTransform> ().transform.position = tempTransform.position + nVec;
-		cell.content = go;
-
-		ABCChar tempAbcChar = cell.content.GetComponent<ABCChar>();
-
-		UIChar tempUiChar = cell.content.GetComponent<UIChar>();
-
-		cell.content.GetComponent<BoxCollider2D>().enabled = true;
-
-		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
-
-		if(OnLetterCreated != null)
-		{
-			OnLetterCreated(tempAbcChar,tempUiChar,true);
-		}
-		tempUiChar.isFromGrid = true;
-	}
-
-	protected void addBlockToInitialOccupiedCell(Cell cell)
-	{
-		GameObject go = GameObject.Instantiate (singleSquarePiece) as GameObject;
-		SpriteRenderer sprite = go.GetComponent<Piece> ().pieces [0].GetComponent<SpriteRenderer> ();
-
-		Vector3 nVec = new Vector3 (sprite.bounds.size.x * 0.5f,
-			-sprite.bounds.size.x * 0.5f, 0) + cell.transform.position;
-
-		go.transform.position = nVec;
-
-		go.GetComponent<Piece> ().currentType = cell.pieceType;
-
-		//go.transform.position = configureCellUnderAndReturnPosition (go.GetComponent<Piece> ());
-
-		go.GetComponent<BoxCollider2D> ().enabled = false;
-	}
-
 	public void turnPieceToLetterByWinNotification(Cell cell)
 	{
 		cell.destroyCell ();
@@ -537,33 +435,12 @@ public class CellsManager : MonoBehaviour
 	}
 
 	/*
-	 * La funcion busca la celda de la pieza que se le envia y manda a llamar a 
-	 * selectCellOfColor con la celda indicada
-	 * 
-	 * @params cellPiece{GameObject}: El objeto que se busca en las celdas
-	 */
-	public void selectCellsOfColor(GameObject cellPiece)
-	{
-		for(int i = 0;i < cells.Count;i++)
-		{
-			if(cells[i].content != null)
-			{
-				if(cells[i].content.Equals(cellPiece))
-				{
-					selectCellsOfColor(cells[i]);
-					return;
-				}
-			}
-		}
-	}
-
-	/*
 	 * La funcion evalua de que manera es en la que se deben de seleccionar por color las celdas,
 	 * esto en lo que se prueban los PowerUps, existiran seleccion de coplores en vecinos y de colores en toda la grid
 	 * 
 	 * @params cell{Cell}: La celda que se usara como base para tomar su color y buscar las demas
 	 */
-	public void selectCellsOfColor(Cell cell)
+	public void selectCellsOfColor(Cell cell,bool selectNeighbors)
 	{
 		List<Cell> finalList = new List<Cell>();
 		List<Cell> pendingList = new List<Cell>();
@@ -625,16 +502,6 @@ public class CellsManager : MonoBehaviour
 		for(int i = 0;i < selected.Count;i++)
 		{
 			selected[i].destroyCell();
-		}
-
-		selected = new List<Cell>();
-	}
-
-	public void turnSelectedCellsToLetters()
-	{
-		for(int i = 0;i < selected.Count;i++)
-		{
-			turnPieceToLetter(selected[i]);
 		}
 
 		selected = new List<Cell>();

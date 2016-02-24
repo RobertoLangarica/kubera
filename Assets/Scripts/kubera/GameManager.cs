@@ -614,7 +614,6 @@ public class GameManager : MonoBehaviour
 		deactivateCurrentPowerUp();
 
 		destroyByColor = true;
-		cellManager.selectNeighbors = false;
 
 		//inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP).activateDestroyMode(myButtonPosition));
 		//inputGameController.setDestroyByColor (destroyByColor);
@@ -628,7 +627,6 @@ public class GameManager : MonoBehaviour
 		deactivateCurrentPowerUp();
 
 		destroyByColor = true;
-		cellManager.selectNeighbors = true;
 
 		//inputGameController.activePowerUp (powerUpManager.getPowerUp(EPOWERUPS.DESTROY_NEIGHBORS_POWERUP).activateDestroyMode(myButtonPosition));
 		//inputGameController.setDestroyByColor (destroyByColor);

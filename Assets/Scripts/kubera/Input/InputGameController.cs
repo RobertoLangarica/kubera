@@ -203,11 +203,8 @@ public class InputGameController : MonoBehaviour
 									&& tempCell.pieceType != EPieceType.LETTER_OBSTACLE
 									&& OnPowerUpUsed())
 								{	
-									cellManager.selectCellsOfColor(tempCell);
 										
 									DestroyImmediate(piece);
-								
-									cellManager.turnSelectedCellsToLetters();
 								}
 								else
 								{
