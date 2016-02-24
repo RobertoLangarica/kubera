@@ -66,17 +66,19 @@ public class GameManager : MonoBehaviour
 
 	void Awake () 
 	{
-		wordManager = FindObjectOfType<WordManager>();
-		cellManager = FindObjectOfType<CellsManager>();
+		
+
 		powerUpManager = FindObjectOfType<PowerUpManager2> ();
 		pieceManager = FindObjectOfType<PieceManager>();
 		hud = FindObjectOfType<HUD> ();
 
+		cellManager = FindObjectOfType<CellsManager>();
 		cellManager.OnLetterCreated += registerNewLetterCreated;
 
 		inputPiece = FindObjectOfType<InputPiece>();
 		inputPiece.OnDrop += OnPieceDropped;
 
+		wordManager = FindObjectOfType<WordManager>();
 		wordManager.OnSendVector3 += sendVectorToCellManager;
 	}
 
@@ -1180,5 +1182,11 @@ public class GameManager : MonoBehaviour
 		randomizedBlackPoolLeters.RemoveAt (0);
 
 		return letter;
+	}
+
+
+	public void tryToActivatePowerup(int powerupTypeIndex)
+	{
+		
 	}
 }
