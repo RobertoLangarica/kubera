@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
 	protected HUD hud;
 
 	protected InputPiece inputPiece;
+	protected InputWords inputWords;
 
 	protected List<GameObject> XMLPoolPiecesList = new List<GameObject>();
 	protected List<ScriptableABCChar> XMLPoolLetersList = new List<ScriptableABCChar>();
@@ -67,16 +68,21 @@ public class GameManager : MonoBehaviour
 
 	void Awake () 
 	{
-		
+		wordManager = FindObjectOfType<WordManager>();
+		cellManager = FindObjectOfType<CellsManager>();
+		powerUpManager = FindObjectOfType<PowerupManager> ();
 
 		powerUpManager2 = FindObjectOfType<PowerUpManager2> ();
+
 		pieceManager = FindObjectOfType<PieceManager>();
+
 		hud = FindObjectOfType<HUD> ();
+		inputWords = FindObjectOfType<InputWords>();
+		inputPiece = FindObjectOfType<InputPiece>();
 
 		cellManager = FindObjectOfType<CellsManager>();
 		cellManager.OnLetterCreated += registerNewLetterCreated;
 
-		inputPiece = FindObjectOfType<InputPiece>();
 		inputPiece.OnDrop += OnPieceDropped;
 
 		wordManager = FindObjectOfType<WordManager>();
@@ -85,6 +91,8 @@ public class GameManager : MonoBehaviour
 		powerupManager = FindObjectOfType<PowerupManager>();
 		powerupManager.OnPowerupCanceled = OnPowerupCanceled;
 		powerupManager.OnPowerupCompleted = OnPowerupCompleted;
+
+		pieceManager.OnShowMoney += activeMoney;
 	}
 
 	void Start()
@@ -110,6 +118,7 @@ public class GameManager : MonoBehaviour
 		hud.setSecondChanceLock (false);
 
 		powerUpManager2.activateAvailablePowers();
+
 		checkIfNeedToUnlockPowerUp();
 
 
@@ -1202,7 +1211,6 @@ public class GameManager : MonoBehaviour
 
 		return letter;
 	}
-
 
 	public void tryToActivatePowerup(int powerupTypeIndex)
 	{
