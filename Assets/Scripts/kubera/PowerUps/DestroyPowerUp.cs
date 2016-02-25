@@ -2,7 +2,7 @@
 using System.Collections;
 using DG.Tweening;
 
-public class BombPowerUp : PowerupBase 
+public class DestroyPowerUp : PowerupBase 
 {
 	public GameObject powerUpBlock;
 	public Transform powerUpButton;
@@ -10,7 +10,7 @@ public class BombPowerUp : PowerupBase
 	protected CellsManager cellsManager;
 	protected InputBombAndDestroy bombInput;
 
-	protected GameObject bombGO;
+	protected GameObject destroyGO;
 
 	void Start () 
 	{
@@ -20,18 +20,18 @@ public class BombPowerUp : PowerupBase
 
 	public override void activate()
 	{
-		bombGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
-		bombGO.name = "BombPowerUp";
-		bombGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
+		destroyGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
+		destroyGO.name = "DestroyPowerUp";
+		destroyGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
 
 		bombInput.enabled = true;
-		bombInput.setCurrentSelected(bombGO);
+		bombInput.setCurrentSelected(destroyGO);
 		bombInput.OnDrop += powerUPPositionated;
 	}
 
 	public void powerUPPositionated()
 	{
-		Cell cellSelected = cellsManager.getCellUnderPoint(bombGO.transform.position);
+		Cell cellSelected = cellsManager.getCellUnderPoint(destroyGO.transform.position);
 
 		if(cellSelected != null)
 		{
@@ -39,11 +39,11 @@ public class BombPowerUp : PowerupBase
 				&& cellSelected.pieceType != EPieceType.LETTER_OBSTACLE
 				&& cellSelected.occupied)
 			{
-				cellsManager.selectCellsOfColor(cellSelected,true);
+				cellsManager.selectCellsOfColor(cellSelected,false);
 
 				cellsManager.destroySelectedCells();
 
-				DestroyImmediate(bombGO);
+				DestroyImmediate(destroyGO);
 				bombInput.OnDrop -= powerUPPositionated;
 			}
 			else 
@@ -59,11 +59,11 @@ public class BombPowerUp : PowerupBase
 
 	public void powerUPCanceled()
 	{
-		bombGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("BombPowerUP_Move");
-		bombGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("BombPowerUP_Scale");
+		destroyGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("DestroyPowerUP_Move");
+		destroyGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("DestroyPowerUP_Scale");
 
 		bombInput.OnDrop -= powerUPPositionated;
-		
+
 		OnCancel();
 	}
 }

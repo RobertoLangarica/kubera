@@ -16,6 +16,11 @@ public class InputBombAndDestroy : MonoBehaviour
 
 	public float pieceSpeed = 0.3f;
 
+	void Start()
+	{
+		enabled = false;
+	}
+
 	void OnDrag(DragGesture gesture) 
 	{
 		//Solo se ejecuta una vez por frame (multifinger puede llamarlo mas de una vez)
@@ -62,15 +67,42 @@ public class InputBombAndDestroy : MonoBehaviour
 					{
 						OnDrop();	
 					}
+					reset();
 				}
 			}
 			break;
 		}
 	}
 
+	void OnFingerUp()
+	{
+		if(!somethingDragged && currentSelected != null)
+		{
+			if(OnDrop != null)
+			{
+				OnDrop();	
+			}
+
+			reset();
+		}
+
+		somethingDragged = false;
+	}
+
 	public void moveTo(GameObject target, Vector3 to, float delay = 0.1f)
 	{
 		DOTween.Kill("InputBombDestroy_Dragging",false);
 		target.transform.DOMove (to, delay).SetId("InputBombDestroy_Dragging");
+	}
+
+	public void reset()
+	{
+		currentSelected = null;
+		somethingDragged = false;
+	}
+
+	public void setCurrentSelected(GameObject selected)
+	{
+		currentSelected = selected;
 	}
 }
