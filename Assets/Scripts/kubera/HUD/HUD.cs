@@ -24,9 +24,11 @@ public class HUD : MonoBehaviour {
 	public GameObject uiLetter;
 
 	protected float[] scoreToStar;
+	protected ScoreTextPool scorePool;
 
-	void Start () {
-	
+	void Start () 
+	{
+		scorePool = FindObjectOfType<ScoreTextPool>();
 	}
 
 	/**
@@ -180,6 +182,7 @@ public class HUD : MonoBehaviour {
 		}
 	}
 
+<<<<<<< HEAD:Assets/Scripts/kubera/HUD.cs
 	public void activateSettings()
 	{
 		if (points.IsActive ()) 
@@ -202,3 +205,19 @@ public class HUD : MonoBehaviour {
 		}
 	}
 }
+=======
+	public void showScoreTextAt(Vector3 scorePosition,int score)
+	{
+		Vector3 finish = scorePosition;
+		Text poolText = scorePool.getFreeText();
+		ScoreText bText = poolText.gameObject.GetComponent<ScoreText>();
+
+		poolText.text = score.ToString();
+
+		scorePosition.z = 0;
+		finish.y += 2;//poolText.rectTransform.rect.height;
+		//Se inicia la animacion del texto
+		bText.startAnim(scorePosition,finish);
+	}
+}
+>>>>>>> 1301ceb0c623b98ca9d57d260262aba5ad3a7672:Assets/Scripts/kubera/HUD/HUD.cs
