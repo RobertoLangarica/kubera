@@ -6,6 +6,12 @@ using System.Collections.Generic;
 public class HUD : MonoBehaviour {
 
 	public Text points;
+	public Text scoreText;
+
+	public Button Music;
+	public Button Exit;
+	public Button Sounds;
+
 	public Text movementsText;
 	public Text gemsText;
 	public Text levelText;
@@ -171,6 +177,28 @@ public class HUD : MonoBehaviour {
 
 		default:
 			break;
+		}
+	}
+
+	public void activateSettings()
+	{
+		if (points.IsActive ()) 
+		{
+			points.enabled = false;
+			scoreText.enabled = false;
+			//Activar los otros botones
+			Music.gameObject.SetActive(true);
+			Exit.gameObject.SetActive(true);
+			Sounds.gameObject.SetActive(true);
+		}
+		else 
+		{
+			scoreText.enabled = true;
+			points.enabled = true;
+			//Desactivar los otros botones
+			Music.gameObject.SetActive(false);
+			Exit.gameObject.SetActive (false);
+			Sounds.gameObject.SetActive(false);
 		}
 	}
 }

@@ -184,7 +184,10 @@ public class GameManager : MonoBehaviour
 		tempCell = cellManager.getCellsUnderPiece (piece);
 		//damos puntos por las piezas en la pieza
 
-		piecePositionatedCorrectly (piece.pieces.Length);
+		if (!piece.powerUp) 
+		{
+			piecePositionatedCorrectly (piece.pieces.Length);
+		}
 
 		for(int i=0; i< tempCell.Count; i++)
 		{ 
@@ -1226,5 +1229,24 @@ public class GameManager : MonoBehaviour
 	{
 		//[TODO] consumimos gemas
 		allowGameInput(true);
+	}
+
+	public void activateSettings()
+	{
+		hud.activateSettings ();
+	}
+
+	//TODO
+	public void activateMusic()
+	{
+	}
+
+	public void activateSounds()
+	{
+	}
+
+	public void exit()
+	{
+		
 	}
 }
