@@ -69,7 +69,7 @@ public class RotatePowerUp : PowerupBase
 					posOverFinger.z = selectedInitialPosition.z;
 					posOverFinger += offsetPositionOverFinger;
 					moveTo(currentSelected,posOverFinger,pieceSpeed);
-					currentSelected.transform.DOScale(selectedScale,.1f).SetId("Input_SelectedScale");
+					currentSelected.transform.DOScale(selectedScale,.1f).SetId("InputRotate_SelectedScale");
 				}
 			}	
 			break;
@@ -93,7 +93,6 @@ public class RotatePowerUp : PowerupBase
 					if (gameManager.dropPieceOnGrid (currentSelected.GetComponent<Piece> ())) 
 					{
 						pieceManager.setRotationPiecesAsNormalRotation ();
-						print ("S");
 						completePowerUp ();
 					}
 					else
@@ -102,7 +101,7 @@ public class RotatePowerUp : PowerupBase
 						reset();
 					}
 
-					DOTween.Kill("Input_Dragging",false);
+					DOTween.Kill("InputRotate_Dragging",false);
 				}
 			}
 			break;
@@ -115,8 +114,8 @@ public class RotatePowerUp : PowerupBase
 		{
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
 
-			DOTween.Kill ("Input_InitialPosition", true);
-			DOTween.Kill ("Input_ScalePosition", true);
+			DOTween.Kill ("InputRotate_InitialPosition", true);
+			DOTween.Kill ("InputRotate_ScalePosition", true);
 
 			selectedInitialPosition = currentSelected.transform.position;
 			selectedInitialScale = currentSelected.transform.localScale;
@@ -129,7 +128,6 @@ public class RotatePowerUp : PowerupBase
 		}
 		else if(!allowInput)
 		{
-			print ("entering");
 			allowInputDuringRotate = false;
 		}
 	}
@@ -144,7 +142,6 @@ public class RotatePowerUp : PowerupBase
 		}
 		else if(!somethingDragged && allowInputDuringRotate)
 		{
-			print ("ended");
 			completePowerUp ();
 		}
 		allowInputDuringRotate = true;
@@ -154,8 +151,8 @@ public class RotatePowerUp : PowerupBase
 
 	public void returnSelectedToInitialState(float delay = 0)
 	{
-		DOTween.Kill("Input_SelectedPosition",true);
-		DOTween.Kill("Input_SelectedScale",true);
+		DOTween.Kill("InputRotate_SelectedPosition",true);
+		DOTween.Kill("InputRotate_SelectedScale",true);
 
 		if(delay == 0)
 		{
@@ -167,8 +164,8 @@ public class RotatePowerUp : PowerupBase
 		}
 		else
 		{
-			currentSelected.transform.DOMove (selectedInitialPosition, .1f).SetId("Input_InitialPosition");
-			currentSelected.transform.DOScale (selectedInitialScale, .1f).SetId("Input_ScalePosition");
+			currentSelected.transform.DOMove (selectedInitialPosition, .1f).SetId("InputRotate_InitialPosition");
+			currentSelected.transform.DOScale (selectedInitialScale, .1f).SetId("InputRotate_ScalePosition");
 		}
 	}
 
@@ -180,8 +177,8 @@ public class RotatePowerUp : PowerupBase
 
 	public void moveTo(GameObject target, Vector3 to, float delay = 0.1f)
 	{
-		DOTween.Kill("Input_Dragging",false);
-		target.transform.DOMove (to, delay).SetId("Input_Dragging");
+		DOTween.Kill("InputRotate_Dragging",false);
+		target.transform.DOMove (to, delay).SetId("InputRotate_Dragging");
 	}
 
 	protected void isRotating(bool isRotating)
@@ -191,7 +188,7 @@ public class RotatePowerUp : PowerupBase
 
 	protected void completePowerUp()
 	{
-		DOTween.Kill ("Input_Dragging");
+		DOTween.Kill ("InputRotate_Dragging");
 		pieceManager.activateRotation (false);
 		this.gameObject.SetActive( false);
 

@@ -178,12 +178,10 @@ public class PieceManager : MonoBehaviour {
 	//checamos si una pieza esta rotada
 	public bool checkIfExistRotatedPiezes()
 	{
-		bool OneWasRotated = false;
 		for (int i = 0; i < piecesStock.childCount; i++) 
 		{
 			if (piecesStock.GetChild (i).GetComponent<Piece> ().howManyHasBeenRotated != 0) 
 			{	
-				OneWasRotated =  true;
 				return true;
 			}
 		}
