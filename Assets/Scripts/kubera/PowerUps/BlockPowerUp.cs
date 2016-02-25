@@ -15,23 +15,25 @@ public class BlockPowerUp : PowerupBase
 		inputBlockPowerUp.OnPowerupCanceled += cancelPowerUp;
 		inputBlockPowerUp.OnPowerupCompleted += completePowerUp;
 
-		this.gameObject.SetActive( false);
+		inputBlockPowerUp.enabled = false;
 	}
 
 	public override void activate ()
 	{
-		this.gameObject.SetActive( true);
+		inputBlockPowerUp.enabled = true;
 
 		inputBlockPowerUp.createBlock (powerUpBlock,buttonPowerUpBlock.position);
 	}
 
 	protected void completePowerUp()
 	{
+		inputBlockPowerUp.enabled = false;
 		OnComplete ();
 	}
 
 	protected void cancelPowerUp()
 	{
+		inputBlockPowerUp.enabled = false;
 		OnCancel ();
 	}
 }

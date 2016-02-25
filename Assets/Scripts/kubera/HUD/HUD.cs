@@ -182,7 +182,6 @@ public class HUD : MonoBehaviour {
 		}
 	}
 
-<<<<<<< HEAD:Assets/Scripts/kubera/HUD.cs
 	public void activateSettings()
 	{
 		if (points.IsActive ()) 
@@ -204,8 +203,7 @@ public class HUD : MonoBehaviour {
 			Sounds.gameObject.SetActive(false);
 		}
 	}
-}
-=======
+
 	public void showScoreTextAt(Vector3 scorePosition,int score)
 	{
 		Vector3 finish = scorePosition;
@@ -220,4 +218,3 @@ public class HUD : MonoBehaviour {
 		bText.startAnim(scorePosition,finish);
 	}
 }
->>>>>>> 1301ceb0c623b98ca9d57d260262aba5ad3a7672:Assets/Scripts/kubera/HUD/HUD.cs

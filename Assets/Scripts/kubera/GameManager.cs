@@ -159,7 +159,6 @@ public class GameManager : MonoBehaviour
 			return false;
 		}
 
-		pieceManager.checkPiecesToPosisionate (piece.gameObject);
 		putPiecesOnGrid (piece);
 		checkAndCompleteLines ();
 
@@ -174,6 +173,7 @@ public class GameManager : MonoBehaviour
 
 		if (!piece.powerUp) 
 		{
+			pieceManager.checkPiecesToPosisionate (piece.gameObject);
 			piecePositionatedCorrectly (piece.pieces.Length);
 			hud.showScoreTextAt(piece.transform.position,piece.pieces.Length);
 		}
