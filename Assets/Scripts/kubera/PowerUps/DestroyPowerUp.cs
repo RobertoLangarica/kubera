@@ -39,9 +39,9 @@ public class DestroyPowerUp : PowerupBase
 				&& cellSelected.pieceType != EPieceType.LETTER_OBSTACLE
 				&& cellSelected.occupied)
 			{
-				cellsManager.selectCellsOfColor(cellSelected,false);
+				Cell[] selection = cellsManager.getCellsOfSameType(cellSelected);
 
-				cellsManager.destroySelectedCells();
+				cellsManager.destroyCells(selection);
 
 				DestroyImmediate(destroyGO);
 				bombInput.OnDrop -= powerUPPositionated;

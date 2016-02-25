@@ -18,9 +18,11 @@ public class HUD : MonoBehaviour {
 	public GameObject uiLetter;
 
 	protected float[] scoreToStar;
+	protected ScoreTextPool scorePool;
 
-	void Start () {
-	
+	void Start () 
+	{
+		scorePool = FindObjectOfType<ScoreTextPool>();
 	}
 
 	/**
@@ -172,5 +174,19 @@ public class HUD : MonoBehaviour {
 		default:
 			break;
 		}
+	}
+
+	public void showScoreTextAt(Vector3 scorePosition,int score)
+	{
+		Vector3 finish = scorePosition;
+		Text poolText = scorePool.getFreeText();
+		ScoreText bText = poolText.gameObject.GetComponent<ScoreText>();
+
+		poolText.text = score.ToString();
+
+		scorePosition.z = 0;
+		finish.y += 2;//poolText.rectTransform.rect.height;
+		//Se inicia la animacion del texto
+		bText.startAnim(scorePosition,finish);
 	}
 }
