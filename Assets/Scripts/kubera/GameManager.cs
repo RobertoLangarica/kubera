@@ -83,7 +83,6 @@ public class GameManager : MonoBehaviour
 		powerupManager.OnPowerupCompleted = OnPowerupCompleted;
 
 		pieceManager = FindObjectOfType<PieceManager>();
-		pieceManager.OnShowMoney += activeMoney;
 	}
 
 	void Start()
@@ -100,6 +99,9 @@ public class GameManager : MonoBehaviour
 
 		fillLettersPoolList ();
 		fillPiecesPoolList ();
+
+		pieceManager.initializeShowingPieces ();
+
 
 		cellToLetter = new List<Cell> ();
 
@@ -180,7 +182,7 @@ public class GameManager : MonoBehaviour
 
 		if (!piece.powerUp) 
 		{
-			pieceManager.checkPiecesToPosisionate (piece.gameObject);
+			pieceManager.removeFromListPieceUsed (piece.gameObject);
 			piecePositionatedCorrectly (piece.pieces.Length);
 			hud.showScoreTextAt(piece.transform.position,piece.pieces.Length);
 		}
@@ -195,6 +197,11 @@ public class GameManager : MonoBehaviour
 			piece.pieces [i].transform.DOMove (cellPosition, 0.5f);
 		}
 		piece.activeCollider (false);
+
+		if (pieceManager.getShowingPieceList ().Count == 0) 
+		{
+			pieceManager.initializeShowingPieces();
+		}
 	}
 
 	private void checkAndCompleteLines()
@@ -641,7 +648,7 @@ public class GameManager : MonoBehaviour
 
 	public void checkToLoose()
 	{
-		if(!cellManager.checkIfOneCanFit(pieceManager.piecesInBar) || remainingMoves == 0)
+		if(!cellManager.checkIfOneCanFit(pieceManager.showingPieces) || remainingMoves == 0)
 		{
 			Debug.Log ("Perdio");
 			while(true)
@@ -961,7 +968,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		pieceManager.setPiecesPoolList (XMLPoolPiecesList);
+		pieceManager.setPiecesInList (XMLPoolPiecesList);
 	}
 
 	protected void fillLettersPoolList()

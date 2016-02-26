@@ -45,6 +45,7 @@ public class BombPowerUp : PowerupBase
 
 				DestroyImmediate(bombGO);
 				bombInput.OnDrop -= powerUPPositionated;
+				bombInput.enabled = false;
 			}
 			else 
 			{
@@ -63,7 +64,8 @@ public class BombPowerUp : PowerupBase
 		bombGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("BombPowerUP_Scale");
 
 		bombInput.OnDrop -= powerUPPositionated;
-		
+		bombInput.enabled = false;
+
 		OnCancel();
 	}
 }

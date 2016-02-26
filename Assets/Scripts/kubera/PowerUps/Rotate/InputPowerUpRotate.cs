@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
 
@@ -6,6 +7,8 @@ public class InputPowerUpRotate : MonoBehaviour
 {
 	protected PieceManager pieceManager;
 	protected GameManager gameManager;
+	protected HUD hud;
+
 	public Vector3 offsetPositionOverFinger = new Vector3(0,1.5f,0);
 	public Vector3 selectedScale = new Vector3 (4.5f, 4.5f, 4.5f);
 	public bool allowInput = true;
@@ -24,7 +27,9 @@ public class InputPowerUpRotate : MonoBehaviour
 	protected bool somethingDragged = false;
 	protected int lastTimeDraggedFrame;
 	protected GameObject currentSelected = null;
-	protected Vector3 selectedInitialScale   = new Vector3(2.5f,2.5f,2.5f);
+
+	public Vector3 selectedInitialScale   = new Vector3(2.5f,2.5f,2.5f);
+
 	protected Vector3 selectedInitialPosition;
 
 	public float pieceSpeed = 0.3f;
@@ -35,12 +40,16 @@ public class InputPowerUpRotate : MonoBehaviour
 	{
 		pieceManager = FindObjectOfType<PieceManager> ();
 		gameManager = FindObjectOfType<GameManager> ();
-		pieceManager.OnRotate += isRotating;
+		hud = FindObjectOfType<HUD> ();
 	}
 
 	public void startRotate()
 	{
-		pieceManager.activateRotation (true);
+		pieceManager = FindObjectOfType<PieceManager> ();
+		gameManager = FindObjectOfType<GameManager> ();
+		hud = FindObjectOfType<HUD> ();
+
+		activateRotation (true);
 	}
 
 	void OnDrag(DragGesture gesture) 
@@ -96,13 +105,13 @@ public class InputPowerUpRotate : MonoBehaviour
 					if (gameManager.dropPieceOnGrid (currentSelected.GetComponent<Piece> ())) 
 					{
 						reset();
-						pieceManager.setRotationPiecesAsNormalRotation ();
-						completePowerUp ();
+						setRotationPiecesAsNormalRotation ();
+						completePowerUp (true);
 					}
 					else
 					{
-						reset();
 						returnSelectedToInitialState();
+						reset();
 					}
 
 					DOTween.Kill("InputRotate_Dragging",false);
@@ -114,7 +123,6 @@ public class InputPowerUpRotate : MonoBehaviour
 
 	void OnFingerDown(FingerDownEvent  gesture)
 	{
-		print (allowInput);
 		if (allowInput && gesture.Raycast.Hits2D != null) 
 		{
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
@@ -142,13 +150,13 @@ public class InputPowerUpRotate : MonoBehaviour
 	{
 		if(!somethingDragged && currentSelected != null)
 		{				
-			pieceManager.setRotatePiece (currentSelected);
+			setRotatePiece (currentSelected);
 			reset ();
 			//returnSelectedToInitialState (0.1f);
 		}
 		else if(!somethingDragged && allowInputDuringRotate)
 		{
-			completePowerUp (true);
+			//completePowerUp (true);
 		}
 		allowInputDuringRotate = true;
 
@@ -162,9 +170,6 @@ public class InputPowerUpRotate : MonoBehaviour
 
 		if(delay == 0)
 		{
-			print (selectedInitialPosition);
-			print (selectedInitialScale);
-
 			currentSelected.transform.position = selectedInitialPosition;
 			currentSelected.transform.localScale = selectedInitialScale;
 		}
@@ -196,21 +201,114 @@ public class InputPowerUpRotate : MonoBehaviour
 	{
 		DOTween.Kill ("InputRotate_Dragging");
 
-		pieceManager.activateRotation (false);
+		activateRotation (false);
 
-		if (cancel) 
+	}
+
+	public void setRotatePiece(GameObject go)
+	{
+		if (go.GetComponent<Piece> ()) 
 		{
-			OnPowerupRotateCanceled ();
+			setRotatePiece(go.GetComponent<Piece>());
+		}
+	}
+
+	//Se cambian las piezas por las rotadas
+	public void setRotatePiece(Piece piece)
+	{	
+		if (!allowInput)
+		{
 			return;
 		}
-			
-		if (pieceManager.checkIfExistRotatedPiezes ()) 
+	
+
+		if (piece.rotateTimes > 0) {
+			isRotating (true);
+
+			//CHANGE: Los nombres deben ser lo mas claros y simples posibles, para contar las rotaciones pudo ser un rotateCount
+			piece.howManyHasBeenRotated += 1;
+
+			piece.gameObject.transform.DOScale (new Vector3 (0, 0), 0.25f).OnComplete (() => {
+
+				piece.transform.localRotation = Quaternion.Euler(new Vector3(0,0,piece.transform.rotation.eulerAngles.z+90));
+
+				piece.transform.DOScale (selectedInitialScale, 0.25f).OnComplete (() => {
+					isRotating(false);
+				});
+			});
+
+			if (piece.howManyHasBeenRotated > piece.rotateTimes) {
+				piece.howManyHasBeenRotated = 0;
+			}
+		}
+	}
+
+	//regresamos la rotacion inicial si no se concreto la rotacion
+	public void returnRotatePiecesToNormalRotation()
+	{
+		if (!allowInput)
 		{
-			OnPowerupRotateCompleted ();
+			return;
+		}
+
+		for (int i = 0; i < pieceManager.showingPieces.Count; i++) 
+		{
+			if (pieceManager.showingPieces[i].howManyHasBeenRotated != 0) 
+			{				
+				int temp = pieceManager.showingPieces[i].howManyHasBeenRotated;
+				pieceManager.showingPieces [i].howManyHasBeenRotated = 0;
+				pieceManager.showingPieces [i].transform.DOScale (new Vector3 (0.1f, 0.1f), 0.25f);
+				StartCoroutine(pos(i,temp));
+			}
+		}
+	}
+
+	IEnumerator pos(int i,int rotateTimes)
+	{
+		yield return new WaitForSeconds (0.25f);
+		print ("S");
+		pieceManager.showingPieces [i].transform.localRotation = Quaternion.Euler(new Vector3(0,0,pieceManager.showingPieces [i].transform.rotation.eulerAngles.z-(90 * rotateTimes)));
+		pieceManager.showingPieces [i].transform.DOScale (selectedInitialScale, 0.25f);
+	}
+
+	public bool setRotationPiecesAsNormalRotation()
+	{
+		bool OneWasRotated = false;
+		for (int i = 0; i < hud.showingPiecesContainer.childCount; i++) 
+		{
+			if (hud.showingPiecesContainer.GetChild (i).GetComponent<Piece> ().howManyHasBeenRotated != 0) 
+			{
+				hud.showingPiecesContainer.GetChild (i).GetComponent<Piece> ().howManyHasBeenRotated = 0;
+				OneWasRotated = true;
+			}
+		}
+		return OneWasRotated;
+	}
+
+	public void activateRotation(bool activate)
+	{
+		if(activate)
+		{
+			for (int i = 0; i < pieceManager.showingPieces.Count; i++) 
+			{
+				hud.activateTransformImage(true,i);
+			}
 		}
 		else
 		{
-			OnPowerupRotateCanceled ();
+			for (int i = 0; i < hud.rotationImagePositions.Length; i++) 
+			{
+				if (selectedInitialPosition.y == hud.rotationImagePositions [i].position.y) 
+				{
+					hud.activateTransformImage (false, i);
+				}
+			}
+				
+			//TODO: saber cuando se utilizan las piezas y se queda sin nada
+			if (pieceManager.getShowingPieceList ().Count == 3) 
+			{
+				OnPowerupRotateCompleted ();
+			}
 		}
 	}
 

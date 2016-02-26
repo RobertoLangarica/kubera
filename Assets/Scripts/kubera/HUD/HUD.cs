@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class HUD : MonoBehaviour {
 
@@ -19,9 +20,15 @@ public class HUD : MonoBehaviour {
 	public Image[] Stars;
 	public Text winConditionText;
 
+	public Transform[] rotationImagePositions;
+	public Transform showingPiecesContainer;
+
 	public GameObject GemsChargeGO;
 	public GameObject secondChanceLock;
 	public GameObject uiLetter;
+
+	//DONE: Hardcoding
+	public Vector3 initialPieceScale = new Vector3(2.5f,2.5f,2.5f);
 
 	protected float[] scoreToStar;
 	protected ScoreTextPool scorePool;
@@ -213,5 +220,33 @@ public class HUD : MonoBehaviour {
 		finish.y += 2;//poolText.rectTransform.rect.height;
 		//Se inicia la animacion del texto
 		bText.startAnim(scorePosition,finish);
+	}
+
+	public void activateTransformImage(bool activate,int activePos)
+	{
+		if (activate) 
+		{
+			rotationImagePositions [activePos].GetComponent<Image> ().enabled = true;
+		}
+		else 
+		{
+			rotationImagePositions [activePos].GetComponent<Image> ().enabled = false;
+		}
+	}
+
+	public void showPieces(List<Piece> pieces)
+	{
+		for (int i = 0; i < pieces.Count; i++) 
+		{
+			Piece go = Instantiate (pieces [0]);
+			go.name = pieces[0].name;
+
+			pieces.RemoveAt(0);
+
+			go.transform.position= new Vector3(rotationImagePositions [i].position.x,rotationImagePositions [i].position.y,1);
+			go.transform.localScale = new Vector3 (0, 0, 0);
+			go.transform.DOScale(initialPieceScale, 0.25f);
+			go.transform.SetParent (showingPiecesContainer);
+		}
 	}
 }
