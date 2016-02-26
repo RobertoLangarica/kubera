@@ -107,9 +107,4 @@ public class Piece : MonoBehaviour
 			updateColorBasedOnType();
 		}
 	}
-
-	public void activeCollider(bool activate)
-	{
-		GetComponent<BoxCollider2D> ().enabled = activate;
-	}
 }

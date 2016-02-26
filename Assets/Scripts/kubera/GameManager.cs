@@ -114,6 +114,11 @@ public class GameManager : MonoBehaviour
 		hud.setLevelName (currentLevel.name);
 		hud.setSecondChanceLock (false);
 
+		//Se muestra el objetivo al inicio del nivel
+		hud.showObjectivePopUp(myWinCondition[0],myWinCondition[1]);
+		hud.OnObjectivePopUpClose += allowGameInput;
+		allowGameInput(false);
+
 		checkIfNeedToUnlockPowerUp();
 
 		float[] scoreToStar = new float[3];
@@ -192,9 +197,15 @@ public class GameManager : MonoBehaviour
 
 			cellManager.occupyAndConfigureCell (tempCell [i], piece.pieces [i], piece.currentType);
 
-			piece.pieces [i].transform.DOMove (cellPosition, 0.5f);
+			tempCell[i].content.transform.DOMove (cellPosition, 0.5f);
 		}
-		piece.activeCollider (false);
+
+		for(int i = 0;i < piece.pieces.Length;i++)
+		{
+			piece.pieces[i].transform.SetParent(piece.transform.parent);
+		}
+
+		Destroy(piece.gameObject);
 	}
 
 	private void checkAndCompleteLines()
@@ -817,9 +828,10 @@ public class GameManager : MonoBehaviour
 		addPoints(amount,false);
 	}
 
-	protected void allowGameInput(bool allowInput)
+	protected void allowGameInput(bool allowInput = true)
 	{
 		inputPiece.allowInput = allowInput;
+		inputWords.allowInput = allowInput;
 	}
 
 	protected void bombsForWinBonification()
