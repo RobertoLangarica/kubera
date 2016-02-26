@@ -4,8 +4,8 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class HUD : MonoBehaviour {
-
+public class HUD : MonoBehaviour 
+{
 	public Text points;
 	public Text scoreText;
 
@@ -27,8 +27,14 @@ public class HUD : MonoBehaviour {
 	public GameObject secondChanceLock;
 	public GameObject uiLetter;
 
+
 	//DONE: Hardcoding
 	public Vector3 initialPieceScale = new Vector3(2.5f,2.5f,2.5f);
+
+	public GameObject objectivePopUp;
+
+	public delegate void DPopUpNotification();
+	public DPopUpNotification OnObjectivePopUpClose;
 
 	protected float[] scoreToStar;
 	protected ScoreTextPool scorePool;
@@ -217,11 +223,12 @@ public class HUD : MonoBehaviour {
 		poolText.text = score.ToString();
 
 		scorePosition.z = 0;
-		finish.y += 2;//poolText.rectTransform.rect.height;
+		finish.y += 2;// HACK: poolText.rectTransform.rect.height;
+
 		//Se inicia la animacion del texto
 		bText.startAnim(scorePosition,finish);
 	}
-
+		
 	public void activateTransformImage(bool activate,int activePos)
 	{
 		if (activate) 
@@ -247,6 +254,27 @@ public class HUD : MonoBehaviour {
 			go.transform.localScale = new Vector3 (0, 0, 0);
 			go.transform.DOScale(initialPieceScale, 0.25f);
 			go.transform.SetParent (showingPiecesContainer);
+		}
+	}
+
+	public void showObjectivePopUp(string objectiveType,string objective)
+	{
+		Text objectiveTypeText = objectivePopUp.transform.FindChild("Type").GetComponent<Text>();
+		Text objectiveText = objectivePopUp.transform.FindChild("Objective").GetComponent<Text>();
+
+		objectiveTypeText.text = objectiveType;
+		objectiveText.text = objective;
+
+		objectivePopUp.SetActive(true);
+	}
+
+	public void hideObjectivePopUp()
+	{
+		objectivePopUp.SetActive(false);
+
+		if(OnObjectivePopUpClose != null)
+		{
+			OnObjectivePopUpClose();
 		}
 	}
 }
