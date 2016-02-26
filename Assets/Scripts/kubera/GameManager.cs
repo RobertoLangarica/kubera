@@ -166,7 +166,6 @@ public class GameManager : MonoBehaviour
 			return false;
 		}
 
-		pieceManager.checkPiecesToPosisionate (piece.gameObject);
 		putPiecesOnGrid (piece);
 		checkAndCompleteLines ();
 
@@ -179,7 +178,12 @@ public class GameManager : MonoBehaviour
 		tempCell = cellManager.getCellsUnderPiece (piece);
 		//damos puntos por las piezas en la pieza
 
-		piecePositionatedCorrectly (piece.pieces.Length);
+		if (!piece.powerUp) 
+		{
+			pieceManager.checkPiecesToPosisionate (piece.gameObject);
+			piecePositionatedCorrectly (piece.pieces.Length);
+			hud.showScoreTextAt(piece.transform.position,piece.pieces.Length);
+		}
 
 		for(int i=0; i< tempCell.Count; i++)
 		{ 
@@ -711,7 +715,7 @@ public class GameManager : MonoBehaviour
 		}
 		else 
 		{
-			cellToLetter.AddRange (cellManager.searchCellsOfSameColor (cellManager.colorOfMoreQuantity ()));
+			cellToLetter.AddRange (cellManager.getCellsOfSameType (cellManager.colorOfMoreQuantity ()));
 			winBombs--;
 			StartCoroutine (addWinLetterAfterBlockMore ());
 		}
@@ -745,8 +749,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(winBombs > 0 && cellManager.colorOfMoreQuantity() != EPieceType.NONE)
 		{
-			cellToLetter = new List<Cell>();
-			cellToLetter = cellManager.searchCellsOfSameColor(cellManager.colorOfMoreQuantity());
+			cellToLetter = new List<Cell>(cellManager.getCellsOfSameType(cellManager.colorOfMoreQuantity()));
 			winBombs--;
 			StartCoroutine (addWinLetterAfterBlockMore ());
 		}
@@ -759,8 +762,8 @@ public class GameManager : MonoBehaviour
 	protected void destroyAndCountAllLetters()
 	{
 		cellToLetter = new List<Cell>();
-		cellToLetter.AddRange (cellManager.searchCellsOfSameColor (EPieceType.LETTER));
-		cellToLetter.AddRange (cellManager.searchCellsOfSameColor (EPieceType.LETTER_OBSTACLE));
+		cellToLetter.AddRange (cellManager.getCellsOfSameType (EPieceType.LETTER));
+		cellToLetter.AddRange (cellManager.getCellsOfSameType (EPieceType.LETTER_OBSTACLE));
 		winPoints ();
 		StartCoroutine (destroyLetter ());
 	}
@@ -1085,5 +1088,24 @@ public class GameManager : MonoBehaviour
 	{
 		//TODO: consumimos gemas
 		allowGameInput(true);
+	}
+
+	public void activateSettings()
+	{
+		hud.activateSettings ();
+	}
+
+	//TODO
+	public void activateMusic()
+	{
+	}
+
+	public void activateSounds()
+	{
+	}
+
+	public void exit()
+	{
+		
 	}
 }

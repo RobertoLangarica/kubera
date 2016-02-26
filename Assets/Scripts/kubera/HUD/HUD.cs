@@ -6,6 +6,12 @@ using System.Collections.Generic;
 public class HUD : MonoBehaviour {
 
 	public Text points;
+	public Text scoreText;
+
+	public Button Music;
+	public Button Exit;
+	public Button Sounds;
+
 	public Text movementsText;
 	public Text gemsText;
 	public Text levelText;
@@ -18,9 +24,11 @@ public class HUD : MonoBehaviour {
 	public GameObject uiLetter;
 
 	protected float[] scoreToStar;
+	protected ScoreTextPool scorePool;
 
-	void Start () {
-	
+	void Start () 
+	{
+		scorePool = FindObjectOfType<ScoreTextPool>();
 	}
 
 	/**
@@ -169,5 +177,41 @@ public class HUD : MonoBehaviour {
 		default:
 			break;
 		}
+	}
+
+	public void activateSettings()
+	{
+		if (points.IsActive ()) 
+		{
+			points.enabled = false;
+			scoreText.enabled = false;
+			//Activar los otros botones
+			Music.gameObject.SetActive(true);
+			Exit.gameObject.SetActive(true);
+			Sounds.gameObject.SetActive(true);
+		}
+		else 
+		{
+			scoreText.enabled = true;
+			points.enabled = true;
+			//Desactivar los otros botones
+			Music.gameObject.SetActive(false);
+			Exit.gameObject.SetActive (false);
+			Sounds.gameObject.SetActive(false);
+		}
+	}
+
+	public void showScoreTextAt(Vector3 scorePosition,int score)
+	{
+		Vector3 finish = scorePosition;
+		Text poolText = scorePool.getFreeText();
+		ScoreText bText = poolText.gameObject.GetComponent<ScoreText>();
+
+		poolText.text = score.ToString();
+
+		scorePosition.z = 0;
+		finish.y += 2;//poolText.rectTransform.rect.height;
+		//Se inicia la animacion del texto
+		bText.startAnim(scorePosition,finish);
 	}
 }

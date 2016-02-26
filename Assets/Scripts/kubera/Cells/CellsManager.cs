@@ -16,16 +16,8 @@ public class CellsManager : MonoBehaviour
 	[HideInInspector]public int columns = 0;
 	[HideInInspector]public int rows = 0;
 
-	//Las celdas seleccionadas por color
-	protected List<Cell> selected;
-
 	//Todas las celdas del grid
 	protected List<Cell> cells;
-
-	void Start () 
-	{
-		selected = new List<Cell>();
-	}
 
 	/*
 	 * Se crea la grid y se asigna cada celda como hijo de este gameObject.
@@ -440,25 +432,44 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @params cell{Cell}: La celda que se usara como base para tomar su color y buscar las demas
 	 */
-	public void selectCellsOfColor(Cell cell,bool selectNeighbors)
+	public Cell[] getCellNeighborsOfSameType(Cell cell)
 	{
 		List<Cell> finalList = new List<Cell>();
 		List<Cell> pendingList = new List<Cell>();
 
-		if(selectNeighbors)
+		pendingList.Add(cell);
+			
+		while(pendingList.Count > 0)
 		{
-			pendingList.Add(cell);
-				
-			while(pendingList.Count > 0)
+			searchNeigboursOfSameType(pendingList[0],ref finalList,ref pendingList);
+		}
+
+		return finalList.ToArray();
+	}
+
+
+	/*
+	 * Busca la celdas que sean del mismo color en toda la grid y los agrega a 'selected'
+	 * 
+	 * @params cell{Cell}: Celda de la que se tomara su color comop parametro para evaluar
+	 */
+	public Cell[] getCellsOfSameType(Cell cell)
+	{
+		return getCellsOfSameType(cell.pieceType);
+	}
+
+	public Cell[] getCellsOfSameType(EPieceType cellType)
+	{
+		List<Cell> selection = new List<Cell>();
+
+		for(int i = 0;i < cells.Count;i++)
+		{
+			if(cells[i].pieceType == cellType)
 			{
-				searchNeigboursOfSameColor(pendingList[0],ref finalList,ref pendingList);
+				selection.Add(cells[i]);
 			}
-			selected = finalList;
 		}
-		else
-		{
-			searchCellsOfSameColor(cell);
-		}
+		return selection.ToArray();
 	}
 
 	/*
@@ -497,14 +508,12 @@ public class CellsManager : MonoBehaviour
 	/*
 	 * Destruye todas las celdas que estan en la lista de 'selected'
 	 */
-	public void destroySelectedCells()
+	public void destroyCells(Cell[] cells)
 	{
-		for(int i = 0;i < selected.Count;i++)
+		for(int i = 0;i < cells.Length;i++)
 		{
-			selected[i].destroyCell();
+			cells[i].destroyCell();
 		}
-
-		selected = new List<Cell>();
 	}
 
 	/*
@@ -516,7 +525,7 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @params pending{List<Cell>}: En esta lista se van agregando las celdas que tienen el mismo color, pero que aun no han sido evaluadas
 	 */
-	protected void searchNeigboursOfSameColor(Cell cell,ref List<Cell> final, ref List<Cell> pending)
+	protected void searchNeigboursOfSameType(Cell cell,ref List<Cell> final, ref List<Cell> pending)
 	{
 		int cX = cells.IndexOf(cell)%columns;
 		int cY = cells.IndexOf(cell)/columns;
@@ -556,37 +565,6 @@ public class CellsManager : MonoBehaviour
 		}
 		pending.Remove(cell);
 		final.Add(cell);
-	}
-
-	/*
-	 * Busca la celdas que sean del mismo color en toda la grid y los agrega a 'selected'
-	 * 
-	 * @params cell{Cell}: Celda de la que se tomara su color comop parametro para evaluar
-	 */
-	public List<Cell> searchCellsOfSameColor(Cell cell)
-	{
-		selected.Clear();
-		for(int i = 0;i < cells.Count;i++)
-		{
-			if(cells[i].pieceType == cell.pieceType)
-			{
-				selected.Add(cells[i]);
-			}
-		}
-		return selected;
-	}
-
-	public List<Cell> searchCellsOfSameColor(EPieceType cellType)
-	{
-		selected.Clear();
-		for(int i = 0;i < cells.Count;i++)
-		{
-			if(cells[i].pieceType == cellType)
-			{
-				selected.Add(cells[i]);
-			}
-		}
-		return selected;
 	}
 
 	public Cell[] getAllEmptyCells()

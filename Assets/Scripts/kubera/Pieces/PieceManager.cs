@@ -179,7 +179,7 @@ public class PieceManager : MonoBehaviour
 			if (piecesInBar[i].howManyHasBeenRotated != 0) 
 			{				
 				int temp = piecesInBar[i].howManyHasBeenRotated;
-
+				piecesInBar [i].howManyHasBeenRotated = 0;
 				piecesInBar [i].transform.DOScale (new Vector3 (0.1f, 0.1f), 0.25f);
 				StartCoroutine(pos(i,temp));
 			}
