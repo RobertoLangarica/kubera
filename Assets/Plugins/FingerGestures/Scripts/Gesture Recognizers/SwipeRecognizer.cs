@@ -49,7 +49,7 @@ public class SwipeRecognizer : DiscreteGestureRecognizer<SwipeGesture>
     /// <summary>
     /// Directions to restrict the swipe gesture to
     /// </summary>
-    private FingerGestures.SwipeDirection ValidDirections = FingerGestures.SwipeDirection.All;  //FIXME: public
+    private FingerGestures.SwipeDirection ValidDirections = FingerGestures.SwipeDirection.All;  
 
     /// <summary>
     /// Minimum distance the finger must travel in order to produce a valid swipe

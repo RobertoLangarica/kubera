@@ -147,7 +147,7 @@ public class PinchRecognizer : ContinuousGestureRecognizer<PinchGesture>
             if( !FingersMovedInOppositeDirections( finger0, finger1 ) )
             {
                 // skip without firing event
-                return GestureRecognitionState.InProgress; //TODO: might want to make this configurable, so the recognizer can fail if fingers move in same direction
+                return GestureRecognitionState.InProgress; 
             }
 
             gesture.Delta = newDelta;

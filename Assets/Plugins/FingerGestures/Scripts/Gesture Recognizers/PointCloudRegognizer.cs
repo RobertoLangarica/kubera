@@ -400,7 +400,7 @@ public class PointCloudRegognizer : DiscreteGestureRecognizer<PointCloudGesture>
 
         if( dist > MinDistanceBetweenSamples * MinDistanceBetweenSamples )
         {
-            int strokeId = 0;   //TODO increment this after each finger up>down
+            int strokeId = 0;   
             gesture.RawPoints.Add( new Point( strokeId, gesture.Position ) );
         }
 
