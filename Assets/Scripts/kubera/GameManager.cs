@@ -47,7 +47,6 @@ public class GameManager : MonoBehaviour
 
 	protected int currentWildCardsActivated;
 
-	protected PersistentData persistentData;
 	protected WordManager wordManager;
 	protected CellsManager cellManager;
 	protected PowerUpManager powerupManager;
@@ -57,6 +56,7 @@ public class GameManager : MonoBehaviour
 	protected InputPiece inputPiece;
 	protected InputWords inputWords;
 
+	protected Level currentLevel;
 	protected List<GameObject> XMLPoolPiecesList = new List<GameObject>();
 	protected List<ScriptableABCChar> XMLPoolLetersList = new List<ScriptableABCChar>();
 	protected List<ScriptableABCChar> XMLPoolBlackLetersList = new List<ScriptableABCChar>();
@@ -88,23 +88,30 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
-		persistentData = FindObjectOfType<PersistentData>();
+		//TODO: Leer las gemas de algun lado
+		UserDataManager.instance.playerGems = 300;
+
+		setAndConfigureLevel(PersistentData.instance.currentLevel);
+	}
+
+	private void setAndConfigureLevel(Level level)
+	{
+		currentLevel = level;
 
 		fillLettersPoolList ();
 		fillPiecesPoolList ();
 
 		cellToLetter = new List<Cell> ();
 
-		myWinCondition = persistentData.currentLevel.winCondition.Split ('-');
-		remainingMoves = totalMoves = persistentData.currentLevel.moves;
+		myWinCondition = currentLevel.winCondition.Split ('-');
+		remainingMoves = totalMoves = currentLevel.moves;
 
 		hud.setMovments (remainingMoves);
 
 
-		UserDataManager.instance.playerGems = 300;
 
 		hud.setGems(UserDataManager.instance.playerGems);
-		hud.setLevel (persistentData.levelNumber);
+		hud.setLevelName (currentLevel.name);
 		hud.setSecondChanceLock (false);
 
 		checkIfNeedToUnlockPowerUp();
@@ -118,7 +125,7 @@ public class GameManager : MonoBehaviour
 		getWinCondition ();
 
 		toBuilderButton.SetActive(false);
-		if(persistentData.fromLevelBuilder)
+		if(PersistentData.instance.fromLevelBuilder)
 		{
 			PersistentData.instance.fromLevelBuilder = false;
 			toBuilderButton.SetActive(true);
@@ -834,23 +841,23 @@ public class GameManager : MonoBehaviour
 
 	protected void checkIfNeedToUnlockPowerUp()
 	{
-		if(persistentData.currentLevel.unblockBlock)
+		if(currentLevel.unblockBlock)
 		{
 			//powerUpManager2.activatePower(EPOWERUPS.BLOCK_POWERUP);
 		}
-		if(persistentData.currentLevel.unblockBomb)
+		if(currentLevel.unblockBomb)
 		{
 			//powerUpManager2.activatePower(EPOWERUPS.DESTROY_NEIGHBORS_POWERUP);
 		}
-		if(persistentData.currentLevel.unblockDestroy)
+		if(currentLevel.unblockDestroy)
 		{
 			//powerUpManager2.activatePower(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP);
 		}
-		if(persistentData.currentLevel.unblockRotate)
+		if(currentLevel.unblockRotate)
 		{
 			//powerUpManager2.activatePower(EPOWERUPS.ROTATE_POWERUP);
 		}
-		if(persistentData.currentLevel.unblockWildcard)
+		if(currentLevel.unblockWildcard)
 		{
 			//powerUpManager2.activatePower(EPOWERUPS.WILDCARD_POWERUP);
 		}
@@ -858,23 +865,23 @@ public class GameManager : MonoBehaviour
 
 	protected void UnlockPowerUp()
 	{
-		if(persistentData.currentLevel.unblockBlock)
+		if(currentLevel.unblockBlock)
 		{
 			UserDataManager.instance.onePiecePowerUpAvailable = true;
 		}
-		if(persistentData.currentLevel.unblockBomb)
+		if(currentLevel.unblockBomb)
 		{
 			UserDataManager.instance.destroyNeighborsPowerUpAvailable = true;
 		}
-		if(persistentData.currentLevel.unblockDestroy)
+		if(currentLevel.unblockDestroy)
 		{
 			UserDataManager.instance.destroyPowerUpAvailable = true;
 		}
-		if(persistentData.currentLevel.unblockRotate)
+		if(currentLevel.unblockRotate)
 		{
 			UserDataManager.instance.rotatePowerUpAvailable = true;
 		}
-		if(persistentData.currentLevel.unblockWildcard)
+		if(currentLevel.unblockWildcard)
 		{
 			UserDataManager.instance.wildCardPowerUpAvailable = true;
 		}

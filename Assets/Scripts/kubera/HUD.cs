@@ -122,13 +122,10 @@ public class HUD : MonoBehaviour {
 		Stars[1].rectTransform.localPosition = new Vector3(Stars[1].rectTransform.localPosition.x, scoreToStar[1] / scoreToStar [2] * pointsMeter.rectTransform.rect.height);
 		Stars[2].rectTransform.localPosition = new Vector3(Stars[2].rectTransform.localPosition.x, scoreToStar[2] / scoreToStar [2] * pointsMeter.rectTransform.rect.height );
 	}
-
-	/**
-	 * Setea el nivel en la hud
-	 **/
-	public void setLevel(int chargeMoney)
+		
+	public void setLevelName(string name)
 	{
-		levelText.text = chargeMoney.ToString ();
+		levelText.text = name;
 	}	
 
 	/**

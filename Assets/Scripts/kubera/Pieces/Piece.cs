@@ -41,8 +41,6 @@ public class Piece : MonoBehaviour
 	protected Color rendererColor;
 
 	[HideInInspector]public bool powerUp;
-	[HideInInspector]public Transform myFirstPos;
-	[HideInInspector]public int myFirstPosInt;
 	[HideInInspector]public GameObject parent;
 
 	public int rotateTimes = 0;
