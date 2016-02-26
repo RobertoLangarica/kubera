@@ -243,17 +243,21 @@ public class HUD : MonoBehaviour
 
 	public void showPieces(List<Piece> pieces)
 	{
-		for (int i = 0; i < pieces.Count; i++) 
+		List<Piece> newListPieces = new List<Piece> (pieces);
+		int i = 0;
+		while(newListPieces.Count >0)
 		{
-			Piece go = Instantiate (pieces [0]);
-			go.name = pieces[0].name;
+			Piece go = Instantiate (newListPieces [0]);
+			go.name = newListPieces[0].name;
 
-			pieces.RemoveAt(0);
+			newListPieces.RemoveAt(0);
 
 			go.transform.position= new Vector3(rotationImagePositions [i].position.x,rotationImagePositions [i].position.y,1);
 			go.transform.localScale = new Vector3 (0, 0, 0);
 			go.transform.DOScale(initialPieceScale, 0.25f);
 			go.transform.SetParent (showingPiecesContainer);
+
+			i++;
 		}
 	}
 

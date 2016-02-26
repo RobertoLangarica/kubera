@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
 		fillPiecesPoolList ();
 
 		pieceManager.initializeShowingPieces ();
-
+		hud.showPieces (pieceManager.getShowingPieceList ());
 
 		cellToLetter = new List<Cell> ();
 
@@ -210,7 +210,8 @@ public class GameManager : MonoBehaviour
 
 		if (pieceManager.getShowingPieceList ().Count == 0) 
 		{
-			pieceManager.initializeShowingPieces();
+			pieceManager.initializeShowingPieces ();
+			hud.showPieces (pieceManager.getShowingPieceList ());
 		}
 
 		Destroy(piece.gameObject);

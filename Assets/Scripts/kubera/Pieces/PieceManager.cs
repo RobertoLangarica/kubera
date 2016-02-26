@@ -30,14 +30,15 @@ public class PieceManager : MonoBehaviour
 
 	//CHANGE: Cantidad de piezas que se estan mostrando, hay que ponerle un nombre que indique eso
 	//DONE: cambio de nombre
-	protected int showingAvailablePieces;
+	[HideInInspector]
+	public int quantityOfPiecesShowing;
 
 
 	[HideInInspector]public bool isRotating = false;
 
 	void Start () 
 	{
-		showingAvailablePieces = quantityOfPiecesCanShow;
+		quantityOfPiecesShowing = quantityOfPiecesCanShow;
 	}
 		
 	//TODO: Esto inicializa las piezas que se van a mostrar, un mejor nombre
@@ -52,13 +53,8 @@ public class PieceManager : MonoBehaviour
 			}
 
 			showingPieces.Add((availablePieces [0]));
-
-
-			//TODO: Que alguien mas
-
-
 		}
-		showingAvailablePieces = quantityOfPiecesCanShow;
+		quantityOfPiecesShowing = quantityOfPiecesCanShow;
 	}
 
 	public List<Piece> getShowingPieceList()
@@ -105,11 +101,12 @@ public class PieceManager : MonoBehaviour
 
 	public void removeFromListPieceUsed(GameObject pieceSelected)
 	{
-		showingAvailablePieces--;
+		quantityOfPiecesShowing--;
 		int toDelete = 0;
-		for(int i=0; i<getShowingPieceList().Count; i++)
+
+		for(int i=0; i<showingPieces.Count; i++)
 		{
-			if(pieceSelected.name == showingPieces[i].name)
+			if(pieceSelected.name == showingPieces[i].gameObject.name)
 			{
 				toDelete=i;
 				break;

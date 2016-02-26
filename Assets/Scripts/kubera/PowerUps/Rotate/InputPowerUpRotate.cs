@@ -105,7 +105,6 @@ public class InputPowerUpRotate : MonoBehaviour
 					if (gameManager.dropPieceOnGrid (currentSelected.GetComponent<Piece> ())) 
 					{
 						reset();
-						setRotationPiecesAsNormalRotation ();
 						completePowerUp (true);
 					}
 					else
@@ -243,48 +242,6 @@ public class InputPowerUpRotate : MonoBehaviour
 		}
 	}
 
-	//regresamos la rotacion inicial si no se concreto la rotacion
-	public void returnRotatePiecesToNormalRotation()
-	{
-		if (!allowInput)
-		{
-			return;
-		}
-
-		for (int i = 0; i < pieceManager.showingPieces.Count; i++) 
-		{
-			if (pieceManager.showingPieces[i].howManyHasBeenRotated != 0) 
-			{				
-				int temp = pieceManager.showingPieces[i].howManyHasBeenRotated;
-				pieceManager.showingPieces [i].howManyHasBeenRotated = 0;
-				pieceManager.showingPieces [i].transform.DOScale (new Vector3 (0.1f, 0.1f), 0.25f);
-				StartCoroutine(pos(i,temp));
-			}
-		}
-	}
-
-	IEnumerator pos(int i,int rotateTimes)
-	{
-		yield return new WaitForSeconds (0.25f);
-		print ("S");
-		pieceManager.showingPieces [i].transform.localRotation = Quaternion.Euler(new Vector3(0,0,pieceManager.showingPieces [i].transform.rotation.eulerAngles.z-(90 * rotateTimes)));
-		pieceManager.showingPieces [i].transform.DOScale (selectedInitialScale, 0.25f);
-	}
-
-	public bool setRotationPiecesAsNormalRotation()
-	{
-		bool OneWasRotated = false;
-		for (int i = 0; i < hud.showingPiecesContainer.childCount; i++) 
-		{
-			if (hud.showingPiecesContainer.GetChild (i).GetComponent<Piece> ().howManyHasBeenRotated != 0) 
-			{
-				hud.showingPiecesContainer.GetChild (i).GetComponent<Piece> ().howManyHasBeenRotated = 0;
-				OneWasRotated = true;
-			}
-		}
-		return OneWasRotated;
-	}
-
 	public void activateRotation(bool activate)
 	{
 		if(activate)
@@ -305,7 +262,7 @@ public class InputPowerUpRotate : MonoBehaviour
 			}
 				
 			//TODO: saber cuando se utilizan las piezas y se queda sin nada
-			if (pieceManager.getShowingPieceList ().Count == 3) 
+			if (pieceManager.getShowingPieceList ().Count == pieceManager.quantityOfPiecesCanShow) 
 			{
 				OnPowerupRotateCompleted ();
 			}
