@@ -28,7 +28,7 @@ public class RotatePowerUp : PowerupBase
 		this.gameObject.SetActive( true);
 
 		powerUpGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
-		powerUpGO.name = "BombPowerUp";
+		powerUpGO.name = "RotatePowerUp";
 		powerUpGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
 
 		inputPowerUp.enabled = true;
@@ -58,12 +58,18 @@ public class RotatePowerUp : PowerupBase
 		inputPowerUp.OnDrop -= powerUpPositionated;
 		if (!activated) 
 		{
-			powerUpGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("BombPowerUP_Move");
-			powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("BombPowerUP_Scale");
+			powerUpGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("RotatePowerUP_Move");
+			powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("RotatePowerUP_Scale").OnComplete (() => {
+
+				DestroyImmediate(powerUpGO);
+			});
 			cancelPowerUp ();
 			return;
 		}
-		powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("BombPowerUP_Scale");
+		powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("RotatePowerUP_Scale").OnComplete (() => {
+
+			DestroyImmediate(powerUpGO);
+		});
 
 	}
 

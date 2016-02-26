@@ -61,7 +61,10 @@ public class DestroyPowerUp : PowerupBase
 	public void powerUPCanceled()
 	{
 		destroyGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("DestroyPowerUP_Move");
-		destroyGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("DestroyPowerUP_Scale");
+		destroyGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("DestroyPowerUP_Scale").OnComplete (() => {
+
+			DestroyImmediate(destroyGO);
+		});
 
 		bombInput.OnDrop -= powerUPPositionated;
 		bombInput.enabled = false;
