@@ -441,7 +441,7 @@ public class GameManager : MonoBehaviour
 		return false;
 	}
 
-	/*public void verifyWord()
+	public void verifyWord()
 	{
 		int amount = 0;
 		int multiplierHelper = 1;
@@ -509,7 +509,7 @@ public class GameManager : MonoBehaviour
 
 		wordManager.resetValidation();
 		addPoints(amount);
-	}*/
+	}
 
 	protected void sendVectorToCellManager(Vector3 vector3)
 	{
@@ -661,7 +661,7 @@ public class GameManager : MonoBehaviour
 
 	public void checkToLoose()
 	{
-		if(!cellManager.checkIfOneCanFit(pieceManager.showingPieces) || remainingMoves == 0)
+		if(!cellManager.checkIfOneCanFit(pieceManager.getShowingPieceList()) || remainingMoves == 0)
 		{
 			Debug.Log ("Perdio");
 			while(true)
@@ -1010,7 +1010,6 @@ public class GameManager : MonoBehaviour
 					XMLPoolLetersList.Add(newLetter);
 				}
 			}
-
 			if(PersistentData.instance.currentLevel.obstacleLettersPool.Length > 0)
 			{
 				lettersPool = PersistentData.instance.currentLevel.obstacleLettersPool.Split(new char[1]{','});
