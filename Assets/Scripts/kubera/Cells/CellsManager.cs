@@ -270,7 +270,6 @@ public class CellsManager : MonoBehaviour
 				}
 			}
 		}
-
 		return true;
 	}
 		
@@ -405,12 +404,12 @@ public class CellsManager : MonoBehaviour
 
 		foreach(Cell val in cells)
 		{
-			if(!val.occupied)
+			if(!val.occupied && val.canPositionateOnThisCell())
 			{
 				for(int i = 0;i < piecesList.Count;i++)
 				{
 					
-					offset = (val.transform.position + moveLittle) - piecesList[0].transform.position;
+					offset = (val.transform.position + moveLittle) - piecesList[i].pieces[0].transform.position;
 					vecArr = new Vector3[piecesList[i].pieces.Length];
 					for(int j = 0;j < piecesList[i].pieces.Length;j++)
 					{
@@ -418,11 +417,13 @@ public class CellsManager : MonoBehaviour
 					}
 					if(canPositionateAll(vecArr))
 					{
+						Debug.Log("Se puede colocar");
 						return true;
 					}
 				}
 			}
 		}
+		Debug.Log("No se puede colocar");
 		return false;
 	}
 

@@ -663,6 +663,11 @@ public class GameManager : MonoBehaviour
 	{
 		if(!cellManager.checkIfOneCanFit(pieceManager.getShowingPieceList()) || remainingMoves == 0)
 		{
+			if(remainingMoves == 0)
+			{
+				allowGameInput(false);
+			}
+
 			Debug.Log ("Perdio");
 			while(true)
 			{
