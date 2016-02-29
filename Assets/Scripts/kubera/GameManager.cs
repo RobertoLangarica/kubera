@@ -188,7 +188,7 @@ public class GameManager : MonoBehaviour
 		if (!piece.powerUp) 
 		{
 			pieceManager.removeFromListPieceUsed (piece.gameObject);
-			piecePositionatedCorrectly (piece.pieces.Length);
+			addPointsActions (piece.pieces.Length);
 			hud.showScoreTextAt(piece.transform.position,piece.pieces.Length);
 		}
 
@@ -397,7 +397,7 @@ public class GameManager : MonoBehaviour
 		return false;
 	}
 
-	protected void piecePositionatedCorrectly(int length)
+	protected void addPointsActions(int length)
 	{
 		remainingMoves--;
 
@@ -508,7 +508,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		wordManager.resetValidation();
-		addPoints(amount);
+		addPointsActions (amount);
 	}
 
 	protected void sendVectorToCellManager(Vector3 vector3)
@@ -661,7 +661,7 @@ public class GameManager : MonoBehaviour
 
 	public void checkToLoose()
 	{
-		if(!cellManager.checkIfOneCanFit(pieceManager.showingPieces) || remainingMoves == 0)
+		if(!cellManager.checkIfOneCanFit(pieceManager.getShowingPieceList()) || remainingMoves == 0)
 		{
 			Debug.Log ("Perdio");
 			while(true)
@@ -1004,7 +1004,6 @@ public class GameManager : MonoBehaviour
 					XMLPoolLetersList.Add(newLetter);
 				}
 			}
-
 			if(PersistentData.instance.currentLevel.obstacleLettersPool.Length > 0)
 			{
 				lettersPool = PersistentData.instance.currentLevel.obstacleLettersPool.Split(new char[1]{','});

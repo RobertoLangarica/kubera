@@ -248,8 +248,8 @@ public class HUD : MonoBehaviour
 		while(newListPieces.Count >0)
 		{
 			Piece go = Instantiate (newListPieces [0]);
-			go.name = newListPieces[0].name;
 
+			go.name = newListPieces[0].name;
 			newListPieces.RemoveAt(0);
 
 			go.transform.position= new Vector3(rotationImagePositions [i].position.x,rotationImagePositions [i].position.y,1);
