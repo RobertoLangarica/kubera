@@ -408,8 +408,7 @@ public class CellsManager : MonoBehaviour
 			if(!val.occupied)
 			{
 				for(int i = 0;i < piecesList.Count;i++)
-				{
-					
+				{	
 					offset = (val.transform.position + moveLittle) - piecesList[0].transform.position;
 					vecArr = new Vector3[piecesList[i].pieces.Length];
 					for(int j = 0;j < piecesList[i].pieces.Length;j++)
