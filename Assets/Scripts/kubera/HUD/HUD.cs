@@ -18,7 +18,6 @@ public class HUD : MonoBehaviour
 	public Text levelText;
 	public Image pointsMeter;
 	public Image[] Stars;
-	public Text winConditionText;
 
 	public Transform[] rotationImagePositions;
 	public Transform showingPiecesContainer;
@@ -27,6 +26,9 @@ public class HUD : MonoBehaviour
 	public GameObject secondChanceLock;
 	public GameObject uiLetter;
 
+	public Text winConditionText;
+	public Text winConditionLettersText;
+	public GameObject winConditionLettersContainer;
 
 	//DONE: Hardcoding
 	public Vector3 initialPieceScale = new Vector3(2.5f,2.5f,2.5f);
@@ -173,20 +175,46 @@ public class HUD : MonoBehaviour
 		//[TODO] Jalar textos del xml de idiomas
 		switch (winCondition) {
 		case "points":
+			winConditionText.enabled = true;
+			winConditionLettersText.enabled = false;
 			winConditionText.text = "Obten: " + value +" puntos.";
 			break;
 		case "words":
+			winConditionText.enabled = true;
+			winConditionLettersText.enabled = false;
 			winConditionText.text = "Forma: " + value +" palabras.";
 			break;
 		case "letters":
+			winConditionText.enabled = false;
+			winConditionLettersText.enabled = true;
+			winConditionLettersText.text = "Usa: ";
+			for (int i = 0; i < letters.Count; i++) 
+			{
+				GameObject letter =  Instantiate(uiLetter) as GameObject;
+				letter.GetComponentInChildren<Text> ().text = letters[i];
+				letter.transform.SetParent (winConditionLettersContainer.transform,false);
+			}
+
+			break;
 		case "blackLetters":
-			winConditionText.text = "Usa: ";
+			winConditionText.enabled = false;
+			winConditionLettersText.enabled = true;
+			winConditionLettersText.text = "Usa: ";
+			for (int i = 0; i < letters.Count; i++) 
+			{
+				GameObject letter =  Instantiate(uiLetter) as GameObject;
+				letter.GetComponentInChildren<Text> ().text = letters[i];
+				letter.transform.SetParent (winConditionLettersContainer.transform,false);
+				letter.GetComponent<Image>().color = Color.grey;
+			}
 
 			break;
 		case "word":
+			winConditionText.enabled = true;
+			winConditionLettersText.enabled = false;
 			winConditionText.text = "Forma: " + words;
-			break;
 
+			break;
 		default:
 			break;
 		}

@@ -188,6 +188,13 @@ public class GameManager : MonoBehaviour
 		if (!piece.powerUp) 
 		{
 			pieceManager.removeFromListPieceUsed (piece.gameObject);
+
+			if (pieceManager.getShowingPieceList ().Count == 0) 
+			{
+				pieceManager.initializeShowingPieces ();
+				hud.showPieces (pieceManager.getShowingPieceList ());
+			}
+
 			addPointsActions (piece.pieces.Length);
 			hud.showScoreTextAt(piece.transform.position,piece.pieces.Length);
 		}
@@ -208,11 +215,7 @@ public class GameManager : MonoBehaviour
 		}
 
 
-		if (pieceManager.getShowingPieceList ().Count == 0) 
-		{
-			pieceManager.initializeShowingPieces ();
-			hud.showPieces (pieceManager.getShowingPieceList ());
-		}
+
 
 		Destroy(piece.gameObject);
 	}
@@ -505,10 +508,10 @@ public class GameManager : MonoBehaviour
 			amount *= multiplierHelper;
 
 			wordsMade++;
+			addPointsActions (amount);
 		}
 
 		wordManager.resetValidation();
-		addPointsActions (amount);
 	}
 
 	protected void sendVectorToCellManager(Vector3 vector3)
@@ -576,8 +579,11 @@ public class GameManager : MonoBehaviour
 
 	protected void getWinCondition()
 	{
+		int quantity = 0;
+
 		if(myWinCondition[0] == "letters")
 		{
+			words= new string[0];
 			letters = new List<string> ();
 			int i;
 			string[] s = myWinCondition [1].Split (',');
@@ -597,9 +603,15 @@ public class GameManager : MonoBehaviour
 		}
 		if(myWinCondition[0] == "word")
 		{
+			words = new string[myWinCondition [1].Split ('_').Length];
 			words = myWinCondition [1].Split ('_');
 		}
-		hud.setWinConditionOnHud (myWinCondition [0],words,int.Parse(myWinCondition [1]),letters);
+		if ((myWinCondition [1]).Length < 2) 
+		{
+			quantity = int.Parse (myWinCondition [1]);
+		}
+
+		hud.setWinConditionOnHud (myWinCondition [0],words,quantity,letters);
 	}
 
 	protected void checkWinCondition ()
