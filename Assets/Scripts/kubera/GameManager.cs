@@ -731,18 +731,12 @@ public class GameManager : MonoBehaviour
 			hud.setMovments (remainingMoves);
 
 			GameObject go = GameObject.Instantiate (bonificationPiece) as GameObject;
-			SpriteRenderer sprite = go.GetComponent<Piece> ().pieces [0].GetComponent<SpriteRenderer> ();
-
-			Vector3 nVec = new Vector3 (sprite.bounds.size.x * 0.5f,
-				               -sprite.bounds.size.x * 0.5f, 0) + cell.transform.position;
-
-			go.transform.position = nVec;
 
 			go.GetComponent<Piece> ().currentType = cellManager.colorOfMoreQuantity ();
 
-			//go.transform.position = cellManager.positionate (go.GetComponent<Piece> ());
+			cellManager.setCellContent(cell,go);
+			cellManager.setCellType(cell,go.GetComponent<Piece> ().currentType);
 
-			//cellManager.turnPieceToLetterByWinNotification (cell);
 			StartCoroutine (add1x1BlockMore ());
 		}
 		else 
@@ -869,7 +863,7 @@ public class GameManager : MonoBehaviour
 		{
 			winBombs = 3;
 		}
-		else if(remainingMoves > 10)
+		else if(remainingMoves >= 10)
 		{
 			winBombs = 5;
 		}
@@ -1049,7 +1043,7 @@ public class GameManager : MonoBehaviour
 	protected void fillLetterPoolRandomList()
 	{
 		List<ScriptableABCChar> tempList = new List<ScriptableABCChar> ();
-		randomizedPoolLeters = new List<ScriptableABCChar>(XMLPoolLetersList);
+		randomizedPoolLeters = new List<ScriptableABCChar>();
 
 		tempList = new List<ScriptableABCChar>(XMLPoolLetersList);
 
@@ -1057,7 +1051,7 @@ public class GameManager : MonoBehaviour
 		while(tempList.Count >0)
 		{
 			int val = UnityEngine.Random.Range(0,tempList.Count);
-			randomizedBlackPoolLeters.Add(tempList[val]);
+			randomizedPoolLeters.Add(tempList[val]);
 			tempList.RemoveAt(val);
 		}
 	}
@@ -1065,7 +1059,7 @@ public class GameManager : MonoBehaviour
 	protected void fillBlackLetterPoolRandomList()
 	{
 		List<ScriptableABCChar> tempList = new List<ScriptableABCChar> ();
-		randomizedBlackPoolLeters = new List<ScriptableABCChar>(XMLPoolBlackLetersList);
+		randomizedBlackPoolLeters = new List<ScriptableABCChar>();
 
 		tempList = new List<ScriptableABCChar>(XMLPoolBlackLetersList);
 
