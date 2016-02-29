@@ -18,7 +18,6 @@ public class InputPowerUpRotate : MonoBehaviour
 	public DOnDragNotification OnDragStartPieceRotated;
 
 	public delegate void DPowerUpRotateNotification();
-	public DPowerUpRotateNotification OnPowerupRotateCanceled;
 	public DPowerUpRotateNotification OnPowerupRotateCompleted;
 
 	public delegate bool DOnFingerNotification(GameObject target);

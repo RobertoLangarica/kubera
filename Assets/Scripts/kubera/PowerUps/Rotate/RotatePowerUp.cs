@@ -24,9 +24,11 @@ public class RotatePowerUp : PowerupBase
 
 	public override void activate ()
 	{
-		
 		this.gameObject.SetActive( true);
-
+		if (powerUpGO != null) 
+		{
+			DestroyImmediate (powerUpGO);
+		}
 		powerUpGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
 		powerUpGO.name = "RotatePowerUp";
 		powerUpGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
@@ -51,47 +53,52 @@ public class RotatePowerUp : PowerupBase
 			if (v3.y > piecesPanel.anchorMin.y && v3.y < piecesPanel.anchorMax.y) 
 			{
 				activated = true;
-				powerUpActivateRotate ();
 			}
 		}
-			
-		inputPowerUp.OnDrop -= powerUpPositionated;
+		//print ("powerUpPositionated "+ activated);
 		if (!activated) 
 		{
-			powerUpGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("RotatePowerUP_Move");
-			powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("RotatePowerUP_Scale").OnComplete (() => {
+			powerUpGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId ("RotatePowerUP_Move");
+			powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId ("RotatePowerUP_Scale").OnComplete (() => {
 
-				DestroyImmediate(powerUpGO);
+				DestroyImmediate (powerUpGO);
+				cancelPowerUp ();
 			});
-			cancelPowerUp ();
-			return;
 		}
-		powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("RotatePowerUP_Scale").OnComplete (() => {
+		else 
+		{
+			powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId ("RotatePowerUP_Scale").OnComplete (() => {
 
-			DestroyImmediate(powerUpGO);
-		});
+				DestroyImmediate (powerUpGO);
+				powerUpActivateRotate ();
+			});
+		}
+		inputPowerUp.OnDrop -= powerUpPositionated;
 
 	}
 
 	public void powerUpActivateRotate()
 	{
 		inputPowerUpRotate.gameObject.SetActive (true);
+		inputPowerUpRotate.enabled = true;
+		inputPowerUp.OnDrop -= powerUpPositionated;
 		inputPowerUpRotate.OnPowerupRotateCompleted += completePowerUp;
-		inputPowerUpRotate.OnPowerupRotateCanceled += cancelPowerUp;
 		inputPowerUpRotate.startRotate ();
 	}
 
 	protected void completePowerUp()
 	{
+		inputPowerUpRotate.OnPowerupRotateCompleted -= completePowerUp;
 		OnComplete ();
-		inputPowerUpRotate.enabled = true;
+		inputPowerUpRotate.enabled = false;
 		this.gameObject.SetActive( false);
 	}
 
 	protected void cancelPowerUp()
 	{
+		//print ("cancelPowerUp");
 		OnCancel ();
-		inputPowerUpRotate.enabled = true;
+		inputPowerUpRotate.enabled = false;
 		this.gameObject.SetActive( false);
 	}
 }

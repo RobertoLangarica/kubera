@@ -27,7 +27,10 @@ public class WildCardPowerUp : PowerupBase
 	public override void activate ()
 	{
 		this.gameObject.SetActive( true);
-
+		if (powerUpGO != null) 
+		{
+			DestroyImmediate (powerUpGO);
+		}
 		powerUpGO = Instantiate (powerUpWildCard,powerUpButton.position,Quaternion.identity) as GameObject;
 		powerUpGO.name = "WildPowerUp";
 		powerUpGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);

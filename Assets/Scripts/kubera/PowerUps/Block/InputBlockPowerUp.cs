@@ -28,7 +28,10 @@ public class InputBlockPowerUp : MonoBehaviour
 	public void createBlock(GameObject block, Vector3 bottonPosition)
 	{
 		GameObject blockGO = Instantiate (block,bottonPosition,Quaternion.identity) as GameObject;
-
+		if (currentSelected) 
+		{
+			DestroyImmediate (currentSelected);
+		}
 		butonPowerUpBlockPosition = bottonPosition;
 		butonPowerUpBlockPosition.z = 0;
 		currentSelected = blockGO;

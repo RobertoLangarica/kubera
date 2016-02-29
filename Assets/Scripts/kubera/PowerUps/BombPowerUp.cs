@@ -20,6 +20,10 @@ public class BombPowerUp : PowerupBase
 
 	public override void activate()
 	{
+		if (bombGO != null) 
+		{
+			DestroyImmediate (bombGO);
+		}
 		bombGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
 		bombGO.name = "BombPowerUp";
 		bombGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);

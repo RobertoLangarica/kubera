@@ -20,6 +20,10 @@ public class DestroyPowerUp : PowerupBase
 
 	public override void activate()
 	{
+		if (destroyGO != null) 
+		{
+			DestroyImmediate (destroyGO);
+		}
 		destroyGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
 		destroyGO.name = "DestroyPowerUp";
 		destroyGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
