@@ -1031,7 +1031,7 @@ public class GameManager : MonoBehaviour
 	protected void fillLetterPoolRandomList()
 	{
 		List<ScriptableABCChar> tempList = new List<ScriptableABCChar> ();
-		randomizedPoolLeters = new List<ScriptableABCChar>(XMLPoolLetersList);
+		randomizedPoolLeters = new List<ScriptableABCChar>();
 
 		tempList = new List<ScriptableABCChar>(XMLPoolLetersList);
 
@@ -1039,7 +1039,7 @@ public class GameManager : MonoBehaviour
 		while(tempList.Count >0)
 		{
 			int val = UnityEngine.Random.Range(0,tempList.Count);
-			randomizedBlackPoolLeters.Add(tempList[val]);
+			randomizedPoolLeters.Add(tempList[val]);
 			tempList.RemoveAt(val);
 		}
 	}
@@ -1047,7 +1047,7 @@ public class GameManager : MonoBehaviour
 	protected void fillBlackLetterPoolRandomList()
 	{
 		List<ScriptableABCChar> tempList = new List<ScriptableABCChar> ();
-		randomizedBlackPoolLeters = new List<ScriptableABCChar>(XMLPoolBlackLetersList);
+		randomizedBlackPoolLeters = new List<ScriptableABCChar>();
 
 		tempList = new List<ScriptableABCChar>(XMLPoolBlackLetersList);
 
