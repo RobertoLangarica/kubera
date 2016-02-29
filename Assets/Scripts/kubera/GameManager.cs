@@ -188,7 +188,7 @@ public class GameManager : MonoBehaviour
 		if (!piece.powerUp) 
 		{
 			pieceManager.removeFromListPieceUsed (piece.gameObject);
-			piecePositionatedCorrectly (piece.pieces.Length);
+			addPointsActions (piece.pieces.Length);
 			hud.showScoreTextAt(piece.transform.position,piece.pieces.Length);
 		}
 
@@ -397,7 +397,7 @@ public class GameManager : MonoBehaviour
 		return false;
 	}
 
-	protected void piecePositionatedCorrectly(int length)
+	protected void addPointsActions(int length)
 	{
 		remainingMoves--;
 
@@ -508,7 +508,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		wordManager.resetValidation();
-		addPoints(amount);
+		addPointsActions (amount);
 	}
 
 	protected void sendVectorToCellManager(Vector3 vector3)
