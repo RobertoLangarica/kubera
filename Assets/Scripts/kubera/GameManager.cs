@@ -441,7 +441,7 @@ public class GameManager : MonoBehaviour
 		return false;
 	}
 
-	/*public void verifyWord()
+	public void verifyWord()
 	{
 		int amount = 0;
 		int multiplierHelper = 1;
@@ -509,7 +509,7 @@ public class GameManager : MonoBehaviour
 
 		wordManager.resetValidation();
 		addPoints(amount);
-	}*/
+	}
 
 	protected void sendVectorToCellManager(Vector3 vector3)
 	{
@@ -719,18 +719,12 @@ public class GameManager : MonoBehaviour
 			hud.setMovments (remainingMoves);
 
 			GameObject go = GameObject.Instantiate (bonificationPiece) as GameObject;
-			SpriteRenderer sprite = go.GetComponent<Piece> ().pieces [0].GetComponent<SpriteRenderer> ();
-
-			Vector3 nVec = new Vector3 (sprite.bounds.size.x * 0.5f,
-				               -sprite.bounds.size.x * 0.5f, 0) + cell.transform.position;
-
-			go.transform.position = nVec;
 
 			go.GetComponent<Piece> ().currentType = cellManager.colorOfMoreQuantity ();
 
-			//go.transform.position = cellManager.positionate (go.GetComponent<Piece> ());
+			cellManager.setCellContent(cell,go);
+			cellManager.setCellType(cell,go.GetComponent<Piece> ().currentType);
 
-			//cellManager.turnPieceToLetterByWinNotification (cell);
 			StartCoroutine (add1x1BlockMore ());
 		}
 		else 
@@ -857,7 +851,7 @@ public class GameManager : MonoBehaviour
 		{
 			winBombs = 3;
 		}
-		else if(remainingMoves > 10)
+		else if(remainingMoves >= 10)
 		{
 			winBombs = 5;
 		}
