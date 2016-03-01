@@ -34,6 +34,9 @@ public class HUD : MonoBehaviour
 
 	public GameObject exitGamePopUp;
 
+	public Image[] musicImages;
+	public Image[] soundsImages;
+
 	//DONE: Hardcoding
 	public Vector3 initialPieceScale = new Vector3(2.5f,2.5f,2.5f);
 
@@ -354,5 +357,29 @@ public class HUD : MonoBehaviour
 							});
 					});
 			});
+	}
+
+	public void setStateMusic(bool activate)
+	{
+		if (activate) 
+		{
+			Music.image = musicImages [0];
+		}
+		else
+		{
+			Music.image = musicImages [1];
+		}
+	}
+
+	public void setStateSounds(bool activate)
+	{
+		if (activate) 
+		{
+			Sounds.image = soundsImages [0];
+		}
+		else
+		{
+			Sounds.image = soundsImages [1];
+		}
 	}
 }
