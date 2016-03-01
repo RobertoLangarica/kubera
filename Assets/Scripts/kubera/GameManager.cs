@@ -547,7 +547,11 @@ public class GameManager : MonoBehaviour
 
 	public void linesCreated(int totalLines)
 	{
-		audioManager.PlayLeLineCreatedAudio();
+		if(totalLines > 0)
+		{
+			Debug.Log(totalLines);
+			audioManager.PlayLeLineCreatedAudio();
+		}
 
 		switch(totalLines)
 		{
