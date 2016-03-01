@@ -417,13 +417,11 @@ public class CellsManager : MonoBehaviour
 					}
 					if(canPositionateAll(vecArr))
 					{
-						Debug.Log("Se puede colocar");
 						return true;
 					}
 				}
 			}
 		}
-		Debug.Log("No se puede colocar");
 		return false;
 	}
 

@@ -35,9 +35,6 @@ public class HUD : MonoBehaviour
 
 	public GameObject objectivePopUp;
 
-	public delegate void DPopUpNotification();
-	public DPopUpNotification OnObjectivePopUpClose;
-
 	protected float[] scoreToStar;
 	protected ScoreTextPool scorePool;
 
@@ -303,10 +300,5 @@ public class HUD : MonoBehaviour
 	public void hideObjectivePopUp()
 	{
 		objectivePopUp.SetActive(false);
-
-		if(OnObjectivePopUpClose != null)
-		{
-			OnObjectivePopUpClose();
-		}
 	}
 }

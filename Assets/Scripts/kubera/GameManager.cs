@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
 
 		//Se muestra el objetivo al inicio del nivel
 		hud.showObjectivePopUp(myWinCondition[0],myWinCondition[1]);
-		hud.OnObjectivePopUpClose += allowGameInput;
+
 		allowGameInput(false);
 
 		checkIfNeedToUnlockPowerUp();
@@ -183,8 +183,33 @@ public class GameManager : MonoBehaviour
 	{
 		List<Cell> tempCell = new List<Cell> ();
 		tempCell = cellManager.getCellsUnderPiece (piece);
-		//damos puntos por las piezas en la pieza
 
+
+		for(int i=0; i< tempCell.Count; i++)
+		{ 
+			Vector3 cellPosition =  tempCell[i].transform.position + (new Vector3 (tempCell[i].GetComponent<SpriteRenderer> ().bounds.extents.x,
+				-tempCell[i].GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
+
+			cellManager.occupyAndConfigureCell (tempCell [i], piece.pieces [i], piece.currentType);
+
+			tempCell [i].content.transform.DOMove (cellPosition, 0.5f);
+
+			if(tempCell.Count == i+1)
+			{
+				StartCoroutine(allPiecesAreOnGrid(piece));
+			}
+
+		}
+
+		for(int i = 0;i < piece.pieces.Length;i++)
+		{
+			piece.pieces[i].transform.SetParent(piece.transform.parent);
+		}
+	}
+
+	IEnumerator allPiecesAreOnGrid(Piece piece)
+	{
+		yield return new WaitForSeconds (0.5f);
 		if (!piece.powerUp) 
 		{
 			pieceManager.removeFromListPieceUsed (piece.gameObject);
@@ -195,27 +220,10 @@ public class GameManager : MonoBehaviour
 				hud.showPieces (pieceManager.getShowingPieceList ());
 			}
 
+			//damos puntos por las piezas en la pieza
 			addPointsActions (piece.pieces.Length);
 			hud.showScoreTextAt(piece.transform.position,piece.pieces.Length);
 		}
-
-		for(int i=0; i< tempCell.Count; i++)
-		{ 
-			Vector3 cellPosition =  tempCell[i].transform.position + (new Vector3 (tempCell[i].GetComponent<SpriteRenderer> ().bounds.extents.x,
-				-tempCell[i].GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
-
-			cellManager.occupyAndConfigureCell (tempCell [i], piece.pieces [i], piece.currentType);
-
-			tempCell[i].content.transform.DOMove (cellPosition, 0.5f);
-		}
-
-		for(int i = 0;i < piece.pieces.Length;i++)
-		{
-			piece.pieces[i].transform.SetParent(piece.transform.parent);
-		}
-
-
-
 
 		Destroy(piece.gameObject);
 	}
@@ -450,12 +458,13 @@ public class GameManager : MonoBehaviour
 		int multiplierHelper = 1;
 		bool letterFound;
 		bool canUseAllWildCards;
+		bool correct = false;
 
 		canUseAllWildCards = canCompleteWordWithWildCards();
 
 		if(wordManager.wordsValidator.completeWord && canUseAllWildCards)
 		{
-			//useGems(powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
+			correct = true;
 			
 			for(int i = 0;i < wordManager.chars.Count;i++)
 			{
@@ -511,7 +520,7 @@ public class GameManager : MonoBehaviour
 			addPointsActions (amount);
 		}
 
-		wordManager.resetValidation();
+		wordManager.resetValidation(correct);
 	}
 
 	protected void sendVectorToCellManager(Vector3 vector3)
@@ -606,7 +615,7 @@ public class GameManager : MonoBehaviour
 			words = new string[myWinCondition [1].Split ('_').Length];
 			words = myWinCondition [1].Split ('_');
 		}
-		if ((myWinCondition [1]).Length < 2) 
+		if(myWinCondition[0] == "points" ||myWinCondition[0] == "words")
 		{
 			quantity = int.Parse (myWinCondition [1]);
 		}
@@ -1124,6 +1133,12 @@ public class GameManager : MonoBehaviour
 	public void activateSettings()
 	{
 		hud.activateSettings ();
+	}
+
+	public void closeObjectivePopUp()
+	{
+		hud.hideObjectivePopUp ();
+		allowGameInput ();
 	}
 
 	//TODO

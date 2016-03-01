@@ -201,7 +201,7 @@ namespace ABC
 		/**
 		 * Elimina los caracteres de la busqueda actual
 		 **/ 
-		public void resetValidation()
+		public void resetValidation(bool correct = false)
 		{
 			if (letterContainer.transform.childCount != 0) 
 			{
@@ -223,17 +223,19 @@ namespace ABC
 					{
 						if (wordsValidator.completeWord) 
 						{
-							OnSendVector3 (uiChar.piece.transform.position);
-							uiChar.destroyPiece ();
+							if (!abcChar.wildcard) 
+							{
+								OnSendVector3 (uiChar.piece.transform.position);
+								uiChar.destroyPiece ();
+							}
+							else 
+							{
+								DestroyImmediate(uiChar.gameObject);
+							}
 						} 
 						else 
 						{
-							if (abcChar.wildcard) 
-							{
-								//activeMoney (false);
-								//GameObject.Find("WildCard").GetComponent<PowerUpBase>().returnPower();
-							} 
-							else 
+							if (!abcChar.wildcard) 
 							{
 								uiChar.piece.GetComponent<UIChar> ().backToNormal ();
 							}
