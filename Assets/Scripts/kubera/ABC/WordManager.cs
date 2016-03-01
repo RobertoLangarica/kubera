@@ -44,7 +44,6 @@ namespace ABC
 				inputWords.onDragFinish += swappEnding;
 				inputWords.onDragStart  += activateSwapp;
 				inputWords.onTap += sendLetterToWord;
-				inputWords.onFingerUpAfterDragEnd += checkSwappLetters;
 			}
 
 			chars = new List<ABCChar>();
@@ -92,6 +91,7 @@ namespace ABC
 
 			letter.transform.localScale = new Vector3 (1, 1, 1);
 			letter.GetComponent<UIChar> ().piece = piece;
+			piece.GetComponent<UIChar> ().piece = letter;
 
 			//letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
 			letter.GetComponent<ABCChar>().initializeText();
@@ -536,10 +536,18 @@ namespace ABC
 		 **/
 		public void sendLetterToWord(GameObject go)
 		{
-			if (maxLetters >  letterContainer.transform.childCount && go.GetComponent<UIChar>().checkIfLetterCanBeUsedFromGrid ()) 
+			if (go.GetComponent<UIChar>().checkIfLetterCanBeUsedFromGrid ()) 
 			{
-				addCharacter (go.GetComponent<ABCChar> (), go);
-				activateButtonOfWordsActions (true);
+				if (maxLetters > letterContainer.transform.childCount) 
+				{
+					addCharacter (go.GetComponent<ABCChar> (), go);
+					activateButtonOfWordsActions (true);
+				}
+			}
+			else
+			{
+				checkSwappLetters(go.GetComponent<UIChar>().piece);
+				//go.GetComponent<UIChar> ().piece.GetComponent<UIChar>().destroyLetter();
 			}
 		}
 
