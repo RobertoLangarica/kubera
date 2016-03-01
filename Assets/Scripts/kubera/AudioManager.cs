@@ -15,10 +15,12 @@ public class AudioManager : MonoBehaviour
 
 	public bool soundEffects;
 
+	protected bool _mainAudio;
+
 	public bool mainAudio
 	{
 		get{
-			return mainAudio;
+			return _mainAudio;
 		}
 
 		set{
@@ -32,7 +34,7 @@ public class AudioManager : MonoBehaviour
 				PauseMainAudio();
 			}
 
-			mainAudio = value;
+			_mainAudio = value;
 		}
 	}
 
@@ -47,6 +49,9 @@ public class AudioManager : MonoBehaviour
 
 	public bool PlayLeLineCreatedAudio()
 	{
+		Debug.Log("Line created!!");
+		Debug.Log(lineCreatedAudio);
+		Debug.Log(soundEffects);
 		if(lineCreatedAudio != null && soundEffects)
 		{
 			audioSource.PlayOneShot(lineCreatedAudio);
