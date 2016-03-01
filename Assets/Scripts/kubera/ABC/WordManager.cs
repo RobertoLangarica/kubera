@@ -91,7 +91,10 @@ namespace ABC
 
 			letter.transform.localScale = new Vector3 (1, 1, 1);
 			letter.GetComponent<UIChar> ().piece = piece;
-			piece.GetComponent<UIChar> ().piece = letter;
+			if (piece.GetComponent<UIChar> ()) 
+			{
+				piece.GetComponent<UIChar> ().piece = letter;
+			}
 
 			//letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
 			letter.GetComponent<ABCChar>().initializeText();
