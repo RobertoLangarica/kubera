@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
 	public bool canRotate;
 	public bool destroyByColor;
 
+	public Transform canvasOfLetters;
+
 	protected List<Cell> cellToLetter;
 
 	protected int currentWildCardsActivated;
@@ -342,7 +344,7 @@ public class GameManager : MonoBehaviour
 	{
 		GameObject go = Instantiate (uiLetter)as GameObject;
 
-		go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
+		go.transform.SetParent (canvasOfLetters,false);
 
 		go.GetComponent<BoxCollider2D>().enabled = true;
 
@@ -357,7 +359,7 @@ public class GameManager : MonoBehaviour
 	{
 		GameObject go = Instantiate (uiLetter)as GameObject;
 
-		go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
+		go.transform.SetParent (canvasOfLetters,false);
 
 		go.GetComponent<BoxCollider2D>().enabled = true;
 
@@ -695,7 +697,6 @@ public class GameManager : MonoBehaviour
 	IEnumerator check()
 	{
 		yield return new WaitForSeconds (.2f);
-
 		if(!wordManager.checkIfAWordisPossible(listChar))
 		{
 			audioManager.PlayLoseAudio();

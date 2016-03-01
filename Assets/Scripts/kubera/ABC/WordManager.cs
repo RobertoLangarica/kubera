@@ -395,6 +395,7 @@ namespace ABC
 		 **/
 		public bool checkIfAWordisPossible(List<ABCChar> pool)
 		{
+			//TODO: checar si realmente no puede hacer una palabra
 			//Debug.Log ("Possible word: "+words.isAWordPossible(pool));
 			if(!wordsValidator.isAWordPossible(pool))
 			{
