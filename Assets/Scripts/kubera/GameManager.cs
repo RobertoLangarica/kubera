@@ -1064,7 +1064,7 @@ public class GameManager : MonoBehaviour
 
 		while(tempList.Count >0)
 		{
-			int val = UnityEngine.Random.Range(0,tempList.Count);
+			int val = Random.Range(0,tempList.Count);
 			randomizedPoolLeters.Add(tempList[val]);
 			tempList.RemoveAt(val);
 		}
@@ -1080,7 +1080,7 @@ public class GameManager : MonoBehaviour
 
 		while(tempList.Count >0)
 		{
-			int val = UnityEngine.Random.Range(0,tempList.Count);
+			int val = Random.Range(0,tempList.Count);
 			randomizedBlackPoolLeters.Add(tempList[val]);
 			tempList.RemoveAt(val);
 		}

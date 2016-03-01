@@ -90,7 +90,7 @@ public class PieceManager : MonoBehaviour
 
 		while(availablePieces.Count >0)
 		{
-			int val = UnityEngine.Random.Range(0,availablePieces.Count);
+			int val = Random.Range(0,availablePieces.Count);
 			newList.Add(availablePieces[val]);
 			availablePieces.RemoveAt(val);
 		}
