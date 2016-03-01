@@ -51,8 +51,8 @@ public class PieceManager : MonoBehaviour
 			{
 				randomizelist(allPieces);
 			}
-
-			showingPieces.Add((availablePieces [i]));
+			showingPieces.Add((availablePieces [0]));
+			availablePieces.RemoveAt (0);
 		}
 		quantityOfPiecesShowing = quantityOfPiecesCanShow;
 	}
@@ -70,7 +70,6 @@ public class PieceManager : MonoBehaviour
 		{
 			gameObjectListToPiecesList.Add (piecesList [i].GetComponent<Piece> ());
 		}
-
 		setPiecesInList (gameObjectListToPiecesList);
 	}
 
