@@ -16,7 +16,7 @@ namespace ABC
 		public GameObject wordActiveButton;
 		public Sprite[] wordActiveButtonImagesStates;
 
-		public int maxLetters = 12;
+		public int maxLetters = 7;
 
 		protected InputWords inputWords;
 
@@ -535,7 +535,7 @@ namespace ABC
 		 **/
 		public void sendLetterToWord(GameObject go)
 		{
-			if (go.GetComponent<UIChar>().checkIfLetterCanBeUsedFromGrid ()) 
+			if (maxLetters >  letterContainer.transform.childCount &&go.GetComponent<UIChar>().checkIfLetterCanBeUsedFromGrid ()) 
 			{
 				addCharacter (go.GetComponent<ABCChar> (), go);
 				activateButtonOfWordsActions (true);
