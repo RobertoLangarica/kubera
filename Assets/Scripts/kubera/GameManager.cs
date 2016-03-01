@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
 	protected PowerUpManager powerupManager;
 	protected PieceManager pieceManager;
 	protected HUD hud;
+	protected AudioManager audioManager;
 
 	protected InputPiece inputPiece;
 	protected InputWords inputWords;
@@ -83,6 +84,8 @@ public class GameManager : MonoBehaviour
 		powerupManager.OnPowerupCompleted = OnPowerupCompleted;
 
 		pieceManager = FindObjectOfType<PieceManager>();
+
+		audioManager = FindObjectOfType<AudioManager>();
 	}
 
 	void Start()
@@ -205,6 +208,8 @@ public class GameManager : MonoBehaviour
 		{
 			piece.pieces[i].transform.SetParent(piece.transform.parent);
 		}
+
+		audioManager.PlayPiecePositionatedAudio();
 	}
 
 	IEnumerator allPiecesAreOnGrid(Piece piece)
@@ -540,6 +545,8 @@ public class GameManager : MonoBehaviour
 
 	public void linesCreated(int totalLines)
 	{
+		audioManager.PlayLeLineCreatedAudio();
+
 		switch(totalLines)
 		{
 		case(1):
@@ -688,7 +695,11 @@ public class GameManager : MonoBehaviour
 	IEnumerator check()
 	{
 		yield return new WaitForSeconds (.2f);
-		FindObjectOfType<WordManager>().checkIfAWordisPossible(listChar);
+
+		if(!wordManager.checkIfAWordisPossible(listChar))
+		{
+			audioManager.PlayLoseAudio();
+		}
 	}
 
 	public void checkToLoose()
@@ -725,6 +736,8 @@ public class GameManager : MonoBehaviour
 
 	protected void winBonification()
 	{
+		audioManager.PlayWonAudio();
+
 		allowGameInput (false);
 
 		//Se limpian las letras 
@@ -1143,11 +1156,14 @@ public class GameManager : MonoBehaviour
 
 	public void activateSettings(bool activate)
 	{
+		audioManager.PlayButtonAudio();
+
 		hud.activateSettings (activate);
 	}
 
 	public void closeObjectivePopUp()
 	{
+		audioManager.PlayButtonAudio();
 		hud.hideObjectivePopUp ();
 		allowGameInput ();
 	}
@@ -1155,15 +1171,40 @@ public class GameManager : MonoBehaviour
 	//TODO
 	public void activateMusic()
 	{
-		
+		audioManager.PlayButtonAudio();
+
+		if(audioManager.mainAudio)
+		{
+			audioManager.mainAudio = false;
+			UserDataManager.instance.musicSetting = false;
+		}
+		else
+		{
+			audioManager.mainAudio = true;
+			UserDataManager.instance.musicSetting = true;
+		}
 	}
 
 	public void activateSounds()
 	{
+		audioManager.PlayButtonAudio();
+		
+		if(audioManager.soundEffects)
+		{
+			audioManager.soundEffects = false;
+			UserDataManager.instance.soundEffectsSetting = false;
+		}
+		else
+		{
+			audioManager.soundEffects = true;
+			UserDataManager.instance.soundEffectsSetting = true;
+		}
 	}
 
 	public void quitGame()
 	{
+		audioManager.PlayButtonAudio();
+
 		hud.quitGamePopUp ();
 	}
 }
