@@ -44,6 +44,7 @@ namespace ABC
 				inputWords.onDragFinish += swappEnding;
 				inputWords.onDragStart  += activateSwapp;
 				inputWords.onTap += sendLetterToWord;
+				inputWords.onFingerUpAfterDragEnd += checkSwappLetters;
 			}
 
 			chars = new List<ABCChar>();
@@ -450,7 +451,7 @@ namespace ABC
 			}
 			else
 			{
-				checkSwappLetters(letter);	
+				checkSwappLetters(letter,false);	
 			}
 		}
 
@@ -470,7 +471,7 @@ namespace ABC
 		  * a la letra que se movera se mueve su index para que este arriba de las otras letras
 		  * destruye la letra seleccionada si la arrojaron a la basura
 		  **/
-		public void checkSwappLetters(GameObject letter,bool destroy = false)
+		public void checkSwappLetters(GameObject letter,bool destroy = true)
 		{			
 			letterContainer.GetComponent<GridLayoutGroup>().enabled = true;
 			if(destroy)
@@ -535,7 +536,7 @@ namespace ABC
 		 **/
 		public void sendLetterToWord(GameObject go)
 		{
-			if (maxLetters >  letterContainer.transform.childCount &&go.GetComponent<UIChar>().checkIfLetterCanBeUsedFromGrid ()) 
+			if (maxLetters >  letterContainer.transform.childCount && go.GetComponent<UIChar>().checkIfLetterCanBeUsedFromGrid ()) 
 			{
 				addCharacter (go.GetComponent<ABCChar> (), go);
 				activateButtonOfWordsActions (true);
