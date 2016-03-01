@@ -30,6 +30,8 @@ public class HUD : MonoBehaviour
 	public Text winConditionLettersText;
 	public GameObject winConditionLettersContainer;
 
+	public GameObject PointerOnScene;
+
 	public GameObject exitGamePopUp;
 
 	//DONE: Hardcoding
@@ -258,7 +260,7 @@ public class HUD : MonoBehaviour
 			Music.gameObject.SetActive(true);
 			Exit.gameObject.SetActive(true);
 			Sounds.gameObject.SetActive(true);
-			gameObject.transform.Find ("InputInOnScene").gameObject.SetActive(true);
+			PointerOnScene.SetActive(true);
 		}
 		else 
 		{
@@ -268,7 +270,7 @@ public class HUD : MonoBehaviour
 			Music.gameObject.SetActive(false);
 			Exit.gameObject.SetActive (false);
 			Sounds.gameObject.SetActive(false);
-			gameObject.transform.Find ("InputInOnScene").gameObject.SetActive(false);
+			PointerOnScene.SetActive(false);
 		}
 	}
 
