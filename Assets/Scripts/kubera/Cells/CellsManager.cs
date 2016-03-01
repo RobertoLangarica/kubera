@@ -163,12 +163,9 @@ public class CellsManager : MonoBehaviour
 			for(int x = 0; x < columns; x++)
 			{
 				cell = getCellAt(x,y);
-				if(cell.available && cell.occupied && cell.pieceType != EPieceType.LETTER)
+				if(cell.available && cell.occupied && cell.pieceType != EPieceType.LETTER && cell.content != null)
 				{
-					if (cell.content != null) 
-					{
-						result [result.Count - 1].Add (cell);
-					}
+					result [result.Count - 1].Add (cell);
 				}
 				else
 				{
@@ -193,12 +190,9 @@ public class CellsManager : MonoBehaviour
 			for(int y = 0; y < rows; y++)
 			{
 				cell = getCellAt(x,y);
-				if(cell.available && cell.occupied && cell.pieceType != EPieceType.LETTER)
+				if(cell.available && cell.occupied && cell.pieceType != EPieceType.LETTER && cell.content != null)
 				{
-					if (cell.content != null) 
-					{
-						result [result.Count - 1].Add (cell);
-					}
+					result [result.Count - 1].Add (cell);
 				}
 				else
 				{
