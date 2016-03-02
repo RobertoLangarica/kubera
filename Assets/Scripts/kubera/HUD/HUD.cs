@@ -324,13 +324,71 @@ public class HUD : MonoBehaviour
 		}
 	}
 
-	public void showObjectivePopUp(string objectiveType,string objective)
+	public void showObjectivePopUp(string winCondition, string[] words, int value=0,List<string> letters = null)
 	{
 		Text objectiveTypeText = objectivePopUp.transform.FindChild("Type").GetComponent<Text>();
 		Text objectiveText = objectivePopUp.transform.FindChild("Objective").GetComponent<Text>();
 
-		objectiveTypeText.text = objectiveType;
-		objectiveText.text = objective;
+		//[TODO] Jalar textos del xml de idiomas
+		switch (winCondition) {
+		case "points":
+			objectiveTypeText.text = "Obten: ";
+			objectiveText.text = value + " puntos.";
+
+			break;
+		case "words":
+			objectiveTypeText.text = "Forma: ";
+			objectiveText.text = value + " palabras.";
+			break;
+		case "letters":
+			objectiveTypeText.text = "Usa: ";
+			for (int i = 0; i < letters.Count; i++) 
+			{
+				objectiveText.text += letters[i];
+				if (letters.Count == i + 1) 
+				{
+					objectiveText.text += ".";
+				}
+				else 
+				{
+					objectiveText.text += ", ";
+				}
+			}
+			break;
+		case "obstacles":
+			objectiveTypeText.text = "Usa: ";
+			for (int i = 0; i < letters.Count; i++) 
+			{
+				objectiveText.text += letters[i];
+				if (letters.Count == i + 1) 
+				{
+					objectiveText.text += ".";
+				}
+				else 
+				{
+					objectiveText.text += ", ";
+				}
+			}
+			break;
+		case "word":
+			objectiveTypeText.text = "Forma: ";
+			string wordString = "";
+			for (int i = 0; i<words.Length; i++) 
+			{
+				wordString += words [i];
+				if (i + 1 < words.Length) 
+				{
+					wordString += ", ";
+				}
+			}
+			objectiveText.text += wordString;
+
+			break;
+		default:
+			break;
+		}
+
+
 
 		objectivePopUp.SetActive(true);
 	}

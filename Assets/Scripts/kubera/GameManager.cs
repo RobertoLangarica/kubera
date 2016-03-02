@@ -121,8 +121,7 @@ public class GameManager : MonoBehaviour
 		hud.setLevelName (currentLevel.name);
 		hud.setSecondChanceLock (false);
 
-		//Se muestra el objetivo al inicio del nivel
-		hud.showObjectivePopUp(myWinCondition[0],myWinCondition[1]);
+
 
 		allowGameInput(false);
 
@@ -643,6 +642,10 @@ public class GameManager : MonoBehaviour
 		{
 			quantity = int.Parse (myWinCondition [1]);
 		}
+
+		//Se muestra el objetivo al inicio del nivel
+		//TODO: hacerlo bien R
+		hud.showObjectivePopUp(myWinCondition [0],words,quantity,letters);
 
 		hud.setWinConditionOnHud (myWinCondition [0],words,quantity,letters);
 	}
