@@ -281,8 +281,7 @@ public class GameManager : MonoBehaviour
 			if((cellType & 0x2) == 0x2)
 			{
 				cellContent = createCellBlockContent(cellType);
-				cellManager.setCellType(i,cellContent.GetComponent<Piece> ().currentType);
-				cellManager.setCellContent(i,cellContent);
+				cellManager.occupyAndConfigureCell(i,cellContent,cellContent.GetComponent<Piece> ().currentType);
 			}
 			if((cellType & 0x4) == 0x4)
 			{
@@ -291,8 +290,7 @@ public class GameManager : MonoBehaviour
 			if((cellType & 0x8) == 0x8)
 			{	
 				cellContent = createCellObstacleContent();
-				cellManager.setCellType(i,EPieceType.LETTER_OBSTACLE);
-				cellManager.setCellContent(i,cellContent);
+				cellManager.occupyAndConfigureCell(i,cellContent,EPieceType.LETTER_OBSTACLE);
 			}
 		}
 	}
@@ -780,8 +778,7 @@ public class GameManager : MonoBehaviour
 
 			go.GetComponent<Piece> ().currentType = cellManager.colorOfMoreQuantity ();
 
-			cellManager.setCellContent(cell,go);
-			cellManager.setCellType(cell,go.GetComponent<Piece> ().currentType);
+			cellManager.occupyAndConfigureCell(cell,go,go.GetComponent<Piece> ().currentType);
 
 			StartCoroutine (add1x1BlockMore ());
 		}

@@ -49,8 +49,7 @@ public class DestroyPowerUp : PowerupBase
 
 				for(int i = 0;i < selection.Length;i++)
 				{
-					cellsManager.setCellContent(selection[i],gameManager.createLetterContent());
-					cellsManager.setCellType(selection[i],EPieceType.LETTER);
+					cellsManager.occupyAndConfigureCell(selection[i],gameManager.createLetterContent(),EPieceType.LETTER);
 				}
 				//cellsManager.destroyCells(selection);
 

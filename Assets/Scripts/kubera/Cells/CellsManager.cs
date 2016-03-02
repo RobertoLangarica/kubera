@@ -309,6 +309,14 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Ocupa la celda indicada y le asigna el contenido y tipo indicado
 	 **/ 
+	public void occupyAndConfigureCell(int cellIndex,GameObject content, EPieceType type)
+	{
+		occupyAndConfigureCell(cells[cellIndex],content,type);
+	}
+
+	/**
+	 * Ocupa la celda indicada y le asigna el contenido y tipo indicado
+	 **/ 
 	public void occupyAndConfigureCell(Cell cell,GameObject content, EPieceType type)
 	{
 		cell.occupied = true;
@@ -320,7 +328,7 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Cambia el contenido de la celda y destruye el anterior si se necesita y posiciona si se necesita
 	 **/ 
-	public void setCellContent(int cellIndex,GameObject content, bool destroyOldContent = true, bool positionate = true)
+	protected void setCellContent(int cellIndex,GameObject content, bool destroyOldContent = true, bool positionate = true)
 	{
 		setCellContent(cells[cellIndex],content,destroyOldContent,positionate);
 	}
@@ -328,7 +336,7 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Cambia el contenido de la celda y destruye el anterior si se necesita y posiciona si se necesita
 	 **/ 
-	public void setCellContent(int x, int y,GameObject content, bool destroyOldContent = true, bool positionate = true)
+	protected void setCellContent(int x, int y,GameObject content, bool destroyOldContent = true, bool positionate = true)
 	{
 		setCellContent(getCellAt(x,y),content,destroyOldContent,positionate);
 	}
@@ -336,7 +344,7 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Cambia el contenido de la celda y destruye el anterior si se necesita y posiciona si se necesita
 	 **/ 
-	public void setCellContent(Cell cell,GameObject content, bool destroyOldContent = true, bool positionate = true)
+	protected void setCellContent(Cell cell,GameObject content, bool destroyOldContent = true, bool positionate = true)
 	{
 		if(destroyOldContent)
 		{
@@ -349,6 +357,7 @@ public class CellsManager : MonoBehaviour
 		{
 			content.transform.position = cell.transform.position + (new Vector3 (cell.GetComponent<SpriteRenderer> ().bounds.extents.x,
 				-cell.GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
+			
 		}
 	}
 
