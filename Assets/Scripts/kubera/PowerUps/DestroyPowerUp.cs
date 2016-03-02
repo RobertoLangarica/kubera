@@ -50,6 +50,7 @@ public class DestroyPowerUp : PowerupBase
 				DestroyImmediate(destroyGO);
 				bombInput.OnDrop -= powerUPPositionated;
 				bombInput.enabled = false;
+				OnComplete ();
 			}
 			else 
 			{
