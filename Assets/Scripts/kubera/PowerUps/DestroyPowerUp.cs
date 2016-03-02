@@ -9,13 +9,15 @@ public class DestroyPowerUp : PowerupBase
 
 	protected CellsManager cellsManager;
 	protected InputBombAndDestroy bombInput;
+	protected GameManager gameManager;
 
 	protected GameObject destroyGO;
 
 	void Start () 
 	{
-		cellsManager = GameObject.FindObjectOfType<CellsManager>();
-		bombInput = GameObject.FindObjectOfType<InputBombAndDestroy>();
+		cellsManager = FindObjectOfType<CellsManager>();
+		bombInput = FindObjectOfType<InputBombAndDestroy>();
+		gameManager = FindObjectOfType<GameManager>();
 	}
 
 	public override void activate()
@@ -45,7 +47,11 @@ public class DestroyPowerUp : PowerupBase
 			{
 				Cell[] selection = cellsManager.getCellsOfSameType(cellSelected);
 
-				cellsManager.destroyCells(selection);
+				for(int i = 0;i < selection.Length;i++)
+				{
+					cellsManager.setCellContent(selection[i],gameManager.createLetterContent());
+				}
+				//cellsManager.destroyCells(selection);
 
 				DestroyImmediate(destroyGO);
 				bombInput.OnDrop -= powerUPPositionated;
