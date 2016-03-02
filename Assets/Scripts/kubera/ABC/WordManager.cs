@@ -545,7 +545,7 @@ namespace ABC
 		 **/
 		public void activateButtonOfWordsActions(bool activate)
 		{
-			activeWordActiveButton (activate);
+			activateWordDeleteButton (activate);
 		}
 
 		/**
@@ -568,17 +568,9 @@ namespace ABC
 			}
 		}
 
-		public void activeWordActiveButton(bool showing)
+		public void activateWordDeleteButton(bool showing)
 		{
 			wordDeleteButton.SetActive(showing);
-		}
-
-		public void wordCompletedShowButton(bool isCompleted)
-		{
-			if(isCompleted)
-			{
-			}
-
 		}
 
 		public void wordNotCompletedOrMoving(int imageValue)
