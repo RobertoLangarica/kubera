@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 	protected List<string> letters;
 	protected string[] words;
 		
-	protected int blackLettersUsed = 0;
+	protected int obstaclesUsed = 0;
 
 	protected string[] myWinCondition;
 
@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
 	public bool canRotate;
 	public bool destroyByColor;
 
+	public Transform canvasOfLetters;
+
 	protected List<Cell> cellToLetter;
 
 	protected int currentWildCardsActivated;
@@ -52,6 +54,7 @@ public class GameManager : MonoBehaviour
 	protected PowerUpManager powerupManager;
 	protected PieceManager pieceManager;
 	protected HUD hud;
+	protected AudioManager audioManager;
 
 	protected InputPiece inputPiece;
 	protected InputWords inputWords;
@@ -83,7 +86,8 @@ public class GameManager : MonoBehaviour
 		powerupManager.OnPowerupCompleted = OnPowerupCompleted;
 
 		pieceManager = FindObjectOfType<PieceManager>();
-		pieceManager.OnShowMoney += activeMoney;
+
+		audioManager = FindObjectOfType<AudioManager>();
 	}
 
 	void Start()
@@ -101,6 +105,9 @@ public class GameManager : MonoBehaviour
 		fillLettersPoolList ();
 		fillPiecesPoolList ();
 
+		pieceManager.initializeShowingPieces ();
+		hud.showPieces (pieceManager.getShowingPieceList ());
+
 		cellToLetter = new List<Cell> ();
 
 		myWinCondition = currentLevel.winCondition.Split ('-');
@@ -113,6 +120,11 @@ public class GameManager : MonoBehaviour
 		hud.setGems(UserDataManager.instance.playerGems);
 		hud.setLevelName (currentLevel.name);
 		hud.setSecondChanceLock (false);
+
+		//Se muestra el objetivo al inicio del nivel
+		hud.showObjectivePopUp(myWinCondition[0],myWinCondition[1]);
+
+		allowGameInput(false);
 
 		checkIfNeedToUnlockPowerUp();
 
@@ -176,14 +188,7 @@ public class GameManager : MonoBehaviour
 	{
 		List<Cell> tempCell = new List<Cell> ();
 		tempCell = cellManager.getCellsUnderPiece (piece);
-		//damos puntos por las piezas en la pieza
 
-		if (!piece.powerUp) 
-		{
-			pieceManager.checkPiecesToPosisionate (piece.gameObject);
-			piecePositionatedCorrectly (piece.pieces.Length);
-			hud.showScoreTextAt(piece.transform.position,piece.pieces.Length);
-		}
 
 		for(int i=0; i< tempCell.Count; i++)
 		{ 
@@ -192,9 +197,42 @@ public class GameManager : MonoBehaviour
 
 			cellManager.occupyAndConfigureCell (tempCell [i], piece.pieces [i], piece.currentType);
 
-			piece.pieces [i].transform.DOMove (cellPosition, 0.5f);
+			tempCell [i].content.transform.DOMove (cellPosition, 0.5f);
+
+			if(tempCell.Count == i+1)
+			{
+				StartCoroutine(allPiecesAreOnGrid(piece));
+			}
+
 		}
-		piece.activeCollider (false);
+
+		for(int i = 0;i < piece.pieces.Length;i++)
+		{
+			piece.pieces[i].transform.SetParent(piece.transform.parent);
+		}
+
+		audioManager.PlayPiecePositionatedAudio();
+	}
+
+	IEnumerator allPiecesAreOnGrid(Piece piece)
+	{
+		yield return new WaitForSeconds (0.5f);
+		if (!piece.powerUp) 
+		{
+			pieceManager.removeFromListPieceUsed (piece.gameObject);
+
+			if (pieceManager.getShowingPieceList ().Count == 0) 
+			{
+				pieceManager.initializeShowingPieces ();
+				hud.showPieces (pieceManager.getShowingPieceList ());
+			}
+
+			//damos puntos por las piezas en la pieza
+			addPointsActions (piece.pieces.Length);
+			hud.showScoreTextAt(piece.transform.position,piece.pieces.Length);
+		}
+
+		Destroy(piece.gameObject);
 	}
 
 	private void checkAndCompleteLines()
@@ -306,7 +344,7 @@ public class GameManager : MonoBehaviour
 	{
 		GameObject go = Instantiate (uiLetter)as GameObject;
 
-		go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
+		go.transform.SetParent (canvasOfLetters,false);
 
 		go.GetComponent<BoxCollider2D>().enabled = true;
 
@@ -321,7 +359,7 @@ public class GameManager : MonoBehaviour
 	{
 		GameObject go = Instantiate (uiLetter)as GameObject;
 
-		go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
+		go.transform.SetParent (canvasOfLetters,false);
 
 		go.GetComponent<BoxCollider2D>().enabled = true;
 
@@ -377,7 +415,7 @@ public class GameManager : MonoBehaviour
 		return false;
 	}
 
-	protected void piecePositionatedCorrectly(int length)
+	protected void addPointsActions(int length)
 	{
 		remainingMoves--;
 
@@ -421,19 +459,19 @@ public class GameManager : MonoBehaviour
 		return false;
 	}
 
-	/*public void verifyWord()
+	public void verifyWord()
 	{
 		int amount = 0;
 		int multiplierHelper = 1;
 		bool letterFound;
 		bool canUseAllWildCards;
+		bool correct = false;
 
 		canUseAllWildCards = canCompleteWordWithWildCards();
 
 		if(wordManager.wordsValidator.completeWord && canUseAllWildCards)
 		{
-			//useGems(powerUpManager.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
-			
+			correct = true;
 			for(int i = 0;i < wordManager.chars.Count;i++)
 			{
 				letterFound = false;
@@ -455,15 +493,26 @@ public class GameManager : MonoBehaviour
 					{amount += int.Parse(wordManager.chars[i].pointsOrMultiple);}
 					break;
 				}
-				if (wordManager.chars [i].type == ABCChar.EType.OBSTACLE) 
+				if (!letterFound && wordManager.chars [i].type == ABCChar.EType.OBSTACLE && myWinCondition [0] == "obstacles") 
 				{
-					blackLettersUsed++;
+					for (int j = 0; j < letters.Count; j++) 
+					{
+						if (letters [j].ToLower () == wordManager.chars [i].character.ToLower () && !letterFound) 
+						{	
+							hud.destroyLetterFound (letters [j]);
+							letters.RemoveAt (j);
+							break;
+						}
+					}
 				}
 				
 				if (myWinCondition [0] == "letters") 
 				{
-					for (int j = 0; j < letters.Count; j++) {
-						if (letters [j].ToLower () == wordManager.chars [i].character.ToLower () && !letterFound) {
+					for (int j = 0; j < letters.Count; j++) 
+					{
+						if (letters [j].ToLower () == wordManager.chars [i].character.ToLower () && !letterFound) 
+						{
+							hud.destroyLetterFound (letters [j]);
 							letters.RemoveAt (j);
 							letterFound = true;
 						}
@@ -485,11 +534,11 @@ public class GameManager : MonoBehaviour
 			amount *= multiplierHelper;
 
 			wordsMade++;
+			addPointsActions (amount);
 		}
 
-		wordManager.resetValidation();
-		addPoints(amount);
-	}*/
+		wordManager.resetValidation(correct);
+	}
 
 	protected void sendVectorToCellManager(Vector3 vector3)
 	{
@@ -498,6 +547,12 @@ public class GameManager : MonoBehaviour
 
 	public void linesCreated(int totalLines)
 	{
+		if(totalLines > 0)
+		{
+			Debug.Log(totalLines);
+			audioManager.PlayLeLineCreatedAudio();
+		}
+
 		switch(totalLines)
 		{
 		case(1):
@@ -556,8 +611,11 @@ public class GameManager : MonoBehaviour
 
 	protected void getWinCondition()
 	{
-		if(myWinCondition[0] == "letters")
+		int quantity = 0;
+
+		if(myWinCondition[0] == "letters" || myWinCondition[0] == "obstacles")
 		{
+			words= new string[0];
 			letters = new List<string> ();
 			int i;
 			string[] s = myWinCondition [1].Split (',');
@@ -575,11 +633,18 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
+
 		if(myWinCondition[0] == "word")
 		{
+			words = new string[myWinCondition [1].Split ('_').Length];
 			words = myWinCondition [1].Split ('_');
 		}
-		hud.setWinConditionOnHud (myWinCondition [0],words,int.Parse(myWinCondition [1]),letters);
+		if(myWinCondition[0] == "points" ||myWinCondition[0] == "words")
+		{
+			quantity = int.Parse (myWinCondition [1]);
+		}
+
+		hud.setWinConditionOnHud (myWinCondition [0],words,quantity,letters);
 	}
 
 	protected void checkWinCondition ()
@@ -605,8 +670,8 @@ public class GameManager : MonoBehaviour
 				win = true;
 			}
 			break;
-		case "blackLetters":
-			if (blackLettersUsed >= int.Parse (myWinCondition [1])) 
+		case "obstacles":
+			if (letters.Count == 0) 
 			{
 				win = true;
 			}
@@ -636,13 +701,21 @@ public class GameManager : MonoBehaviour
 	IEnumerator check()
 	{
 		yield return new WaitForSeconds (.2f);
-		FindObjectOfType<WordManager>().checkIfAWordisPossible(listChar);
+		if(!wordManager.checkIfAWordisPossible(listChar))
+		{
+			audioManager.PlayLoseAudio();
+		}
 	}
 
 	public void checkToLoose()
 	{
-		if(!cellManager.checkIfOneCanFit(pieceManager.piecesInBar) || remainingMoves == 0)
+		if(!cellManager.checkIfOneCanFit(pieceManager.getShowingPieceList()) || remainingMoves == 0)
 		{
+			if(remainingMoves == 0)
+			{
+				allowGameInput(false);
+			}
+
 			Debug.Log ("Perdio");
 			while(true)
 			{
@@ -668,6 +741,8 @@ public class GameManager : MonoBehaviour
 
 	protected void winBonification()
 	{
+		audioManager.PlayWonAudio();
+
 		allowGameInput (false);
 
 		//Se limpian las letras 
@@ -699,18 +774,12 @@ public class GameManager : MonoBehaviour
 			hud.setMovments (remainingMoves);
 
 			GameObject go = GameObject.Instantiate (bonificationPiece) as GameObject;
-			SpriteRenderer sprite = go.GetComponent<Piece> ().pieces [0].GetComponent<SpriteRenderer> ();
-
-			Vector3 nVec = new Vector3 (sprite.bounds.size.x * 0.5f,
-				               -sprite.bounds.size.x * 0.5f, 0) + cell.transform.position;
-
-			go.transform.position = nVec;
 
 			go.GetComponent<Piece> ().currentType = cellManager.colorOfMoreQuantity ();
 
-			//go.transform.position = cellManager.positionate (go.GetComponent<Piece> ());
+			cellManager.setCellContent(cell,go);
+			cellManager.setCellType(cell,go.GetComponent<Piece> ().currentType);
 
-			//cellManager.turnPieceToLetterByWinNotification (cell);
 			StartCoroutine (add1x1BlockMore ());
 		}
 		else 
@@ -817,9 +886,10 @@ public class GameManager : MonoBehaviour
 		addPoints(amount,false);
 	}
 
-	protected void allowGameInput(bool allowInput)
+	protected void allowGameInput(bool allowInput = true)
 	{
 		inputPiece.allowInput = allowInput;
+		inputWords.allowInput = allowInput;
 	}
 
 	protected void bombsForWinBonification()
@@ -836,7 +906,7 @@ public class GameManager : MonoBehaviour
 		{
 			winBombs = 3;
 		}
-		else if(remainingMoves > 10)
+		else if(remainingMoves >= 10)
 		{
 			winBombs = 5;
 		}
@@ -961,7 +1031,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		pieceManager.setPiecesPoolList (XMLPoolPiecesList);
+		pieceManager.setPiecesInList (XMLPoolPiecesList);
 	}
 
 	protected void fillLettersPoolList()
@@ -989,7 +1059,6 @@ public class GameManager : MonoBehaviour
 					XMLPoolLetersList.Add(newLetter);
 				}
 			}
-
 			if(PersistentData.instance.currentLevel.obstacleLettersPool.Length > 0)
 			{
 				lettersPool = PersistentData.instance.currentLevel.obstacleLettersPool.Split(new char[1]{','});
@@ -1017,15 +1086,15 @@ public class GameManager : MonoBehaviour
 	protected void fillLetterPoolRandomList()
 	{
 		List<ScriptableABCChar> tempList = new List<ScriptableABCChar> ();
-		randomizedPoolLeters = new List<ScriptableABCChar>(XMLPoolLetersList);
+		randomizedPoolLeters = new List<ScriptableABCChar>();
 
 		tempList = new List<ScriptableABCChar>(XMLPoolLetersList);
 
 
 		while(tempList.Count >0)
 		{
-			int val = UnityEngine.Random.Range(0,tempList.Count);
-			randomizedBlackPoolLeters.Add(tempList[val]);
+			int val = Random.Range(0,tempList.Count);
+			randomizedPoolLeters.Add(tempList[val]);
 			tempList.RemoveAt(val);
 		}
 	}
@@ -1033,14 +1102,14 @@ public class GameManager : MonoBehaviour
 	protected void fillBlackLetterPoolRandomList()
 	{
 		List<ScriptableABCChar> tempList = new List<ScriptableABCChar> ();
-		randomizedBlackPoolLeters = new List<ScriptableABCChar>(XMLPoolBlackLetersList);
+		randomizedBlackPoolLeters = new List<ScriptableABCChar>();
 
 		tempList = new List<ScriptableABCChar>(XMLPoolBlackLetersList);
 
 
 		while(tempList.Count >0)
 		{
-			int val = UnityEngine.Random.Range(0,tempList.Count);
+			int val = Random.Range(0,tempList.Count);
 			randomizedBlackPoolLeters.Add(tempList[val]);
 			tempList.RemoveAt(val);
 		}
@@ -1090,22 +1159,57 @@ public class GameManager : MonoBehaviour
 		allowGameInput(true);
 	}
 
-	public void activateSettings()
+	public void activateSettings(bool activate)
 	{
-		hud.activateSettings ();
+		audioManager.PlayButtonAudio();
+
+		hud.activateSettings (activate);
+	}
+
+	public void closeObjectivePopUp()
+	{
+		audioManager.PlayButtonAudio();
+		hud.hideObjectivePopUp ();
+		allowGameInput ();
 	}
 
 	//TODO
 	public void activateMusic()
 	{
+		audioManager.PlayButtonAudio();
+
+		if(audioManager.mainAudio)
+		{
+			audioManager.mainAudio = false;
+			UserDataManager.instance.musicSetting = false;
+		}
+		else
+		{
+			audioManager.mainAudio = true;
+			UserDataManager.instance.musicSetting = true;
+		}
 	}
 
 	public void activateSounds()
 	{
+		audioManager.PlayButtonAudio();
+		
+		if(audioManager.soundEffects)
+		{
+			audioManager.soundEffects = false;
+			UserDataManager.instance.soundEffectsSetting = false;
+		}
+		else
+		{
+			audioManager.soundEffects = true;
+			UserDataManager.instance.soundEffectsSetting = true;
+		}
 	}
 
-	public void exit()
+	public void quitGame()
 	{
-		
+		audioManager.PlayButtonAudio();
+
+		hud.quitGamePopUp ();
 	}
 }

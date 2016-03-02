@@ -16,7 +16,7 @@ namespace ABC
 		public GameObject wordActiveButton;
 		public Sprite[] wordActiveButtonImagesStates;
 
-		public int maxLetters = 12;
+		public int maxLetters = 7;
 
 		protected InputWords inputWords;
 
@@ -61,15 +61,17 @@ namespace ABC
 		}
 			
 
-		public ABCChar getWildcard(string pointsOrMultiple)
+		public GameObject getWildcard(string pointsOrMultiple)
 		{
-			ABCChar result = new ABCChar();
+			
+			GameObject result = new GameObject();
+			result.AddComponent<ABCChar> ();
 			string wildcardValue = ".";
-			result.value = wordsValidator.getCharValue(wildcardValue);
-			result.wildcard = true;
-			result.character = wildcardValue;
-			result.pointsOrMultiple = pointsOrMultiple;
-			result.type = ABCChar.EType.NORMAL;
+			result.GetComponent<ABCChar>().value = wordsValidator.getCharValue(wildcardValue);
+			result.GetComponent<ABCChar>().wildcard = true;
+			result.GetComponent<ABCChar>().character = wildcardValue;
+			result.GetComponent<ABCChar>().pointsOrMultiple = pointsOrMultiple;
+			result.GetComponent<ABCChar>().type = ABCChar.EType.NORMAL;
 
 			return result;
 		}
@@ -89,6 +91,10 @@ namespace ABC
 
 			letter.transform.localScale = new Vector3 (1, 1, 1);
 			letter.GetComponent<UIChar> ().piece = piece;
+			if (piece.GetComponent<UIChar> ()) 
+			{
+				piece.GetComponent<UIChar> ().piece = letter;
+			}
 
 			//letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
 			letter.GetComponent<ABCChar>().initializeText();
@@ -103,13 +109,16 @@ namespace ABC
 			}
 		}
 
-		/*protected void actualizeBoxColliderOfLetters()
+		protected void actualizeBoxColliderOfLetter(GameObject letter)
 		{
-			for (int i = 0; i < letterContainer.transform.childCount; i++) 
-			{
-				letterContainer.transform.GetChild(i).GetComponent<BoxCollider2D> ().size = letterContainer.transform.GetChild(i).GetComponent<Image> ().rectTransform.rect.size;
-			}
-		}*/
+			StartCoroutine(actualizeBoxCollider(letter));
+		}
+
+		IEnumerator actualizeBoxCollider(GameObject letter)
+		{
+			yield return new WaitForSeconds (0.1f);
+			letter.GetComponent<BoxCollider2D> ().size = letter.GetComponent<Image> ().rectTransform.rect.size;
+		}
 
 		/**
 		 * Agrega la siguiente letra tomando en cuenta los espacios vacios
@@ -129,7 +138,9 @@ namespace ABC
 			}
 
 			//Agregamos la letra al ultimo
-			letter.transform.SetParent(letterContainer.transform);
+			letter.transform.SetParent(letterContainer.transform,false);
+
+			actualizeBoxColliderOfLetter (letter);
 		}
 
 		/**
@@ -194,7 +205,7 @@ namespace ABC
 		/**
 		 * Elimina los caracteres de la busqueda actual
 		 **/ 
-		public void resetValidation()
+		public void resetValidation(bool correct = false)
 		{
 			if (letterContainer.transform.childCount != 0) 
 			{
@@ -216,17 +227,19 @@ namespace ABC
 					{
 						if (wordsValidator.completeWord) 
 						{
-							OnSendVector3 (uiChar.piece.transform.position);
-							uiChar.destroyPiece ();
+							if (!abcChar.wildcard) 
+							{
+								OnSendVector3 (uiChar.piece.transform.position);
+								uiChar.destroyPiece ();
+							}
+							else 
+							{
+								DestroyImmediate(uiChar.gameObject);
+							}
 						} 
 						else 
 						{
-							if (abcChar.wildcard) 
-							{
-								//activeMoney (false);
-								//GameObject.Find("WildCard").GetComponent<PowerUpBase>().returnPower();
-							} 
-							else 
+							if (!abcChar.wildcard) 
 							{
 								uiChar.piece.GetComponent<UIChar> ().backToNormal ();
 							}
@@ -382,6 +395,7 @@ namespace ABC
 		 **/
 		public bool checkIfAWordisPossible(List<ABCChar> pool)
 		{
+			//TODO: checar si realmente no puede hacer una palabra
 			//Debug.Log ("Possible word: "+words.isAWordPossible(pool));
 			if(!wordsValidator.isAWordPossible(pool))
 			{
@@ -441,7 +455,7 @@ namespace ABC
 			}
 			else
 			{
-				checkSwappLetters(letter);	
+				checkSwappLetters(letter,false);	
 			}
 		}
 
@@ -461,7 +475,7 @@ namespace ABC
 		  * a la letra que se movera se mueve su index para que este arriba de las otras letras
 		  * destruye la letra seleccionada si la arrojaron a la basura
 		  **/
-		public void checkSwappLetters(GameObject letter,bool destroy = false)
+		public void checkSwappLetters(GameObject letter,bool destroy = true)
 		{			
 			letterContainer.GetComponent<GridLayoutGroup>().enabled = true;
 			if(destroy)
@@ -528,8 +542,16 @@ namespace ABC
 		{
 			if (go.GetComponent<UIChar>().checkIfLetterCanBeUsedFromGrid ()) 
 			{
-				addCharacter (go.GetComponent<ABCChar> (), go);
-				activateButtonOfWordsActions (true);
+				if (maxLetters > letterContainer.transform.childCount) 
+				{
+					addCharacter (go.GetComponent<ABCChar> (), go);
+					activateButtonOfWordsActions (true);
+				}
+			}
+			else
+			{
+				checkSwappLetters(go.GetComponent<UIChar>().piece);
+				//go.GetComponent<UIChar> ().piece.GetComponent<UIChar>().destroyLetter();
 			}
 		}
 

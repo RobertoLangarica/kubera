@@ -28,7 +28,10 @@ public class InputBlockPowerUp : MonoBehaviour
 	public void createBlock(GameObject block, Vector3 bottonPosition)
 	{
 		GameObject blockGO = Instantiate (block,bottonPosition,Quaternion.identity) as GameObject;
-
+		if (currentSelected) 
+		{
+			DestroyImmediate (currentSelected);
+		}
 		butonPowerUpBlockPosition = bottonPosition;
 		butonPowerUpBlockPosition.z = 0;
 		currentSelected = blockGO;
@@ -87,7 +90,6 @@ public class InputBlockPowerUp : MonoBehaviour
 					else
 					{
 						returnSelectedToInitialState(0.2f);
-						reset();
 						completePowerUp (false);
 					}
 
@@ -103,7 +105,6 @@ public class InputBlockPowerUp : MonoBehaviour
 		if(!somethingDragged && currentSelected != null)
 		{				
 			returnSelectedToInitialState (0.2f);
-			reset ();
 			completePowerUp (false);
 		}
 
@@ -133,7 +134,10 @@ public class InputBlockPowerUp : MonoBehaviour
 		else
 		{
 			currentSelected.transform.DOMove (butonPowerUpBlockPosition, delay).SetId("InputBlock_InitialPosition");
-			currentSelected.transform.DOScale (new Vector3(0,0,0), delay).SetId("InputBlock_ScalePosition");
+			currentSelected.transform.DOScale (new Vector3(0,0,0), delay).SetId("InputBlock_ScalePosition").OnComplete (() => {
+				DestroyImmediate(currentSelected);
+				reset();//Se manda reset despues de destruirla
+			});
 		}
 	}
 

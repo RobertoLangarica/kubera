@@ -20,6 +20,10 @@ public class DestroyPowerUp : PowerupBase
 
 	public override void activate()
 	{
+		if (destroyGO != null) 
+		{
+			DestroyImmediate (destroyGO);
+		}
 		destroyGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
 		destroyGO.name = "DestroyPowerUp";
 		destroyGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
@@ -45,6 +49,7 @@ public class DestroyPowerUp : PowerupBase
 
 				DestroyImmediate(destroyGO);
 				bombInput.OnDrop -= powerUPPositionated;
+				bombInput.enabled = false;
 			}
 			else 
 			{
@@ -60,9 +65,13 @@ public class DestroyPowerUp : PowerupBase
 	public void powerUPCanceled()
 	{
 		destroyGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("DestroyPowerUP_Move");
-		destroyGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("DestroyPowerUP_Scale");
+		destroyGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("DestroyPowerUP_Scale").OnComplete (() => {
+
+			DestroyImmediate(destroyGO);
+		});
 
 		bombInput.OnDrop -= powerUPPositionated;
+		bombInput.enabled = false;
 
 		OnCancel();
 	}

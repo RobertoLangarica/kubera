@@ -163,12 +163,9 @@ public class CellsManager : MonoBehaviour
 			for(int x = 0; x < columns; x++)
 			{
 				cell = getCellAt(x,y);
-				if(cell.available && cell.occupied && cell.pieceType != EPieceType.LETTER)
+				if(cell.available && cell.occupied && cell.pieceType != EPieceType.LETTER && cell.content != null)
 				{
-					if (cell.content != null) 
-					{
-						result [result.Count - 1].Add (cell);
-					}
+					result [result.Count - 1].Add (cell);
 				}
 				else
 				{
@@ -193,12 +190,9 @@ public class CellsManager : MonoBehaviour
 			for(int y = 0; y < rows; y++)
 			{
 				cell = getCellAt(x,y);
-				if(cell.available && cell.occupied && cell.pieceType != EPieceType.LETTER)
+				if(cell.available && cell.occupied && cell.pieceType != EPieceType.LETTER && cell.content != null)
 				{
-					if (cell.content != null) 
-					{
-						result [result.Count - 1].Add (cell);
-					}
+					result [result.Count - 1].Add (cell);
 				}
 				else
 				{
@@ -270,7 +264,6 @@ public class CellsManager : MonoBehaviour
 				}
 			}
 		}
-
 		return true;
 	}
 		
@@ -405,12 +398,12 @@ public class CellsManager : MonoBehaviour
 
 		foreach(Cell val in cells)
 		{
-			if(!val.occupied)
+			if(!val.occupied && val.canPositionateOnThisCell())
 			{
 				for(int i = 0;i < piecesList.Count;i++)
 				{
 					
-					offset = (val.transform.position + moveLittle) - piecesList[0].transform.position;
+					offset = (val.transform.position + moveLittle) - piecesList[i].pieces[0].transform.position;
 					vecArr = new Vector3[piecesList[i].pieces.Length];
 					for(int j = 0;j < piecesList[i].pieces.Length;j++)
 					{

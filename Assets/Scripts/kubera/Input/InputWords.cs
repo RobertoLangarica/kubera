@@ -39,7 +39,6 @@ public class InputWords : MonoBehaviour
 					return;
 				}
 
-
 				letter = gesture.Raycast.Hit2D.transform.gameObject;
 
 				onDragStart(letter);
