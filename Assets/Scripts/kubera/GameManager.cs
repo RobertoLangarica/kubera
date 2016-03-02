@@ -355,7 +355,7 @@ public class GameManager : MonoBehaviour
 		return go;
 	}
 
-	protected GameObject createLetterContent()
+	public GameObject createLetterContent()
 	{
 		GameObject go = Instantiate (uiLetter)as GameObject;
 
