@@ -644,9 +644,8 @@ public class GameManager : MonoBehaviour
 		}
 
 		//Se muestra el objetivo al inicio del nivel
-		//TODO: hacerlo bien R
-		hud.showObjectivePopUp(myWinCondition [0],words,quantity,letters);
 
+		hud.showObjectivePopUp(myWinCondition [0],words,quantity,letters);
 		hud.setWinConditionOnHud (myWinCondition [0],words,quantity,letters);
 	}
 
