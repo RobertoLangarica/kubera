@@ -13,7 +13,8 @@ namespace ABC
 		public GameObject emptyChild;
 		public GameObject letterContainer;
 
-		public GameObject wordActiveButton;
+		public GameObject wordCompleteButton;
+		public GameObject wordDeleteButton;
 		public Sprite[] wordActiveButtonImagesStates;
 
 		public int maxLetters = 7;
@@ -29,7 +30,7 @@ namespace ABC
 
 		protected float letterPrefabHeight = 0;
 
-		[HideInInspector]public Vector3 wordActiveButtonPosition;
+		[HideInInspector]public Vector3 wordDeleteButtonPosition;
 
 		public delegate void DSendVector3(Vector3 vector3);
 		public DSendVector3 OnSendVector3;
@@ -48,7 +49,7 @@ namespace ABC
 
 			chars = new List<ABCChar>();
 
-			wordActiveButtonPosition = wordActiveButton.transform.localPosition;
+			wordDeleteButtonPosition = wordDeleteButton.transform.localPosition;
 
 			GridLayoutGroup gridLayout = letterContainer.GetComponent<GridLayoutGroup>();
 			gridLayout.cellSize = new Vector2(letterContainer.GetComponent<RectTransform>().rect.width/maxLetters
@@ -57,7 +58,8 @@ namespace ABC
 
 			wordsValidator = FindObjectOfType<ABCDataStructure>();
 
-			wordActiveButton.SetActive(false);
+			wordDeleteButton.SetActive(false);
+			wordCompleteButton.SetActive (false);
 		}
 			
 
@@ -176,11 +178,12 @@ namespace ABC
 
 					if(wordsValidator.completeWord)
 					{
-						onWordComplete();
+						onWordComplete(true);
 					}
 					else
 					{
-						isCompletedNotCompletedOrMoving(1);
+						wordNotCompletedOrMoving(0);
+						onWordComplete(false);
 					}
 				}
 			}
@@ -192,11 +195,12 @@ namespace ABC
 
 				if(wordsValidator.completeWord)
 				{
-					onWordComplete();
+					onWordComplete(true);
 				}
 				else
 				{
-					isCompletedNotCompletedOrMoving(1);
+					wordNotCompletedOrMoving(0);
+					onWordComplete(false);
 				}
 			}
 		}
@@ -205,7 +209,7 @@ namespace ABC
 		/**
 		 * Elimina los caracteres de la busqueda actual
 		 **/ 
-		public void resetValidation(bool correct = false)
+		public void resetValidation()
 		{
 			if (letterContainer.transform.childCount != 0) 
 			{
@@ -272,10 +276,18 @@ namespace ABC
 		/**
 		 * Cuando se completa una palabra
 		 **/ 
-		protected void onWordComplete()
+		protected void onWordComplete(bool wordCompleted)
 		{
-			Debug.Log("Se completo: "+getFullWord());
-			isCompletedNotCompletedOrMoving(0);
+			if(wordCompleted)
+			{
+				Debug.Log("Se completo: "+getFullWord());
+				wordCompleteButton.SetActive (true);
+			}
+			else
+			{
+				wordCompleteButton.SetActive (false);
+			}
+
 		}
 
 		/**
@@ -441,7 +453,7 @@ namespace ABC
 					}
 				}
 			}
-			isCompletedNotCompletedOrMoving(2);
+			wordNotCompletedOrMoving(1);
 		}
 
 		/**
@@ -449,7 +461,7 @@ namespace ABC
 		 **/
 		protected void swappEnding(GameObject letter)
 		{
-			if(!letter.GetComponent<ABCChar> ().wildcard && letter.transform.localPosition.x > wordActiveButtonPosition.x -50 && letter.transform.localPosition.x < wordActiveButtonPosition.x +50)
+			if(!letter.GetComponent<ABCChar> ().wildcard && letter.transform.localPosition.x > wordDeleteButtonPosition.x -50 && letter.transform.localPosition.x < wordDeleteButtonPosition.x +50)
 			{
 				checkSwappLetters (letter, true);
 			}
@@ -506,11 +518,12 @@ namespace ABC
 			}
 			if(wordsValidator.completeWord)
 			{
-				onWordComplete();
+				onWordComplete(true);
 			}
 			else
 			{
-				isCompletedNotCompletedOrMoving(1);
+				onWordComplete(false);
+				wordNotCompletedOrMoving(0);
 			}
 			isThereAnyLetterOnContainer ();
 		}
@@ -557,20 +570,26 @@ namespace ABC
 
 		public void activeWordActiveButton(bool showing)
 		{
-			wordActiveButton.SetActive(showing);
+			wordDeleteButton.SetActive(showing);
 		}
 
-		public void isCompletedNotCompletedOrMoving(int imageValue)
+		public void wordCompletedShowButton(bool isCompleted)
 		{
-			switch (imageValue) {
+			if(isCompleted)
+			{
+			}
+
+		}
+
+		public void wordNotCompletedOrMoving(int imageValue)
+		{
+			switch (imageValue) 
+			{
 			case 0:
-				wordActiveButton.GetComponent<Image> ().sprite = wordActiveButtonImagesStates [0];//completed
+				wordDeleteButton.GetComponent<Image> ().sprite = wordActiveButtonImagesStates [0];//notCompleted
 				break;
 			case 1:
-				wordActiveButton.GetComponent<Image> ().sprite = wordActiveButtonImagesStates [1];//notCompleted
-				break;
-			case 2:
-				wordActiveButton.GetComponent<Image> ().sprite = wordActiveButtonImagesStates [2];//Moving
+				wordDeleteButton.GetComponent<Image> ().sprite = wordActiveButtonImagesStates [1];//Moving
 				break;
 			default:
 				break;

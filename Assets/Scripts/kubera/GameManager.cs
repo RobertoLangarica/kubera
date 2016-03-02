@@ -458,19 +458,22 @@ public class GameManager : MonoBehaviour
 		return false;
 	}
 
+	public void deleteWord()
+	{
+		wordManager.resetValidation();
+	}
+
 	public void verifyWord()
 	{
 		int amount = 0;
 		int multiplierHelper = 1;
 		bool letterFound;
 		bool canUseAllWildCards;
-		bool correct = false;
 
 		canUseAllWildCards = canCompleteWordWithWildCards();
 
 		if(wordManager.wordsValidator.completeWord && canUseAllWildCards)
 		{
-			correct = true;
 			for(int i = 0;i < wordManager.chars.Count;i++)
 			{
 				letterFound = false;
@@ -536,7 +539,7 @@ public class GameManager : MonoBehaviour
 			addPointsActions (amount);
 		}
 
-		wordManager.resetValidation(correct);
+		wordManager.resetValidation();
 	}
 
 	protected void sendVectorToCellManager(Vector3 vector3)
