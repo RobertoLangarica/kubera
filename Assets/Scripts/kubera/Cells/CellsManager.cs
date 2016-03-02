@@ -309,19 +309,19 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Ocupa la celda indicada y le asigna el contenido y tipo indicado
 	 **/ 
-	public void occupyAndConfigureCell(int cellIndex,GameObject content, EPieceType type)
+	public void occupyAndConfigureCell(int cellIndex,GameObject content, EPieceType type,bool positionate = false)
 	{
-		occupyAndConfigureCell(cells[cellIndex],content,type);
+		occupyAndConfigureCell(cells[cellIndex],content,type,positionate);
 	}
 
 	/**
 	 * Ocupa la celda indicada y le asigna el contenido y tipo indicado
 	 **/ 
-	public void occupyAndConfigureCell(Cell cell,GameObject content, EPieceType type)
+	public void occupyAndConfigureCell(Cell cell,GameObject content, EPieceType type,bool positionate = false)
 	{
 		cell.occupied = true;
 
-		setCellContent(cell, content, true,false);//destroy
+		setCellContent(cell, content, true,positionate);//destroy
 		setCellType(cell, type);
 	}
 

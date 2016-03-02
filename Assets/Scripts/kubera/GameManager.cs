@@ -781,7 +781,7 @@ public class GameManager : MonoBehaviour
 
 			go.GetComponent<Piece> ().currentType = cellManager.colorOfMoreQuantity ();
 
-			cellManager.occupyAndConfigureCell(cell,go,go.GetComponent<Piece> ().currentType);
+			cellManager.occupyAndConfigureCell(cell,go,go.GetComponent<Piece> ().currentType,true);
 
 			StartCoroutine (add1x1BlockMore ());
 		}
