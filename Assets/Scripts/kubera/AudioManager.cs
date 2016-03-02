@@ -49,9 +49,6 @@ public class AudioManager : MonoBehaviour
 
 	public bool PlayLeLineCreatedAudio()
 	{
-		Debug.Log("Line created!!");
-		Debug.Log(lineCreatedAudio);
-		Debug.Log(soundEffects);
 		if(lineCreatedAudio != null && soundEffects)
 		{
 			audioSource.PlayOneShot(lineCreatedAudio);
