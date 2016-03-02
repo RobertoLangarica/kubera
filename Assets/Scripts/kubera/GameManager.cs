@@ -67,6 +67,8 @@ public class GameManager : MonoBehaviour
 	protected List<ScriptableABCChar> randomizedBlackPoolLeters = new List<ScriptableABCChar>();
 	protected List<ABCChar> listChar = new List<ABCChar>();
 
+	protected bool playerWon;
+
 	void Awake () 
 	{
 		hud = FindObjectOfType<HUD> ();
@@ -375,13 +377,13 @@ public class GameManager : MonoBehaviour
 	 * 
 	 * @params point{int}: La cantidad de puntos que se le entregara al jugador
 	 */
-	protected void addPoints(int point,bool checkWinConditionBolean = true)
+	protected void addPoints(int point)
 	{
 		pointsCount += point;
 
 		hud.setPoints (pointsCount);
 
-		if (checkWinConditionBolean) 
+		if (!playerWon) 
 		{
 			checkWinCondition ();
 		}
@@ -692,6 +694,7 @@ public class GameManager : MonoBehaviour
 		if (win) 
 		{
 			print ("win");
+			playerWon = true;
 			UnlockPowerUp();
 			winBonification ();
 		}
@@ -886,7 +889,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		amount *= multiplierHelper;
-		addPoints(amount,false);
+		addPoints(amount);
 	}
 
 	protected void allowGameInput(bool allowInput = true)
