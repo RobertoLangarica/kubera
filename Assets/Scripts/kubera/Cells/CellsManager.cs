@@ -156,23 +156,35 @@ public class CellsManager : MonoBehaviour
 	{
 		List<List<Cell>> result = new List<List<Cell>>(rows);
 		Cell cell;
+		int noneCells = 0;
 
 		for(int y = 0; y < rows; y++)
 		{
 			result.Add(new List<Cell>(columns));
+			noneCells = 0;
 			for(int x = 0; x < columns; x++)
 			{
 				cell = getCellAt(x,y);
-				if(cell.available && cell.occupied && cell.pieceType != EPieceType.LETTER && cell.content != null)
+				if(cell.occupied && cell.pieceType != EPieceType.LETTER && cell.pieceType != EPieceType.LETTER_OBSTACLE)
 				{
-					result [result.Count - 1].Add (cell);
+					if(cell.content != null)
+					{
+						result [result.Count - 1].Add (cell);
+					}
+					if(cell.pieceType == EPieceType.NONE)
+					{
+						noneCells++;
+					}
 				}
 				else
 				{
-					//La linea no esta completa
 					result.RemoveAt(result.Count-1);
 					break;
 				}
+			}
+			if(noneCells == columns)
+			{
+				result.RemoveAt(result.Count-1);
 			}
 		}
 
@@ -183,23 +195,35 @@ public class CellsManager : MonoBehaviour
 	{
 		List<List<Cell>> result = new List<List<Cell>>(columns);
 		Cell cell;
+		int noneCells = 0;
 
 		for(int x = 0; x < columns; x++)
 		{
 			result.Add(new List<Cell>(rows));
+			noneCells = 0;
 			for(int y = 0; y < rows; y++)
 			{
 				cell = getCellAt(x,y);
-				if(cell.available && cell.occupied && cell.pieceType != EPieceType.LETTER && cell.content != null)
+				if(cell.occupied && cell.pieceType != EPieceType.LETTER && cell.pieceType != EPieceType.LETTER_OBSTACLE)
 				{
-					result [result.Count - 1].Add (cell);
+					if(cell.content != null)
+					{
+						result [result.Count - 1].Add (cell);
+					}
+					if(cell.pieceType == EPieceType.NONE)
+					{
+						noneCells++;
+					}
 				}
 				else
 				{
-					//La linea no esta completa
 					result.RemoveAt(result.Count-1);
 					break;
 				}
+			}
+			if(noneCells == rows)
+			{
+				result.RemoveAt(result.Count-1);
 			}
 		}
 
