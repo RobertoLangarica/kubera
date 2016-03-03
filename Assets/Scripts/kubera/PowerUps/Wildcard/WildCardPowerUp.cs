@@ -79,7 +79,7 @@ public class WildCardPowerUp : PowerupBase
 
 	public void powerUpActivateRotate()
 	{
-		GameObject GO = wordManager.getWildcard ("10");
+		GameObject GO = wordManager.getWildcard ("x3");
 		wordManager.addCharacter(GO.GetComponent<ABC.ABCChar>(),GO);
 		wordManager.activateButtonOfWordsActions (true);
 		DestroyImmediate (GO);

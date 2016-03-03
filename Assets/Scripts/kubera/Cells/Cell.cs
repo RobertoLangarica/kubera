@@ -83,7 +83,7 @@ public class Cell : MonoBehaviour
 		{
 			pieceType = EPieceType.NONE;
 			occupied = true;
-			available = true;
+			available = false;
 			content = null;
 
 			//Cambio Temporal

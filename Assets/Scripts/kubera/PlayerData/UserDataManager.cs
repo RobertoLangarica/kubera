@@ -200,6 +200,32 @@ public class UserDataManager
 		}
 	}
 
+	public bool soundEffectsSetting
+	{
+		get
+		{
+			return PlayerPrefs.GetInt("soundEffectsSetting") == 0 ? false : true;
+		}		
+		set
+		{
+			int tempBool = value == false ? 0 : 1;
+			PlayerPrefs.SetInt("soundEffectsSetting",tempBool);
+		}
+	}
+
+	public bool musicSetting
+	{
+		get
+		{
+			return PlayerPrefs.GetInt("musicSetting") == 0 ? false : true;
+		}		
+		set
+		{
+			int tempBool = value == false ? 0 : 1;
+			PlayerPrefs.SetInt("musicSetting",tempBool);
+		}
+	}
+
 	public int playerGems
 	{
 		get

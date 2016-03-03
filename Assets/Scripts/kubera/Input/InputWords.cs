@@ -11,13 +11,10 @@ public class InputWords : MonoBehaviour
 	//Para notificar estados del drag a otros objetos
 	public delegate void DInputWordNotification(GameObject letter);
 
-	protected bool somethingDragged = false;
-
 	public DInputWordNotification onDragFinish;
 	public DInputWordNotification onDragUpdate;
 	public DInputWordNotification onDragStart;
 	public DInputWordNotification onTap;
-	public DInputWordNotification onFingerUpAfterDragEnd;
 
 	public float letterSpeed = 0.5f;
 	public bool allowInput = true;
@@ -42,7 +39,6 @@ public class InputWords : MonoBehaviour
 					return;
 				}
 
-				somethingDragged = true;
 				letter = gesture.Raycast.Hit2D.transform.gameObject;
 
 				onDragStart(letter);
@@ -91,21 +87,6 @@ public class InputWords : MonoBehaviour
 			//[TODO]
 			//gameObject.GetComponent<AudioSource> ().Play ();
 		}
-	}
-
-	void OnFingerUp(FingerUpEvent fingerUpEvent)
-	{
-		if (fingerUpEvent.Raycast.Hit2D) 
-		{
-			if (!somethingDragged) 
-			{				
-				letter = fingerUpEvent.Raycast.Hit2D.transform.gameObject;
-				print ("OnFingerUp");
-				onFingerUpAfterDragEnd (letter);
-				letter = null;
-			}
-		}
-		somethingDragged = false;
 	}
 
 	public void moveTo(GameObject target, Vector3 to, float delay = 0.1f)

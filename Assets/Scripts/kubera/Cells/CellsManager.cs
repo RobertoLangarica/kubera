@@ -156,26 +156,35 @@ public class CellsManager : MonoBehaviour
 	{
 		List<List<Cell>> result = new List<List<Cell>>(rows);
 		Cell cell;
+		int noneCells = 0;
 
 		for(int y = 0; y < rows; y++)
 		{
 			result.Add(new List<Cell>(columns));
+			noneCells = 0;
 			for(int x = 0; x < columns; x++)
 			{
 				cell = getCellAt(x,y);
-				if(cell.available && cell.occupied && cell.pieceType != EPieceType.LETTER)
+				if(cell.occupied && cell.pieceType != EPieceType.LETTER && cell.pieceType != EPieceType.LETTER_OBSTACLE)
 				{
-					if (cell.content != null) 
+					if(cell.content != null)
 					{
 						result [result.Count - 1].Add (cell);
+					}
+					if(cell.pieceType == EPieceType.NONE)
+					{
+						noneCells++;
 					}
 				}
 				else
 				{
-					//La linea no esta completa
 					result.RemoveAt(result.Count-1);
 					break;
 				}
+			}
+			if(noneCells == columns)
+			{
+				result.RemoveAt(result.Count-1);
 			}
 		}
 
@@ -186,26 +195,35 @@ public class CellsManager : MonoBehaviour
 	{
 		List<List<Cell>> result = new List<List<Cell>>(columns);
 		Cell cell;
+		int noneCells = 0;
 
 		for(int x = 0; x < columns; x++)
 		{
 			result.Add(new List<Cell>(rows));
+			noneCells = 0;
 			for(int y = 0; y < rows; y++)
 			{
 				cell = getCellAt(x,y);
-				if(cell.available && cell.occupied && cell.pieceType != EPieceType.LETTER)
+				if(cell.occupied && cell.pieceType != EPieceType.LETTER && cell.pieceType != EPieceType.LETTER_OBSTACLE)
 				{
-					if (cell.content != null) 
+					if(cell.content != null)
 					{
 						result [result.Count - 1].Add (cell);
+					}
+					if(cell.pieceType == EPieceType.NONE)
+					{
+						noneCells++;
 					}
 				}
 				else
 				{
-					//La linea no esta completa
 					result.RemoveAt(result.Count-1);
 					break;
 				}
+			}
+			if(noneCells == rows)
+			{
+				result.RemoveAt(result.Count-1);
 			}
 		}
 
@@ -291,18 +309,26 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Ocupa la celda indicada y le asigna el contenido y tipo indicado
 	 **/ 
-	public void occupyAndConfigureCell(Cell cell,GameObject content, EPieceType type)
+	public void occupyAndConfigureCell(int cellIndex,GameObject content, EPieceType type,bool positionate = false)
+	{
+		occupyAndConfigureCell(cells[cellIndex],content,type,positionate);
+	}
+
+	/**
+	 * Ocupa la celda indicada y le asigna el contenido y tipo indicado
+	 **/ 
+	public void occupyAndConfigureCell(Cell cell,GameObject content, EPieceType type,bool positionate = false)
 	{
 		cell.occupied = true;
 
-		setCellContent(cell, content, true,false);//destroy
+		setCellContent(cell, content, true,positionate);//destroy
 		setCellType(cell, type);
 	}
 
 	/**
 	 * Cambia el contenido de la celda y destruye el anterior si se necesita y posiciona si se necesita
 	 **/ 
-	public void setCellContent(int cellIndex,GameObject content, bool destroyOldContent = true, bool positionate = true)
+	protected void setCellContent(int cellIndex,GameObject content, bool destroyOldContent = true, bool positionate = true)
 	{
 		setCellContent(cells[cellIndex],content,destroyOldContent,positionate);
 	}
@@ -310,7 +336,7 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Cambia el contenido de la celda y destruye el anterior si se necesita y posiciona si se necesita
 	 **/ 
-	public void setCellContent(int x, int y,GameObject content, bool destroyOldContent = true, bool positionate = true)
+	protected void setCellContent(int x, int y,GameObject content, bool destroyOldContent = true, bool positionate = true)
 	{
 		setCellContent(getCellAt(x,y),content,destroyOldContent,positionate);
 	}
@@ -318,7 +344,7 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Cambia el contenido de la celda y destruye el anterior si se necesita y posiciona si se necesita
 	 **/ 
-	public void setCellContent(Cell cell,GameObject content, bool destroyOldContent = true, bool positionate = true)
+	protected void setCellContent(Cell cell,GameObject content, bool destroyOldContent = true, bool positionate = true)
 	{
 		if(destroyOldContent)
 		{
@@ -331,6 +357,7 @@ public class CellsManager : MonoBehaviour
 		{
 			content.transform.position = cell.transform.position + (new Vector3 (cell.GetComponent<SpriteRenderer> ().bounds.extents.x,
 				-cell.GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
+			
 		}
 	}
 
