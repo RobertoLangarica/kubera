@@ -7,7 +7,6 @@ using DG.Tweening;
 
 public class GameManager : MonoBehaviour 
 {
-	public GameObject toBuilderButton;
 
 	//Texto del PoUp
 	public Text scoreText;
@@ -136,13 +135,6 @@ public class GameManager : MonoBehaviour
 		hud.setMeterData (scoreToStar);
 
 		getWinCondition ();
-
-		toBuilderButton.SetActive(false);
-		if(PersistentData.instance.fromLevelBuilder)
-		{
-			PersistentData.instance.fromLevelBuilder = false;
-			toBuilderButton.SetActive(true);
-		}
 
 		cellManager.resizeGrid(10,10);
 		parseTheCellsOnGrid();
@@ -1009,13 +1001,6 @@ public class GameManager : MonoBehaviour
 	public void RefillLifes()
 	{
 		UserDataManager.instance.refillAllPlayerLifes();
-	}
-
-	public void goBackToBuilder()
-	{
-		PersistentData.instance.fromGameToEdit = true;
-
-		ScreenManager.instance.GoToScene("LevelBuilder");
 	}
 
 	protected void fillPiecesPoolList()

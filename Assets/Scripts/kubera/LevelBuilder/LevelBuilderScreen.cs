@@ -420,6 +420,7 @@ namespace LevelBuilder
 
 		public bool wordExistInPreviousLevels(string word)
 		{
+			int howManyTimes = 0;
 			word = word.ToLowerInvariant();
 			word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
 
@@ -431,11 +432,19 @@ namespace LevelBuilder
 
 					if(goal[0] == "word")
 					{
-						string[] words = goal[1].Split('_');
+						string[] words = goal[1].Split(',');
 
-						if(words[0] == word || words[1] == word)
+						for(int i= 0; i<words.Length; i++)
 						{
-							return true;	
+							if(words[i].Split('_')[0] == word || words[i].Split('_')[1] == word)
+							{
+								howManyTimes++;
+							}
+
+							if(howManyTimes > 1)
+							{
+								return true;	
+							}
 						}
 					}
 				}	
@@ -490,7 +499,6 @@ namespace LevelBuilder
 		IEnumerator initializeAfterGame()
 		{
 			yield return new WaitForSeconds (.5f);
-			print (PersistentData.instance.fromGameToEdit);
 			if(PersistentData.instance.fromGameToEdit)
 			{
 				PersistentData.instance.fromGameToEdit = false;

@@ -93,7 +93,8 @@ namespace LevelBuilder
 		public void onWordChange()
 		{
 			wordPopup.showWarning("");
-			wordPopup.activateAdd(false);	
+			wordPopup.activateAdd(false);
+			wordPopup.activateAddWordToList (false);
 
 			if(wordPopup.getInputValue().Length < 3)
 			{
@@ -111,6 +112,7 @@ namespace LevelBuilder
 			else
 			{
 				wordPopup.showWarning("Palabra válida");
+				wordPopup.activateAddWordToList (true);
 			}
 		}
 
@@ -178,7 +180,8 @@ namespace LevelBuilder
 			}
 			else if(goal[0] == "word")
 			{
-				wordPopup.setInputValue(goal[1].Split('_')[0]);
+				//wordPopup.setInputValue(goal[1].Split('_')[0]);
+				wordPopup.setInputValues(goal[1].Split(','));
 				toggleWord.isOn = true;
 			}
 		}
@@ -211,7 +214,7 @@ namespace LevelBuilder
 				word = word.ToLowerInvariant();
 				result += word+"_";
 				word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
-				result+= word;
+				result += word;
 			}
 				
 			return result;

@@ -9,16 +9,23 @@ namespace LevelBuilder
 		public Text txtWarning;
 		public InputField inputWord;
 		public Button btnAdd;
+		public Button btnAddToList;
+		public Button btnDeleteFromList;
+		public Text	wordsList;
 
 		public delegate void DNotification();
 		public DNotification onCancel;
 		public DNotification onAccept;
 		public DNotification onAdd;
 		public DNotification onChange;
+		public DNotification onAddWordToList;
+		public DNotification onDeleteWordFromList;
 
 		public void reset()
 		{
 			btnAdd.interactable = false;
+			btnAddToList.interactable = false;
+			btnDeleteFromList.interactable = false;
 			txtWarning.text = "";
 			inputWord.text = "";
 		}
@@ -48,6 +55,12 @@ namespace LevelBuilder
 			onChange();
 		}
 
+		public void addWordToList()
+		{
+			//onAddWordToList ();
+			getInputValues ();
+		}
+
 		public void showWarning(string text)
 		{
 			txtWarning.text = text;
@@ -61,6 +74,37 @@ namespace LevelBuilder
 		public string getInputValue()
 		{
 			return inputWord.text;
+		}
+
+		public void setInputValues(string[] text)
+		{
+			for(int i=0; i<text.Length; i++)
+			{
+				wordsList.text += text[i].Split('_')[0];
+				if(i+1 < text.Length)
+				{
+					wordsList.text += "\n";
+				}
+			}
+		}
+
+		public string[] getInputValues()
+		{
+			string[] words = new string[wordsList.text.Length];
+
+			for(int i=0; i<wordsList.text.Length; i++)
+			{
+				if(wordsList.text[i] == '\n')
+				{
+					print (wordsList.text.Substring(i,1));
+				}
+			}
+			return words;
+		}
+
+		public void activateAddWordToList(bool active)
+		{
+			btnAddToList.interactable = active;
 		}
 	}
 }
