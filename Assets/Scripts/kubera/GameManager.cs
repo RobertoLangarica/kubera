@@ -342,10 +342,10 @@ public class GameManager : MonoBehaviour
 
 		go.GetComponent<BoxCollider2D>().enabled = true;
 
-		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
-
 		Vector3 letterSize = (Camera.main.WorldToScreenPoint(sprite.bounds.size) -Camera.main.WorldToScreenPoint(Vector3.zero)) * totalLetterPercentToFillCell;
 		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(Mathf.Abs(letterSize.x),Mathf.Abs(letterSize.y));
+
+		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
 
 		registerNewLetterCreated (go.GetComponent<ABCChar> (), go.GetComponent<UIChar> (), true);
 
@@ -361,10 +361,10 @@ public class GameManager : MonoBehaviour
 
 		go.GetComponent<BoxCollider2D>().enabled = true;
 
-		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
-
 		Vector3 letterSize = (Camera.main.WorldToScreenPoint(sprite.bounds.size) -Camera.main.WorldToScreenPoint(Vector3.zero)) * totalLetterPercentToFillCell;
 		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(Mathf.Abs(letterSize.x),Mathf.Abs(letterSize.y));
+
+		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
 
 		registerNewLetterCreated (go.GetComponent<ABCChar> (), go.GetComponent<UIChar> (), false);
 
