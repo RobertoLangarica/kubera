@@ -283,7 +283,7 @@ public class GameManager : MonoBehaviour
 			if((cellType & 0x2) == 0x2)
 			{
 				cellContent = createCellBlockContent(cellType);
-				cellManager.occupyAndConfigureCell(i,cellContent,cellContent.GetComponent<Piece> ().currentType);
+				cellManager.occupyAndConfigureCell(i,cellContent,cellContent.GetComponent<Piece> ().currentType,true);
 			}
 			if((cellType & 0x4) == 0x4)
 			{
@@ -292,7 +292,7 @@ public class GameManager : MonoBehaviour
 			if((cellType & 0x8) == 0x8)
 			{	
 				cellContent = createCellObstacleContent();
-				cellManager.occupyAndConfigureCell(i,cellContent,EPieceType.LETTER_OBSTACLE);
+				cellManager.occupyAndConfigureCell(i,cellContent,EPieceType.LETTER_OBSTACLE,true);
 			}
 		}
 	}
