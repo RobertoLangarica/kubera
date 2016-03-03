@@ -420,7 +420,6 @@ namespace LevelBuilder
 
 		public bool wordExistInPreviousLevels(string word)
 		{
-			int howManyTimes = 0;
 			word = word.ToLowerInvariant();
 			word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
 
@@ -437,11 +436,6 @@ namespace LevelBuilder
 						for(int i= 0; i<words.Length; i++)
 						{
 							if(words[i].Split('_')[0] == word || words[i].Split('_')[1] == word)
-							{
-								howManyTimes++;
-							}
-
-							if(howManyTimes > 1)
 							{
 								return true;	
 							}
