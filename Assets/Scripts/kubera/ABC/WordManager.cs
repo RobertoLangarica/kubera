@@ -209,14 +209,15 @@ namespace ABC
 		/**
 		 * Elimina los caracteres de la busqueda actual
 		 **/ 
-		public void resetValidation()
+		public void resetValidation(bool reset = false)
 		{
 			if (letterContainer.transform.childCount != 0) 
 			{
 				for (int i = 0; i < chars.Count; i++)
 				{
 					ABCChar abcChar;
-					if (chars [i].gameObject.GetComponent<UIChar> ().piece != null)
+					
+					if (chars [i].gameObject.GetComponent<UIChar> ().piece != null) 
 					{
 						abcChar = chars [i].gameObject.GetComponent<UIChar> ().piece.GetComponent<ABCChar> ();
 					} 
@@ -226,28 +227,35 @@ namespace ABC
 					}
 
 					UIChar uiChar = chars [i].gameObject.GetComponent<UIChar> ();
-
-					if (uiChar != null && abcChar != null) 
+					if (!reset) 
 					{
-						if (wordsValidator.completeWord) 
+						if (uiChar != null && abcChar != null) 
 						{
-							if (!abcChar.wildcard) 
+							if (wordsValidator.completeWord) 
 							{
-								OnSendVector3 (uiChar.piece.transform.position);
-								uiChar.destroyPiece ();
-							}
+								if (!abcChar.wildcard) 
+								{
+									OnSendVector3 (uiChar.piece.transform.position);
+									uiChar.destroyPiece ();
+								}
+								else 
+								{
+									DestroyImmediate (uiChar.gameObject);
+								}
+							} 
 							else 
 							{
-								DestroyImmediate(uiChar.gameObject);
-							}
-						} 
-						else 
-						{
-							if (!abcChar.wildcard) 
-							{
-								uiChar.piece.GetComponent<UIChar> ().backToNormal ();
-							}
+								if (!abcChar.wildcard) {
+									uiChar.piece.GetComponent<UIChar> ().backToNormal ();
+								}
 
+							}
+						}
+					}
+					else
+					{
+						if (!abcChar.wildcard) {
+							uiChar.piece.GetComponent<UIChar> ().backToNormal ();
 						}
 					}
 				}

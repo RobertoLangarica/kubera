@@ -460,7 +460,7 @@ public class GameManager : MonoBehaviour
 
 	public void deleteWord()
 	{
-		wordManager.resetValidation();
+		wordManager.resetValidation(true);
 	}
 
 	public void verifyWord()
