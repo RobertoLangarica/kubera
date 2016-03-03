@@ -58,6 +58,8 @@ public class GameManager : MonoBehaviour
 	protected InputPiece inputPiece;
 	protected InputWords inputWords;
 
+	public float totalLetterPercentToFillCell = 0.9f;
+
 	protected Level currentLevel;
 	protected List<GameObject> XMLPoolPiecesList = new List<GameObject>();
 	protected List<ScriptableABCChar> XMLPoolLetersList = new List<ScriptableABCChar>();
@@ -342,7 +344,8 @@ public class GameManager : MonoBehaviour
 
 		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
 
-		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(sprite.bounds.extents.x * sprite.sprite.pixelsPerUnit,sprite.bounds.extents.y * sprite.sprite.pixelsPerUnit);
+		Vector3 letterSize = (Camera.main.WorldToScreenPoint(sprite.bounds.size) -Camera.main.WorldToScreenPoint(Vector3.zero)) * totalLetterPercentToFillCell;
+		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(Mathf.Abs(letterSize.x),Mathf.Abs(letterSize.y));
 
 		registerNewLetterCreated (go.GetComponent<ABCChar> (), go.GetComponent<UIChar> (), true);
 
@@ -360,7 +363,8 @@ public class GameManager : MonoBehaviour
 
 		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
 
-		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(sprite.bounds.extents.x * sprite.sprite.pixelsPerUnit,sprite.bounds.extents.y * sprite.sprite.pixelsPerUnit);
+		Vector3 letterSize = (Camera.main.WorldToScreenPoint(sprite.bounds.size) -Camera.main.WorldToScreenPoint(Vector3.zero)) * totalLetterPercentToFillCell;
+		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(Mathf.Abs(letterSize.x),Mathf.Abs(letterSize.y));
 
 		registerNewLetterCreated (go.GetComponent<ABCChar> (), go.GetComponent<UIChar> (), false);
 
