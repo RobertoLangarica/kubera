@@ -386,35 +386,6 @@ public class CellsManager : MonoBehaviour
 		cell.setTypeToCell (cellType);
 	}
 
-	public void turnPieceToLetterByWinNotification(Cell cell)
-	{
-		cell.destroyCell ();
-		Transform tempTransform = cell.transform;
-
-		GameObject go = Instantiate (uiLetter)as GameObject;
-
-
-		go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
-
-		Vector3 nVec = new Vector3(cell.transform.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
-			-cell.transform.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
-
-		go.GetComponent<RectTransform> ().transform.position = tempTransform.position + nVec;
-		cell.content = go;
-
-		ABCChar tempAbcChar = cell.content.GetComponent<ABCChar>();
-
-		UIChar tempUiChar = cell.content.GetComponent<UIChar>();
-
-		cell.content.GetComponent<BoxCollider2D>().enabled = true;
-
-		if(OnLetterCreated != null)
-		{
-			OnLetterCreated(tempAbcChar,tempUiChar,false);
-		}
-	}
-
-
 	/*
 	 * Analiza si aun es posible colocar alguna de las piezas disponibles en la grid
 	 * 

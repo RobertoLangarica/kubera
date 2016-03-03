@@ -334,12 +334,15 @@ public class GameManager : MonoBehaviour
 	protected GameObject createCellObstacleContent()
 	{
 		GameObject go = Instantiate (uiLetter)as GameObject;
+		SpriteRenderer sprite = singleSquarePiece.GetComponent<Piece>().pieces[0].GetComponent<SpriteRenderer>();
 
 		go.transform.SetParent (canvasOfLetters,false);
 
 		go.GetComponent<BoxCollider2D>().enabled = true;
 
 		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
+
+		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(sprite.bounds.size.x,sprite.bounds.size.y);
 
 		registerNewLetterCreated (go.GetComponent<ABCChar> (), go.GetComponent<UIChar> (), true);
 
@@ -349,12 +352,15 @@ public class GameManager : MonoBehaviour
 	public GameObject createLetterContent()
 	{
 		GameObject go = Instantiate (uiLetter)as GameObject;
+		SpriteRenderer sprite = singleSquarePiece.GetComponent<Piece>().pieces[0].GetComponent<SpriteRenderer>();
 
 		go.transform.SetParent (canvasOfLetters,false);
 
 		go.GetComponent<BoxCollider2D>().enabled = true;
 
 		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
+
+		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(sprite.bounds.size.x,sprite.bounds.size.y);
 
 		registerNewLetterCreated (go.GetComponent<ABCChar> (), go.GetComponent<UIChar> (), false);
 
@@ -798,8 +804,7 @@ public class GameManager : MonoBehaviour
 
 		if (cellToLetter.Count > 0) 
 		{
-			cellManager.turnPieceToLetterByWinNotification (cellToLetter [random]);
-			cellToLetter [random].pieceType = EPieceType.LETTER;
+			cellManager.occupyAndConfigureCell (cellToLetter [random],createLetterContent(),EPieceType.LETTER,true);
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
