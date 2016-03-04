@@ -95,6 +95,16 @@ public class Cell : MonoBehaviour
 			occupied = true;
 			available = false;
 		}
+		if((cellType & 0x10) == 0x10)
+		{
+			pieceType = EPieceType.NONE;
+			occupied = true;
+			available = false;
+			content = null;
+
+			//Cambio Temporal
+			GetComponent<SpriteRenderer>().color = Color.cyan;
+		}
 	}
 
 	public void updateCellColor(int color)
