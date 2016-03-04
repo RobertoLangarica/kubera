@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -115,19 +116,19 @@ namespace LevelBuilder
 			{
 				toggle.isOn = false;
 			}
-
-			//TODO: HARDCODING
-			languageSelector.value = 1;
-			//Actualizamos el lenguaje al que este configurado 
-			/*for(int i = 0; i < languageSelector.options.Count; i++)
+				
+			if(languageSelector.options[languageSelector.value].text != language)
 			{
-				if(languageSelector.options[i].text == language)
+				//Actualizamos el lenguaje al que este configurado 
+				for(int i = 0; i < languageSelector.options.Count; i++)
 				{
-					languageSelector.value = i;
-					break;
-				}
-			}*/
-
+					if(languageSelector.options[i].text == language)
+					{
+						languageSelector.value = i;
+						break;
+					}
+				}	
+			}
 		}
 
 		/**
@@ -238,6 +239,7 @@ namespace LevelBuilder
 
 			//Aguardamos el archivo
 			PersistentData.instance.levelsData.Save(Application.dataPath+"/Resources/levels_"+languageSelector.options[languageSelector.value].text+".xml");
+			AssetDatabase.Refresh();
 
 			//Completamos la lista de niveles
 			updateLevelSelectorOptions();
