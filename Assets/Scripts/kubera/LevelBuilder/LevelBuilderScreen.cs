@@ -16,6 +16,8 @@ namespace LevelBuilder
 		public const string ABC_NORMAL_TYPE	 = "1";
 		public const string ABC_OBSTACLE_TYPE= "0";
 
+		protected string defaultLetters ="12_A_1_1,02_B_3_1,05_C_3_1,05_D_2_1,12_E_1_1,01_F_4_1,02_G_2_1,06_I_1_1,01_J_8_1,00_K_0_1,05_L_1_1,02_M_3_1,05_N_1_1,01_Ñ_8_1,09_O_1_1,02_P_3_1,01_Q_5_1,07_R_1_1,06_S_1_1,04_T_1_1,05_U_1_1,01_V_4_1,00_W_0_1,01_X_8_1,01_Y_4_1,01_Z_10_1" ;
+
 		public InputField inputStar1;
 		public InputField inputStar2;
 		public InputField inputStar3;
@@ -187,7 +189,7 @@ namespace LevelBuilder
 			abcObstacleSelector.createEmptyData();
 
 			//Default data
-			//abcSelector.sincronizeDataWithCSV(level.lettersPool);
+			abcSelector.sincronizeDataWithCSV (defaultLetters);
 			//abcObstacleSelector.sincronizeDataWithCSV(level.obstacleLettersPool);
 			//levelGoalSelector.sincronizeDataWithString(level.winCondition);
 		}
