@@ -176,7 +176,7 @@ public class HUD : MonoBehaviour
 	/**
 	 * setea la condicion de victoria
 	 **/
-	public void setWinConditionOnHud(string winCondition, string[] words, int value=0,List<string> letters = null)
+	public void setWinConditionOnHud(string winCondition, string word, int value=0,List<string> letters = null)
 	{
 		//[TODO] Jalar textos del xml de idiomas
 		switch (winCondition) {
@@ -223,16 +223,7 @@ public class HUD : MonoBehaviour
 		case "word":
 			winConditionText.gameObject.SetActive (true);
 			winConditionLettersText.gameObject.SetActive (false);
-			string wordString = "";
-			for (int i = 0; i<words.Length; i++) 
-			{
-				wordString += words [i];
-				if (i + 1 < words.Length) 
-				{
-					wordString += ", ";
-				}
-			}
-			winConditionText.text = "Forma: " + wordString;
+			winConditionText.text = "Forma: " + word;
 
 			break;
 		default:
@@ -324,7 +315,7 @@ public class HUD : MonoBehaviour
 		}
 	}
 
-	public void showObjectivePopUp(string winCondition, string[] words, int value=0,List<string> letters = null)
+	public void showObjectivePopUp(string winCondition, string word, int value=0,List<string> letters = null)
 	{
 		Text objectiveTypeText = objectivePopUp.transform.FindChild("Type").GetComponent<Text>();
 		Text objectiveText = objectivePopUp.transform.FindChild("Objective").GetComponent<Text>();
@@ -342,6 +333,7 @@ public class HUD : MonoBehaviour
 			break;
 		case "letters":
 			objectiveTypeText.text = "Usa: ";
+			objectiveText.text = "";
 			for (int i = 0; i < letters.Count; i++) 
 			{
 				objectiveText.text += letters[i];
@@ -357,32 +349,19 @@ public class HUD : MonoBehaviour
 			break;
 		case "obstacles":
 			objectiveTypeText.text = "Usa: ";
-			for (int i = 0; i < letters.Count; i++) 
-			{
-				objectiveText.text += letters[i];
-				if (letters.Count == i + 1) 
-				{
-					objectiveText.text += ".";
-				}
-				else 
-				{
-					objectiveText.text += ", ";
-				}
-			}
+			objectiveText.text = value + " letras.";
 			break;
 		case "word":
 			objectiveTypeText.text = "Forma: ";
-			string wordString = "";
-			for (int i = 0; i<words.Length; i++) 
-			{
-				wordString += words [i];
-				if (i + 1 < words.Length) 
-				{
-					wordString += ", ";
-				}
-			}
-			objectiveText.text += wordString;
-
+			objectiveText.text = word;
+			break;
+		case "sin":
+			objectiveTypeText.text = "Sinonimo de: ";
+			objectiveText.text = word;
+			break;
+		case "ant":
+			objectiveTypeText.text = "Antonimo de: ";
+			objectiveText.text = word;
 			break;
 		default:
 			break;

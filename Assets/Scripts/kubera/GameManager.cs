@@ -638,7 +638,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		if(myWinCondition[0] == "word")
+		if(myWinCondition[0] == "word" || myWinCondition[0] == "sin" || myWinCondition[0] == "ant")
 		{
 			words = new string[myWinCondition [1].Split ('_').Length];
 			words = myWinCondition [1].Split ('_');
@@ -650,8 +650,8 @@ public class GameManager : MonoBehaviour
 
 		//Se muestra el objetivo al inicio del nivel
 
-		hud.showObjectivePopUp(myWinCondition [0],words,quantity,letters);
-		hud.setWinConditionOnHud (myWinCondition [0],words,quantity,letters);
+		hud.showObjectivePopUp(myWinCondition [0],words[0],quantity,letters);
+		hud.setWinConditionOnHud (myWinCondition [0],words[0],quantity,letters);
 	}
 
 	protected void checkWinCondition ()
