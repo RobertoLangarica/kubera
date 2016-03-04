@@ -17,6 +17,7 @@ namespace LevelBuilder
 		public const string ABC_OBSTACLE_TYPE= "0";
 
 		protected string defaultLetters ="12_A_1_1,02_B_3_1,05_C_3_1,05_D_2_1,12_E_1_1,01_F_4_1,02_G_2_1,03_H_4_1,06_I_1_1,01_J_8_1,00_K_0_1,05_L_1_1,02_M_3_1,05_N_1_1,01_Ñ_8_1,09_O_1_1,02_P_3_1,01_Q_5_1,07_R_1_1,06_S_1_1,04_T_1_1,05_U_1_1,01_V_4_1,00_W_0_1,01_X_8_1,01_Y_4_1,01_Z_10_1" ;
+		protected string defaultObstacles ="0_A_0_0,02_B_3_0,05_C_3_0,00_D_0_0,0_E_0_0,01_F_4_0,00_G_0_0,03_H_4_0,00_I_0_0,01_J_8_0,00_K_0_0,00_L_0_0,02_M_3_0,00_N_0_0,01_Ñ_8_0,00_O_0_0,02_P_3_0,01_Q_5_0,00_R_0_0,00_S_0_0,00_T_0_0,00_U_0_0,01_V_4_0,00_W_0_0,01_X_8_0,01_Y_4_0,01_Z_10_1" ;
 
 		public InputField inputStar1;
 		public InputField inputStar2;
@@ -190,7 +191,7 @@ namespace LevelBuilder
 
 			//Default data
 			abcSelector.sincronizeDataWithCSV (defaultLetters);
-			//abcObstacleSelector.sincronizeDataWithCSV(level.obstacleLettersPool);
+			abcObstacleSelector.sincronizeDataWithCSV(defaultObstacles);
 			//levelGoalSelector.sincronizeDataWithString(level.winCondition);
 		}
 
@@ -363,6 +364,11 @@ namespace LevelBuilder
 			//Reset de datos a los del XML
 			abcSelector.gameObject.SetActive(false);
 		}
+
+		public void OnResetABCSelector()
+		{
+			abcSelector.sincronizeDataWithCSV (defaultLetters);
+		}
 			
 		public void OnAcceptABCSelector()
 		{
@@ -381,6 +387,11 @@ namespace LevelBuilder
 			abcObstacleSelector.sincronizeDataWithCSV(abcDataBeforeOpen);
 			abcObstacleSelector.updateShowedData();
 			abcObstacleSelector.gameObject.SetActive(false);
+		}
+
+		public void OnResetABCObstacleSelector()
+		{
+			abcObstacleSelector.sincronizeDataWithCSV(defaultObstacles);
 		}
 
 		public void OnAcceptABCObstacleSelector()
