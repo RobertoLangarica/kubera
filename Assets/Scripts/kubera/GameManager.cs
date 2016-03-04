@@ -7,7 +7,6 @@ using DG.Tweening;
 
 public class GameManager : MonoBehaviour 
 {
-	public GameObject toBuilderButton;
 
 	//Texto del PoUp
 	public Text scoreText;
@@ -58,6 +57,8 @@ public class GameManager : MonoBehaviour
 
 	protected InputPiece inputPiece;
 	protected InputWords inputWords;
+
+	public float totalLetterPercentToFillCell = 0.9f;
 
 	protected Level currentLevel;
 	protected List<GameObject> XMLPoolPiecesList = new List<GameObject>();
@@ -136,13 +137,6 @@ public class GameManager : MonoBehaviour
 		hud.setMeterData (scoreToStar);
 
 		getWinCondition ();
-
-		toBuilderButton.SetActive(false);
-		if(PersistentData.instance.fromLevelBuilder)
-		{
-			PersistentData.instance.fromLevelBuilder = false;
-			toBuilderButton.SetActive(true);
-		}
 
 		cellManager.resizeGrid(10,10);
 		parseTheCellsOnGrid();
@@ -342,10 +336,14 @@ public class GameManager : MonoBehaviour
 	protected GameObject createCellObstacleContent()
 	{
 		GameObject go = Instantiate (uiLetter)as GameObject;
+		SpriteRenderer sprite = singleSquarePiece.GetComponent<Piece>().pieces[0].GetComponent<SpriteRenderer>();
 
 		go.transform.SetParent (canvasOfLetters,false);
 
 		go.GetComponent<BoxCollider2D>().enabled = true;
+
+		Vector3 letterSize = (Camera.main.WorldToScreenPoint(sprite.bounds.size) -Camera.main.WorldToScreenPoint(Vector3.zero)) * totalLetterPercentToFillCell;
+		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(Mathf.Abs(letterSize.x),Mathf.Abs(letterSize.y));
 
 		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
 
@@ -357,10 +355,14 @@ public class GameManager : MonoBehaviour
 	public GameObject createLetterContent()
 	{
 		GameObject go = Instantiate (uiLetter)as GameObject;
+		SpriteRenderer sprite = cellManager.cellPrefab.GetComponent<SpriteRenderer>();//singleSquarePiece.GetComponent<Piece>().pieces[0].GetComponent<SpriteRenderer>();
 
 		go.transform.SetParent (canvasOfLetters,false);
 
 		go.GetComponent<BoxCollider2D>().enabled = true;
+
+		Vector3 letterSize = (Camera.main.WorldToScreenPoint(sprite.bounds.size) -Camera.main.WorldToScreenPoint(Vector3.zero)) * totalLetterPercentToFillCell;
+		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(Mathf.Abs(letterSize.x),Mathf.Abs(letterSize.y));
 
 		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
 
@@ -806,8 +808,7 @@ public class GameManager : MonoBehaviour
 
 		if (cellToLetter.Count > 0) 
 		{
-			cellManager.turnPieceToLetterByWinNotification (cellToLetter [random]);
-			cellToLetter [random].pieceType = EPieceType.LETTER;
+			cellManager.occupyAndConfigureCell (cellToLetter [random],createLetterContent(),EPieceType.LETTER,true);
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
@@ -1009,13 +1010,6 @@ public class GameManager : MonoBehaviour
 	public void RefillLifes()
 	{
 		UserDataManager.instance.refillAllPlayerLifes();
-	}
-
-	public void goBackToBuilder()
-	{
-		PersistentData.instance.fromGameToEdit = true;
-
-		ScreenManager.instance.GoToScene("LevelBuilder");
 	}
 
 	protected void fillPiecesPoolList()

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour 
@@ -24,8 +25,9 @@ public class AudioManager : MonoBehaviour
 		}
 
 		set{
+			_mainAudio = value;
 
-			if(value)
+			if(_mainAudio == true)
 			{
 				PlayMainAudio();
 			}
@@ -33,8 +35,6 @@ public class AudioManager : MonoBehaviour
 			{
 				PauseMainAudio();
 			}
-
-			_mainAudio = value;
 		}
 	}
 
@@ -45,6 +45,23 @@ public class AudioManager : MonoBehaviour
 	void Start()
 	{
 		audioSource = gameObject.GetComponent<AudioSource>();
+
+		soundEffects = UserDataManager.instance.soundEffectsSetting;
+		mainAudio = UserDataManager.instance.musicSetting;
+
+		OnLevelWasLoaded();
+	}
+
+	void OnLevelWasLoaded()
+	{
+		switch(SceneManager.GetActiveScene().name)
+		{
+		case("Game"):
+			PauseMainAudio();
+			currentMainThemeIndex = 0;
+			PlayMainAudio();
+			break;
+		}
 	}
 
 	public bool PlayLeLineCreatedAudio()

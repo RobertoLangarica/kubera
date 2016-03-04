@@ -45,6 +45,8 @@ namespace LevelBuilder
 			wordPopup.onCancel += onCancelWordPopUp;
 			wordPopup.onAdd += AddWordToDictionary;
 			wordPopup.onChange += onWordChange;
+			wordPopup.onAddWord += onAddWordPopUp;
+			wordPopup.onDeleteWord += onDeleteWordPopUp;
 
 			showWordPopup(false);
 		}
@@ -83,6 +85,27 @@ namespace LevelBuilder
 			showWordPopup(false);
 		}
 
+		public void onAddWordPopUp()
+		{
+			wordBeforeOpen = wordPopup.getInputValue();
+			wordPopup.reset();
+			wordPopup.setNewWord(wordBeforeOpen);
+			wordPopup.actualizeInputValues ();
+			wordPopup.activateDeleteWord (true);
+		}
+
+		public void onDeleteWordPopUp()
+		{
+			wordPopup.deleteWordFromList ();
+			activateDeleteWord ();
+			wordPopup.actualizeInputValues ();
+		}
+
+		public void activateDeleteWord()
+		{
+			wordPopup.activateDeleteWord (checkIfExistWords());
+		}
+
 		public void AddWordToDictionary()
 		{
 			onAddWordToDictionary(wordPopup.getInputValue());
@@ -93,7 +116,8 @@ namespace LevelBuilder
 		public void onWordChange()
 		{
 			wordPopup.showWarning("");
-			wordPopup.activateAdd(false);	
+			wordPopup.activateAdd(false);
+			wordPopup.activateAddWord (false);
 
 			if(wordPopup.getInputValue().Length < 3)
 			{
@@ -111,7 +135,17 @@ namespace LevelBuilder
 			else
 			{
 				wordPopup.showWarning("Palabra válida");
+				wordPopup.activateAddWord (true);
 			}
+		}
+
+		public bool checkIfExistWords()
+		{
+			if(wordPopup.getInputValues().Length >0)
+			{
+				return true;
+			}
+			return false;
 		}
 
 		public void OnShowABCSelector()
@@ -178,7 +212,10 @@ namespace LevelBuilder
 			}
 			else if(goal[0] == "word")
 			{
-				wordPopup.setInputValue(goal[1].Split('_')[0]);
+				//wordPopup.setInputValue(goal[1].Split('_')[0]);
+				wordPopup.setWords (goal[1].Split(','));
+				wordPopup.actualizeInputValues();
+				activateDeleteWord ();
 				toggleWord.isOn = true;
 			}
 		}
@@ -206,14 +243,21 @@ namespace LevelBuilder
 			else if(toggleWord.isOn)
 			{
 				//Primero se guarda con acentos luego sin acentos
-				string word = wordPopup.getInputValue();
+				string[] words = wordPopup.getInputValues();
+				string word;
 				result = "word-";
-				word = word.ToLowerInvariant();
-				result += word+"_";
-				word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
-				result+= word;
-			}
-				
+				for(int i=0; i<words.Length; i++)
+				{
+					word = words[i];
+					result += word+"_";
+					word = words[i].Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+					result += word;
+					if(i+1 < words.Length)
+					{
+						result += ",";
+					}
+				}
+			}				
 			return result;
 		}
 	}
