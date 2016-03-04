@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 	protected bool wordFound;
 	protected List<string> letters;
 	protected string[] words;
-		
+	protected int obstaclesQuantity = 0;
 	protected int obstaclesUsed = 0;
 
 	protected string[] myWinCondition;
@@ -278,6 +278,7 @@ public class GameManager : MonoBehaviour
 			{
 				cellContent = createCellBlockContent(cellType);
 				cellManager.occupyAndConfigureCell(i,cellContent,cellContent.GetComponent<Piece> ().currentType,true);
+				obstaclesQuantity++;
 			}
 			if((cellType & 0x4) == 0x4)
 			{
@@ -617,7 +618,7 @@ public class GameManager : MonoBehaviour
 	{
 		int quantity = 0;
 
-		if(myWinCondition[0] == "letters" || myWinCondition[0] == "obstacles")
+		if(myWinCondition[0] == "letters")
 		{
 			words= new string[0];
 			letters = new List<string> ();
@@ -636,6 +637,11 @@ public class GameManager : MonoBehaviour
 					letters.Add (temp [1]);
 				}
 			}
+		}
+
+		if(myWinCondition[0] == "obstacles")
+		{
+			quantity = obstaclesQuantity;
 		}
 
 		if(myWinCondition[0] == "word" || myWinCondition[0] == "sin" || myWinCondition[0] == "ant")
@@ -678,7 +684,7 @@ public class GameManager : MonoBehaviour
 			}
 			break;
 		case "obstacles":
-			if (letters.Count == 0) 
+			if (obstaclesQuantity == obstaclesUsed) 
 			{
 				win = true;
 			}
