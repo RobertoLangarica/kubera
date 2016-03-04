@@ -498,17 +498,9 @@ public class GameManager : MonoBehaviour
 					{amount += int.Parse(wordManager.chars[i].pointsOrMultiple);}
 					break;
 				}
-				if (!letterFound && wordManager.chars [i].type == ABCChar.EType.OBSTACLE && myWinCondition [0] == "obstacles") 
+				if (wordManager.chars [i].type == ABCChar.EType.OBSTACLE) 
 				{
-					for (int j = 0; j < letters.Count; j++) 
-					{
-						if (letters [j].ToLower () == wordManager.chars [i].character.ToLower () && !letterFound) 
-						{	
-							hud.destroyLetterFound (letters [j]);
-							letters.RemoveAt (j);
-							break;
-						}
-					}
+					obstaclesUsed++;
 				}
 				
 				if (myWinCondition [0] == "letters") 
@@ -652,6 +644,7 @@ public class GameManager : MonoBehaviour
 		if(myWinCondition[0] == "points" ||myWinCondition[0] == "words")
 		{
 			quantity = int.Parse (myWinCondition [1]);
+			words= new string[1]{myWinCondition [1]};
 		}
 
 		//Se muestra el objetivo al inicio del nivel
