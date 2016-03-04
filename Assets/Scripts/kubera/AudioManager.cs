@@ -14,10 +14,14 @@ public class AudioManager : MonoBehaviour
 
 	public List<AudioClip> mainThemes;
 
+	public AudioSource audioSource;
+
+	[HideInInspector]
 	public bool soundEffects;
 
 	protected bool _mainAudio;
 
+	[HideInInspector]
 	public bool mainAudio
 	{
 		get{
@@ -40,12 +44,8 @@ public class AudioManager : MonoBehaviour
 
 	protected int currentMainThemeIndex;
 
-	protected AudioSource audioSource;
-
 	void Start()
 	{
-		audioSource = gameObject.GetComponent<AudioSource>();
-
 		soundEffects = UserDataManager.instance.soundEffectsSetting;
 		mainAudio = UserDataManager.instance.musicSetting;
 
