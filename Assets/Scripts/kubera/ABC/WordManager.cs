@@ -565,6 +565,7 @@ namespace ABC
 			{
 				if (maxLetters > letterContainer.transform.childCount) 
 				{
+					go.GetComponent<UIChar> ().makeUsed ();
 					addCharacter (go.GetComponent<ABCChar> (), go);
 					activateButtonOfWordsActions (true);
 				}

@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 	protected bool wordFound;
 	protected List<string> letters;
 	protected string[] words;
-		
+	protected int obstaclesQuantity = 0;
 	protected int obstaclesUsed = 0;
 
 	protected string[] myWinCondition;
@@ -277,6 +277,7 @@ public class GameManager : MonoBehaviour
 			{
 				cellContent = createCellBlockContent(cellType);
 				cellManager.occupyAndConfigureCell(i,cellContent,cellContent.GetComponent<Piece> ().currentType,true);
+				obstaclesQuantity++;
 			}
 			if((cellType & 0x4) == 0x4)
 			{
@@ -496,17 +497,9 @@ public class GameManager : MonoBehaviour
 					{amount += int.Parse(wordManager.chars[i].pointsOrMultiple);}
 					break;
 				}
-				if (!letterFound && wordManager.chars [i].type == ABCChar.EType.OBSTACLE && myWinCondition [0] == "obstacles") 
+				if (wordManager.chars [i].type == ABCChar.EType.OBSTACLE) 
 				{
-					for (int j = 0; j < letters.Count; j++) 
-					{
-						if (letters [j].ToLower () == wordManager.chars [i].character.ToLower () && !letterFound) 
-						{	
-							hud.destroyLetterFound (letters [j]);
-							letters.RemoveAt (j);
-							break;
-						}
-					}
+					obstaclesUsed++;
 				}
 				
 				if (myWinCondition [0] == "letters") 
@@ -616,7 +609,7 @@ public class GameManager : MonoBehaviour
 	{
 		int quantity = 0;
 
-		if(myWinCondition[0] == "letters" || myWinCondition[0] == "obstacles")
+		if(myWinCondition[0] == "letters")
 		{
 			words= new string[0];
 			letters = new List<string> ();
@@ -637,7 +630,12 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		if(myWinCondition[0] == "word")
+		if(myWinCondition[0] == "obstacles")
+		{
+			quantity = obstaclesQuantity;
+		}
+
+		if(myWinCondition[0] == "word" || myWinCondition[0] == "sin" || myWinCondition[0] == "ant")
 		{
 			words = new string[myWinCondition [1].Split ('_').Length];
 			words = myWinCondition [1].Split ('_');
@@ -645,12 +643,13 @@ public class GameManager : MonoBehaviour
 		if(myWinCondition[0] == "points" ||myWinCondition[0] == "words")
 		{
 			quantity = int.Parse (myWinCondition [1]);
+			words= new string[1]{myWinCondition [1]};
 		}
 
 		//Se muestra el objetivo al inicio del nivel
 
-		hud.showObjectivePopUp(myWinCondition [0],words,quantity,letters);
-		hud.setWinConditionOnHud (myWinCondition [0],words,quantity,letters);
+		hud.showObjectivePopUp(myWinCondition [0],words[0],quantity,letters);
+		hud.setWinConditionOnHud (myWinCondition [0],words[0],quantity,letters);
 	}
 
 	protected void checkWinCondition ()
@@ -677,7 +676,7 @@ public class GameManager : MonoBehaviour
 			}
 			break;
 		case "obstacles":
-			if (letters.Count == 0) 
+			if (obstaclesQuantity == obstaclesUsed) 
 			{
 				win = true;
 			}

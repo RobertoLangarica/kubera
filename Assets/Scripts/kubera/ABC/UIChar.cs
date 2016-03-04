@@ -84,12 +84,15 @@ namespace ABC
 		{
 			if(!usedFromGrid)
 			{
-				usedFromGrid=true;
-				changeColorToUsed ();
-
 				return true;
 			}
 			return false;
+		}
+
+		public void makeUsed()
+		{
+			usedFromGrid=true;
+			changeColorToUsed ();
 		}
 
 		protected void changeColorToUsed()

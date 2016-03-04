@@ -49,7 +49,7 @@ public class BombPowerUp : PowerupBase
 
 				for(int i = 0;i < selection.Length;i++)
 				{
-					cellsManager.occupyAndConfigureCell(selection[i],gameManager.createLetterContent(),EPieceType.LETTER);
+					cellsManager.occupyAndConfigureCell(selection[i],gameManager.createLetterContent(),EPieceType.LETTER,true);
 				}
 				//cellsManager.destroyCells(selection);
 
