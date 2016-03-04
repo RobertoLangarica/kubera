@@ -646,6 +646,7 @@ public class GameManager : MonoBehaviour
 		if(myWinCondition[0] == "points" ||myWinCondition[0] == "words")
 		{
 			quantity = int.Parse (myWinCondition [1]);
+			words= new string[1]{myWinCondition [1]};
 		}
 
 		//Se muestra el objetivo al inicio del nivel
