@@ -2,6 +2,7 @@
 using System.Xml.Serialization;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 [XmlRoot("scrabtris")]
 public class Levels
@@ -13,7 +14,7 @@ public class Levels
 	public void Save(string path)
 	{
 		var serializer = new XmlSerializer(typeof(Levels));
-		using(var stream = new FileStream(path, FileMode.Create))
+		using(var stream = new StreamWriter(new FileStream(path, FileMode.Create),Encoding.UTF8))
 		{
 			serializer.Serialize(stream, this);
 		}

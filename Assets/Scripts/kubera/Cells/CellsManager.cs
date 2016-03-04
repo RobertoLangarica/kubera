@@ -309,18 +309,26 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Ocupa la celda indicada y le asigna el contenido y tipo indicado
 	 **/ 
-	public void occupyAndConfigureCell(Cell cell,GameObject content, EPieceType type)
+	public void occupyAndConfigureCell(int cellIndex,GameObject content, EPieceType type,bool positionate = false)
+	{
+		occupyAndConfigureCell(cells[cellIndex],content,type,positionate);
+	}
+
+	/**
+	 * Ocupa la celda indicada y le asigna el contenido y tipo indicado
+	 **/ 
+	public void occupyAndConfigureCell(Cell cell,GameObject content, EPieceType type,bool positionate = false)
 	{
 		cell.occupied = true;
 
-		setCellContent(cell, content, true,false);//destroy
+		setCellContent(cell, content, true,positionate);//destroy
 		setCellType(cell, type);
 	}
 
 	/**
 	 * Cambia el contenido de la celda y destruye el anterior si se necesita y posiciona si se necesita
 	 **/ 
-	public void setCellContent(int cellIndex,GameObject content, bool destroyOldContent = true, bool positionate = true)
+	protected void setCellContent(int cellIndex,GameObject content, bool destroyOldContent = true, bool positionate = true)
 	{
 		setCellContent(cells[cellIndex],content,destroyOldContent,positionate);
 	}
@@ -328,7 +336,7 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Cambia el contenido de la celda y destruye el anterior si se necesita y posiciona si se necesita
 	 **/ 
-	public void setCellContent(int x, int y,GameObject content, bool destroyOldContent = true, bool positionate = true)
+	protected void setCellContent(int x, int y,GameObject content, bool destroyOldContent = true, bool positionate = true)
 	{
 		setCellContent(getCellAt(x,y),content,destroyOldContent,positionate);
 	}
@@ -336,7 +344,7 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Cambia el contenido de la celda y destruye el anterior si se necesita y posiciona si se necesita
 	 **/ 
-	public void setCellContent(Cell cell,GameObject content, bool destroyOldContent = true, bool positionate = true)
+	protected void setCellContent(Cell cell,GameObject content, bool destroyOldContent = true, bool positionate = true)
 	{
 		if(destroyOldContent)
 		{
@@ -349,6 +357,7 @@ public class CellsManager : MonoBehaviour
 		{
 			content.transform.position = cell.transform.position + (new Vector3 (cell.GetComponent<SpriteRenderer> ().bounds.extents.x,
 				-cell.GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
+			
 		}
 	}
 
@@ -376,35 +385,6 @@ public class CellsManager : MonoBehaviour
 	{
 		cell.setTypeToCell (cellType);
 	}
-
-	public void turnPieceToLetterByWinNotification(Cell cell)
-	{
-		cell.destroyCell ();
-		Transform tempTransform = cell.transform;
-
-		GameObject go = Instantiate (uiLetter)as GameObject;
-
-
-		go.transform.SetParent (GameObject.Find("CanvasOfLetters").transform,false);
-
-		Vector3 nVec = new Vector3(cell.transform.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,
-			-cell.transform.gameObject.GetComponent<SpriteRenderer>().bounds.size.x*0.5f,0);
-
-		go.GetComponent<RectTransform> ().transform.position = tempTransform.position + nVec;
-		cell.content = go;
-
-		ABCChar tempAbcChar = cell.content.GetComponent<ABCChar>();
-
-		UIChar tempUiChar = cell.content.GetComponent<UIChar>();
-
-		cell.content.GetComponent<BoxCollider2D>().enabled = true;
-
-		if(OnLetterCreated != null)
-		{
-			OnLetterCreated(tempAbcChar,tempUiChar,false);
-		}
-	}
-
 
 	/*
 	 * Analiza si aun es posible colocar alguna de las piezas disponibles en la grid

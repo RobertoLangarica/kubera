@@ -7,7 +7,6 @@ using DG.Tweening;
 
 public class GameManager : MonoBehaviour 
 {
-	public GameObject toBuilderButton;
 
 	//Texto del PoUp
 	public Text scoreText;
@@ -59,6 +58,8 @@ public class GameManager : MonoBehaviour
 	protected InputPiece inputPiece;
 	protected InputWords inputWords;
 
+	public float totalLetterPercentToFillCell = 0.9f;
+
 	protected Level currentLevel;
 	protected List<GameObject> XMLPoolPiecesList = new List<GameObject>();
 	protected List<ScriptableABCChar> XMLPoolLetersList = new List<ScriptableABCChar>();
@@ -66,6 +67,8 @@ public class GameManager : MonoBehaviour
 	protected List<ScriptableABCChar> randomizedPoolLeters = new List<ScriptableABCChar>();
 	protected List<ScriptableABCChar> randomizedBlackPoolLeters = new List<ScriptableABCChar>();
 	protected List<ABCChar> listChar = new List<ABCChar>();
+
+	protected bool playerWon;
 
 	void Awake () 
 	{
@@ -134,13 +137,6 @@ public class GameManager : MonoBehaviour
 		hud.setMeterData (scoreToStar);
 
 		getWinCondition ();
-
-		toBuilderButton.SetActive(false);
-		if(PersistentData.instance.fromLevelBuilder)
-		{
-			PersistentData.instance.fromLevelBuilder = false;
-			toBuilderButton.SetActive(true);
-		}
 
 		cellManager.resizeGrid(10,10);
 		parseTheCellsOnGrid();
@@ -281,8 +277,7 @@ public class GameManager : MonoBehaviour
 			if((cellType & 0x2) == 0x2)
 			{
 				cellContent = createCellBlockContent(cellType);
-				cellManager.setCellType(i,cellContent.GetComponent<Piece> ().currentType);
-				cellManager.setCellContent(i,cellContent);
+				cellManager.occupyAndConfigureCell(i,cellContent,cellContent.GetComponent<Piece> ().currentType,true);
 			}
 			if((cellType & 0x4) == 0x4)
 			{
@@ -291,8 +286,7 @@ public class GameManager : MonoBehaviour
 			if((cellType & 0x8) == 0x8)
 			{	
 				cellContent = createCellObstacleContent();
-				cellManager.setCellType(i,EPieceType.LETTER_OBSTACLE);
-				cellManager.setCellContent(i,cellContent);
+				cellManager.occupyAndConfigureCell(i,cellContent,EPieceType.LETTER_OBSTACLE,true);
 			}
 		}
 	}
@@ -342,10 +336,14 @@ public class GameManager : MonoBehaviour
 	protected GameObject createCellObstacleContent()
 	{
 		GameObject go = Instantiate (uiLetter)as GameObject;
+		SpriteRenderer sprite = singleSquarePiece.GetComponent<Piece>().pieces[0].GetComponent<SpriteRenderer>();
 
 		go.transform.SetParent (canvasOfLetters,false);
 
 		go.GetComponent<BoxCollider2D>().enabled = true;
+
+		Vector3 letterSize = (Camera.main.WorldToScreenPoint(sprite.bounds.size) -Camera.main.WorldToScreenPoint(Vector3.zero)) * totalLetterPercentToFillCell;
+		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(Mathf.Abs(letterSize.x),Mathf.Abs(letterSize.y));
 
 		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
 
@@ -357,10 +355,14 @@ public class GameManager : MonoBehaviour
 	public GameObject createLetterContent()
 	{
 		GameObject go = Instantiate (uiLetter)as GameObject;
+		SpriteRenderer sprite = cellManager.cellPrefab.GetComponent<SpriteRenderer>();//singleSquarePiece.GetComponent<Piece>().pieces[0].GetComponent<SpriteRenderer>();
 
 		go.transform.SetParent (canvasOfLetters,false);
 
 		go.GetComponent<BoxCollider2D>().enabled = true;
+
+		Vector3 letterSize = (Camera.main.WorldToScreenPoint(sprite.bounds.size) -Camera.main.WorldToScreenPoint(Vector3.zero)) * totalLetterPercentToFillCell;
+		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(Mathf.Abs(letterSize.x),Mathf.Abs(letterSize.y));
 
 		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
 
@@ -375,13 +377,13 @@ public class GameManager : MonoBehaviour
 	 * 
 	 * @params point{int}: La cantidad de puntos que se le entregara al jugador
 	 */
-	protected void addPoints(int point,bool checkWinConditionBolean = true)
+	protected void addPoints(int point)
 	{
 		pointsCount += point;
 
 		hud.setPoints (pointsCount);
 
-		if (checkWinConditionBolean) 
+		if (!playerWon) 
 		{
 			checkWinCondition ();
 		}
@@ -458,19 +460,22 @@ public class GameManager : MonoBehaviour
 		return false;
 	}
 
+	public void deleteWord()
+	{
+		wordManager.resetValidation(true);
+	}
+
 	public void verifyWord()
 	{
 		int amount = 0;
 		int multiplierHelper = 1;
 		bool letterFound;
 		bool canUseAllWildCards;
-		bool correct = false;
 
 		canUseAllWildCards = canCompleteWordWithWildCards();
 
 		if(wordManager.wordsValidator.completeWord && canUseAllWildCards)
 		{
-			correct = true;
 			for(int i = 0;i < wordManager.chars.Count;i++)
 			{
 				letterFound = false;
@@ -536,7 +541,7 @@ public class GameManager : MonoBehaviour
 			addPointsActions (amount);
 		}
 
-		wordManager.resetValidation(correct);
+		wordManager.resetValidation();
 	}
 
 	protected void sendVectorToCellManager(Vector3 vector3)
@@ -644,9 +649,8 @@ public class GameManager : MonoBehaviour
 		}
 
 		//Se muestra el objetivo al inicio del nivel
-		//TODO: hacerlo bien R
-		hud.showObjectivePopUp(myWinCondition [0],words,quantity,letters);
 
+		hud.showObjectivePopUp(myWinCondition [0],words,quantity,letters);
 		hud.setWinConditionOnHud (myWinCondition [0],words,quantity,letters);
 	}
 
@@ -692,6 +696,7 @@ public class GameManager : MonoBehaviour
 		if (win) 
 		{
 			print ("win");
+			playerWon = true;
 			UnlockPowerUp();
 			winBonification ();
 		}
@@ -780,8 +785,7 @@ public class GameManager : MonoBehaviour
 
 			go.GetComponent<Piece> ().currentType = cellManager.colorOfMoreQuantity ();
 
-			cellManager.setCellContent(cell,go);
-			cellManager.setCellType(cell,go.GetComponent<Piece> ().currentType);
+			cellManager.occupyAndConfigureCell(cell,go,go.GetComponent<Piece> ().currentType,true);
 
 			StartCoroutine (add1x1BlockMore ());
 		}
@@ -804,8 +808,7 @@ public class GameManager : MonoBehaviour
 
 		if (cellToLetter.Count > 0) 
 		{
-			cellManager.turnPieceToLetterByWinNotification (cellToLetter [random]);
-			cellToLetter [random].pieceType = EPieceType.LETTER;
+			cellManager.occupyAndConfigureCell (cellToLetter [random],createLetterContent(),EPieceType.LETTER,true);
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
@@ -886,7 +889,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		amount *= multiplierHelper;
-		addPoints(amount,false);
+		addPoints(amount);
 	}
 
 	protected void allowGameInput(bool allowInput = true)
@@ -1007,13 +1010,6 @@ public class GameManager : MonoBehaviour
 	public void RefillLifes()
 	{
 		UserDataManager.instance.refillAllPlayerLifes();
-	}
-
-	public void goBackToBuilder()
-	{
-		PersistentData.instance.fromGameToEdit = true;
-
-		ScreenManager.instance.GoToScene("LevelBuilder");
 	}
 
 	protected void fillPiecesPoolList()

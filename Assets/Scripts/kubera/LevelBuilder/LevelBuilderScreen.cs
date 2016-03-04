@@ -112,15 +112,18 @@ namespace LevelBuilder
 				toggle.isOn = false;
 			}
 
+			//TODO: HARDCODING
+			languageSelector.value = 1;
 			//Actualizamos el lenguaje al que este configurado 
-			for(int i = 0; i < languageSelector.options.Count; i++)
+			/*for(int i = 0; i < languageSelector.options.Count; i++)
 			{
 				if(languageSelector.options[i].text == language)
 				{
 					languageSelector.value = i;
 					break;
 				}
-			}
+			}*/
+
 		}
 
 		/**
@@ -431,11 +434,14 @@ namespace LevelBuilder
 
 					if(goal[0] == "word")
 					{
-						string[] words = goal[1].Split('_');
+						string[] words = goal[1].Split(',');
 
-						if(words[0] == word || words[1] == word)
+						for(int i= 0; i<words.Length; i++)
 						{
-							return true;	
+							if(words[i].Split('_')[0] == word || words[i].Split('_')[1] == word)
+							{
+								return true;	
+							}
 						}
 					}
 				}	
@@ -490,7 +496,6 @@ namespace LevelBuilder
 		IEnumerator initializeAfterGame()
 		{
 			yield return new WaitForSeconds (.5f);
-			print (PersistentData.instance.fromGameToEdit);
 			if(PersistentData.instance.fromGameToEdit)
 			{
 				PersistentData.instance.fromGameToEdit = false;
