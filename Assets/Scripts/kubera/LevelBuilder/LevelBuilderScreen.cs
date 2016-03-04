@@ -112,15 +112,18 @@ namespace LevelBuilder
 				toggle.isOn = false;
 			}
 
+			//TODO: HARDCODING
+			languageSelector.value = 1;
 			//Actualizamos el lenguaje al que este configurado 
-			for(int i = 0; i < languageSelector.options.Count; i++)
+			/*for(int i = 0; i < languageSelector.options.Count; i++)
 			{
 				if(languageSelector.options[i].text == language)
 				{
 					languageSelector.value = i;
 					break;
 				}
-			}
+			}*/
+
 		}
 
 		/**
