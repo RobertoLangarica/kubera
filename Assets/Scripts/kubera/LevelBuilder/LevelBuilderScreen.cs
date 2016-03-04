@@ -16,6 +16,8 @@ namespace LevelBuilder
 		public const string ABC_NORMAL_TYPE	 = "1";
 		public const string ABC_OBSTACLE_TYPE= "0";
 
+		protected string defaultLetters ="12_A_1_1,02_B_3_1,05_C_3_1,05_D_2_1,12_E_1_1,01_F_4_1,02_G_2_1,03_H_4_1,06_I_1_1,01_J_8_1,00_K_0_1,05_L_1_1,02_M_3_1,05_N_1_1,01_Ñ_8_1,09_O_1_1,02_P_3_1,01_Q_5_1,07_R_1_1,06_S_1_1,04_T_1_1,05_U_1_1,01_V_4_1,00_W_0_1,01_X_8_1,01_Y_4_1,01_Z_10_1" ;
+
 		public InputField inputStar1;
 		public InputField inputStar2;
 		public InputField inputStar3;
@@ -94,6 +96,7 @@ namespace LevelBuilder
 			updateLevelSelectorOptions();
 
 			setAlfabetToABCSelectors();
+			setABCSelectorsDefaultData();
 
 			piecesSelector.resetDataItems();
 			piecesSelector.updateShowedData();
@@ -112,15 +115,18 @@ namespace LevelBuilder
 				toggle.isOn = false;
 			}
 
+			//TODO: HARDCODING
+			languageSelector.value = 1;
 			//Actualizamos el lenguaje al que este configurado 
-			for(int i = 0; i < languageSelector.options.Count; i++)
+			/*for(int i = 0; i < languageSelector.options.Count; i++)
 			{
 				if(languageSelector.options[i].text == language)
 				{
 					languageSelector.value = i;
 					break;
 				}
-			}
+			}*/
+
 		}
 
 		/**
@@ -174,6 +180,18 @@ namespace LevelBuilder
 			abcSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
 			abcGoalSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
 			abcObstacleSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
+		}
+
+		private void setABCSelectorsDefaultData()
+		{
+			abcSelector.createEmptyData();
+			abcGoalSelector.createEmptyData();
+			abcObstacleSelector.createEmptyData();
+
+			//Default data
+			abcSelector.sincronizeDataWithCSV (defaultLetters);
+			//abcObstacleSelector.sincronizeDataWithCSV(level.obstacleLettersPool);
+			//levelGoalSelector.sincronizeDataWithString(level.winCondition);
 		}
 
 		public void writeLevelToXML()
@@ -234,9 +252,10 @@ namespace LevelBuilder
 
 			abcSelector.sincronizeDataWithCSV(level.lettersPool);
 			abcObstacleSelector.sincronizeDataWithCSV(level.obstacleLettersPool);
+			levelGoalSelector.sincronizeDataWithString(level.winCondition);
 			piecesSelector.sincronizeDataWithCSV(level.pieces);
 			gridEditor.sincronizeDataWithCSV(level.grid);
-			levelGoalSelector.sincronizeDataWithString(level.winCondition);
+
 			powerupToggles[BOMB_POWERUP].isOn = level.unblockBomb;
 			powerupToggles[BLOCK_POWERUP].isOn = level.unblockBlock;
 			powerupToggles[ROTATE_POWERUP].isOn = level.unblockRotate;
@@ -420,7 +439,6 @@ namespace LevelBuilder
 
 		public bool wordExistInPreviousLevels(string word)
 		{
-			int howManyTimes = 0;
 			word = word.ToLowerInvariant();
 			word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
 
@@ -437,11 +455,6 @@ namespace LevelBuilder
 						for(int i= 0; i<words.Length; i++)
 						{
 							if(words[i].Split('_')[0] == word || words[i].Split('_')[1] == word)
-							{
-								howManyTimes++;
-							}
-
-							if(howManyTimes > 1)
 							{
 								return true;	
 							}

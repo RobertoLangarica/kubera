@@ -18,6 +18,8 @@ namespace LevelBuilder
 		public Toggle toggleLetters;
 		public Toggle toggleWordsCount;
 		public Toggle toggleWord;
+		public Toggle toggleSin;
+		public Toggle toggleAnt;
 		public Toggle toggleObstacles;
 
 		public Selectable selectablePoints;
@@ -45,6 +47,8 @@ namespace LevelBuilder
 			wordPopup.onCancel += onCancelWordPopUp;
 			wordPopup.onAdd += AddWordToDictionary;
 			wordPopup.onChange += onWordChange;
+			wordPopup.onAddWord += onAddWordPopUp;
+			wordPopup.onDeleteWord += onDeleteWordPopUp;
 
 			showWordPopup(false);
 		}
@@ -83,6 +87,29 @@ namespace LevelBuilder
 			showWordPopup(false);
 		}
 
+		public void onAddWordPopUp()
+		{
+			wordBeforeOpen = wordPopup.getInputValue();
+			wordPopup.reset();
+			wordPopup.setNewWord(wordBeforeOpen);
+			wordPopup.actualizeInputValues ();
+			wordPopup.activateDeleteWord (true);
+			toMuchWords ();
+		}
+
+		public void onDeleteWordPopUp()
+		{
+			wordPopup.deleteWordFromList ();
+			activateDeleteWord ();
+			wordPopup.actualizeInputValues ();
+			toMuchWords ();
+		}
+
+		public void activateDeleteWord()
+		{
+			wordPopup.activateDeleteWord (checkIfExistWords());
+		}
+
 		public void AddWordToDictionary()
 		{
 			onAddWordToDictionary(wordPopup.getInputValue());
@@ -90,11 +117,50 @@ namespace LevelBuilder
 			wordPopup.showWarning("Palabra válida");
 		}
 
+		public void toMuchWords()
+		{
+			if(!isAntOrSinOn() && wordPopup.getInputValues().Length > 1)
+			{
+				wordPopup.showWarning("Se tomara el primero de la lista.");
+			}
+			else
+			{
+				wordPopup.showWarning("");
+			}
+		}
+
+		public void onToggleAnt()
+		{
+			if(toggleAnt.isOn)
+			{
+				toggleSin.isOn = false;
+			}
+			toMuchWords ();
+		}
+
+		public void onToggleSin()
+		{
+			if(toggleSin.isOn)
+			{
+				toggleAnt.isOn = false;
+			}
+			toMuchWords ();
+		}
+
+		public bool isAntOrSinOn()
+		{
+			if(toggleAnt.isOn || toggleSin.isOn)
+			{
+				return true;
+			}
+			return false;
+		}
+
 		public void onWordChange()
 		{
 			wordPopup.showWarning("");
 			wordPopup.activateAdd(false);
-			wordPopup.activateAddWordToList (false);
+			wordPopup.activateAddWord (false);
 
 			if(wordPopup.getInputValue().Length < 3)
 			{
@@ -112,8 +178,17 @@ namespace LevelBuilder
 			else
 			{
 				wordPopup.showWarning("Palabra válida");
-				wordPopup.activateAddWordToList (true);
+				wordPopup.activateAddWord (true);
 			}
+		}
+
+		public bool checkIfExistWords()
+		{
+			if(wordPopup.getInputValues().Length >0)
+			{
+				return true;
+			}
+			return false;
 		}
 
 		public void OnShowABCSelector()
@@ -181,8 +256,31 @@ namespace LevelBuilder
 			else if(goal[0] == "word")
 			{
 				//wordPopup.setInputValue(goal[1].Split('_')[0]);
-				wordPopup.setInputValues(goal[1].Split(','));
+				wordPopup.setWords (goal[1].Split(','));
+				wordPopup.actualizeInputValues();
+				activateDeleteWord ();
+				toMuchWords ();
 				toggleWord.isOn = true;
+			}
+			else if(goal[0] == "sin")
+			{
+				//wordPopup.setInputValue(goal[1].Split('_')[0]);
+				wordPopup.setWords (goal[1].Split(','));
+				wordPopup.actualizeInputValues();
+				activateDeleteWord ();
+				toMuchWords ();
+				toggleWord.isOn = true;
+				toggleSin.isOn = true;
+			}
+			else if(goal[0] == "ant")
+			{
+				//wordPopup.setInputValue(goal[1].Split('_')[0]);
+				wordPopup.setWords (goal[1].Split(','));
+				wordPopup.actualizeInputValues();
+				activateDeleteWord ();
+				toMuchWords ();
+				toggleWord.isOn = true;
+				toggleAnt.isOn = true;
 			}
 		}
 			
@@ -206,17 +304,56 @@ namespace LevelBuilder
 			{
 				result = "obstacles-";
 			}
+			else if(toggleSin.isOn)
+			{
+				//Primero se guarda con acentos luego sin acentos
+				string[] words = wordPopup.getInputValues();
+				string word;
+				result = "sin-";
+
+				for(int i=0; i<words.Length; i++)
+				{
+					word = words[i];
+					result += word+"_";
+					word = words[i].Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+					result += word;
+					if(i+1 < words.Length)
+					{
+						result += ",";
+					}
+				}
+			}			
+			else if(toggleAnt.isOn)
+			{
+				//Primero se guarda con acentos luego sin acentos
+				string[] words = wordPopup.getInputValues();
+				string word;
+				result = "ant-";
+
+				for(int i=0; i<words.Length; i++)
+				{
+					word = words[i];
+					result += word+"_";
+					word = words[i].Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+					result += word;
+					if(i+1 < words.Length)
+					{
+						result += ",";
+					}
+				}
+			}
 			else if(toggleWord.isOn)
 			{
 				//Primero se guarda con acentos luego sin acentos
-				string word = wordPopup.getInputValue();
+				string words = wordPopup.getInputValues()[0];
+				string word;
 				result = "word-";
-				word = word.ToLowerInvariant();
+
+				word = words;
 				result += word+"_";
-				word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+				word = words.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
 				result += word;
-			}
-				
+			}		
 			return result;
 		}
 	}
