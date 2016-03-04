@@ -94,6 +94,7 @@ namespace LevelBuilder
 			updateLevelSelectorOptions();
 
 			setAlfabetToABCSelectors();
+			setABCSelectorsDefaultData();
 
 			piecesSelector.resetDataItems();
 			piecesSelector.updateShowedData();
@@ -179,6 +180,18 @@ namespace LevelBuilder
 			abcObstacleSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
 		}
 
+		private void setABCSelectorsDefaultData()
+		{
+			abcSelector.createEmptyData();
+			abcGoalSelector.createEmptyData();
+			abcObstacleSelector.createEmptyData();
+
+			//Default data
+			//abcSelector.sincronizeDataWithCSV(level.lettersPool);
+			//abcObstacleSelector.sincronizeDataWithCSV(level.obstacleLettersPool);
+			//levelGoalSelector.sincronizeDataWithString(level.winCondition);
+		}
+
 		public void writeLevelToXML()
 		{
 			Level lvlToSave;
@@ -237,9 +250,10 @@ namespace LevelBuilder
 
 			abcSelector.sincronizeDataWithCSV(level.lettersPool);
 			abcObstacleSelector.sincronizeDataWithCSV(level.obstacleLettersPool);
+			levelGoalSelector.sincronizeDataWithString(level.winCondition);
 			piecesSelector.sincronizeDataWithCSV(level.pieces);
 			gridEditor.sincronizeDataWithCSV(level.grid);
-			levelGoalSelector.sincronizeDataWithString(level.winCondition);
+
 			powerupToggles[BOMB_POWERUP].isOn = level.unblockBomb;
 			powerupToggles[BLOCK_POWERUP].isOn = level.unblockBlock;
 			powerupToggles[ROTATE_POWERUP].isOn = level.unblockRotate;

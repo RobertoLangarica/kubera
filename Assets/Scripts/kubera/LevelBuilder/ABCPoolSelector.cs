@@ -25,7 +25,10 @@ namespace LevelBuilder
 		public void setAlfabet(List<AlfabetUnit> newAlfabet)
 		{
 			alfabet = newAlfabet;
+		}
 
+		public void createEmptyData()
+		{
 			selector.OnDataChange += onSelectorDataChange;
 			createDataItems();
 			setSelectorData();
