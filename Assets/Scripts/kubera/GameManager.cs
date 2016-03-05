@@ -79,7 +79,6 @@ public class GameManager : MonoBehaviour
 		inputPiece.OnDrop += OnPieceDropped;
 
 		cellManager = FindObjectOfType<CellsManager>();
-		cellManager.OnLetterCreated += registerNewLetterCreated;
 
 		wordManager = FindObjectOfType<WordManager>();
 		wordManager.OnSendVector3 += sendVectorToCellManager;

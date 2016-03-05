@@ -71,6 +71,12 @@ public class PersistentData : MonoBehaviour
 	 **/ 
 	public void configureGameForLanguage(string language = "")
 	{
+		if(language == currentLanguage)
+		{
+			onDictionaryFinished();
+			return;
+		}
+
 		if(language == "")
 		{
 			language = UserDataManager.instance.language;
@@ -92,6 +98,8 @@ public class PersistentData : MonoBehaviour
 
 		//CurrentLevel
 		currentLevel = levelsData.getLevelByNumber(levelNumber);
+
+		currentLanguage = language;
 	}
 
 	private void onDictionaryFinishedCallback()

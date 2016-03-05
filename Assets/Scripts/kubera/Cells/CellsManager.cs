@@ -5,9 +5,6 @@ using ABC;
 
 public class CellsManager : MonoBehaviour 
 {
-	public delegate void letterCreated(ABCChar abcChar,UIChar uiChar,bool isBlackLetter);
-	[HideInInspector]public letterCreated OnLetterCreated;
-
 	public GameObject cellPrefab;
 	public GameObject obstacleLetterPrefab;
 	public GameObject singleSquarePiece;
