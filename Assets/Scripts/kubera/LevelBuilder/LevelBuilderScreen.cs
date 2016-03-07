@@ -371,6 +371,11 @@ namespace LevelBuilder
 		{
 			abcSelector.sincronizeDataWithCSV (defaultLetters);
 		}
+
+		public void OnEreaseABCSelector()
+		{
+			abcSelector.createEmptyData();
+		}
 			
 		public void OnAcceptABCSelector()
 		{
@@ -394,6 +399,11 @@ namespace LevelBuilder
 		public void OnResetABCObstacleSelector()
 		{
 			abcObstacleSelector.sincronizeDataWithCSV(defaultObstacles);
+		}
+
+		public void OnEreaseABCObstacleSelector()
+		{
+			abcObstacleSelector.createEmptyData();
 		}
 
 		public void OnAcceptABCObstacleSelector()
