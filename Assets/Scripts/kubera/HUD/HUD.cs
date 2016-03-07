@@ -176,59 +176,72 @@ public class HUD : MonoBehaviour
 	/**
 	 * setea la condicion de victoria
 	 **/
-	public void setWinConditionOnHud(string winCondition, string word, int value=0,List<string> letters = null)
+
+	public void setPointsCondition(int pointsNeed, int pointsMade)
 	{
-		//[TODO] Jalar textos del xml de idiomas
-		switch (winCondition) {
-		case "points":
-			winConditionText.gameObject.SetActive (true);
-			winConditionLettersText.gameObject.SetActive (false);
-			winConditionText.text = "Obten: " + value +" puntos.";
-			break;
-		case "words":
-			winConditionText.gameObject.SetActive (true);
-			winConditionLettersText.gameObject.SetActive (false);
-			winConditionText.text = "Forma: " + value +" palabras.";
-			break;
-		case "letters":
-			winConditionText.gameObject.SetActive (false);
-			winConditionLettersText.gameObject.SetActive (true);
-			winConditionLettersText.text = "Usa: ";
-			for (int i = 0; i < letters.Count; i++) 
-			{
-				GameObject letter =  Instantiate(uiLetter) as GameObject;
-				letter.name = letters [i];
-				lettersToFound.Add (letter);
-				letter.GetComponentInChildren<Text> ().text = letters[i];
-				letter.transform.SetParent (winConditionLettersContainer.transform,false);
-			}
+		winConditionText.gameObject.SetActive (true);
+		winConditionLettersText.gameObject.SetActive (false);
+		winConditionText.text = "Van: "+ pointsMade +" puntos  de" + pointsNeed;
+	}
 
-			break;
-		case "obstacles":
-			winConditionText.gameObject.SetActive (false);
-			winConditionLettersText.gameObject.SetActive (true);
-			winConditionLettersText.text = "Usa: ";
-			print (letters.Count);
-			for (int i = 0; i < letters.Count; i++) 
-			{
-				GameObject letter =  Instantiate(uiLetter) as GameObject;
-				letter.name = letters [i];
-				lettersToFound.Add (letter);
-				letter.GetComponentInChildren<Text> ().text = letters[i];
-				letter.transform.SetParent (winConditionLettersContainer.transform,false);
-				letter.GetComponent<Image>().color = Color.grey;
-			}
+	public void setWordsCondition(int wordNeed,int wordsMade)
+	{
+		winConditionText.gameObject.SetActive (true);
+		winConditionLettersText.gameObject.SetActive (false);
+		winConditionText.text = "Van: "+ wordsMade +" palabras  de" + wordNeed;
+	}
 
-			break;
-		case "word":
-			winConditionText.gameObject.SetActive (true);
-			winConditionLettersText.gameObject.SetActive (false);
-			winConditionText.text = "Forma: " + word;
-
-			break;
-		default:
-			break;
+	public void setLettersCondition(List<string> letters = null)
+	{
+		winConditionText.gameObject.SetActive (false);
+		winConditionLettersText.gameObject.SetActive (true);
+		winConditionLettersText.text = "Usa: ";
+		for (int i = 0; i < letters.Count; i++) 
+		{
+			GameObject letter =  Instantiate(uiLetter) as GameObject;
+			letter.name = letters [i];
+			lettersToFound.Add (letter);
+			letter.GetComponentInChildren<Text> ().text = letters[i];
+			letter.transform.SetParent (winConditionLettersContainer.transform,false);
 		}
+	}
+
+	public void setObstaclesCondition(int value=0)
+	{
+		winConditionText.gameObject.SetActive (true);
+		winConditionLettersText.gameObject.SetActive (false);
+		winConditionText.text = "Usa: todas las letras negras.";
+	}
+
+	public void setWordCondition(string word)
+	{
+		winConditionText.gameObject.SetActive (true);
+		winConditionLettersText.gameObject.SetActive (false);
+		winConditionText.text = "Forma: " + word +".";
+	}
+
+	public void setSinCondition(string word)
+	{
+		winConditionText.gameObject.SetActive (true);
+		winConditionLettersText.gameObject.SetActive (false);
+		winConditionText.text = "Sinonimo de: " + word +".";
+	}
+
+	public void setAntCondition(string word)
+	{
+		winConditionText.gameObject.SetActive (true);
+		winConditionLettersText.gameObject.SetActive (false);
+		winConditionText.text = "Antonimo de: " + word +".";
+	}
+
+	public void actualizePointsWinCondition ()
+	{
+		
+	}
+
+	public void actualizeWordsValueWinCondition ()
+	{
+
 	}
 
 	public void destroyLetterFound(string letterFound)
@@ -237,8 +250,8 @@ public class HUD : MonoBehaviour
 		{
 			if (letterFound == lettersToFound [i].name) 
 			{
-				lettersToFound.RemoveAt (i);
 				Destroy (lettersToFound [i]);
+				lettersToFound.RemoveAt (i);
 				break;
 			}
 		}
@@ -333,10 +346,12 @@ public class HUD : MonoBehaviour
 			break;
 		case "letters":
 			objectiveTypeText.text = "Usa: ";
+
 			objectiveText.text = "";
 			for (int i = 0; i < letters.Count; i++) 
 			{
 				objectiveText.text += letters[i];
+
 				if (letters.Count == i + 1) 
 				{
 					objectiveText.text += ".";
@@ -349,7 +364,7 @@ public class HUD : MonoBehaviour
 			break;
 		case "obstacles":
 			objectiveTypeText.text = "Usa: ";
-			objectiveText.text = value + " letras.";
+			objectiveText.text = value + " letras negras.";
 			break;
 		case "word":
 			objectiveTypeText.text = "Forma: ";
