@@ -32,6 +32,8 @@ public class Level
 
 	[XmlAttribute("winCondition")]public string winCondition;
 
+	[XmlAttribute("tutorialConfig")]public string tutorialConfig;
+
 	/**
 	 * Listado de piezas separado por ',' con el siguiente formato:
 	 * (Cantidad)_Pieza

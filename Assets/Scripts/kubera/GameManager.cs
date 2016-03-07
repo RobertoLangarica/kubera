@@ -208,6 +208,11 @@ public class GameManager : MonoBehaviour
 		audioManager.PlayPiecePositionatedAudio();
 	}
 
+	private void configureLevelForTutorial()
+	{
+		
+	}
+
 	IEnumerator allPiecesAreOnGrid(Piece piece)
 	{
 		yield return new WaitForSeconds (0.5f);
