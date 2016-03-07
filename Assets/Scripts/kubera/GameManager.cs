@@ -82,6 +82,7 @@ public class GameManager : MonoBehaviour
 
 		wordManager = FindObjectOfType<WordManager>();
 		wordManager.OnSendVector3 += sendVectorToCellManager;
+		wordManager.OnLettersActualized += showPointsOfLettersSelected;
 
 		powerupManager = FindObjectOfType<PowerUpManager>();
 		powerupManager.OnPowerupCanceled = OnPowerupCanceled;
@@ -543,6 +544,41 @@ public class GameManager : MonoBehaviour
 	protected void sendVectorToCellManager(Vector3 vector3)
 	{
 		cellManager.getCellUnderPoint(vector3).clearCell();
+	}
+
+	protected void showPointsOfLettersSelected ()
+	{
+		int amount = 0;
+		int multiplierHelper = 1;
+
+		for (int i = 0; i < wordManager.chars.Count; i++) 
+		{
+			switch (wordManager.chars [i].pointsOrMultiple) 
+			{
+			case("x2"):
+				{
+					multiplierHelper *= 2;}
+				break;
+			case("x3"):
+				{
+					multiplierHelper *= 3;}
+				break;
+			case("x4"):
+				{
+					multiplierHelper *= 4;}
+				break;
+			case("x5"):
+				{
+					multiplierHelper *= 5;}
+				break;
+			default:
+				{
+					amount += int.Parse (wordManager.chars [i].pointsOrMultiple);}
+				break;
+			}
+		}
+
+		hud.setLettersPoints (amount);
 	}
 
 	public void linesCreated(int totalLines)

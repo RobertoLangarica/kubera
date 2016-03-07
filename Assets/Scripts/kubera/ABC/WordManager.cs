@@ -35,6 +35,9 @@ namespace ABC
 		public delegate void DSendVector3(Vector3 vector3);
 		public DSendVector3 OnSendVector3;
 
+		public delegate void DLettersActualized();
+		public DLettersActualized OnLettersActualized;
+
 		void Start()
 		{
 			inputWords = FindObjectOfType<InputWords> ();
@@ -101,6 +104,11 @@ namespace ABC
 			//letter.GetComponent<UIChar> ().changeImageTexture(changeTexture(character.character.ToLower () + "1"));
 			letter.GetComponent<ABCChar>().initializeText();
 			validateCharacter(character);
+		}
+
+		public void pointsOfLetter()
+		{
+			OnLettersActualized ();
 		}
 
 		protected void isThereAnyLetterOnContainer()
@@ -568,11 +576,14 @@ namespace ABC
 					go.GetComponent<UIChar> ().makeUsed ();
 					addCharacter (go.GetComponent<ABCChar> (), go);
 					activateButtonOfWordsActions (true);
+
+					pointsOfLetter ();
 				}
 			}
 			else
 			{
 				checkSwappLetters(go.GetComponent<UIChar>().piece);
+				pointsOfLetter ();
 				//go.GetComponent<UIChar> ().piece.GetComponent<UIChar>().destroyLetter();
 			}
 		}
