@@ -37,6 +37,8 @@ public class HUD : MonoBehaviour
 	public Image[] musicImages;
 	public Image[] soundsImages;
 
+	public Text lettersPoints;
+
 	//DONE: Hardcoding
 	public Vector3 initialPieceScale = new Vector3(2.5f,2.5f,2.5f);
 
@@ -433,5 +435,15 @@ public class HUD : MonoBehaviour
 		{
 			Sounds.image = soundsImages [1];
 		}
+	}
+
+	public void setLettersPoints(int lettersPoints)
+	{
+		this.lettersPoints.text = lettersPoints.ToString();
+	}
+
+	public void activateLettersPoints(bool activate)
+	{
+		lettersPoints.enabled = activate;
 	}
 }
