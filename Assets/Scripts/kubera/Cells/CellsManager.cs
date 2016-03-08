@@ -575,6 +575,44 @@ public class CellsManager : MonoBehaviour
 		return result.ToArray();
 	}
 
+	public EPieceType colorRandom()
+	{
+		int index = -1;
+
+		index = Random.Range (0, 8);
+
+		EPieceType result = EPieceType.NONE;
+
+		switch(index)
+		{
+		case 0:
+			result = EPieceType.AQUA;
+			break;
+		case 1:
+			result = EPieceType.BLACK;
+			break;
+		case 2:
+			result = EPieceType.BLUE;
+			break;
+		case 3:
+			result = EPieceType.GREEN;
+			break;
+		case 4:
+			result = EPieceType.GREY;
+			break;
+		case 5:
+			result = EPieceType.MAGENTA;
+			break;
+		case 6:
+			result = EPieceType.RED;
+			break;
+		case 7:
+			result = EPieceType.YELLOW;
+			break;
+		}
+		return result;
+	}
+
 	public EPieceType colorOfMoreQuantity()
 	{
 		int[] quantity = new int[8];
@@ -621,13 +659,15 @@ public class CellsManager : MonoBehaviour
 			}
 		}
 
+
+
+		EPieceType result = EPieceType.NONE;
+
 		//para regresar un color valido
 		if(index == -1)
 		{
-			index = Random.Range (0, 8);
+			return result;
 		}
-
-		EPieceType result = EPieceType.NONE;
 
 		switch(index)
 		{

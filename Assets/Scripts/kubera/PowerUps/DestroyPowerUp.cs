@@ -43,6 +43,7 @@ public class DestroyPowerUp : PowerupBase
 		{
 			if(cellSelected.pieceType != EPieceType.LETTER 
 				&& cellSelected.pieceType != EPieceType.LETTER_OBSTACLE
+				&& cellSelected.pieceType != EPieceType.NONE
 				&& cellSelected.occupied)
 			{
 				Cell[] selection = cellsManager.getCellsOfSameType(cellSelected);

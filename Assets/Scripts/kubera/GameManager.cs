@@ -32,8 +32,6 @@ public class GameManager : MonoBehaviour
 	protected int totalMoves;
 	protected int remainingMoves;
 
-	protected int winBombs;
-
 	public int secondChanceMovements = 5;
 	public int secondChanceBombs = 2;
 	protected int secondChanceTimes = 0;
@@ -542,8 +540,13 @@ public class GameManager : MonoBehaviour
 			actualizeWordsCompletedWinCondition ();
 			addPointsActions (amount);
 		}
+		resetLettersSelected ();
+	}
 
+	protected void resetLettersSelected()
+	{
 		wordManager.resetValidation();
+
 	}
 
 	protected void sendVectorToCellManager(Vector3 vector3)
@@ -859,18 +862,9 @@ public class GameManager : MonoBehaviour
 		allowGameInput (false);
 
 		//Se limpian las letras 
-		//verifyWord();
+		resetLettersSelected ();
 
-		bombsForWinBonification();
-
-		if(cellManager.colorOfMoreQuantity() != EPieceType.NONE)
-		{
-			add1x1Block();
-		}
-		else
-		{
-			destroyAndCountAllLetters();
-		}
+		add1x1Block();
 	}
 
 	protected void add1x1Block()
@@ -882,13 +876,13 @@ public class GameManager : MonoBehaviour
 		{
 			cell = emptyCells [Random.Range (0, emptyCells.Length - 1)];
 
-
 			remainingMoves--;
+
 			hud.setMovments (remainingMoves);
 
 			GameObject go = GameObject.Instantiate (bonificationPiece) as GameObject;
 
-			go.GetComponent<Piece> ().currentType = cellManager.colorOfMoreQuantity ();
+			go.GetComponent<Piece> ().currentType = cellManager.colorRandom ();
 
 			cellManager.occupyAndConfigureCell(cell,go,go.GetComponent<Piece> ().currentType,true);
 
@@ -896,9 +890,23 @@ public class GameManager : MonoBehaviour
 		}
 		else 
 		{
-			cellToLetter.AddRange (cellManager.getCellsOfSameType (cellManager.colorOfMoreQuantity ()));
-			winBombs--;
-			StartCoroutine (addWinLetterAfterBlockMore ());
+			if(remainingMoves != 0)
+			{
+				addPoints (10);
+				remainingMoves--;
+
+				hud.setMovments (remainingMoves);
+				StartCoroutine (add1x1BlockMore ());
+			}
+			else
+			{
+				if(cellManager.colorOfMoreQuantity() != EPieceType.NONE)
+				{
+					cellToLetter.AddRange (cellManager.getCellsOfSameType (cellManager.colorOfMoreQuantity ()));
+				}
+				StartCoroutine (addWinLetterAfterBlockMore ());
+			}
+
 		}
 	}
 	IEnumerator add1x1BlockMore()
@@ -927,10 +935,9 @@ public class GameManager : MonoBehaviour
 
 	protected void useBombs()
 	{
-		if(winBombs > 0 && cellManager.colorOfMoreQuantity() != EPieceType.NONE)
+		if(cellManager.colorOfMoreQuantity() != EPieceType.NONE)
 		{
 			cellToLetter = new List<Cell>(cellManager.getCellsOfSameType(cellManager.colorOfMoreQuantity()));
-			winBombs--;
 			StartCoroutine (addWinLetterAfterBlockMore ());
 		}
 		else
@@ -1003,25 +1010,7 @@ public class GameManager : MonoBehaviour
 		inputWords.allowInput = allowInput;
 	}
 
-	protected void bombsForWinBonification()
-	{
-		if(remainingMoves > 0 && remainingMoves < 4)
-		{
-			winBombs = 1;
-		}
-		else if(remainingMoves > 3 && remainingMoves < 7)
-		{
-			winBombs = 2;
-		}
-		else if(remainingMoves > 6 && remainingMoves < 10)
-		{
-			winBombs = 3;
-		}
-		else if(remainingMoves >= 10)
-		{
-			winBombs = 5;
-		}
-	}
+
 
 	protected void checkIfNeedToUnlockPowerUp()
 	{
