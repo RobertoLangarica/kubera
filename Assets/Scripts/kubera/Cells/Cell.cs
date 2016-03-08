@@ -77,7 +77,7 @@ public class Cell : MonoBehaviour
 			occupied = true;
 			available = true;
 			content = null;
-			tempType = cellType >> 4;
+			tempType = cellType >> 6;
 
 			updateCellColor(tempType);
 		}

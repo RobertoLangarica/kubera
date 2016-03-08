@@ -262,8 +262,6 @@ namespace LevelBuilder
 
 			abcSelector.sincronizeDataWithCSV(level.lettersPool);
 			abcObstacleSelector.sincronizeDataWithCSV(level.obstacleLettersPool);
-			abcTutorialSelector.sincronizeDataWithCSV(level.tutorialConfig.Split('-')[0]);
-			tutorialInput.text = level.tutorialConfig.Split('-')[1];
 			levelGoalSelector.sincronizeDataWithString(level.winCondition);
 			piecesSelector.sincronizeDataWithCSV(level.pieces);
 			gridEditor.sincronizeDataWithCSV(level.grid);
@@ -277,6 +275,15 @@ namespace LevelBuilder
 			inputStar1.text = level.scoreToStar1.ToString();
 			inputStar2.text = level.scoreToStar2.ToString();
 			inputStar3.text = level.scoreToStar3.ToString();
+
+			if(level.tutorialConfig != null)
+			{
+				if(level.tutorialConfig.Length > 0)
+				{
+					abcTutorialSelector.sincronizeDataWithCSV(level.tutorialConfig.Split('-')[0]);
+					tutorialInput.text = level.tutorialConfig.Split('-')[1];
+				}
+			}
 		}
 			
 		public void OnLanguageSelected()

@@ -329,7 +329,7 @@ public class GameManager : MonoBehaviour
 	protected GameObject createCellBlockContent(int contentColor)
 	{
 		GameObject go = GameObject.Instantiate (singleSquarePiece) as GameObject;
-		int tempType = contentColor >> 4;
+		int tempType = contentColor >> 6;
 
 		go.GetComponent<BoxCollider2D> ().enabled = false;
 
@@ -1191,8 +1191,9 @@ public class GameManager : MonoBehaviour
 					}
 				}
 			}
-			if(PersistentData.instance.currentLevel.tutorialConfig.Length > 0)
+			if(PersistentData.instance.currentLevel.tutorialConfig.Length > 1)
 			{
+				Debug.Log(PersistentData.instance.currentLevel.tutorialConfig.Length);
 				string[] tutorialInfo = PersistentData.instance.currentLevel.tutorialConfig.Split(new char[1]{'-'});
 				lettersPool = tutorialInfo[0].Split(new char[1]{','});
 
