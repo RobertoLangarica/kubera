@@ -16,6 +16,8 @@ public class Cell : MonoBehaviour
 	 * 2 = Cubo de color que se agrega desde el inicio
 	 * 4 = Celda vacia (si cuenta para la linea)
 	 * 8 = Letra como obstaculo
+	 * 16 = Letra como obstaculo pero visible
+	 * 32 = Letra tutorial
 	 * 
 	 * El siguiente nibble se utiliza para los colores que se marcan en la bandera 2
 	 * Son colores del 0 al 7 de momento
@@ -104,6 +106,12 @@ public class Cell : MonoBehaviour
 
 			//Cambio Temporal
 			GetComponent<SpriteRenderer>().color = Color.cyan;
+		}
+		if((cellType & 0x20) == 0x20)
+		{
+			pieceType = EPieceType.LETTER;
+			occupied = true;
+			available = false;
 		}
 	}
 

@@ -24,6 +24,7 @@ namespace LevelBuilder
 		public InputField inputStar2;
 		public InputField inputStar3;
 		public InputField inputMovements;
+		public InputField tutorialInput;
 		public Text lblScore;
 		public Text lblTitle;
 		public Text lblName;
@@ -32,6 +33,7 @@ namespace LevelBuilder
 		public ABCPoolSelector abcSelector;
 		public ABCPoolSelector abcObstacleSelector;
 		public ABCPoolSelector abcGoalSelector;
+		public ABCPoolSelector abcTutorialSelector;
 		public LevelGoalSelector levelGoalSelector;
 		public PiecesSelector piecesSelector;
 		public TileGridEditor gridEditor;
@@ -46,6 +48,8 @@ namespace LevelBuilder
 		private string abcDataBeforeOpen;
 		private string piecesDataBeforeOpen;
 		private string gridDataBeforeOpen;
+
+		protected string tutorialSelection;
 	
 		//Nombre para el nivel que se esta modificando (este nivel puede no existir en el xml de niveles)
 		private string currentEditingLevelName;
@@ -182,6 +186,7 @@ namespace LevelBuilder
 			abcSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
 			abcGoalSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
 			abcObstacleSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
+			abcTutorialSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
 		}
 
 		private void setABCSelectorsDefaultData()
@@ -189,6 +194,7 @@ namespace LevelBuilder
 			abcSelector.createEmptyData();
 			abcGoalSelector.createEmptyData();
 			abcObstacleSelector.createEmptyData();
+			abcTutorialSelector.createEmptyData();
 
 			//Default data
 			abcSelector.sincronizeDataWithCSV (defaultLetters);
@@ -219,6 +225,7 @@ namespace LevelBuilder
 			lvlToSave.difficulty = 0;
 			lvlToSave.lettersPool = abcSelector.getCSVData(ABC_NORMAL_TYPE);
 			lvlToSave.obstacleLettersPool = abcObstacleSelector.getCSVData(ABC_OBSTACLE_TYPE);
+			lvlToSave.tutorialConfig = abcTutorialSelector.getCSVData(ABC_NORMAL_TYPE) + '-' + tutorialSelection;
 			lvlToSave.pieces = piecesSelector.getCSVData();
 			lvlToSave.grid = gridEditor.getCSVData();
 			lvlToSave.winCondition = levelGoalSelector.getStringData();
@@ -255,6 +262,8 @@ namespace LevelBuilder
 
 			abcSelector.sincronizeDataWithCSV(level.lettersPool);
 			abcObstacleSelector.sincronizeDataWithCSV(level.obstacleLettersPool);
+			abcTutorialSelector.sincronizeDataWithCSV(level.tutorialConfig.Split('-')[0]);
+			tutorialInput.text = level.tutorialConfig.Split('-')[1];
 			levelGoalSelector.sincronizeDataWithString(level.winCondition);
 			piecesSelector.sincronizeDataWithCSV(level.pieces);
 			gridEditor.sincronizeDataWithCSV(level.grid);
@@ -410,6 +419,40 @@ namespace LevelBuilder
 		{
 			//Se quedan los datos como estan
 			abcObstacleSelector.gameObject.SetActive(false);
+		}
+
+		public void OnShowABCTutorialSelector()
+		{
+			abcDataBeforeOpen = abcTutorialSelector.getCSVData(ABC_NORMAL_TYPE);
+			abcTutorialSelector.gameObject.SetActive(true);
+		}
+
+		public void OnCancelABCTutorialSelector()
+		{
+			abcTutorialSelector.sincronizeDataWithCSV(abcDataBeforeOpen);
+			abcTutorialSelector.updateShowedData();
+			abcTutorialSelector.gameObject.SetActive(false);
+		}
+
+		public void OnResetABCTutorialSelector()
+		{
+			abcTutorialSelector.sincronizeDataWithCSV(defaultObstacles);
+		}
+
+		public void OnEreaseABCTutorialSelector()
+		{
+			abcTutorialSelector.createEmptyData();
+		}
+
+		public void OnAcceptABCTutorialSelector()
+		{
+			//Se quedan los datos como estan
+			abcTutorialSelector.gameObject.SetActive(false);
+		}
+
+		public void onSelectionTextChanged(string val)
+		{
+			tutorialSelection = val;
 		}
 
 		public void OnShowPiecesSelector()

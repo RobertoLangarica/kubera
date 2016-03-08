@@ -62,8 +62,10 @@ public class GameManager : MonoBehaviour
 	protected List<GameObject> XMLPoolPiecesList = new List<GameObject>();
 	protected List<ScriptableABCChar> XMLPoolLetersList = new List<ScriptableABCChar>();
 	protected List<ScriptableABCChar> XMLPoolBlackLetersList = new List<ScriptableABCChar>();
+	protected List<ScriptableABCChar> XMLPoolTutorialLetersList = new List<ScriptableABCChar>();
 	protected List<ScriptableABCChar> randomizedPoolLeters = new List<ScriptableABCChar>();
 	protected List<ScriptableABCChar> randomizedBlackPoolLeters = new List<ScriptableABCChar>();
+	protected List<ScriptableABCChar> randomizedTutorialPoolLeters = new List<ScriptableABCChar>();
 	protected List<ABCChar> listChar = new List<ABCChar>();
 
 	protected bool playerWon;
@@ -207,11 +209,6 @@ public class GameManager : MonoBehaviour
 		audioManager.PlayPiecePositionatedAudio();
 	}
 
-	private void configureLevelForTutorial()
-	{
-		
-	}
-
 	IEnumerator allPiecesAreOnGrid(Piece piece)
 	{
 		yield return new WaitForSeconds (0.5f);
@@ -249,7 +246,7 @@ public class GameManager : MonoBehaviour
 				{
 					if (cellList [i] [j].pieceType != EPieceType.LETTER) 
 					{
-						GameObject cellContent = createLetterContent();
+						GameObject cellContent = getAndRegisterNewLetter("normal");
 						Vector3 cellPosition =  cellList [i] [j].transform.position + (new Vector3 (cellList [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x,
 							-cellList [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
 						
@@ -267,6 +264,8 @@ public class GameManager : MonoBehaviour
 		GameObject cellContent = null;
 		string[] levelGridData = PersistentData.instance.currentLevel.grid.Split(',');
 		int cellType = 0;
+
+		List<GameObject> tutorialLetters = new List<GameObject>();
 
 		for(int i = 0;i < levelGridData.Length;i++)
 		{
@@ -288,9 +287,41 @@ public class GameManager : MonoBehaviour
 			}
 			if((cellType & 0x8) == 0x8)
 			{	
-				cellContent = createCellObstacleContent();
+				cellContent = getAndRegisterNewLetter("obstacle");
 				cellManager.occupyAndConfigureCell(i,cellContent,EPieceType.LETTER_OBSTACLE,true);
 				obstaclesQuantity++;
+			}
+			if((cellType & 0x20) == 0x20)
+			{	
+				cellContent = getAndRegisterNewLetter("tutorial");
+				cellManager.occupyAndConfigureCell(i,cellContent,EPieceType.LETTER,true);
+				tutorialLetters.Add(cellContent);
+			}
+		}
+
+		if(tutorialLetters.Count > 0)
+		{
+			selectLettersForTutorial(tutorialLetters);
+		}
+	}
+
+	protected void selectLettersForTutorial(List<GameObject> tutorialLetters)
+	{
+		string[] selectedLetters = PersistentData.instance.currentLevel.tutorialConfig.Split('-')[1].Split(',');
+		ABCChar abcChar;
+
+		for(int i = 0;i < selectedLetters.Length;i++)
+		{
+			for(int j = 0;j < tutorialLetters.Count;j++)
+			{
+				abcChar = tutorialLetters[j].GetComponent<ABCChar>();
+
+				if(abcChar.character == selectedLetters[i])
+				{
+					wordManager.sendLetterToWord(tutorialLetters[j]);
+					tutorialLetters.RemoveAt(j);
+					break;
+				}
 			}
 		}
 	}
@@ -337,10 +368,10 @@ public class GameManager : MonoBehaviour
 		return go;
 	}
 
-	protected GameObject createCellObstacleContent()
+	protected GameObject createLetter()
 	{
 		GameObject go = Instantiate (uiLetter)as GameObject;
-		SpriteRenderer sprite = singleSquarePiece.GetComponent<Piece>().pieces[0].GetComponent<SpriteRenderer>();
+		SpriteRenderer sprite = cellManager.cellPrefab.GetComponent<SpriteRenderer>();
 
 		go.transform.SetParent (canvasOfLetters,false);
 
@@ -350,29 +381,36 @@ public class GameManager : MonoBehaviour
 		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(Mathf.Abs(letterSize.x),Mathf.Abs(letterSize.y));
 
 		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
-
-		registerNewLetterCreated (go.GetComponent<ABCChar> (), go.GetComponent<UIChar> (), true);
 
 		return go;
 	}
 
-	public GameObject createLetterContent()
+	public GameObject getAndRegisterNewLetter(string letterType)
 	{
-		GameObject go = Instantiate (uiLetter)as GameObject;
-		SpriteRenderer sprite = cellManager.cellPrefab.GetComponent<SpriteRenderer>();//singleSquarePiece.GetComponent<Piece>().pieces[0].GetComponent<SpriteRenderer>();
+		GameObject newLetter = createLetter();
 
-		go.transform.SetParent (canvasOfLetters,false);
+		ABCChar abcChar = newLetter.GetComponent<ABCChar> ();
+		UIChar uiChar = newLetter.GetComponent<UIChar> ();
 
-		go.GetComponent<BoxCollider2D>().enabled = true;
+		switch(letterType)
+		{
+		case("normal"):
+			abcChar.initializeFromScriptableABCChar(giveLetterInfo());
+			break;
+		case("obstacle"):
+			abcChar.initializeFromScriptableABCChar(giveBlackLetterInfo());
+			break;
+		case("tutorial"):
+			abcChar.initializeFromScriptableABCChar(giveTutorialLetterInfo());
+			break;
+		}
 
-		Vector3 letterSize = (Camera.main.WorldToScreenPoint(sprite.bounds.size) -Camera.main.WorldToScreenPoint(Vector3.zero)) * totalLetterPercentToFillCell;
-		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(Mathf.Abs(letterSize.x),Mathf.Abs(letterSize.y));
+		uiChar.type = abcChar.type;
+		uiChar.changeColorAndSetValues(abcChar.character.ToLower ());
 
-		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
+		listChar.Add(abcChar);
 
-		registerNewLetterCreated (go.GetComponent<ABCChar> (), go.GetComponent<UIChar> (), false);
-
-		return go;
+		return newLetter;
 	}
 
 
@@ -634,23 +672,6 @@ public class GameManager : MonoBehaviour
 			}
 			break;
 		}
-	}
-
-	protected void registerNewLetterCreated(ABCChar abcChar,UIChar uiChar,bool isBlackLetter)
-	{
-		if(isBlackLetter)
-		{
-			abcChar.initializeFromScriptableABCChar(giveBlackLetterInfo());
-		}
-		else
-		{
-			abcChar.initializeFromScriptableABCChar(giveLetterInfo());
-		}
-
-		uiChar.type = abcChar.type;
-		uiChar.changeColorAndSetValues(abcChar.character.ToLower ());
-
-		listChar.Add(abcChar);
 	}
 
 	protected void getWinCondition()
@@ -921,7 +942,7 @@ public class GameManager : MonoBehaviour
 
 		if (cellToLetter.Count > 0) 
 		{
-			cellManager.occupyAndConfigureCell (cellToLetter [random],createLetterContent(),EPieceType.LETTER,true);
+			cellManager.occupyAndConfigureCell (cellToLetter [random],getAndRegisterNewLetter("normal"),EPieceType.LETTER,true);
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
@@ -1170,6 +1191,25 @@ public class GameManager : MonoBehaviour
 					}
 				}
 			}
+			if(PersistentData.instance.currentLevel.tutorialConfig.Length > 0)
+			{
+				string[] tutorialInfo = PersistentData.instance.currentLevel.tutorialConfig.Split(new char[1]{'-'});
+				lettersPool = tutorialInfo[0].Split(new char[1]{','});
+
+				for(int i =0; i<lettersPool.Length; i++)
+				{
+					piecesInfo = lettersPool[i].Split(new char[1]{'_'});
+					amout = int.Parse(piecesInfo[0]);
+					for(int j = 0;j < amout;j++)
+					{
+						newLetter = new ScriptableABCChar();
+						newLetter.character = piecesInfo[1];
+						newLetter.pointsOrMultiple = piecesInfo[2];
+						newLetter.type = int.Parse(piecesInfo[3]);
+						XMLPoolTutorialLetersList.Add(newLetter);
+					}
+				}
+			}
 		}
 		/*****/
 		fillLetterPoolRandomList ();
@@ -1208,6 +1248,22 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	protected void fillTutorialLetterPoolRandomList()
+	{
+		List<ScriptableABCChar> tempList = new List<ScriptableABCChar> ();
+		randomizedTutorialPoolLeters = new List<ScriptableABCChar>();
+
+		tempList = new List<ScriptableABCChar>(XMLPoolTutorialLetersList);
+
+
+		while(tempList.Count >0)
+		{
+			int val = Random.Range(0,tempList.Count);
+			randomizedTutorialPoolLeters.Add(tempList[val]);
+			tempList.RemoveAt(val);
+		}
+	}
+
 	public ScriptableABCChar giveLetterInfo()
 	{
 		if(randomizedPoolLeters.Count==0)
@@ -1229,6 +1285,18 @@ public class GameManager : MonoBehaviour
 		}
 		ScriptableABCChar letter = randomizedBlackPoolLeters[0];
 		randomizedBlackPoolLeters.RemoveAt (0);
+
+		return letter;
+	}
+
+	public ScriptableABCChar giveTutorialLetterInfo()
+	{
+		if(randomizedTutorialPoolLeters.Count==0)
+		{
+			fillTutorialLetterPoolRandomList();
+		}
+		ScriptableABCChar letter = randomizedTutorialPoolLeters[0];
+		randomizedTutorialPoolLeters.RemoveAt (0);
 
 		return letter;
 	}
