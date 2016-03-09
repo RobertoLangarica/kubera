@@ -35,7 +35,7 @@ public class Cell : MonoBehaviour
 		occupied = false;
 		content = null;
 
-		if((cellType & 0x2) == 0x2 || (cellType & 0x8) == 0x8)
+		if((cellType & 0x2) == 0x2 || (cellType & 0x8) == 0x8 || (cellType & 0x20) == 0x20)
 		{
 			cellType = 1;
 			available = true;
