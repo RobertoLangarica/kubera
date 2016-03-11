@@ -66,7 +66,7 @@ public class HUD : MonoBehaviour
 	/**
 	 * Setea los movimientos en la hud
 	 **/
-	public void setMovments(int movments)
+	public void setMovements(int movments)
 	{
 		movementsText.text = movments.ToString();
 	}

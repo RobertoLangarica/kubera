@@ -37,10 +37,10 @@ public class WildCardPowerUp : PowerupBase
 
 		inputPowerUp.enabled = true;
 		inputPowerUp.setCurrentSelected(powerUpGO);
-		inputPowerUp.OnDrop += powerUpPositionated;
+		inputPowerUp.OnDrop += powerUpPositioned;
 	}
 
-	public void powerUpPositionated()
+	public void powerUpPositioned()
 	{
 		bool activated = false;
 		Vector3 v3 = new Vector3();
@@ -59,7 +59,7 @@ public class WildCardPowerUp : PowerupBase
 			}
 		}
 
-		inputPowerUp.OnDrop -= powerUpPositionated;
+		inputPowerUp.OnDrop -= powerUpPositioned;
 		if (!activated) 
 		{
 			powerUpGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("WildCardPowerUP_Move");

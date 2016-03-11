@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class AudioManager : MonoBehaviour 
 {
 	public AudioClip lineCreatedAudio;
-	public AudioClip piecePositionatedAudio;
+	public AudioClip piecePositionedAudio;
 	public AudioClip buttonAudio;
 	public AudioClip wonAudio;
 	public AudioClip loseAudio;
@@ -74,11 +74,11 @@ public class AudioManager : MonoBehaviour
 		return false;
 	}
 
-	public bool PlayPiecePositionatedAudio()
+	public bool PlayPiecePositionedAudio()
 	{
-		if(piecePositionatedAudio != null && soundEffects)
+		if(piecePositionedAudio != null && soundEffects)
 		{
-			audioSource.PlayOneShot(piecePositionatedAudio);
+			audioSource.PlayOneShot(piecePositionedAudio);
 		}
 		//Sound was not assigned
 		return false;

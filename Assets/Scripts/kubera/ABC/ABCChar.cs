@@ -5,7 +5,7 @@ using System.Collections;
 namespace ABC
 {
 	//Clase creada para poder crear listas de objetos que inicializaran los ABCChar
-	public class ScriptableABCChar
+	public class ABCCharinfo
 	{
 		public string pointsOrMultiple;
 		public int type;
@@ -59,11 +59,11 @@ namespace ABC
 			}
 		}
 
-		public void initializeFromScriptableABCChar(ScriptableABCChar scriptAbcVals)
+		public void initializeFromInfo(ABCCharinfo info)
 		{
-			character = scriptAbcVals.character;
-			pointsOrMultiple = scriptAbcVals.pointsOrMultiple;
-			type = (EType)scriptAbcVals.type;
+			character = info.character;
+			pointsOrMultiple = info.pointsOrMultiple;
+			type = (EType)info.type;
 
 			initializeText ();
 

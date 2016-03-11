@@ -6,46 +6,16 @@ using DG.Tweening;
 
 public class PieceManager : MonoBehaviour 
 {
-	//CHANGE: pieces en plural es redundante con List asi que puede cambiar el nombre
-	//CHANGE: una lista de piezas tiene significado para PieceManager y no me queda claro porque son GameObject
-	//TODO: al parecer piecesList es la lista de las piezas que quedan, puede ser remainingPieces o availablePieces
-	//DONE: cambio de nombre al sugerido
 	protected List<Piece> availablePieces = new List<Piece>();
-	//TODO: safeList es la lista de todas las piezas y podria llamarse asi pieces
-	//DONE: cambio de nombre 
 	protected List<Piece> allPieces;
 
-	//TODO: PieceManager no conoce una barra, puede tener una lista de piezas siendo mostradas showingPieces
-	//DONE: cambio de nombre al sugerido
 	public List<Piece> showingPieces = new List<Piece>();
+	public int piecesToShow = 3;
+	[HideInInspector]	public int piecesShowedCount;
 
-	//TODO: Un nombre que indique que estas son las posiciones
-	//DONE: cambio de nombre
-	public Transform[] piecesInitialPosition;
-
-	//TODO: Hay que poner un nombre que indique que esta es la cantidad de piezas que se pueden mostrar
-	//CHANGE: Que sea publica para poder editar esas piezas
-	//DONE: cambio de nombre
-	public int quantityOfPiecesCanShow = 3;
-
-	//CHANGE: Cantidad de piezas que se estan mostrando, hay que ponerle un nombre que indique eso
-	//DONE: cambio de nombre
-	[HideInInspector]
-	public int quantityOfPiecesShowing;
-
-
-	[HideInInspector]public bool isRotating = false;
-
-	void Start () 
+	public void initializePiecesToShow()
 	{
-		quantityOfPiecesShowing = quantityOfPiecesCanShow;
-	}
-		
-	//TODO: Esto inicializa las piezas que se van a mostrar, un mejor nombre
-	//DONE: cambio de nombre
-	public void initializeShowingPieces()
-	{
-		for(int i= 0; i<quantityOfPiecesCanShow; i++)
+		for(int i= 0; i<piecesToShow; i++)
 		{
 			if(availablePieces.Count==0)
 			{
@@ -54,42 +24,18 @@ public class PieceManager : MonoBehaviour
 			showingPieces.Add((availablePieces [0]));
 			availablePieces.RemoveAt (0);
 		}
-		quantityOfPiecesShowing = quantityOfPiecesCanShow;
+		piecesShowedCount = piecesToShow;
 	}
 
-	public List<Piece> getShowingPieceList()
-	{
-		return showingPieces;
-	}
-
-	public void setPiecesInList(List<GameObject> piecesList)
-	{
-		List<Piece> gameObjectListToPiecesList = new List<Piece>();
-
-		for (int i = 0; i < piecesList.Count; i++) 
-		{
-			gameObjectListToPiecesList.Add (piecesList [i].GetComponent<Piece> ());
-		}
-		setPiecesInList (gameObjectListToPiecesList);
-	}
-
-	public void setPiecesInList(List<Piece> piecesList)
-	{
-		allPieces = new List<Piece>();
-		allPieces = piecesList;
-	}
-
-	//CHANGE: Al parecer randomizelist no llena la lista, randomiza la lista de piezas
-	//TODO: Que sea un randomizelist y que reciba que lista randomizar para que sea reusable
-	//DONE: cambio de nombre al sugerido y recibe lista
 	protected void randomizelist(List<Piece> pieces)
 	{
 		List<Piece> newList = new List<Piece>();
 		availablePieces = new List<Piece>(pieces);
 
+		int val;
 		while(availablePieces.Count >0)
 		{
-			int val = Random.Range(0,availablePieces.Count);
+			val = Random.Range(0,availablePieces.Count);
 			newList.Add(availablePieces[val]);
 			availablePieces.RemoveAt(val);
 		}
@@ -97,24 +43,50 @@ public class PieceManager : MonoBehaviour
 		availablePieces = newList;
 	}
 
-	public void removeFromListPieceUsed(GameObject pieceSelected)
+	public List<Piece> getShowingPieces()
 	{
-		quantityOfPiecesShowing--;
-		int toDelete = 0;
+		return showingPieces;
+	}
 
+	public void setPieces(List<GameObject> gameObjects)
+	{
+		List<Piece> pieces = new List<Piece>();
+
+		for (int i = 0; i < gameObjects.Count; i++) 
+		{
+			pieces.Add (gameObjects [i].GetComponent<Piece> ());
+		}
+		setPieces (pieces);
+	}
+
+	public void setPieces(List<Piece> pieces)
+	{
+		allPieces = pieces;
+	}
+		
+	public void removeFromShowedPieces(Piece piece)
+	{
 		for(int i=0; i<showingPieces.Count; i++)
 		{
-			if(pieceSelected.name == showingPieces[i].gameObject.name)
+			if(piece.GetInstanceID() == showingPieces[i].GetInstanceID())
 			{
-				toDelete=i;
-				break;
+				piecesShowedCount--;
+				showingPieces.RemoveAt (i);
+				return;
 			}
 		}
-		showingPieces.RemoveAt (toDelete);
+	}
 
-		/*if(getShowingPieceList().Count == 0)
+	public bool isAShowedPiece(Piece piece)
+	{
+		for(int i=0; i<showingPieces.Count; i++)
 		{
-			//initializeShowingPieces();
-		}*/
+			if(piece.GetInstanceID() == showingPieces[i].GetInstanceID())
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
