@@ -728,6 +728,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
+		amount *= multiplierHelper;
 		hud.setLettersPoints (amount);
 	}
 

@@ -477,6 +477,11 @@ namespace LevelBuilder
 			piecesSelector.gameObject.SetActive(false);
 		}
 
+		public void OnResetPieceSelector()
+		{
+			piecesSelector.sincronizeDataWithCSV("");
+		}
+
 		public void OnAcceptPiecesSelector()
 		{
 			//Se quedan los datos como estan
