@@ -413,15 +413,15 @@ namespace ABC
 		/**
 		 * Revisa si es posible armar una palabra con los caracteres que se tienen en este momento
 		 **/ 
-		public void checkIfAWordisPossible()
+		public void checkIfAWordIsPossible()
 		{
-			checkIfAWordisPossible(chars);
+			checkIfAWordIsPossible(chars);
 		}
 
 		/**
 		 * Revisa si es posible armar una palabra con los caracteres que se tienen
 		 **/
-		public bool checkIfAWordisPossible(List<ABCChar> pool)
+		public bool checkIfAWordIsPossible(List<ABCChar> pool)
 		{
 			//TODO: checar si realmente no puede hacer una palabra
 			//Debug.Log ("Possible word: "+words.isAWordPossible(pool));

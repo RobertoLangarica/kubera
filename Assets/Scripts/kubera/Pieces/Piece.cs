@@ -34,13 +34,12 @@ public class Piece : MonoBehaviour
 	public Color COLOR_YELLOW			= new Color(0.976f, 0.627f, 0.000f);
 	public Color COLOR_NONE				= new Color(1, 1, 1);
 
-	public GameObject[] pieces;
+	public GameObject[] squares;
 	public EPieceType starterType;
 
 	protected EPieceType _currentType;
 	protected Color rendererColor;
 
-	[HideInInspector]public bool powerUp;
 	[HideInInspector]public GameObject parent;
 
 	public int rotateTimes = 0;
@@ -62,7 +61,7 @@ public class Piece : MonoBehaviour
 
 		Color color = getColorOfType(currentType);
 			
-		foreach(GameObject piece in pieces)
+		foreach(GameObject piece in squares)
 		{
 			piece.GetComponent<SpriteRenderer>().color = color;
 		}

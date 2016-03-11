@@ -35,10 +35,10 @@ public class RotatePowerUp : PowerupBase
 
 		inputPowerUp.enabled = true;
 		inputPowerUp.setCurrentSelected(powerUpGO);
-		inputPowerUp.OnDrop += powerUpPositionated;
+		inputPowerUp.OnDrop += powerUpPositioned;
 	}
 
-	public void powerUpPositionated()
+	public void powerUpPositioned()
 	{
 		bool activated = false;
 		Vector3 v3 = new Vector3();
@@ -55,7 +55,7 @@ public class RotatePowerUp : PowerupBase
 				activated = true;
 			}
 		}
-		//print ("powerUpPositionated "+ activated);
+		//print ("powerUpPositioned "+ activated);
 		if (!activated) 
 		{
 			powerUpGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId ("RotatePowerUP_Move");
@@ -73,7 +73,7 @@ public class RotatePowerUp : PowerupBase
 				powerUpActivateRotate ();
 			});
 		}
-		inputPowerUp.OnDrop -= powerUpPositionated;
+		inputPowerUp.OnDrop -= powerUpPositioned;
 
 	}
 
@@ -81,7 +81,7 @@ public class RotatePowerUp : PowerupBase
 	{
 		inputPowerUpRotate.gameObject.SetActive (true);
 		inputPowerUpRotate.enabled = true;
-		inputPowerUp.OnDrop -= powerUpPositionated;
+		inputPowerUp.OnDrop -= powerUpPositioned;
 		inputPowerUpRotate.OnPowerupRotateCompleted += completePowerUp;
 		inputPowerUpRotate.startRotate ();
 	}

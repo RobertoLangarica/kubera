@@ -32,10 +32,10 @@ public class DestroyPowerUp : PowerupBase
 
 		bombInput.enabled = true;
 		bombInput.setCurrentSelected(destroyGO);
-		bombInput.OnDrop += powerUPPositionated;
+		bombInput.OnDrop += powerUpPositioned;
 	}
 
-	public void powerUPPositionated()
+	public void powerUpPositioned()
 	{
 		Cell cellSelected = cellsManager.getCellUnderPoint(destroyGO.transform.position);
 
@@ -55,7 +55,7 @@ public class DestroyPowerUp : PowerupBase
 				//cellsManager.destroyCells(selection);
 
 				DestroyImmediate(destroyGO);
-				bombInput.OnDrop -= powerUPPositionated;
+				bombInput.OnDrop -= powerUpPositioned;
 				bombInput.enabled = false;
 				OnComplete ();
 			}
@@ -78,7 +78,7 @@ public class DestroyPowerUp : PowerupBase
 			DestroyImmediate(destroyGO);
 		});
 
-		bombInput.OnDrop -= powerUPPositionated;
+		bombInput.OnDrop -= powerUpPositioned;
 		bombInput.enabled = false;
 
 		OnCancel();

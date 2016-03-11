@@ -295,9 +295,9 @@ public class CellsManager : MonoBehaviour
 	{
 		List<Cell> result = new List<Cell>();
 
-		for(int i = 0;i < piece.pieces.Length;i++)
+		for(int i = 0;i < piece.squares.Length;i++)
 		{
-			result.Add(getCellUnderPoint(piece.pieces[i].transform.position));
+			result.Add(getCellUnderPoint(piece.squares[i].transform.position));
 		}
 
 		return result;
@@ -404,11 +404,11 @@ public class CellsManager : MonoBehaviour
 				for(int i = 0;i < piecesList.Count;i++)
 				{
 					
-					offset = (val.transform.position + moveLittle) - piecesList[i].pieces[0].transform.position;
-					vecArr = new Vector3[piecesList[i].pieces.Length];
-					for(int j = 0;j < piecesList[i].pieces.Length;j++)
+					offset = (val.transform.position + moveLittle) - piecesList[i].squares[0].transform.position;
+					vecArr = new Vector3[piecesList[i].squares.Length];
+					for(int j = 0;j < piecesList[i].squares.Length;j++)
 					{
-						vecArr[j] = piecesList[i].pieces[j].transform.position + offset;
+						vecArr[j] = piecesList[i].squares[j].transform.position + offset;
 					}
 					if(canPositionateAll(vecArr))
 					{

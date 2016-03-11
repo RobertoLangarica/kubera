@@ -261,7 +261,7 @@ public class InputPowerUpRotate : MonoBehaviour
 			}
 				
 			//TODO: saber cuando se utilizan las piezas y se queda sin nada
-			if (pieceManager.getShowingPieceList ().Count == pieceManager.quantityOfPiecesCanShow) 
+			if (pieceManager.getShowingPieces ().Count == pieceManager.piecesToShow) 
 			{
 				OnPowerupRotateCompleted ();
 			}
