@@ -185,10 +185,10 @@ public class GameManager : MonoBehaviour
 					}
 				}
 			}
-			if(currentLevel.tutorialConfig.Length > 1)
+			if(currentLevel.tutorialLettersPool.Length > 1)
 			{
-				Debug.Log(currentLevel.tutorialConfig.Length);
-				string[] tutorialInfo = currentLevel.tutorialConfig.Split('_');
+				Debug.Log(currentLevel.tutorialLettersPool.Length);
+				string[] tutorialInfo = currentLevel.tutorialLettersPool.Split('_');
 				lettersPool = tutorialInfo[0].Split(',');
 
 				for(int i =0; i<lettersPool.Length; i++)
