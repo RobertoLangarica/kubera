@@ -992,9 +992,6 @@ public class GameManager : MonoBehaviour
 	{
 		int amount = 0;
 
-		Debug.Log(cell);
-		Debug.Log(cell.content);
-		Debug.Log(cell.content.GetComponent<ABCChar>());
 		if(int.TryParse(cell.content.GetComponent<ABCChar>().pointsOrMultiple,out amount))
 		{
 			hud.showScoreTextAt(cell.transform.position,amount);
