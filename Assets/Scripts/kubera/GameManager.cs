@@ -124,11 +124,7 @@ public class GameManager : MonoBehaviour
 		hud.setLevelName (currentLevel.name);
 		hud.setSecondChanceLock (false);
 
-
-
 		allowGameInput(false);
-
-		checkIfNeedToUnlockPowerUp();
 
 		float[] scoreToStar = new float[3];
 		scoreToStar [0] = PersistentData.instance.currentLevel.scoreToStar1;
@@ -826,7 +822,7 @@ public class GameManager : MonoBehaviour
 		{
 			print ("win");
 			playerWon = true;
-			UnlockPowerUp();
+			unlockPowerUp();
 			winBonification ();
 		}
 		else
@@ -1031,33 +1027,7 @@ public class GameManager : MonoBehaviour
 		inputWords.allowInput = allowInput;
 	}
 
-
-
-	protected void checkIfNeedToUnlockPowerUp()
-	{
-		if(currentLevel.unblockBlock)
-		{
-			//powerUpManager2.activatePower(EPOWERUPS.BLOCK_POWERUP);
-		}
-		if(currentLevel.unblockBomb)
-		{
-			//powerUpManager2.activatePower(EPOWERUPS.DESTROY_NEIGHBORS_POWERUP);
-		}
-		if(currentLevel.unblockDestroy)
-		{
-			//powerUpManager2.activatePower(EPOWERUPS.DESTROY_ALL_COLOR_POWERUP);
-		}
-		if(currentLevel.unblockRotate)
-		{
-			//powerUpManager2.activatePower(EPOWERUPS.ROTATE_POWERUP);
-		}
-		if(currentLevel.unblockWildcard)
-		{
-			//powerUpManager2.activatePower(EPOWERUPS.WILDCARD_POWERUP);
-		}
-	}
-
-	protected void UnlockPowerUp()
+	protected void unlockPowerUp()
 	{
 		if(currentLevel.unblockBlock)
 		{
