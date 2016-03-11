@@ -105,8 +105,8 @@ public class GameManager : MonoBehaviour
 	{
 		currentLevel = level;
 
-		fillLettersPoolList ();
-		fillPiecesPoolList ();
+		fillLettersPool();
+		fillPiecesPool ();
 
 		pieceManager.initializeShowingPieces ();
 		hud.showPieces (pieceManager.getShowingPieceList ());
@@ -127,9 +127,9 @@ public class GameManager : MonoBehaviour
 		allowGameInput(false);
 
 		float[] scoreToStar = new float[3];
-		scoreToStar [0] = PersistentData.instance.currentLevel.scoreToStar1;
-		scoreToStar [1] = PersistentData.instance.currentLevel.scoreToStar2;
-		scoreToStar [2] = PersistentData.instance.currentLevel.scoreToStar3;
+		scoreToStar [0] = currentLevel.scoreToStar1;
+		scoreToStar [1] = currentLevel.scoreToStar2;
+		scoreToStar [2] = currentLevel.scoreToStar3;
 		hud.setMeterData (scoreToStar);
 	
 		cellManager.resizeGrid(10,10);
@@ -258,7 +258,7 @@ public class GameManager : MonoBehaviour
 	protected void parseTheCellsOnGrid()
 	{
 		GameObject cellContent = null;
-		string[] levelGridData = PersistentData.instance.currentLevel.grid.Split(',');
+		string[] levelGridData = currentLevel.grid.Split(',');
 		int cellType = 0;
 
 		List<GameObject> tutorialLetters = new List<GameObject>();
@@ -303,7 +303,7 @@ public class GameManager : MonoBehaviour
 
 	protected void selectLettersForTutorial(List<GameObject> tutorialLetters)
 	{
-		string[] selectedLetters = PersistentData.instance.currentLevel.tutorialConfig.Split('-')[1].Split(',');
+		string[] selectedLetters = currentLevel.tutorialConfig.Split('-')[1].Split(',');
 		ABCChar abcChar;
 
 		for(int i = 0;i < selectedLetters.Length;i++)
@@ -1097,12 +1097,12 @@ public class GameManager : MonoBehaviour
 		UserDataManager.instance.refillAllPlayerLifes();
 	}
 
-	protected void fillPiecesPoolList()
+	protected void fillPiecesPool()
 	{
 		string[] piecesInfo;
 		int amout = 0;
 
-		string[] myPieces = PersistentData.instance.currentLevel.pieces.Split(new char[1]{','});
+		string[] myPieces = currentLevel.pieces.Split(new char[1]{','});
 
 		for(int i =0; i<myPieces.Length; i++)
 		{
@@ -1118,9 +1118,9 @@ public class GameManager : MonoBehaviour
 		pieceManager.setPiecesInList (XMLPoolPiecesList);
 	}
 
-	protected void fillLettersPoolList()
+	protected void fillLettersPool()
 	{
-		string[] lettersPool = PersistentData.instance.currentLevel.lettersPool.Split(new char[1]{','});
+		string[] lettersPool = currentLevel.lettersPool.Split(new char[1]{','});
 		string[] piecesInfo;
 
 		/*Aqui diseccionar el XML****************/
@@ -1143,9 +1143,9 @@ public class GameManager : MonoBehaviour
 					XMLPoolLetersList.Add(newLetter);
 				}
 			}
-			if(PersistentData.instance.currentLevel.obstacleLettersPool.Length > 0)
+			if(currentLevel.obstacleLettersPool.Length > 0)
 			{
-				lettersPool = PersistentData.instance.currentLevel.obstacleLettersPool.Split(new char[1]{','});
+				lettersPool = currentLevel.obstacleLettersPool.Split(new char[1]{','});
 
 				for(int i =0; i<lettersPool.Length; i++)
 				{
@@ -1161,10 +1161,10 @@ public class GameManager : MonoBehaviour
 					}
 				}
 			}
-			if(PersistentData.instance.currentLevel.tutorialConfig.Length > 1)
+			if(currentLevel.tutorialConfig.Length > 1)
 			{
-				Debug.Log(PersistentData.instance.currentLevel.tutorialConfig.Length);
-				string[] tutorialInfo = PersistentData.instance.currentLevel.tutorialConfig.Split(new char[1]{'-'});
+				Debug.Log(currentLevel.tutorialConfig.Length);
+				string[] tutorialInfo = currentLevel.tutorialConfig.Split(new char[1]{'-'});
 				lettersPool = tutorialInfo[0].Split(new char[1]{','});
 
 				for(int i =0; i<lettersPool.Length; i++)
@@ -1304,8 +1304,7 @@ public class GameManager : MonoBehaviour
 		hud.hideObjectivePopUp ();
 		allowGameInput ();
 	}
-
-	//TODO
+		
 	public void activateMusic()
 	{
 		audioManager.PlayButtonAudio();
