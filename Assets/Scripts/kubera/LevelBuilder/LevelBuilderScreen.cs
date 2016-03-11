@@ -225,7 +225,7 @@ namespace LevelBuilder
 			lvlToSave.difficulty = 0;
 			lvlToSave.lettersPool = abcSelector.getCSVData(ABC_NORMAL_TYPE);
 			lvlToSave.obstacleLettersPool = abcObstacleSelector.getCSVData(ABC_OBSTACLE_TYPE);
-			lvlToSave.tutorialConfig = abcTutorialSelector.getCSVData(ABC_NORMAL_TYPE) + '-' + tutorialSelection;
+			lvlToSave.tutorialLettersPool = abcTutorialSelector.getCSVData(ABC_NORMAL_TYPE) + '-' + tutorialSelection;
 			lvlToSave.pieces = piecesSelector.getCSVData();
 			lvlToSave.grid = gridEditor.getCSVData();
 			lvlToSave.winCondition = levelGoalSelector.getStringData();
@@ -276,12 +276,12 @@ namespace LevelBuilder
 			inputStar2.text = level.scoreToStar2.ToString();
 			inputStar3.text = level.scoreToStar3.ToString();
 
-			if(level.tutorialConfig != null)
+			if(level.tutorialLettersPool != null)
 			{
-				if(level.tutorialConfig.Length > 0)
+				if(level.tutorialLettersPool.Length > 0)
 				{
-					abcTutorialSelector.sincronizeDataWithCSV(level.tutorialConfig.Split('-')[0]);
-					tutorialInput.text = level.tutorialConfig.Split('-')[1];
+					abcTutorialSelector.sincronizeDataWithCSV(level.tutorialLettersPool.Split('-')[0]);
+					tutorialInput.text = level.tutorialLettersPool.Split('-')[1];
 				}
 			}
 		}
