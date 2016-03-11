@@ -117,14 +117,9 @@ public class GameManager : MonoBehaviour
 		remainingMoves = totalMoves = currentLevel.moves;
 
 		hud.setMovments (remainingMoves);
-
-
-
 		hud.setGems(UserDataManager.instance.playerGems);
 		hud.setLevelName (currentLevel.name);
 		hud.setSecondChanceLock (false);
-
-
 
 		allowGameInput(false);
 
@@ -140,6 +135,99 @@ public class GameManager : MonoBehaviour
 		parseTheCellsOnGrid();
 
 		getWinCondition ();
+	}
+
+	protected void fillLettersPool()
+	{
+		string[] lettersPool = currentLevel.lettersPool.Split(',');
+		string[] piecesInfo;
+
+		/*Aqui diseccionar el XML****************/
+		int amount = 0;
+		ScriptableABCChar newLetter = null;
+
+		if(XMLPoolLetersList.Count == 0)
+		{
+			/**
+			 * CSV
+			 * cantidad_letra_puntos/multiplo_tipo
+			 * ej. 02_A_1_1
+			 **/ 
+			for(int i =0; i<lettersPool.Length; i++)
+			{
+				piecesInfo = lettersPool[i].Split('_');
+				amount = int.Parse(piecesInfo[0]);
+
+				for(int j = 0;j < amount;j++)
+				{
+					newLetter = new ScriptableABCChar();
+					newLetter.character = piecesInfo[1];
+					newLetter.pointsOrMultiple = piecesInfo[2];
+					newLetter.type = int.Parse(piecesInfo[3]);
+
+					XMLPoolLetersList.Add(newLetter);
+				}
+			}
+
+			if(currentLevel.obstacleLettersPool.Length > 0)
+			{
+				lettersPool = currentLevel.obstacleLettersPool.Split(',');
+
+				for(int i =0; i<lettersPool.Length; i++)
+				{
+					piecesInfo = lettersPool[i].Split(new char[1]{'_'});
+					amount = int.Parse(piecesInfo[0]);
+					for(int j = 0;j < amount;j++)
+					{
+						newLetter = new ScriptableABCChar();
+						newLetter.character = piecesInfo[1];
+						newLetter.pointsOrMultiple = piecesInfo[2];
+						newLetter.type = int.Parse(piecesInfo[3]);
+						XMLPoolBlackLetersList.Add(newLetter);
+					}
+				}
+			}
+			if(currentLevel.tutorialConfig.Length > 1)
+			{
+				Debug.Log(currentLevel.tutorialConfig.Length);
+				string[] tutorialInfo = currentLevel.tutorialConfig.Split('_');
+				lettersPool = tutorialInfo[0].Split(',');
+
+				for(int i =0; i<lettersPool.Length; i++)
+				{
+					piecesInfo = lettersPool[i].Split('_');
+					amount = int.Parse(piecesInfo[0]);
+					for(int j = 0;j < amount;j++)
+					{
+						newLetter = new ScriptableABCChar();
+						newLetter.character = piecesInfo[1];
+						newLetter.pointsOrMultiple = piecesInfo[2];
+						newLetter.type = int.Parse(piecesInfo[3]);
+						XMLPoolTutorialLetersList.Add(newLetter);
+					}
+				}
+			}
+		}
+		/*****/
+
+		randomizedPoolLeters = randomizeList<ScriptableABCChar>(XMLPoolLetersList);
+		randomizedBlackPoolLeters = randomizeList<ScriptableABCChar>(XMLPoolBlackLetersList);
+	}
+
+	protected List<T> randomizeList<T>(List<T> target)
+	{
+		List<T> result = new List<T>();
+		List<T> temporal = new List<T>(target);
+		int index;
+
+		while(temporal.Count > 0)
+		{
+			index = Random.Range(0,temporal.Count);
+			result.Add(temporal[index]);
+			temporal.RemoveAt(index);
+		}
+
+		return result;
 	}
 
 	void Update()
@@ -1148,108 +1236,7 @@ public class GameManager : MonoBehaviour
 		pieceManager.setPiecesInList (XMLPoolPiecesList);
 	}
 
-	protected void fillLettersPool()
-	{
-		string[] lettersPool = currentLevel.lettersPool.Split(new char[1]{','});
-		string[] piecesInfo;
-
-		/*Aqui diseccionar el XML****************/
-		int amout = 0;
-		ScriptableABCChar newLetter = null;
-
-		if(XMLPoolLetersList.Count == 0)
-		{
-			for(int i =0; i<lettersPool.Length; i++)
-			{
-				piecesInfo = lettersPool[i].Split(new char[1]{'_'});
-				amout = int.Parse(piecesInfo[0]);
-				for(int j = 0;j < amout;j++)
-				{
-					newLetter = new ScriptableABCChar();
-					newLetter.character = piecesInfo[1];
-					newLetter.pointsOrMultiple = piecesInfo[2];
-					newLetter.type = int.Parse(piecesInfo[3]);
-
-					XMLPoolLetersList.Add(newLetter);
-				}
-			}
-			if(currentLevel.obstacleLettersPool.Length > 0)
-			{
-				lettersPool = currentLevel.obstacleLettersPool.Split(new char[1]{','});
-
-				for(int i =0; i<lettersPool.Length; i++)
-				{
-					piecesInfo = lettersPool[i].Split(new char[1]{'_'});
-					amout = int.Parse(piecesInfo[0]);
-					for(int j = 0;j < amout;j++)
-					{
-						newLetter = new ScriptableABCChar();
-						newLetter.character = piecesInfo[1];
-						newLetter.pointsOrMultiple = piecesInfo[2];
-						newLetter.type = int.Parse(piecesInfo[3]);
-						XMLPoolBlackLetersList.Add(newLetter);
-					}
-				}
-			}
-			if(currentLevel.tutorialConfig.Length > 1)
-			{
-				Debug.Log(currentLevel.tutorialConfig.Length);
-				string[] tutorialInfo = currentLevel.tutorialConfig.Split(new char[1]{'-'});
-				lettersPool = tutorialInfo[0].Split(new char[1]{','});
-
-				for(int i =0; i<lettersPool.Length; i++)
-				{
-					piecesInfo = lettersPool[i].Split(new char[1]{'_'});
-					amout = int.Parse(piecesInfo[0]);
-					for(int j = 0;j < amout;j++)
-					{
-						newLetter = new ScriptableABCChar();
-						newLetter.character = piecesInfo[1];
-						newLetter.pointsOrMultiple = piecesInfo[2];
-						newLetter.type = int.Parse(piecesInfo[3]);
-						XMLPoolTutorialLetersList.Add(newLetter);
-					}
-				}
-			}
-		}
-		/*****/
-		fillLetterPoolRandomList ();
-		fillBlackLetterPoolRandomList ();
-	}
-
-	protected void fillLetterPoolRandomList()
-	{
-		List<ScriptableABCChar> tempList = new List<ScriptableABCChar> ();
-		randomizedPoolLeters = new List<ScriptableABCChar>();
-
-		tempList = new List<ScriptableABCChar>(XMLPoolLetersList);
-
-
-		while(tempList.Count >0)
-		{
-			int val = Random.Range(0,tempList.Count);
-			randomizedPoolLeters.Add(tempList[val]);
-			tempList.RemoveAt(val);
-		}
-	}
-
-	protected void fillBlackLetterPoolRandomList()
-	{
-		List<ScriptableABCChar> tempList = new List<ScriptableABCChar> ();
-		randomizedBlackPoolLeters = new List<ScriptableABCChar>();
-
-		tempList = new List<ScriptableABCChar>(XMLPoolBlackLetersList);
-
-
-		while(tempList.Count >0)
-		{
-			int val = Random.Range(0,tempList.Count);
-			randomizedBlackPoolLeters.Add(tempList[val]);
-			tempList.RemoveAt(val);
-		}
-	}
-
-	protected void fillTutorialLetterPoolRandomList()
+	protected void fillTutorialLettersRandomPool()
 	{
 		List<ScriptableABCChar> tempList = new List<ScriptableABCChar> ();
 		randomizedTutorialPoolLeters = new List<ScriptableABCChar>();
@@ -1269,7 +1256,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(randomizedPoolLeters.Count==0)
 		{
-			fillLetterPoolRandomList();
+			randomizedPoolLeters = randomizeList<ScriptableABCChar>(XMLPoolLetersList);
 		}
 
 		ScriptableABCChar letter = randomizedPoolLeters[0];
@@ -1282,7 +1269,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(randomizedBlackPoolLeters.Count==0)
 		{
-			fillBlackLetterPoolRandomList();
+			randomizedBlackPoolLeters = randomizeList<ScriptableABCChar>(XMLPoolBlackLetersList);
 		}
 		ScriptableABCChar letter = randomizedBlackPoolLeters[0];
 		randomizedBlackPoolLeters.RemoveAt (0);
@@ -1294,7 +1281,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(randomizedTutorialPoolLeters.Count==0)
 		{
-			fillTutorialLetterPoolRandomList();
+			randomizedTutorialPoolLeters = randomizeList<ScriptableABCChar>(XMLPoolTutorialLetersList);
 		}
 		ScriptableABCChar letter = randomizedTutorialPoolLeters[0];
 		randomizedTutorialPoolLeters.RemoveAt (0);
