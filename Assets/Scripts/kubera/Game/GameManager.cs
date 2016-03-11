@@ -903,13 +903,16 @@ public class GameManager : MonoBehaviour
 
 			cellManager.occupyAndConfigureCell(cell,go,go.GetComponent<Piece> ().currentType,true);
 
+			hud.showScoreTextAt(cell.transform.position,1);
+			addPoints(1);
+
 			StartCoroutine (add1x1BlockMore ());
 		}
 		else 
 		{
 			if(remainingMoves != 0)
 			{
-				addPoints (10);
+				addPoints (1);
 				remainingMoves--;
 
 				hud.setMovments (remainingMoves);
@@ -968,13 +971,13 @@ public class GameManager : MonoBehaviour
 		cellToLetter = new List<Cell>();
 		cellToLetter.AddRange (cellManager.getCellsOfSameType (EPieceType.LETTER));
 		cellToLetter.AddRange (cellManager.getCellsOfSameType (EPieceType.LETTER_OBSTACLE));
-		winPoints ();
 		StartCoroutine (destroyLetter ());
 	}
 
 	IEnumerator destroyLetter()
 	{
 		int random = Random.Range (0, cellToLetter.Count);
+		showDestroyedLetterScore(cellToLetter[random]);
 		cellToLetter [random].destroyCell ();
 		cellToLetter.RemoveAt (random);
 
@@ -985,40 +988,18 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	protected void winPoints()
+	protected void showDestroyedLetterScore(Cell cell)
 	{
 		int amount = 0;
-		int multiplierHelper = 1;
 
-		for (int i = 0; i < cellToLetter.Count; i++) 
+		Debug.Log(cell);
+		Debug.Log(cell.content);
+		Debug.Log(cell.content.GetComponent<ABCChar>());
+		if(int.TryParse(cell.content.GetComponent<ABCChar>().pointsOrMultiple,out amount))
 		{
-			switch (cellToLetter[i].content.GetComponent<ABCChar>().pointsOrMultiple) 
-			{
-			case("x2"):
-				{
-					multiplierHelper *= 2;}
-				break;
-			case("x3"):
-				{
-					multiplierHelper *= 3;}
-				break;
-			case("x4"):
-				{
-					multiplierHelper *= 4;}
-				break;
-			case("x5"):
-				{
-					multiplierHelper *= 5;}
-				break;
-			default:
-				{
-					amount += int.Parse (cellToLetter[i].content.GetComponent<ABCChar>().pointsOrMultiple);}
-				break;
-			}
+			hud.showScoreTextAt(cell.transform.position,amount);
+			addPoints(amount);
 		}
-
-		amount *= multiplierHelper;
-		addPoints(amount);
 	}
 
 	protected void allowGameInput(bool allowInput = true)
