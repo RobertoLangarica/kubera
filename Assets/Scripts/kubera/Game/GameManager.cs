@@ -173,7 +173,7 @@ public class GameManager : MonoBehaviour
 
 				for(int i =0; i<lettersPool.Length; i++)
 				{
-					piecesInfo = lettersPool[i].Split(new char[1]{'_'});
+					piecesInfo = lettersPool[i].Split('_');
 					amount = int.Parse(piecesInfo[0]);
 					for(int j = 0;j < amount;j++)
 					{
@@ -188,7 +188,7 @@ public class GameManager : MonoBehaviour
 			if(currentLevel.tutorialLettersPool.Length > 1)
 			{
 				Debug.Log(currentLevel.tutorialLettersPool.Length);
-				string[] tutorialInfo = currentLevel.tutorialLettersPool.Split('_');
+				string[] tutorialInfo = currentLevel.tutorialLettersPool.Split('-');
 				lettersPool = tutorialInfo[0].Split(',');
 
 				for(int i =0; i<lettersPool.Length; i++)
@@ -393,7 +393,7 @@ public class GameManager : MonoBehaviour
 
 	protected void selectLettersForTutorial(List<GameObject> tutorialLetters)
 	{
-		string[] selectedLetters = currentLevel.tutorialConfig.Split('-')[1].Split(',');
+		string[] selectedLetters = currentLevel.tutorialLettersPool.Split('-')[1].Split(',');
 		ABCChar abcChar;
 
 		for(int i = 0;i < selectedLetters.Length;i++)

@@ -32,7 +32,7 @@ public class Level
 
 	[XmlAttribute("winCondition")]public string winCondition;
 
-	[XmlAttribute("tutorialLettersPool")]public string tutorialLettersPool;//tutorialConfig
+	[XmlAttribute("tutorialLettersPool")]public string tutorialLettersPool;
 
 	/**
 	 * Listado de piezas separado por ',' con el siguiente formato:
