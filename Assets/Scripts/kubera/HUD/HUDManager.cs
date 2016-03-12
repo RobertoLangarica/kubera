@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class HUD : MonoBehaviour 
+public class HUDManager : MonoBehaviour 
 {
 	public Text points;
 	public Text scoreText;
@@ -108,9 +108,9 @@ public class HUD : MonoBehaviour
 	/**
 	 * setea los datos para obtener estrellas
 	 **/
-	public void setMeterData(float[] scoreToStarData)
+	public void setStarData(float[] scores)
 	{
-		scoreToStar = scoreToStarData;
+		scoreToStar = scores;
 		setPositionOfStars ();
 		setPoints (0);
 	}
@@ -159,17 +159,22 @@ public class HUD : MonoBehaviour
 		levelText.text = name;
 	}	
 
-	/**
-	 * Setea la condicion de victoria
-	 **/
-	public void setWinCondition(string winCondition)
+
+	public void setWinCondition(bool isLettersCondition)
 	{
-		
+		if(isLettersCondition)
+		{
+			winConditionText.gameObject.SetActive (false);
+			winConditionLettersText.gameObject.SetActive (true);
+		}
+		else
+		{
+			winConditionText.gameObject.SetActive (true);
+			winConditionLettersText.gameObject.SetActive (false);
+		}
 	}	
 
-	/**
-	 * Setea la condicion de victoria
-	 **/
+
 	public void setSecondChanceLock(bool activate)
 	{
 		secondChanceLock.SetActive(activate);
@@ -178,25 +183,18 @@ public class HUD : MonoBehaviour
 	/**
 	 * setea la condicion de victoria
 	 **/
-
 	public void setPointsCondition(int pointsNeed, int pointsMade)
 	{
-		winConditionText.gameObject.SetActive (true);
-		winConditionLettersText.gameObject.SetActive (false);
 		winConditionText.text = "Van: "+ pointsMade +" puntos  de" + pointsNeed;
 	}
 
 	public void setWordsCondition(int wordNeed,int wordsMade)
 	{
-		winConditionText.gameObject.SetActive (true);
-		winConditionLettersText.gameObject.SetActive (false);
 		winConditionText.text = "Van: "+ wordsMade +" palabras  de" + wordNeed;
 	}
 
 	public void setLettersCondition(List<string> letters = null)
 	{
-		winConditionText.gameObject.SetActive (false);
-		winConditionLettersText.gameObject.SetActive (true);
 		winConditionLettersText.text = "Usa: ";
 		for (int i = 0; i < letters.Count; i++) 
 		{
@@ -210,29 +208,21 @@ public class HUD : MonoBehaviour
 
 	public void setObstaclesCondition(int value=0)
 	{
-		winConditionText.gameObject.SetActive (true);
-		winConditionLettersText.gameObject.SetActive (false);
 		winConditionText.text = "Usa: todas las letras negras.";
 	}
 
 	public void setWordCondition(string word)
 	{
-		winConditionText.gameObject.SetActive (true);
-		winConditionLettersText.gameObject.SetActive (false);
 		winConditionText.text = "Forma: " + word +".";
 	}
 
 	public void setSinCondition(string word)
 	{
-		winConditionText.gameObject.SetActive (true);
-		winConditionLettersText.gameObject.SetActive (false);
 		winConditionText.text = "Sinonimo de: " + word +".";
 	}
 
 	public void setAntCondition(string word)
 	{
-		winConditionText.gameObject.SetActive (true);
-		winConditionLettersText.gameObject.SetActive (false);
 		winConditionText.text = "Antonimo de: " + word +".";
 	}
 
@@ -312,6 +302,7 @@ public class HUD : MonoBehaviour
 
 	public void showPieces(List<Piece> pieces)
 	{
+		print (pieces.Count);
 		List<Piece> newListPieces = new List<Piece> (pieces);
 		int i = 0;
 		while(newListPieces.Count >0)
