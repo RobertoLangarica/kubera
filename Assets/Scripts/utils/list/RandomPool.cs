@@ -7,6 +7,11 @@ public class RandomPool<T>
 	private List<T> original;
 	private List<T> randomized;
 
+	public RandomPool(List<T> source)
+	{
+		original = new List<T>(source);//clone
+		randomized = randomizeList(original);
+	}
 
 	public T getNextRandomized()
 	{
