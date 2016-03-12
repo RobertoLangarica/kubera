@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
 	protected InputPiece inputPiece;
 	protected InputWords inputWords;
 
-	public float totalLetterPercentToFillCell = 0.9f;
+	public float letterSizeMultiplier = 0.9f;
 
 	protected Level currentLevel;
 	protected RandomPool<ABCCharinfo> lettersPool;
@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
 	{
 		currentLevel = level;
 
-		fillLettersPool();
+		readLettersFromLevel(level);
 		pieceManager.setPieces(getPiecesFromLevel(level));
 
 		pieceManager.initializePiecesToShow ();
@@ -128,82 +128,58 @@ public class GameManager : MonoBehaviour
 		getWinCondition ();
 	}
 
-	protected void fillLettersPool()
+	protected void readLettersFromLevel(Level level)
 	{
-		string[] letters = currentLevel.lettersPool.Split(',');
-		string[] piecesInfo;
+		lettersPool = new RandomPool<ABCCharinfo>(getLettersInfoFromCSV(level.lettersPool));
 
-		/*Aqui diseccionar el XML****************/
-		int amount = 0;
-		ABCCharinfo newLetter = null;
-		List<ABCCharinfo> result = new List<ABCCharinfo>();
-
-		/**
-		 * CSV
-		 * cantidad_letra_puntos/multiplo_tipo
-		 * ej. 02_A_1_1
-		 **/ 
-		for(int i =0; i<letters.Length; i++)
+		if(level.obstacleLettersPool.Length > 0)
 		{
-			piecesInfo = letters[i].Split('_');
-			amount = int.Parse(piecesInfo[0]);
+			obstaclesLettersPool = new RandomPool<ABCCharinfo>(getLettersInfoFromCSV(level.obstacleLettersPool));
+		}
+
+		if(level.tutorialLettersPool.Length > 1)
+		{
+			tutorialLettersPool = new RandomPool<ABCCharinfo>(getLettersInfoFromCSV(level.tutorialLettersPool.Split('-')[0]));
+		}
+	}
+
+	/**
+	 * CSV
+	 * cantidad_letra_puntos/multiplo_tipo
+	 * ej. 02_A_1_1,10_B_x2_1
+	 **/ 
+	protected List<ABCCharinfo> getLettersInfoFromCSV(string csv)
+	{
+		List<ABCCharinfo> result = new List<ABCCharinfo>();
+		string[] info = csv.Split(',');
+		string[] infoFragments;
+
+		int amount;
+		string abc;
+		string points_multiplier;
+		int type;
+		ABCCharinfo letter;
+
+		for(int i =0; i<info.Length; i++)
+		{
+			infoFragments = info[i].Split('_');
+			amount = int.Parse(infoFragments[0]);
+			abc = infoFragments[1];
+			points_multiplier = infoFragments[2];
+			type = int.Parse(infoFragments[3]);
 
 			for(int j = 0;j < amount;j++)
 			{
-				newLetter = new ABCCharinfo();
-				newLetter.character = piecesInfo[1];
-				newLetter.pointsOrMultiple = piecesInfo[2];
-				newLetter.type = int.Parse(piecesInfo[3]);
+				letter = new ABCCharinfo();
+				letter.character = abc;
+				letter.pointsOrMultiple = points_multiplier;
+				letter.type = type;
 
-				result.Add(newLetter);
+				result.Add(letter);
 			}
 		}
-		lettersPool = new RandomPool<ABCCharinfo>(result);
 
-
-		if(currentLevel.obstacleLettersPool.Length > 0)
-		{
-			result.Clear();
-			letters = currentLevel.obstacleLettersPool.Split(',');
-
-			for(int i =0; i<letters.Length; i++)
-			{
-				piecesInfo = letters[i].Split('_');
-				amount = int.Parse(piecesInfo[0]);
-				for(int j = 0;j < amount;j++)
-				{
-					newLetter = new ABCCharinfo();
-					newLetter.character = piecesInfo[1];
-					newLetter.pointsOrMultiple = piecesInfo[2];
-					newLetter.type = int.Parse(piecesInfo[3]);
-					result.Add(newLetter);
-				}
-			}
-
-			obstaclesLettersPool = new RandomPool<ABCCharinfo>(result);
-		}
-		if(currentLevel.tutorialLettersPool.Length > 1)
-		{
-			result.Clear();
-			string[] tutorialInfo = currentLevel.tutorialLettersPool.Split('-');
-			letters = tutorialInfo[0].Split(',');
-
-			for(int i =0; i<letters.Length; i++)
-			{
-				piecesInfo = letters[i].Split('_');
-				amount = int.Parse(piecesInfo[0]);
-				for(int j = 0;j < amount;j++)
-				{
-					newLetter = new ABCCharinfo();
-					newLetter.character = piecesInfo[1];
-					newLetter.pointsOrMultiple = piecesInfo[2];
-					newLetter.type = int.Parse(piecesInfo[3]);
-					result.Add(newLetter);
-				}
-			}
-
-			tutorialLettersPool = new RandomPool<ABCCharinfo>(result);
-		}
+		return result;
 	}
 
 	protected List<Piece> getPiecesFromLevel(Level level)
@@ -460,7 +436,7 @@ public class GameManager : MonoBehaviour
 
 		go.GetComponent<BoxCollider2D>().enabled = true;
 
-		Vector3 letterSize = (Camera.main.WorldToScreenPoint(sprite.bounds.size) -Camera.main.WorldToScreenPoint(Vector3.zero)) * totalLetterPercentToFillCell;
+		Vector3 letterSize = (Camera.main.WorldToScreenPoint(sprite.bounds.size) -Camera.main.WorldToScreenPoint(Vector3.zero)) * letterSizeMultiplier;
 		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(Mathf.Abs(letterSize.x),Mathf.Abs(letterSize.y));
 
 		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;

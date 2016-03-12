@@ -6,13 +6,10 @@ using DG.Tweening;
 
 public class PieceManager : MonoBehaviour 
 {
-	protected RandomPool<Piece> pieces;
-
-	//protected List<Piece> availablePieces = new List<Piece>();
-	//protected List<Piece> allPieces;
-
-	public List<Piece> showingPieces = new List<Piece>();
 	public int piecesToShow = 3;
+
+	protected RandomPool<Piece> pieces;
+	public List<Piece> showingPieces = new List<Piece>();
 
 	[HideInInspector]	public int piecesShowedCount;
 
