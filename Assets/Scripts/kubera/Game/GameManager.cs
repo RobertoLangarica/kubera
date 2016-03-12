@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
 	protected CellsManager cellManager;
 	protected PowerUpManager powerupManager;
 	protected PieceManager pieceManager;
-	protected HUD hud;
+	protected HUDManager hudManager;
 	protected AudioManager audioManager;
 
 	protected InputPiece inputPiece;
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
 	void Awake () 
 	{
-		hud = FindObjectOfType<HUD> ();
+		hudManager = FindObjectOfType<HUDManager> ();
 		inputWords = FindObjectOfType<InputWords>();
 
 		inputPiece = FindObjectOfType<InputPiece>();
@@ -106,17 +106,16 @@ public class GameManager : MonoBehaviour
 		fillPiecesPool();
 
 		pieceManager.initializePiecesToShow ();
-		hud.showPieces (pieceManager.getShowingPieces ());
+		hudManager.showPieces (pieceManager.getShowingPieces ());
 
 		cellToLetter = new List<Cell> ();
 
 		myWinCondition = currentLevel.winCondition.Split ('-');
 		remainingMoves = totalMoves = currentLevel.moves;
 
-		hud.setMovements (remainingMoves);
-		hud.setGems(UserDataManager.instance.playerGems);
-		hud.setLevelName (currentLevel.name);
-		hud.setSecondChanceLock (false);
+		hudManager.setGems(UserDataManager.instance.playerGems);
+		hudManager.setLevelName (currentLevel.name);
+		hudManager.setSecondChanceLock (false);
 
 		allowGameInput(false);
 
@@ -124,12 +123,14 @@ public class GameManager : MonoBehaviour
 		scoreToStar [0] = currentLevel.scoreToStar1;
 		scoreToStar [1] = currentLevel.scoreToStar2;
 		scoreToStar [2] = currentLevel.scoreToStar3;
-		hud.setMeterData (scoreToStar);
+		hudManager.setStarData (scoreToStar);
 	
 		cellManager.resizeGrid(10,10);
 		parseTheCellsOnGrid();
 
 		getWinCondition ();
+
+		actualizeHUDInfo ();
 	}
 
 	protected void fillLettersPool()
@@ -278,6 +279,8 @@ public class GameManager : MonoBehaviour
 			audioManager.PlayPiecePositionedAudio();
 			checkForCompletedLines();
 			StartCoroutine(afterPiecePositioned(piece));
+			checkWinCondition ();
+			actualizeHUDInfo ();
 			return true;
 		}
 
@@ -319,13 +322,14 @@ public class GameManager : MonoBehaviour
 			if (pieceManager.getShowingPieces ().Count == 0) 
 			{
 				pieceManager.initializePiecesToShow ();
-				hud.showPieces (pieceManager.getShowingPieces ());
+				hudManager.showPieces (pieceManager.getShowingPieces ());
 			}
 
 			//Damos puntos por cada cuadro en la pieza
 			addPoints (piece.squares.Length);
 			substractMoves(1);
-			hud.showScoreTextAt(piece.transform.position,piece.squares.Length);
+
+			showScoreTextOnHud (piece.transform.position, piece.squares.Length);
 		}
 
 		Destroy(piece.gameObject);
@@ -524,14 +528,6 @@ public class GameManager : MonoBehaviour
 	protected void addPoints(int amount)
 	{
 		pointsCount += amount;
-		hud.setPoints (pointsCount);
-
-		actualizePointsWinCondition ();
-
-		if (!playerWon) 
-		{
-			checkWinCondition ();
-		}
 	}
 
 
@@ -542,7 +538,7 @@ public class GameManager : MonoBehaviour
 		{
 			UserDataManager.instance.playerGems -= gemsPrice;
 
-			hud.setGems(UserDataManager.instance.playerGems);
+			hudManager.setGems(UserDataManager.instance.playerGems);
 
 			Debug.Log("Se cobrara");
 			return true;
@@ -566,19 +562,18 @@ public class GameManager : MonoBehaviour
 	protected void substractMoves(int amount)
 	{
 		remainingMoves-=amount;
-		hud.setMovements (remainingMoves);
 	}
 
 	public void activeMoney(bool show,int howMany=0)
 	{
 		if(show)
 		{
-			hud.activateChargeGems (true);
-			hud.setChargeGems (howMany);
+			hudManager.activateChargeGems (true);
+			hudManager.setChargeGems (howMany);
 		}
 		else
 		{
-			hud.activateChargeGems (false);	
+			hudManager.activateChargeGems (false);	
 		}
 	}
 
@@ -654,7 +649,7 @@ public class GameManager : MonoBehaviour
 						{
 							print (letters [j]);
 							print ( wordManager.chars [i].character);
-							hud.destroyLetterFound (goalLetters [j]);
+							hudManager.destroyLetterFound (goalLetters [j]);
 							letters.RemoveAt (j);
 							letterFound = true;
 						}
@@ -676,11 +671,11 @@ public class GameManager : MonoBehaviour
 			amount *= multiplierHelper;
 
 			wordsMade++;
-			actualizeWordsCompletedWinCondition ();
 
 			substractMoves(1);
 			addPoints(amount);
-
+			actualizeHUDInfo ();
+			checkWinCondition ();
 		}
 		resetLettersSelected ();
 	}
@@ -729,7 +724,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		amount *= multiplierHelper;
-		hud.setLettersPoints (amount);
+		hudManager.setLettersPoints (amount);
 	}
 
 	public void linesCreated(int totalLines)
@@ -783,7 +778,7 @@ public class GameManager : MonoBehaviour
 	{
 		int quantity = 0;
 		string word = "";
-
+		bool isLetterCondition = false;
 		if(myWinCondition[0] == "letters")
 		{
 			goalLetters = new List<string> ();
@@ -802,12 +797,13 @@ public class GameManager : MonoBehaviour
 					goalLetters.Add (temp [1]);
 				}
 			}
-			hud.setLettersCondition (goalLetters);
+			isLetterCondition = true;
+			hudManager.setLettersCondition (goalLetters);
 		}
 		else if(myWinCondition[0] == "obstacles")
 		{
 			quantity = obstaclesCount;
-			hud.setObstaclesCondition (quantity);
+			hudManager.setObstaclesCondition (quantity);
 		}
 		else if(myWinCondition[0] == "word")
 		{
@@ -818,7 +814,7 @@ public class GameManager : MonoBehaviour
 				goalWords.Add (text[i].Split('_')[0]);
 			}
 			word = goalWords [0];
-			hud.setWordCondition (word);
+			hudManager.setWordCondition (word);
 		}
 		else if(myWinCondition[0] == "sin")
 		{
@@ -828,7 +824,7 @@ public class GameManager : MonoBehaviour
 				goalWords.Add (text[i].Split('_')[0]);
 			}
 			word = goalWords [0];
-			hud.setSinCondition (word);
+			hudManager.setSinCondition (word);
 		}
 		else if(myWinCondition[0] == "ant")
 		{
@@ -838,22 +834,22 @@ public class GameManager : MonoBehaviour
 				goalWords.Add (text[i].Split('_')[0]);
 			}
 			word = goalWords [0];
-			hud.setAntCondition (word);
+			hudManager.setAntCondition (word);
 		}
 		else if(myWinCondition[0] == "points")
 		{
 			quantity = int.Parse (myWinCondition [1]);
-			hud.setPointsCondition (quantity,pointsCount);
+			hudManager.setPointsCondition (quantity,pointsCount);
 		}
 		else if(myWinCondition[0] == "words")
 		{
 			quantity = int.Parse (myWinCondition [1]);
-			hud.setWordsCondition (quantity,wordsMade);
+			hudManager.setWordsCondition (quantity,wordsMade);
 		}
 
 		//Se muestra el objetivo al inicio del nivel
-
-		hud.showObjectivePopUp(myWinCondition[0],word,quantity,goalLetters);
+		hudManager.setWinCondition (isLetterCondition);
+		hudManager.showObjectivePopUp(myWinCondition[0],word,quantity,goalLetters);
 	}
 
 	protected void actualizePointsWinCondition ()
@@ -862,7 +858,7 @@ public class GameManager : MonoBehaviour
 		{
 			int quantity = 0;
 			quantity = int.Parse (myWinCondition [1]);
-			hud.setPointsCondition (quantity,pointsCount);
+			hudManager.setPointsCondition (quantity,pointsCount);
 		}
 	}
 
@@ -872,7 +868,7 @@ public class GameManager : MonoBehaviour
 		{
 			int quantity = 0;
 			quantity = int.Parse (myWinCondition [1]);
-			hud.setWordsCondition (quantity,wordsMade);
+			hudManager.setWordsCondition (quantity,wordsMade);
 		}
 	}
 
@@ -1005,17 +1001,14 @@ public class GameManager : MonoBehaviour
 		{
 			cell = emptyCells [Random.Range (0, emptyCells.Length - 1)];
 
-			remainingMoves--;
-
-			hud.setMovements (remainingMoves);
-
+			substractMoves (1);
 			GameObject go = GameObject.Instantiate (bonificationPiecePrefab) as GameObject;
 
 			go.GetComponent<Piece> ().currentType = cellManager.colorRandom ();
 
 			cellManager.occupyAndConfigureCell(cell,go,go.GetComponent<Piece> ().currentType,true);
 
-			hud.showScoreTextAt(cell.transform.position,1);
+			showScoreTextOnHud (cell.transform.position, 1);
 			addPoints(1);
 
 			StartCoroutine (add1x1BlockMore ());
@@ -1025,9 +1018,8 @@ public class GameManager : MonoBehaviour
 			if(remainingMoves != 0)
 			{
 				addPoints (1);
-				remainingMoves--;
+				substractMoves (1);
 
-				hud.setMovements (remainingMoves);
 				StartCoroutine (add1x1BlockMore ());
 			}
 			else
@@ -1038,8 +1030,9 @@ public class GameManager : MonoBehaviour
 				}
 				StartCoroutine (addWinLetterAfterBlockMore ());
 			}
-
 		}
+
+		actualizeHUDInfo ();
 	}
 	IEnumerator add1x1BlockMore()
 	{
@@ -1106,7 +1099,7 @@ public class GameManager : MonoBehaviour
 
 		if(int.TryParse(cell.content.GetComponent<ABCChar>().pointsOrMultiple,out amount))
 		{
-			hud.showScoreTextAt(cell.transform.position,amount);
+			showScoreTextOnHud (cell.transform.position, amount);
 			addPoints(amount);
 		}
 	}
@@ -1166,7 +1159,7 @@ public class GameManager : MonoBehaviour
 			secondChanceTimes++;
 
 			remainingMoves += secondChanceMovements;
-			hud.setMovements (remainingMoves);
+			actualizeHUDInfo ();
 
 			//inputGameController.activateSecondChanceLocked();
 		}
@@ -1239,13 +1232,13 @@ public class GameManager : MonoBehaviour
 	{
 		audioManager.PlayButtonAudio();
 
-		hud.activateSettings (activate);
+		hudManager.activateSettings (activate);
 	}
 
 	public void closeObjectivePopUp()
 	{
 		audioManager.PlayButtonAudio();
-		hud.hideObjectivePopUp ();
+		hudManager.hideObjectivePopUp ();
 		allowGameInput ();
 	}
 		
@@ -1285,6 +1278,21 @@ public class GameManager : MonoBehaviour
 	{
 		audioManager.PlayButtonAudio();
 
-		hud.quitGamePopUp ();
+		hudManager.quitGamePopUp ();
+	}
+
+	protected void actualizeHUDInfo()
+	{
+		hudManager.setMovements (remainingMoves);
+	}
+
+	protected void showScoreTextOnHud(Vector3 pos,int amount)
+	{
+		hudManager.showScoreTextAt(pos,amount);
+		hudManager.setPoints (pointsCount);
+
+		actualizeWordsCompletedWinCondition ();
+		actualizePointsWinCondition ();
+
 	}
 }
