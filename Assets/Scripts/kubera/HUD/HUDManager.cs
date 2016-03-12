@@ -302,6 +302,7 @@ public class HUDManager : MonoBehaviour
 
 	public void showPieces(List<Piece> pieces)
 	{
+		print (pieces.Count);
 		List<Piece> newListPieces = new List<Piece> (pieces);
 		int i = 0;
 		while(newListPieces.Count >0)
