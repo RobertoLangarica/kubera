@@ -56,13 +56,9 @@ public class GameManager : MonoBehaviour
 	public float totalLetterPercentToFillCell = 0.9f;
 
 	protected Level currentLevel;
-	protected List<GameObject> pieces = new List<GameObject>();
-	protected List<ABCCharinfo> letters = new List<ABCCharinfo>();
-	protected List<ABCCharinfo> obstacleLetters = new List<ABCCharinfo>();
-	protected List<ABCCharinfo> tutorialLetters = new List<ABCCharinfo>();
-	protected List<ABCCharinfo> randomizedLetters = new List<ABCCharinfo>();
-	protected List<ABCCharinfo> randomizedObstacleLetters = new List<ABCCharinfo>();
-	protected List<ABCCharinfo> randomizedTutorialLetters = new List<ABCCharinfo>();
+	protected RandomPool<ABCCharinfo> lettersPool;
+	protected RandomPool<ABCCharinfo> obstaclesLettersPool;
+	protected RandomPool<ABCCharinfo> tutorialLettersPool;
 	protected List<ABCChar> charactersOnGrid = new List<ABCChar>();
 
 	protected bool playerWon;
@@ -103,7 +99,7 @@ public class GameManager : MonoBehaviour
 		currentLevel = level;
 
 		fillLettersPool();
-		fillPiecesPool();
+		pieceManager.setPieces(getPiecesFromLevel(level));
 
 		pieceManager.initializePiecesToShow ();
 		hudManager.showPieces (pieceManager.getShowingPieces ());
@@ -135,103 +131,89 @@ public class GameManager : MonoBehaviour
 
 	protected void fillLettersPool()
 	{
-		string[] lettersPool = currentLevel.lettersPool.Split(',');
+		string[] letters = currentLevel.lettersPool.Split(',');
 		string[] piecesInfo;
 
 		/*Aqui diseccionar el XML****************/
 		int amount = 0;
 		ABCCharinfo newLetter = null;
+		List<ABCCharinfo> result = new List<ABCCharinfo>();
 
-		if(letters.Count == 0)
+		/**
+		 * CSV
+		 * cantidad_letra_puntos/multiplo_tipo
+		 * ej. 02_A_1_1
+		 **/ 
+		for(int i =0; i<letters.Length; i++)
 		{
-			/**
-			 * CSV
-			 * cantidad_letra_puntos/multiplo_tipo
-			 * ej. 02_A_1_1
-			 **/ 
-			for(int i =0; i<lettersPool.Length; i++)
-			{
-				piecesInfo = lettersPool[i].Split('_');
-				amount = int.Parse(piecesInfo[0]);
+			piecesInfo = letters[i].Split('_');
+			amount = int.Parse(piecesInfo[0]);
 
+			for(int j = 0;j < amount;j++)
+			{
+				newLetter = new ABCCharinfo();
+				newLetter.character = piecesInfo[1];
+				newLetter.pointsOrMultiple = piecesInfo[2];
+				newLetter.type = int.Parse(piecesInfo[3]);
+
+				result.Add(newLetter);
+			}
+		}
+		lettersPool = new RandomPool<ABCCharinfo>(result);
+
+
+		if(currentLevel.obstacleLettersPool.Length > 0)
+		{
+			result.Clear();
+			letters = currentLevel.obstacleLettersPool.Split(',');
+
+			for(int i =0; i<letters.Length; i++)
+			{
+				piecesInfo = letters[i].Split('_');
+				amount = int.Parse(piecesInfo[0]);
 				for(int j = 0;j < amount;j++)
 				{
 					newLetter = new ABCCharinfo();
 					newLetter.character = piecesInfo[1];
 					newLetter.pointsOrMultiple = piecesInfo[2];
 					newLetter.type = int.Parse(piecesInfo[3]);
-
-					letters.Add(newLetter);
+					result.Add(newLetter);
 				}
 			}
 
-			if(currentLevel.obstacleLettersPool.Length > 0)
-			{
-				lettersPool = currentLevel.obstacleLettersPool.Split(',');
-
-				for(int i =0; i<lettersPool.Length; i++)
-				{
-					piecesInfo = lettersPool[i].Split('_');
-					amount = int.Parse(piecesInfo[0]);
-					for(int j = 0;j < amount;j++)
-					{
-						newLetter = new ABCCharinfo();
-						newLetter.character = piecesInfo[1];
-						newLetter.pointsOrMultiple = piecesInfo[2];
-						newLetter.type = int.Parse(piecesInfo[3]);
-						obstacleLetters.Add(newLetter);
-					}
-				}
-			}
-			if(currentLevel.tutorialLettersPool.Length > 1)
-			{
-				Debug.Log(currentLevel.tutorialLettersPool.Length);
-				string[] tutorialInfo = currentLevel.tutorialLettersPool.Split('-');
-				lettersPool = tutorialInfo[0].Split(',');
-
-				for(int i =0; i<lettersPool.Length; i++)
-				{
-					piecesInfo = lettersPool[i].Split('_');
-					amount = int.Parse(piecesInfo[0]);
-					for(int j = 0;j < amount;j++)
-					{
-						newLetter = new ABCCharinfo();
-						newLetter.character = piecesInfo[1];
-						newLetter.pointsOrMultiple = piecesInfo[2];
-						newLetter.type = int.Parse(piecesInfo[3]);
-						tutorialLetters.Add(newLetter);
-					}
-				}
-			}
+			obstaclesLettersPool = new RandomPool<ABCCharinfo>(result);
 		}
-		/*****/
-
-		randomizedLetters = randomizeList<ABCCharinfo>(letters);
-		randomizedObstacleLetters = randomizeList<ABCCharinfo>(obstacleLetters);
-	}
-
-	protected List<T> randomizeList<T>(List<T> target)
-	{
-		List<T> result = new List<T>();
-		List<T> temporal = new List<T>(target);
-		int index;
-
-		while(temporal.Count > 0)
+		if(currentLevel.tutorialLettersPool.Length > 1)
 		{
-			index = Random.Range(0,temporal.Count);
-			result.Add(temporal[index]);
-			temporal.RemoveAt(index);
-		}
+			result.Clear();
+			string[] tutorialInfo = currentLevel.tutorialLettersPool.Split('-');
+			letters = tutorialInfo[0].Split(',');
 
-		return result;
+			for(int i =0; i<letters.Length; i++)
+			{
+				piecesInfo = letters[i].Split('_');
+				amount = int.Parse(piecesInfo[0]);
+				for(int j = 0;j < amount;j++)
+				{
+					newLetter = new ABCCharinfo();
+					newLetter.character = piecesInfo[1];
+					newLetter.pointsOrMultiple = piecesInfo[2];
+					newLetter.type = int.Parse(piecesInfo[3]);
+					result.Add(newLetter);
+				}
+			}
+
+			tutorialLettersPool = new RandomPool<ABCCharinfo>(result);
+		}
 	}
 
-	protected void fillPiecesPool()
+	protected List<Piece> getPiecesFromLevel(Level level)
 	{
 		string[] info;
 		int amount = 0;
 
-		string[] piecesInfo = currentLevel.pieces.Split(',');
+		string[] piecesInfo = level.pieces.Split(',');
+		List<Piece> pieces = new List<Piece>();
 
 		for(int i =0; i<piecesInfo.Length; i++)
 		{
@@ -240,11 +222,11 @@ public class GameManager : MonoBehaviour
 
 			for(int j=0; j<amount; j++)
 			{
-				pieces.Add ((GameObject)(Resources.Load (info[1])));
+				pieces.Add (((GameObject)(Resources.Load (info[1]))).GetComponent<Piece>());
 			}
 		}
 
-		pieceManager.setPieces (pieces);
+		return pieces;
 	}
 
 	void Update()
@@ -500,14 +482,13 @@ public class GameManager : MonoBehaviour
 		switch(letterType)
 		{
 		case("normal"):
-			
-			abcChar.initializeFromInfo(getLetterInfoFromPool(randomizedLetters,letters));
+			abcChar.initializeFromInfo(lettersPool.getNextRandomized());
 			break;
 		case("obstacle"):
-			abcChar.initializeFromInfo(getLetterInfoFromPool(randomizedObstacleLetters,obstacleLetters));
+			abcChar.initializeFromInfo(obstaclesLettersPool.getNextRandomized());
 			break;
 		case("tutorial"):
-			abcChar.initializeFromInfo(getLetterInfoFromPool(randomizedTutorialLetters,tutorialLetters));
+			abcChar.initializeFromInfo(tutorialLettersPool.getNextRandomized());
 			break;
 		}
 
@@ -643,14 +624,16 @@ public class GameManager : MonoBehaviour
 				
 				if (myWinCondition [0] == "letters") 
 				{
-					for (int j = 0; j < letters.Count; j++) 
+					for (int j = 0; j < goalLetters.Count; j++) 
 					{
 						if (goalLetters [j].ToLower () == wordManager.chars [i].character.ToLower () && !letterFound) 
 						{
-							print (letters [j]);
+							print (goalLetters [j]);
 							print ( wordManager.chars [i].character);
+
 							hudManager.destroyLetterFound (goalLetters [j]);
-							letters.RemoveAt (j);
+
+							goalLetters.RemoveAt (j);
 							letterFound = true;
 						}
 					}
@@ -891,7 +874,7 @@ public class GameManager : MonoBehaviour
 			}
 			break;
 		case "letters":
-			if (letters.Count == 0) 
+			if (goalLetters.Count == 0) 
 			{
 				win = true;
 			}
@@ -1178,35 +1161,6 @@ public class GameManager : MonoBehaviour
 	public void RefillLifes()
 	{
 		UserDataManager.instance.refillAllPlayerLifes();
-	}
-
-	protected void fillTutorialLettersRandomPool()
-	{
-		List<ABCCharinfo> tempList = new List<ABCCharinfo> ();
-		randomizedTutorialLetters = new List<ABCCharinfo>();
-
-		tempList = new List<ABCCharinfo>(tutorialLetters);
-
-
-		while(tempList.Count >0)
-		{
-			int val = Random.Range(0,tempList.Count);
-			randomizedTutorialLetters.Add(tempList[val]);
-			tempList.RemoveAt(val);
-		}
-	}
-
-	public ABCCharinfo getLetterInfoFromPool(List<ABCCharinfo> pool, List<ABCCharinfo> originalPool)
-	{
-		if(pool.Count == 0)
-		{
-			pool = randomizeList<ABCCharinfo>(originalPool);
-		}	
-
-		ABCCharinfo letter = pool[0];
-		pool.RemoveAt (0);
-
-		return letter;
 	}
 
 	public void tryToActivatePowerup(int powerupTypeIndex)
