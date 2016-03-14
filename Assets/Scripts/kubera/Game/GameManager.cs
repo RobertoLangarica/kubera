@@ -8,10 +8,10 @@ using DG.Tweening;
 public class GameManager : MonoBehaviour 
 {
 	public Text scoreText;
+	public GameObject retryPopUp;
+	public GameObject notEnoughLifesPopUp;
 
 	public GameObject bonificationPiecePrefab;
-	public GameObject retryPopUpPrefab;
-	public GameObject notEnoughLifesPopUpPrefab;
 	public GameObject singleSquarePiecePrefab;
 	public GameObject gridLetterPrefab;
 
