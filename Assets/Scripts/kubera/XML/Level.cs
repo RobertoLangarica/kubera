@@ -30,7 +30,7 @@ public class Level
 	[XmlAttribute("unblockDestroy")]public bool unblockDestroy;
 	[XmlAttribute("unblockWildcard")]public bool unblockWildcard;
 
-	[XmlAttribute("winCondition")]public string winCondition;
+	[XmlAttribute("winCondition")]public string goal;
 
 	[XmlAttribute("tutorialLettersPool")]public string tutorialLettersPool;
 

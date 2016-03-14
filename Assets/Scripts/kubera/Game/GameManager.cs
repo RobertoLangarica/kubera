@@ -7,6 +7,10 @@ using DG.Tweening;
 
 public class GameManager : MonoBehaviour 
 {
+	public const string LETTER		= "normal";
+	public const string OBSTACLE_LETTER		= "tutorial";
+	public const string TUTORIAL_LETTER		= "obstacle";
+
 	public Text scoreText;
 
 	public GameObject bonificationPiecePrefab;
@@ -110,7 +114,7 @@ public class GameManager : MonoBehaviour
 
 		cellToLetter = new List<Cell> ();
 
-		myWinCondition = currentLevel.winCondition.Split ('-');
+		myWinCondition = currentLevel.goal.Split ('-');
 		remainingMoves = totalMoves = currentLevel.moves;
 
 		hud.setMovements (remainingMoves);
@@ -347,7 +351,7 @@ public class GameManager : MonoBehaviour
 				{
 					if (cellList [i] [j].pieceType != EPieceType.LETTER) 
 					{
-						GameObject cellContent = getAndRegisterNewLetter("normal");
+						GameObject cellContent = getAndRegisterNewLetter(LETTER);
 						Vector3 cellPosition =  cellList [i] [j].transform.position + (new Vector3 (cellList [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x,
 							-cellList [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
 						
@@ -388,13 +392,13 @@ public class GameManager : MonoBehaviour
 			}
 			if((cellType & 0x8) == 0x8)
 			{	
-				cellContent = getAndRegisterNewLetter("obstacle");
+				cellContent = getAndRegisterNewLetter(OBSTACLE_LETTER);
 				cellManager.occupyAndConfigureCell(i,cellContent,EPieceType.LETTER_OBSTACLE,true);
 				obstaclesCount++;
 			}
 			if((cellType & 0x20) == 0x20)
 			{	
-				cellContent = getAndRegisterNewLetter("tutorial");
+				cellContent = getAndRegisterNewLetter(TUTORIAL_LETTER);
 				cellManager.occupyAndConfigureCell(i,cellContent,EPieceType.LETTER,true);
 				tutorialLetters.Add(cellContent);
 			}
@@ -495,14 +499,14 @@ public class GameManager : MonoBehaviour
 
 		switch(letterType)
 		{
-		case("normal"):
+		case(LETTER):
 			
 			abcChar.initializeFromInfo(getLetterInfoFromPool(randomizedLetters,letters));
 			break;
-		case("obstacle"):
+		case(OBSTACLE_LETTER):
 			abcChar.initializeFromInfo(getLetterInfoFromPool(randomizedObstacleLetters,obstacleLetters));
 			break;
-		case("tutorial"):
+		case(TUTORIAL_LETTER):
 			abcChar.initializeFromInfo(getLetterInfoFromPool(randomizedTutorialLetters,tutorialLetters));
 			break;
 		}
