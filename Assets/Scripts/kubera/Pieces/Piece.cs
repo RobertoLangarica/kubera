@@ -48,7 +48,8 @@ public class Piece : MonoBehaviour
 	public int howManyHasBeenRotated = 0;
 
 	[HideInInspector]
-	public int id = Random.Range (0, 9999999);
+	public int id;// = Random.Range (0, 9999999);
+
 
 	void Start () 
 	{
@@ -60,7 +61,11 @@ public class Piece : MonoBehaviour
 		}
 	
 		currentType = starterType;
+	}
 
+	public void initializeId()
+	{
+		id = Random.Range (0, 9999999);
 	}
 
 	protected void updateColorBasedOnType()

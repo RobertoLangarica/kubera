@@ -20,10 +20,10 @@ public class GameManager : MonoBehaviour
 	public const string TUTORIAL_LETTER		= "obstacle";
 
 	public Text scoreText;
+	public GameObject retryPopUp;
+	public GameObject notEnoughLifesPopUp;
 
 	public GameObject bonificationPiecePrefab;
-	public GameObject retryPopUpPrefab;
-	public GameObject notEnoughLifesPopUpPrefab;
 	public GameObject singleSquarePiecePrefab;
 	public GameObject gridLetterPrefab;
 
@@ -305,7 +305,7 @@ public class GameManager : MonoBehaviour
 			//Damos puntos por cada cuadro en la pieza
 			addPoints (piece.squares.Length);
 			substractMoves(1);
-
+			actualizeHUDInfo ();
 			showScoreTextOnHud (piece.transform.position, piece.squares.Length);
 		}
 
@@ -1094,6 +1094,7 @@ public class GameManager : MonoBehaviour
 			showScoreTextOnHud (cell.transform.position, amount);
 			addPoints(amount);
 		}
+		actualizeHUDInfo ();
 	}
 
 	protected void allowGameInput(bool allowInput = true)
