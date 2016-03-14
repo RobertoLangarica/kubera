@@ -228,7 +228,7 @@ namespace LevelBuilder
 			lvlToSave.tutorialLettersPool = abcTutorialSelector.getCSVData(ABC_NORMAL_TYPE) + '-' + tutorialSelection;
 			lvlToSave.pieces = piecesSelector.getCSVData();
 			lvlToSave.grid = gridEditor.getCSVData();
-			lvlToSave.winCondition = levelGoalSelector.getStringData();
+			lvlToSave.goal = levelGoalSelector.getStringData();
 			lvlToSave.unblockBomb = powerupToggles[BOMB_POWERUP].isOn;
 			lvlToSave.unblockBlock = powerupToggles[BLOCK_POWERUP].isOn;
 			lvlToSave.unblockRotate = powerupToggles[ROTATE_POWERUP].isOn;
@@ -262,7 +262,7 @@ namespace LevelBuilder
 
 			abcSelector.sincronizeDataWithCSV(level.lettersPool);
 			abcObstacleSelector.sincronizeDataWithCSV(level.obstacleLettersPool);
-			levelGoalSelector.sincronizeDataWithString(level.winCondition);
+			levelGoalSelector.sincronizeDataWithString(level.goal);
 			piecesSelector.sincronizeDataWithCSV(level.pieces);
 			gridEditor.sincronizeDataWithCSV(level.grid);
 
@@ -522,9 +522,9 @@ namespace LevelBuilder
 
 			foreach(Level lvl in PersistentData.instance.levelsData.levels)
 			{
-				if(lvl.winCondition != null && lvl.winCondition.Length != 0)
+				if(lvl.goal != null && lvl.goal.Length != 0)
 				{
-					string[] goal = lvl.winCondition.Split('-');
+					string[] goal = lvl.goal.Split('-');
 
 					if(goal[0] == "word")
 					{
