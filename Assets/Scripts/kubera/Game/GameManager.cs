@@ -305,7 +305,7 @@ public class GameManager : MonoBehaviour
 			//Damos puntos por cada cuadro en la pieza
 			addPoints (piece.squares.Length);
 			substractMoves(1);
-
+			actualizeHUDInfo ();
 			showScoreTextOnHud (piece.transform.position, piece.squares.Length);
 		}
 
@@ -1094,6 +1094,7 @@ public class GameManager : MonoBehaviour
 			showScoreTextOnHud (cell.transform.position, amount);
 			addPoints(amount);
 		}
+		actualizeHUDInfo ();
 	}
 
 	protected void allowGameInput(bool allowInput = true)
