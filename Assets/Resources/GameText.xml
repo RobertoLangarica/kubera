@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<gameText>
+	<texts>
+		<text id="hudPuntaje">
+			<languages>
+				<language id="english" text="Points"/>
+				<language id="spanish" text="Puntos"/>
+				<language id="default" text="Puntos"/>
+			</languages>
+		</text>
+		<text id="goalText">
+			<languages>
+				<language id="english" text="Get"/>
+				<language id="spanish" text="Obten"/>
+				<language id="default" text="Obten"/>
+			</languages>
+		</text>
+	</texts>
+</gameText>
