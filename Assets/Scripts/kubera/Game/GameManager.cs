@@ -7,7 +7,15 @@ using DG.Tweening;
 
 public class GameManager : MonoBehaviour 
 {
-	public const string LETTER		= "normal";
+	public const string GOAL_BY_POINTS			= "points";
+	public const string GOAL_BY_WORDS			= "words";
+	public const string GOAL_BY_OBSTACLES		= "obstacles";
+	public const string GOAL_BY_1WORD			= "word";
+	public const string GOAL_BY_LETTERS			= "letters";
+	public const string GOAL_BY_ANTONYM			= "ant";
+	public const string GOAL_BY_SYNONYMOUS		= "sin";
+
+	public const string LETTER				= "normal";
 	public const string OBSTACLE_LETTER		= "tutorial";
 	public const string TUTORIAL_LETTER		= "obstacle";
 
@@ -241,7 +249,14 @@ public class GameManager : MonoBehaviour
 			audioManager.PlayPiecePositionedAudio();
 			checkForCompletedLines();
 			StartCoroutine(afterPiecePositioned(piece));
-			checkGoal ();
+			if (checkGoal ()) 
+			{
+				playerHasWon ();
+			}
+			else 
+			{
+				checkIfLoose ();
+			}
 			actualizeHUDInfo ();
 			return true;
 		}
@@ -600,7 +615,7 @@ public class GameManager : MonoBehaviour
 					obstaclesUsed++;
 				}
 				
-				if (goalInfo [0] == "letters") 
+				if (goalInfo [0] == GOAL_BY_LETTERS) 
 				{
 					for (int j = 0; j < goalLetters.Count; j++) 
 					{
@@ -618,7 +633,7 @@ public class GameManager : MonoBehaviour
 				}
 			}
 
-			if (goalInfo [0] == "word" || goalInfo [0] == "ant"|| goalInfo [0] == "sin") 
+			if (goalInfo [0] == GOAL_BY_1WORD || goalInfo [0] == GOAL_BY_ANTONYM || goalInfo [0] == GOAL_BY_SYNONYMOUS) 
 			{
 				for (int j = 0; j < goalWords.Count; j++) 
 				{
@@ -636,7 +651,14 @@ public class GameManager : MonoBehaviour
 			substractMoves(1);
 			addPoints(amount);
 			actualizeHUDInfo ();
-			checkGoal ();
+			if (checkGoal ()) 
+			{
+				playerHasWon ();
+			} 
+			else 
+			{
+				checkIfLoose ();
+			}
 		}
 		resetLettersSelected ();
 	}
@@ -739,7 +761,7 @@ public class GameManager : MonoBehaviour
 		int quantity = 0;
 		string word = "";
 		bool isLetterCondition = false;
-		if(goalInfo[0] == "letters")
+		if(goalInfo[0] == GOAL_BY_LETTERS)
 		{
 			goalLetters = new List<string> ();
 			int i;
@@ -760,12 +782,12 @@ public class GameManager : MonoBehaviour
 			isLetterCondition = true;
 			hudManager.setLettersCondition (goalLetters);
 		}
-		else if(goalInfo[0] == "obstacles")
+		else if(goalInfo[0] == GOAL_BY_OBSTACLES)
 		{
 			quantity = obstaclesCount;
 			hudManager.setObstaclesCondition (quantity);
 		}
-		else if(goalInfo[0] == "word")
+		else if(goalInfo[0] == GOAL_BY_1WORD)
 		{
 			string[] text = goalInfo [1].Split (',');
 
@@ -776,7 +798,7 @@ public class GameManager : MonoBehaviour
 			word = goalWords [0];
 			hudManager.setWordCondition (word);
 		}
-		else if(goalInfo[0] == "sin")
+		else if(goalInfo[0] == GOAL_BY_SYNONYMOUS)
 		{
 			string[] text = goalInfo [1].Split (',');
 			for(int i=0; i<text.Length; i++)
@@ -786,7 +808,7 @@ public class GameManager : MonoBehaviour
 			word = goalWords [0];
 			hudManager.setSinCondition (word);
 		}
-		else if(goalInfo[0] == "ant")
+		else if(goalInfo[0] == GOAL_BY_ANTONYM)
 		{
 			string[] text = goalInfo [1].Split (',');
 			for(int i=0; i<text.Length; i++)
@@ -796,12 +818,12 @@ public class GameManager : MonoBehaviour
 			word = goalWords [0];
 			hudManager.setAntCondition (word);
 		}
-		else if(goalInfo[0] == "points")
+		else if(goalInfo[0] == GOAL_BY_POINTS)
 		{
 			quantity = int.Parse (goalInfo [1]);
 			hudManager.setPointsCondition (quantity,pointsCount);
 		}
-		else if(goalInfo[0] == "words")
+		else if(goalInfo[0] == GOAL_BY_WORDS)
 		{
 			quantity = int.Parse (goalInfo [1]);
 			hudManager.setWordsCondition (quantity,wordsMade);
@@ -814,7 +836,7 @@ public class GameManager : MonoBehaviour
 
 	protected void actualizePointsGoal ()
 	{
-		if(goalInfo[0] == "points")
+		if(goalInfo[0] == GOAL_BY_POINTS)
 		{
 			int quantity = 0;
 			quantity = int.Parse (goalInfo [1]);
@@ -824,7 +846,7 @@ public class GameManager : MonoBehaviour
 
 	protected void actualizeWordsCompletedGoal()
 	{
-		if(goalInfo[0] == "words")
+		if(goalInfo[0] == GOAL_BY_WORDS)
 		{
 			int quantity = 0;
 			quantity = int.Parse (goalInfo [1]);
@@ -833,58 +855,59 @@ public class GameManager : MonoBehaviour
 	}
 
 
-	protected void checkGoal ()
+	protected bool checkGoal ()
 	{
-		bool win = false;
 		switch (goalInfo[0]) {
-		case "points":
+		case GOAL_BY_POINTS:
 			if(pointsCount >= int.Parse( goalInfo[1]))
 			{
-				win = true;
+				return true;
 			}
 			break;
 
-		case "words":
+		case GOAL_BY_WORDS:
 			if (wordsMade >= int.Parse (goalInfo [1])) 
 			{
-				win = true;
+				return true;
 			}
 			break;
-		case "letters":
+		case GOAL_BY_LETTERS:
 			if (goalLetters.Count == 0) 
 			{
-				win = true;
+				return true;
 			}
 			break;
-		case "obstacles":
+		case GOAL_BY_OBSTACLES:
 			if (obstaclesCount == obstaclesUsed) 
 			{
-				win = true;
+				return true;
 			}
 			break;
-		case "word":
+		case GOAL_BY_1WORD:
 			if (wordFound) 
 			{
-				win = true;
+				return true;
 			}
 			break;
-		case "ant":
+		case GOAL_BY_ANTONYM:
 			if (wordFound) 
 			{
-				win = true;
+				return true;
 			}
 			break;
-		case "sin":
+		case GOAL_BY_SYNONYMOUS:
 			if (wordFound) 
 			{
-				win = true;
+				return true;
 			}
 			break;
 		default:
 			break;
 		}
 
-		if (win) 
+		return false;
+
+		/*if (win) 
 		{
 			print ("win");
 			playerWon = true;
@@ -894,7 +917,7 @@ public class GameManager : MonoBehaviour
 		else
 		{
 			checkIfLoose ();
-		}
+		}*/
 	}
 
 	IEnumerator check()
@@ -906,8 +929,17 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	public void checkIfLoose()
+	protected void playerHasWon()
 	{
+		print ("win");
+		playerWon = true;
+		unlockPowerUp();
+		winBonification ();
+	}
+
+	protected void checkIfLoose()
+	{
+		Debug.Log(pieceManager.getShowingPieces()[0].squares[0] + "------------");
 		if(!cellManager.checkIfOneCanFit(pieceManager.getShowingPieces()) || remainingMoves == 0)
 		{
 			if(remainingMoves == 0)
