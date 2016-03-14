@@ -48,7 +48,7 @@ public class PieceManager : MonoBehaviour
 	{
 		for(int i=0; i<showingPieces.Count; i++)
 		{
-			if(piece.GetInstanceID() == showingPieces[i].GetInstanceID())
+			if(piece.id == showingPieces[i].id)
 			{
 				piecesShowedCount--;
 				showingPieces.RemoveAt (i);
@@ -61,7 +61,7 @@ public class PieceManager : MonoBehaviour
 	{
 		for(int i=0; i<showingPieces.Count; i++)
 		{
-			if(piece.GetInstanceID() == showingPieces[i].GetInstanceID())
+			if(piece.id == showingPieces[i].id)
 			{
 				return true;
 			}

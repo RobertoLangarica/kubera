@@ -47,6 +47,9 @@ public class Piece : MonoBehaviour
 	[HideInInspector]
 	public int howManyHasBeenRotated = 0;
 
+	[HideInInspector]
+	public int id = Random.Range (0, 9999999);
+
 	void Start () 
 	{
 		squares = new GameObject[transform.childCount];
@@ -57,6 +60,7 @@ public class Piece : MonoBehaviour
 		}
 	
 		currentType = starterType;
+
 	}
 
 	protected void updateColorBasedOnType()

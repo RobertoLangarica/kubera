@@ -208,6 +208,7 @@ public class HUDManager : MonoBehaviour
 
 	public void setObstaclesCondition(int value=0)
 	{
+		// value = las letras negras que existen
 		winConditionText.text = "Usa: todas las letras negras.";
 	}
 
@@ -226,12 +227,12 @@ public class HUDManager : MonoBehaviour
 		winConditionText.text = "Antonimo de: " + word +".";
 	}
 
-	public void actualizePointsWinCondition ()
+	public void actualizePointsWinCondition (int points)
 	{
 		
 	}
 
-	public void actualizeWordsValueWinCondition ()
+	public void actualizeWordsValueWinCondition (int points)
 	{
 
 	}
@@ -302,7 +303,6 @@ public class HUDManager : MonoBehaviour
 
 	public void showPieces(List<Piece> pieces)
 	{
-		print (pieces.Count);
 		List<Piece> newListPieces = new List<Piece> (pieces);
 		int i = 0;
 		while(newListPieces.Count >0)

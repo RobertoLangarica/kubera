@@ -476,7 +476,6 @@ public class GameManager : MonoBehaviour
 		return newLetter;
 	}
 
-
 	/*
 	 * Se incrementa el puntaje del jugador
 	 * 
@@ -486,8 +485,6 @@ public class GameManager : MonoBehaviour
 	{
 		pointsCount += amount;
 	}
-
-
 
 	protected bool useGems(int gemsPrice = 0)
 	{
@@ -690,7 +687,6 @@ public class GameManager : MonoBehaviour
 	{
 		if(totalLines > 0)
 		{
-			Debug.Log(totalLines);
 			audioManager.PlayLeLineCreatedAudio();
 		}
 
@@ -1213,13 +1209,16 @@ public class GameManager : MonoBehaviour
 
 	protected void actualizeHUDInfo()
 	{
+		hudManager.setPoints (pointsCount);
 		hudManager.setMovements (remainingMoves);
+
+		actualizePointsWinCondition ();
+		actualizeWordsCompletedWinCondition ();
 	}
 
 	protected void showScoreTextOnHud(Vector3 pos,int amount)
 	{
 		hudManager.showScoreTextAt(pos,amount);
-		hudManager.setPoints (pointsCount);
 
 		actualizeWordsCompletedWinCondition ();
 		actualizePointsWinCondition ();
