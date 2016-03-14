@@ -6,41 +6,21 @@ using DG.Tweening;
 
 public class PieceManager : MonoBehaviour 
 {
-	protected List<Piece> availablePieces = new List<Piece>();
-	protected List<Piece> allPieces;
-
-	public List<Piece> showingPieces = new List<Piece>();
 	public int piecesToShow = 3;
+
+	protected RandomPool<Piece> pieces;
+	public List<Piece> showingPieces = new List<Piece>();
+
 	[HideInInspector]	public int piecesShowedCount;
 
 	public void initializePiecesToShow()
 	{
 		for(int i= 0; i<piecesToShow; i++)
 		{
-			if(availablePieces.Count==0)
-			{
-				randomizelist(allPieces);
-			}
-			showingPieces.Add((availablePieces [0]));
-			availablePieces.RemoveAt (0);
+			showingPieces.Add(pieces.getNextRandomized());
 		}
+
 		piecesShowedCount = piecesToShow;
-	}
-
-	protected void randomizelist(List<Piece> pieces)
-	{
-		List<Piece> newList = new List<Piece>();
-		availablePieces = new List<Piece>(pieces);
-
-		int val;
-		while(availablePieces.Count >0)
-		{
-			val = Random.Range(0,availablePieces.Count);
-			newList.Add(availablePieces[val]);
-			availablePieces.RemoveAt(val);
-		}
-
-		availablePieces = newList;
 	}
 
 	public List<Piece> getShowingPieces()
@@ -48,20 +28,20 @@ public class PieceManager : MonoBehaviour
 		return showingPieces;
 	}
 
-	public void setPieces(List<GameObject> gameObjects)
+	public void setPieces(List<GameObject> value)
 	{
 		List<Piece> pieces = new List<Piece>();
 
-		for (int i = 0; i < gameObjects.Count; i++) 
+		for (int i = 0; i < value.Count; i++) 
 		{
-			pieces.Add (gameObjects [i].GetComponent<Piece> ());
+			pieces.Add (value [i].GetComponent<Piece> ());
 		}
 		setPieces (pieces);
 	}
 
-	public void setPieces(List<Piece> pieces)
+	public void setPieces(List<Piece> value)
 	{
-		allPieces = pieces;
+		pieces = new RandomPool<Piece>(value);
 	}
 		
 	public void removeFromShowedPieces(Piece piece)

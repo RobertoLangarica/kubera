@@ -7,7 +7,7 @@ public class InputPowerUpRotate : MonoBehaviour
 {
 	protected PieceManager pieceManager;
 	protected GameManager gameManager;
-	protected HUD hud;
+	protected HUDManager hudManager;
 
 	public Vector3 offsetPositionOverFinger = new Vector3(0,1.5f,0);
 	public Vector3 selectedScale = new Vector3 (4.5f, 4.5f, 4.5f);
@@ -39,14 +39,14 @@ public class InputPowerUpRotate : MonoBehaviour
 	{
 		pieceManager = FindObjectOfType<PieceManager> ();
 		gameManager = FindObjectOfType<GameManager> ();
-		hud = FindObjectOfType<HUD> ();
+		hudManager = FindObjectOfType<HUDManager> ();
 	}
 
 	public void startRotate()
 	{
 		pieceManager = FindObjectOfType<PieceManager> ();
 		gameManager = FindObjectOfType<GameManager> ();
-		hud = FindObjectOfType<HUD> ();
+		hudManager = FindObjectOfType<HUDManager> ();
 
 		activateRotation (true);
 	}
@@ -247,16 +247,16 @@ public class InputPowerUpRotate : MonoBehaviour
 		{
 			for (int i = 0; i < pieceManager.showingPieces.Count; i++) 
 			{
-				hud.activateTransformImage(true,i);
+				hudManager.activateTransformImage(true,i);
 			}
 		}
 		else
 		{
-			for (int i = 0; i < hud.rotationImagePositions.Length; i++) 
+			for (int i = 0; i < hudManager.rotationImagePositions.Length; i++) 
 			{
-				if (selectedInitialPosition.y == hud.rotationImagePositions [i].position.y) 
+				if (selectedInitialPosition.y == hudManager.rotationImagePositions [i].position.y) 
 				{
-					hud.activateTransformImage (false, i);
+					hudManager.activateTransformImage (false, i);
 				}
 			}
 				

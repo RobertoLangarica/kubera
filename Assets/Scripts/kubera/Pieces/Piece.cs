@@ -49,6 +49,13 @@ public class Piece : MonoBehaviour
 
 	void Start () 
 	{
+		squares = new GameObject[transform.childCount];
+
+		for(int i=0; i<transform.childCount; i++)
+		{
+			squares [i] = transform.GetChild (i).gameObject;
+		}
+	
 		currentType = starterType;
 	}
 

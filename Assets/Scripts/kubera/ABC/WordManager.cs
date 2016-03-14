@@ -106,7 +106,7 @@ namespace ABC
 			validateCharacter(character);
 		}
 
-		public void pointsOfLetter()
+		public void lettersActualized()
 		{
 			OnLettersActualized ();
 		}
@@ -287,6 +287,7 @@ namespace ABC
 
 			actualizeIfExistLettersOn ();
 
+			lettersActualized ();
 		}
 
 		/**
@@ -577,13 +578,13 @@ namespace ABC
 					addCharacter (go.GetComponent<ABCChar> (), go);
 					activateButtonOfWordsActions (true);
 
-					pointsOfLetter ();
+					lettersActualized ();
 				}
 			}
 			else
 			{
 				checkSwappLetters(go.GetComponent<UIChar>().piece);
-				pointsOfLetter ();
+				lettersActualized ();
 				//go.GetComponent<UIChar> ().piece.GetComponent<UIChar>().destroyLetter();
 			}
 		}

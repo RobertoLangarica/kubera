@@ -51,29 +51,25 @@ public class GameManager : MonoBehaviour
 	protected CellsManager cellManager;
 	protected PowerUpManager powerupManager;
 	protected PieceManager pieceManager;
-	protected HUD hud;
+	protected HUDManager hudManager;
 	protected AudioManager audioManager;
 
 	protected InputPiece inputPiece;
 	protected InputWords inputWords;
 
-	public float totalLetterPercentToFillCell = 0.9f;
+	public float letterSizeMultiplier = 0.9f;
 
 	protected Level currentLevel;
-	protected List<GameObject> pieces = new List<GameObject>();
-	protected List<ABCCharinfo> letters = new List<ABCCharinfo>();
-	protected List<ABCCharinfo> obstacleLetters = new List<ABCCharinfo>();
-	protected List<ABCCharinfo> tutorialLetters = new List<ABCCharinfo>();
-	protected List<ABCCharinfo> randomizedLetters = new List<ABCCharinfo>();
-	protected List<ABCCharinfo> randomizedObstacleLetters = new List<ABCCharinfo>();
-	protected List<ABCCharinfo> randomizedTutorialLetters = new List<ABCCharinfo>();
+	protected RandomPool<ABCCharinfo> lettersPool;
+	protected RandomPool<ABCCharinfo> obstaclesLettersPool;
+	protected RandomPool<ABCCharinfo> tutorialLettersPool;
 	protected List<ABCChar> charactersOnGrid = new List<ABCChar>();
 
 	protected bool playerWon;
 
 	void Awake () 
 	{
-		hud = FindObjectOfType<HUD> ();
+		hudManager = FindObjectOfType<HUDManager> ();
 		inputWords = FindObjectOfType<InputWords>();
 
 		inputPiece = FindObjectOfType<InputPiece>();
@@ -106,21 +102,20 @@ public class GameManager : MonoBehaviour
 	{
 		currentLevel = level;
 
-		fillLettersPool();
-		fillPiecesPool();
+		readLettersFromLevel(level);
+		pieceManager.setPieces(getPiecesFromLevel(level));
 
 		pieceManager.initializePiecesToShow ();
-		hud.showPieces (pieceManager.getShowingPieces ());
+		hudManager.showPieces (pieceManager.getShowingPieces ());
 
 		cellToLetter = new List<Cell> ();
 
 		myWinCondition = currentLevel.goal.Split ('-');
 		remainingMoves = totalMoves = currentLevel.moves;
 
-		hud.setMovements (remainingMoves);
-		hud.setGems(UserDataManager.instance.playerGems);
-		hud.setLevelName (currentLevel.name);
-		hud.setSecondChanceLock (false);
+		hudManager.setGems(UserDataManager.instance.playerGems);
+		hudManager.setLevelName (currentLevel.name);
+		hudManager.setSecondChanceLock (false);
 
 		allowGameInput(false);
 
@@ -128,113 +123,77 @@ public class GameManager : MonoBehaviour
 		scoreToStar [0] = currentLevel.scoreToStar1;
 		scoreToStar [1] = currentLevel.scoreToStar2;
 		scoreToStar [2] = currentLevel.scoreToStar3;
-		hud.setMeterData (scoreToStar);
+		hudManager.setStarData (scoreToStar);
 	
 		cellManager.resizeGrid(10,10);
 		parseTheCellsOnGrid();
 
 		getWinCondition ();
+
+		actualizeHUDInfo ();
 	}
 
-	protected void fillLettersPool()
+	protected void readLettersFromLevel(Level level)
 	{
-		string[] lettersPool = currentLevel.lettersPool.Split(',');
-		string[] piecesInfo;
+		lettersPool = new RandomPool<ABCCharinfo>(getLettersInfoFromCSV(level.lettersPool));
 
-		/*Aqui diseccionar el XML****************/
-		int amount = 0;
-		ABCCharinfo newLetter = null;
-
-		if(letters.Count == 0)
+		if(level.obstacleLettersPool.Length > 0)
 		{
-			/**
-			 * CSV
-			 * cantidad_letra_puntos/multiplo_tipo
-			 * ej. 02_A_1_1
-			 **/ 
-			for(int i =0; i<lettersPool.Length; i++)
-			{
-				piecesInfo = lettersPool[i].Split('_');
-				amount = int.Parse(piecesInfo[0]);
-
-				for(int j = 0;j < amount;j++)
-				{
-					newLetter = new ABCCharinfo();
-					newLetter.character = piecesInfo[1];
-					newLetter.pointsOrMultiple = piecesInfo[2];
-					newLetter.type = int.Parse(piecesInfo[3]);
-
-					letters.Add(newLetter);
-				}
-			}
-
-			if(currentLevel.obstacleLettersPool.Length > 0)
-			{
-				lettersPool = currentLevel.obstacleLettersPool.Split(',');
-
-				for(int i =0; i<lettersPool.Length; i++)
-				{
-					piecesInfo = lettersPool[i].Split('_');
-					amount = int.Parse(piecesInfo[0]);
-					for(int j = 0;j < amount;j++)
-					{
-						newLetter = new ABCCharinfo();
-						newLetter.character = piecesInfo[1];
-						newLetter.pointsOrMultiple = piecesInfo[2];
-						newLetter.type = int.Parse(piecesInfo[3]);
-						obstacleLetters.Add(newLetter);
-					}
-				}
-			}
-			if(currentLevel.tutorialLettersPool.Length > 1)
-			{
-				Debug.Log(currentLevel.tutorialLettersPool.Length);
-				string[] tutorialInfo = currentLevel.tutorialLettersPool.Split('-');
-				lettersPool = tutorialInfo[0].Split(',');
-
-				for(int i =0; i<lettersPool.Length; i++)
-				{
-					piecesInfo = lettersPool[i].Split('_');
-					amount = int.Parse(piecesInfo[0]);
-					for(int j = 0;j < amount;j++)
-					{
-						newLetter = new ABCCharinfo();
-						newLetter.character = piecesInfo[1];
-						newLetter.pointsOrMultiple = piecesInfo[2];
-						newLetter.type = int.Parse(piecesInfo[3]);
-						tutorialLetters.Add(newLetter);
-					}
-				}
-			}
+			obstaclesLettersPool = new RandomPool<ABCCharinfo>(getLettersInfoFromCSV(level.obstacleLettersPool));
 		}
-		/*****/
 
-		randomizedLetters = randomizeList<ABCCharinfo>(letters);
-		randomizedObstacleLetters = randomizeList<ABCCharinfo>(obstacleLetters);
+		if(level.tutorialLettersPool.Length > 1)
+		{
+			tutorialLettersPool = new RandomPool<ABCCharinfo>(getLettersInfoFromCSV(level.tutorialLettersPool.Split('-')[0]));
+		}
 	}
 
-	protected List<T> randomizeList<T>(List<T> target)
+	/**
+	 * CSV
+	 * cantidad_letra_puntos/multiplo_tipo
+	 * ej. 02_A_1_1,10_B_x2_1
+	 **/ 
+	protected List<ABCCharinfo> getLettersInfoFromCSV(string csv)
 	{
-		List<T> result = new List<T>();
-		List<T> temporal = new List<T>(target);
-		int index;
+		List<ABCCharinfo> result = new List<ABCCharinfo>();
+		string[] info = csv.Split(',');
+		string[] infoFragments;
 
-		while(temporal.Count > 0)
+		int amount;
+		string abc;
+		string points_multiplier;
+		int type;
+		ABCCharinfo letter;
+
+		for(int i =0; i<info.Length; i++)
 		{
-			index = Random.Range(0,temporal.Count);
-			result.Add(temporal[index]);
-			temporal.RemoveAt(index);
+			infoFragments = info[i].Split('_');
+			amount = int.Parse(infoFragments[0]);
+			abc = infoFragments[1];
+			points_multiplier = infoFragments[2];
+			type = int.Parse(infoFragments[3]);
+
+			for(int j = 0;j < amount;j++)
+			{
+				letter = new ABCCharinfo();
+				letter.character = abc;
+				letter.pointsOrMultiple = points_multiplier;
+				letter.type = type;
+
+				result.Add(letter);
+			}
 		}
 
 		return result;
 	}
 
-	protected void fillPiecesPool()
+	protected List<Piece> getPiecesFromLevel(Level level)
 	{
 		string[] info;
 		int amount = 0;
 
-		string[] piecesInfo = currentLevel.pieces.Split(',');
+		string[] piecesInfo = level.pieces.Split(',');
+		List<Piece> pieces = new List<Piece>();
 
 		for(int i =0; i<piecesInfo.Length; i++)
 		{
@@ -243,11 +202,11 @@ public class GameManager : MonoBehaviour
 
 			for(int j=0; j<amount; j++)
 			{
-				pieces.Add ((GameObject)(Resources.Load (info[1])));
+				pieces.Add (((GameObject)(Resources.Load (info[1]))).GetComponent<Piece>());
 			}
 		}
 
-		pieceManager.setPieces (pieces);
+		return pieces;
 	}
 
 	void Update()
@@ -282,6 +241,8 @@ public class GameManager : MonoBehaviour
 			audioManager.PlayPiecePositionedAudio();
 			checkForCompletedLines();
 			StartCoroutine(afterPiecePositioned(piece));
+			checkWinCondition ();
+			actualizeHUDInfo ();
 			return true;
 		}
 
@@ -323,13 +284,14 @@ public class GameManager : MonoBehaviour
 			if (pieceManager.getShowingPieces ().Count == 0) 
 			{
 				pieceManager.initializePiecesToShow ();
-				hud.showPieces (pieceManager.getShowingPieces ());
+				hudManager.showPieces (pieceManager.getShowingPieces ());
 			}
 
 			//Damos puntos por cada cuadro en la pieza
 			addPoints (piece.squares.Length);
 			substractMoves(1);
-			hud.showScoreTextAt(piece.transform.position,piece.squares.Length);
+
+			showScoreTextOnHud (piece.transform.position, piece.squares.Length);
 		}
 
 		Destroy(piece.gameObject);
@@ -482,7 +444,7 @@ public class GameManager : MonoBehaviour
 
 		go.GetComponent<BoxCollider2D>().enabled = true;
 
-		Vector3 letterSize = (Camera.main.WorldToScreenPoint(sprite.bounds.size) -Camera.main.WorldToScreenPoint(Vector3.zero)) * totalLetterPercentToFillCell;
+		Vector3 letterSize = (Camera.main.WorldToScreenPoint(sprite.bounds.size) -Camera.main.WorldToScreenPoint(Vector3.zero)) * letterSizeMultiplier;
 		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(Mathf.Abs(letterSize.x),Mathf.Abs(letterSize.y));
 
 		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
@@ -501,13 +463,13 @@ public class GameManager : MonoBehaviour
 		{
 		case(LETTER):
 			
-			abcChar.initializeFromInfo(getLetterInfoFromPool(randomizedLetters,letters));
+			abcChar.initializeFromInfo(lettersPool.getNextRandomized());
 			break;
 		case(OBSTACLE_LETTER):
-			abcChar.initializeFromInfo(getLetterInfoFromPool(randomizedObstacleLetters,obstacleLetters));
+			abcChar.initializeFromInfo(obstaclesLettersPool.getNextRandomized());
 			break;
 		case(TUTORIAL_LETTER):
-			abcChar.initializeFromInfo(getLetterInfoFromPool(randomizedTutorialLetters,tutorialLetters));
+			abcChar.initializeFromInfo(tutorialLettersPool.getNextRandomized());
 			break;
 		}
 
@@ -528,14 +490,6 @@ public class GameManager : MonoBehaviour
 	protected void addPoints(int amount)
 	{
 		pointsCount += amount;
-		hud.setPoints (pointsCount);
-
-		actualizePointsWinCondition ();
-
-		if (!playerWon) 
-		{
-			checkWinCondition ();
-		}
 	}
 
 
@@ -546,7 +500,7 @@ public class GameManager : MonoBehaviour
 		{
 			UserDataManager.instance.playerGems -= gemsPrice;
 
-			hud.setGems(UserDataManager.instance.playerGems);
+			hudManager.setGems(UserDataManager.instance.playerGems);
 
 			Debug.Log("Se cobrara");
 			return true;
@@ -570,19 +524,18 @@ public class GameManager : MonoBehaviour
 	protected void substractMoves(int amount)
 	{
 		remainingMoves-=amount;
-		hud.setMovements (remainingMoves);
 	}
 
 	public void activeMoney(bool show,int howMany=0)
 	{
 		if(show)
 		{
-			hud.activateChargeGems (true);
-			hud.setChargeGems (howMany);
+			hudManager.activateChargeGems (true);
+			hudManager.setChargeGems (howMany);
 		}
 		else
 		{
-			hud.activateChargeGems (false);	
+			hudManager.activateChargeGems (false);	
 		}
 	}
 
@@ -652,14 +605,16 @@ public class GameManager : MonoBehaviour
 				
 				if (myWinCondition [0] == "letters") 
 				{
-					for (int j = 0; j < letters.Count; j++) 
+					for (int j = 0; j < goalLetters.Count; j++) 
 					{
 						if (goalLetters [j].ToLower () == wordManager.chars [i].character.ToLower () && !letterFound) 
 						{
-							print (letters [j]);
+							print (goalLetters [j]);
 							print ( wordManager.chars [i].character);
-							hud.destroyLetterFound (goalLetters [j]);
-							letters.RemoveAt (j);
+
+							hudManager.destroyLetterFound (goalLetters [j]);
+
+							goalLetters.RemoveAt (j);
 							letterFound = true;
 						}
 					}
@@ -680,11 +635,11 @@ public class GameManager : MonoBehaviour
 			amount *= multiplierHelper;
 
 			wordsMade++;
-			actualizeWordsCompletedWinCondition ();
 
 			substractMoves(1);
 			addPoints(amount);
-
+			actualizeHUDInfo ();
+			checkWinCondition ();
 		}
 		resetLettersSelected ();
 	}
@@ -733,7 +688,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		amount *= multiplierHelper;
-		hud.setLettersPoints (amount);
+		hudManager.setLettersPoints (amount);
 	}
 
 	public void linesCreated(int totalLines)
@@ -787,7 +742,7 @@ public class GameManager : MonoBehaviour
 	{
 		int quantity = 0;
 		string word = "";
-
+		bool isLetterCondition = false;
 		if(myWinCondition[0] == "letters")
 		{
 			goalLetters = new List<string> ();
@@ -806,12 +761,13 @@ public class GameManager : MonoBehaviour
 					goalLetters.Add (temp [1]);
 				}
 			}
-			hud.setLettersCondition (goalLetters);
+			isLetterCondition = true;
+			hudManager.setLettersCondition (goalLetters);
 		}
 		else if(myWinCondition[0] == "obstacles")
 		{
 			quantity = obstaclesCount;
-			hud.setObstaclesCondition (quantity);
+			hudManager.setObstaclesCondition (quantity);
 		}
 		else if(myWinCondition[0] == "word")
 		{
@@ -822,7 +778,7 @@ public class GameManager : MonoBehaviour
 				goalWords.Add (text[i].Split('_')[0]);
 			}
 			word = goalWords [0];
-			hud.setWordCondition (word);
+			hudManager.setWordCondition (word);
 		}
 		else if(myWinCondition[0] == "sin")
 		{
@@ -832,7 +788,7 @@ public class GameManager : MonoBehaviour
 				goalWords.Add (text[i].Split('_')[0]);
 			}
 			word = goalWords [0];
-			hud.setSinCondition (word);
+			hudManager.setSinCondition (word);
 		}
 		else if(myWinCondition[0] == "ant")
 		{
@@ -842,22 +798,22 @@ public class GameManager : MonoBehaviour
 				goalWords.Add (text[i].Split('_')[0]);
 			}
 			word = goalWords [0];
-			hud.setAntCondition (word);
+			hudManager.setAntCondition (word);
 		}
 		else if(myWinCondition[0] == "points")
 		{
 			quantity = int.Parse (myWinCondition [1]);
-			hud.setPointsCondition (quantity,pointsCount);
+			hudManager.setPointsCondition (quantity,pointsCount);
 		}
 		else if(myWinCondition[0] == "words")
 		{
 			quantity = int.Parse (myWinCondition [1]);
-			hud.setWordsCondition (quantity,wordsMade);
+			hudManager.setWordsCondition (quantity,wordsMade);
 		}
 
 		//Se muestra el objetivo al inicio del nivel
-
-		hud.showObjectivePopUp(myWinCondition[0],word,quantity,goalLetters);
+		hudManager.setWinCondition (isLetterCondition);
+		hudManager.showObjectivePopUp(myWinCondition[0],word,quantity,goalLetters);
 	}
 
 	protected void actualizePointsWinCondition ()
@@ -866,7 +822,7 @@ public class GameManager : MonoBehaviour
 		{
 			int quantity = 0;
 			quantity = int.Parse (myWinCondition [1]);
-			hud.setPointsCondition (quantity,pointsCount);
+			hudManager.setPointsCondition (quantity,pointsCount);
 		}
 	}
 
@@ -876,7 +832,7 @@ public class GameManager : MonoBehaviour
 		{
 			int quantity = 0;
 			quantity = int.Parse (myWinCondition [1]);
-			hud.setWordsCondition (quantity,wordsMade);
+			hudManager.setWordsCondition (quantity,wordsMade);
 		}
 	}
 
@@ -899,7 +855,7 @@ public class GameManager : MonoBehaviour
 			}
 			break;
 		case "letters":
-			if (letters.Count == 0) 
+			if (goalLetters.Count == 0) 
 			{
 				win = true;
 			}
@@ -1009,17 +965,14 @@ public class GameManager : MonoBehaviour
 		{
 			cell = emptyCells [Random.Range (0, emptyCells.Length - 1)];
 
-			remainingMoves--;
-
-			hud.setMovements (remainingMoves);
-
+			substractMoves (1);
 			GameObject go = GameObject.Instantiate (bonificationPiecePrefab) as GameObject;
 
 			go.GetComponent<Piece> ().currentType = cellManager.colorRandom ();
 
 			cellManager.occupyAndConfigureCell(cell,go,go.GetComponent<Piece> ().currentType,true);
 
-			hud.showScoreTextAt(cell.transform.position,1);
+			showScoreTextOnHud (cell.transform.position, 1);
 			addPoints(1);
 
 			StartCoroutine (add1x1BlockMore ());
@@ -1029,9 +982,8 @@ public class GameManager : MonoBehaviour
 			if(remainingMoves != 0)
 			{
 				addPoints (1);
-				remainingMoves--;
+				substractMoves (1);
 
-				hud.setMovements (remainingMoves);
 				StartCoroutine (add1x1BlockMore ());
 			}
 			else
@@ -1042,8 +994,9 @@ public class GameManager : MonoBehaviour
 				}
 				StartCoroutine (addWinLetterAfterBlockMore ());
 			}
-
 		}
+
+		actualizeHUDInfo ();
 	}
 	IEnumerator add1x1BlockMore()
 	{
@@ -1110,7 +1063,7 @@ public class GameManager : MonoBehaviour
 
 		if(int.TryParse(cell.content.GetComponent<ABCChar>().pointsOrMultiple,out amount))
 		{
-			hud.showScoreTextAt(cell.transform.position,amount);
+			showScoreTextOnHud (cell.transform.position, amount);
 			addPoints(amount);
 		}
 	}
@@ -1170,7 +1123,7 @@ public class GameManager : MonoBehaviour
 			secondChanceTimes++;
 
 			remainingMoves += secondChanceMovements;
-			hud.setMovements (remainingMoves);
+			actualizeHUDInfo ();
 
 			//inputGameController.activateSecondChanceLocked();
 		}
@@ -1189,35 +1142,6 @@ public class GameManager : MonoBehaviour
 	public void RefillLifes()
 	{
 		UserDataManager.instance.refillAllPlayerLifes();
-	}
-
-	protected void fillTutorialLettersRandomPool()
-	{
-		List<ABCCharinfo> tempList = new List<ABCCharinfo> ();
-		randomizedTutorialLetters = new List<ABCCharinfo>();
-
-		tempList = new List<ABCCharinfo>(tutorialLetters);
-
-
-		while(tempList.Count >0)
-		{
-			int val = Random.Range(0,tempList.Count);
-			randomizedTutorialLetters.Add(tempList[val]);
-			tempList.RemoveAt(val);
-		}
-	}
-
-	public ABCCharinfo getLetterInfoFromPool(List<ABCCharinfo> pool, List<ABCCharinfo> originalPool)
-	{
-		if(pool.Count == 0)
-		{
-			pool = randomizeList<ABCCharinfo>(originalPool);
-		}	
-
-		ABCCharinfo letter = pool[0];
-		pool.RemoveAt (0);
-
-		return letter;
 	}
 
 	public void tryToActivatePowerup(int powerupTypeIndex)
@@ -1243,13 +1167,13 @@ public class GameManager : MonoBehaviour
 	{
 		audioManager.PlayButtonAudio();
 
-		hud.activateSettings (activate);
+		hudManager.activateSettings (activate);
 	}
 
 	public void closeObjectivePopUp()
 	{
 		audioManager.PlayButtonAudio();
-		hud.hideObjectivePopUp ();
+		hudManager.hideObjectivePopUp ();
 		allowGameInput ();
 	}
 		
@@ -1289,6 +1213,21 @@ public class GameManager : MonoBehaviour
 	{
 		audioManager.PlayButtonAudio();
 
-		hud.quitGamePopUp ();
+		hudManager.quitGamePopUp ();
+	}
+
+	protected void actualizeHUDInfo()
+	{
+		hudManager.setMovements (remainingMoves);
+	}
+
+	protected void showScoreTextOnHud(Vector3 pos,int amount)
+	{
+		hudManager.showScoreTextAt(pos,amount);
+		hudManager.setPoints (pointsCount);
+
+		actualizeWordsCompletedWinCondition ();
+		actualizePointsWinCondition ();
+
 	}
 }
