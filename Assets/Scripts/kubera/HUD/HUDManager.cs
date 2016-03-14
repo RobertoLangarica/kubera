@@ -26,9 +26,9 @@ public class HUDManager : MonoBehaviour
 	public GameObject secondChanceLock;
 	public GameObject uiLetter;
 
-	public Text winConditionText;
-	public Text winConditionLettersText;
-	public GameObject winConditionLettersContainer;
+	public Text goalText;
+	public Text goalLettersText;
+	public GameObject goalLettersContainer;
 
 	public GameObject PointerOnScene;
 
@@ -160,17 +160,17 @@ public class HUDManager : MonoBehaviour
 	}	
 
 
-	public void setWinCondition(bool isLettersCondition)
+	public void setGoal(bool isLettersCondition)
 	{
 		if(isLettersCondition)
 		{
-			winConditionText.gameObject.SetActive (false);
-			winConditionLettersText.gameObject.SetActive (true);
+			goalText.gameObject.SetActive (false);
+			goalLettersText.gameObject.SetActive (true);
 		}
 		else
 		{
-			winConditionText.gameObject.SetActive (true);
-			winConditionLettersText.gameObject.SetActive (false);
+			goalText.gameObject.SetActive (true);
+			goalLettersText.gameObject.SetActive (false);
 		}
 	}	
 
@@ -185,54 +185,54 @@ public class HUDManager : MonoBehaviour
 	 **/
 	public void setPointsCondition(int pointsNeed, int pointsMade)
 	{
-		winConditionText.text = "Van: "+ pointsMade +" puntos  de" + pointsNeed;
+		goalText.text = "Van: "+ pointsMade +" puntos  de" + pointsNeed;
 	}
 
 	public void setWordsCondition(int wordNeed,int wordsMade)
 	{
-		winConditionText.text = "Van: "+ wordsMade +" palabras  de" + wordNeed;
+		goalText.text = "Van: "+ wordsMade +" palabras  de" + wordNeed;
 	}
 
 	public void setLettersCondition(List<string> letters = null)
 	{
-		winConditionLettersText.text = "Usa: ";
+		goalLettersText.text = "Usa: ";
 		for (int i = 0; i < letters.Count; i++) 
 		{
 			GameObject letter =  Instantiate(uiLetter) as GameObject;
 			letter.name = letters [i];
 			lettersToFound.Add (letter);
 			letter.GetComponentInChildren<Text> ().text = letters[i];
-			letter.transform.SetParent (winConditionLettersContainer.transform,false);
+			letter.transform.SetParent (goalLettersContainer.transform,false);
 		}
 	}
 
 	public void setObstaclesCondition(int value=0)
 	{
 		// value = las letras negras que existen
-		winConditionText.text = "Usa: todas las letras negras.";
+		goalText.text = "Usa: todas las letras negras.";
 	}
 
 	public void setWordCondition(string word)
 	{
-		winConditionText.text = "Forma: " + word +".";
+		goalText.text = "Forma: " + word +".";
 	}
 
 	public void setSinCondition(string word)
 	{
-		winConditionText.text = "Sinonimo de: " + word +".";
+		goalText.text = "Sinonimo de: " + word +".";
 	}
 
 	public void setAntCondition(string word)
 	{
-		winConditionText.text = "Antonimo de: " + word +".";
+		goalText.text = "Antonimo de: " + word +".";
 	}
 
-	public void actualizePointsWinCondition (int points)
+	public void actualizePointsGoal (int points)
 	{
 		
 	}
 
-	public void actualizeWordsValueWinCondition (int points)
+	public void actualizeWordsValueGoal (int points)
 	{
 
 	}
@@ -321,13 +321,13 @@ public class HUDManager : MonoBehaviour
 		}
 	}
 
-	public void showObjectivePopUp(string winCondition, string word, int value=0,List<string> letters = null)
+	public void showObjectivePopUp(string goal, string word, int value=0,List<string> letters = null)
 	{
 		Text objectiveTypeText = objectivePopUp.transform.FindChild("Type").GetComponent<Text>();
 		Text objectiveText = objectivePopUp.transform.FindChild("Objective").GetComponent<Text>();
 
 		//[TODO] Jalar textos del xml de idiomas
-		switch (winCondition) {
+		switch (goal) {
 		case "points":
 			objectiveTypeText.text = "Obten: ";
 			objectiveText.text = value + " puntos.";

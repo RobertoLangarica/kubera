@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 	protected int obstaclesCount = 0;
 	protected int obstaclesUsed = 0;
 
-	protected string[] myWinCondition;
+	protected string[] goalInfo;
 
 	protected int totalMoves;
 	protected int remainingMoves;
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
 
 		cellToLetter = new List<Cell> ();
 
-		myWinCondition = currentLevel.goal.Split ('-');
+		goalInfo = currentLevel.goal.Split ('-');
 		remainingMoves = totalMoves = currentLevel.moves;
 
 		hudManager.setGems(UserDataManager.instance.playerGems);
@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
 		cellManager.resizeGrid(10,10);
 		parseTheCellsOnGrid();
 
-		getWinCondition ();
+		getGoal ();
 
 		actualizeHUDInfo ();
 	}
@@ -241,7 +241,7 @@ public class GameManager : MonoBehaviour
 			audioManager.PlayPiecePositionedAudio();
 			checkForCompletedLines();
 			StartCoroutine(afterPiecePositioned(piece));
-			checkWinCondition ();
+			checkGoal ();
 			actualizeHUDInfo ();
 			return true;
 		}
@@ -600,7 +600,7 @@ public class GameManager : MonoBehaviour
 					obstaclesUsed++;
 				}
 				
-				if (myWinCondition [0] == "letters") 
+				if (goalInfo [0] == "letters") 
 				{
 					for (int j = 0; j < goalLetters.Count; j++) 
 					{
@@ -618,7 +618,7 @@ public class GameManager : MonoBehaviour
 				}
 			}
 
-			if (myWinCondition [0] == "word" || myWinCondition [0] == "ant"|| myWinCondition [0] == "sin") 
+			if (goalInfo [0] == "word" || goalInfo [0] == "ant"|| goalInfo [0] == "sin") 
 			{
 				for (int j = 0; j < goalWords.Count; j++) 
 				{
@@ -636,7 +636,7 @@ public class GameManager : MonoBehaviour
 			substractMoves(1);
 			addPoints(amount);
 			actualizeHUDInfo ();
-			checkWinCondition ();
+			checkGoal ();
 		}
 		resetLettersSelected ();
 	}
@@ -734,16 +734,16 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	protected void getWinCondition()
+	protected void getGoal()
 	{
 		int quantity = 0;
 		string word = "";
 		bool isLetterCondition = false;
-		if(myWinCondition[0] == "letters")
+		if(goalInfo[0] == "letters")
 		{
 			goalLetters = new List<string> ();
 			int i;
-			string[] s = myWinCondition [1].Split (',');
+			string[] s = goalInfo [1].Split (',');
 			string[] temp;
 
 			for(i=0; i< s.Length; i++)
@@ -760,14 +760,14 @@ public class GameManager : MonoBehaviour
 			isLetterCondition = true;
 			hudManager.setLettersCondition (goalLetters);
 		}
-		else if(myWinCondition[0] == "obstacles")
+		else if(goalInfo[0] == "obstacles")
 		{
 			quantity = obstaclesCount;
 			hudManager.setObstaclesCondition (quantity);
 		}
-		else if(myWinCondition[0] == "word")
+		else if(goalInfo[0] == "word")
 		{
-			string[] text = myWinCondition [1].Split (',');
+			string[] text = goalInfo [1].Split (',');
 
 			for(int i=0; i<text.Length; i++)
 			{
@@ -776,9 +776,9 @@ public class GameManager : MonoBehaviour
 			word = goalWords [0];
 			hudManager.setWordCondition (word);
 		}
-		else if(myWinCondition[0] == "sin")
+		else if(goalInfo[0] == "sin")
 		{
-			string[] text = myWinCondition [1].Split (',');
+			string[] text = goalInfo [1].Split (',');
 			for(int i=0; i<text.Length; i++)
 			{
 				goalWords.Add (text[i].Split('_')[0]);
@@ -786,9 +786,9 @@ public class GameManager : MonoBehaviour
 			word = goalWords [0];
 			hudManager.setSinCondition (word);
 		}
-		else if(myWinCondition[0] == "ant")
+		else if(goalInfo[0] == "ant")
 		{
-			string[] text = myWinCondition [1].Split (',');
+			string[] text = goalInfo [1].Split (',');
 			for(int i=0; i<text.Length; i++)
 			{
 				goalWords.Add (text[i].Split('_')[0]);
@@ -796,56 +796,56 @@ public class GameManager : MonoBehaviour
 			word = goalWords [0];
 			hudManager.setAntCondition (word);
 		}
-		else if(myWinCondition[0] == "points")
+		else if(goalInfo[0] == "points")
 		{
-			quantity = int.Parse (myWinCondition [1]);
+			quantity = int.Parse (goalInfo [1]);
 			hudManager.setPointsCondition (quantity,pointsCount);
 		}
-		else if(myWinCondition[0] == "words")
+		else if(goalInfo[0] == "words")
 		{
-			quantity = int.Parse (myWinCondition [1]);
+			quantity = int.Parse (goalInfo [1]);
 			hudManager.setWordsCondition (quantity,wordsMade);
 		}
 
 		//Se muestra el objetivo al inicio del nivel
-		hudManager.setWinCondition (isLetterCondition);
-		hudManager.showObjectivePopUp(myWinCondition[0],word,quantity,goalLetters);
+		hudManager.setGoal (isLetterCondition);
+		hudManager.showObjectivePopUp(goalInfo[0],word,quantity,goalLetters);
 	}
 
-	protected void actualizePointsWinCondition ()
+	protected void actualizePointsGoal ()
 	{
-		if(myWinCondition[0] == "points")
+		if(goalInfo[0] == "points")
 		{
 			int quantity = 0;
-			quantity = int.Parse (myWinCondition [1]);
+			quantity = int.Parse (goalInfo [1]);
 			hudManager.setPointsCondition (quantity,pointsCount);
 		}
 	}
 
-	protected void actualizeWordsCompletedWinCondition()
+	protected void actualizeWordsCompletedGoal()
 	{
-		if(myWinCondition[0] == "words")
+		if(goalInfo[0] == "words")
 		{
 			int quantity = 0;
-			quantity = int.Parse (myWinCondition [1]);
+			quantity = int.Parse (goalInfo [1]);
 			hudManager.setWordsCondition (quantity,wordsMade);
 		}
 	}
 
 
-	protected void checkWinCondition ()
+	protected void checkGoal ()
 	{
 		bool win = false;
-		switch (myWinCondition[0]) {
+		switch (goalInfo[0]) {
 		case "points":
-			if(pointsCount >= int.Parse( myWinCondition[1]))
+			if(pointsCount >= int.Parse( goalInfo[1]))
 			{
 				win = true;
 			}
 			break;
 
 		case "words":
-			if (wordsMade >= int.Parse (myWinCondition [1])) 
+			if (wordsMade >= int.Parse (goalInfo [1])) 
 			{
 				win = true;
 			}
@@ -1217,16 +1217,16 @@ public class GameManager : MonoBehaviour
 		hudManager.setPoints (pointsCount);
 		hudManager.setMovements (remainingMoves);
 
-		actualizePointsWinCondition ();
-		actualizeWordsCompletedWinCondition ();
+		actualizePointsGoal ();
+		actualizeWordsCompletedGoal ();
 	}
 
 	protected void showScoreTextOnHud(Vector3 pos,int amount)
 	{
 		hudManager.showScoreTextAt(pos,amount);
 
-		actualizeWordsCompletedWinCondition ();
-		actualizePointsWinCondition ();
+		actualizeWordsCompletedGoal ();
+		actualizePointsGoal ();
 
 	}
 }
