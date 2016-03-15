@@ -168,7 +168,7 @@ public class CellsManager : MonoBehaviour
 			for(int x = 0; x < columns; x++)
 			{
 				cell = getCellAt(x,y);
-				if(cell.occupied && cell.pieceType != EPieceType.LETTER && cell.pieceType != EPieceType.LETTER_OBSTACLE)
+				if(cell.occupied && cell.contentType != EPieceType.LETTER && cell.contentType != EPieceType.LETTER_OBSTACLE)
 				{
 					if(cell.content != null && keepAdding)
 					{
@@ -176,7 +176,7 @@ public class CellsManager : MonoBehaviour
 						addRow = false;
 						nothingFound = false;
 					}
-					if(cell.pieceType == EPieceType.NONE)
+					if(cell.contentType == EPieceType.NONE)
 					{
 						cell.name = "a";
 						if(!addRow)
@@ -227,7 +227,7 @@ public class CellsManager : MonoBehaviour
 			for(int y = 0; y < rows; y++)
 			{
 				cell = getCellAt(x,y);
-				if(cell.occupied && cell.pieceType != EPieceType.LETTER && cell.pieceType != EPieceType.LETTER_OBSTACLE)
+				if(cell.occupied && cell.contentType != EPieceType.LETTER && cell.contentType != EPieceType.LETTER_OBSTACLE)
 				{
 					if(cell.content != null && keepAdding)
 					{
@@ -235,7 +235,7 @@ public class CellsManager : MonoBehaviour
 						addRow = false;
 						nothingFound = false;
 					}
-					if(cell.pieceType == EPieceType.NONE)
+					if(cell.contentType == EPieceType.NONE)
 					{
 						cell.name = "a";
 						if(!addRow)
@@ -361,7 +361,7 @@ public class CellsManager : MonoBehaviour
 		cell.occupied = true;
 
 		setCellContent(cell, content, true,positionate);//destroy
-		setCellType(cell, type);
+		setCellContentType(cell, type);
 	}
 
 	/**
@@ -400,29 +400,29 @@ public class CellsManager : MonoBehaviour
 		}
 	}
 
-	public void setCellType(int cellIndex,EPieceType type)
+	public void setCellContentType(int cellIndex,EPieceType type)
 	{
-		setCellType(cells[cellIndex],type);
+		setCellContentType(cells[cellIndex],type);
 	}
 		
-	public void setCellType(int x, int y, EPieceType type)
+	public void setCellContentType(int x, int y, EPieceType type)
 	{
-		setCellType(getCellAt(x,y),type);
+		setCellContentType(getCellAt(x,y),type);
 	}
 
-	public void setCellType(Cell cell, EPieceType type)
+	public void setCellContentType(Cell cell, EPieceType type)
 	{
-		cell.pieceType = type;
+		cell.contentType = type;
 	}
 
-	public void setCellToType(int cellIndex, int cellType)
+	public void setCellType(int cellIndex, int cellType)
 	{
-		setCellToType (cells [cellIndex], cellType);
+		setCellType (cells [cellIndex], cellType);
 	}
 
-	public void setCellToType(Cell cell, int cellType)
+	public void setCellType(Cell cell, int cellType)
 	{
-		cell.setTypeToCell (cellType);
+		cell.setType (cellType);
 	}
 
 	/*
@@ -432,7 +432,7 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @return true: Si una cabe. false: Si ninguna cabe
 	 */
-	public bool checkIfOneCanFit(List<Piece> piecesList)
+	public bool checkIfOnePieceCanFit(List<Piece> piecesList)
 	{
 		Vector3 offset = Vector3.zero;
 		float extentsX = cellPrefab.gameObject.GetComponent<SpriteRenderer>().bounds.extents.x;
@@ -491,7 +491,7 @@ public class CellsManager : MonoBehaviour
 	 */
 	public Cell[] getCellsOfSameType(Cell cell)
 	{
-		return getCellsOfSameType(cell.pieceType);
+		return getCellsOfSameType(cell.contentType);
 	}
 
 	public Cell[] getCellsOfSameType(EPieceType cellType)
@@ -500,7 +500,7 @@ public class CellsManager : MonoBehaviour
 
 		for(int i = 0;i < cells.Count;i++)
 		{
-			if(cells[i].pieceType == cellType)
+			if(cells[i].contentType == cellType)
 			{
 				selection.Add(cells[i]);
 			}
@@ -570,7 +570,7 @@ public class CellsManager : MonoBehaviour
 		tempC = getCellAt(cX,cY-1);
 		if(tempC != null)
 		{
-			if(tempC.pieceType == cell.pieceType && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			if(tempC.contentType == cell.contentType && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
 			{
 				pending.Add(tempC);
 			}
@@ -578,7 +578,7 @@ public class CellsManager : MonoBehaviour
 		tempC = getCellAt(cX-1,cY);
 		if(tempC != null)
 		{
-			if(tempC.pieceType == cell.pieceType && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			if(tempC.contentType == cell.contentType && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
 			{
 				pending.Add(tempC);
 			}
@@ -586,7 +586,7 @@ public class CellsManager : MonoBehaviour
 		tempC = getCellAt(cX+1,cY);
 		if(tempC != null)
 		{
-			if(tempC.pieceType == cell.pieceType && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			if(tempC.contentType == cell.contentType && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
 			{
 				pending.Add(tempC);
 			}
@@ -594,7 +594,7 @@ public class CellsManager : MonoBehaviour
 		tempC = getCellAt(cX,cY+1);
 		if(tempC != null)
 		{
-			if(tempC.pieceType == cell.pieceType && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			if(tempC.contentType == cell.contentType && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
 			{
 				pending.Add(tempC);
 			}
@@ -663,7 +663,7 @@ public class CellsManager : MonoBehaviour
 
 		for(int i = 0;i < cells.Count;i++)
 		{
-			switch(cells[i].pieceType)
+			switch(cells[i].contentType)
 			{
 			case EPieceType.AQUA:
 				quantity[0]++;

@@ -41,18 +41,17 @@ public class DestroyPowerUp : PowerupBase
 
 		if(cellSelected != null)
 		{
-			if(cellSelected.pieceType != EPieceType.LETTER 
-				&& cellSelected.pieceType != EPieceType.LETTER_OBSTACLE
-				&& cellSelected.pieceType != EPieceType.NONE
+			if(cellSelected.contentType != EPieceType.LETTER 
+				&& cellSelected.contentType != EPieceType.LETTER_OBSTACLE
+				&& cellSelected.contentType != EPieceType.NONE
 				&& cellSelected.occupied)
 			{
 				Cell[] selection = cellsManager.getCellsOfSameType(cellSelected);
 
 				for(int i = 0;i < selection.Length;i++)
 				{
-					cellsManager.occupyAndConfigureCell(selection[i],gameManager.getAndRegisterNewLetter("normal"),EPieceType.LETTER,true);
+					cellsManager.occupyAndConfigureCell(selection[i],gameManager.createLetterFromInfo(gameManager.lettersPool.getNextRandomized()).gameObject,EPieceType.LETTER,true);
 				}
-				//cellsManager.destroyCells(selection);
 
 				DestroyImmediate(destroyGO);
 				bombInput.OnDrop -= powerUpPositioned;

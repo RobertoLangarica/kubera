@@ -106,7 +106,7 @@ public class HUDManager : MonoBehaviour
 	}
 
 	/**
-	 * setea los datos para obtener estrellas
+	 * Puntos para obtener estrellas
 	 **/
 	public void setStarData(float[] scores)
 	{

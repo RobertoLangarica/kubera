@@ -79,9 +79,10 @@ public class WildCardPowerUp : PowerupBase
 
 	public void powerUpActivateRotate()
 	{
+		//TODO: HArdcoding de ese x3 que se quede como variable en algun lado (editable de editor)
 		GameObject GO = wordManager.getWildcard ("x3");
 		wordManager.addCharacter(GO.GetComponent<ABC.ABCChar>(),GO);
-		wordManager.activateButtonOfWordsActions (true);
+		wordManager.activateWordDeleteButton (true);
 		DestroyImmediate (GO);
 		OnComplete ();
 	}

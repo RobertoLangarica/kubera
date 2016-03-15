@@ -141,6 +141,7 @@ namespace LevelBuilder
 		private void updateLevelSelectorOptions()
 		{
 			List<string> names = PersistentData.instance.levelsData.getAllLevelsNames();
+			names.Sort();
 
 			List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
 

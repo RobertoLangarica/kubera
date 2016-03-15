@@ -4,21 +4,21 @@ using System.Collections;
 
 namespace ABC
 {
-	public class UIChar : MonoBehaviour 
+	public class WordChar : MonoBehaviour 
 	{
 		public Image myImage;
-		public GameObject piece;
+		public GameObject gridLetterReference;
 		public bool isFromGrid;
-		public Color usedColor = new Color(1,1,1,0.2f);
+		public Color selectedColor = new Color(1,1,1,0.2f);
 
 		[HideInInspector]public ABCChar.EType type;
-		[HideInInspector]public bool usedFromGrid;
+		[HideInInspector]public bool selected;
 
 		public void changeSpriteRendererTexture(Sprite newSprite)
 		{
 			GetComponent<SpriteRenderer> ().sprite = newSprite;//PieceManager.instance.changeTexture (character.character.ToLower () + "1");
 			GetComponent<SpriteRenderer> ().color = Color.white;
-			setColorToSpriteRendererTextureByType();
+			updateSpriteColor();
 		}
 
 		public void changeImageTexture(Sprite newSprite)
@@ -27,45 +27,38 @@ namespace ABC
 			GetComponent<Image> ().color = Color.white;
 		}
 
-		public void changeColorAndSetValues(string letter)
+		public void destroyLetterFromGrid()
 		{
-			setColorToImage();
-		}
-
-		public void destroyPiece()
-		{
-			Destroy (piece);
+			Destroy(gridLetterReference);
 		}
 	
-		public void destroyLetter()
+		public void destroy()
 		{
-			piece.GetComponent<UIChar> ().backToNormal ();
+			//reference back to unused state
+			gridLetterReference.GetComponent<WordChar> ().markAsUnselected();
 			DestroyImmediate (gameObject);
 		}
 
-		protected void setColorToSpriteRendererTextureByType()
+		public void updatecolor()
 		{
-			SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-
-			if(spriteRenderer == null)
-			{
-				return;
-			}
-
-			spriteRenderer.color = getColorBasedOnType(type);
+			updateSpriteColor();
+			updateImageColor();
 		}
 
-		protected void setColorToImage()
+		protected void updateImageColor()
 		{
 			Image image = gameObject.GetComponent<Image>();
 
-			if(image == null)
-			{
-				setColorToSpriteRendererTextureByType ();
-				return;
-			}
-				
+			if(image == null){return;}
 			image.color = getColorBasedOnType(type);
+		}
+
+		protected void updateSpriteColor()
+		{
+			SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
+			if(spriteRenderer == null){return;}
+			spriteRenderer.color = getColorBasedOnType(type);
 		}
 
 		public Color getColorBasedOnType(ABCChar.EType type)
@@ -80,30 +73,26 @@ namespace ABC
 			return Color.white;
 		}
 
-		public bool checkIfLetterCanBeUsedFromGrid()
+		public bool isPreviouslySelected()
 		{
-			if(!usedFromGrid)
-			{
-				return true;
-			}
-			return false;
+			return selected;
 		}
 
-		public void makeUsed()
+		public void markAsSelected()
 		{
-			usedFromGrid=true;
+			selected=true;
 			changeColorToUsed ();
+		}
+
+		public void markAsUnselected()
+		{
+			selected=false;
+			updatecolor();
 		}
 
 		protected void changeColorToUsed()
 		{
-			gameObject.GetComponent<Image> ().color = usedColor;
-		}
-
-		public void backToNormal()
-		{
-			usedFromGrid=false;
-			setColorToImage();
+			gameObject.GetComponent<Image> ().color = selectedColor;
 		}
 	}
 }

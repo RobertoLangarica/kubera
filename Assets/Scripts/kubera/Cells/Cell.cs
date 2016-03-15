@@ -4,7 +4,7 @@ using ABC;
 
 public class Cell : MonoBehaviour 
 {
-	public EPieceType pieceType;
+	public EPieceType contentType;
 	public bool available;
 	public bool occupied;
 	public GameObject content;
@@ -24,20 +24,20 @@ public class Cell : MonoBehaviour
 	 * 0xNNNN0000
 	 */
 	[HideInInspector]
-	public int cellType;
+	public int type;
 
 	/*
 	 * La funcion solo refresca los valores en las celdas
 	 */
 	public void clearCell()
 	{
-		pieceType = EPieceType.NONE;
+		contentType = EPieceType.NONE;
 		occupied = false;
 		content = null;
 
-		if((cellType & 0x2) == 0x2 || (cellType & 0x8) == 0x8 || (cellType & 0x20) == 0x20)
+		if((type & 0x2) == 0x2 || (type & 0x8) == 0x8 || (type & 0x20) == 0x20)
 		{
-			cellType = 1;
+			type = 1;
 			available = true;
 		}
 	}
@@ -53,37 +53,35 @@ public class Cell : MonoBehaviour
 
 	public bool canPositionateOnThisCell()
 	{
-		if((cellType & 0x1) == 0x1)
+		if((type & 0x1) == 0x1)
 		{
 			return true;
 		}
 		return false;
 	}
 
-	public void setTypeToCell(int newCellType = 1)
+	public void setType(int newCellType = 1)
 	{
-		int tempType = 0;
+		type = newCellType;
 
-		cellType = newCellType;
-		if((cellType & 0x1) == 0x1)
+		if((type & 0x1) == 0x1)
 		{
-			pieceType = EPieceType.NONE;
+			contentType = EPieceType.NONE;
 			occupied = false;
 			available = true;
 			content = null;
 		}
-		if((cellType & 0x2) == 0x2)
+		if((type & 0x2) == 0x2)
 		{
 			occupied = true;
 			available = true;
 			content = null;
-			tempType = cellType >> 6;
 
-			updateCellColor(tempType);
+			updateCellColor(type >> 6);
 		}
-		if((cellType & 0x4) == 0x4)
+		if((type & 0x4) == 0x4)
 		{
-			pieceType = EPieceType.NONE;
+			contentType = EPieceType.NONE;
 			occupied = true;
 			available = false;
 			content = null;
@@ -91,15 +89,15 @@ public class Cell : MonoBehaviour
 			//Cambio Temporal
 			GetComponent<SpriteRenderer>().enabled = false;
 		}
-		if((cellType & 0x8) == 0x8)
+		if((type & 0x8) == 0x8)
 		{
-			pieceType = EPieceType.LETTER_OBSTACLE;
+			contentType = EPieceType.LETTER_OBSTACLE;
 			occupied = true;
 			available = false;
 		}
-		if((cellType & 0x10) == 0x10)
+		if((type & 0x10) == 0x10)
 		{
-			pieceType = EPieceType.NONE;
+			contentType = EPieceType.NONE;
 			occupied = true;
 			available = false;
 			content = null;
@@ -107,9 +105,9 @@ public class Cell : MonoBehaviour
 			//Cambio Temporal
 			GetComponent<SpriteRenderer>().color = Color.cyan;
 		}
-		if((cellType & 0x20) == 0x20)
+		if((type & 0x20) == 0x20)
 		{
-			pieceType = EPieceType.LETTER;
+			contentType = EPieceType.LETTER;
 			occupied = true;
 			available = false;
 		}
@@ -120,32 +118,25 @@ public class Cell : MonoBehaviour
 		switch(color)
 		{
 		case(1):
-			pieceType = EPieceType.AQUA;
-			//Debug.Log(typeOfPiece);
+			contentType = EPieceType.AQUA;
 			break;
 		case(2):
-			pieceType = EPieceType.BLUE;
-			//Debug.Log(typeOfPiece);
+			contentType = EPieceType.BLUE;
 			break;
 		case(3):
-			pieceType = EPieceType.GREEN;
-			//Debug.Log(typeOfPiece);
+			contentType = EPieceType.GREEN;
 			break;
 		case(4):
-			pieceType = EPieceType.MAGENTA;
-			//Debug.Log(typeOfPiece);
+			contentType = EPieceType.MAGENTA;
 			break;
 		case(5):
-			pieceType = EPieceType.RED;
-			//Debug.Log(typeOfPiece);
+			contentType = EPieceType.RED;
 			break;
 		case(6):
-			pieceType = EPieceType.YELLOW;
-			//Debug.Log(typeOfPiece);
+			contentType = EPieceType.YELLOW;
 			break;
 		case(7):
-			pieceType = EPieceType.GREY;
-			//Debug.Log(typeOfPiece);
+			contentType = EPieceType.GREY;
 			break;
 		}
 	}
