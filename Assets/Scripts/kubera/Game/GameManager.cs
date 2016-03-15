@@ -43,23 +43,24 @@ public class GameManager : MonoBehaviour
 
 	protected int currentWildCardsActivated;
 
-	protected WordManager wordManager;
-	protected CellsManager cellManager;
+	protected WordManager	wordManager;
+	protected CellsManager	cellManager;
 	protected PowerUpManager powerupManager;
-	protected PieceManager pieceManager;
-	protected HUDManager hudManager;
-	protected AudioManager audioManager;
+	protected PieceManager 	 pieceManager;
+	protected HUDManager 	 hudManager;
+	protected AudioManager 	 audioManager;
 
 	protected InputPiece inputPiece;
 	protected InputWords inputWords;
 
 	public float letterSizeMultiplier = 0.9f;
+	private Vector3 lettersizeDelta;
 
 	protected Level currentLevel;
-	protected RandomPool<ABCCharinfo> lettersPool;
-	protected RandomPool<ABCCharinfo> obstaclesLettersPool;
-	protected RandomPool<ABCCharinfo> tutorialLettersPool;
-	protected List<ABCChar> charactersOnGrid = new List<ABCChar>();
+	public RandomPool<ABCCharinfo> lettersPool;
+	public RandomPool<ABCCharinfo> obstaclesLettersPool;
+	public RandomPool<ABCCharinfo> tutorialLettersPool;
+	protected List<ABCChar> gridCharacters = new List<ABCChar>();
 
 	protected bool playerWon;
 
@@ -88,6 +89,12 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
+		//LetterSize
+		Vector3 cellSizeReference = cellManager.cellPrefab.GetComponent<SpriteRenderer>().bounds.size;
+		lettersizeDelta = (Camera.main.WorldToScreenPoint(cellSizeReference) -Camera.main.WorldToScreenPoint(Vector3.zero)) * letterSizeMultiplier;
+		lettersizeDelta.x = Mathf.Abs(lettersizeDelta.x);
+		lettersizeDelta.y = Mathf.Abs(lettersizeDelta.y);
+
 		//TODO: Leer las gemas de algun lado
 		UserDataManager.instance.playerGems = 300;
 
@@ -99,7 +106,7 @@ public class GameManager : MonoBehaviour
 		currentLevel = level;
 
 		readLettersFromLevel(level);
-		pieceManager.setPieces(getPiecesFromLevel(level));
+		pieceManager.setPieces(getPiecesPoolFromLevel(level));
 
 		pieceManager.initializePiecesToShow ();
 		hudManager.showPieces (pieceManager.getShowingPieces ());
@@ -124,9 +131,8 @@ public class GameManager : MonoBehaviour
 		cellManager.resizeGrid(10,10);
 		initializeGridFromLevel(level);
 
-		getWinCondition ();
-
-		actualizeHUDInfo ();
+		getWinCondition();
+		actualizeHUDInfo();
 	}
 
 	protected void readLettersFromLevel(Level level)
@@ -183,7 +189,7 @@ public class GameManager : MonoBehaviour
 		return result;
 	}
 
-	protected List<Piece> getPiecesFromLevel(Level level)
+	protected List<Piece> getPiecesPoolFromLevel(Level level)
 	{
 		string[] info;
 		int amount = 0;
@@ -211,7 +217,7 @@ public class GameManager : MonoBehaviour
 		string[] levelGridData = level.grid.Split(',');
 		int cellType = 0;
 
-		List<GameObject> tutorialLetters = new List<GameObject>();
+		List<ABCChar> tutorialLetters = new List<ABCChar>();
 
 		for(int i = 0;i < levelGridData.Length;i++)
 		{
@@ -222,26 +228,62 @@ public class GameManager : MonoBehaviour
 			//Inicializamos el contenido
 			if((cellType & 0x2) == 0x2)
 			{
-				cellContent = createSingleBlockPiece(cellType);
-				cellManager.occupyAndConfigureCell(i,cellContent,cellContent.GetComponent<Piece> ().currentType,true);
+				//Cuadro de color
+				Piece content = createPiece(singleSquarePiecePrefab, cellType>>6);
+				cellManager.occupyAndConfigureCell(i,content.gameObject,content.currentType,true);
 			}
 			else if((cellType & 0x8) == 0x8)
 			{	
-				cellContent = getAndRegisterNewLetter("obstacle");
-				cellManager.occupyAndConfigureCell(i,cellContent,EPieceType.LETTER_OBSTACLE,true);
+				//Letra obstaculo
+				ABCChar letter = createLetterFromInfo(obstaclesLettersPool.getNextRandomized());
+				cellManager.occupyAndConfigureCell(i,letter.gameObject,EPieceType.LETTER_OBSTACLE,true);
+				gridCharacters.Add(letter);
 				obstaclesCount++;
 			}
 			else if((cellType & 0x20) == 0x20)
 			{	
-				cellContent = getAndRegisterNewLetter("tutorial");
-				cellManager.occupyAndConfigureCell(i,cellContent,EPieceType.LETTER,true);
-				tutorialLetters.Add(cellContent);
+				ABCChar letter = createLetterFromInfo(tutorialLettersPool.getNextRandomized());
+				cellManager.occupyAndConfigureCell(i,letter.gameObject,EPieceType.LETTER,true);
+				gridCharacters.Add(letter);
+				tutorialLetters.Add(letter);
 			}
 		}
 
 		if(tutorialLetters.Count > 0)
 		{
 			selectLettersForTutorial(tutorialLetters);
+		}
+	}
+
+	/*protected void selectLetterFromGrid(string character)
+	{
+		for(int i = 0; i < gridCharacters.Count; i++)
+		{
+			if(gridCharacters[i].character == character)
+			{
+				wordManager.sendLetterToWord(gridCharacters[i]);
+			}
+		}
+	}*/
+
+	protected void selectLettersForTutorial(List<ABCChar> tutorialLetters)
+	{
+		string[] selectedLetters = currentLevel.tutorialLettersPool.Split('-')[1].Split(',');
+		ABCChar abcChar;
+
+		for(int i = 0;i < selectedLetters.Length;i++)
+		{
+			for(int j = 0;j < tutorialLetters.Count;j++)
+			{
+				abcChar = tutorialLetters[j].GetComponent<ABCChar>();
+
+				if(abcChar.character == selectedLetters[i])
+				{
+					wordManager.addLetterToWord(tutorialLetters[j].gameObject);
+					tutorialLetters.RemoveAt(j);
+					break;
+				}
+			}
 		}
 	}
 
@@ -275,7 +317,10 @@ public class GameManager : MonoBehaviour
 		{
 			putPiecesOnGrid (piece);
 			audioManager.PlayPiecePositionedAudio();
-			checkForCompletedLines();
+			List<List<Cell>> cells = cellManager.getCompletedVerticalAndHorizontalLines ();
+			//Puntos por las lineas creadas
+			linesCreated (cells.Count);
+			convertLinesToLetters(cells);
 			StartCoroutine(afterPiecePositioned(piece));
 			checkWinCondition ();
 			actualizeHUDInfo ();
@@ -333,141 +378,58 @@ public class GameManager : MonoBehaviour
 		Destroy(piece.gameObject);
 	}
 
-	private void checkForCompletedLines()
+	private void convertLinesToLetters(List<List<Cell>> cells)
 	{
-		List<List<Cell>> cellList = new List<List<Cell>> ();
-		cellList = cellManager.getCompletedVerticalAndHorizontalLines ();
-
-		//damos puntos por las lineas creadas
-		linesCreated (cellList.Count);
-
-		if (cellList.Count > 0) 
-		{			
-			for (int i = 0; i < cellList.Count; i++) 
-			{
-				for(int j=0; j<cellList[i].Count; j++)
-				{
-					if (cellList [i] [j].contentType != EPieceType.LETTER) 
-					{
-						GameObject cellContent = getAndRegisterNewLetter("normal");
-						Vector3 cellPosition =  cellList [i] [j].transform.position + (new Vector3 (cellList [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x,
-							-cellList [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
-						
-						cellManager.occupyAndConfigureCell (cellList [i] [j], cellContent, EPieceType.LETTER);
-						cellContent.transform.DOMove (cellPosition, 0);
-
-					}
-				}
-			}
-		}
-	}
-
-	protected void selectLettersForTutorial(List<GameObject> tutorialLetters)
-	{
-		string[] selectedLetters = currentLevel.tutorialLettersPool.Split('-')[1].Split(',');
-		ABCChar abcChar;
-
-		for(int i = 0;i < selectedLetters.Length;i++)
+		for (int i = 0; i < cells.Count; i++) 
 		{
-			for(int j = 0;j < tutorialLetters.Count;j++)
+			for(int j=0; j<cells[i].Count; j++)
 			{
-				abcChar = tutorialLetters[j].GetComponent<ABCChar>();
-
-				if(abcChar.character == selectedLetters[i])
+				if (cells [i] [j].contentType != EPieceType.LETTER) 
 				{
-					wordManager.sendLetterToWord(tutorialLetters[j]);
-					tutorialLetters.RemoveAt(j);
-					break;
+					ABCChar letter = createLetterFromInfo(lettersPool.getNextRandomized());
+					Vector3 cellPosition =  cells [i] [j].transform.position + (new Vector3 (cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x,
+						-cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
+
+					cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, EPieceType.LETTER);
+					letter.gameObject.transform.DOMove (cellPosition, 0);
+					gridCharacters.Add(letter);
 				}
 			}
 		}
 	}
 
-	protected GameObject createSingleBlockPiece(int contentColor)
+	protected Piece createPiece(GameObject sourcePrefab, int colorIndex)
 	{
-		GameObject go = GameObject.Instantiate (singleSquarePiecePrefab) as GameObject;
-		int tempType = contentColor >> 6;
-
+		GameObject go = GameObject.Instantiate (sourcePrefab) as GameObject;
 		go.GetComponent<BoxCollider2D> ().enabled = false;
+		Piece piece = go.GetComponent<Piece>();
+		piece.currentType = (EPieceType)colorIndex;
 
-		switch(tempType)
-		{
-		case(1):
-			go.GetComponent<Piece> ().currentType = EPieceType.AQUA;
-			//Debug.Log(typeOfPiece);
-			break;
-		case(2):
-			go.GetComponent<Piece> ().currentType = EPieceType.BLUE;
-			//Debug.Log(typeOfPiece);
-			break;
-		case(3):
-			go.GetComponent<Piece> ().currentType = EPieceType.GREEN;
-			//Debug.Log(typeOfPiece);
-			break;
-		case(4):
-			go.GetComponent<Piece> ().currentType = EPieceType.MAGENTA;
-			//Debug.Log(typeOfPiece);
-			break;
-		case(5):
-			go.GetComponent<Piece> ().currentType = EPieceType.RED;
-			//Debug.Log(typeOfPiece);
-			break;
-		case(6):
-			go.GetComponent<Piece> ().currentType = EPieceType.YELLOW;
-			//Debug.Log(typeOfPiece);
-			break;
-		case(7):
-			go.GetComponent<Piece> ().currentType = EPieceType.GREY;
-			//Debug.Log(typeOfPiece);
-			break;
-		}
-
-		return go;
+		return piece;
 	}
 
-	protected GameObject createLetter()
+	public ABCChar createLetterFromInfo(ABCCharinfo charInfo)
+	{
+		GameObject newLetter = getNewEmptyLetter();
+		ABCChar abcChar	= newLetter.GetComponent<ABCChar> ();
+		WordChar	uiChar	= newLetter.GetComponent<WordChar> ();
+
+		abcChar.initializeFromInfo(charInfo);
+		uiChar.type = abcChar.type;
+		uiChar.updatecolor();
+
+		return abcChar;
+	}
+
+	protected GameObject getNewEmptyLetter()
 	{
 		GameObject go = Instantiate (gridLetterPrefab)as GameObject;
-		SpriteRenderer sprite = cellManager.cellPrefab.GetComponent<SpriteRenderer>();
-
 		go.transform.SetParent (canvasOfLetters,false);
-
 		go.GetComponent<BoxCollider2D>().enabled = true;
-
-		Vector3 letterSize = (Camera.main.WorldToScreenPoint(sprite.bounds.size) -Camera.main.WorldToScreenPoint(Vector3.zero)) * letterSizeMultiplier;
-		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(Mathf.Abs(letterSize.x),Mathf.Abs(letterSize.y));
-
+		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(lettersizeDelta.x,lettersizeDelta.y);
 		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
 
 		return go;
-	}
-
-	public GameObject getAndRegisterNewLetter(string letterType)
-	{
-		GameObject newLetter = createLetter();
-
-		ABCChar abcChar = newLetter.GetComponent<ABCChar> ();
-		UIChar uiChar = newLetter.GetComponent<UIChar> ();
-
-		switch(letterType)
-		{
-		case("normal"):
-			abcChar.initializeFromInfo(lettersPool.getNextRandomized());
-			break;
-		case("obstacle"):
-			abcChar.initializeFromInfo(obstaclesLettersPool.getNextRandomized());
-			break;
-		case("tutorial"):
-			abcChar.initializeFromInfo(tutorialLettersPool.getNextRandomized());
-			break;
-		}
-
-		uiChar.type = abcChar.type;
-		uiChar.changeColorAndSetValues(abcChar.character.ToLower ());
-
-		charactersOnGrid.Add(abcChar);
-
-		return newLetter;
 	}
 
 
@@ -893,7 +855,7 @@ public class GameManager : MonoBehaviour
 	IEnumerator check()
 	{
 		yield return new WaitForSeconds (.2f);
-		if(!wordManager.checkIfAWordIsPossible(charactersOnGrid))
+		if(!wordManager.checkIfAWordIsPossible(gridCharacters))
 		{
 			audioManager.PlayLoseAudio();
 		}
@@ -912,11 +874,11 @@ public class GameManager : MonoBehaviour
 			while(true)
 			{
 				bool pass = true;
-				for(int i=0; i < charactersOnGrid.Count; i++)
+				for(int i=0; i < gridCharacters.Count; i++)
 				{
-					if(!charactersOnGrid[i])
+					if(!gridCharacters[i])
 					{
-						charactersOnGrid.RemoveAt(i);
+						gridCharacters.RemoveAt(i);
 						i--;
 						pass = false;
 					}
@@ -999,7 +961,7 @@ public class GameManager : MonoBehaviour
 
 		if (cellToLetter.Count > 0) 
 		{
-			cellManager.occupyAndConfigureCell (cellToLetter [random],getAndRegisterNewLetter("normal"),EPieceType.LETTER,true);
+			cellManager.occupyAndConfigureCell (cellToLetter [random],createLetterFromInfo(lettersPool.getNextRandomized()).gameObject,EPieceType.LETTER,true);
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
@@ -1218,6 +1180,5 @@ public class GameManager : MonoBehaviour
 
 		actualizeWordsCompletedWinCondition ();
 		actualizePointsWinCondition ();
-
 	}
 }
