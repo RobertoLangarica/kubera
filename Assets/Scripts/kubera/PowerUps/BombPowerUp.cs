@@ -41,9 +41,9 @@ public class BombPowerUp : PowerupBase
 
 		if(cellSelected != null)
 		{
-			if(cellSelected.pieceType != EPieceType.LETTER 
-				&& cellSelected.pieceType != EPieceType.LETTER_OBSTACLE
-				&& cellSelected.pieceType != EPieceType.NONE
+			if(cellSelected.contentType != EPieceType.LETTER 
+				&& cellSelected.contentType != EPieceType.LETTER_OBSTACLE
+				&& cellSelected.contentType != EPieceType.NONE
 				&& cellSelected.occupied)
 			{
 				Cell[] selection =  cellsManager.getCellNeighborsOfSameType(cellSelected);
