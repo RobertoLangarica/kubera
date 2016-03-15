@@ -46,7 +46,7 @@ public class GameTextManager
 	 * @params newText{string[]}: Una lista de Textos o simbolos que reemplazaran los textos de textToReplace. Usualmente para agregar texto dinamico.
 	 * 									Este sera ignorado si no se pasa tambien valor a textToReplace que sea del mismo tamaño.
 	 */
-	public string getTextByIDinLanguage(string idText,string language = "",string[] textToReplace = null,string[] newText = null)
+	public string getTextByIDinLanguage(string idText,string language = "")
 	{
 		TextXML text = gameTextData.getTextByID(idText);
 		string resultText = "";
@@ -66,8 +66,15 @@ public class GameTextManager
 
 		if(resultText == "")
 		{
-			resultText = text.languages[text.languages.Length-1].text;
+			resultText = getTextByIDinLanguage(idText,"default");
 		}
+
+		return resultText;
+	}
+
+	public string changeTextWords(string original,string[] textToReplace,string[] newText)
+	{
+		string resultText = original;
 
 		if(textToReplace != null && newText != null)
 		{
@@ -80,6 +87,6 @@ public class GameTextManager
 			}
 		}
 
-		return resultText;
+		return resultText;	
 	}
 }
