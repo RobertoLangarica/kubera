@@ -153,33 +153,53 @@ public class CellsManager : MonoBehaviour
 	{
 		List<List<Cell>> result = new List<List<Cell>>(rows);
 		Cell cell;
-		int noneCells = 0;
+		bool keepAdding = false;
+		bool nothingFound = true;	
+		bool addRow = false;
 
 		for(int y = 0; y < rows; y++)
 		{
 			result.Add(new List<Cell>(columns));
-			noneCells = 0;
+
+			keepAdding = true;
+			nothingFound = true;
+			addRow = true;
+
 			for(int x = 0; x < columns; x++)
 			{
 				cell = getCellAt(x,y);
 				if(cell.occupied && cell.pieceType != EPieceType.LETTER && cell.pieceType != EPieceType.LETTER_OBSTACLE)
 				{
-					if(cell.content != null)
+					if(cell.content != null && keepAdding)
 					{
 						result [result.Count - 1].Add (cell);
+						addRow = false;
+						nothingFound = false;
 					}
 					if(cell.pieceType == EPieceType.NONE)
 					{
-						noneCells++;
+						cell.name = "a";
+						if(!addRow)
+						{
+							result.Add(new List<Cell>(columns));
+						}
+						keepAdding = true;
+						addRow = true;
+						nothingFound = true;
 					}
 				}
 				else
 				{
-					result.RemoveAt(result.Count-1);
-					break;
+					if(cell.available && keepAdding)
+					{
+						keepAdding = false;
+						result.RemoveAt(result.Count-1);
+						nothingFound = false;
+						addRow = false;
+					}
 				}
 			}
-			if(noneCells == columns)
+			if(nothingFound)
 			{
 				result.RemoveAt(result.Count-1);
 			}
@@ -192,33 +212,53 @@ public class CellsManager : MonoBehaviour
 	{
 		List<List<Cell>> result = new List<List<Cell>>(columns);
 		Cell cell;
-		int noneCells = 0;
+		bool keepAdding = false;
+		bool nothingFound = true;	
+		bool addRow = false;
 
 		for(int x = 0; x < columns; x++)
 		{
 			result.Add(new List<Cell>(rows));
-			noneCells = 0;
+
+			keepAdding = true;
+			nothingFound = true;
+			addRow = true;
+
 			for(int y = 0; y < rows; y++)
 			{
 				cell = getCellAt(x,y);
 				if(cell.occupied && cell.pieceType != EPieceType.LETTER && cell.pieceType != EPieceType.LETTER_OBSTACLE)
 				{
-					if(cell.content != null)
+					if(cell.content != null && keepAdding)
 					{
 						result [result.Count - 1].Add (cell);
+						addRow = false;
+						nothingFound = false;
 					}
 					if(cell.pieceType == EPieceType.NONE)
 					{
-						noneCells++;
+						cell.name = "a";
+						if(!addRow)
+						{
+							result.Add(new List<Cell>(columns));
+						}
+						keepAdding = true;
+						addRow = true;
+						nothingFound = true;
 					}
 				}
 				else
 				{
-					result.RemoveAt(result.Count-1);
-					break;
+					if(cell.available && keepAdding)
+					{
+						keepAdding = false;
+						result.RemoveAt(result.Count-1);
+						nothingFound = false;
+						addRow = false;
+					}
 				}
 			}
-			if(noneCells == rows)
+			if(nothingFound)
 			{
 				result.RemoveAt(result.Count-1);
 			}
@@ -233,6 +273,8 @@ public class CellsManager : MonoBehaviour
 
 		result.AddRange(getCompletedHorizontalLines());
 		result.AddRange(getCompletedVerticalLines());
+
+		print (result.Count);
 
 		return result;
 	}
