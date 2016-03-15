@@ -274,7 +274,6 @@ public class CellsManager : MonoBehaviour
 		result.AddRange(getCompletedHorizontalLines());
 		result.AddRange(getCompletedVerticalLines());
 
-		print (result.Count);
 
 		return result;
 	}
