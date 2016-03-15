@@ -934,7 +934,6 @@ public class GameManager : MonoBehaviour
 			{
 				addPoints (1);
 				substractMoves (1);
-
 				StartCoroutine (add1x1BlockMore ());
 			}
 			else
@@ -1171,14 +1170,16 @@ public class GameManager : MonoBehaviour
 	protected void actualizeHUDInfo()
 	{
 		hudManager.setMovements (remainingMoves);
+		hudManager.setPoints (pointsCount);
+
+		actualizeWordsCompletedWinCondition ();
+		actualizePointsWinCondition ();
 	}
 
 	protected void showScoreTextOnHud(Vector3 pos,int amount)
 	{
 		hudManager.showScoreTextAt(pos,amount);
-		hudManager.setPoints (pointsCount);
 
-		actualizeWordsCompletedWinCondition ();
-		actualizePointsWinCondition ();
+
 	}
 }
