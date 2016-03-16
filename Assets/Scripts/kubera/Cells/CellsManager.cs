@@ -280,7 +280,7 @@ public class CellsManager : MonoBehaviour
 		List<List<Cell>> result = new List<List<Cell>>();
 
 		result.AddRange(getCompletedHorizontalLines());
-		//result.AddRange(getCompletedVerticalLines());
+		result.AddRange(getCompletedVerticalLines());
 
 		return result;
 	}
