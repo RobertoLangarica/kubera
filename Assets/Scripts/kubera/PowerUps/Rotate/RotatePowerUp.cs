@@ -10,11 +10,13 @@ public class RotatePowerUp : PowerupBase
 
 	protected InputPowerUpRotate inputPowerUpRotate;
 	protected InputBombAndDestroy inputPowerUp;
+	protected InputWords inputWords;
 
 	protected GameObject powerUpGO;
 
 	void Start()
 	{
+		inputWords = FindObjectOfType<InputWords> ();
 		inputPowerUpRotate = FindObjectOfType<InputPowerUpRotate> ();
 		inputPowerUp = FindObjectOfType<InputBombAndDestroy> ();
 
@@ -36,6 +38,8 @@ public class RotatePowerUp : PowerupBase
 		inputPowerUp.enabled = true;
 		inputPowerUp.setCurrentSelected(powerUpGO);
 		inputPowerUp.OnDrop += powerUpPositioned;
+
+		inputWords.allowInput = true;
 	}
 
 	public void powerUpPositioned()

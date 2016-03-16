@@ -45,7 +45,7 @@ public class Piece : MonoBehaviour
 	public int rotateTimes = 0;
 
 	[HideInInspector]
-	public int howManyHasBeenRotated = 0;
+	public int rotateCount = 0;
 
 	[HideInInspector]
 	public int id;// = Random.Range (0, 9999999);
