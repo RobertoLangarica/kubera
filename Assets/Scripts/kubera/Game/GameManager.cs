@@ -322,7 +322,14 @@ public class GameManager : MonoBehaviour
 			linesCreated (cells.Count);
 			convertLinesToLetters(cells);
 			StartCoroutine(afterPiecePositioned(piece));
-			checkWinCondition ();
+			if (checkWinCondition ()) 
+			{
+				won ();
+			}
+			else
+			{
+				checkIfLoose ();
+			}
 			actualizeHUDInfo ();
 			return true;
 		}
@@ -592,7 +599,14 @@ public class GameManager : MonoBehaviour
 			substractMoves(1);
 			addPoints(amount);
 			actualizeHUDInfo ();
-			checkWinCondition ();
+			if (checkWinCondition ()) 
+			{
+				won ();
+			}
+			else
+			{
+				checkIfLoose ();
+			}
 		}
 		resetLettersSelected ();
 	}
@@ -790,68 +804,56 @@ public class GameManager : MonoBehaviour
 	}
 
 
-	protected void checkWinCondition ()
+	protected bool checkWinCondition ()
 	{
-		bool win = false;
 		switch (myWinCondition[0]) {
 		case "points":
 			if(pointsCount >= int.Parse( myWinCondition[1]))
 			{
-				win = true;
+				return true;
 			}
 			break;
 
 		case "words":
 			if (wordsMade >= int.Parse (myWinCondition [1])) 
 			{
-				win = true;
+				return true;
 			}
 			break;
 		case "letters":
 			if (goalLetters.Count == 0) 
 			{
-				win = true;
+				return true;
 			}
 			break;
 		case "obstacles":
 			if (obstaclesCount == obstaclesUsed) 
 			{
-				win = true;
+				return true;
 			}
 			break;
 		case "word":
 			if (wordFound) 
 			{
-				win = true;
+				return true;
 			}
 			break;
 		case "ant":
 			if (wordFound) 
 			{
-				win = true;
+				return true;
 			}
 			break;
 		case "sin":
 			if (wordFound) 
 			{
-				win = true;
+				return true;
 			}
 			break;
 		default:
 			break;
 		}
-
-		if (win) 
-		{
-			print ("win");
-			playerWon = true;
-			unlockPowerUp();
-			winBonification ();
-		}
-		else
-		{
-			checkIfLoose ();
-		}
+		return false;
 	}
 
 	IEnumerator check()
@@ -863,7 +865,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	public void checkIfLoose()
+	protected void checkIfLoose()
 	{
 		if(!cellManager.checkIfOnePieceCanFit(pieceManager.getShowingPieces()) || remainingMoves == 0)
 		{
@@ -895,6 +897,15 @@ public class GameManager : MonoBehaviour
 			StartCoroutine(check());
 
 		}
+	}
+
+	protected void won()
+	{
+		print ("win");
+		playerWon = true;
+		unlockPowerUp();
+
+		Invoke("winBonification",piecePositionedDelay*2);
 	}
 
 	protected void winBonification()
