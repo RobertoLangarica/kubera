@@ -160,7 +160,6 @@ public class CellsManager : MonoBehaviour
 		for(int y = 0; y < rows; y++)
 		{
 			result.Add(new List<Cell>(columns));
-
 			keepAdding = true;
 			nothingFound = true;
 			addRow = true;
@@ -178,7 +177,7 @@ public class CellsManager : MonoBehaviour
 					}
 					if(cell.contentType == EPieceType.NONE)
 					{
-						cell.name = "a";
+						//cell.name = "null";
 						if(!addRow)
 						{
 							result.Add(new List<Cell>(columns));
@@ -190,18 +189,23 @@ public class CellsManager : MonoBehaviour
 				}
 				else
 				{
-					if(cell.available && keepAdding)
+					if(keepAdding)
 					{
-						keepAdding = false;
-						result.RemoveAt(result.Count-1);
-						nothingFound = false;
-						addRow = false;
+						if(cell.available || cell.contentType == EPieceType.LETTER || cell.contentType == EPieceType.LETTER_OBSTACLE)
+						{
+							keepAdding = false;
+							result.RemoveAt(result.Count-1);
+
+							nothingFound = false;
+							addRow = false;
+						}
 					}
 				}
 			}
 			if(nothingFound)
 			{
 				result.RemoveAt(result.Count-1);
+
 			}
 		}
 
@@ -237,7 +241,7 @@ public class CellsManager : MonoBehaviour
 					}
 					if(cell.contentType == EPieceType.NONE)
 					{
-						cell.name = "a";
+						//cell.name = "null";
 						if(!addRow)
 						{
 							result.Add(new List<Cell>(columns));
@@ -249,12 +253,16 @@ public class CellsManager : MonoBehaviour
 				}
 				else
 				{
-					if(cell.available && keepAdding)
+					if(keepAdding)
 					{
-						keepAdding = false;
-						result.RemoveAt(result.Count-1);
-						nothingFound = false;
-						addRow = false;
+						if(cell.available || cell.contentType == EPieceType.LETTER || cell.contentType == EPieceType.LETTER_OBSTACLE)
+						{
+							keepAdding = false;
+							result.RemoveAt(result.Count-1);
+
+							nothingFound = false;
+							addRow = false;
+						}
 					}
 				}
 			}
@@ -272,8 +280,7 @@ public class CellsManager : MonoBehaviour
 		List<List<Cell>> result = new List<List<Cell>>();
 
 		result.AddRange(getCompletedHorizontalLines());
-		result.AddRange(getCompletedVerticalLines());
-
+		//result.AddRange(getCompletedVerticalLines());
 
 		return result;
 	}

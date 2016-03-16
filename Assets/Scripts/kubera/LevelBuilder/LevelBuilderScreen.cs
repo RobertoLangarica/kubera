@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -247,7 +247,7 @@ namespace LevelBuilder
 
 			//Aguardamos el archivo
 			PersistentData.instance.levelsData.Save(Application.dataPath+"/Resources/levels_"+languageSelector.options[languageSelector.value].text+".xml");
-			AssetDatabase.Refresh();
+			//AssetDatabase.Refresh();
 
 			//Completamos la lista de niveles
 			updateLevelSelectorOptions();
