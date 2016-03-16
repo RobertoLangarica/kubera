@@ -322,14 +322,6 @@ public class GameManager : MonoBehaviour
 			linesCreated (cells.Count);
 			convertLinesToLetters(cells);
 			StartCoroutine(afterPiecePositioned(piece));
-			if (checkWinCondition ()) 
-			{
-				won ();
-			}
-			else
-			{
-				checkIfLoose ();
-			}
 			actualizeHUDInfo ();
 			return true;
 		}
@@ -378,9 +370,7 @@ public class GameManager : MonoBehaviour
 			}
 
 			//Damos puntos por cada cuadro en la pieza
-			addPoints (piece.squares.Length);
-			substractMoves(1);
-			actualizeHUDInfo ();
+			actionFinished(piece.squares.Length);
 			showScoreTextOnHud (piece.transform.position, piece.squares.Length);
 		}
 
@@ -404,6 +394,22 @@ public class GameManager : MonoBehaviour
 					gridCharacters.Add(letter);
 				}
 			}
+		}
+	}
+
+	//TODO: checar el nombre de la funcion
+	protected void actionFinished(int points,int movements = 1)
+	{
+		addPoints (points);
+		substractMoves(movements);
+		actualizeHUDInfo ();
+		if (checkGoal ()) 
+		{
+			won ();
+		}
+		else
+		{
+			checkIfLoose ();
 		}
 	}
 
@@ -596,17 +602,7 @@ public class GameManager : MonoBehaviour
 
 			wordsMade++;
 
-			substractMoves(1);
-			addPoints(amount);
-			actualizeHUDInfo ();
-			if (checkWinCondition ()) 
-			{
-				won ();
-			}
-			else
-			{
-				checkIfLoose ();
-			}
+			actionFinished (amount);
 		}
 		resetLettersSelected ();
 	}
@@ -804,7 +800,7 @@ public class GameManager : MonoBehaviour
 	}
 
 
-	protected bool checkWinCondition ()
+	protected bool checkGoal ()
 	{
 		switch (myWinCondition[0]) {
 		case "points":
