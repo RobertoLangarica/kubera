@@ -23,7 +23,7 @@ namespace ABC
 		public Sprite deleteCharacterState;
 		public Sprite deleteWordState;
 
-		public int maxLetters = 7;
+		public int maxLetters = 10;
 
 		protected InputWords inputWords;
 
@@ -61,8 +61,18 @@ namespace ABC
 			deleteBtnPosition = deleteButtonImage.transform.localPosition;
 
 			GridLayoutGroup gridLayout = letterContainer.GetComponent<GridLayoutGroup>();
-			gridLayout.cellSize = new Vector2(letterContainer.GetComponent<RectTransform>().rect.width/maxLetters
-				,letterContainer.GetComponent<RectTransform>().rect.height*.9f);
+
+			if(((letterContainer.GetComponent<RectTransform> ().rect.width/maxLetters )-5) < letterContainer.GetComponent<RectTransform> ().rect.height *.8f)
+			{
+				gridLayout.cellSize = new Vector2((letterContainer.GetComponent<RectTransform> ().rect.width/maxLetters )-5
+					,(letterContainer.GetComponent<RectTransform> ().rect.width/maxLetters )-5);
+			}
+			else
+			{
+				gridLayout.cellSize = new Vector2(letterContainer.GetComponent<RectTransform>().rect.height*.9f
+					,letterContainer.GetComponent<RectTransform>().rect.height*.9f);
+			}
+
 
 
 			wordsValidator = FindObjectOfType<ABCDataStructure>();
