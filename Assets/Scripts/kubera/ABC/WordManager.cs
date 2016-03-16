@@ -502,8 +502,9 @@ namespace ABC
 
 		protected bool isOverDeleteArea(Vector3 target)
 		{
-			//TODO: Esos 50 son hardcoding? o de donde viene ese rango
-			if(target.x > deleteBtnPosition.x -50 && target.x < deleteBtnPosition.x +50)
+			//DONE: Esos 50 son hardcoding? o de donde viene ese rango
+			if(target.x > (deleteBtnPosition.x - (deleteButtonImage.rectTransform.rect.width*0.5f)) &&
+				target.x < (deleteBtnPosition.x + (deleteButtonImage.rectTransform.rect.width*0.5f)))
 			{
 				return true;	
 			}
