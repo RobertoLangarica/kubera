@@ -347,7 +347,9 @@ public class GameManager : MonoBehaviour
 
 		}
 
-		//TODO: Hay que poner un comentario aqui que nos diga que pasa con esta reenparentada
+		//DONE: Hay que poner un comentario aqui que nos diga que pasa con esta reenparentada
+
+		//Se reasigna el padre de los squares, para poder destruir su contenedor tras averlo posicionado, para evitar tener GameObjects en desuso en la escena
 		for(int i = 0;i < piece.squares.Length;i++)
 		{
 			piece.squares[i].transform.SetParent(piece.transform.parent);

@@ -38,6 +38,7 @@ public class HUDManager : MonoBehaviour
 	public Image[] soundsImages;
 
 	public Text lettersPoints;
+	public Text lettersPointsTitle;
 
 	//DONE: Hardcoding
 	public Vector3 initialPieceScale = new Vector3(2.5f,2.5f,2.5f);
@@ -61,6 +62,8 @@ public class HUDManager : MonoBehaviour
 	{
 		points.text = pointsCount.ToString();
 		setMeterPoints (pointsCount);
+
+		scoreText.text = lettersPointsTitle.text = GameTextManager.instance.getTextByIDinLanguage ("hudPuntaje");
 	}
 
 	/**
@@ -185,17 +188,19 @@ public class HUDManager : MonoBehaviour
 	 **/
 	public void setPointsCondition(int pointsNeed, int pointsMade)
 	{
-		goalText.text = "Van: "+ pointsMade +" puntos  de" + pointsNeed;
+		goalText.text = GameTextManager.instance.changeTextWords(
+			GameTextManager.instance.getTextByIDinLanguage("goalByPointsCondition"),new string[2]{"pointsMade","pointsNeed"},new string[2]{pointsMade.ToString(),pointsNeed.ToString()});
 	}
 
 	public void setWordsCondition(int wordNeed,int wordsMade)
 	{
-		goalText.text = "Van: "+ wordsMade +" palabras  de" + wordNeed;
+		goalText.text = GameTextManager.instance.changeTextWords(
+			GameTextManager.instance.getTextByIDinLanguage("goalByWordsCondition"),new string[2]{"wordsMade","wordNeed"},new string[2]{wordsMade.ToString(),wordNeed.ToString()});
 	}
 
 	public void setLettersCondition(List<string> letters = null)
 	{
-		goalLettersText.text = "Usa: ";
+		goalLettersText.text = GameTextManager.instance.getTextByIDinLanguage("goalByLettersCondition");
 		for (int i = 0; i < letters.Count; i++) 
 		{
 			GameObject letter =  Instantiate(uiLetter) as GameObject;
@@ -208,23 +213,26 @@ public class HUDManager : MonoBehaviour
 
 	public void setObstaclesCondition(int value=0)
 	{
-		// value = las letras negras que existen
-		goalText.text = "Usa: todas las letras negras.";
+		goalText.text = GameTextManager.instance.changeTextWords(
+			GameTextManager.instance.getTextByIDinLanguage("goalByObstaclesCondition"),new string[1]{"goalObstacleLetters"},new string[1]{value.ToString()});
 	}
 
 	public void setWordCondition(string word)
 	{
-		goalText.text = "Forma: " + word +".";
+		goalText.text = GameTextManager.instance.changeTextWords(
+			GameTextManager.instance.getTextByIDinLanguage("goalBy1WordCondition"),new string[1]{"goalWord"},new string[1]{word});
 	}
 
 	public void setSinCondition(string word)
 	{
-		goalText.text = "Sinonimo de: " + word +".";
+		goalText.text = GameTextManager.instance.changeTextWords(
+			GameTextManager.instance.getTextByIDinLanguage("goalBySynonymousCondition"),new string[1]{"goalSin"},new string[1]{word});
 	}
 
 	public void setAntCondition(string word)
 	{
-		goalText.text = "Antonimo de: " + word +".";
+		goalText.text = GameTextManager.instance.changeTextWords(
+			GameTextManager.instance.getTextByIDinLanguage("goalByAntonymCondition"),new string[1]{"goalAnt"},new string[1]{word});
 	}
 
 	public void actualizePointsGoal (int points)
@@ -323,53 +331,51 @@ public class HUDManager : MonoBehaviour
 
 	public void showObjectivePopUp(string goal, string word, int value=0,List<string> letters = null)
 	{
-		Text objectiveTypeText = objectivePopUp.transform.FindChild("Type").GetComponent<Text>();
 		Text objectiveText = objectivePopUp.transform.FindChild("Objective").GetComponent<Text>();
 
 		//[TODO] Jalar textos del xml de idiomas
 		switch (goal) {
 		case "points":
-			objectiveTypeText.text = "Obten: ";
-			objectiveText.text = value + " puntos.";
-
+			objectiveText.text = GameTextManager.instance.changeTextWords(
+				GameTextManager.instance.getTextByIDinLanguage("goalByPointsObjectivePopUp"),new string[1]{"goalPoints"},new string[1]{value.ToString()});
 			break;
 		case "words":
-			objectiveTypeText.text = "Forma: ";
-			objectiveText.text = value + " palabras.";
+			objectiveText.text = GameTextManager.instance.changeTextWords(
+				GameTextManager.instance.getTextByIDinLanguage("goalByWordsObjectivePopUp"),new string[1]{"goalWords"},new string[1]{value.ToString()});
 			break;
 		case "letters":
-			objectiveTypeText.text = "Usa: ";
-
-			objectiveText.text = "";
+			string temp = "";
 			for (int i = 0; i < letters.Count; i++) 
 			{
-				objectiveText.text += letters[i];
+				temp += letters[i];
 
 				if (letters.Count == i + 1) 
 				{
-					objectiveText.text += ".";
+					temp += ".";
 				}
 				else 
 				{
-					objectiveText.text += ", ";
+					temp += ", ";
 				}
 			}
+			objectiveText.text = GameTextManager.instance.changeTextWords(
+				GameTextManager.instance.getTextByIDinLanguage("goalByLettersObjectivePopUp"),new string[1]{"goalLetters"},new string[1]{temp});
 			break;
 		case "obstacles":
-			objectiveTypeText.text = "Usa: ";
-			objectiveText.text = value + " letras negras.";
+			objectiveText.text = GameTextManager.instance.changeTextWords(
+				GameTextManager.instance.getTextByIDinLanguage("goalByObstaclesObjectivePopUp"),new string[1]{"goalObstacleLetters"},new string[1]{value.ToString()});
 			break;
 		case "word":
-			objectiveTypeText.text = "Forma: ";
-			objectiveText.text = word;
+			objectiveText.text = GameTextManager.instance.changeTextWords(
+				GameTextManager.instance.getTextByIDinLanguage("goalBy1WordObjectivePopUp"),new string[1]{"goalWord"},new string[1]{word});
 			break;
 		case "sin":
-			objectiveTypeText.text = "Sinonimo de: ";
-			objectiveText.text = word;
+			objectiveText.text = GameTextManager.instance.changeTextWords(
+				GameTextManager.instance.getTextByIDinLanguage("goalBySynonymousObjectivePopUp"),new string[1]{"goalSin"},new string[1]{word});
 			break;
 		case "ant":
-			objectiveTypeText.text = "Antonimo de: ";
-			objectiveText.text = word;
+			objectiveText.text = GameTextManager.instance.changeTextWords(
+				GameTextManager.instance.getTextByIDinLanguage("goalByAntonymObjectivePopUp"),new string[1]{"goalAnt"},new string[1]{word});
 			break;
 		default:
 			break;
