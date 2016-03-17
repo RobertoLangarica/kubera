@@ -31,7 +31,7 @@ namespace ABC
 		public List<ABCChar> chars;
 		protected bool invalidCharlist;//Indica que la lista de caracteres tuvo o tiene uno invalido
 
-		protected int sortingOrderAfterSwap;
+		protected int sortingOrderAfterSwapp;
 		protected Vector2[] lettersPositions; //los vectores de las letras 
 
 		protected float letterPrefabHeight = 0;
@@ -44,6 +44,7 @@ namespace ABC
 		public delegate void DLettersActualized();
 		public DLettersActualized OnLettersActualized;
 
+		protected GridLayoutGroup gridLayoutGroup;
 		void Start()
 		{
 			inputWords = FindObjectOfType<InputWords> ();
@@ -60,16 +61,16 @@ namespace ABC
 
 			deleteBtnPosition = deleteButtonImage.transform.localPosition;
 
-			GridLayoutGroup gridLayout = letterContainer.GetComponent<GridLayoutGroup>();
+			gridLayoutGroup = letterContainer.GetComponent<GridLayoutGroup>();
 
 			if(((letterContainer.GetComponent<RectTransform> ().rect.width/maxLetters )-5) < letterContainer.GetComponent<RectTransform> ().rect.height *.8f)
 			{
-				gridLayout.cellSize = new Vector2((letterContainer.GetComponent<RectTransform> ().rect.width/maxLetters )-5
+				gridLayoutGroup.cellSize = new Vector2((letterContainer.GetComponent<RectTransform> ().rect.width/maxLetters )-5
 					,(letterContainer.GetComponent<RectTransform> ().rect.width/maxLetters )-5);
 			}
 			else
 			{
-				gridLayout.cellSize = new Vector2(letterContainer.GetComponent<RectTransform>().rect.height*.9f
+				gridLayoutGroup.cellSize = new Vector2(letterContainer.GetComponent<RectTransform>().rect.height*.9f
 					,letterContainer.GetComponent<RectTransform>().rect.height*.9f);
 			}
 
@@ -154,7 +155,7 @@ namespace ABC
 				{
 					DestroyImmediate(letterContainer.transform.GetChild(i).gameObject);
 					letter.transform.SetParent(letterContainer.transform);
-					letter.transform.SetSiblingIndex(i);
+					setSibilingIndex (letter, i);
 					return;
 				}
 			}
@@ -369,7 +370,7 @@ namespace ABC
 				GameObject letter =  Instantiate(emptyChild);
 
 				letter.transform.SetParent(letterContainer.transform);
-				letter.transform.SetSiblingIndex(lvlIndex);
+				setSibilingIndex (letter, lvlIndex);
 				letter.transform.localScale = new Vector3(1,1,1);
 			}
 		}
@@ -450,10 +451,10 @@ namespace ABC
 
 		protected void OnActivateSwapp(GameObject letter)
 		{
-			letterContainer.GetComponent<GridLayoutGroup>().enabled = false;
+			activateGridLayout (false);
 			fillLettersPositions ();
-			sortingOrderAfterSwap = letter.transform.GetSiblingIndex();
-			letter.transform.SetSiblingIndex(100);
+			sortingOrderAfterSwapp = letter.transform.GetSiblingIndex();
+			setSibilingIndex (letter, maxLetters);
 		}
 
 
@@ -469,7 +470,7 @@ namespace ABC
 						if(letter.GetComponent<RectTransform>().anchoredPosition.x > letterContainer.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition.x)
 						{
 							//izquierda a derecha
-							sortingOrderAfterSwap = i;
+							sortingOrderAfterSwapp = i;
 
 							for(int j=letterContainer.transform.childCount-2; j>=i; j--)
 							{
@@ -479,7 +480,7 @@ namespace ABC
 						else
 						{
 							//derecha a izquierda 
-							sortingOrderAfterSwap = i+1;
+							sortingOrderAfterSwapp = i+1;
 
 							for(int j =0; j<=i; j++)
 							{
@@ -493,21 +494,38 @@ namespace ABC
 
 			changeDeleteState(EDeleteState.CHARACTER);
 		}
-
+			
 		/**
-		 * checa si debe borrar la imagen o mandar a reacomodar
-		 **/
+		* activa o desactiva el poder mover las letras
+		* a la letra que se movera se mueve su index para que este arriba de las otras letras
+		* destruye la letra seleccionada si la arrojaron a la basura
+		**/
 		protected void OnSwappEnding(GameObject letter)
 		{
 			//Los comodines nos ep ueden destruir
 			if(!letter.GetComponent<ABCChar> ().wildcard && isOverDeleteArea(letter.transform.localPosition))
 			{
-				checkSwappLetters (letter, true);
+				destroyLetter (letter);
 			}
 			else
 			{
-				checkSwappLetters(letter,false);	
+				setSibilingIndex (letter, sortingOrderAfterSwapp);
 			}
+
+			activateGridLayout (true);
+
+			afterLettersChange ();
+		}
+
+		protected void afterLettersChange()
+		{
+			resetWordValidationToSiblingOrder();
+
+			if(!isThereAnyLetterOnContainer())
+			{
+				activateWordDeleteButton(false);
+			}
+			lettersActualized ();
 		}
 
 		protected bool isOverDeleteArea(Vector3 target)
@@ -522,30 +540,14 @@ namespace ABC
 			return false;
 		}
 
-		/**
-		  * activa o desactiva el poder mover las letras
-		  * a la letra que se movera se mueve su index para que este arriba de las otras letras
-		  * destruye la letra seleccionada si la arrojaron a la basura
-		  **/
-		public void checkSwappLetters(GameObject letter,bool destroy = true)
-		{			
-			letterContainer.GetComponent<GridLayoutGroup>().enabled = true;
+		protected void destroyLetter(GameObject letter)
+		{
+			letter.GetComponent<WordChar> ().destroy();
+		}
 
-			if(destroy)
-			{
-				letter.GetComponent<WordChar> ().destroy();
-			}
-			else
-			{
-				letter.transform.SetSiblingIndex(sortingOrderAfterSwap);
-			}
-
-			resetWordValidationToSiblingOrder();
-
-			if(!isThereAnyLetterOnContainer())
-			{
-				activateWordDeleteButton(false);
-			}
+		protected void activateGridLayout(bool activate)
+		{
+			gridLayoutGroup.enabled = activate;
 		}
 			
 		protected void resetWordValidationToSiblingOrder ()
@@ -606,9 +608,9 @@ namespace ABC
 			}
 			else
 			{
-				//TODO: Esto esta confuso, hay que tener una forma clara de agregar una nueva letra como ultimo sibling
-				checkSwappLetters(letter.gridLetterReference);
-				lettersActualized ();
+				//DONE: Esto esta confuso, hay que tener una forma clara de agregar una nueva letra como ultimo sibling
+				destroyLetter(letter.gridLetterReference);
+				afterLettersChange ();
 			}
 		}
 
@@ -628,6 +630,11 @@ namespace ABC
 				deleteButtonImage.sprite = deleteCharacterState;
 				break;
 			}
+		}
+
+		protected void setSibilingIndex(GameObject go, int siblingPosition)
+		{
+			go.transform.SetSiblingIndex (siblingPosition);
 		}
 	}
 }

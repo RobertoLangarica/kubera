@@ -69,6 +69,14 @@ namespace LevelBuilder
 			}
 		}
 
+		public void onSetAllTiles()
+		{
+			for(int i=0; i<gridTiles.Length; i++)
+			{
+				setTileValueWithButton(gridTiles[i],currentButtonSelected);
+			}
+		}
+
 		private void setTileValueWithButton(GridTile tile, ButtonTile button)
 		{
 			tile.setDataValue(button.dataValue);

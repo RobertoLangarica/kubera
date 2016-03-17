@@ -297,7 +297,7 @@ public class HUDManager : MonoBehaviour
 		bText.startAnim(scorePosition,finish);
 	}
 		
-	public void activateTransformImage(bool activate,int activePos)
+	public void activateRotateImage(bool activate,int activePos)
 	{
 		if (activate) 
 		{

@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 	public int secondChanceBombs = 2;
 	protected int secondChanceTimes = 0;
 	protected int bombsUsed = 0;
-	public float piecePositionedDelay = 0.5f;
+	public float piecePositionedDelay = 0.1f;
 
 	public bool canRotate;
 	public bool destroyByColor;
@@ -601,10 +601,10 @@ public class GameManager : MonoBehaviour
 			amount *= multiplierHelper;
 
 			wordsMade++;
+			resetLettersSelected ();
 
 			actionFinished (amount);
 		}
-		resetLettersSelected ();
 	}
 
 	protected void resetLettersSelected()
@@ -619,6 +619,12 @@ public class GameManager : MonoBehaviour
 	}
 
 	protected void showPointsOfLettersSelected ()
+	{
+		
+		hudManager.setLettersPoints (pointsOfLettersSelected());
+	}
+
+	protected int pointsOfLettersSelected()
 	{
 		int amount = 0;
 		int multiplierHelper = 1;
@@ -651,7 +657,8 @@ public class GameManager : MonoBehaviour
 		}
 
 		amount *= multiplierHelper;
-		hudManager.setLettersPoints (amount);
+
+		return amount;
 	}
 
 	public void linesCreated(int totalLines)
