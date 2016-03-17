@@ -37,6 +37,9 @@ public class GameManager : MonoBehaviour
 	public bool canRotate;
 	public bool destroyByColor;
 
+	public int consonant= 3;
+	public int vocal = 1; 
+
 	public Transform canvasOfLetters;
 
 	protected List<Cell> cellToLetter;
@@ -1025,13 +1028,16 @@ public class GameManager : MonoBehaviour
 
 	protected void showDestroyedLetterScore(Cell cell)
 	{
-		int amount = 0;
-
-		if(int.TryParse(cell.content.GetComponent<ABCChar>().pointsOrMultiple,out amount))
+		int amount = consonant;
+		if(cell.content.GetComponent<ABCChar>().isVocal())
 		{
-			showScoreTextOnHud (cell.transform.position, amount);
-			addPoints(amount);
+			amount = vocal;
 		}
+
+
+		showScoreTextOnHud (cell.transform.position, amount);
+		addPoints(amount);
+
 		actualizeHUDInfo ();
 	}
 

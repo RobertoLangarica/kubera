@@ -234,17 +234,7 @@ public class HUDManager : MonoBehaviour
 		goalText.text = GameTextManager.instance.changeTextWords(
 			GameTextManager.instance.getTextByIDinLanguage("goalByAntonymCondition"),new string[1]{"goalAnt"},new string[1]{word});
 	}
-
-	public void actualizePointsGoal (int points)
-	{
 		
-	}
-
-	public void actualizeWordsValueGoal (int points)
-	{
-
-	}
-
 	public void destroyLetterFound(string letterFound)
 	{
 		for (int i = 0; i < lettersToFound.Count; i++) 
@@ -312,6 +302,7 @@ public class HUDManager : MonoBehaviour
 	public void showPieces(List<Piece> pieces)
 	{
 		List<Piece> newListPieces = new List<Piece> (pieces);
+
 		int i = 0;
 		while(newListPieces.Count >0)
 		{
