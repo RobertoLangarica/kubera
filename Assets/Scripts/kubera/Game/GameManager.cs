@@ -32,10 +32,13 @@ public class GameManager : MonoBehaviour
 	public int secondChanceBombs = 2;
 	protected int secondChanceTimes = 0;
 	protected int bombsUsed = 0;
-	public float piecePositionedDelay = 0.5f;
+	public float piecePositionedDelay = 0.1f;
 
 	public bool canRotate;
 	public bool destroyByColor;
+
+	public int consonant= 3;
+	public int vocal = 1; 
 
 	public Transform canvasOfLetters;
 
@@ -327,7 +330,6 @@ public class GameManager : MonoBehaviour
 			linesCreated (cells.Count);
 			convertLinesToLetters(cells);
 			StartCoroutine(afterPiecePositioned(piece));
-			checkWinCondition ();
 			actualizeHUDInfo ();
 			return true;
 		}
@@ -352,7 +354,9 @@ public class GameManager : MonoBehaviour
 
 		}
 
-		//TODO: Hay que poner un comentario aqui que nos diga que pasa con esta reenparentada
+		//DONE: Hay que poner un comentario aqui que nos diga que pasa con esta reenparentada
+
+		//Se reasigna el padre de los squares, para poder destruir su contenedor tras averlo posicionado, para evitar tener GameObjects en desuso en la escena
 		for(int i = 0;i < piece.squares.Length;i++)
 		{
 			piece.squares[i].transform.SetParent(piece.transform.parent);
@@ -374,9 +378,7 @@ public class GameManager : MonoBehaviour
 			}
 
 			//Damos puntos por cada cuadro en la pieza
-			addPoints (piece.squares.Length);
-			substractMoves(1);
-			actualizeHUDInfo ();
+			actionFinished(piece.squares.Length);
 			showScoreTextOnHud (piece.transform.position, piece.squares.Length);
 		}
 
@@ -400,6 +402,22 @@ public class GameManager : MonoBehaviour
 					gridCharacters.Add(letter);
 				}
 			}
+		}
+	}
+
+	//TODO: checar el nombre de la funcion
+	protected void actionFinished(int points,int movements = 1)
+	{
+		addPoints (points);
+		substractMoves(movements);
+		actualizeHUDInfo ();
+		if (checkGoal ()) 
+		{
+			won ();
+		}
+		else
+		{
+			checkIfLoose ();
 		}
 	}
 
@@ -591,13 +609,10 @@ public class GameManager : MonoBehaviour
 			amount *= multiplierHelper;
 
 			wordsMade++;
+			resetLettersSelected ();
 
-			substractMoves(1);
-			addPoints(amount);
-			actualizeHUDInfo ();
-			checkWinCondition ();
+			actionFinished (amount);
 		}
-		resetLettersSelected ();
 	}
 
 	protected void resetLettersSelected()
@@ -612,6 +627,12 @@ public class GameManager : MonoBehaviour
 	}
 
 	protected void showPointsOfLettersSelected ()
+	{
+		
+		hudManager.setLettersPoints (pointsOfLettersSelected());
+	}
+
+	protected int pointsOfLettersSelected()
 	{
 		int amount = 0;
 		int multiplierHelper = 1;
@@ -644,7 +665,8 @@ public class GameManager : MonoBehaviour
 		}
 
 		amount *= multiplierHelper;
-		hudManager.setLettersPoints (amount);
+
+		return amount;
 	}
 
 	public void linesCreated(int totalLines)
@@ -793,68 +815,56 @@ public class GameManager : MonoBehaviour
 	}
 
 
-	protected void checkWinCondition ()
+	protected bool checkGoal ()
 	{
-		bool win = false;
 		switch (myWinCondition[0]) {
 		case "points":
 			if(pointsCount >= int.Parse( myWinCondition[1]))
 			{
-				win = true;
+				return true;
 			}
 			break;
 
 		case "words":
 			if (wordsMade >= int.Parse (myWinCondition [1])) 
 			{
-				win = true;
+				return true;
 			}
 			break;
 		case "letters":
 			if (goalLetters.Count == 0) 
 			{
-				win = true;
+				return true;
 			}
 			break;
 		case "obstacles":
 			if (obstaclesCount == obstaclesUsed) 
 			{
-				win = true;
+				return true;
 			}
 			break;
 		case "word":
 			if (wordFound) 
 			{
-				win = true;
+				return true;
 			}
 			break;
 		case "ant":
 			if (wordFound) 
 			{
-				win = true;
+				return true;
 			}
 			break;
 		case "sin":
 			if (wordFound) 
 			{
-				win = true;
+				return true;
 			}
 			break;
 		default:
 			break;
 		}
-
-		if (win) 
-		{
-			print ("win");
-			playerWon = true;
-			unlockPowerUp();
-			winBonification ();
-		}
-		else
-		{
-			checkIfLoose ();
-		}
+		return false;
 	}
 
 	IEnumerator check()
@@ -866,7 +876,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	public void checkIfLoose()
+	protected void checkIfLoose()
 	{
 		if(!cellManager.checkIfOnePieceCanFit(pieceManager.getShowingPieces()) || remainingMoves == 0)
 		{
@@ -898,6 +908,15 @@ public class GameManager : MonoBehaviour
 			StartCoroutine(check());
 
 		}
+	}
+
+	protected void won()
+	{
+		print ("win");
+		playerWon = true;
+		unlockPowerUp();
+
+		Invoke("winBonification",piecePositionedDelay*2);
 	}
 
 	protected void winBonification()
@@ -939,7 +958,6 @@ public class GameManager : MonoBehaviour
 			{
 				addPoints (1);
 				substractMoves (1);
-
 				StartCoroutine (add1x1BlockMore ());
 			}
 			else
@@ -1015,13 +1033,16 @@ public class GameManager : MonoBehaviour
 
 	protected void showDestroyedLetterScore(Cell cell)
 	{
-		int amount = 0;
-
-		if(int.TryParse(cell.content.GetComponent<ABCChar>().pointsOrMultiple,out amount))
+		int amount = consonant;
+		if(cell.content.GetComponent<ABCChar>().isVocal())
 		{
-			showScoreTextOnHud (cell.transform.position, amount);
-			addPoints(amount);
+			amount = vocal;
 		}
+
+
+		showScoreTextOnHud (cell.transform.position, amount);
+		addPoints(amount);
+
 		actualizeHUDInfo ();
 	}
 
@@ -1176,14 +1197,16 @@ public class GameManager : MonoBehaviour
 	protected void actualizeHUDInfo()
 	{
 		hudManager.setMovements (remainingMoves);
+		hudManager.setPoints (pointsCount);
+
+		actualizeWordsCompletedWinCondition ();
+		actualizePointsWinCondition ();
 	}
 
 	protected void showScoreTextOnHud(Vector3 pos,int amount)
 	{
 		hudManager.showScoreTextAt(pos,amount);
-		hudManager.setPoints (pointsCount);
 
-		actualizeWordsCompletedWinCondition ();
-		actualizePointsWinCondition ();
+
 	}
 }

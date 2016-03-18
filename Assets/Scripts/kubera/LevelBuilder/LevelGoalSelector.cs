@@ -211,6 +211,11 @@ namespace LevelBuilder
 			abcSelector.gameObject.SetActive(false);
 		}
 
+		public void OnResetABCSelector()
+		{
+			abcSelector.sincronizeDataWithCSV ("");
+		}
+
 		public void resetToDefault()
 		{
 			togglePoints.isOn = true;

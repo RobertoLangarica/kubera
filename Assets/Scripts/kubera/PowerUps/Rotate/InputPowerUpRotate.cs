@@ -12,6 +12,7 @@ public class InputPowerUpRotate : MonoBehaviour
 	public Vector3 offsetPositionOverFinger = new Vector3(0,1.5f,0);
 	public Vector3 selectedScale = new Vector3 (4.5f, 4.5f, 4.5f);
 	public bool allowInput = true;
+	public Transform pieceStock;
 
 	public delegate void DOnDragNotification(GameObject target);
 	public DOnDragNotification OnDropPieceRotated;
@@ -40,6 +41,11 @@ public class InputPowerUpRotate : MonoBehaviour
 		pieceManager = FindObjectOfType<PieceManager> ();
 		gameManager = FindObjectOfType<GameManager> ();
 		hudManager = FindObjectOfType<HUDManager> ();
+
+		if(pieceStock == null)
+		{
+			print("Falta asignarlo en el editor");
+		}
 	}
 
 	public void startRotate()
@@ -48,7 +54,7 @@ public class InputPowerUpRotate : MonoBehaviour
 		gameManager = FindObjectOfType<GameManager> ();
 		hudManager = FindObjectOfType<HUDManager> ();
 
-		activateRotation (true);
+		activateRotateImage (true);
 	}
 
 	void OnDrag(DragGesture gesture) 
@@ -99,12 +105,10 @@ public class InputPowerUpRotate : MonoBehaviour
 			{	
 				if(currentSelected)
 				{
-					
-
 					if (gameManager.dropPieceOnGrid (currentSelected.GetComponent<Piece> ())) 
 					{
 						reset();
-						completePowerUp (true);
+						onPiecePositionatedCompleted (true);
 					}
 					else
 					{
@@ -148,7 +152,7 @@ public class InputPowerUpRotate : MonoBehaviour
 	{
 		if(!somethingDragged && currentSelected != null)
 		{				
-			setRotatePiece (currentSelected);
+			RotatePiece (currentSelected);
 			reset ();
 			//returnSelectedToInitialState (0.1f);
 		}
@@ -195,36 +199,40 @@ public class InputPowerUpRotate : MonoBehaviour
 		allowInput = !isRotating;
 	}
 
-	protected void completePowerUp(bool cancel = false)
+	protected void onPiecePositionatedCompleted(bool cancel = false)
 	{
 		DOTween.Kill ("InputRotate_Dragging");
 
-		activateRotation (false);
+		activateRotateImage (false);
 
-	}
-
-	public void setRotatePiece(GameObject go)
-	{
-		if (go.GetComponent<Piece> ()) 
+		// por los delay cuando es 1 es cuando solo queda la pieza que se esta poniendo
+		if (pieceManager.getShowingPieces ().Count == 1) 
 		{
-			setRotatePiece(go.GetComponent<Piece>());
+			OnPowerupRotateCompleted ();
 		}
 	}
 
-	//Se cambian las piezas por las rotadas
-	public void setRotatePiece(Piece piece)
+	public void RotatePiece(GameObject go)
+	{
+		if (go.GetComponent<Piece> ()) 
+		{
+			RotatePiece(go.GetComponent<Piece>());
+		}
+	}
+
+	//Se rotan las piezas
+	public void RotatePiece(Piece piece)
 	{	
 		if (!allowInput)
 		{
 			return;
 		}
-	
 
 		if (piece.rotateTimes > 0) {
 			isRotating (true);
 
 			//CHANGE: Los nombres deben ser lo mas claros y simples posibles, para contar las rotaciones pudo ser un rotateCount
-			piece.howManyHasBeenRotated += 1;
+			piece.rotateCount += 1;
 
 			piece.gameObject.transform.DOScale (new Vector3 (0, 0), 0.25f).OnComplete (() => {
 
@@ -235,19 +243,26 @@ public class InputPowerUpRotate : MonoBehaviour
 				});
 			});
 
-			if (piece.howManyHasBeenRotated > piece.rotateTimes) {
-				piece.howManyHasBeenRotated = 0;
+			if (piece.rotateCount > piece.rotateTimes) {
+				piece.rotateCount = 0;
 			}
 		}
 	}
 
-	public void activateRotation(bool activate)
+	public void activateRotateImage(bool activate)
 	{
 		if(activate)
 		{
-			for (int i = 0; i < pieceManager.showingPieces.Count; i++) 
+			for (int i = 0; i < hudManager.rotationImagePositions.Length; i++) 
 			{
-				hudManager.activateTransformImage(true,i);
+				for (int j = 0; j < pieceStock.childCount; j++) 
+				{
+					if ((int)pieceStock.GetChild(j).position.y == (int)hudManager.rotationImagePositions [i].position.y) 
+					{
+						hudManager.activateRotateImage (true, i);
+						break;
+					}
+				}
 			}
 		}
 		else
@@ -256,14 +271,8 @@ public class InputPowerUpRotate : MonoBehaviour
 			{
 				if (selectedInitialPosition.y == hudManager.rotationImagePositions [i].position.y) 
 				{
-					hudManager.activateTransformImage (false, i);
+					hudManager.activateRotateImage (false, i);
 				}
-			}
-				
-			//TODO: saber cuando se utilizan las piezas y se queda sin nada
-			if (pieceManager.getShowingPieces ().Count == pieceManager.piecesToShow) 
-			{
-				OnPowerupRotateCompleted ();
 			}
 		}
 	}

@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class WildCardPowerUp : PowerupBase
 {
+	public string powerUpScore = "x3";
 	public GameObject powerUpWildCard;
 	public Transform powerUpButton;
 	public RectTransform wordsContainer;
@@ -79,8 +80,8 @@ public class WildCardPowerUp : PowerupBase
 
 	public void powerUpActivateRotate()
 	{
-		//TODO: HArdcoding de ese x3 que se quede como variable en algun lado (editable de editor)
-		GameObject GO = wordManager.getWildcard ("x3");
+		//DONE: HArdcoding de ese x3 que se quede como variable en algun lado (editable de editor)
+		GameObject GO = wordManager.getWildcard (powerUpScore);
 		wordManager.addCharacter(GO.GetComponent<ABC.ABCChar>(),GO);
 		wordManager.activateWordDeleteButton (true);
 		DestroyImmediate (GO);
