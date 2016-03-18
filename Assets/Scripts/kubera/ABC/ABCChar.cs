@@ -72,5 +72,19 @@ namespace ABC
 				wildcard = true;
 			}
 		}
+
+		public bool isVocal()
+		{
+			switch (character) {
+			case "A":
+			case "E":
+			case "I":
+			case "O":
+			case "U":
+				return true;
+			default:
+				return false;			
+			}
+		}
 	}
 }
