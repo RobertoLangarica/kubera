@@ -34,9 +34,6 @@ public class GameManager : MonoBehaviour
 	protected int bombsUsed = 0;
 	public float piecePositionedDelay = 0.1f;
 
-	public bool canRotate;
-	public bool destroyByColor;
-
 	public int consonant= 3;
 	public int vocal = 1; 
 
@@ -65,7 +62,6 @@ public class GameManager : MonoBehaviour
 	public RandomPool<ABCCharinfo> tutorialLettersPool;
 	protected List<ABCChar> gridCharacters = new List<ABCChar>();
 
-	protected bool playerWon;
 
 	void Awake () 
 	{
@@ -908,7 +904,6 @@ public class GameManager : MonoBehaviour
 	protected void won()
 	{
 		print ("win");
-		playerWon = true;
 		unlockPowerUp();
 
 		Invoke("winBonification",piecePositionedDelay*2);
