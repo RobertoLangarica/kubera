@@ -40,7 +40,7 @@ public class HUDManager : MonoBehaviour
 	public Text lettersPoints;
 	public Text lettersPointsTitle;
 
-	//DONE: Hardcoding
+
 	public Vector3 initialPieceScale = new Vector3(2.5f,2.5f,2.5f);
 
 	public GameObject objectivePopUp;

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public enum EPieceType
 {
@@ -48,8 +49,7 @@ public class Piece : MonoBehaviour
 	public int rotateCount = 0;
 
 	[HideInInspector]
-	public int id;// = Random.Range (0, 9999999);
-
+	public  Guid guid;
 
 	void Start () 
 	{
@@ -63,9 +63,16 @@ public class Piece : MonoBehaviour
 		currentType = starterType;
 	}
 
+	//HACK: esta fallando GetInstanceID gracias a que las piezas se clonan con Resources.Load
+	//por ahora dejamos GUID (que ademas si se inicializa en la declaracion sufre del mismo bug de repeticion)
 	public void initializeId()
 	{
-		id = Random.Range (0, 9999999);
+		guid = System.Guid.NewGuid();
+	}
+
+	public void printID()
+	{
+		Debug.Log("ID: "+this.GetInstanceID());
 	}
 
 	protected void updateColorBasedOnType()

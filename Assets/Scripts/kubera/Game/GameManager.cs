@@ -203,8 +203,13 @@ public class GameManager : MonoBehaviour
 
 			for(int j=0; j<amount; j++)
 			{
-				pieces.Add (((GameObject)(Resources.Load (info[1]))).GetComponent<Piece>());
+				//pieces.Add ( (Instantiate(Resources.Load(info[1])) as GameObject).GetComponent<Piece>() );
+				pieces.Add (Resources.Load<GameObject>(info[1]).GetComponent<Piece>());
+				//pieces[pieces.Count-1].gameObject.SetActive(false);
+				//pieces[pieces.Count-1].gameObject.SetActive(true);
 			}
+
+			Resources.UnloadUnusedAssets();
 		}
 
 		return pieces;
@@ -254,7 +259,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	/*protected void selectLetterFromGrid(string character)
+	/*protected void selectLetterFromGrid(string character,)
 	{
 		for(int i = 0; i < gridCharacters.Count; i++)
 		{
@@ -540,7 +545,7 @@ public class GameManager : MonoBehaviour
 
 		canUseAllWildCards = canCompleteWordWithWildCards();
 
-		if(wordManager.wordsValidator.completeWord && canUseAllWildCards)
+		if(wordManager.wordsValidator.isCompleteWord() && canUseAllWildCards)
 		{
 			for(int i = 0;i < wordManager.chars.Count;i++)
 			{

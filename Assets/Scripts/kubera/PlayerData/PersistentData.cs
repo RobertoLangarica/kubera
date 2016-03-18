@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using ABC;
+using ABC.Tree;
+using ABCSerializer;
 
 /**
  * clase que ponemos en un prefab que va existir 
@@ -18,6 +21,7 @@ public class PersistentData : MonoBehaviour
 	public DNotify onDictionaryFinished;
 
 	public int levelNumber = 1;
+	public bool loadSerializedDictionary = true;
 	[HideInInspector]public Level currentLevel;
 	[HideInInspector]public Levels levelsData;
 	[HideInInspector]public ABCDataStructure abcStructure;
@@ -82,6 +86,8 @@ public class PersistentData : MonoBehaviour
 			language = UserDataManager.instance.language;
 		}
 
+		currentLanguage = language;
+
 		//Niveles
 		TextAsset tempTxt = (TextAsset)Resources.Load ("levels_"+language);
 		levelsData = Levels.LoadFromText(tempTxt.text);
@@ -90,22 +96,71 @@ public class PersistentData : MonoBehaviour
 		TextAsset abc = Resources.Load("ABCData/ABC_"+language) as TextAsset;
 		abcStructure.initializeAlfabet(abc.text);
 
-		//Diccionario
-		abc = Resources.Load("ABCData/WORDS_"+language) as TextAsset;
-		abcStructure.onDictionaryFinished += onDictionaryFinishedCallback;	
-		abcStructure.processDictionary(abc.text);
-
+		if(loadSerializedDictionary)
+		{
+			loadAndDeserializeDictionary(language);	
+		}
+		else
+		{
+			//Diccionario
+			abc = Resources.Load("ABCData/WORDS_"+language) as TextAsset;
+			abcStructure.onDictionaryFinished += onDictionaryFinishedCallback;	
+			abcStructure.processDictionary(abc.text);	
+		}
 
 		//CurrentLevel
 		currentLevel = levelsData.getLevelByNumber(levelNumber);
-
-		currentLanguage = language;
 	}
 
 	private void onDictionaryFinishedCallback()
 	{
-		abcStructure.onDictionaryFinished -= onDictionaryFinishedCallback;	
+		abcStructure.onDictionaryFinished -= onDictionaryFinishedCallback;
+		serializeAndSaveDictionary(currentLanguage);
 		onDictionaryFinished();
+	}
+
+
+	private void serializeAndSaveDictionary(string language)
+	{
+		if(language == "")
+		{
+			language = UserDataManager.instance.language;
+		}
+
+		string path = Application.dataPath+"/Resources/"+"ABCData/DICTIONARY_"+language+".bytes";
+
+		File.Delete(path);
+		FileStream fs = new FileStream(path,FileMode.Create);
+		ABCNodeSerializer serializer = new ABCNodeSerializer();
+
+		serializer.Serialize(fs,abcStructure.tree.root);
+		fs.Close();
+		fs.Dispose();
+
+		Debug.Log("Diccionario guardado y serializado con exito");
+	}
+
+	private void loadAndDeserializeDictionary(string language)
+	{
+		if(language == "")
+		{
+			language = UserDataManager.instance.language;
+		}
+
+		string path = Application.dataPath+"/Resources/"+"ABCData/DICTIONARY_"+language+".bytes";
+
+		ABCNode data = null;
+		FileStream fs = File.OpenRead(path);
+		ABCNodeSerializer serializer = new ABCNodeSerializer();
+
+		data = (ABCNode)serializer.Deserialize(fs, null, typeof(ABCNode));
+		fs.Close();
+		fs.Dispose();
+
+		abcStructure.tree = new ABCTree();
+		abcStructure.tree.root = data;
+
+		Debug.Log("Diccionario deserializado con exito");
 	}
 
 	public void addWordToDictionary(string word, string language = "")

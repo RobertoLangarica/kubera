@@ -197,7 +197,7 @@ namespace ABC
 
 					invalidCharlist = false;
 
-					if(wordsValidator.completeWord)
+					if(wordsValidator.isCompleteWord())
 					{
 						onWordComplete(true);
 					}
@@ -214,7 +214,7 @@ namespace ABC
 				chars.Add(character);
 				wordsValidator.validateChar(character);
 
-				if(wordsValidator.completeWord)
+				if(wordsValidator.isCompleteWord())
 				{
 					onWordComplete(true);
 				}
@@ -252,7 +252,7 @@ namespace ABC
 					{
 						if (uiChar != null && abcChar != null) 
 						{
-							if (wordsValidator.completeWord) 
+							if (wordsValidator.isCompleteWord()) 
 							{
 								if (!abcChar.wildcard) 
 								{
@@ -329,9 +329,10 @@ namespace ABC
 		{
 			string result = "";
 
+			//characte es desconfiable por los comodines (usamos value)
 			foreach(ABCChar c in chars)
 			{
-				result = result+c.character;
+				result = result+wordsValidator.getStringByValue(c.value);
 			}
 
 			return result;
@@ -565,14 +566,14 @@ namespace ABC
 				wordsValidator.validateChar(c);
 			}
 
-			if(wordsValidator.completeWord)
+			if(wordsValidator.isCompleteWord())
 			{
 				onWordComplete(true);
 			}
 			else
 			{
 				onWordComplete(false);
-				changeDeleteState(0);
+				changeDeleteState(EDeleteState.WORD);
 			}
 		}
 
