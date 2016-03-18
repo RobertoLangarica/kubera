@@ -19,6 +19,7 @@ public class PieceManager : MonoBehaviour
 		{
 			showingPieces.Add(pieces.getNextRandomized());
 			showingPieces [i].initializeId ();
+
 		}
 
 		piecesShowedCount = piecesToShow;
@@ -49,7 +50,7 @@ public class PieceManager : MonoBehaviour
 	{
 		for(int i=0; i<showingPieces.Count; i++)
 		{
-			if(piece.id == showingPieces[i].id)
+			if(piece.guid == showingPieces[i].guid)
 			{
 				piecesShowedCount--;
 				showingPieces.RemoveAt (i);
@@ -62,7 +63,7 @@ public class PieceManager : MonoBehaviour
 	{
 		for(int i=0; i<showingPieces.Count; i++)
 		{
-			if(piece.id == showingPieces[i].id)
+			if(piece.guid.Equals(showingPieces[i].guid))
 			{
 				return true;
 			}
