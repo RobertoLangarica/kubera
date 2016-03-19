@@ -106,5 +106,12 @@
 				<language id="default" text="Antonimo de: goalAnt ."/>
 			</languages>
 		</text>
+		<text id="exitText">
+			<languages>
+				<language id="english" text="You click exit button."/>
+				<language id="spanish" text="Presionaste el boton de salida"/>
+				<language id="default" text="Presionaste el boton de salida"/>
+			</languages>
+		</text>
 	</texts>
 </gameText>

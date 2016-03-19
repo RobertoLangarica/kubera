@@ -33,6 +33,8 @@ public class HUDManager : MonoBehaviour
 	public GameObject PointerOnScene;
 
 	public GameObject exitGamePopUp;
+	public Text exitText;
+	public RectTransform exitContent;
 
 	public Image[] musicImages;
 	public Image[] soundsImages;
@@ -385,17 +387,18 @@ public class HUDManager : MonoBehaviour
 	public void quitGamePopUp()
 	{
 		exitGamePopUp.SetActive (true);
-		RectTransform content = exitGamePopUp.transform.FindChild ("Content").GetComponent<RectTransform>();
+		exitText.text = GameTextManager.instance.getTextByIDinLanguage ("exitText");
 		Vector3 v3 = new Vector3 ();
-		v3 = content.anchoredPosition;
+		v3 = exitContent.anchoredPosition;
 
-		content.DOAnchorPos (new Vector3(content.anchoredPosition.x,0), 1.5f).SetEase(Ease.OutBack).OnComplete(()=>
+		exitContent.DOAnchorPos (new Vector3(exitContent.anchoredPosition.x,0), 1.5f).SetEase(Ease.OutBack).OnComplete(()=>
 			{
-				content.DOAnchorPos (new Vector3(content.anchoredPosition.x,0), 1.5f).OnComplete(()=>
+				exitContent.DOAnchorPos (new Vector3(exitContent.anchoredPosition.x,0), 1.5f).OnComplete(()=>
 					{
-						content.DOAnchorPos (-v3, 1.0f).SetEase(Ease.InBack).OnComplete(()=>
+						exitContent.DOAnchorPos (-v3, 1.0f).SetEase(Ease.InBack).OnComplete(()=>
 							{
 								//TODO: salirnos del nivel y hacerle perder una vida, etc.
+								print("perdio");
 							});
 					});
 			});
