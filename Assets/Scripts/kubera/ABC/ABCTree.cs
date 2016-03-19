@@ -6,39 +6,13 @@ using ABCSerializer;
 
 namespace ABC.Tree
 {
-	/**ABCNode viene en las dll para serialización
-	 * children es una lista readonly pero mutable.
-	 * Hay que usar la funcion 
-	 * copyListToOnlyMutableList(List<T> mutable, List<T> dataToCopy)
-	 * 
-	 * */
-	/*public class ABCNode
-	{
-		public int value;//Valor de caracter que representa este nodo
-		public bool end;//Indica si este valor es el final de una palabra
-		//public ABCNode parent = null;
-		public List<ABCNode> children;
-
-		//Para validacion
-		public bool wildcard;//Indica si en la validacion se usa como comodin
-		public int wildcardIndex; //Representa el valor que se le da en la busqueda al comodin
-		public int lastCorrectValue;//Ultimo valor correcto en modo comodin
-
-		public ABCNode()
-		{
-			wildcard = false;
-			end = false;
-			children = new List<ABCNode>();
-		}
-	}*/
-
 	public class ABCTree 
 	{
 		public ABCNode root;
 
 		/*****PARA LA BUSQUEDA CARACTER POR CARACTER*****************/
 		private bool isValid;
-		private ABCNode currentValidationList;
+		private ABCNode currentValidationNode;
 		private List<ABCNode> levelsOfSearch;
 		private int levelsCount;
 		/************************************************************/
@@ -54,7 +28,7 @@ namespace ABC.Tree
 			isValid = true;
 			levelsOfSearch = new List<ABCNode>();
 			used = new List<ABCChar>();
-			currentValidationList = root;
+			currentValidationNode = root;
 		}
 
 		/**
@@ -76,11 +50,14 @@ namespace ABC.Tree
 				}
 				current = next;
 				//Nos traemos el nodo que haga match con el valor
+				//next = current.children.Find(item => getNodeValue(item) == word[index]);
 				next = current.children.Find(item => item.value == word[index]);
 
 				//Una nueva subpalabra?
+				//if(next != null && index == size-1 && !getNodeEnd(next))
 				if(next != null && index == size-1 && !next.end)
 				{
+					//setNodeEnd(next,true);
 					next.end = true;
 					return true;
 				}
@@ -93,9 +70,10 @@ namespace ABC.Tree
 				for(;index < size; index++)
 				{
 					next = new ABCNode();
+					//setNodeValue(next, word[index]);
 					next.value = word[index];
-					next.end = index == size-1;
-					//next.parent = current;
+					//setNodeEnd(next, (index == size-1));
+					next.end = (index == size-1);
 					current.children.Add(next);
 					current = next;
 				}
@@ -122,6 +100,7 @@ namespace ABC.Tree
 					break;
 				}
 				current = next.children;
+				//next = current.Find(item => getNodeValue(item) == word[index]);
 				next = current.Find(item => item.value == word[index]);
 
 				//No se un match
@@ -130,6 +109,7 @@ namespace ABC.Tree
 					return false;
 				}
 				//Se llego al ultimo caracter y no es un nodo terminal
+				//else if(index == size-1 && !getNodeEnd(next))
 				else if(index == size-1 && !next.end)
 				{
 					return false;
@@ -147,7 +127,7 @@ namespace ABC.Tree
 		public void cleanCharByCharValidation()
 		{
 			isValid = true;
-			currentValidationList = root;
+			currentValidationNode = root;
 			levelsCount = 0;
 			levelsOfSearch.Clear();
 		}
@@ -167,32 +147,42 @@ namespace ABC.Tree
 				if(c.wildcard)
 				{
 					Debug.Log("comodin");
-					int cant = currentValidationList.wildcard ?
-						currentValidationList.children[currentValidationList.wildcardIndex].children.Count 
-						: currentValidationList.children.Count;
+					/*int cant =  getNodeWildcard(currentValidationNode) ?
+						currentValidationNode.children[getNodeWildcardIndex(currentValidationNode)].children.Count 
+						: currentValidationNode.children.Count;*/
 
+					int cant = currentValidationNode.wildcard ? 
+						currentValidationNode.children[currentValidationNode.wildcardIndex].children.Count
+						: currentValidationNode.children.Count;
 
 					if(cant > 0)
 					{
-						//Armamos el comodin
+						//El comodin no es aprte de la lista es un "puntero" externo
+						//Se iguala al currentValidationNode y apunta a sus hijos
 						ABCNode wildcard = new ABCNode();
+						//setNodeWildcard(wildcard,true);
 						wildcard.wildcard = true;
+						//setNodeWildcardIndex(wildcard, 0);
 						wildcard.wildcardIndex = 0;
 						//El mismo contenido que el nodo anterior 
 						//(ya que al ser comodin referencia todas las listas)
-						if(currentValidationList.wildcard)
+						//if(getNodeWildcard(currentValidationNode))
+						if(currentValidationNode.wildcard)
 						{
-							copyListToOnlyMutableList<ABCNode>(wildcard.children,currentValidationList.children[currentValidationList.wildcardIndex].children);
+							//copyListToOnlyMutableList<ABCNode>(wildcard.children,currentValidationNode.children[getNodeWildcardIndex(currentValidationNode)].children);
+							copyListToOnlyMutableList<ABCNode>(wildcard.children,currentValidationNode.children[currentValidationNode.wildcardIndex].children);
 						}
 						else
 						{
-							copyListToOnlyMutableList<ABCNode>(wildcard.children,currentValidationList.children);
+							copyListToOnlyMutableList<ABCNode>(wildcard.children,currentValidationNode.children);
 						}
 
-						c.value = wildcard.children[wildcard.wildcardIndex].value;
+						//Valor al que apunta el comodin
+						//c.value = getNodeValue(wildcard.children[getNodeWildcardIndex(wildcard)]);
+						c.value =   wildcard.children[wildcard.wildcardIndex].value;
 
 						//Correcto sin validacion ya que es comodin
-						currentValidationList = wildcard;
+						currentValidationNode = wildcard;
 						levelsOfSearch.Add(wildcard);
 						isValid = true;
 					}
@@ -206,15 +196,18 @@ namespace ABC.Tree
 				else
 				{
 					//Buscamos en el nivel actual si existe el caracter que se pide
-					if(currentValidationList.wildcard)
+					//if(getNodeWildcard(currentValidationNode))
+					if(currentValidationNode.wildcard)
 					{
 						//Si es comodin busca en la lista que el comodin apunta en este momento
-						tmp = currentValidationList.children[currentValidationList.wildcardIndex].children.Find(item => item.value == c.value);
+						//tmp = currentValidationNode.children[getNodeWildcardIndex(currentValidationNode)].children.Find(item => getNodeValue(item) == c.value);
+						tmp = currentValidationNode.children[currentValidationNode.wildcardIndex].children.Find(item => item.value == c.value);
 					}
 					else
 					{
 						//Busqueda directa en el nodo
-						tmp = currentValidationList.children.Find(item => item.value == c.value);
+						//tmp = currentValidationNode.children.Find(item => getNodeValue(item) == c.value);
+						tmp = currentValidationNode.children.Find(item => item.value == c.value);
 					}
 
 
@@ -222,7 +215,7 @@ namespace ABC.Tree
 					{
 						//Si existe!!
 						//Guardamos el nuevo nivel de busqueda
-						currentValidationList = tmp;
+						currentValidationNode = tmp;
 						levelsOfSearch.Add(tmp);
 						isValid = true;
 					}
@@ -262,17 +255,21 @@ namespace ABC.Tree
 			while(--i >= 0)
 			{
 				//Buscamos un comodin
+				//if(getNodeWildcard(levelsOfSearch[i]))
 				if(levelsOfSearch[i].wildcard)
 				{
 					int l2 = levelsOfSearch[i].children.Count;
 					//Guardamos el estado actual
+					//setNodeLastCorrectValue(levelsOfSearch[i], getNodeWildcardIndex(levelsOfSearch[i]));
 					levelsOfSearch[i].lastCorrectValue = levelsOfSearch[i].wildcardIndex;
 					List<ABCNode> partialChain = levelsOfSearch.GetRange(i+1,levelsOfSearch.Count-(i+1));
 					List<ABCNode> partialResult;
 
-					for(int j = levelsOfSearch[i].wildcardIndex+1; j < l2; j++)
+					//for(int j = getNodeWildcardIndex(levelsOfSearch[i]) +1; j < l2; j++)
+					for(int j = levelsOfSearch[i].wildcardIndex +1; j < l2; j++)
 					{
 						//Este nuevo comodin es valido?
+						//setNodeWildcardIndex(levelsOfSearch[i], j);
 						levelsOfSearch[i].wildcardIndex = j;
 
 						if(partialChain.Count > 0)
@@ -283,12 +280,15 @@ namespace ABC.Tree
 							if(partialResult != null)
 							{
 								//Contiene el caracter a validar?
+								//if(getNodeWildcard(partialResult[partialResult.Count-1]))
 								if(partialResult[partialResult.Count-1].wildcard)
 								{
+									//tmp = partialResult[partialResult.Count-1].children[getNodeWildcardIndex(partialResult[partialResult.Count-1])].children.Find(item => getNodeValue(item) == charToValidate.value);
 									tmp = partialResult[partialResult.Count-1].children[partialResult[partialResult.Count-1].wildcardIndex].children.Find(item => item.value == charToValidate.value);
 								}
 								else
 								{
+									//tmp = partialResult[partialResult.Count-1].children.Find(item => getNodeValue(item) == charToValidate.value);
 									tmp = partialResult[partialResult.Count-1].children.Find(item => item.value == charToValidate.value);
 								}
 							}
@@ -296,6 +296,7 @@ namespace ABC.Tree
 						else
 						{
 							//No hay nadie debajo y lo validamos directamente a este nodo
+							//tmp = levelsOfSearch[i].children[getNodeWildcardIndex(levelsOfSearch[i])].children.Find(item => getNodeValue(item) == charToValidate.value);
 							tmp = levelsOfSearch[i].children[levelsOfSearch[i].wildcardIndex].children.Find(item => item.value == charToValidate.value);
 
 						}
@@ -305,7 +306,7 @@ namespace ABC.Tree
 						{
 							//LISTO tenemos el valor como debe ser
 							levelsOfSearch.Add(tmp);
-							currentValidationList = tmp;
+							currentValidationNode = tmp;
 							return true;
 						}
 					}
@@ -317,15 +318,18 @@ namespace ABC.Tree
 			while(--i >= 0)
 			{
 				//Buscamos un comodin
+				//if(getNodeWildcard(copy[i]))
 				if(copy[i].wildcard)
 				{
 					if(i == 0)
 					{
+						//setNodeWildcardIndex(copy[i], getNodeLastCorrectValue(copy[i]) );
 						copy[i].wildcardIndex = copy[i].lastCorrectValue;
 						copyListToOnlyMutableList<ABCNode>(copy[i].children, root.children);
 					}
 					else
 					{
+						//setNodeWildcardIndex(copy[i], getNodeLastCorrectValue(copy[i]) );
 						copy[i].wildcardIndex = copy[i].lastCorrectValue;
 						copyListToOnlyMutableList<ABCNode>(copy[i].children,copy[i-1].children);
 					}
@@ -347,10 +351,13 @@ namespace ABC.Tree
 			ABCNode tmp;
 			for(int i = 0; i < limit; i++)
 			{
+				//if(getNodeWildcard(values[i]))
 				if(values[i].wildcard)
 				{
 					//Guardamos el estado del comodin
+					//setNodeLastCorrectValue(values[i], getNodeWildcardIndex(values[i]) );
 					values[i].lastCorrectValue = values[i].wildcardIndex;
+					//setNodeWildcardIndex(values[i], 0);
 					values[i].wildcardIndex = 0;
 
 					if(i == 0)
@@ -380,6 +387,7 @@ namespace ABC.Tree
 						for(int j = 0; j < l2; j++)
 						{
 							//Si es el correcto que se quede con el valor 
+							//setNodeWildcardIndex(values[i], j);
 							values[i].wildcardIndex = j;
 							partialResult = getCorrectChain(values[i].children[j],partialChain);
 
@@ -399,6 +407,7 @@ namespace ABC.Tree
 				}
 				else
 				{
+					//tmp = target.children.Find(item => getNodeValue(item) == getNodeValue(values[i]));
 					tmp = target.children.Find(item => item.value == values[i].value);
 
 					if(tmp != null)
@@ -444,6 +453,7 @@ namespace ABC.Tree
 					//Disminuimos la cuenta de los niveles
 					levelsCount--;
 					//Quitamos cualquier comodin
+					//setNodeWildcard(levelsOfSearch[i], false);
 					levelsOfSearch[i].wildcard = false;
 					levelsOfSearch.RemoveAt(i);
 				}
@@ -452,12 +462,14 @@ namespace ABC.Tree
 				if(levelsCount > 0)
 				{
 					//Si el nivel que quedo es comodin lo reseteamos al estado default
+					//if(getNodeWildcard(levelsOfSearch[levelsCount-1]))
 					if(levelsOfSearch[levelsCount-1].wildcard)
 					{
+						//setNodeWildcardIndex(levelsOfSearch[levelsCount-1], 0);
 						levelsOfSearch[levelsCount-1].wildcardIndex = 0;
 					}
 
-					currentValidationList = levelsOfSearch[levelsCount-1];
+					currentValidationNode = levelsOfSearch[levelsCount-1];
 				}
 				else
 				{
@@ -471,13 +483,16 @@ namespace ABC.Tree
 		{
 			if(isValid)
 			{
-				if(currentValidationList.wildcard)
+				//if(getNodeWildcard(currentValidationNode))
+				if(currentValidationNode.wildcard)
 				{
-					return currentValidationList.children[currentValidationList.wildcardIndex].end;
+					//return getNodeEnd(currentValidationNode.children[getNodeWildcardIndex(currentValidationNode)]);
+					return currentValidationNode.children[(int)currentValidationNode.wildcardIndex].end;
 				}
 				else
 				{
-					return currentValidationList.end;
+					//return getNodeEnd(currentValidationNode);
+					return currentValidationNode.end;
 				}
 			}
 
@@ -490,6 +505,7 @@ namespace ABC.Tree
 		protected bool hasValueInChildren(ABCNode lst, int searchValue)
 		{
 			ABCNode tmp;
+			//tmp = lst.children.Find(item => getNodeValue(item) == searchValue);
 			tmp = lst.children.Find(item => item.value == searchValue);
 
 			if(tmp != null)
@@ -547,6 +563,7 @@ namespace ABC.Tree
 					validated.Add(sortedChars[i].value,true);
 
 					//Alguna palabra inicia con este caracter
+					//tmp = root.children.Find(item => getNodeValue(item) == sortedChars[i].value);
 					tmp = root.children.Find(item => item.value == sortedChars[i].value);
 
 					if(tmp != null)
@@ -595,6 +612,7 @@ namespace ABC.Tree
 
 			foreach(ABCNode val in current.children)
 			{
+				//tmp = getUnusedCharFromList(getNodeValue(val), sortedChars);
 				tmp = getUnusedCharFromList(val.value, sortedChars);
 
 				if(tmp != null)
@@ -604,6 +622,7 @@ namespace ABC.Tree
 					tmp.used = true;
 
 					//Ya es una palabra?
+					//if(getNodeEnd(val))
 					if(val.end)
 					{
 						result =  true;
@@ -677,5 +696,55 @@ namespace ABC.Tree
 				mutable.Add(t);
 			}
 		}
+
+		/*public int getNodeValue(ABCNode node)
+		{
+			return (node.composedValue & 0x255);
+		}
+
+		public void setNodeValue(ABCNode node, int value)
+		{
+			node.composedValue = (node.composedValue & ~0x255) | (value & 0x255);
+		}
+
+		public bool getNodeEnd(ABCNode node)
+		{
+			return ((node.composedValue & (0x255<<4)) == (0x01<<4));
+		}
+
+		public void setNodeEnd(ABCNode node, bool value)
+		{
+			node.composedValue = (node.composedValue & ~(0x255<<4)) | ((value?1:0)<<4);
+		}
+
+		public bool getNodeWildcard(ABCNode node)
+		{
+			return ((node.composedValue & (0x255<<8)) == (0x01<<8));
+		}
+
+		public void setNodeWildcard(ABCNode node, bool value)
+		{
+			node.composedValue = (node.composedValue & ~(0x255<<8)) | ((value?1:0)<<8);
+		}
+
+		public int getNodeWildcardIndex(ABCNode node)
+		{
+			return (node.composedValue & (0x255<<12));
+		}
+
+		public void setNodeWildcardIndex(ABCNode node, int value)
+		{
+			node.composedValue = (node.composedValue & ~(0x255<<12)) | ((value & 0x255)<<12);
+		}
+
+		public int getNodeLastCorrectValue(ABCNode node)
+		{
+			return (node.composedValue & (0x255<<16));
+		}	
+
+		public void setNodeLastCorrectValue(ABCNode node, int value)
+		{
+			node.composedValue = (node.composedValue & ~(0x255<<16)) | ((value & 0x255)<<16);
+		}*/
 	}	
 }

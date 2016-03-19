@@ -101,7 +101,11 @@ public class GameManager : MonoBehaviour
 		//TODO: Leer las gemas de algun lado
 		UserDataManager.instance.playerGems = 300;
 
+		#if UNITY_ANDROID
+		setAndConfigureLevel(PersistentData.instance.getRandomLevel());
+		#else
 		setAndConfigureLevel(PersistentData.instance.currentLevel);
+		#endif
 	}
 
 	private void setAndConfigureLevel(Level level)

@@ -195,4 +195,9 @@ public class PersistentData : MonoBehaviour
 			}
 		}
 	}
+
+	public Level getRandomLevel()
+	{
+		return levelsData.levels[Random.Range(0,levelsData.levels.Length)];
+	}
 }

@@ -526,6 +526,7 @@ namespace ABC
 			{
 				activateWordDeleteButton(false);
 			}
+
 			lettersActualized ();
 		}
 
