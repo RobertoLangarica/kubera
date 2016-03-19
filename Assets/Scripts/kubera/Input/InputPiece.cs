@@ -44,9 +44,11 @@ public class InputPiece : MonoBehaviour
 					}
 
 					Vector3 posOverFinger = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-					posOverFinger.z = selectedInitialPosition.z;
+					posOverFinger.z = -1;
 					posOverFinger += offsetPositionOverFinger;
 					moveTo(currentSelected,posOverFinger,pieceSpeed);
+
+
 					currentSelected.transform.DOScale(selectedScale,.1f).SetId("Input_SelectedScale");
 				}
 			}	
@@ -57,7 +59,7 @@ public class InputPiece : MonoBehaviour
 				if(currentSelected != null)
 				{
 					Vector3 posOverFinger = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-					posOverFinger.z = selectedInitialPosition.z;
+					posOverFinger.z = -1;
 					posOverFinger += offsetPositionOverFinger;
 					moveTo(currentSelected,posOverFinger,pieceSpeed);
 				}
@@ -68,13 +70,14 @@ public class InputPiece : MonoBehaviour
 			{	
 				if(currentSelected)
 				{
+					changePositionZ (currentSelected,selectedInitialPosition.z);
+
 					if(OnDrop != null)
 					{
 						OnDrop(currentSelected);	
 					}
 
 					DOTween.Kill("Input_Dragging",false);
-
 
 					//Para un autoreset hay que descomentar las siguientes lineas
 					//returnSelectedToInitialState();
@@ -83,6 +86,11 @@ public class InputPiece : MonoBehaviour
 			}
 			break;
 		}
+	}
+
+	void changePositionZ(GameObject go,float z)
+	{
+		go.transform.position = new Vector3 (go.transform.position.x, go.transform.position.y, z);
 	}
 
 	void OnFingerDown(FingerDownEvent  gesture)
@@ -145,5 +153,6 @@ public class InputPiece : MonoBehaviour
 	{
 		DOTween.Kill("Input_Dragging",false);
 		target.transform.DOMove (to, delay).SetId("Input_Dragging");
+
 	}
 }

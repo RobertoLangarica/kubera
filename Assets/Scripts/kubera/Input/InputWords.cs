@@ -15,9 +15,11 @@ public class InputWords : MonoBehaviour
 	public DInputWordNotification onDragUpdate;
 	public DInputWordNotification onDragStart;
 	public DInputWordNotification onTap;
+	public DInputWordNotification onTapAfterLongPress;
 
 	public float letterSpeed = 0.5f;
 	public bool allowInput = true;
+	protected bool deleteLetter;
 
 	void OnDrag(DragGesture gesture) 
 	{
@@ -29,7 +31,7 @@ public class InputWords : MonoBehaviour
 
 		lastTimeDraggedFrame = Time.frameCount;
 
-
+		deleteLetter = false;
 		switch(gesture.Phase)
 		{
 		case (ContinuousGesturePhase.Started):
@@ -86,6 +88,23 @@ public class InputWords : MonoBehaviour
 			onTap (gesture.Raycast.Hit2D.transform.gameObject);
 			//[TODO]
 			//gameObject.GetComponent<AudioSource> ().Play ();
+		}
+	}
+
+	void OnTapAfterLongPress(TapGesture gesture)
+	{
+		if (allowInput && gesture.Raycast.Hit2D  &&deleteLetter) 
+		{	
+			onTapAfterLongPress (gesture.Raycast.Hit2D.transform.gameObject);
+		}
+		deleteLetter = false;
+	}
+
+	void OnLongPress(LongPressGesture gesture)
+	{
+		if(allowInput && gesture.Raycast.Hit2D)
+		{
+			deleteLetter = true;
 		}
 	}
 
