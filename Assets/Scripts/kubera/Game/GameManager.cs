@@ -208,6 +208,7 @@ public class GameManager : MonoBehaviour
 			for(int j=0; j<amount; j++)
 			{
 				pieces.Add (((GameObject)(Resources.Load (info[1]))).GetComponent<Piece>());
+				pieces[pieces.Count-1].setUniqueId();
 			}
 		}
 

@@ -24,6 +24,8 @@ public enum EPieceType
 
 public class Piece : MonoBehaviour 
 {
+	private static int ISNTANCE_COUNT = 0;
+
 	public Color COLOR_AQUA				= new Color(0.376f, 0.698f, 0.639f); 
 	public Color COLOR_BLACK			= new Color(0.180f, 0.188f, 0.192f);
 	public Color COLOR_LETTER_OBSTACLE	= new Color(0.180f, 0.188f, 0.192f);
@@ -48,8 +50,10 @@ public class Piece : MonoBehaviour
 	[HideInInspector]
 	public int rotateCount = 0;
 
+	//[HideInInspector]
+	//public  Guid guid;
 	[HideInInspector]
-	public  Guid guid;
+	public int id;
 
 	void Start () 
 	{
@@ -65,9 +69,15 @@ public class Piece : MonoBehaviour
 
 	//HACK: esta fallando GetInstanceID gracias a que las piezas se clonan con Resources.Load
 	//por ahora dejamos GUID (que ademas si se inicializa en la declaracion sufre del mismo bug de repeticion)
-	public void initializeId()
+	/*public void initializeId()
 	{
 		guid = System.Guid.NewGuid();
+	}*/
+
+	//HACK: Que onda con GetInstanceID
+	public void setUniqueId()
+	{
+		id = ++ISNTANCE_COUNT;
 	}
 
 	public void printID()
