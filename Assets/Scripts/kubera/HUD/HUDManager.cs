@@ -311,6 +311,7 @@ public class HUDManager : MonoBehaviour
 			Piece go = Instantiate (newListPieces [0]);
 
 			go.name = newListPieces[0].name;
+			go.guid = newListPieces [0].guid;
 			newListPieces.RemoveAt(0);
 
 			go.transform.position= new Vector3(rotationImagePositions [i].position.x,rotationImagePositions [i].position.y,1);

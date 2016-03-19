@@ -203,13 +203,8 @@ public class GameManager : MonoBehaviour
 
 			for(int j=0; j<amount; j++)
 			{
-				//pieces.Add ( (Instantiate(Resources.Load(info[1])) as GameObject).GetComponent<Piece>() );
-				pieces.Add (Resources.Load<GameObject>(info[1]).GetComponent<Piece>());
-				//pieces[pieces.Count-1].gameObject.SetActive(false);
-				//pieces[pieces.Count-1].gameObject.SetActive(true);
+				pieces.Add (((GameObject)(Resources.Load (info[1]))).GetComponent<Piece>());
 			}
-
-			Resources.UnloadUnusedAssets();
 		}
 
 		return pieces;
