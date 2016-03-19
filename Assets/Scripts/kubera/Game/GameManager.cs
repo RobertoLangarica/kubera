@@ -34,9 +34,6 @@ public class GameManager : MonoBehaviour
 	protected int bombsUsed = 0;
 	public float piecePositionedDelay = 0.1f;
 
-	public bool canRotate;
-	public bool destroyByColor;
-
 	public int consonant= 3;
 	public int vocal = 1; 
 
@@ -65,7 +62,6 @@ public class GameManager : MonoBehaviour
 	public RandomPool<ABCCharinfo> tutorialLettersPool;
 	protected List<ABCChar> gridCharacters = new List<ABCChar>();
 
-	protected bool playerWon;
 
 	void Awake () 
 	{
@@ -211,13 +207,8 @@ public class GameManager : MonoBehaviour
 
 			for(int j=0; j<amount; j++)
 			{
-				//pieces.Add ( (Instantiate(Resources.Load(info[1])) as GameObject).GetComponent<Piece>() );
-				pieces.Add (Resources.Load<GameObject>(info[1]).GetComponent<Piece>());
-				//pieces[pieces.Count-1].gameObject.SetActive(false);
-				//pieces[pieces.Count-1].gameObject.SetActive(true);
+				pieces.Add (((GameObject)(Resources.Load (info[1]))).GetComponent<Piece>());
 			}
-
-			Resources.UnloadUnusedAssets();
 		}
 
 		return pieces;
@@ -917,7 +908,6 @@ public class GameManager : MonoBehaviour
 	protected void won()
 	{
 		print ("win");
-		playerWon = true;
 		unlockPowerUp();
 
 		Invoke("winBonification",piecePositionedDelay*2);

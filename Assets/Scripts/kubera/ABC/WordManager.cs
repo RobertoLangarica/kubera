@@ -55,6 +55,7 @@ namespace ABC
 				inputWords.onDragFinish += OnSwappEnding;
 				inputWords.onDragStart  += OnActivateSwapp;
 				inputWords.onTap += addLetterToWord;
+				inputWords.onTapAfterLongPress += destroyLetterAfterLongPress;
 			}
 
 			chars = new List<ABCChar>();
@@ -63,10 +64,10 @@ namespace ABC
 
 			gridLayoutGroup = letterContainer.GetComponent<GridLayoutGroup>();
 
-			if(((letterContainer.GetComponent<RectTransform> ().rect.width/maxLetters )-5) < letterContainer.GetComponent<RectTransform> ().rect.height *.8f)
+			if(((letterContainer.GetComponent<RectTransform> ().rect.width/maxLetters )-gridLayoutGroup.padding.left) < letterContainer.GetComponent<RectTransform> ().rect.height *.8f)
 			{
 				gridLayoutGroup.cellSize = new Vector2((letterContainer.GetComponent<RectTransform> ().rect.width/maxLetters )-5
-					,(letterContainer.GetComponent<RectTransform> ().rect.width/maxLetters )-5);
+					,(letterContainer.GetComponent<RectTransform> ().rect.width/maxLetters )-gridLayoutGroup.padding.left);
 			}
 			else
 			{
@@ -78,14 +79,13 @@ namespace ABC
 
 			wordsValidator = FindObjectOfType<ABCDataStructure>();
 
-			deleteButtonImage.gameObject.SetActive(false);
+			activateWordDeleteButton (false);
 			wordCompleteButton.SetActive (false);
 		}
 			
 
 		public GameObject getWildcard(string pointsOrMultiple)
-		{
-			
+		{			
 			GameObject result = new GameObject();
 			result.AddComponent<ABCChar> ();
 			string wildcardValue = ".";
@@ -456,6 +456,7 @@ namespace ABC
 			fillLettersPositions ();
 			sortingOrderAfterSwapp = letter.transform.GetSiblingIndex();
 			setSibilingIndex (letter, maxLetters);
+			changeDeleteState(EDeleteState.CHARACTER);
 		}
 
 
@@ -493,7 +494,6 @@ namespace ABC
 				}
 			}
 
-			changeDeleteState(EDeleteState.CHARACTER);
 		}
 			
 		/**
@@ -574,8 +574,8 @@ namespace ABC
 			else
 			{
 				onWordComplete(false);
-				changeDeleteState(EDeleteState.WORD);
 			}
+			changeDeleteState(EDeleteState.WORD);
 		}
 
 		/*
@@ -614,6 +614,12 @@ namespace ABC
 				destroyLetter(letter.gridLetterReference);
 				afterLettersChange ();
 			}
+		}
+
+		public void destroyLetterAfterLongPress(GameObject go)
+		{
+			destroyLetter (go);
+			afterLettersChange ();
 		}
 
 		public void activateWordDeleteButton(bool active)
