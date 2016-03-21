@@ -7,14 +7,12 @@ using ABC.Tree;
 
 namespace ABC
 {
-	public class ABCDataStructure : MonoBehaviour 
+	public class ABCDictionary : MonoBehaviour 
 	{
-		//Alfabeto que contiene todos los caracteres y su representacion en entero
-		private List<AlfabetUnit> alfabet;
+		private List<ABCUnit> alfabet;
+		private ABCTree tree = null;
 
-		[HideInInspector]public ABCTree tree = null;
-
-		/**Para el proecsamiento del diccionario**/
+		/**Para el proecsamiento del diccionario en texto**/
 		public delegate void DNotify();
 		public DNotify onDictionaryFinished;
 		private string[] dictionaryWords;
@@ -48,11 +46,6 @@ namespace ABC
 		{
 			char[] chars = word.ToCharArray();
 			List<int> result = new List<int>();
-
-			/*for(int i = 0; i < word.Length; i++)
-			{
-				result.Add(int.Parse(word[i].ToString()));
-			}*/
 
 			foreach(char character in chars)
 			{
@@ -152,7 +145,7 @@ namespace ABC
 		 **/
 		public int getCharValue(char c)
 		{
-			AlfabetUnit tmp;
+			ABCUnit tmp;
 			tmp = alfabet.Find(item => item.cvalue == c);
 
 			if(tmp != null)
@@ -169,7 +162,7 @@ namespace ABC
 		public string getStringByValue(int value)
 		{
 
-			AlfabetUnit tmp;
+			ABCUnit tmp;
 			tmp = alfabet.Find(item => item.ivalue == value);
 			
 			if(tmp != null)
@@ -180,20 +173,16 @@ namespace ABC
 			return "";
 		}
 
-		/**
-		 * Inicializa el alfabeto recibiendo un csv con los caracteres
-		 * 
-		 * */
 		public void initializeAlfabet(string csvText)
 		{
 			//Nos aseguramos que sean mayusculas
 			string[] chars = csvText.ToUpperInvariant().Split(',');
-			alfabet = new List<AlfabetUnit>();
+			alfabet = new List<ABCUnit>();
 			int counter = -1;
 
 			foreach(string schar in chars)
 			{
-				alfabet.Add(new AlfabetUnit(++counter,schar));
+				alfabet.Add(new ABCUnit(++counter,schar));
 			}
 		}
 			
@@ -206,17 +195,9 @@ namespace ABC
 		{
 			Regex regex = new Regex(@"\r\n?|\n");
 			StringBuilder builder = new StringBuilder(regex.Replace(text,"\n").ToUpperInvariant());
-			//text = regex.Replace(text,"\n");
 
 			//Quitamos toda la acentuacion y obtenemos un arreglo
 			builder.Replace('Á','A').Replace('É','E').Replace('Í','I').Replace('Ó','O').Replace('Ú','U').Replace('Ü','U');
-
-			//text = text.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u').ToUpperInvariant();
-
-			/*foreach(AlfabetUnit abc in alfabet)
-			{
-				builder.Replace(abc.cvalue.ToString(),abc.ivalue.ToString());
-			}*/
 
 			dictionaryWords = builder.ToString().Split('\n');
 
@@ -272,9 +253,24 @@ namespace ABC
 			yield break;
 		}
 
-		public List<AlfabetUnit> getAlfabet()
+		public List<ABCUnit> getAlfabet()
 		{
 			return alfabet;
+		}
+
+		public void setTreeRoot(ABCSerializer.ABCNode rootNode)
+		{
+			if(tree == null)
+			{
+				tree = new ABCTree();
+			}
+
+			tree.root = rootNode;
+		}
+
+		public ABCSerializer.ABCNode getTreeRoot()
+		{
+			return tree.root;
 		}
 	}
 }

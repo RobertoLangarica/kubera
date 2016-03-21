@@ -14,7 +14,7 @@ namespace LevelBuilder
 		public Text txtInfo;
 		public string title;
 
-		private List<AlfabetUnit> alfabet;
+		private List<ABCUnit> alfabet;
 		public	List<GridDataItem> items;
 
 		void Start () 
@@ -22,7 +22,7 @@ namespace LevelBuilder
 			selector.setTitle(title);
 		}
 
-		public void setAlfabet(List<AlfabetUnit> newAlfabet)
+		public void setAlfabet(List<ABCUnit> newAlfabet)
 		{
 			alfabet = newAlfabet;
 		}
@@ -39,7 +39,7 @@ namespace LevelBuilder
 		{
 			items = new List<GridDataItem>();
 
-			foreach(AlfabetUnit a in alfabet)
+			foreach(ABCUnit a in alfabet)
 			{
 				items.Add(new GridDataItem());
 				items[items.Count-1].data = a;
@@ -75,7 +75,7 @@ namespace LevelBuilder
 						builder.Append(", ");
 					}
 
-					builder.Append((items[i].data as AlfabetUnit).cvalue);
+					builder.Append((items[i].data as ABCUnit).cvalue);
 					builder.Append(":");
 					builder.Append(localCount);
 				}
@@ -142,7 +142,7 @@ namespace LevelBuilder
 		{
 			foreach(GridDataItem item in items)
 			{
-				if((item.data as AlfabetUnit).cvalue == value )
+				if((item.data as ABCUnit).cvalue == value )
 				{
 					return item;
 				}
@@ -160,7 +160,7 @@ namespace LevelBuilder
 			{
 				handler.quantity = items[i].quantity;
 				handler.type = forcedType;
-				handler.letter = (items[i].data as AlfabetUnit).cvalue;
+				handler.letter = (items[i].data as ABCUnit).cvalue;
 
 				if(handler.quantity != 0)
 				{

@@ -19,25 +19,30 @@ namespace ABC
 			OBSTACLE, NORMAL	
 		}
 
-		public Text txtLetter;
-		public Text txtPoints;
+
 		public bool wildcard = false;//Indica si este caracter es un comodin
 		public string character = "A";//La cadena que representa al caracter
+		public int value;//Valor del caracter que se utiliza dentro de ABCDataStructure
+		public bool used;//Se usa por ABCDataStructure cuando averigua si se pueden armar palabras
+
 		public string pointsOrMultiple;
+		public Text txtLetter;
+		public Text txtPoints;
 		public EType type;
+		[HideInInspector]public bool empty = false;//Lo usa WordManager al eliminar caracteres
+		[HideInInspector]public int index;//Indice del caracter en WordManager
+
 
 		protected bool textActualized; //texto actualizado
-		[HideInInspector]public int value;//Valor del caracter que se utiliza dentro de ABCDataStructure
-		[HideInInspector]public bool empty = false;//Lo usa WordManager al eliminar caracteres
-		[HideInInspector]public bool used;//Se usa por ABCDataStructure cuando averigua si se pueden armar palabras
-		[HideInInspector]public int index;//Indice del caracter en WordManager
+
+
 
 		void Start () 
 		{
 			//si es comodin lo dejamos en blanco y sino le dejamos el texto adecuado
 			if(!wildcard)
 			{
-				ABCDataStructure abc = FindObjectOfType<ABCDataStructure>();
+				ABCDictionary abc = FindObjectOfType<ABCDictionary>();
 				value = abc.getCharValue(character.ToUpper().ToCharArray()[0]);
 				character = abc.getStringByValue(value);
 			}

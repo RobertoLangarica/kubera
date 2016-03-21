@@ -27,7 +27,7 @@ namespace ABC
 
 		protected InputWords inputWords;
 
-		[HideInInspector]public ABCDataStructure wordsValidator;
+		[HideInInspector]public ABCDictionary wordsValidator;
 		public List<ABCChar> chars;
 		protected bool invalidCharlist;//Indica que la lista de caracteres tuvo o tiene uno invalido
 
@@ -77,7 +77,7 @@ namespace ABC
 
 
 
-			wordsValidator = FindObjectOfType<ABCDataStructure>();
+			wordsValidator = FindObjectOfType<ABCDictionary>();
 
 			activateWordDeleteButton (false);
 			wordCompleteButton.SetActive (false);

@@ -186,10 +186,10 @@ namespace LevelBuilder
 
 		private void setAlfabetToABCSelectors()
 		{
-			abcSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
-			abcGoalSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
-			abcObstacleSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
-			abcTutorialSelector.setAlfabet(PersistentData.instance.abcStructure.getAlfabet());
+			abcSelector.setAlfabet(PersistentData.instance.abcDictionary.getAlfabet());
+			abcGoalSelector.setAlfabet(PersistentData.instance.abcDictionary.getAlfabet());
+			abcObstacleSelector.setAlfabet(PersistentData.instance.abcDictionary.getAlfabet());
+			abcTutorialSelector.setAlfabet(PersistentData.instance.abcDictionary.getAlfabet());
 		}
 
 		private void setABCSelectorsDefaultData()
@@ -516,7 +516,7 @@ namespace LevelBuilder
 		{
 			word = word.ToLowerInvariant();
 			word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
-			return PersistentData.instance.abcStructure.isValidWord(word);
+			return PersistentData.instance.abcDictionary.isValidWord(word);
 		}
 
 		public bool wordExistInPreviousLevels(string word)
@@ -553,7 +553,7 @@ namespace LevelBuilder
 			word = word.ToLowerInvariant();
 			word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
 			PersistentData.instance.addWordToDictionary(word,languageSelector.options[languageSelector.value].text);
-			PersistentData.instance.abcStructure.registerNewWord(word);
+			PersistentData.instance.abcDictionary.registerNewWord(word);
 			PersistentData.instance.serializeAndSaveDictionary(languageSelector.options[languageSelector.value].text);
 		}
 

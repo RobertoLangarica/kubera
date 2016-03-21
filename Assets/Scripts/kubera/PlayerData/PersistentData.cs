@@ -24,7 +24,7 @@ public class PersistentData : MonoBehaviour
 	public bool loadSerializedDictionary = true;
 	[HideInInspector]public Level currentLevel;
 	[HideInInspector]public Levels levelsData;
-	[HideInInspector]public ABCDataStructure abcStructure;
+	[HideInInspector]public ABCDictionary abcDictionary;
 
 	//El idioma en que se encuentra configurado actualmente el juego
 	private string currentLanguage;
@@ -62,7 +62,7 @@ public class PersistentData : MonoBehaviour
 			return;
 		}
 
-		abcStructure = FindObjectOfType<ABCDataStructure>();
+		abcDictionary = FindObjectOfType<ABCDictionary>();
 		onDictionaryFinished += foo;
 		configureGameForLanguage();
 	}
@@ -97,7 +97,7 @@ public class PersistentData : MonoBehaviour
 
 		//Alfabeto
 		TextAsset abc = Resources.Load("ABCData/ABC_"+language) as TextAsset;
-		abcStructure.initializeAlfabet(abc.text);
+		abcDictionary.initializeAlfabet(abc.text);
 
 		//Diccionario
 		#if UNITY_EDITOR
@@ -110,8 +110,8 @@ public class PersistentData : MonoBehaviour
 		{
 			//Diccionario
 			abc = Resources.Load("ABCData/WORDS_"+language) as TextAsset;
-			abcStructure.onDictionaryFinished += onDictionaryFinishedCallback;	
-			abcStructure.processDictionary(abc.text);	
+			abcDictionary.onDictionaryFinished += onDictionaryFinishedCallback;	
+			abcDictionary.processDictionary(abc.text);	
 		}
 		#else
 			loadAndDeserializeDictionary(language);
@@ -121,7 +121,7 @@ public class PersistentData : MonoBehaviour
 
 	private void onDictionaryFinishedCallback()
 	{
-		abcStructure.onDictionaryFinished -= onDictionaryFinishedCallback;
+		abcDictionary.onDictionaryFinished -= onDictionaryFinishedCallback;
 		serializeAndSaveDictionary(currentLanguage);
 		onDictionaryFinished();
 	}
@@ -140,7 +140,7 @@ public class PersistentData : MonoBehaviour
 		FileStream fs = new FileStream(path,FileMode.Create);
 		ABCNodeSerializer serializer = new ABCNodeSerializer();
 
-		serializer.Serialize(fs,abcStructure.tree.root);
+		serializer.Serialize(fs,abcDictionary.getTreeRoot());
 		fs.Close();
 		fs.Dispose();
 
@@ -160,9 +160,7 @@ public class PersistentData : MonoBehaviour
 		Stream source = new MemoryStream(resource.bytes);
 		data = (ABCNode)serializer.Deserialize(source, null, typeof(ABCNode));
 
-		abcStructure.tree = new ABCTree();
-		abcStructure.tree.root = data;
-
+		abcDictionary.setTreeRoot(data);
 		Resources.UnloadAsset(resource);
 
 		Debug.Log("Diccionario deserializado con exito");

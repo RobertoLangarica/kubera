@@ -97,6 +97,7 @@ public class GameManager : MonoBehaviour
 		//TODO: Leer las gemas de algun lado
 		UserDataManager.instance.playerGems = 300;
 
+		//TODO el release no manda un random
 		#if UNITY_ANDROID
 		setAndConfigureLevel(PersistentData.instance.getRandomLevel());
 		#else
@@ -132,7 +133,7 @@ public class GameManager : MonoBehaviour
 		hudManager.setStarData (scoreToStar);
 	
 		cellManager.resizeGrid(10,10);
-		initializeGridFromLevel(level);
+		populateGridFromLevel(level);
 
 		getWinCondition();
 		actualizeHUDInfo();
@@ -215,7 +216,7 @@ public class GameManager : MonoBehaviour
 		return pieces;
 	}
 
-	protected void initializeGridFromLevel(Level level)
+	protected void populateGridFromLevel(Level level)
 	{
 		GameObject cellContent = null;
 		string[] levelGridData = level.grid.Split(',');
@@ -233,7 +234,7 @@ public class GameManager : MonoBehaviour
 			if((cellType & 0x2) == 0x2)
 			{
 				//Cuadro de color
-				Piece content = createPiece(singleSquarePiecePrefab, cellType>>6);
+				Piece content = createSingleSquarePiece(singleSquarePiecePrefab, cellType>>6);
 				cellManager.occupyAndConfigureCell(i,content.gameObject,content.currentType,true);
 			}
 			else if((cellType & 0x8) == 0x8)
@@ -259,7 +260,41 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	/*protected void selectLetterFromGrid(string character,)
+	protected Piece createSingleSquarePiece(GameObject sourcePrefab, int colorIndex)
+	{
+		GameObject go = GameObject.Instantiate (sourcePrefab) as GameObject;
+		go.GetComponent<BoxCollider2D> ().enabled = false;
+		Piece piece = go.GetComponent<Piece>();
+		piece.currentType = (EPieceType)colorIndex;
+
+		return piece;
+	}
+
+	public ABCChar createLetterFromInfo(ABCCharinfo charInfo)
+	{
+		GameObject newLetter = getNewEmptyLetter();
+		ABCChar abcChar	= newLetter.GetComponent<ABCChar> ();
+		WordChar	uiChar	= newLetter.GetComponent<WordChar> ();
+
+		abcChar.initializeFromInfo(charInfo);
+		uiChar.type = abcChar.type;
+		uiChar.updatecolor();
+
+		return abcChar;
+	}
+
+	protected GameObject getNewEmptyLetter()
+	{
+		GameObject go = Instantiate (gridLetterPrefab)as GameObject;
+		go.transform.SetParent (canvasOfLetters,false);
+		go.GetComponent<BoxCollider2D>().enabled = true;
+		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(lettersizeDelta.x,lettersizeDelta.y);
+		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
+
+		return go;
+	}
+
+	/*protected void selectLetterFromGrid(string character)
 	{
 		for(int i = 0; i < gridCharacters.Count; i++)
 		{
@@ -295,7 +330,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(Input.GetKeyUp(KeyCode.A))
 		{
-			initializeGridFromLevel (currentLevel);
+			populateGridFromLevel (currentLevel);
 		}
 	}
 
@@ -417,78 +452,9 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	protected Piece createPiece(GameObject sourcePrefab, int colorIndex)
-	{
-		GameObject go = GameObject.Instantiate (sourcePrefab) as GameObject;
-		go.GetComponent<BoxCollider2D> ().enabled = false;
-		Piece piece = go.GetComponent<Piece>();
-		piece.currentType = (EPieceType)colorIndex;
-
-		return piece;
-	}
-
-	public ABCChar createLetterFromInfo(ABCCharinfo charInfo)
-	{
-		GameObject newLetter = getNewEmptyLetter();
-		ABCChar abcChar	= newLetter.GetComponent<ABCChar> ();
-		WordChar	uiChar	= newLetter.GetComponent<WordChar> ();
-
-		abcChar.initializeFromInfo(charInfo);
-		uiChar.type = abcChar.type;
-		uiChar.updatecolor();
-
-		return abcChar;
-	}
-
-	protected GameObject getNewEmptyLetter()
-	{
-		GameObject go = Instantiate (gridLetterPrefab)as GameObject;
-		go.transform.SetParent (canvasOfLetters,false);
-		go.GetComponent<BoxCollider2D>().enabled = true;
-		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(lettersizeDelta.x,lettersizeDelta.y);
-		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
-
-		return go;
-	}
-
-
-	/*
-	 * Se incrementa el puntaje del jugador
-	 * 
-	 * @params point{int}: La cantidad de puntos que se le entregara al jugador
-	 */
 	protected void addPoints(int amount)
 	{
 		pointsCount += amount;
-	}
-
-
-
-	protected bool useGems(int gemsPrice = 0)
-	{
-		if(checkIfExistEnoughGems(gemsPrice))
-		{
-			UserDataManager.instance.playerGems -= gemsPrice;
-
-			hudManager.setGems(UserDataManager.instance.playerGems);
-
-			Debug.Log("Se cobrara");
-			return true;
-		}
-		Debug.Log("Fondos insuficientes");
-		return false;
-	}
-
-	/**
-	 * checa si existen suficientes gemas para hacer la transaccion
-	 **/
-	public bool checkIfExistEnoughGems(int gemsPrice)
-	{
-		if(UserDataManager.instance.playerGems >= gemsPrice)
-		{
-			return true;
-		}
-		return false;
 	}
 
 	protected void substractMoves(int amount)
@@ -669,7 +635,6 @@ public class GameManager : MonoBehaviour
 	{
 		if(totalLines > 0)
 		{
-			Debug.Log(totalLines);
 			audioManager.PlayLeLineCreatedAudio();
 		}
 
@@ -1091,7 +1056,7 @@ public class GameManager : MonoBehaviour
 			break;
 		}
 
-		if(useGems(secondChancePrice))
+		if(tryToUseGems(secondChancePrice))
 		{
 			secondChanceTimes++;
 
@@ -1100,6 +1065,31 @@ public class GameManager : MonoBehaviour
 
 			//inputGameController.activateSecondChanceLocked();
 		}
+	}
+
+	protected bool tryToUseGems(int gemsPrice = 0)
+	{
+		//TODO: TransactionManager?
+		if(checkIfExistEnoughGems(gemsPrice))
+		{
+			UserDataManager.instance.playerGems -= gemsPrice;
+			hudManager.setGems(UserDataManager.instance.playerGems);
+			return true;
+		}
+		Debug.Log("Fondos insuficientes");
+		return false;
+	}
+
+	/**
+	 * checa si existen suficientes gemas para hacer la transaccion
+	 **/
+	public bool checkIfExistEnoughGems(int gemsPrice)
+	{
+		if(UserDataManager.instance.playerGems >= gemsPrice)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	public void CancelRetry()
