@@ -92,13 +92,19 @@ public class PersistentData : MonoBehaviour
 		TextAsset tempTxt = (TextAsset)Resources.Load ("levels_"+language);
 		levelsData = Levels.LoadFromText(tempTxt.text);
 
+		//CurrentLevel
+		currentLevel = levelsData.getLevelByNumber(levelNumber);
+
 		//Alfabeto
 		TextAsset abc = Resources.Load("ABCData/ABC_"+language) as TextAsset;
 		abcStructure.initializeAlfabet(abc.text);
 
+		//Diccionario
+		#if UNITY_EDITOR
 		if(loadSerializedDictionary)
 		{
 			loadAndDeserializeDictionary(language);	
+			onDictionaryFinished();
 		}
 		else
 		{
@@ -107,9 +113,10 @@ public class PersistentData : MonoBehaviour
 			abcStructure.onDictionaryFinished += onDictionaryFinishedCallback;	
 			abcStructure.processDictionary(abc.text);	
 		}
-
-		//CurrentLevel
-		currentLevel = levelsData.getLevelByNumber(levelNumber);
+		#else
+			loadAndDeserializeDictionary(language);
+			onDictionaryFinished();
+		#endif
 	}
 
 	private void onDictionaryFinishedCallback()
@@ -120,7 +127,7 @@ public class PersistentData : MonoBehaviour
 	}
 
 
-	private void serializeAndSaveDictionary(string language)
+	public void serializeAndSaveDictionary(string language)
 	{
 		if(language == "")
 		{
@@ -149,11 +156,14 @@ public class PersistentData : MonoBehaviour
 
 		ABCNode data = null;
 		ABCNodeSerializer serializer = new ABCNodeSerializer();
-		Stream source = new MemoryStream((Resources.Load("ABCData/DICTIONARY_"+language) as TextAsset).bytes);
+		TextAsset resource = Resources.Load("ABCData/DICTIONARY_"+language) as TextAsset; 
+		Stream source = new MemoryStream(resource.bytes);
 		data = (ABCNode)serializer.Deserialize(source, null, typeof(ABCNode));
 
 		abcStructure.tree = new ABCTree();
 		abcStructure.tree.root = data;
+
+		Resources.UnloadAsset(resource);
 
 		Debug.Log("Diccionario deserializado con exito");
 	}
@@ -169,6 +179,8 @@ public class PersistentData : MonoBehaviour
 		writer.Write("\n"+word);
 		writer.Close();
 		writer.Dispose();
+
+
 	}
 
 	/**

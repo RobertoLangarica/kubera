@@ -554,6 +554,7 @@ namespace LevelBuilder
 			word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
 			PersistentData.instance.addWordToDictionary(word,languageSelector.options[languageSelector.value].text);
 			PersistentData.instance.abcStructure.registerNewWord(word);
+			PersistentData.instance.serializeAndSaveDictionary(languageSelector.options[languageSelector.value].text);
 		}
 
 		public void OnReset()
