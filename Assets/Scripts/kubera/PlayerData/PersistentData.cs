@@ -147,15 +147,10 @@ public class PersistentData : MonoBehaviour
 			language = UserDataManager.instance.language;
 		}
 
-		string path = Application.dataPath+"/Resources/"+"ABCData/DICTIONARY_"+language+".bytes";
-
 		ABCNode data = null;
-		FileStream fs = File.OpenRead(path);
 		ABCNodeSerializer serializer = new ABCNodeSerializer();
-
-		data = (ABCNode)serializer.Deserialize(fs, null, typeof(ABCNode));
-		fs.Close();
-		fs.Dispose();
+		Stream source = new MemoryStream((Resources.Load("ABCData/DICTIONARY_"+language) as TextAsset).bytes);
+		data = (ABCNode)serializer.Deserialize(source, null, typeof(ABCNode));
 
 		abcStructure.tree = new ABCTree();
 		abcStructure.tree.root = data;
@@ -170,8 +165,6 @@ public class PersistentData : MonoBehaviour
 			language = UserDataManager.instance.language;
 		}
 
-		//Diccionario
-		//TextAsset abc = Resources.Load("ABCData/WORDS_"+language) as TextAsset;
 		StreamWriter writer = new StreamWriter(Application.dataPath+"/Resources/"+"ABCData/WORDS_"+language+".txt",true);
 		writer.Write("\n"+word);
 		writer.Close();
