@@ -9,7 +9,6 @@ public class ScreenManager : MonoBehaviour {
 	public string firstScreenName;//Primer pantalla que se muestra en el juego
 	public string firstEditorScreen;//Primer pantalla que se muestra en el editor
 	public string screenBeforeClose;//Pantalla que no tiene back (cierra la app)
-	public AudioSource music;
 
 	[HideInInspector]
 	public bool blocked = false;
@@ -20,7 +19,6 @@ public class ScreenManager : MonoBehaviour {
 	protected string waitScreen;
 	private bool destroyed = false;//Indica si el objeto ya se destruyo
 
-	protected bool isAudioPlaying = true;
 	protected Dictionary<string,string> backScreens;
 
 	protected float timeBeforeNextScreen;
@@ -142,12 +140,6 @@ public class ScreenManager : MonoBehaviour {
 			return;
 		}
 
-		if (!isAudioPlaying && (newScene == firstEditorScreen || newScene == firstScreenName) ) 
-		{
-			isAudioPlaying = true;
-			//music.Play();
-		}
-
 		if(SceneFadeInOut.instance != null)
 			SceneFadeInOut.instance.Fade();
 
@@ -167,11 +159,6 @@ public class ScreenManager : MonoBehaviour {
 		if(newScene == SceneManager.GetActiveScene().name)
 		{
 			return;
-		}
-
-		if (!isAudioPlaying && (newScene == firstEditorScreen || newScene == firstScreenName) ) 
-		{
-			isAudioPlaying = true;
 		}
 
 		if(!backScreens.ContainsKey(newScene))
