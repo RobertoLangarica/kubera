@@ -97,10 +97,8 @@ public class InputWords : MonoBehaviour
 	{
 		if (allowInput && gesture.Raycast.Hit2D  &&canDeleteLetter) 
 		{	
-			print ("WSS"+canDeleteLetter);
 			onTapToDestroy (gesture.Raycast.Hit2D.transform.gameObject);
 		}
-		print ("asd   "+canDeleteLetter);
 		canDeleteLetter = true;
 	}
 
