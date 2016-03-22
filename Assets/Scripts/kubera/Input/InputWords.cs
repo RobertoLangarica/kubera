@@ -15,11 +15,11 @@ public class InputWords : MonoBehaviour
 	public DInputWordNotification onDragUpdate;
 	public DInputWordNotification onDragStart;
 	public DInputWordNotification onTap;
-	public DInputWordNotification onTapAfterLongPress;
+	public DInputWordNotification onTapToDestroy;
 
 	public float letterSpeed = 0.5f;
 	public bool allowInput = true;
-	protected bool deleteLetter;
+	protected bool canDeleteLetter = true;
 
 	void OnDrag(DragGesture gesture) 
 	{
@@ -31,7 +31,7 @@ public class InputWords : MonoBehaviour
 
 		lastTimeDraggedFrame = Time.frameCount;
 
-		deleteLetter = false;
+		canDeleteLetter = false;
 		switch(gesture.Phase)
 		{
 		case (ContinuousGesturePhase.Started):
@@ -73,6 +73,8 @@ public class InputWords : MonoBehaviour
 				letter = null;
 
 				DOTween.Kill ("InputW_Dragging");
+				canDeleteLetter = true;
+
 			}
 			break;
 		}
@@ -93,19 +95,13 @@ public class InputWords : MonoBehaviour
 
 	void OnTapAfterLongPress(TapGesture gesture)
 	{
-		if (allowInput && gesture.Raycast.Hit2D  &&deleteLetter) 
+		if (allowInput && gesture.Raycast.Hit2D  &&canDeleteLetter) 
 		{	
-			onTapAfterLongPress (gesture.Raycast.Hit2D.transform.gameObject);
+			print ("WSS"+canDeleteLetter);
+			onTapToDestroy (gesture.Raycast.Hit2D.transform.gameObject);
 		}
-		deleteLetter = false;
-	}
-
-	void OnLongPress(LongPressGesture gesture)
-	{
-		if(allowInput && gesture.Raycast.Hit2D)
-		{
-			deleteLetter = true;
-		}
+		print ("asd   "+canDeleteLetter);
+		canDeleteLetter = true;
 	}
 
 	public void moveTo(GameObject target, Vector3 to, float delay = 0.1f)

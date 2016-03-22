@@ -211,6 +211,23 @@ public class HUDManager : MonoBehaviour
 			letter.GetComponentInChildren<Text> ().text = letters[i];
 			letter.transform.SetParent (goalLettersContainer.transform,false);
 		}
+		setSizeOfContainer (letters.Count);
+	}
+
+	protected void setSizeOfContainer(int maxSize = 5)
+	{
+		GridLayoutGroup gridLayoutGroup = goalLettersContainer.GetComponent<GridLayoutGroup>();
+
+		if(((goalLettersContainer.GetComponent<RectTransform> ().rect.width/maxSize )-gridLayoutGroup.padding.left) < goalLettersContainer.GetComponent<RectTransform> ().rect.height *.8f)
+		{
+			gridLayoutGroup.cellSize = new Vector2((goalLettersContainer.GetComponent<RectTransform> ().rect.width/maxSize )-5
+				,(goalLettersContainer.GetComponent<RectTransform> ().rect.width/maxSize )-gridLayoutGroup.padding.left);
+		}
+		else
+		{
+			gridLayoutGroup.cellSize = new Vector2(goalLettersContainer.GetComponent<RectTransform>().rect.height*.8f
+				,goalLettersContainer.GetComponent<RectTransform>().rect.height*.8f);
+		}
 	}
 
 	public void setObstaclesCondition(int value=0)

@@ -55,7 +55,7 @@ namespace ABC
 				inputWords.onDragFinish += OnSwappEnding;
 				inputWords.onDragStart  += OnActivateSwapp;
 				inputWords.onTap += addLetterToWord;
-				inputWords.onTapAfterLongPress += destroyLetterAfterLongPress;
+				inputWords.onTapToDestroy += destroyLetterAfterLongPress;
 			}
 
 			chars = new List<ABCChar>();
