@@ -51,7 +51,7 @@ public class Piece : MonoBehaviour
 	public int rotateCount = 0;
 
 	[HideInInspector]
-	public int positionInScene = 0;
+	public int createdIndex = 0;
 
 	//[HideInInspector]
 	//public  Guid guid;
