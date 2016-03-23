@@ -50,10 +50,19 @@ public class Piece : MonoBehaviour
 	[HideInInspector]
 	public int rotateCount = 0;
 
+	[HideInInspector]
+	public int positionInScene = 0;
+
 	//[HideInInspector]
 	//public  Guid guid;
 	[HideInInspector]
 	public int id;
+
+	[HideInInspector]
+	public Vector3 positionOnScene;
+
+	[HideInInspector]
+	public Vector3 initialPieceScale;
 
 	void Start () 
 	{

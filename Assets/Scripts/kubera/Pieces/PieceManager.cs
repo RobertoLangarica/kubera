@@ -19,7 +19,6 @@ public class PieceManager : MonoBehaviour
 		{
 			showingPieces.Add(pieces.getNextRandomized());
 			//showingPieces [i].initializeId ();
-
 		}
 
 		piecesShowedCount = piecesToShow;

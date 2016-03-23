@@ -35,6 +35,7 @@ public class InputPowerUpRotate : MonoBehaviour
 	public float pieceSpeed = 0.3f;
 
 	protected bool allowInputDuringRotate = true;
+	protected bool isLongPressed = false;
 
 	void Start()
 	{
@@ -73,6 +74,12 @@ public class InputPowerUpRotate : MonoBehaviour
 			{
 				if(currentSelected != null)
 				{
+					if(!isLongPressed)
+					{
+						selectedInitialPosition = currentSelected.transform.position;
+						selectedInitialScale = currentSelected.transform.localScale;
+					}
+
 					somethingDragged = true;
 
 					if(OnDragStartPieceRotated != null)
@@ -85,6 +92,7 @@ public class InputPowerUpRotate : MonoBehaviour
 					posOverFinger += offsetPositionOverFinger;
 					moveTo(currentSelected,posOverFinger,pieceSpeed);
 					currentSelected.transform.DOScale(selectedScale,.1f).SetId("InputRotate_SelectedScale");
+
 				}
 			}	
 			break;
@@ -115,7 +123,6 @@ public class InputPowerUpRotate : MonoBehaviour
 						returnSelectedToInitialState();
 						reset();
 					}
-
 					DOTween.Kill("InputRotate_Dragging",false);
 				}
 			}
@@ -129,16 +136,6 @@ public class InputPowerUpRotate : MonoBehaviour
 		{
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
 
-			DOTween.Kill ("InputRotate_InitialPosition", true);
-			DOTween.Kill ("InputRotate_ScalePosition", true);
-
-			selectedInitialPosition = currentSelected.transform.position;
-			selectedInitialScale = currentSelected.transform.localScale;
-
-			Vector3 overFingerPosition = Camera.main.ScreenToWorldPoint (new Vector3 (gesture.Position.x, gesture.Position.y, 0));
-			overFingerPosition.z = selectedInitialPosition.z;
-			overFingerPosition += offsetPositionOverFinger;
-
 			//currentSelected.transform.DOMove(overFingerPosition,.1f).SetId("Input_SelectedPosition");
 
 		}
@@ -148,37 +145,62 @@ public class InputPowerUpRotate : MonoBehaviour
 		}
 	}
 
+	void OnLongPress(LongPressGesture gesture)
+	{
+		if (allowInput && currentSelected != null) 
+		{
+			/*DOTween.Kill ("InputRotate_InitialPosition", true);
+			DOTween.Kill ("InputRotate_SelectedScale", true);*/
+			selectedInitialPosition = currentSelected.transform.position;
+			selectedInitialScale = currentSelected.transform.localScale;
+
+			Vector3 posOverFinger = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
+			posOverFinger.z = selectedInitialPosition.z;
+			posOverFinger += offsetPositionOverFinger;
+
+			moveTo(currentSelected,posOverFinger,pieceSpeed);
+			currentSelected.transform.DOScale(selectedScale,.1f).SetId("InputRotate_SelectedScale");
+
+			isLongPressed = true;
+		}
+	}
+
 	void OnFingerUp()
 	{
-		if(!somethingDragged && currentSelected != null)
+		if(!somethingDragged && currentSelected != null && !isLongPressed)
 		{				
 			RotatePiece (currentSelected);
 			reset ();
 			//returnSelectedToInitialState (0.1f);
 		}
-		else if(!somethingDragged && allowInputDuringRotate)
+		else if(!somethingDragged && currentSelected != null && isLongPressed)
 		{
-			//completePowerUp (true);
+			returnSelectedToInitialState(0.1f);
+			reset();
 		}
-		allowInputDuringRotate = true;
 
+		isLongPressed = false;
+		allowInputDuringRotate = true;
 		somethingDragged = false;
 	}
 
 	public void returnSelectedToInitialState(float delay = 0)
 	{
-		DOTween.Kill("InputRotate_SelectedPosition",true);
-		DOTween.Kill("InputRotate_SelectedScale",true);
+		DOTween.Kill("InputRotate_InitialPosition",false);
+		DOTween.Kill("InputRotate_SelectedScale",false);
+		DOTween.Kill("InputRotate_Dragging",false);
+
+		Piece piece = currentSelected.GetComponent<Piece> ();
 
 		if(delay == 0)
 		{
-			currentSelected.transform.position = selectedInitialPosition;
-			currentSelected.transform.localScale = selectedInitialScale;
+			currentSelected.transform.position = piece.positionOnScene;
+			currentSelected.transform.localScale = piece.initialPieceScale;
 		}
 		else
 		{
-			currentSelected.transform.DOMove (selectedInitialPosition, .1f).SetId("InputRotate_InitialPosition");
-			currentSelected.transform.DOScale (selectedInitialScale, .1f).SetId("InputRotate_ScalePosition");
+			currentSelected.transform.DOMove (piece.positionOnScene, .1f).SetId("InputRotate_InitialPosition").OnComplete(()=>{allowInput = true; });;
+			currentSelected.transform.DOScale (piece.initialPieceScale, .1f).SetId("InputRotate_SelectedScale");
 		}
 	}
 
@@ -253,17 +275,10 @@ public class InputPowerUpRotate : MonoBehaviour
 	{
 		if(activate)
 		{
-			for (int i = 0; i < hudManager.rotationImagePositions.Length; i++) 
-			{
 				for (int j = 0; j < pieceStock.childCount; j++) 
 				{
-					if ((int)pieceStock.GetChild(j).position.y == (int)hudManager.rotationImagePositions [i].position.y) 
-					{
-						hudManager.activateRotateImage (true, i);
-						break;
-					}
+					hudManager.activateRotateImage (true, pieceStock.GetChild(j).GetComponent<Piece>().positionInScene);
 				}
-			}
 		}
 		else
 		{
