@@ -18,8 +18,8 @@ public class PieceManager : MonoBehaviour
 		for(int i= 0; i<piecesToShow; i++)
 		{
 			showingPieces.Add(pieces.getNextRandomized());
+			showingPieces [i].createdIndex = i;
 			//showingPieces [i].initializeId ();
-
 		}
 
 		piecesShowedCount = piecesToShow;

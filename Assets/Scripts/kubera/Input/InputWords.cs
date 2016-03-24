@@ -19,7 +19,7 @@ public class InputWords : MonoBehaviour
 
 	public float letterSpeed = 0.5f;
 	public bool allowInput = true;
-	protected bool deleteLetter;
+	protected bool canDeleteLetter = true;
 
 	void OnDrag(DragGesture gesture) 
 	{
@@ -31,7 +31,7 @@ public class InputWords : MonoBehaviour
 
 		lastTimeDraggedFrame = Time.frameCount;
 
-		deleteLetter = false;
+		canDeleteLetter = false;
 		switch(gesture.Phase)
 		{
 		case (ContinuousGesturePhase.Started):
@@ -73,38 +73,29 @@ public class InputWords : MonoBehaviour
 				letter = null;
 
 				DOTween.Kill ("InputW_Dragging");
+				canDeleteLetter = true;
+
 			}
 			break;
 		}
 	}
 
-	/**
-	 * tap de la letra en el tablero
-	 **/
-	void OnTap(TapGesture gesture)
+	void OnLetterGridTap(TapGesture gesture)
 	{
 		if(allowInput && gesture.Raycast.Hit2D)
 		{		
+			Debug.Log("HERE");
 			onTap (gesture.Raycast.Hit2D.transform.gameObject);
-			//[TODO]
-			//gameObject.GetComponent<AudioSource> ().Play ();
 		}
 	}
 
-	void OnTapAfterLongPress(TapGesture gesture)
+	void OnLetterWordTap(TapGesture gesture)
 	{
-		if (allowInput && gesture.Raycast.Hit2D  &&deleteLetter) 
+		if (allowInput && gesture.Raycast.Hit2D ) 
 		{	
-			onTapToDelete (gesture.Raycast.Hit2D.transform.gameObject);
-		}
-		deleteLetter = false;
-	}
+			Debug.Log("HERE2");
 
-	void OnLongPress(LongPressGesture gesture)
-	{
-		if(allowInput && gesture.Raycast.Hit2D)
-		{
-			deleteLetter = true;
+			onTapToDelete (gesture.Raycast.Hit2D.transform.gameObject);
 		}
 	}
 
