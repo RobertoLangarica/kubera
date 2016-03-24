@@ -36,9 +36,6 @@ namespace ABC
 
 		[HideInInspector]public Vector3 deleteBtnPosition;
 
-		public delegate void DSendVector3(Vector3 vector3);
-		public DSendVector3 OnSendVector3;
-
 		protected GridLayoutGroup gridLayoutGroup;
 
 		public int wordPoints;
@@ -81,7 +78,7 @@ namespace ABC
 			activateWordCompleteBtn(false);
 		}
 
-		public void OnGridLetterTapped(GameObject go)
+		private void OnGridLetterTapped(GameObject go)
 		{
 			Letter letter = go.GetComponent<Letter>();
 
@@ -98,13 +95,13 @@ namespace ABC
 
 		}
 
-		public void onLetterTap(GameObject go)
+		private void onLetterTap(GameObject go)
 		{
 			Letter letter = go.GetComponent<Letter>();
-			removeLetter(letter.letterReference);
+			removeLetter(letter);
 		}
 
-		protected void OnActivateSwapp(GameObject target)
+		private void OnActivateSwapp(GameObject target)
 		{
 			activateGridLayout (false);
 			fillLettersPositions ();
@@ -113,7 +110,7 @@ namespace ABC
 			changeDeleteState(EDeleteState.CHARACTER);
 		}
 
-		protected void fillLettersPositions()
+		private void fillLettersPositions()
 		{
 			Transform container = letterContainer.transform;
 			lettersPositions = new Vector2[container.childCount];
@@ -123,7 +120,7 @@ namespace ABC
 			}
 		}
 
-		public void OnLettersSwapping(GameObject letter)
+		private void OnLettersSwapping(GameObject letter)
 		{
 			Transform container = letterContainer.transform;
 			for(int i = 0; i< container.childCount; i++)
@@ -164,7 +161,7 @@ namespace ABC
 
 		}
 
-		protected void OnSwappEnding(GameObject target)
+		private void OnSwappEnding(GameObject target)
 		{
 			Letter letter = target.GetComponent<Letter>();
 
@@ -184,7 +181,7 @@ namespace ABC
 			changeDeleteState(EDeleteState.WORD);
 		}
 
-		protected bool isOverDeleteArea(Vector3 target)
+		private bool isOverDeleteArea(Vector3 target)
 		{
 			//TODO: Ver si min y max hacen la chamba de esas restas
 			if( target.x > (deleteBtnPosition.x - (deleteButtonImage.rectTransform.rect.width*0.5f) ) 
@@ -196,12 +193,12 @@ namespace ABC
 			return false;
 		}
 
-		protected void setSiblingIndex(GameObject target, int siblingPosition)
+		private void setSiblingIndex(GameObject target, int siblingPosition)
 		{
 			target.transform.SetSiblingIndex (siblingPosition);
 		}
 
-		protected void sortLettersAfterSwipe()
+		private void sortLettersAfterSwipe()
 		{
 			resetValidationToSiblingOrder();
 
@@ -213,20 +210,22 @@ namespace ABC
 			onLettersChange();
 		}
 			
-		//TODO: Posiblemente se necesita que devuelva Letter
 		public Letter getWildcard(string pointsOrMultiple)
 		{			
-			//TODO: Usar el prefab de letras
-			GameObject result = new GameObject();
-			Letter letter = result.AddComponent<Letter> ();
+			//TODO: Usar el prefab de letras o un prefab de comodin
+			Letter letter = Instantiate(letterPrefab).GetComponent<Letter>();
 			string wildcardValue = ".";
-			ABCChar abc = new ABCChar();
 
+			ABCChar abc = new ABCChar();
 			abc.value = wordsValidator.getCharValue(wildcardValue);
 			abc.wildcard = true;
 			abc.character = wildcardValue;
 			abc.pointsOrMultiple = pointsOrMultiple;
+
 			letter.type = Letter.EType.NORMAL;
+			letter.abcChar = abc;
+
+			letter.updateTexts();
 
 			return letter;
 		}
@@ -237,24 +236,25 @@ namespace ABC
 			{
 				//Clone para la visualizacion en WordManager
 				Letter clone = Instantiate(letterPrefab).GetComponent<Letter>();
-				clone.transform.localScale = new Vector3 (1, 1, 1);
 				clone.abcChar = gridReference.abcChar;
 				clone.type = gridReference.type;
 				clone.letterReference = gridReference;
 				clone.updateTexts();
+
 				gridReference.letterReference = clone;
 
 				addLetter(clone);
 			}
 		}
 
-		public bool isAddLetterAllowed()
+		private bool isAddLetterAllowed()
 		{
 			return letters.Count < maxLetters;
 		}
 
 		public void addLetter(Letter letter)
 		{
+			letter.select();
 			addLetterToValidationList(letter);
 			addLetterToContainer(letter);
 		}
@@ -293,7 +293,7 @@ namespace ABC
 			onLettersChange();
 		}
 
-		private void removeLetter(Letter letter)
+		public void removeLetter(Letter letter)
 		{
 			letters.Remove(letter);
 
@@ -303,7 +303,7 @@ namespace ABC
 			onLettersChange();
 		}
 
-		protected void afterWordValidation()
+		private void afterWordValidation()
 		{
 			activateWordCompleteBtn(wordsValidator.isCompleteWord());
 
@@ -313,7 +313,7 @@ namespace ABC
 			}
 		}
 
-		protected void addLetterToContainer(Letter letter)
+		private void addLetterToContainer(Letter letter)
 		{
 			//Agregamos la letra al ultimo
 			letter.transform.SetParent(letterContainer.transform,false);
@@ -322,7 +322,7 @@ namespace ABC
 			updateLetterBoxCollider (letter.gameObject);
 		}
 
-		protected void updateLetterBoxCollider(GameObject letter)
+		private void updateLetterBoxCollider(GameObject letter)
 		{
 			StartCoroutine(resizeBoxCollider(letter));
 		}
@@ -333,7 +333,7 @@ namespace ABC
 			letter.GetComponent<BoxCollider2D> ().size = letter.GetComponent<Image> ().rectTransform.rect.size;
 		}
 
-		protected bool isThereAnyLetterOnContainer()
+		private bool isThereAnyLetterOnContainer()
 		{
 			return (letterContainer.transform.childCount == 0 ? false:true); 
 		}
@@ -373,12 +373,12 @@ namespace ABC
 			return true;
 		}
 
-		protected void activateGridLayout(bool activate)
+		private void activateGridLayout(bool activate)
 		{
 			gridLayoutGroup.enabled = activate;
 		}
 			
-		protected void resetValidationToSiblingOrder ()
+		private void resetValidationToSiblingOrder ()
 		{
 			letters.Clear();
 
@@ -388,7 +388,7 @@ namespace ABC
 			}
 		}
 
-		protected void validateAllLetters()
+		private void validateAllLetters()
 		{
 			wordsValidator.initCharByCharValidation();
 
@@ -424,7 +424,7 @@ namespace ABC
 			}
 		}
 
-		protected void onLettersChange()
+		private void onLettersChange()
 		{
 			updateWordPoints();
 
@@ -438,7 +438,7 @@ namespace ABC
 			}
 		}
 
-		protected void updateWordPoints()
+		private void updateWordPoints()
 		{
 			int amount = 0;
 			int multiplierHelper = 1;

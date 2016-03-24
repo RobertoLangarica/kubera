@@ -24,38 +24,22 @@ namespace ABC
 
 		public ABCChar abcChar;
 
-		public void changeSpriteRendererTexture(Sprite newSprite)
+		void Start()
 		{
-			GetComponent<SpriteRenderer> ().sprite = newSprite;
-			updateSpriteColor();
+			myImage = gameObject.GetComponent<Image>();	
 		}
 
 		public void changeImageTexture(Sprite newSprite)
 		{
-			GetComponent<Image> ().sprite = newSprite;//PieceManager.instance.changeTexture (character.character.ToLower () + "1");
-			updateImageColor();
+			GetComponent<Image> ().sprite = newSprite;
+			updateColor();
 		}
 
-		public void updatecolor()
+		public void updateColor()
 		{
-			updateSpriteColor();
-			updateImageColor();
-		}
+			if(myImage == null){return;}
 
-		protected void updateImageColor()
-		{
-			Image image = gameObject.GetComponent<Image>();
-
-			if(image == null){return;}
-			image.color = getColorBasedOnType(type);
-		}
-
-		protected void updateSpriteColor()
-		{
-			SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-
-			if(spriteRenderer == null){return;}
-			spriteRenderer.color = getColorBasedOnType(type);
+			myImage.color = getColorBasedOnType(type);
 		}
 
 		public Color getColorBasedOnType(EType type)
@@ -75,7 +59,7 @@ namespace ABC
 			return selected;
 		}
 
-		public void markAsSelected()
+		private void markAsSelected()
 		{
 			selected=true;
 			updateColorToSelected ();
@@ -84,7 +68,17 @@ namespace ABC
 		private void markAsUnselected()
 		{
 			selected=false;
-			updatecolor();
+			updateColor();
+		}
+
+		public void select()
+		{
+			markAsSelected();
+
+			if(letterReference != null)
+			{
+				letterReference.markAsSelected();
+			}
 		}
 
 		public void deselect()
@@ -102,7 +96,9 @@ namespace ABC
 
 		protected void updateColorToSelected()
 		{
-			gameObject.GetComponent<Image> ().color = selectedColor;
+			if(myImage == null){return;}
+
+			myImage.color = selectedColor;	
 		}
 
 		public void updateTexts()

@@ -74,7 +74,6 @@ public class GameManager : MonoBehaviour
 		cellManager = FindObjectOfType<CellsManager>();
 
 		wordManager = FindObjectOfType<WordManager>();
-		wordManager.OnSendVector3 += sendVectorToCellManager;
 
 		powerupManager = FindObjectOfType<PowerUpManager>();
 		powerupManager.OnPowerupCanceled = OnPowerupCanceled;
@@ -276,7 +275,7 @@ public class GameManager : MonoBehaviour
 
 		letter.initializeFromInfo(charInfo);
 		letter.updateTexts();
-		letter.updatecolor();
+		letter.updateColor();
 
 		return letter;
 	}

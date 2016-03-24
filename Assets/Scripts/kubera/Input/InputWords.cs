@@ -84,8 +84,7 @@ public class InputWords : MonoBehaviour
 	{
 		if(allowInput && gesture.Raycast.Hit2D)
 		{		
-			Debug.Log("HERE");
-			onTap (gesture.Raycast.Hit2D.transform.gameObject);
+			onTap(gesture.Raycast.Hit2D.transform.gameObject);
 		}
 	}
 
@@ -93,9 +92,7 @@ public class InputWords : MonoBehaviour
 	{
 		if (allowInput && gesture.Raycast.Hit2D ) 
 		{	
-			Debug.Log("HERE2");
-
-			onTapToDelete (gesture.Raycast.Hit2D.transform.gameObject);
+			onTapToDelete(gesture.Raycast.Hit2D.transform.gameObject);
 		}
 	}
 
