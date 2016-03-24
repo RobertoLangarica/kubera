@@ -98,7 +98,10 @@ namespace ABC
 		private void onLetterTap(GameObject go)
 		{
 			Letter letter = go.GetComponent<Letter>();
-			removeLetter(letter);
+			if(!letter.abcChar.wildcard)
+			{
+				removeLetter(letter);
+			}
 		}
 
 		private void OnActivateSwapp(GameObject target)
