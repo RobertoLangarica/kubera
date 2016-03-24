@@ -29,7 +29,7 @@ namespace ABC
 		[HideInInspector]public ABCDictionary wordsValidator;
 		public List<Letter> letters;
 
-		protected int siblingIndexAfterSwap;
+		protected int siblingIndexAfterDrag;
 		protected Vector2[] lettersPositions; //los vectores de las letras 
 
 		protected float letterPrefabHeight = 0;
@@ -69,9 +69,9 @@ namespace ABC
 			{
 				inputWords.onTap		+= OnGridLetterTapped;
 				inputWords.onTapToDelete+= onLetterTap;
-				inputWords.onDragUpdate += OnLettersSwapping;
-				inputWords.onDragFinish += OnSwappEnding;
-				inputWords.onDragStart  += OnActivateSwapp;
+				inputWords.onDragUpdate += OnLetterDragging;
+				inputWords.onDragFinish += OnLetterDragFinish;
+				inputWords.onDragStart  += OnLetterDragStart;
 			}
 
 			activateWordDeleteBtn(false);
@@ -104,11 +104,11 @@ namespace ABC
 			}
 		}
 
-		private void OnActivateSwapp(GameObject target)
+		private void OnLetterDragStart(GameObject target)
 		{
 			activateGridLayout (false);
 			fillLettersPositions ();
-			siblingIndexAfterSwap = target.transform.GetSiblingIndex();
+			siblingIndexAfterDrag = target.transform.GetSiblingIndex();
 			setSiblingIndex (target, maxLetters);
 			changeDeleteState(EDeleteState.CHARACTER);
 		}
@@ -123,23 +123,24 @@ namespace ABC
 			}
 		}
 
-		private void OnLettersSwapping(GameObject letter)
+		private void OnLetterDragging(GameObject letter)
 		{
 			Transform container = letterContainer.transform;
+			RectTransform letterRect = letter.GetComponent<RectTransform>();
+
 			for(int i = 0; i< container.childCount; i++)
 			{			
 				if(container.GetChild(i).gameObject != letter)
 				{
 					RectTransform childRect = container.GetChild(i).GetComponent<RectTransform>();
-					RectTransform letterRect = letter.GetComponent<RectTransform>();
 
-					if( (int)childRect.anchoredPosition.x > (int)(letterRect.anchoredPosition.x - (letterRect.rect.width * 0.5f) ) 
-						&& (int)childRect.anchoredPosition.x < (int)( letterRect.anchoredPosition.x + (letterRect.rect.width * 0.5f)) )
+					 if( 	childRect.anchoredPosition.x > (letterRect.anchoredPosition.x - (letterRect.rect.width*0.5f) ) 
+						&&	childRect.anchoredPosition.x < (letterRect.anchoredPosition.x + (letterRect.rect.width*0.5f) ) )
 					{
 						if(letterRect.anchoredPosition.x > childRect.anchoredPosition.x)
 						{
 							//izquierda a derecha
-							siblingIndexAfterSwap = i;
+							siblingIndexAfterDrag = i;
 
 							for(int j=container.childCount-2; j>=i; j--)
 							{
@@ -149,22 +150,20 @@ namespace ABC
 						else
 						{
 							//derecha a izquierda 
-							siblingIndexAfterSwap = i+1;
+							siblingIndexAfterDrag = i+1;
 
 							for(int j =0; j<=i; j++)
 							{
 								container.GetChild(j).GetComponent<RectTransform>().anchoredPosition = lettersPositions[j];
 							}
 						}
+						break;
 					}
-
-					break;
 				}
 			}
-
 		}
 
-		private void OnSwappEnding(GameObject target)
+		private void OnLetterDragFinish(GameObject target)
 		{
 			Letter letter = target.GetComponent<Letter>();
 
@@ -175,13 +174,13 @@ namespace ABC
 			}
 			else
 			{
-				setSiblingIndex (letter.gameObject, siblingIndexAfterSwap);
+				setSiblingIndex (letter.gameObject, siblingIndexAfterDrag);
 			}
 
 			activateGridLayout (true);
-			sortLettersAfterSwipe();
+			resetValidationToSiblingOrder();
+			onLettersChange();
 			validateAllLetters();
-			changeDeleteState(EDeleteState.WORD);
 		}
 
 		private bool isOverDeleteArea(Vector3 target)
@@ -201,17 +200,6 @@ namespace ABC
 			target.transform.SetSiblingIndex (siblingPosition);
 		}
 
-		private void sortLettersAfterSwipe()
-		{
-			resetValidationToSiblingOrder();
-
-			if(!isThereAnyLetterOnContainer())
-			{
-				
-			}
-
-			onLettersChange();
-		}
 			
 		public Letter getWildcard(string pointsOrMultiple)
 		{			
