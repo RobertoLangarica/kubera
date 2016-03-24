@@ -15,7 +15,7 @@ public class InputWords : MonoBehaviour
 	public DInputWordNotification onDragUpdate;
 	public DInputWordNotification onDragStart;
 	public DInputWordNotification onTap;
-	public DInputWordNotification onTapAfterLongPress;
+	public DInputWordNotification onTapToDelete;
 
 	public float letterSpeed = 0.5f;
 	public bool allowInput = true;
@@ -95,7 +95,7 @@ public class InputWords : MonoBehaviour
 	{
 		if (allowInput && gesture.Raycast.Hit2D  &&deleteLetter) 
 		{	
-			onTapAfterLongPress (gesture.Raycast.Hit2D.transform.gameObject);
+			onTapToDelete (gesture.Raycast.Hit2D.transform.gameObject);
 		}
 		deleteLetter = false;
 	}

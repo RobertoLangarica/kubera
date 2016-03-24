@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 	public RandomPool<ABCCharinfo> lettersPool;
 	public RandomPool<ABCCharinfo> obstaclesLettersPool;
 	public RandomPool<ABCCharinfo> tutorialLettersPool;
-	protected List<ABCChar> gridCharacters = new List<ABCChar>();
+	protected List<Letter> gridCharacters = new List<Letter>();
 
 
 	void Awake () 
@@ -75,7 +75,6 @@ public class GameManager : MonoBehaviour
 
 		wordManager = FindObjectOfType<WordManager>();
 		wordManager.OnSendVector3 += sendVectorToCellManager;
-		wordManager.OnLettersActualized += showPointsOfLettersSelected;
 
 		powerupManager = FindObjectOfType<PowerUpManager>();
 		powerupManager.OnPowerupCanceled = OnPowerupCanceled;
@@ -222,7 +221,7 @@ public class GameManager : MonoBehaviour
 		string[] levelGridData = level.grid.Split(',');
 		int cellType = 0;
 
-		List<ABCChar> tutorialLetters = new List<ABCChar>();
+		List<Letter> tutorialLetters = new List<Letter>();
 
 		for(int i = 0;i < levelGridData.Length;i++)
 		{
@@ -240,14 +239,14 @@ public class GameManager : MonoBehaviour
 			else if((cellType & 0x8) == 0x8)
 			{	
 				//Letra obstaculo
-				ABCChar letter = createLetterFromInfo(obstaclesLettersPool.getNextRandomized());
+				Letter letter = createLetterFromInfo(obstaclesLettersPool.getNextRandomized());
 				cellManager.occupyAndConfigureCell(i,letter.gameObject,EPieceType.LETTER_OBSTACLE,true);
 				gridCharacters.Add(letter);
 				obstaclesCount++;
 			}
 			else if((cellType & 0x20) == 0x20)
 			{	
-				ABCChar letter = createLetterFromInfo(tutorialLettersPool.getNextRandomized());
+				Letter letter = createLetterFromInfo(tutorialLettersPool.getNextRandomized());
 				cellManager.occupyAndConfigureCell(i,letter.gameObject,EPieceType.LETTER,true);
 				gridCharacters.Add(letter);
 				tutorialLetters.Add(letter);
@@ -270,17 +269,16 @@ public class GameManager : MonoBehaviour
 		return piece;
 	}
 
-	public ABCChar createLetterFromInfo(ABCCharinfo charInfo)
+	public Letter createLetterFromInfo(ABCCharinfo charInfo)
 	{
-		GameObject newLetter = getNewEmptyLetter();
-		ABCChar abcChar	= newLetter.GetComponent<ABCChar> ();
-		WordChar	uiChar	= newLetter.GetComponent<WordChar> ();
+		GameObject emptyLetter = getNewEmptyLetter();
+		Letter letter = emptyLetter.GetComponent<Letter> ();
 
-		abcChar.initializeFromInfo(charInfo);
-		uiChar.type = abcChar.type;
-		uiChar.updatecolor();
+		letter.initializeFromInfo(charInfo);
+		letter.updateTexts();
+		letter.updatecolor();
 
-		return abcChar;
+		return letter;
 	}
 
 	protected GameObject getNewEmptyLetter()
@@ -293,45 +291,26 @@ public class GameManager : MonoBehaviour
 
 		return go;
 	}
-
-	/*protected void selectLetterFromGrid(string character)
+		
+	/// <summary>
+	/// TODO: el poder seleccionar letras no es solo del tutorial hay que hacerlo generico
+	/// </summary>
+	/// <param name="tutorialLetters">Tutorial letters.</param>
+	protected void selectLettersForTutorial(List<Letter> tutorialLetters)
 	{
-		for(int i = 0; i < gridCharacters.Count; i++)
+		for(int j = 0;j < tutorialLetters.Count;j++)
 		{
-			if(gridCharacters[i].character == character)
+			if(!tutorialLetters[j].isPreviouslySelected())
 			{
-				wordManager.sendLetterToWord(gridCharacters[i]);
-			}
-		}
-	}*/
-
-	protected void selectLettersForTutorial(List<ABCChar> tutorialLetters)
-	{
-		string[] selectedLetters = currentLevel.tutorialLettersPool.Split('-')[1].Split(',');
-		ABCChar abcChar;
-
-		for(int i = 0;i < selectedLetters.Length;i++)
-		{
-			for(int j = 0;j < tutorialLetters.Count;j++)
-			{
-				abcChar = tutorialLetters[j].GetComponent<ABCChar>();
-
-				if(abcChar.character == selectedLetters[i])
-				{
-					wordManager.addLetterToWord(tutorialLetters[j].gameObject);
-					tutorialLetters.RemoveAt(j);
-					break;
-				}
+				wordManager.addLetterFromGrid(tutorialLetters[j]);
+				break;
 			}
 		}
 	}
 
 	void Update()
 	{
-		if(Input.GetKeyUp(KeyCode.A))
-		{
-			populateGridFromLevel (currentLevel);
-		}
+		hudManager.setLettersPoints (wordManager.wordPoints);
 	}
 
 	private void OnPieceDropped(GameObject obj)
@@ -424,7 +403,7 @@ public class GameManager : MonoBehaviour
 			{
 				if (cells [i] [j].contentType != EPieceType.LETTER) 
 				{
-					ABCChar letter = createLetterFromInfo(lettersPool.getNextRandomized());
+					Letter letter = createLetterFromInfo(lettersPool.getNextRandomized());
 					Vector3 cellPosition =  cells [i] [j].transform.position + (new Vector3 (cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x,
 						-cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
 
@@ -475,160 +454,68 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	protected bool canCompleteWordWithWildCards()
+	public void OnDeleteWord()
 	{
-		if (currentWildCardsActivated == 0) 
-		{
-			return true;
-		}
-
-		/*if(UserDataManager.instance.playerGems >= (powerUpManager2.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated) && activatedPowerUp)
-		{
-			UserDataManager.instance.playerGems -= (powerUpManager2.getPowerUp(EPOWERUPS.WILDCARD_POWERUP).gemsPrice * currentWildCardsActivated);
-
-			if(activatedPowerUp.typeOfPowerUp == EPOWERUPS.WILDCARD_POWERUP)
-			{
-				deactivateCurrentPowerUp();
-			}
-			currentWildCardsActivated = 0;
-			return true;
-		}*/
-		currentWildCardsActivated = 0;
-		return false;
+		wordManager.removeAllLetters(false);
 	}
 
-	public void deleteWord()
-	{
-		wordManager.resetValidation(true);
-	}
-
-	public void verifyWord()
+	public void OnRetrieveWord()
 	{
 		int amount = 0;
 		int multiplierHelper = 1;
 		bool letterFound;
 		bool canUseAllWildCards;
 
-		canUseAllWildCards = canCompleteWordWithWildCards();
-
-		if(wordManager.wordsValidator.isCompleteWord() && canUseAllWildCards)
+		for(int i = 0;i < wordManager.letters.Count;i++)
 		{
-			for(int i = 0;i < wordManager.chars.Count;i++)
+			letterFound = false;
+
+			if (wordManager.letters[i].type == Letter.EType.OBSTACLE) 
 			{
-				letterFound = false;
-				switch(wordManager.chars[i].pointsOrMultiple)
+				obstaclesUsed++;
+			}
+
+			if (myWinCondition [0] == "letters") 
+			{
+				for (int j = 0; j < goalLetters.Count; j++) 
 				{
-				case("x2"):
-					{multiplierHelper *= 2;}
-					break;
-				case("x3"):
-					{multiplierHelper *= 3;}
-					break;
-				case("x4"):
-					{multiplierHelper *= 4;}
-					break;
-				case("x5"):
-					{multiplierHelper *= 5;}
-					break;
-				default:
-					{amount += int.Parse(wordManager.chars[i].pointsOrMultiple);}
-					break;
-				}
-				if (wordManager.chars [i].type == ABCChar.EType.OBSTACLE) 
-				{
-					obstaclesUsed++;
-				}
-				
-				if (myWinCondition [0] == "letters") 
-				{
-					for (int j = 0; j < goalLetters.Count; j++) 
+					if (goalLetters [j] == wordManager.letters [i].abcChar.character && !letterFound) 
 					{
-						if (goalLetters [j].ToLower () == wordManager.chars [i].character.ToLower () && !letterFound) 
-						{
-							print (goalLetters [j]);
-							print ( wordManager.chars [i].character);
+						print (goalLetters [j]);
+						print ( wordManager.letters [i].abcChar.character);
 
-							hudManager.destroyLetterFound (goalLetters [j]);
+						hudManager.destroyLetterFound (goalLetters [j]);
 
-							goalLetters.RemoveAt (j);
-							letterFound = true;
-						}
+						goalLetters.RemoveAt (j);
+						letterFound = true;
 					}
 				}
 			}
-
-			if (myWinCondition [0] == "word" || myWinCondition [0] == "ant"|| myWinCondition [0] == "sin") 
-			{
-				for (int j = 0; j < goalWords.Count; j++) 
-				{
-					if(wordManager.getFullWord().ToLower() == goalWords[j].ToLower())
-					{
-						wordFound = true;
-					}
-				}
-			}
-
-			amount *= multiplierHelper;
-
-			wordsMade++;
-			resetLettersSelected ();
-
-			actionFinished (amount);
 		}
-	}
 
-	protected void resetLettersSelected()
-	{
-		wordManager.resetValidation();
-
-	}
-
-	protected void sendVectorToCellManager(Vector3 vector3)
-	{
-		cellManager.getCellUnderPoint(vector3).clearCell();
-	}
-
-	protected void showPointsOfLettersSelected ()
-	{
-		
-		hudManager.setLettersPoints (pointsOfLettersSelected());
-	}
-
-	protected int pointsOfLettersSelected()
-	{
-		int amount = 0;
-		int multiplierHelper = 1;
-
-		for (int i = 0; i < wordManager.chars.Count; i++) 
+		if (myWinCondition [0] == "word" || myWinCondition [0] == "ant"|| myWinCondition [0] == "sin") 
 		{
-			switch (wordManager.chars [i].pointsOrMultiple) 
+			for (int j = 0; j < goalWords.Count; j++) 
 			{
-			case("x2"):
+				if(wordManager.getCurrentWordOnList().ToLower() == goalWords[j].ToLower())
 				{
-					multiplierHelper *= 2;}
-				break;
-			case("x3"):
-				{
-					multiplierHelper *= 3;}
-				break;
-			case("x4"):
-				{
-					multiplierHelper *= 4;}
-				break;
-			case("x5"):
-				{
-					multiplierHelper *= 5;}
-				break;
-			default:
-				{
-					amount += int.Parse (wordManager.chars [i].pointsOrMultiple);}
-				break;
+					wordFound = true;
+				}
 			}
 		}
 
 		amount *= multiplierHelper;
 
-		return amount;
+		wordsMade++;
+
+		wordManager.removeAllLetters();
+
+		actionFinished (amount);
+	}
+
+	protected void sendVectorToCellManager(Vector3 vector3)
+	{
+		cellManager.getCellUnderPoint(vector3).clearCell();
 	}
 
 	public void linesCreated(int totalLines)
@@ -886,7 +773,7 @@ public class GameManager : MonoBehaviour
 		allowGameInput (false);
 
 		//Se limpian las letras 
-		resetLettersSelected ();
+		wordManager.removeAllLetters();
 
 		add1x1Block();
 	}

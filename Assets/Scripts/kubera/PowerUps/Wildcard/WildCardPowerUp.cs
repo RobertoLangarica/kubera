@@ -44,7 +44,8 @@ public class WildCardPowerUp : PowerupBase
 	public void powerUpPositioned()
 	{
 		bool activated = false;
-		Vector3 v3 = new Vector3();
+		Vector3 v3;
+
 		v3 = powerUpGO.transform.position;
 		v3 = Camera.main.WorldToScreenPoint (v3);
 
@@ -56,7 +57,7 @@ public class WildCardPowerUp : PowerupBase
 			if (v3.y > wordsContainer.anchorMin.y && v3.y < wordsContainer.anchorMax.y) 
 			{
 				activated = true;
-				powerUpActivateRotate ();
+				addWildcard ();
 			}
 		}
 
@@ -78,13 +79,9 @@ public class WildCardPowerUp : PowerupBase
 
 	}
 
-	public void powerUpActivateRotate()
+	public void addWildcard()
 	{
-		//DONE: HArdcoding de ese x3 que se quede como variable en algun lado (editable de editor)
-		GameObject GO = wordManager.getWildcard (powerUpScore);
-		wordManager.addCharacter(GO.GetComponent<ABC.ABCChar>(),GO);
-		wordManager.activateWordDeleteButton (true);
-		DestroyImmediate (GO);
+		wordManager.addLetter(wordManager.getWildcard (powerUpScore));
 		OnComplete ();
 	}
 
