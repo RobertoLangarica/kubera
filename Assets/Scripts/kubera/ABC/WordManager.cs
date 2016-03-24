@@ -185,9 +185,8 @@ namespace ABC
 
 		private bool isOverDeleteArea(Vector3 target)
 		{
-			//TODO: Ver si min y max hacen la chamba de esas restas
-			if( target.x > (deleteBtnPosition.x - (deleteButtonImage.rectTransform.rect.width*0.5f) ) 
-				&& target.x < (deleteBtnPosition.x + (deleteButtonImage.rectTransform.rect.width*0.5f) )  )
+			if( 	target.x > (deleteBtnPosition.x - (deleteButtonImage.rectTransform.rect.width*0.5f) ) 
+				&& 	target.x < (deleteBtnPosition.x + (deleteButtonImage.rectTransform.rect.width*0.5f) )  )
 			{
 				return true;	
 			}
@@ -203,7 +202,6 @@ namespace ABC
 			
 		public Letter getWildcard(string pointsOrMultiple)
 		{			
-			//TODO: Usar el prefab de letras o un prefab de comodin
 			Letter letter = Instantiate(letterPrefab).GetComponent<Letter>();
 			string wildcardValue = ".";
 
@@ -248,6 +246,8 @@ namespace ABC
 			letter.select();
 			addLetterToValidationList(letter);
 			addLetterToContainer(letter);
+
+			onLettersChange();
 		}
 
 		protected void addLetterToValidationList(Letter letter)
@@ -419,14 +419,8 @@ namespace ABC
 		{
 			updateWordPoints();
 
-			if(!isThereAnyLetterOnContainer())
-			{
-				activateWordDeleteBtn(false);	
-			}
-			else
-			{
-				changeDeleteState(EDeleteState.WORD);		
-			}
+			activateWordDeleteBtn(isThereAnyLetterOnContainer());
+			changeDeleteState(EDeleteState.WORD);		
 		}
 
 		private void updateWordPoints()
