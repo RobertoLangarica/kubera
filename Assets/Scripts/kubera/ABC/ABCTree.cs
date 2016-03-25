@@ -164,6 +164,7 @@ namespace ABC.Tree
 						wildcard.value = wildcard.children[wildcard.wildcardIndex].value;
 						c.value =   wildcard.value;
 
+						//TODO: Validar si se completa palabra (no por ser comodin es valida la busqueda)
 						//Correcto sin validacion ya que es comodin
 						currentValidationNode = wildcard;
 						levelsOfSearch.Add(wildcard);
@@ -446,14 +447,16 @@ namespace ABC.Tree
 		{
 			if(isValid)
 			{
-				//if(getNodeWildcard(currentValidationNode))
-				if(currentValidationNode.wildcard)
+				if(levelsOfSearch.Count > 0)
 				{
-					return currentValidationNode.children[(int)currentValidationNode.wildcardIndex].end;
-				}
-				else
-				{
-					return currentValidationNode.end;
+					if(levelsOfSearch[levelsOfSearch.Count-1].wildcard)
+					{
+						return levelsOfSearch[levelsOfSearch.Count-1].children[levelsOfSearch[levelsOfSearch.Count-1].wildcardIndex].end;
+					}
+					else
+					{
+						return levelsOfSearch[levelsOfSearch.Count-1].end;
+					}
 				}
 			}
 

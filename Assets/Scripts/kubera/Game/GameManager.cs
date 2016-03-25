@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
 
 	public GameObject bonificationPiecePrefab;
 	public GameObject singleSquarePiecePrefab;
-	public GameObject gridLetterPrefab;
 
 	protected int pointsCount = 0;
 	protected int wordsMade = 0;
@@ -34,10 +33,11 @@ public class GameManager : MonoBehaviour
 	protected int bombsUsed = 0;
 	public float piecePositionedDelay = 0.1f;
 
-	public int consonant= 3;
-	public int vocal = 1; 
+	public int consonantPoints= 3;
+	public int vocalPoints = 1; 
 
-	public Transform canvasOfLetters;
+	public Transform gridLettersContainer;
+	public float gridLettersSizeMultiplier = 0.9f;
 
 	protected List<Cell> cellToLetter;
 
@@ -49,21 +49,13 @@ public class GameManager : MonoBehaviour
 	protected PieceManager 	 pieceManager;
 	protected HUDManager 	 hudManager;
 	protected AudioManager 	 audioManager;
-
 	protected InputPiece inputPiece;
 	protected InputWords inputWords;
-
-	public float letterSizeMultiplier = 0.9f;
-	private Vector3 lettersizeDelta;
-
 	protected Level currentLevel;
-	public RandomPool<ABCCharinfo> lettersPool;
-	public RandomPool<ABCCharinfo> obstaclesLettersPool;
-	public RandomPool<ABCCharinfo> tutorialLettersPool;
 	protected List<Letter> gridCharacters = new List<Letter>();
 
 
-	void Awake () 
+	void Start()
 	{
 		hudManager = FindObjectOfType<HUDManager> ();
 		inputWords = FindObjectOfType<InputWords>();
@@ -74,6 +66,8 @@ public class GameManager : MonoBehaviour
 		cellManager = FindObjectOfType<CellsManager>();
 
 		wordManager = FindObjectOfType<WordManager>();
+		wordManager.setMaxAllowedLetters(PersistentData.instance.maxWordLength);
+		wordManager.gridLettersParent = gridLettersContainer;
 
 		powerupManager = FindObjectOfType<PowerUpManager>();
 		powerupManager.OnPowerupCanceled = OnPowerupCanceled;
@@ -82,20 +76,19 @@ public class GameManager : MonoBehaviour
 		pieceManager = FindObjectOfType<PieceManager>();
 
 		audioManager = FindObjectOfType<AudioManager>();
-	}
 
-	void Start()
-	{
 		//LetterSize
 		Vector3 cellSizeReference = cellManager.cellPrefab.GetComponent<SpriteRenderer>().bounds.size;
-		lettersizeDelta = (Camera.main.WorldToScreenPoint(cellSizeReference) -Camera.main.WorldToScreenPoint(Vector3.zero)) * letterSizeMultiplier;
+		Vector3 lettersizeDelta = (Camera.main.WorldToScreenPoint(cellSizeReference) -Camera.main.WorldToScreenPoint(Vector3.zero)) * gridLettersSizeMultiplier;
 		lettersizeDelta.x = Mathf.Abs(lettersizeDelta.x);
 		lettersizeDelta.y = Mathf.Abs(lettersizeDelta.y);
+
+		wordManager.gridLettersSizeDelta = new Vector2(lettersizeDelta.x, lettersizeDelta.y);
 
 		//TODO: Leer las gemas de algun lado
 		UserDataManager.instance.playerGems = 300;
 
-		//TODO el release no manda un random
+		//TODO: el release no manda un random
 		#if UNITY_ANDROID
 		setAndConfigureLevel(PersistentData.instance.getRandomLevel());
 		#else
@@ -139,56 +132,17 @@ public class GameManager : MonoBehaviour
 
 	protected void readLettersFromLevel(Level level)
 	{
-		lettersPool = new RandomPool<ABCCharinfo>(getLettersInfoFromCSV(level.lettersPool));
+		wordManager.initializePoolFromCSV(level.lettersPool,WordManager.EPoolType.NORMAL);
 
 		if(level.obstacleLettersPool.Length > 0)
 		{
-			obstaclesLettersPool = new RandomPool<ABCCharinfo>(getLettersInfoFromCSV(level.obstacleLettersPool));
+			wordManager.initializePoolFromCSV(level.obstacleLettersPool,WordManager.EPoolType.OBSTACLE);
 		}
 
 		if(level.tutorialLettersPool.Length > 1)
 		{
-			tutorialLettersPool = new RandomPool<ABCCharinfo>(getLettersInfoFromCSV(level.tutorialLettersPool.Split('-')[0]));
+			wordManager.initializePoolFromCSV(level.tutorialLettersPool.Split('-')[0],WordManager.EPoolType.TUTORIAL);
 		}
-	}
-
-	/**
-	 * CSV
-	 * cantidad_letra_puntos/multiplo_tipo
-	 * ej. 02_A_1_1,10_B_x2_1
-	 **/ 
-	protected List<ABCCharinfo> getLettersInfoFromCSV(string csv)
-	{
-		List<ABCCharinfo> result = new List<ABCCharinfo>();
-		string[] info = csv.Split(',');
-		string[] infoFragments;
-
-		int amount;
-		string abc;
-		string points_multiplier;
-		int type;
-		ABCCharinfo letter;
-
-		for(int i =0; i<info.Length; i++)
-		{
-			infoFragments = info[i].Split('_');
-			amount = int.Parse(infoFragments[0]);
-			abc = infoFragments[1];
-			points_multiplier = infoFragments[2];
-			type = int.Parse(infoFragments[3]);
-
-			for(int j = 0;j < amount;j++)
-			{
-				letter = new ABCCharinfo();
-				letter.character = abc;
-				letter.pointsOrMultiple = points_multiplier;
-				letter.type = type;
-
-				result.Add(letter);
-			}
-		}
-
-		return result;
 	}
 
 	protected List<Piece> getPiecesPoolFromLevel(Level level)
@@ -237,24 +191,27 @@ public class GameManager : MonoBehaviour
 			}
 			else if((cellType & 0x8) == 0x8)
 			{	
-				//Letra obstaculo
-				Letter letter = createLetterFromInfo(obstaclesLettersPool.getNextRandomized());
+				//Obstaculo
+				Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.OBSTACLE);
 				cellManager.occupyAndConfigureCell(i,letter.gameObject,EPieceType.LETTER_OBSTACLE,true);
-				gridCharacters.Add(letter);
 				obstaclesCount++;
+
+				gridCharacters.Add(letter);
 			}
 			else if((cellType & 0x20) == 0x20)
 			{	
-				Letter letter = createLetterFromInfo(tutorialLettersPool.getNextRandomized());
+				//De tutorial
+				Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.TUTORIAL);
 				cellManager.occupyAndConfigureCell(i,letter.gameObject,EPieceType.LETTER,true);
-				gridCharacters.Add(letter);
 				tutorialLetters.Add(letter);
+
+				gridCharacters.Add(letter);
 			}
 		}
 
 		if(tutorialLetters.Count > 0)
 		{
-			selectLettersForTutorial(tutorialLetters);
+			selectLettersFromGrid(tutorialLetters, level.tutorialLettersPool.Split('-')[1].Split(','));
 		}
 	}
 
@@ -267,43 +224,19 @@ public class GameManager : MonoBehaviour
 
 		return piece;
 	}
-
-	public Letter createLetterFromInfo(ABCCharinfo charInfo)
-	{
-		GameObject emptyLetter = getNewEmptyLetter();
-		Letter letter = emptyLetter.GetComponent<Letter> ();
-
-		letter.initializeFromInfo(charInfo);
-		letter.updateTexts();
-		letter.updateColor();
-
-		return letter;
-	}
-
-	protected GameObject getNewEmptyLetter()
-	{
-		GameObject go = Instantiate (gridLetterPrefab)as GameObject;
-		go.transform.SetParent (canvasOfLetters,false);
-		go.GetComponent<BoxCollider2D>().enabled = true;
-		go.GetComponent<RectTransform> ().sizeDelta = new Vector2(lettersizeDelta.x,lettersizeDelta.y);
-		go.GetComponent<BoxCollider2D>().size =  go.GetComponent<RectTransform> ().rect.size;
-
-		return go;
-	}
 		
-	/// <summary>
-	/// TODO: el poder seleccionar letras no es solo del tutorial hay que hacerlo generico
-	/// </summary>
-	/// <param name="tutorialLetters">Tutorial letters.</param>
-	protected void selectLettersForTutorial(List<Letter> tutorialLetters)
+	protected void selectLettersFromGrid(List<Letter> gridLetters,string[] charsToLookAt)
 	{
-		for(int j = 0;j < tutorialLetters.Count;j++)
+		for(int i = 0; i < charsToLookAt.Length; i++)
 		{
-			if(!tutorialLetters[j].isPreviouslySelected())
+			for(int j = 0;j < gridLetters.Count;j++)
 			{
-				wordManager.addLetterFromGrid(tutorialLetters[j]);
-				break;
-			}
+				if(!gridLetters[j].isPreviouslySelected() && gridLetters[j].abcChar.character == charsToLookAt[i])
+				{
+					wordManager.addLetterFromGrid(gridLetters[j]);
+					break;
+				}
+			}	
 		}
 	}
 
@@ -402,7 +335,8 @@ public class GameManager : MonoBehaviour
 			{
 				if (cells [i] [j].contentType != EPieceType.LETTER) 
 				{
-					Letter letter = createLetterFromInfo(lettersPool.getNextRandomized());
+					Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
+
 					Vector3 cellPosition =  cells [i] [j].transform.position + (new Vector3 (cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x,
 						-cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
 
@@ -830,7 +764,8 @@ public class GameManager : MonoBehaviour
 
 		if (cellToLetter.Count > 0) 
 		{
-			cellManager.occupyAndConfigureCell (cellToLetter [random],createLetterFromInfo(lettersPool.getNextRandomized()).gameObject,EPieceType.LETTER,true);
+			Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
+			cellManager.occupyAndConfigureCell (cellToLetter [random],letter.gameObject,EPieceType.LETTER,true);
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
@@ -879,10 +814,10 @@ public class GameManager : MonoBehaviour
 
 	protected void showDestroyedLetterScore(Cell cell)
 	{
-		int amount = consonant;
+		int amount = consonantPoints;
 		if(cell.content.GetComponent<ABCChar>().isVocal())
 		{
-			amount = vocal;
+			amount = vocalPoints;
 		}
 
 

@@ -14,11 +14,11 @@ public class WildCardPowerUp : PowerupBase
 
 	protected GameObject powerUpGO;
 
-	protected ABC.WordManager wordManager;
+	protected WordManager wordManager;
 
 	void Start()
 	{
-		wordManager = FindObjectOfType<ABC.WordManager> ();
+		wordManager = FindObjectOfType<WordManager> ();
 
 		inputPowerUp = FindObjectOfType<InputBombAndDestroy> ();
 

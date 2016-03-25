@@ -22,6 +22,7 @@ public class PersistentData : MonoBehaviour
 
 	public int levelNumber = 1;
 	public bool loadSerializedDictionary = true;
+	public int maxWordLength = 10;
 	[HideInInspector]public Level currentLevel;
 	[HideInInspector]public Levels levelsData;
 	[HideInInspector]public ABCDictionary abcDictionary;
@@ -111,7 +112,7 @@ public class PersistentData : MonoBehaviour
 			//Diccionario
 			abc = Resources.Load("ABCData/WORDS_"+language) as TextAsset;
 			abcDictionary.onDictionaryFinished += onDictionaryFinishedCallback;	
-			abcDictionary.processDictionary(abc.text);	
+			abcDictionary.processDictionary(abc.text, maxWordLength);	
 		}
 		#else
 			loadAndDeserializeDictionary(language);

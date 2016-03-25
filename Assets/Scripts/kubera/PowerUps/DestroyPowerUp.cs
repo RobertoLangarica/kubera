@@ -9,7 +9,7 @@ public class DestroyPowerUp : PowerupBase
 
 	protected CellsManager cellsManager;
 	protected InputBombAndDestroy bombInput;
-	protected GameManager gameManager;
+	protected WordManager wordManager;
 
 	protected GameObject destroyGO;
 
@@ -17,7 +17,7 @@ public class DestroyPowerUp : PowerupBase
 	{
 		cellsManager = FindObjectOfType<CellsManager>();
 		bombInput = FindObjectOfType<InputBombAndDestroy>();
-		gameManager = FindObjectOfType<GameManager>();
+		wordManager = FindObjectOfType<WordManager> ();
 	}
 
 	public override void activate()
@@ -50,7 +50,7 @@ public class DestroyPowerUp : PowerupBase
 
 				for(int i = 0;i < selection.Length;i++)
 				{
-					cellsManager.occupyAndConfigureCell(selection[i],gameManager.createLetterFromInfo(gameManager.lettersPool.getNextRandomized()).gameObject,EPieceType.LETTER,true);
+					cellsManager.occupyAndConfigureCell(selection[i],wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL).gameObject,EPieceType.LETTER,true);
 				}
 
 				DestroyImmediate(destroyGO);

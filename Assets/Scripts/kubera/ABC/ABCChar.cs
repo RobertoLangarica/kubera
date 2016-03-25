@@ -19,6 +19,7 @@ namespace ABC
 		public int value;//Valor del caracter que se utiliza dentro de ABCDataStructure
 		public bool used;//Se usa por ABCDataStructure cuando averigua si se pueden armar palabras
 		public string pointsOrMultiple;
+		public int typeInfo;
 
 		public bool isVocal()
 		{
