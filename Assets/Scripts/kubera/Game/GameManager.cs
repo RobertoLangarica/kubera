@@ -89,11 +89,14 @@ public class GameManager : MonoBehaviour
 		UserDataManager.instance.playerGems = 300;
 
 		//TODO: el release no manda un random
-		#if UNITY_ANDROID
-		setAndConfigureLevel(PersistentData.instance.getRandomLevel());
-		#else
-		setAndConfigureLevel(PersistentData.instance.currentLevel);
-		#endif
+		if(PersistentData.instance.currentLevel == null)
+		{
+			setAndConfigureLevel(PersistentData.instance.getRandomLevel());
+		}
+		else
+		{
+			setAndConfigureLevel(PersistentData.instance.currentLevel);	
+		}
 	}
 
 	private void setAndConfigureLevel(Level level)

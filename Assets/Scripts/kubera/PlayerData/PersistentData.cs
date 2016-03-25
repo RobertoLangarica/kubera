@@ -20,9 +20,9 @@ public class PersistentData : MonoBehaviour
 	public delegate void DNotify();
 	public DNotify onDictionaryFinished;
 
-	public int levelNumber = 1;
 	public bool loadSerializedDictionary = true;
 	public int maxWordLength = 10;
+	[HideInInspector]public int levelNumer = -1;
 	[HideInInspector]public Level currentLevel;
 	[HideInInspector]public Levels levelsData;
 	[HideInInspector]public ABCDictionary abcDictionary;
@@ -53,7 +53,8 @@ public class PersistentData : MonoBehaviour
 
 		instance = this;
 		DontDestroyOnLoad(this);
-		setLevelNumber(levelNumber);
+
+		setLevelNumber(levelNumer);
 	}
 
 	void Start()
@@ -90,15 +91,17 @@ public class PersistentData : MonoBehaviour
 		currentLanguage = language;
 
 		//Niveles
-		TextAsset tempTxt = (TextAsset)Resources.Load ("levels_"+language);
-		levelsData = Levels.LoadFromText(tempTxt.text);
+		TextAsset levels = (TextAsset)Resources.Load ("levels_"+language);
+		levelsData = Levels.LoadFromText(levels.text);
+		Resources.UnloadAsset(levels);
 
 		//CurrentLevel
-		currentLevel = levelsData.getLevelByNumber(levelNumber);
+		currentLevel = levelsData.getLevelByNumber(levelNumer);
 
 		//Alfabeto
 		TextAsset abc = Resources.Load("ABCData/ABC_"+language) as TextAsset;
 		abcDictionary.initializeAlfabet(abc.text);
+		Resources.UnloadAsset(abc);
 
 		//Diccionario
 		#if UNITY_EDITOR
@@ -110,9 +113,14 @@ public class PersistentData : MonoBehaviour
 		else
 		{
 			//Diccionario
-			abc = Resources.Load("ABCData/WORDS_"+language) as TextAsset;
+			//abc = Resources.Load("ABCData/WORDS_"+language) as TextAsset;
+
+			StreamReader stream = new StreamReader(Application.dataPath+"/ABCData/WORDS_"+language+".txt");
 			abcDictionary.onDictionaryFinished += onDictionaryFinishedCallback;	
-			abcDictionary.processDictionary(abc.text, maxWordLength);	
+			//abcDictionary.processDictionary(abc.text, maxWordLength);	
+			abcDictionary.processDictionary(stream.ReadToEnd(), maxWordLength);	
+			stream.Close();
+			stream.Dispose();
 		}
 		#else
 			loadAndDeserializeDictionary(language);
@@ -187,11 +195,11 @@ public class PersistentData : MonoBehaviour
 	 **/ 
 	public void setLevelNumber(int value,bool fromBuilder = false)
 	{
-		levelNumber = value;
+		levelNumer = value;
 
 		if(levelsData != null)
 		{
-			currentLevel = levelsData.getLevelByNumber(levelNumber);
+			currentLevel = levelsData.getLevelByNumber(levelNumer);
 
 			if(fromBuilder)
 			{
