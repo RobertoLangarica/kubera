@@ -320,7 +320,7 @@ public class GameManager : MonoBehaviour
 			}
 
 			//Damos puntos por cada cuadro en la pieza
-			actionFinished(piece.squares.Length);
+			onActionDone(piece.squares.Length);
 			showScoreTextOnHud (piece.transform.position, piece.squares.Length);
 		}
 
@@ -349,14 +349,15 @@ public class GameManager : MonoBehaviour
 	}
 
 	//TODO: checar el nombre de la funcion
-	protected void actionFinished(int points,int movements = 1)
+	protected void onActionDone(int pointsForTheAction,int movementsUsed = 1)
 	{
-		addPoints (points);
-		substractMoves(movements);
+		addPoints (pointsForTheAction);
+		substractMoves(movementsUsed);
 		actualizeHUDInfo ();
-		if (checkGoal ()) 
+
+		if (isGoalAchieved()) 
 		{
-			won ();
+			gameWon ();
 		}
 		else
 		{
@@ -394,25 +395,20 @@ public class GameManager : MonoBehaviour
 
 	public void OnRetrieveWord()
 	{
-		int amount = 0;
-		int multiplierHelper = 1;
-		bool letterFound;
-		bool canUseAllWildCards;
-
+		//Contamos obstaculos y si la meta es usar letras entonces vemos si se usan
 		for(int i = 0;i < wordManager.letters.Count;i++)
 		{
-			letterFound = false;
-
 			if (wordManager.letters[i].type == Letter.EType.OBSTACLE) 
 			{
 				obstaclesUsed++;
 			}
 
+			//TODO: Hay que declarar las winConditions como constantes GOAL_LETTERS
 			if (myWinCondition [0] == "letters") 
 			{
 				for (int j = 0; j < goalLetters.Count; j++) 
 				{
-					if (goalLetters [j] == wordManager.letters [i].abcChar.character && !letterFound) 
+					if (goalLetters [j] == wordManager.letters [i].abcChar.character) 
 					{
 						print (goalLetters [j]);
 						print ( wordManager.letters [i].abcChar.character);
@@ -420,7 +416,7 @@ public class GameManager : MonoBehaviour
 						hudManager.destroyLetterFound (goalLetters [j]);
 
 						goalLetters.RemoveAt (j);
-						letterFound = true;
+						break;//Solo se cuenta una vez
 					}
 				}
 			}
@@ -430,6 +426,7 @@ public class GameManager : MonoBehaviour
 		{
 			for (int j = 0; j < goalWords.Count; j++) 
 			{
+				//TODO: Si todo es en mayusculas entonces que los niveles se aseguren de guardarse en mayusculas
 				if(wordManager.getCurrentWordOnList().ToLower() == goalWords[j].ToLower())
 				{
 					wordFound = true;
@@ -437,22 +434,46 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		amount *= multiplierHelper;
-
 		wordsMade++;
+
+		//Los puntos se leen antes de limpiar porque sin letras no hay puntos
+		onActionDone (wordManager.wordPoints);
+		removeLettersFromGrid(wordManager.letters, true);
 
 		wordManager.removeAllLetters();
 
-		actionFinished (amount);
 	}
 
-	protected void sendVectorToCellManager(Vector3 vector3)
+	/**
+	 * @param letters : Listado de letras
+	 * @param useReferenceInstead : Elimina las letras que se tengan de referencia y no las de la lista 
+	 * */
+	private void removeLettersFromGrid(List<Letter> letters, bool useReferenceInstead = false)
 	{
-		cellManager.getCellUnderPoint(vector3).clearCell();
+		Letter letter;
+		for(int i = 0; i < letters.Count; i++)
+		{
+			if(useReferenceInstead)
+			{
+				letter = letters[i].letterReference;
+			}
+			else
+			{
+				letter = letters[i];
+			}
+
+			if(letter != null)
+			{
+				cellManager.getCellUnderPoint(letter.transform.position).clearCell();
+				gridCharacters.Remove(letter);
+				GameObject.DestroyImmediate(letter.gameObject);
+			}
+		}
 	}
 
 	public void linesCreated(int totalLines)
 	{
+		//TODO: Estos puntajes que sean configurables en el editor
 		if(totalLines > 0)
 		{
 			audioManager.PlayLeLineCreatedAudio();
@@ -596,7 +617,7 @@ public class GameManager : MonoBehaviour
 	}
 
 
-	protected bool checkGoal ()
+	protected bool isGoalAchieved ()
 	{
 		switch (myWinCondition[0]) {
 		case "points":
@@ -691,7 +712,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	protected void won()
+	protected void gameWon()
 	{
 		print ("win");
 		unlockPowerUp();
