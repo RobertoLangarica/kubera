@@ -82,7 +82,6 @@ public class GameManager : MonoBehaviour
 		Vector3 lettersizeDelta = (Camera.main.WorldToScreenPoint(cellSizeReference) -Camera.main.WorldToScreenPoint(Vector3.zero)) * gridLettersSizeMultiplier;
 		lettersizeDelta.x = Mathf.Abs(lettersizeDelta.x);
 		lettersizeDelta.y = Mathf.Abs(lettersizeDelta.y);
-
 		wordManager.gridLettersSizeDelta = new Vector2(lettersizeDelta.x, lettersizeDelta.y);
 
 		//TODO: Leer las gemas de algun lado
@@ -104,8 +103,7 @@ public class GameManager : MonoBehaviour
 		currentLevel = level;
 
 		readLettersFromLevel(level);
-		pieceManager.setPieces(getPiecesPoolFromLevel(level));
-
+		pieceManager.initializePiecesFromCSV(level.pieces);
 		pieceManager.initializePiecesToShow ();
 		hudManager.showPieces (pieceManager.getShowingPieces ());
 
@@ -148,29 +146,6 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	protected List<Piece> getPiecesPoolFromLevel(Level level)
-	{
-		string[] info;
-		int amount = 0;
-
-		string[] piecesInfo = level.pieces.Split(',');
-		List<Piece> pieces = new List<Piece>();
-
-		for(int i =0; i<piecesInfo.Length; i++)
-		{
-			info = piecesInfo[i].Split('_');
-			amount = int.Parse(info[0]);
-
-			for(int j=0; j<amount; j++)
-			{
-				pieces.Add (((GameObject)(Resources.Load (info[1]))).GetComponent<Piece>());
-				pieces[pieces.Count-1].setUniqueId();
-			}
-		}
-
-		return pieces;
-	}
-
 	protected void populateGridFromLevel(Level level)
 	{
 		GameObject cellContent = null;
@@ -196,7 +171,7 @@ public class GameManager : MonoBehaviour
 			{	
 				//Obstaculo
 				Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.OBSTACLE);
-				cellManager.occupyAndConfigureCell(i,letter.gameObject,EPieceType.LETTER_OBSTACLE,true);
+				cellManager.occupyAndConfigureCell(i,letter.gameObject,Piece.EType.LETTER_OBSTACLE,true);
 				obstaclesCount++;
 
 				gridCharacters.Add(letter);
@@ -205,7 +180,7 @@ public class GameManager : MonoBehaviour
 			{	
 				//De tutorial
 				Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.TUTORIAL);
-				cellManager.occupyAndConfigureCell(i,letter.gameObject,EPieceType.LETTER,true);
+				cellManager.occupyAndConfigureCell(i,letter.gameObject,Piece.EType.LETTER,true);
 				tutorialLetters.Add(letter);
 
 				gridCharacters.Add(letter);
@@ -223,7 +198,7 @@ public class GameManager : MonoBehaviour
 		GameObject go = GameObject.Instantiate (sourcePrefab) as GameObject;
 		go.GetComponent<BoxCollider2D> ().enabled = false;
 		Piece piece = go.GetComponent<Piece>();
-		piece.currentType = (EPieceType)colorIndex;
+		piece.currentType = (Piece.EType)colorIndex;
 
 		return piece;
 	}
@@ -336,14 +311,14 @@ public class GameManager : MonoBehaviour
 		{
 			for(int j=0; j<cells[i].Count; j++)
 			{
-				if (cells [i] [j].contentType != EPieceType.LETTER) 
+				if (cells [i] [j].contentType != Piece.EType.LETTER) 
 				{
 					Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
 
 					Vector3 cellPosition =  cells [i] [j].transform.position + (new Vector3 (cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x,
 						-cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
 
-					cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, EPieceType.LETTER);
+					cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, Piece.EType.LETTER);
 					letter.gameObject.transform.DOMove (cellPosition, 0);
 					gridCharacters.Add(letter);
 				}
@@ -766,9 +741,9 @@ public class GameManager : MonoBehaviour
 			}
 			else
 			{
-				if(cellManager.colorOfMoreQuantity() != EPieceType.NONE)
+				if(cellManager.getPredominantColor() != Piece.EType.NONE)
 				{
-					cellToLetter.AddRange (cellManager.getCellsOfSameType (cellManager.colorOfMoreQuantity ()));
+					cellToLetter.AddRange (cellManager.getCellsOfSameType (cellManager.getPredominantColor ()));
 				}
 				StartCoroutine (addWinLetterAfterBlockMore ());
 			}
@@ -789,7 +764,7 @@ public class GameManager : MonoBehaviour
 		if (cellToLetter.Count > 0) 
 		{
 			Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
-			cellManager.occupyAndConfigureCell (cellToLetter [random],letter.gameObject,EPieceType.LETTER,true);
+			cellManager.occupyAndConfigureCell (cellToLetter [random],letter.gameObject,Piece.EType.LETTER,true);
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
@@ -803,9 +778,9 @@ public class GameManager : MonoBehaviour
 
 	protected void useBombs()
 	{
-		if(cellManager.colorOfMoreQuantity() != EPieceType.NONE)
+		if(cellManager.getPredominantColor() != Piece.EType.NONE)
 		{
-			cellToLetter = new List<Cell>(cellManager.getCellsOfSameType(cellManager.colorOfMoreQuantity()));
+			cellToLetter = new List<Cell>(cellManager.getCellsOfSameType(cellManager.getPredominantColor()));
 			StartCoroutine (addWinLetterAfterBlockMore ());
 		}
 		else
@@ -817,8 +792,8 @@ public class GameManager : MonoBehaviour
 	protected void destroyAndCountAllLetters()
 	{
 		cellToLetter = new List<Cell>();
-		cellToLetter.AddRange (cellManager.getCellsOfSameType (EPieceType.LETTER));
-		cellToLetter.AddRange (cellManager.getCellsOfSameType (EPieceType.LETTER_OBSTACLE));
+		cellToLetter.AddRange (cellManager.getCellsOfSameType (Piece.EType.LETTER));
+		cellToLetter.AddRange (cellManager.getCellsOfSameType (Piece.EType.LETTER_OBSTACLE));
 		StartCoroutine (destroyLetter ());
 	}
 
@@ -844,7 +819,6 @@ public class GameManager : MonoBehaviour
 			amount = vocalPoints;
 		}
 
-
 		showScoreTextOnHud (cell.transform.position, amount);
 		addPoints(amount);
 
@@ -857,6 +831,8 @@ public class GameManager : MonoBehaviour
 		inputWords.allowInput = allowInput;
 	}
 
+	//TODO: Hay que tener congruencia en los nombres y si ya se usa unlock entonces las variables
+	// que sean unlock o viceversa que se use unblock
 	protected void unlockPowerUp()
 	{
 		if(currentLevel.unblockBlock)
@@ -1036,7 +1012,5 @@ public class GameManager : MonoBehaviour
 	protected void showScoreTextOnHud(Vector3 pos,int amount)
 	{
 		hudManager.showScoreTextAt(pos,amount);
-
-
 	}
 }

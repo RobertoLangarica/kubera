@@ -19,7 +19,6 @@ public class PieceManager : MonoBehaviour
 		{
 			showingPieces.Add(pieces.getNextRandomized());
 			showingPieces [i].createdIndex = i;
-			//showingPieces [i].initializeId ();
 		}
 
 		piecesShowedCount = piecesToShow;
@@ -50,8 +49,7 @@ public class PieceManager : MonoBehaviour
 	{
 		for(int i=0; i<showingPieces.Count; i++)
 		{
-			//if(piece.guid == showingPieces[i].guid)
-			if(piece.id == showingPieces[i].id)
+			if(piece.GetInstanceID() == showingPieces[i].GetInstanceID())
 			{
 				piecesShowedCount--;
 				showingPieces.RemoveAt (i);
@@ -64,13 +62,52 @@ public class PieceManager : MonoBehaviour
 	{
 		for(int i=0; i<showingPieces.Count; i++)
 		{
-			//if(piece.guid.Equals(showingPieces[i].guid))
-			if(piece.id == showingPieces[i].id)
+			if(piece.GetInstanceID() == showingPieces[i].GetInstanceID())
 			{
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	public void initializePiecesFromCSV(string csv)
+	{
+		string[] info;
+		int amount = 0;
+
+		string[] piecesInfo = csv.Split(',');
+		List<Piece> pieces = new List<Piece>();
+
+		Dictionary<string, Object> resources = new Dictionary<string, Object>();
+
+		for(int i =0; i<piecesInfo.Length; i++)
+		{
+			info = piecesInfo[i].Split('_');
+			amount = int.Parse(info[0]);
+
+			for(int j=0; j<amount; j++)
+			{
+				if(!resources.ContainsKey(info[1]))
+				{
+					Debug.Log(info[1]);
+					Debug.Log(Resources.Load(info[1]));
+					resources.Add(info[1],Resources.Load(info[1]));
+				}
+
+				Debug.Log(resources.ContainsKey(info[1])+"__"+resources[info[1]]);
+				pieces.Add( ((GameObject)resources[info[1]]).GetComponent<Piece>() );
+			}
+		}
+
+		//Liberando resources usados
+		foreach(KeyValuePair<string, Object> item in resources)
+		{
+			//GameObject.DestroyImmediate((GameObject)item.Value);
+		}
+
+		Resources.UnloadUnusedAssets();
+
+		setPieces(pieces);
 	}
 }
