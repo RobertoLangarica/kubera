@@ -6,12 +6,20 @@ using DG.Tweening;
 
 public class PieceManager : MonoBehaviour 
 {
+	public GameObject singleSquarePrefab;
+
 	public int piecesToShow = 3;
 
 	protected RandomPool<GameObject> piecesPrefab;
-	public List<Piece> showingPieces = new List<Piece>();
+	[HideInInspector]public List<Piece> showingPieces = new List<Piece>();
 
 	[HideInInspector]public int piecesShowedCount;
+
+	void Start()
+	{
+		//Para que las instancias ya lo traigan desactivado
+		singleSquarePrefab.GetComponent<BoxCollider2D>().enabled = false;	
+	}
 
 	public void initializePiecesToShow()
 	{
@@ -85,5 +93,14 @@ public class PieceManager : MonoBehaviour
 		}
 
 		setPiecesPrefabs(prefabs);
+	}
+
+	public Piece getSingleSquarePiece(int colorIndex)
+	{
+		GameObject go = GameObject.Instantiate (singleSquarePrefab) as GameObject;
+		Piece piece = go.GetComponent<Piece>();
+		piece.currentType = (Piece.EType)colorIndex;
+
+		return piece;
 	}
 }

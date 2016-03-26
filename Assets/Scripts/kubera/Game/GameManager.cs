@@ -12,17 +12,8 @@ public class GameManager : MonoBehaviour
 	public GameObject notEnoughLifesPopUp;
 
 	public GameObject bonificationPiecePrefab;
-	public GameObject singleSquarePiecePrefab;
 
 	protected int pointsCount = 0;
-	protected int wordsMade = 0;
-	protected bool wordFound;
-	protected List<string> goalLetters;
-	protected List<string> goalWords = new List<string>();
-	protected int obstaclesCount = 0;
-	protected int obstaclesUsed = 0;
-
-	protected string[] myWinCondition;
 
 	protected int totalMoves;
 	protected int remainingMoves;
@@ -43,31 +34,33 @@ public class GameManager : MonoBehaviour
 
 	protected int currentWildCardsActivated;
 
-	protected WordManager	wordManager;
-	protected CellsManager	cellManager;
-	protected PowerUpManager powerupManager;
-	protected PieceManager 	 pieceManager;
-	protected HUDManager 	 hudManager;
-	protected AudioManager 	 audioManager;
-	protected InputPiece inputPiece;
-	protected InputWords inputWords;
-	protected Level currentLevel;
-	protected List<Letter> gridCharacters = new List<Letter>();
+	private WordManager		wordManager;
+	private CellsManager	cellManager;
+	private PowerUpManager	powerupManager;
+	private PieceManager 	pieceManager;
+	private HUDManager 	 	hudManager;
+	private AudioManager 	audioManager;
+	private InputPiece 		inputPiece;
+	private InputWords 		inputWords;
+	private GoalManager		goalManager;
+
+	private Level currentLevel;
+	private List<Letter> gridCharacters = new List<Letter>();
 
 
 	void Start()
 	{
-		hudManager = FindObjectOfType<HUDManager> ();
-		inputWords = FindObjectOfType<InputWords>();
-
-		inputPiece = FindObjectOfType<InputPiece>();
-		inputPiece.OnDrop += OnPieceDropped;
-
-		cellManager = FindObjectOfType<CellsManager>();
-
 		wordManager = FindObjectOfType<WordManager>();
 		wordManager.setMaxAllowedLetters(PersistentData.instance.maxWordLength);
 		wordManager.gridLettersParent = gridLettersContainer;
+		//LetterSize
+		Vector3 cellSizeReference = cellManager.cellPrefab.GetComponent<SpriteRenderer>().bounds.size;
+		Vector3 lettersizeDelta = (Camera.main.WorldToScreenPoint(cellSizeReference) -Camera.main.WorldToScreenPoint(Vector3.zero)) * gridLettersSizeMultiplier;
+		lettersizeDelta.x = Mathf.Abs(lettersizeDelta.x);
+		lettersizeDelta.y = Mathf.Abs(lettersizeDelta.y);
+		wordManager.gridLettersSizeDelta = new Vector2(lettersizeDelta.x, lettersizeDelta.y);
+
+		cellManager = FindObjectOfType<CellsManager>();
 
 		powerupManager = FindObjectOfType<PowerUpManager>();
 		powerupManager.OnPowerupCanceled = OnPowerupCanceled;
@@ -75,14 +68,18 @@ public class GameManager : MonoBehaviour
 
 		pieceManager = FindObjectOfType<PieceManager>();
 
+		hudManager = FindObjectOfType<HUDManager> ();
+
 		audioManager = FindObjectOfType<AudioManager>();
 
-		//LetterSize
-		Vector3 cellSizeReference = cellManager.cellPrefab.GetComponent<SpriteRenderer>().bounds.size;
-		Vector3 lettersizeDelta = (Camera.main.WorldToScreenPoint(cellSizeReference) -Camera.main.WorldToScreenPoint(Vector3.zero)) * gridLettersSizeMultiplier;
-		lettersizeDelta.x = Mathf.Abs(lettersizeDelta.x);
-		lettersizeDelta.y = Mathf.Abs(lettersizeDelta.y);
-		wordManager.gridLettersSizeDelta = new Vector2(lettersizeDelta.x, lettersizeDelta.y);
+		inputPiece = FindObjectOfType<InputPiece>();
+		inputPiece.OnDrop += OnPieceDropped;
+
+		inputWords = FindObjectOfType<InputWords>();
+
+		goalManager = FindObjectOfType<GoalManager>();
+		goalManager.currentCondition = "hola";
+		goalManager.OnGoalAchieved += OnLevelGoalAchieved;
 
 		//TODO: Leer las gemas de algun lado
 		UserDataManager.instance.playerGems = 300;
@@ -110,7 +107,8 @@ public class GameManager : MonoBehaviour
 
 		cellToLetter = new List<Cell> ();
 
-		myWinCondition = currentLevel.goal.Split ('-');
+		goalManager.initializeFromString(currentLevel.goal);
+
 		remainingMoves = totalMoves = currentLevel.moves;
 
 		hudManager.setGems(UserDataManager.instance.playerGems);
@@ -123,7 +121,8 @@ public class GameManager : MonoBehaviour
 		scoreToStar [0] = currentLevel.scoreToStar1;
 		scoreToStar [1] = currentLevel.scoreToStar2;
 		scoreToStar [2] = currentLevel.scoreToStar3;
-		hudManager.setStarData (scoreToStar);
+		hudManager.setStarsData (scoreToStar);
+		hudManager.setPoints(0);
 	
 		cellManager.resizeGrid(10,10);
 		populateGridFromLevel(level);
@@ -165,7 +164,7 @@ public class GameManager : MonoBehaviour
 			if((cellType & 0x2) == 0x2)
 			{
 				//Cuadro de color
-				Piece content = createSingleSquarePiece(singleSquarePiecePrefab, cellType>>6);
+				Piece content = pieceManager.getSingleSquarePiece(cellType>>6);
 				cellManager.occupyAndConfigureCell(i,content.gameObject,content.currentType,true);
 			}
 			else if((cellType & 0x8) == 0x8)
@@ -194,16 +193,6 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	protected Piece createSingleSquarePiece(GameObject sourcePrefab, int colorIndex)
-	{
-		GameObject go = GameObject.Instantiate (sourcePrefab) as GameObject;
-		go.GetComponent<BoxCollider2D> ().enabled = false;
-		Piece piece = go.GetComponent<Piece>();
-		piece.currentType = (Piece.EType)colorIndex;
-
-		return piece;
-	}
-		
 	protected void selectLettersFromGrid(List<Letter> gridLetters,string[] charsToLookAt)
 	{
 		for(int i = 0; i < charsToLookAt.Length; i++)
@@ -227,20 +216,16 @@ public class GameManager : MonoBehaviour
 	private void OnPieceDropped(GameObject obj)
 	{
 		Piece piece = obj.GetComponent<Piece>();
-		if (!piece) 
-		{
-			return;
-		}
 
-		if(!dropPieceOnGrid(piece))
+		if(!tryToDropOnGrid(piece))
 		{
 			inputPiece.returnSelectedToInitialState (0.1f);
 		}
 
-		inputPiece.reset ();
+		inputPiece.reset();
 	}
 
-	public bool dropPieceOnGrid(Piece piece)
+	public bool tryToDropOnGrid(Piece piece)
 	{
 		if (cellManager.canPositionateAll (piece.squares)) 
 		{
@@ -268,20 +253,21 @@ public class GameManager : MonoBehaviour
 		{ 
 			cellManager.occupyAndConfigureCell (cells [i], piece.squares [i], piece.currentType);
 
+			//Cada cuadro reeparentado para dejar de usar su contenedor actual
+			//y manipularlo individualmente
+			piece.squares[i].transform.SetParent(piece.transform.parent);
+
 			piecePosition =  cells[i].transform.position + (new Vector3 (cells[i].GetComponent<SpriteRenderer> ().bounds.extents.x,
 				-cells[i].GetComponent<SpriteRenderer> ().bounds.extents.y, 0));
 			
-			piece.squares [i].transform.DOMove (piecePosition, piecePositionedDelay);
-
+			piece.squares[i].transform.DOMove (piecePosition, piecePositionedDelay);
 		}
 
-		//DONE: Hay que poner un comentario aqui que nos diga que pasa con esta reenparentada
-
-		//Se reasigna el padre de los squares, para poder destruir su contenedor tras averlo posicionado, para evitar tener GameObjects en desuso en la escena
-		for(int i = 0;i < piece.squares.Length;i++)
+		//Solo se posicionan los cuadros de la pieza
+		/*for(int i = 0;i < piece.squares.Length;i++)
 		{
 			piece.squares[i].transform.SetParent(piece.transform.parent);
-		}
+		}*/
 	}
 
 	IEnumerator afterPiecePositioned(Piece piece)
@@ -405,7 +391,6 @@ public class GameManager : MonoBehaviour
 		{
 			for (int j = 0; j < goalWords.Count; j++) 
 			{
-				//TODO: Si todo es en mayusculas entonces que los niveles se aseguren de guardarse en mayusculas
 				if(wordManager.getCurrentWordOnList().ToLower() == goalWords[j].ToLower())
 				{
 					wordFound = true;
@@ -499,80 +484,21 @@ public class GameManager : MonoBehaviour
 
 	protected void getWinCondition()
 	{
-		int quantity = 0;
-		string word = "";
-		bool isLetterCondition = false;
-		if(myWinCondition[0] == "letters")
-		{
-			goalLetters = new List<string> ();
-			int i;
-			string[] s = myWinCondition [1].Split (',');
-			string[] temp;
+		//TODO: Mostrar solo la informacion necesaria
 
-			for(i=0; i< s.Length; i++)
-			{
-				temp = s [i].Split ('_');
-				int amount = int.Parse (temp [0]);
-
-				for(int j=0; j<amount; j++)
-				{
-					//print (temp [1]);
-					goalLetters.Add (temp [1]);
-				}
-			}
-			isLetterCondition = true;
-			hudManager.setLettersCondition (goalLetters);
-		}
-		else if(myWinCondition[0] == "obstacles")
-		{
-			quantity = obstaclesCount;
-			hudManager.setObstaclesCondition (quantity);
-		}
-		else if(myWinCondition[0] == "word")
-		{
-			string[] text = myWinCondition [1].Split (',');
-
-			for(int i=0; i<text.Length; i++)
-			{
-				goalWords.Add (text[i].Split('_')[0]);
-			}
-			word = goalWords [0];
-			hudManager.setWordCondition (word);
-		}
-		else if(myWinCondition[0] == "sin")
-		{
-			string[] text = myWinCondition [1].Split (',');
-			for(int i=0; i<text.Length; i++)
-			{
-				goalWords.Add (text[i].Split('_')[0]);
-			}
-			word = goalWords [0];
-			hudManager.setSinCondition (word);
-		}
-		else if(myWinCondition[0] == "ant")
-		{
-			string[] text = myWinCondition [1].Split (',');
-			for(int i=0; i<text.Length; i++)
-			{
-				goalWords.Add (text[i].Split('_')[0]);
-			}
-			word = goalWords [0];
-			hudManager.setAntCondition (word);
-		}
-		else if(myWinCondition[0] == "points")
-		{
-			quantity = int.Parse (myWinCondition [1]);
-			hudManager.setPointsCondition (quantity,pointsCount);
-		}
-		else if(myWinCondition[0] == "words")
-		{
-			quantity = int.Parse (myWinCondition [1]);
-			hudManager.setWordsCondition (quantity,wordsMade);
-		}
+		hudManager.setLettersCondition(goalManager.goalLetters);
+		hudManager.setObstaclesCondition (goalManager.obstaclesCount);
+		hudManager.setWordCondition (goalManager.goalWordsToShow[0]);
+		hudManager.setSynCondition (goalManager.goalWordsToShow[0]);
+		hudManager.setAntCondition(goalManager.goalWordsToShow[0]);
+		hudManager.setPointsCondition(goalManager.goalPoints, pointsCount);
+		hudManager.setWordsCondition(goalManager.goalWordsCount);
 
 		//Se muestra el objetivo al inicio del nivel
-		hudManager.setGoal(isLetterCondition);
-		hudManager.showObjectivePopUp(myWinCondition[0],word,quantity,goalLetters);
+		hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
+
+
+		//hudManager.showGoalPopUp(myWinCondition[0],word,quantity,goalLetters);
 	}
 
 	protected void actualizePointsWinCondition ()
@@ -691,9 +617,9 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	protected void gameWon()
+	private void OnLevelGoalAchieved()
 	{
-		print ("win");
+		Debug.Log("Gano de verdad.");
 		unlockPowerUp();
 
 		Invoke("winBonification",piecePositionedDelay*2);
@@ -958,7 +884,7 @@ public class GameManager : MonoBehaviour
 	public void closeObjectivePopUp()
 	{
 		audioManager.PlayButtonAudio();
-		hudManager.hideObjectivePopUp ();
+		hudManager.hideGoalPopUp ();
 		allowGameInput ();
 	}
 		

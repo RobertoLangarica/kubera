@@ -82,7 +82,7 @@ public class InputBlockPowerUp : MonoBehaviour
 			{	
 				if(currentSelected)
 				{
-					if (gameManager.dropPieceOnGrid (currentSelected.GetComponent<Piece> ())) 
+					if (gameManager.tryToDropOnGrid (currentSelected.GetComponent<Piece> ())) 
 					{
 						reset();
 						completePowerUp (true);

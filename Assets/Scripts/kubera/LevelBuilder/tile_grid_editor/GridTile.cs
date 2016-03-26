@@ -9,7 +9,7 @@ namespace LevelBuilder
 		public delegate void DOnClick(GridTile target);
 		public DOnClick onClick;
 
-		[HideInInspector]public int dataValue;
+		[HideInInspector]private int dataValue;
 
 		private Image tileImage;
 		private Sprite spriteToShow = null;

@@ -242,16 +242,24 @@ namespace LevelBuilder
 			lvlToSave.scoreToStar2 = int.Parse(inputStar2.text);
 			lvlToSave.scoreToStar3 = int.Parse(inputStar3.text);
 
+			//Agregamos el conteo de obstaculos para esa meta
+			if(levelGoalSelector.isObstacles())
+			{
+				lvlToSave.goal = levelGoalSelector.getStringData() + gridEditor.getDataCountOfType(8);
+			}
+
 			if(add)
 			{
 				PersistentData.instance.levelsData.addLevel(lvlToSave);
 			}
 
-			//Aguardamos el archivo
+			//Guardamos el archivo
 			PersistentData.instance.levelsData.Save(Application.dataPath+"/Resources/levels_"+languageSelector.options[languageSelector.value].text+".xml");
+
 			#if UNITY_EDITOR
 			AssetDatabase.Refresh();
 			#endif
+
 			//Completamos la lista de niveles
 			updateLevelSelectorOptions();
 		}

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace LevelBuilder
@@ -14,6 +15,7 @@ namespace LevelBuilder
 		private ButtonTile currentButtonSelected;
 		private ButtonTile[] buttons;
 		private GridTile[] gridTiles;
+		private Dictionary<int, int> dataCount;
 
 		private bool initialized = false;
 
@@ -34,6 +36,8 @@ namespace LevelBuilder
 				setCurrentButtonSelected(normalButtonTile);
 
 				gridTiles = gridTilesContainer.GetComponentsInChildren<GridTile>(true);
+
+				dataCount = new Dictionary<int, int>();
 
 				foreach(GridTile tile in gridTiles)
 				{
@@ -79,6 +83,8 @@ namespace LevelBuilder
 
 		private void setTileValueWithButton(GridTile tile, ButtonTile button)
 		{
+			dataCount[tile.getValue()]--;
+			dataCount[button.dataValue]++;
 			tile.setDataValue(button.dataValue);
 			tile.setSpriteToShow(button.spriteToshow);
 		}
@@ -107,8 +113,7 @@ namespace LevelBuilder
 					tempBtn = normalButtonTile;
 				}
 
-				gridTiles[i].setDataValue(tempBtn.dataValue);	
-				gridTiles[i].setSpriteToShow(tempBtn.spriteToshow);
+				setTileValueWithButton(gridTiles[i], tempBtn);
 			}
 		}
 
@@ -136,7 +141,7 @@ namespace LevelBuilder
 					builder.Append(",");
 				}
 
-				builder.Append(gridTiles[i].dataValue.ToString());
+				builder.Append(gridTiles[i].getValue().ToString());
 			}
 
 			return builder.ToString();
@@ -144,11 +149,20 @@ namespace LevelBuilder
 
 		public void resetDataItems()
 		{
+			//Conteo
+			dataCount.Clear();
+			dataCount.Add(normalButtonTile.dataValue, gridTiles.Length);
+
 			foreach(GridTile tile in gridTiles)
 			{
 				tile.setDataValue(normalButtonTile.dataValue);
 				tile.setSpriteToShow(normalButtonTile.spriteToshow);
 			}
+		}
+
+		public int getDataCountOfType(int type)
+		{
+			return dataCount[type];
 		}
 	}
 }

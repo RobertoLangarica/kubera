@@ -45,7 +45,7 @@ public class HUDManager : MonoBehaviour
 
 	public Vector3 initialPieceScale = new Vector3(2.5f,2.5f,2.5f);
 
-	public GameObject objectivePopUp;
+	public GameObject goalPopUp;
 
 	protected float[] scoreToStar;
 	protected ScoreTextPool scorePool;
@@ -65,7 +65,7 @@ public class HUDManager : MonoBehaviour
 		points.text = pointsCount.ToString();
 		setMeterPoints (pointsCount);
 
-		scoreText.text = lettersPointsTitle.text = GameTextManager.instance.getTextByIDinLanguage ("hudPuntaje");
+		scoreText.text = lettersPointsTitle.text = GameTextManager.instance.getTextByID ("hudPuntaje");
 	}
 
 	/**
@@ -113,11 +113,10 @@ public class HUDManager : MonoBehaviour
 	/**
 	 * Puntos para obtener estrellas
 	 **/
-	public void setStarData(float[] scores)
+	public void setStarsData(float[] scores)
 	{
 		scoreToStar = scores;
-		setPositionOfStars ();
-		setPoints (0);
+		setStarsPosition ();
 	}
 
 
@@ -152,7 +151,7 @@ public class HUDManager : MonoBehaviour
 	/**
 	 * setea las posiciones de las estrellas
 	 **/
-	protected void setPositionOfStars()
+	protected void setStarsPosition()
 	{
 		Stars[0].rectTransform.localPosition = new Vector3(Stars[0].rectTransform.localPosition.x, scoreToStar[0] / scoreToStar [2] * pointsMeter.rectTransform.rect.height );
 		Stars[1].rectTransform.localPosition = new Vector3(Stars[1].rectTransform.localPosition.x, scoreToStar[1] / scoreToStar [2] * pointsMeter.rectTransform.rect.height);
@@ -164,10 +163,9 @@ public class HUDManager : MonoBehaviour
 		levelText.text = name;
 	}	
 
-
-	public void setGoal(bool isLettersCondition)
+	public void showGoalAsLetters(bool isLetters)
 	{
-		if(isLettersCondition)
+		if(isLetters)
 		{
 			goalText.gameObject.SetActive (false);
 			goalLettersText.gameObject.SetActive (true);
@@ -177,8 +175,7 @@ public class HUDManager : MonoBehaviour
 			goalText.gameObject.SetActive (true);
 			goalLettersText.gameObject.SetActive (false);
 		}
-	}	
-
+	}
 
 	public void setSecondChanceLock(bool activate)
 	{
@@ -191,18 +188,18 @@ public class HUDManager : MonoBehaviour
 	public void setPointsCondition(int pointsNeed, int pointsMade)
 	{
 		goalText.text = GameTextManager.instance.changeTextWords(
-			GameTextManager.instance.getTextByIDinLanguage("goalByPointsCondition"),new string[2]{"pointsMade","pointsNeed"},new string[2]{pointsMade.ToString(),pointsNeed.ToString()});
+			GameTextManager.instance.getTextByID("goalByPointsCondition"),new string[2]{"pointsMade","pointsNeed"},new string[2]{pointsMade.ToString(),pointsNeed.ToString()});
 	}
 
-	public void setWordsCondition(int wordNeed,int wordsMade)
+	public void setWordsCondition(int wordsNeeded,int wordsMade)
 	{
 		goalText.text = GameTextManager.instance.changeTextWords(
-			GameTextManager.instance.getTextByIDinLanguage("goalByWordsCondition"),new string[2]{"wordsMade","wordNeed"},new string[2]{wordsMade.ToString(),wordNeed.ToString()});
+			GameTextManager.instance.getTextByID("goalByWordsCondition"),new string[2]{"wordsMade","wordNeed"},new string[2]{wordsMade.ToString(),wordsNeeded.ToString()});
 	}
 
 	public void setLettersCondition(List<string> letters = null)
 	{
-		goalLettersText.text = GameTextManager.instance.getTextByIDinLanguage("goalByLettersCondition");
+		goalLettersText.text = GameTextManager.instance.getTextByID("goalByLettersCondition");
 		for (int i = 0; i < letters.Count; i++) 
 		{
 			GameObject letter =  Instantiate(uiLetter) as GameObject;
@@ -232,26 +229,40 @@ public class HUDManager : MonoBehaviour
 
 	public void setObstaclesCondition(int value=0)
 	{
+		//TODO: Los textos que se usan como codigo para reemplazar deben ser menos coloquiales para evitar que se reesccriban
+		//TODO: goalSin != {{goalSin}} o [[goalSin]] o <<goalSin>> o <code>goalSin</code> Algo que indique a quien edite estas cadenas que no debe de modificarse
+		//TODO: Usar un replace que no necesite estar creando arreglos
+		//goalText.text = GameTextManager.instance.getTextByID("goalByObstaclesCondition").Replace("goalObstacleLetters",value.ToString())
+
 		goalText.text = GameTextManager.instance.changeTextWords(
-			GameTextManager.instance.getTextByIDinLanguage("goalByObstaclesCondition"),new string[1]{"goalObstacleLetters"},new string[1]{value.ToString()});
+			GameTextManager.instance.getTextByID("goalByObstaclesCondition"),new string[1]{"goalObstacleLetters"},new string[1]{value.ToString()});
 	}
 
 	public void setWordCondition(string word)
 	{
+		//TODO: Los textos que se usan como codigo para reemplazar deben ser menos coloquiales para evitar que se reesccriban
+		//TODO: goalSin != {{goalSin}} o [[goalSin]] o <<goalSin>> o <code>goalSin</code> Algo que indique a quien edite estas cadenas que no debe de modificarse
+		//TODO: Usar un replace que no necesite estar creando arreglos
 		goalText.text = GameTextManager.instance.changeTextWords(
-			GameTextManager.instance.getTextByIDinLanguage("goalBy1WordCondition"),new string[1]{"goalWord"},new string[1]{word});
+			GameTextManager.instance.getTextByID("goalBy1WordCondition"),new string[1]{"goalWord"},new string[1]{word});
 	}
 
-	public void setSinCondition(string word)
+	public void setSynCondition(string word)
 	{
+		//TODO: Los textos que se usan como codigo para reemplazar deben ser menos coloquiales para evitar que se reesccriban
+		//TODO: goalSin != {{goalSin}} o [[goalSin]] o <<goalSin>> o <code>goalSin</code> Algo que indique a quien edite estas cadenas que no debe de modificarse
+		//TODO: Usar un replace que no necesite estar creando arreglos
 		goalText.text = GameTextManager.instance.changeTextWords(
-			GameTextManager.instance.getTextByIDinLanguage("goalBySynonymousCondition"),new string[1]{"goalSin"},new string[1]{word});
+			GameTextManager.instance.getTextByID("goalBySynonymousCondition"),new string[1]{"goalSin"},new string[1]{word});
 	}
 
 	public void setAntCondition(string word)
 	{
+		//TODO: Los textos que se usan como codigo para reemplazar deben ser menos coloquiales para evitar que se reesccriban
+		//TODO: goalSin != {{goalSin}} o [[goalSin]] o <<goalSin>> o <code>goalSin</code> Algo que indique a quien edite estas cadenas que no debe de modificarse
+		//TODO: Usar un replace que no necesite estar creando arreglos
 		goalText.text = GameTextManager.instance.changeTextWords(
-			GameTextManager.instance.getTextByIDinLanguage("goalByAntonymCondition"),new string[1]{"goalAnt"},new string[1]{word});
+			GameTextManager.instance.getTextByID("goalByAntonymCondition"),new string[1]{"goalAnt"},new string[1]{word});
 	}
 		
 	public void destroyLetterFound(string letterFound)
@@ -331,72 +342,77 @@ public class HUDManager : MonoBehaviour
 		}
 	}
 
-	public void showObjectivePopUp(string goal, string word, int value=0,List<string> letters = null)
-	{
-		Text objectiveText = objectivePopUp.transform.FindChild("Objective").GetComponent<Text>();
 
-		//[TODO] Jalar textos del xml de idiomas
-		switch (goal) {
-		case "points":
-			objectiveText.text = GameTextManager.instance.changeTextWords(
-				GameTextManager.instance.getTextByIDinLanguage("goalByPointsObjectivePopUp"),new string[1]{"goalPoints"},new string[1]{value.ToString()});
-			break;
-		case "words":
-			objectiveText.text = GameTextManager.instance.changeTextWords(
-				GameTextManager.instance.getTextByIDinLanguage("goalByWordsObjectivePopUp"),new string[1]{"goalWords"},new string[1]{value.ToString()});
-			break;
-		case "letters":
-			string temp = "";
+	public void showGoalPopUp(string goalCondition, Object parameters)
+	{
+		Text goalText = goalPopUp.transform.FindChild("Objective").GetComponent<Text>();
+		string textId;
+		string textToReplace;
+		string replacement;
+
+		switch(goalCondition)
+		{
+		case GoalManager.LETTERS:
+			textId = "goalByLettersObjectivePopUp";
+			textToReplace = "goalLetters";
+
+			replacement = "";
+			List<Letter> letters = (List<Letter>)parameters;
+
 			for (int i = 0; i < letters.Count; i++) 
 			{
-				temp += letters[i];
-
-				if (letters.Count == i + 1) 
-				{
-					temp += ".";
-				}
-				else 
-				{
-					temp += ", ";
-				}
+				replacement += letters[i];
+				replacement += (i == letters.Count-1 ? ".":", ");
 			}
-			objectiveText.text = GameTextManager.instance.changeTextWords(
-				GameTextManager.instance.getTextByIDinLanguage("goalByLettersObjectivePopUp"),new string[1]{"goalLetters"},new string[1]{temp});
+
 			break;
-		case "obstacles":
-			objectiveText.text = GameTextManager.instance.changeTextWords(
-				GameTextManager.instance.getTextByIDinLanguage("goalByObstaclesObjectivePopUp"),new string[1]{"goalObstacleLetters"},new string[1]{value.ToString()});
+		case GoalManager.OBSTACLES:
+			textId = "goalByObstaclesObjectivePopUp";
+			textToReplace = "goalObstacleLetters";
+			replacement = ((int)parameters).ToString();
 			break;
-		case "word":
-			objectiveText.text = GameTextManager.instance.changeTextWords(
-				GameTextManager.instance.getTextByIDinLanguage("goalBy1WordObjectivePopUp"),new string[1]{"goalWord"},new string[1]{word});
+		case GoalManager.POINTS:
+			textId = "goalByPointsObjectivePopUp";
+			textToReplace = "goalPoints";
+			replacement = ((int)parameters).ToString();
 			break;
-		case "sin":
-			objectiveText.text = GameTextManager.instance.changeTextWords(
-				GameTextManager.instance.getTextByIDinLanguage("goalBySynonymousObjectivePopUp"),new string[1]{"goalSin"},new string[1]{word});
+		case GoalManager.WORDS_COUNT:
+			textId = "goalByWordsObjectivePopUp";
+			textToReplace = "goalWords";
+			replacement = ((int)parameters).ToString();
 			break;
-		case "ant":
-			objectiveText.text = GameTextManager.instance.changeTextWords(
-				GameTextManager.instance.getTextByIDinLanguage("goalByAntonymObjectivePopUp"),new string[1]{"goalAnt"},new string[1]{word});
+		case GoalManager.SYNONYMOUS:
+			textId = "goalBySynonymousObjectivePopUp";
+			textToReplace = "goalSin";
+			replacement = (string) parameters;
 			break;
-		default:
+		case GoalManager.WORD:
+			textId = "goalBy1WordObjectivePopUp";
+			textToReplace = "goalWord";
+			replacement = (string) parameters;
+			break;
+		
+		case GoalManager.ANTONYMS:
+			textId = "goalByAntonymObjectivePopUp";
+			textToReplace = "goalAnt";
+			replacement = (string) parameters;
 			break;
 		}
 
+		goalText.text = GameTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
 
-
-		objectivePopUp.SetActive(true);
+		goalPopUp.SetActive(true);
 	}
-
-	public void hideObjectivePopUp()
+		
+	public void hideGoalPopUp()
 	{
-		objectivePopUp.SetActive(false);
+		goalPopUp.SetActive(false);
 	}
 
 	public void quitGamePopUp()
 	{
 		exitGamePopUp.SetActive (true);
-		exitText.text = GameTextManager.instance.getTextByIDinLanguage ("exitText");
+		exitText.text = GameTextManager.instance.getTextByID ("exitText");
 		Vector3 v3 = new Vector3 ();
 		v3 = exitContent.anchoredPosition;
 
