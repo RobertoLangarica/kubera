@@ -8,16 +8,17 @@ public class PieceManager : MonoBehaviour
 {
 	public int piecesToShow = 3;
 
-	protected RandomPool<Piece> pieces;
+	protected RandomPool<GameObject> piecesPrefab;
 	public List<Piece> showingPieces = new List<Piece>();
 
-	[HideInInspector]	public int piecesShowedCount;
+	[HideInInspector]public int piecesShowedCount;
 
 	public void initializePiecesToShow()
 	{
 		for(int i= 0; i<piecesToShow; i++)
 		{
-			showingPieces.Add(pieces.getNextRandomized());
+			showingPieces.Add( GameObject.Instantiate(piecesPrefab.getNextRandomized()).GetComponent<Piece>() );
+			showingPieces[i].gameObject.SetActive(true);
 			showingPieces [i].createdIndex = i;
 		}
 
@@ -29,20 +30,12 @@ public class PieceManager : MonoBehaviour
 		return showingPieces;
 	}
 
-	public void setPieces(List<GameObject> value)
+	/**
+	 * Se guardan solo prefabs porque se instancian al momento de necesitarse
+	 **/ 
+	public void setPiecesPrefabs(List<GameObject> value)
 	{
-		List<Piece> pieces = new List<Piece>();
-
-		for (int i = 0; i < value.Count; i++) 
-		{
-			pieces.Add (value [i].GetComponent<Piece> ());
-		}
-		setPieces (pieces);
-	}
-
-	public void setPieces(List<Piece> value)
-	{
-		pieces = new RandomPool<Piece>(value);
+		piecesPrefab = new RandomPool<GameObject>(value);
 	}
 		
 	public void removeFromShowedPieces(Piece piece)
@@ -77,9 +70,7 @@ public class PieceManager : MonoBehaviour
 		int amount = 0;
 
 		string[] piecesInfo = csv.Split(',');
-		List<Piece> pieces = new List<Piece>();
-
-		Dictionary<string, Object> resources = new Dictionary<string, Object>();
+		List<GameObject> prefabs = new List<GameObject>();
 
 		for(int i =0; i<piecesInfo.Length; i++)
 		{
@@ -88,26 +79,11 @@ public class PieceManager : MonoBehaviour
 
 			for(int j=0; j<amount; j++)
 			{
-				if(!resources.ContainsKey(info[1]))
-				{
-					Debug.Log(info[1]);
-					Debug.Log(Resources.Load(info[1]));
-					resources.Add(info[1],Resources.Load(info[1]));
-				}
-
-				Debug.Log(resources.ContainsKey(info[1])+"__"+resources[info[1]]);
-				pieces.Add( ((GameObject)resources[info[1]]).GetComponent<Piece>() );
+				prefabs.Add((GameObject)Resources.Load(info[1]));
+				prefabs[prefabs.Count-1].SetActive(false);
 			}
 		}
 
-		//Liberando resources usados
-		foreach(KeyValuePair<string, Object> item in resources)
-		{
-			//GameObject.DestroyImmediate((GameObject)item.Value);
-		}
-
-		Resources.UnloadUnusedAssets();
-
-		setPieces(pieces);
+		setPiecesPrefabs(prefabs);
 	}
 }

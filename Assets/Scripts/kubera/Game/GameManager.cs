@@ -90,19 +90,20 @@ public class GameManager : MonoBehaviour
 		//TODO: el release no manda un random
 		if(PersistentData.instance.currentLevel == null)
 		{
-			setAndConfigureLevel(PersistentData.instance.getRandomLevel());
+			configureLevel(PersistentData.instance.getRandomLevel());
 		}
 		else
 		{
-			setAndConfigureLevel(PersistentData.instance.currentLevel);	
+			configureLevel(PersistentData.instance.currentLevel);	
 		}
 	}
 
-	private void setAndConfigureLevel(Level level)
+	private void configureLevel(Level level)
 	{
 		currentLevel = level;
 
 		readLettersFromLevel(level);
+
 		pieceManager.initializePiecesFromCSV(level.pieces);
 		pieceManager.initializePiecesToShow ();
 		hudManager.showPieces (pieceManager.getShowingPieces ());
