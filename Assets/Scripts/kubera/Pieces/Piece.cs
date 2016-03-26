@@ -3,28 +3,26 @@ using UnityEngine.UI;
 using System.Collections;
 using System;
 
-public enum EPieceType
-{
-	NONE,
-	AQUA,
-	BLUE,
-	GREEN,
-	MAGENTA,
-	RED,
-	YELLOW,
-	GREY,
-	BLACK,
-	LETTER,
-	LETTER_OBSTACLE,
-	LETTER_DESTROY_POWERUP,
-	LETTER_ROTATE_POWERUP,
-	LETTER_WILD_POWERUP,
-	LETTER_BLOCK_POWERUP
-}
-
 public class Piece : MonoBehaviour 
 {
-	private static int ISNTANCE_COUNT = 0;
+	public enum EType
+	{
+		NONE,
+		AQUA,
+		BLACK,
+		BLUE,
+		GREEN,
+		GREY,
+		MAGENTA,
+		RED,
+		YELLOW,
+		LETTER,
+		LETTER_OBSTACLE,
+		LETTER_DESTROY_POWERUP,
+		LETTER_ROTATE_POWERUP,
+		LETTER_WILD_POWERUP,
+		LETTER_BLOCK_POWERUP
+	}
 
 	public Color COLOR_AQUA				= new Color(0.376f, 0.698f, 0.639f); 
 	public Color COLOR_BLACK			= new Color(0.180f, 0.188f, 0.192f);
@@ -38,31 +36,22 @@ public class Piece : MonoBehaviour
 	public Color COLOR_NONE				= new Color(1, 1, 1);
 
 	public GameObject[] squares;
-	public EPieceType starterType;
+	public EType starterType;
 
-	protected EPieceType _currentType;
+	protected EType _currentType;
 	protected Color rendererColor;
 
 	[HideInInspector]public GameObject parent;
 
-	public int rotateTimes = 0;
+	[HideInInspector]public int createdIndex = 0;
 
-	[HideInInspector]
-	public int rotateCount = 0;
+	[HideInInspector]public int rotateTimes = 0;
 
-	[HideInInspector]
-	public int positionInScene = 0;
+	[HideInInspector]public int rotateCount = 0;
 
-	//[HideInInspector]
-	//public  Guid guid;
-	[HideInInspector]
-	public int id;
+	[HideInInspector]public Vector3 positionOnScene;
 
-	[HideInInspector]
-	public Vector3 positionOnScene;
-
-	[HideInInspector]
-	public Vector3 initialPieceScale;
+	[HideInInspector]public Vector3 initialPieceScale;
 
 	void Start () 
 	{
@@ -76,27 +65,9 @@ public class Piece : MonoBehaviour
 		currentType = starterType;
 	}
 
-	//HACK: esta fallando GetInstanceID gracias a que las piezas se clonan con Resources.Load
-	//por ahora dejamos GUID (que ademas si se inicializa en la declaracion sufre del mismo bug de repeticion)
-	/*public void initializeId()
-	{
-		guid = System.Guid.NewGuid();
-	}*/
-
-	//HACK: Que onda con GetInstanceID
-	public void setUniqueId()
-	{
-		id = ++ISNTANCE_COUNT;
-	}
-
-	public void printID()
-	{
-		Debug.Log("ID: "+this.GetInstanceID());
-	}
-
 	protected void updateColorBasedOnType()
 	{
-		if(currentType == EPieceType.LETTER_OBSTACLE)
+		if(currentType == EType.LETTER_OBSTACLE)
 		{
 			return;
 		}
@@ -109,34 +80,34 @@ public class Piece : MonoBehaviour
 		}
 	}
 
-	public Color getColorOfType(EPieceType type)
+	public Color getColorOfType(EType type)
 	{
 		switch(type)
 		{
-		case EPieceType.AQUA:
+		case EType.AQUA:
 			return COLOR_AQUA;
-		case EPieceType.BLACK:
+		case EType.BLACK:
 			return COLOR_BLACK;
-		case EPieceType.LETTER_OBSTACLE:
+		case EType.LETTER_OBSTACLE:
 			return COLOR_LETTER_OBSTACLE;
-		case EPieceType.BLUE:
+		case EType.BLUE:
 			return COLOR_BLUE;
-		case EPieceType.GREEN:
+		case EType.GREEN:
 			return COLOR_GREEN;
-		case EPieceType.GREY:
+		case EType.GREY:
 			return COLOR_GREY;
-		case EPieceType.MAGENTA:
+		case EType.MAGENTA:
 			return COLOR_MAGENTA;
-		case EPieceType.RED:
+		case EType.RED:
 			return COLOR_RED;
-		case EPieceType.YELLOW:
+		case EType.YELLOW:
 			return COLOR_YELLOW;
 		}
 
 		return COLOR_NONE;
 	}
 		
-	public EPieceType currentType
+	public EType currentType
 	{
 		get{return _currentType;}
 

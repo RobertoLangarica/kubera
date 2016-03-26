@@ -77,23 +77,23 @@ public class CellsManager : MonoBehaviour
 	{
 		if(!resizeGrid(columns,rows))
 		{
-			setAllCellsToType(EPieceType.NONE);
+			setAllCellsToType(Piece.EType.NONE);
 		}
 	}
 	
 	public void resetGrid()
 	{
-		setAllCellsToType(EPieceType.NONE);
+		setAllCellsToType(Piece.EType.NONE);
 	}
 
-	public void setAllCellsToType(EPieceType type)
+	public void setAllCellsToType(Piece.EType type)
 	{
 		for(int i = 0;i < rows;i++)
 		{
 			for(int j = 0;j < columns;j++)
 			{
 				//[TODO] asignarle tipo
-				//getCellAt(j,i).setTypeToCell();
+				getCellAt(j,i).setType();
 			}
 		}
 	}
@@ -167,7 +167,7 @@ public class CellsManager : MonoBehaviour
 			for(int x = 0; x < columns; x++)
 			{
 				cell = getCellAt(x,y);
-				if(cell.occupied && cell.contentType != EPieceType.LETTER && cell.contentType != EPieceType.LETTER_OBSTACLE)
+				if(cell.occupied && cell.contentType != Piece.EType.LETTER && cell.contentType != Piece.EType.LETTER_OBSTACLE)
 				{
 					if(cell.content != null && keepAdding)
 					{
@@ -175,7 +175,7 @@ public class CellsManager : MonoBehaviour
 						addRow = false;
 						nothingFound = false;
 					}
-					if(cell.contentType == EPieceType.NONE)
+					if(cell.contentType == Piece.EType.NONE)
 					{
 						//cell.name = "null";
 						if(!addRow)
@@ -191,7 +191,7 @@ public class CellsManager : MonoBehaviour
 				{
 					if(keepAdding)
 					{
-						if(cell.available || cell.contentType == EPieceType.LETTER || cell.contentType == EPieceType.LETTER_OBSTACLE)
+						if(cell.available || cell.contentType == Piece.EType.LETTER || cell.contentType == Piece.EType.LETTER_OBSTACLE)
 						{
 							keepAdding = false;
 							result.RemoveAt(result.Count-1);
@@ -231,7 +231,7 @@ public class CellsManager : MonoBehaviour
 			for(int y = 0; y < rows; y++)
 			{
 				cell = getCellAt(x,y);
-				if(cell.occupied && cell.contentType != EPieceType.LETTER && cell.contentType != EPieceType.LETTER_OBSTACLE)
+				if(cell.occupied && cell.contentType != Piece.EType.LETTER && cell.contentType != Piece.EType.LETTER_OBSTACLE)
 				{
 					if(cell.content != null && keepAdding)
 					{
@@ -239,7 +239,7 @@ public class CellsManager : MonoBehaviour
 						addRow = false;
 						nothingFound = false;
 					}
-					if(cell.contentType == EPieceType.NONE)
+					if(cell.contentType == Piece.EType.NONE)
 					{
 						//cell.name = "null";
 						if(!addRow)
@@ -255,7 +255,7 @@ public class CellsManager : MonoBehaviour
 				{
 					if(keepAdding)
 					{
-						if(cell.available || cell.contentType == EPieceType.LETTER || cell.contentType == EPieceType.LETTER_OBSTACLE)
+						if(cell.available || cell.contentType == Piece.EType.LETTER || cell.contentType == Piece.EType.LETTER_OBSTACLE)
 						{
 							keepAdding = false;
 							result.RemoveAt(result.Count-1);
@@ -354,7 +354,7 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Ocupa la celda indicada y le asigna el contenido y tipo indicado
 	 **/ 
-	public void occupyAndConfigureCell(int cellIndex,GameObject content, EPieceType type,bool positionate = false)
+	public void occupyAndConfigureCell(int cellIndex,GameObject content, Piece.EType type,bool positionate = false)
 	{
 		occupyAndConfigureCell(cells[cellIndex],content,type,positionate);
 	}
@@ -362,7 +362,7 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Ocupa la celda indicada y le asigna el contenido y tipo indicado
 	 **/ 
-	public void occupyAndConfigureCell(Cell cell,GameObject content, EPieceType type,bool positionate = false)
+	public void occupyAndConfigureCell(Cell cell,GameObject content, Piece.EType type,bool positionate = false)
 	{
 		cell.occupied = true;
 
@@ -406,17 +406,17 @@ public class CellsManager : MonoBehaviour
 		}
 	}
 
-	public void setCellContentType(int cellIndex,EPieceType type)
+	public void setCellContentType(int cellIndex,Piece.EType type)
 	{
 		setCellContentType(cells[cellIndex],type);
 	}
 		
-	public void setCellContentType(int x, int y, EPieceType type)
+	public void setCellContentType(int x, int y, Piece.EType type)
 	{
 		setCellContentType(getCellAt(x,y),type);
 	}
 
-	public void setCellContentType(Cell cell, EPieceType type)
+	public void setCellContentType(Cell cell, Piece.EType type)
 	{
 		cell.contentType = type;
 	}
@@ -500,7 +500,7 @@ public class CellsManager : MonoBehaviour
 		return getCellsOfSameType(cell.contentType);
 	}
 
-	public Cell[] getCellsOfSameType(EPieceType cellType)
+	public Cell[] getCellsOfSameType(Piece.EType cellType)
 	{
 		List<Cell> selection = new List<Cell>();
 
@@ -623,81 +623,26 @@ public class CellsManager : MonoBehaviour
 		return result.ToArray();
 	}
 
-	public EPieceType colorRandom()
+	public Piece.EType colorRandom()
 	{
-		int index = -1;
-
-		index = Random.Range (0, 8);
-
-		EPieceType result = EPieceType.NONE;
-
-		switch(index)
-		{
-		case 0:
-			result = EPieceType.AQUA;
-			break;
-		case 1:
-			result = EPieceType.BLACK;
-			break;
-		case 2:
-			result = EPieceType.BLUE;
-			break;
-		case 3:
-			result = EPieceType.GREEN;
-			break;
-		case 4:
-			result = EPieceType.GREY;
-			break;
-		case 5:
-			result = EPieceType.MAGENTA;
-			break;
-		case 6:
-			result = EPieceType.RED;
-			break;
-		case 7:
-			result = EPieceType.YELLOW;
-			break;
-		}
-		return result;
+		//HACK: Este rango existe por combinar tipos y colores
+		return (Piece.EType)Random.Range (1, 9);
 	}
 
-	public EPieceType colorOfMoreQuantity()
+	public Piece.EType getPredominantColor()
 	{
-		int[] quantity = new int[8];
-		int index = -1;
-		int amount = 0;
+		
+		int[] quantity = new int[System.Enum.GetNames(typeof(Piece.EType)).Length];
+		int index;
+		int amount;
 
 		for(int i = 0;i < cells.Count;i++)
 		{
-			switch(cells[i].contentType)
-			{
-			case EPieceType.AQUA:
-				quantity[0]++;
-				break;
-			case EPieceType.BLACK:
-				quantity[1]++;
-				break;
-			case EPieceType.BLUE:
-				quantity[2]++;
-				break;
-			case EPieceType.GREEN:
-				quantity[3]++;
-				break;
-			case EPieceType.GREY:
-				quantity[4]++;
-				break;
-			case EPieceType.MAGENTA:
-				quantity[5]++;
-				break;
-			case EPieceType.RED:
-				quantity[6]++;
-				break;
-			case EPieceType.YELLOW:
-				quantity[7]++;
-				break;
-			}
+			quantity[(int)cells[i].contentType]++;
 		}
 
+		amount = 0;
+		index = 0;
 		for(int i = 0;i < quantity.Length;i++)
 		{
 			if(quantity[i] > amount)
@@ -707,43 +652,13 @@ public class CellsManager : MonoBehaviour
 			}
 		}
 
-
-
-		EPieceType result = EPieceType.NONE;
-
-		//para regresar un color valido
-		if(index == -1)
+		//HACK: Este limite existe por combinar colores y tipo
+		if(index >8 )
 		{
-			return result;
+			return Piece.EType.NONE;
 		}
 
-		switch(index)
-		{
-		case 0:
-			result = EPieceType.AQUA;
-			break;
-		case 1:
-			result = EPieceType.BLACK;
-			break;
-		case 2:
-			result = EPieceType.BLUE;
-			break;
-		case 3:
-			result = EPieceType.GREEN;
-			break;
-		case 4:
-			result = EPieceType.GREY;
-			break;
-		case 5:
-			result = EPieceType.MAGENTA;
-			break;
-		case 6:
-			result = EPieceType.RED;
-			break;
-		case 7:
-			result = EPieceType.YELLOW;
-			break;
-		}
-		return result;
+		return (Piece.EType)index;
+
 	}
 }

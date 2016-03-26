@@ -9,7 +9,7 @@ public class DestroyPowerUp : PowerupBase
 
 	protected CellsManager cellsManager;
 	protected InputBombAndDestroy bombInput;
-	protected GameManager gameManager;
+	protected WordManager wordManager;
 
 	protected GameObject destroyGO;
 
@@ -17,7 +17,7 @@ public class DestroyPowerUp : PowerupBase
 	{
 		cellsManager = FindObjectOfType<CellsManager>();
 		bombInput = FindObjectOfType<InputBombAndDestroy>();
-		gameManager = FindObjectOfType<GameManager>();
+		wordManager = FindObjectOfType<WordManager> ();
 	}
 
 	public override void activate()
@@ -41,16 +41,16 @@ public class DestroyPowerUp : PowerupBase
 
 		if(cellSelected != null)
 		{
-			if(cellSelected.contentType != EPieceType.LETTER 
-				&& cellSelected.contentType != EPieceType.LETTER_OBSTACLE
-				&& cellSelected.contentType != EPieceType.NONE
+			if(cellSelected.contentType != Piece.EType.LETTER 
+				&& cellSelected.contentType != Piece.EType.LETTER_OBSTACLE
+				&& cellSelected.contentType != Piece.EType.NONE
 				&& cellSelected.occupied)
 			{
 				Cell[] selection = cellsManager.getCellsOfSameType(cellSelected);
 
 				for(int i = 0;i < selection.Length;i++)
 				{
-					cellsManager.occupyAndConfigureCell(selection[i],gameManager.createLetterFromInfo(gameManager.lettersPool.getNextRandomized()).gameObject,EPieceType.LETTER,true);
+					cellsManager.occupyAndConfigureCell(selection[i],wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL).gameObject,Piece.EType.LETTER,true);
 				}
 
 				DestroyImmediate(destroyGO);

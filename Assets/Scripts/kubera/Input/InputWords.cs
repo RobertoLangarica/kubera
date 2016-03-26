@@ -15,7 +15,7 @@ public class InputWords : MonoBehaviour
 	public DInputWordNotification onDragUpdate;
 	public DInputWordNotification onDragStart;
 	public DInputWordNotification onTap;
-	public DInputWordNotification onTapToDestroy;
+	public DInputWordNotification onTapToDelete;
 
 	public float letterSpeed = 0.5f;
 	public bool allowInput = true;
@@ -80,26 +80,20 @@ public class InputWords : MonoBehaviour
 		}
 	}
 
-	/**
-	 * tap de la letra en el tablero
-	 **/
-	void OnTap(TapGesture gesture)
+	void OnLetterGridTap(TapGesture gesture)
 	{
 		if(allowInput && gesture.Raycast.Hit2D)
 		{		
-			onTap (gesture.Raycast.Hit2D.transform.gameObject);
-			//[TODO]
-			//gameObject.GetComponent<AudioSource> ().Play ();
+			onTap(gesture.Raycast.Hit2D.transform.gameObject);
 		}
 	}
 
-	void OnTapAfterLongPress(TapGesture gesture)
+	void OnLetterWordTap(TapGesture gesture)
 	{
-		if (allowInput && gesture.Raycast.Hit2D  &&canDeleteLetter) 
+		if (allowInput && gesture.Raycast.Hit2D ) 
 		{	
-			onTapToDestroy (gesture.Raycast.Hit2D.transform.gameObject);
+			onTapToDelete(gesture.Raycast.Hit2D.transform.gameObject);
 		}
-		canDeleteLetter = true;
 	}
 
 	public void moveTo(GameObject target, Vector3 to, float delay = 0.1f)

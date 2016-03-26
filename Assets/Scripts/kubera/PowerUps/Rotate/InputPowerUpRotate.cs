@@ -51,10 +51,13 @@ public class InputPowerUpRotate : MonoBehaviour
 
 	public void startRotate()
 	{
-		pieceManager = FindObjectOfType<PieceManager> ();
-		gameManager = FindObjectOfType<GameManager> ();
-		hudManager = FindObjectOfType<HUDManager> ();
-
+		if(pieceManager == null ||gameManager == null|| hudManager == null)
+		{
+			pieceManager = FindObjectOfType<PieceManager> ();
+			gameManager = FindObjectOfType<GameManager> ();
+			hudManager = FindObjectOfType<HUDManager> ();
+		}
+	
 		activateRotateImage (true);
 	}
 
@@ -74,12 +77,6 @@ public class InputPowerUpRotate : MonoBehaviour
 			{
 				if(currentSelected != null)
 				{
-					if(!isLongPressed)
-					{
-						selectedInitialPosition = currentSelected.transform.position;
-						selectedInitialScale = currentSelected.transform.localScale;
-					}
-
 					somethingDragged = true;
 
 					if(OnDragStartPieceRotated != null)
@@ -115,8 +112,8 @@ public class InputPowerUpRotate : MonoBehaviour
 				{
 					if (gameManager.dropPieceOnGrid (currentSelected.GetComponent<Piece> ())) 
 					{
+						onPiecePositionatedCompleted (false,currentSelected.GetComponent<Piece> ().createdIndex);
 						reset();
-						onPiecePositionatedCompleted (true);
 					}
 					else
 					{
@@ -151,8 +148,8 @@ public class InputPowerUpRotate : MonoBehaviour
 		{
 			/*DOTween.Kill ("InputRotate_InitialPosition", true);
 			DOTween.Kill ("InputRotate_SelectedScale", true);*/
-			selectedInitialPosition = currentSelected.transform.position;
-			selectedInitialScale = currentSelected.transform.localScale;
+			/*selectedInitialPosition = currentSelected.transform.position;
+			selectedInitialScale = currentSelected.transform.localScale;*/
 
 			Vector3 posOverFinger = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 			posOverFinger.z = selectedInitialPosition.z;
@@ -221,11 +218,11 @@ public class InputPowerUpRotate : MonoBehaviour
 		allowInput = !isRotating;
 	}
 
-	protected void onPiecePositionatedCompleted(bool cancel = false)
+	protected void onPiecePositionatedCompleted (bool cancel, int posOnScene)
 	{
 		DOTween.Kill ("InputRotate_Dragging");
 
-		activateRotateImage (false);
+		activateRotateImage (cancel,posOnScene);
 
 		// por los delay cuando es 1 es cuando solo queda la pieza que se esta poniendo
 		if (pieceManager.getShowingPieces ().Count == 1) 
@@ -253,7 +250,7 @@ public class InputPowerUpRotate : MonoBehaviour
 		if (piece.rotateTimes > 0) {
 			isRotating (true);
 
-			//CHANGE: Los nombres deben ser lo mas claros y simples posibles, para contar las rotaciones pudo ser un rotateCount
+			//DONE: Los nombres deben ser lo mas claros y simples posibles, para contar las rotaciones pudo ser un rotateCount
 			piece.rotateCount += 1;
 
 			piece.gameObject.transform.DOScale (new Vector3 (0, 0), 0.25f).OnComplete (() => {
@@ -271,24 +268,18 @@ public class InputPowerUpRotate : MonoBehaviour
 		}
 	}
 
-	public void activateRotateImage(bool activate)
+	public void activateRotateImage(bool activate,int posOnScene =-1)
 	{
 		if(activate)
 		{
-				for (int j = 0; j < pieceStock.childCount; j++) 
-				{
-					hudManager.activateRotateImage (true, pieceStock.GetChild(j).GetComponent<Piece>().positionInScene);
-				}
+			for (int j = 0; j < pieceManager.showingPieces.Count; j++) 
+			{				
+				hudManager.activateRotateImage (true, pieceManager.showingPieces[j].GetComponent<Piece>().createdIndex);
+			}
 		}
 		else
 		{
-			for (int i = 0; i < hudManager.rotationImagePositions.Length; i++) 
-			{
-				if (selectedInitialPosition.y == hudManager.rotationImagePositions [i].position.y) 
-				{
-					hudManager.activateRotateImage (false, i);
-				}
-			}
+			hudManager.activateRotateImage (false, posOnScene);
 		}
 	}
 
