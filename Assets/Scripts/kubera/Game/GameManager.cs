@@ -926,7 +926,7 @@ public class GameManager : MonoBehaviour
 
 	public void CancelRetry()
 	{
-		UserDataManager.instance.takeLifeFromPlayer();
+		UserDataManager.instance.giveLifeToPlayer (-1);
 	}
 
 	public void Retry()
@@ -936,7 +936,7 @@ public class GameManager : MonoBehaviour
 
 	public void RefillLifes()
 	{
-		UserDataManager.instance.refillAllPlayerLifes();
+		UserDataManager.instance.giveLifeToPlayer (UserDataManager.instance.maximumLifes);
 	}
 
 	public void tryToActivatePowerup(int powerupTypeIndex)
