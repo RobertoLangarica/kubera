@@ -20,6 +20,8 @@ public class InputPiece : MonoBehaviour
 
 	public float pieceSpeed = 0.3f;
 
+	protected bool isLongPressed = false;
+
 	void OnDrag(DragGesture gesture) 
 	{
 		//Solo se ejecuta una vez por frame (multifinger puede llamarlo mas de una vez)
@@ -35,7 +37,7 @@ public class InputPiece : MonoBehaviour
 		case (ContinuousGesturePhase.Started):
 			{
 				if(currentSelected != null)
-				{
+				{					
 					somethingDragged = true;
 
 					if(OnDragStart != null)
@@ -99,47 +101,63 @@ public class InputPiece : MonoBehaviour
 		{
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
 
+			/*selectedInitialPosition = currentSelected.transform.position;
+			selectedInitialScale = currentSelected.transform.localScale;*/
+		}
+	}
 
-			DOTween.Kill("Input_InitialPosition",true);
-			DOTween.Kill("Input_ScalePosition",true);
+	void OnLongPress(LongPressGesture gesture)
+	{
+		if (allowInput && gesture.Raycast.Hits2D != null) 
+		{
+			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
+
+			//DOTween.Kill("Input_InitialPosition",true);
+			//DOTween.Kill("Input_ScalePosition",true);
 
 			selectedInitialPosition = currentSelected.transform.position;
 			selectedInitialScale = currentSelected.transform.localScale;
 
-			Vector3 overFingerPosition = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-			overFingerPosition.z = selectedInitialPosition.z;
-			overFingerPosition += offsetPositionOverFinger;
+			Vector3 posOverFinger = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
+			posOverFinger.z = -1;
+			posOverFinger += offsetPositionOverFinger;
 
-			//currentSelected.transform.DOMove(overFingerPosition,.1f).SetId("Input_SelectedPosition");
-
+			moveTo(currentSelected,posOverFinger,pieceSpeed);
+			currentSelected.transform.DOScale(selectedScale,.1f).SetId("Input_SelectedScale");
+			isLongPressed = true;
 		}
 	}
 
 	void OnFingerUp()
 	{
-		if(!somethingDragged && currentSelected != null)
-		{				
+		if(!somethingDragged && currentSelected != null && isLongPressed)
+		{		
 			returnSelectedToInitialState(0.1f);
 			reset();
 		}
+		isLongPressed = false;
 
 		somethingDragged = false;
 	}
 
 	public void returnSelectedToInitialState(float delay = 0)
 	{
-		DOTween.Kill("Input_SelectedPosition",true);
-		DOTween.Kill("Input_SelectedScale",true);
+		DOTween.Kill("Input_InitialPosition",false);
+		DOTween.Kill("Input_SelectedScale",false);
+		DOTween.Kill("Input_Dragging",false);
+
+		Piece piece = currentSelected.GetComponent<Piece> ();
 
 		if(delay == 0)
 		{
-			currentSelected.transform.position = selectedInitialPosition;
-			currentSelected.transform.localScale = selectedInitialScale;
+			currentSelected.transform.position = piece.positionOnScene;
+			currentSelected.transform.localScale = piece.initialPieceScale;
 		}
 		else
 		{
-			currentSelected.transform.DOMove (selectedInitialPosition, .1f).SetId("Input_InitialPosition");
-			currentSelected.transform.DOScale (selectedInitialScale, .1f).SetId("Input_ScalePosition");
+			allowInput = false;
+			currentSelected.transform.DOScale (piece.initialPieceScale, .1f).SetId("Input_ScalePosition");
+			currentSelected.transform.DOMove (piece.positionOnScene, .1f).SetId("Input_InitialPosition").OnComplete(()=>{allowInput = true; });
 		}
 	}
 

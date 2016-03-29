@@ -320,24 +320,14 @@ public class HUDManager : MonoBehaviour
 
 	public void showPieces(List<Piece> pieces)
 	{
-		List<Piece> newListPieces = new List<Piece> (pieces);
-
-		int i = 0;
-		while(newListPieces.Count >0)
+		for(int i = 0; i < pieces.Count; i++)
 		{
-			Piece go = Instantiate (newListPieces [0]);
-
-			go.name = newListPieces[0].name;
-			//go.guid = newListPieces [0].guid;
-			go.id = newListPieces [0].id;
-			newListPieces.RemoveAt(0);
-
-			go.transform.position= new Vector3(rotationImagePositions [i].position.x,rotationImagePositions [i].position.y,1);
-			go.transform.localScale = new Vector3 (0, 0, 0);
-			go.transform.DOScale(initialPieceScale, 0.25f);
-			go.transform.SetParent (showingPiecesContainer);
-
-			i++;
+			pieces[i].transform.position= new Vector3(rotationImagePositions [i].position.x,rotationImagePositions [i].position.y,1);
+			pieces[i].positionOnScene = pieces[i].transform.position;
+			pieces[i].initialPieceScale = initialPieceScale;
+			pieces[i].transform.localScale = new Vector3 (0, 0, 0);
+			pieces[i].transform.DOScale(initialPieceScale, 0.25f);
+			pieces[i].transform.SetParent (showingPiecesContainer,false);
 		}
 	}
 

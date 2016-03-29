@@ -191,7 +191,7 @@ namespace ABC
 		 * Procesa el diccionario recibido registrando todas las palabras:
 		 * Cada palabra viene en su propia linea
 		 **/ 
-		public void processDictionary(string text)
+		public void processDictionary(string text, int maxWordLength = 30)
 		{
 			Regex regex = new Regex(@"\r\n?|\n");
 			StringBuilder builder = new StringBuilder(regex.Replace(text,"\n").ToUpperInvariant());
@@ -207,18 +207,26 @@ namespace ABC
 			initTime = Time.realtimeSinceStartup;
 
 			//Descomentar para dividir el trabajo en frames
-			StartCoroutine("registerDictionaryWords"); 
+			StartCoroutine("registerDictionaryWords",maxWordLength); 
 			return;
 
 
+			int rejected = 0;
 			int l = dictionaryWords.Length;
 			//Registramos todas las palabras
 			for(int i = 0; i < l; i++)
 			{
-				registerNewWord(dictionaryWords[i]);
+				if(dictionaryWords[i].Length < maxWordLength)
+				{
+					registerNewWord(dictionaryWords[i]);
+				}
+				else
+				{
+					rejected++;
+				}
 			}
 
-
+			Debug.Log("Rejected words by size: "+rejected);
 			Debug.Log("Dictionary finished in: "+ (Time.realtimeSinceStartup-initTime).ToString("0000.000")+"s");
 			if(onDictionaryFinished != null)
 			{
@@ -226,10 +234,11 @@ namespace ABC
 			}
 		}
 
-		protected IEnumerator registerDictionaryWords()
+		protected IEnumerator registerDictionaryWords(int maxWordLength = 30)
 		{
 			processCount = 0;
 
+			int rejected = 0;
 			//Registramos todas las palabras
 			for(int i = 0; i < dictionaryWords.Length; i++)
 			{
@@ -241,9 +250,18 @@ namespace ABC
 				}
 
 				processCount++;
-				registerNewWord(dictionaryWords[i]);
+
+				if(dictionaryWords[i].Length < maxWordLength)
+				{
+					registerNewWord(dictionaryWords[i]);
+				}
+				else
+				{
+					rejected++;
+				}
 			}
 
+			Debug.Log("Rejected words by size: "+rejected);
 			Debug.Log("Dictionary finished in: "+ (Time.realtimeSinceStartup-initTime).ToString("0000.000")+"s");
 			if(onDictionaryFinished != null)
 			{

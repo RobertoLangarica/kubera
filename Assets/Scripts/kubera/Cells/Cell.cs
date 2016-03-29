@@ -4,7 +4,12 @@ using ABC;
 
 public class Cell : MonoBehaviour 
 {
-	public EPieceType contentType;
+	public enum EType
+	{
+		NORMAL,COLORED,EMPTY,OBSTACLE_LETTER,VISIBLE_OBSTACLE_LETTER,TUTORIAL_LETTER
+	}
+
+	public Piece.EType contentType;
 	public bool available;
 	public bool occupied;
 	public GameObject content;
@@ -19,19 +24,22 @@ public class Cell : MonoBehaviour
 	 * 16 = Letra como obstaculo pero visible
 	 * 32 = Letra tutorial
 	 * 
-	 * El siguiente nibble se utiliza para los colores que se marcan en la bandera 2
+	 * El siguiente nibble se utiliza para los colores que se marcan en la bandera 2.
 	 * Son colores del 0 al 7 de momento
 	 * 0xNNNN0000
 	 */
 	[HideInInspector]
 	public int type;
 
+	public EType cellType;
+	public int colorIndex;
+
 	/*
 	 * La funcion solo refresca los valores en las celdas
 	 */
 	public void clearCell()
 	{
-		contentType = EPieceType.NONE;
+		contentType = Piece.EType.NONE;
 		occupied = false;
 		content = null;
 
@@ -66,77 +74,88 @@ public class Cell : MonoBehaviour
 
 		if((type & 0x1) == 0x1)
 		{
-			contentType = EPieceType.NONE;
+			cellType = EType.NORMAL;
+			contentType = Piece.EType.NONE;
 			occupied = false;
 			available = true;
 			content = null;
 		}
+
 		if((type & 0x2) == 0x2)
 		{
+			cellType = EType.COLORED;
+			colorIndex = type >> 6;
 			occupied = true;
 			available = true;
 			content = null;
 
-			updateCellColor(type >> 6);
+			updateContentTypeByColorIndex(colorIndex);
 		}
 		if((type & 0x4) == 0x4)
 		{
-			contentType = EPieceType.NONE;
+			cellType = EType.EMPTY;
+			contentType = Piece.EType.NONE;
 			occupied = true;
 			available = false;
 			content = null;
 
+			//TODO: Que onda con estos cambios temporales
 			//Cambio Temporal
 			GetComponent<SpriteRenderer>().enabled = false;
 		}
 		if((type & 0x8) == 0x8)
 		{
-			contentType = EPieceType.LETTER_OBSTACLE;
+			cellType = EType.OBSTACLE_LETTER;
+			contentType = Piece.EType.LETTER_OBSTACLE;
 			occupied = true;
 			available = false;
 		}
+
 		if((type & 0x10) == 0x10)
 		{
-			contentType = EPieceType.NONE;
+			contentType = Piece.EType.NONE;
 			occupied = true;
 			available = false;
 			content = null;
 
+			//TODO: Que onda con estos cambios temporales
 			//Cambio Temporal
 			GetComponent<SpriteRenderer>().color = Color.cyan;
 		}
+
 		if((type & 0x20) == 0x20)
 		{
-			contentType = EPieceType.LETTER;
+			cellType = EType.TUTORIAL_LETTER;
+			contentType = Piece.EType.LETTER;
 			occupied = true;
 			available = false;
 		}
 	}
 
-	public void updateCellColor(int color)
+	public void updateContentTypeByColorIndex(int color)
 	{
 		switch(color)
 		{
 		case(1):
-			contentType = EPieceType.AQUA;
+			contentType = Piece.EType.AQUA;
 			break;
 		case(2):
-			contentType = EPieceType.BLUE;
+			contentType = Piece.EType.BLUE;
 			break;
 		case(3):
-			contentType = EPieceType.GREEN;
+			contentType = Piece.EType.GREEN;
 			break;
 		case(4):
-			contentType = EPieceType.MAGENTA;
+			contentType = Piece.EType.MAGENTA;
 			break;
 		case(5):
-			contentType = EPieceType.RED;
+			contentType = Piece.EType.RED;
 			break;
 		case(6):
-			contentType = EPieceType.YELLOW;
+			contentType = Piece.EType.YELLOW;
 			break;
 		case(7):
-			contentType = EPieceType.GREY;
+			contentType = Piece.EType.GREY;
 			break;
 		}
 	}

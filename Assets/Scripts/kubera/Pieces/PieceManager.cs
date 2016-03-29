@@ -8,18 +8,18 @@ public class PieceManager : MonoBehaviour
 {
 	public int piecesToShow = 3;
 
-	protected RandomPool<Piece> pieces;
+	protected RandomPool<GameObject> piecesPrefab;
 	public List<Piece> showingPieces = new List<Piece>();
 
-	[HideInInspector]	public int piecesShowedCount;
+	[HideInInspector]public int piecesShowedCount;
 
 	public void initializePiecesToShow()
 	{
 		for(int i= 0; i<piecesToShow; i++)
 		{
-			showingPieces.Add(pieces.getNextRandomized());
-			//showingPieces [i].initializeId ();
-
+			showingPieces.Add( GameObject.Instantiate(piecesPrefab.getNextRandomized()).GetComponent<Piece>() );
+			showingPieces[i].gameObject.SetActive(true);
+			showingPieces [i].createdIndex = i;
 		}
 
 		piecesShowedCount = piecesToShow;
@@ -30,28 +30,19 @@ public class PieceManager : MonoBehaviour
 		return showingPieces;
 	}
 
-	public void setPieces(List<GameObject> value)
+	/**
+	 * Se guardan solo prefabs porque se instancian al momento de necesitarse
+	 **/ 
+	public void setPiecesPrefabs(List<GameObject> value)
 	{
-		List<Piece> pieces = new List<Piece>();
-
-		for (int i = 0; i < value.Count; i++) 
-		{
-			pieces.Add (value [i].GetComponent<Piece> ());
-		}
-		setPieces (pieces);
-	}
-
-	public void setPieces(List<Piece> value)
-	{
-		pieces = new RandomPool<Piece>(value);
+		piecesPrefab = new RandomPool<GameObject>(value);
 	}
 		
 	public void removeFromShowedPieces(Piece piece)
 	{
 		for(int i=0; i<showingPieces.Count; i++)
 		{
-			//if(piece.guid == showingPieces[i].guid)
-			if(piece.id == showingPieces[i].id)
+			if(piece.GetInstanceID() == showingPieces[i].GetInstanceID())
 			{
 				piecesShowedCount--;
 				showingPieces.RemoveAt (i);
@@ -64,13 +55,35 @@ public class PieceManager : MonoBehaviour
 	{
 		for(int i=0; i<showingPieces.Count; i++)
 		{
-			//if(piece.guid.Equals(showingPieces[i].guid))
-			if(piece.id == showingPieces[i].id)
+			if(piece.GetInstanceID() == showingPieces[i].GetInstanceID())
 			{
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	public void initializePiecesFromCSV(string csv)
+	{
+		string[] info;
+		int amount = 0;
+
+		string[] piecesInfo = csv.Split(',');
+		List<GameObject> prefabs = new List<GameObject>();
+
+		for(int i =0; i<piecesInfo.Length; i++)
+		{
+			info = piecesInfo[i].Split('_');
+			amount = int.Parse(info[0]);
+
+			for(int j=0; j<amount; j++)
+			{
+				prefabs.Add((GameObject)Resources.Load(info[1]));
+				prefabs[prefabs.Count-1].SetActive(false);
+			}
+		}
+
+		setPiecesPrefabs(prefabs);
 	}
 }
