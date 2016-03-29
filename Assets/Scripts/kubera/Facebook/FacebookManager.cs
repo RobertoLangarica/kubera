@@ -30,6 +30,8 @@ public class FacebookManager : MonoBehaviour
 	public int maxUsersPerMessage = 5;
 	protected int messageCount;
 
+	protected GameObject conectFacebook;
+
 	void Awake()
 	{
 		fbGraph = FindObjectOfType<FBGraph> ();
@@ -49,7 +51,7 @@ public class FacebookManager : MonoBehaviour
 
 	protected void OnLoginComplete(bool complete)
 	{
-		Debug.Log("OnLoginComplete");
+		Debug.Log("OnLoginComplete " + complete);
 
 		if (complete)
 		{
@@ -60,14 +62,19 @@ public class FacebookManager : MonoBehaviour
 			//FBGraph.GetScores();
 
 			getFriendsAppRequests ();
+			if(conectFacebook != null)
+			{
+				DestroyImmediate (conectFacebook);
+				print (conectFacebook);
+			}
 		}
 		else
 		{
 			if(!facebookConectMessageCreated)
 			{
 				//crear FacebookConectMessage
-				GameObject go = Instantiate (FacebookConectMessage);
-				go.transform.SetParent (panelMessages);
+				conectFacebook = Instantiate (FacebookConectMessage);
+				conectFacebook.transform.SetParent (panelMessages);
 				facebookConectMessageCreated = true;
 			}
 		}
@@ -283,7 +290,7 @@ public class FacebookManager : MonoBehaviour
 		if (!dict.ContainsKey ("apprequests"))
 		{
 			//deleteAppRequest ((string)dict["id"]);
-			print ("getfriends false");
+			print ("none friendsRequest ");
 			return;
 		}
 
