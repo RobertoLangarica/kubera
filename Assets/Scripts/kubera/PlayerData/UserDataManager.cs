@@ -250,19 +250,26 @@ public class UserDataManager
 		}
 	}
 
-	public void giveLifeToPlayer()
+	public string lifeTimerDate
 	{
-		playerLifes++;
+		get
+		{
+			return PlayerPrefs.GetString ("lifeTimerDate");
+		}
+		set
+		{
+			PlayerPrefs.SetString ("lifeTimerDate",value);
+		}
 	}
 
-	public void takeLifeFromPlayer()
+	public void giveLifeToPlayer(int amount = 1)
 	{
-		playerLifes--;
-	}
+		playerLifes += amount;
 
-	public void refillAllPlayerLifes()
-	{
-		playerLifes = maximumLifes;
+		if (playerLifes > maximumLifes) 
+		{
+			playerLifes = maximumLifes;
+		}
 	}
 }
 
