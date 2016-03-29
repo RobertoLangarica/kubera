@@ -8,7 +8,7 @@ public class GameTextManager
 {
 	protected static GameTextManager _instance;
 
-	protected string gamelanguage;
+	protected string gameLanguage;
 	protected GameTextXML gameTextData;
 
 	public static GameTextManager instance 
@@ -30,7 +30,7 @@ public class GameTextManager
 		gameTextData = GameTextXML.LoadFromText(tempTxt.text);
 
 		//TODO: No se puede leer gameLanguage solo una vez ya que se puede modificar
-		gamelanguage = UserDataManager.instance.language;
+		gameLanguage = UserDataManager.instance.language;
 		//Debug.Log (gamelanguage);
 	}
 
@@ -47,7 +47,7 @@ public class GameTextManager
 
 		if(language == string.Empty)
 		{
-			language = gamelanguage.ToString();
+			language = gameLanguage;
 		}
 
 		for(int i = 0;i < text.languages.Length;i++)
@@ -87,6 +87,11 @@ public class GameTextManager
 				{
 					resultText = resultText.Replace(textToReplace[i],newText[i]);
 				}
+			}
+			//TODO: mandar logError
+			else
+			{
+				//Debug.LogError("");
 			}
 		}
 	}

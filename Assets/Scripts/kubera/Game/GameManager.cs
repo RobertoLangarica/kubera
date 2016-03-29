@@ -485,7 +485,6 @@ public class GameManager : MonoBehaviour
 	protected void getWinCondition()
 	{
 		//TODO: Mostrar solo la informacion necesaria
-
 		hudManager.setLettersCondition(goalManager.goalLetters);
 		hudManager.setObstaclesCondition (goalManager.obstaclesCount);
 		hudManager.setWordCondition (goalManager.goalWordsToShow[0]);
@@ -621,7 +620,6 @@ public class GameManager : MonoBehaviour
 	{
 		Debug.Log("Gano de verdad.");
 		unlockPowerUp();
-
 		Invoke("winBonification",piecePositionedDelay*2);
 	}
 
