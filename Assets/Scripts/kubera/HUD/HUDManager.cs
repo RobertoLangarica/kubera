@@ -16,8 +16,6 @@ public class HUDManager : MonoBehaviour
 	public Text movementsText;
 	public Text gemsText;
 	public Text levelText;
-	public Image pointsMeter;
-	public Image[] Stars;
 
 	public Transform[] rotationImagePositions;
 	public Transform showingPiecesContainer;
@@ -42,44 +40,34 @@ public class HUDManager : MonoBehaviour
 	public Text lettersPoints;
 	public Text lettersPointsTitle;
 
-
 	public Vector3 initialPieceScale = new Vector3(2.5f,2.5f,2.5f);
 
 	public GameObject goalPopUp;
 
-	protected float[] scoreToStar;
 	protected ScoreTextPool scorePool;
-	protected List<GameObject> lettersToFound;
+	protected List<GameObject> lettersToFound = new List<GameObject>();
+	protected HUDMetterAndStars hudStars;
 
 	void Start () 
 	{
-		lettersToFound = new List<GameObject>();
+		hudStars = FindObjectOfType<HUDMetterAndStars> ();
 		scorePool = FindObjectOfType<ScoreTextPool>();
 	}
-
-	/**
-	 * Setea los puntos en la hud
-	 **/
-	public void setPoints(int pointsCount)
+		
+	public void actualizePoints(int pointsCount)
 	{
 		points.text = pointsCount.ToString();
-		setMeterPoints (pointsCount);
+		hudStars.setMeterPoints (pointsCount);
 
 		scoreText.text = lettersPointsTitle.text = GameTextManager.instance.getTextByID ("hudPuntaje");
 	}
-
-	/**
-	 * Setea los movimientos en la hud
-	 **/
-	public void setMovements(int movments)
+		
+	public void actualizeMovements(int movments)
 	{
 		movementsText.text = movments.ToString();
 	}
 
-	/**
-	 * Setea el dinero en la hud
-	 **/
-	public void setGems (int gems)
+	public void actualizeGems (int gems)
 	{
 		gemsText.text = gems.ToString();
 	}
@@ -109,54 +97,11 @@ public class HUDManager : MonoBehaviour
 	{
 		GemsChargeGO.SetActive (activate);
 	}
-
-	/**
-	 * Puntos para obtener estrellas
-	 **/
+		
 	public void setStarsData(float[] scores)
 	{
-		scoreToStar = scores;
-		setStarsPosition ();
-	}
-
-
-	/**
-	 * setea el medidor de puntos
-	 **/
-	public void setMeterPoints(int points)
-	{
-		pointsMeter.fillAmount = (float) points / scoreToStar [2];
-		actualizeStars (points);
-	}
-
-	/**
-	 * actualiza las estrellas
-	 **/
-	protected void actualizeStars(int points)
-	{
-		if(points >= scoreToStar[0])
-		{
-			Stars [0].color = Color.yellow;
-		}
-		if(points >= scoreToStar[1])
-		{
-			Stars [1].color = Color.yellow;
-		}
-		if(points >= scoreToStar[2])
-		{
-			Stars [2].color = Color.yellow;
-		}
-	}
-
-	/**
-	 * setea las posiciones de las estrellas
-	 **/
-	protected void setStarsPosition()
-	{
-		Stars[0].rectTransform.localPosition = new Vector3(Stars[0].rectTransform.localPosition.x, scoreToStar[0] / scoreToStar [2] * pointsMeter.rectTransform.rect.height );
-		Stars[1].rectTransform.localPosition = new Vector3(Stars[1].rectTransform.localPosition.x, scoreToStar[1] / scoreToStar [2] * pointsMeter.rectTransform.rect.height);
-		Stars[2].rectTransform.localPosition = new Vector3(Stars[2].rectTransform.localPosition.x, scoreToStar[2] / scoreToStar [2] * pointsMeter.rectTransform.rect.height );
-	}
+		hudStars.setStarsData (scores);
+	}		
 		
 	public void setLevelName(string name)
 	{
