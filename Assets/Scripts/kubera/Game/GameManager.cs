@@ -708,37 +708,20 @@ public class GameManager : MonoBehaviour
 		//Se limpian las letras 
 		wordManager.removeAllLetters();
 
-		add1x1Block();
+		winBonificationActions();
 	}
 
-	protected void add1x1Block()
+	protected void winBonificationActions()
 	{
-		Cell[] emptyCells = cellManager.getAllEmptyCells();
-		Cell cell;
-
-		if (remainingMoves != 0 && emptyCells.Length > 0) 
+		if(cellManager.getAllEmptyCells().Length > 0)
 		{
-			cell = emptyCells [Random.Range (0, emptyCells.Length - 1)];
-
-			substractMoves (1);
-			GameObject go = GameObject.Instantiate (bonificationPiecePrefab) as GameObject;
-
-			go.GetComponent<Piece> ().currentType = cellManager.colorRandom ();
-
-			cellManager.occupyAndConfigureCell(cell,go,go.GetComponent<Piece> ().currentType,true);
-
-			showScoreTextOnHud (cell.transform.position, 1);
-			addPoints(1);
-
-			StartCoroutine (add1x1BlockMore ());
+			add1x1Block ();
 		}
-		else 
+		else
 		{
-			if(remainingMoves != 0)
+			if (remainingMoves != 0) 
 			{
-				addPoints (1);
-				substractMoves (1);
-				StartCoroutine (add1x1BlockMore ());
+				addMovementPoint ();
 			}
 			else
 			{
@@ -746,19 +729,46 @@ public class GameManager : MonoBehaviour
 				{
 					cellToLetter.AddRange (cellManager.getCellsOfSameType (cellManager.getPredominantColor ()));
 				}
-				StartCoroutine (addWinLetterAfterBlockMore ());
+				StartCoroutine (addWinLetterAfterActions ());
+				actualizeHUDInfo ();
+				return;
 			}
 		}
-
 		actualizeHUDInfo ();
+		StartCoroutine (continueWinBonificationActions ());
 	}
-	IEnumerator add1x1BlockMore()
+
+	protected void addMovementPoint()
+	{
+		addPoints (1);
+		substractMoves (1);
+	}
+
+	protected void add1x1Block()
+	{
+		Cell[] emptyCells = cellManager.getAllEmptyCells();
+		Cell cell;
+
+		cell = emptyCells [Random.Range (0, emptyCells.Length - 1)];
+
+		substractMoves (1);
+		GameObject go = GameObject.Instantiate (bonificationPiecePrefab) as GameObject;
+
+		go.GetComponent<Piece> ().currentType = cellManager.colorRandom ();
+
+		cellManager.occupyAndConfigureCell(cell,go,go.GetComponent<Piece> ().currentType,true);
+
+		showScoreTextOnHud (cell.transform.position, 1);
+		addPoints(1);
+
+	}
+	IEnumerator continueWinBonificationActions()
 	{
 		yield return new WaitForSeconds (.2f);
-		add1x1Block ();
+		winBonificationActions ();
 	}
 
-	IEnumerator addWinLetterAfterBlockMore()
+	IEnumerator addWinLetterAfterActions()
 	{
 		int random = Random.Range (0, cellToLetter.Count);
 
@@ -769,7 +779,7 @@ public class GameManager : MonoBehaviour
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
-			StartCoroutine (addWinLetterAfterBlockMore ());
+			StartCoroutine (addWinLetterAfterActions ());
 		}
 		else
 		{
@@ -782,7 +792,7 @@ public class GameManager : MonoBehaviour
 		if(cellManager.getPredominantColor() != Piece.EType.NONE)
 		{
 			cellToLetter = new List<Cell>(cellManager.getCellsOfSameType(cellManager.getPredominantColor()));
-			StartCoroutine (addWinLetterAfterBlockMore ());
+			StartCoroutine (addWinLetterAfterActions ());
 		}
 		else
 		{
@@ -815,7 +825,7 @@ public class GameManager : MonoBehaviour
 	protected void showDestroyedLetterScore(Cell cell)
 	{
 		int amount = consonantPoints;
-		if(cell.content.GetComponent<ABCChar>().isVocal())
+		if(cell.content.GetComponent<Letter> ().abcChar.isVocal())
 		{
 			amount = vocalPoints;
 		}

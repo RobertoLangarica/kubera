@@ -382,9 +382,6 @@ public class HUDManager : MonoBehaviour
 		default:
 			break;
 		}
-
-
-
 		objectivePopUp.SetActive(true);
 	}
 

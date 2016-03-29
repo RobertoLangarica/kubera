@@ -630,8 +630,7 @@ public class CellsManager : MonoBehaviour
 	}
 
 	public Piece.EType getPredominantColor()
-	{
-		
+	{		
 		int[] quantity = new int[System.Enum.GetNames(typeof(Piece.EType)).Length];
 		int index;
 		int amount;
@@ -645,10 +644,13 @@ public class CellsManager : MonoBehaviour
 		index = 0;
 		for(int i = 0;i < quantity.Length;i++)
 		{
-			if(quantity[i] > amount)
+			if ((Piece.EType)i != Piece.EType.NONE && (Piece.EType)i != Piece.EType.LETTER) 
 			{
-				index = i;
-				amount = quantity[i];
+				if (quantity [i] > amount) 
+				{
+					index = i;
+					amount = quantity [i];
+				}
 			}
 		}
 
