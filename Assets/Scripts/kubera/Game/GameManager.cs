@@ -821,12 +821,12 @@ public class GameManager : MonoBehaviour
 
 	protected void actualizeHUDInfo()
 	{
-
 		hudManager.actualizeMovements (remainingMoves);
 		hudManager.actualizePoints (pointsCount);
 
-		actualizeWordsCompletedWinCondition ();
-		actualizePointsWinCondition ();*/
+
+		//actualizeWordsCompletedWinCondition ();
+		//actualizePointsWinCondition ();
 	}
 
 	protected void showScoreTextOnHud(Vector3 pos,int amount)
