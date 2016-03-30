@@ -12,24 +12,24 @@ public class GoalManager : MonoBehaviour
 	public const string OBSTACLES	= "obstacles";//Obstaculos que remover
 	public const string POINTS		= "points";//Una cantidad de puntos que alcanzar
 
-	public string currentCondition { get; }
+	public string currentCondition { get{return currentCondition;} protected set{currentCondition = value;}}
 
-	public List<string> goalLetters { get; }
-	public List<string> usedLetters { get; }
+	public List<string> goalLetters { get{return goalLetters;} protected set{goalLetters = value;}}
+	public List<string> usedLetters { get{return usedLetters;} protected set{usedLetters = value;}}
 
-	public int goalObstacles { get; }
+	public int goalObstacles  { get{return goalObstacles;} protected set{goalObstacles = value;}}
 	public int obstaclesCount;
 
-	public int goalPoints { get; }
+	public int goalPoints  { get{return goalPoints;} protected set{goalPoints = value;}}
 	public int pointsCount;
 
-	public int goalWordsCount { get; }
-	public int wordsCount { get; }
+	public int goalWordsCount  { get{return goalWordsCount;} protected set{goalWordsCount = value;}}
+	public int wordsCount  { get{return wordsCount;} protected set{wordsCount = value;}}
 
-	public List<string> goalWords { get; }
-	public List<string> goalWordsToShow { get; }
+	public List<string> goalWords  { get{return goalWords;} protected set{goalWords = value;}}
+	public List<string> goalWordsToShow  { get{return goalWordsToShow;} protected set{goalWordsToShow = value;}}
 
-	private delegate void DOnGoalAchieved();
+	public delegate void DOnGoalAchieved();
 	public DOnGoalAchieved OnGoalAchieved;
 
 	public void initializeFromString(string goal)
@@ -125,7 +125,7 @@ public class GoalManager : MonoBehaviour
 	{
 		pointsCount += points;
 
-		if(pointsCount >= goalPoints)
+		if(pointsCount >= goalPoints && currentCondition == POINTS)
 		{
 			if(OnGoalAchieved != null)
 			{
@@ -150,7 +150,7 @@ public class GoalManager : MonoBehaviour
 		case WORD:
 		case SYNONYMOUS:
 		case ANTONYMS:
-			processWordForGoalWords();
+			processWordForGoalWords(word);
 			break; 
 		}
 	}
@@ -242,5 +242,7 @@ public class GoalManager : MonoBehaviour
 		}
 
 		result.ToLower();
+
+		return result;
 	}
 }

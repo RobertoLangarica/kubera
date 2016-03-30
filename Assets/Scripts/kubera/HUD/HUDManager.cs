@@ -298,7 +298,7 @@ public class HUDManager : MonoBehaviour
 			textToReplace = "{{goalLetters}}";
 
 			replacement = "";
-			List<Letter> letters = (List<Letter>)parameters;
+			List<Letter> letters = parameters as List<Letter>;
 
 			for (int i = 0; i < letters.Count; i++) 
 			{
@@ -310,33 +310,33 @@ public class HUDManager : MonoBehaviour
 		case GoalManager.OBSTACLES:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_OBSTACLES_ID;
 			textToReplace = "{{goalObstacleLetters}}";
-			replacement = ((int)parameters).ToString();
+			replacement = (int.Parse(parameters)).ToString();
 			break;
 		case GoalManager.POINTS:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_POINTS_ID;
 			textToReplace = "{{goalPoints}}";
-			replacement = ((int)parameters).ToString();
+			replacement = (int.Parse(parameters)).ToString();
 			break;
 		case GoalManager.WORDS_COUNT:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_WORDS_ID;
 			textToReplace = "{{goalWords}}";
-			replacement = ((int)parameters).ToString();
+			replacement = (int.Parse(parameters)).ToString();
 			break;
 		case GoalManager.SYNONYMOUS:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID;
 			textToReplace = "{{goalSin}}";
-			replacement = (string) parameters;
+			replacement = parameters.ToString();
 			break;
 		case GoalManager.WORD:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_1_WORD_ID;
 			textToReplace = "{{goalWord}}";
-			replacement = (string) parameters;
+			replacement = parameters.ToString();
 			break;
 		
 		case GoalManager.ANTONYMS:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_ANTONYM_ID;
 			textToReplace = "{{goalAnt}}";
-			replacement = (string) parameters;
+			replacement = parameters.ToString();
 			break;
 		}
 
