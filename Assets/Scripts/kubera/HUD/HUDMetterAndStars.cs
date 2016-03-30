@@ -27,8 +27,8 @@ public class HUDMetterAndStars : MonoBehaviour
 	 **/
 	public void setStarsData(float[] scores)
 	{
-		setStarsPosition ();
 		scoreToReachStar = scores;
+		setStarsPosition ();
 	}		
 
 	/**
@@ -37,9 +37,9 @@ public class HUDMetterAndStars : MonoBehaviour
 	public void setStarsPosition()
 	{
 		float pointMetterwidth = pointsMeter.rectTransform.rect.width;
-		Stars[0].rectTransform.localPosition = new Vector3(Stars[0].rectTransform.localPosition.x, scoreToReachStar[0] / scoreToReachStar [2] * pointMetterwidth);
-		Stars[1].rectTransform.localPosition = new Vector3(Stars[1].rectTransform.localPosition.x, scoreToReachStar[1] / scoreToReachStar [2] * pointMetterwidth);
-		Stars[2].rectTransform.localPosition = new Vector3(Stars[2].rectTransform.localPosition.x, scoreToReachStar[2] / scoreToReachStar [2] * pointMetterwidth);
+		Stars[0].rectTransform.localPosition = new Vector3(scoreToReachStar[0] / scoreToReachStar [2] * pointMetterwidth, Stars[0].rectTransform.localPosition.y);
+		Stars[1].rectTransform.localPosition = new Vector3(scoreToReachStar[1] / scoreToReachStar [2] * pointMetterwidth, Stars[1].rectTransform.localPosition.y);
+		Stars[2].rectTransform.localPosition = new Vector3(scoreToReachStar[2] / scoreToReachStar [2] * pointMetterwidth, Stars[2].rectTransform.localPosition.y);
 	}
 
 	/**

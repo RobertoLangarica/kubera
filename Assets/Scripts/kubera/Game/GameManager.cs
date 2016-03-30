@@ -108,7 +108,9 @@ public class GameManager : MonoBehaviour
 
 		remainingMoves = totalMoves = currentLevel.moves;
 
-		//hudManager.setGems(UserDataManager.instance.playerGems);
+
+		hudManager.actualizeGems(UserDataManager.instance.playerGems);
+
 		hudManager.setLevelName (currentLevel.name);
 		hudManager.setSecondChanceLock (false);
 
@@ -119,7 +121,9 @@ public class GameManager : MonoBehaviour
 		scoreToStar [1] = currentLevel.scoreToStar2;
 		scoreToStar [2] = currentLevel.scoreToStar3;
 		hudManager.setStarsData (scoreToStar);
-		//hudManager.setPoints(0);
+
+		hudManager.actualizePoints(0);
+
 	
 		cellManager.resizeGrid(10,10);
 		populateGridFromLevel(level);
@@ -446,13 +450,14 @@ public class GameManager : MonoBehaviour
 		hudManager.setSynCondition (goalManager.goalWordsToShow[0]);
 		hudManager.setAntCondition(goalManager.goalWordsToShow[0]);
 		hudManager.setPointsCondition(goalManager.goalPoints, pointsCount);*/
+
 		//hudManager.setWordsCondition(goalManager.goalWordsCount);
 
 		//Se muestra el objetivo al inicio del nivel
-		//hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
+		hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
+		hudManager.setWinCondition (goalManager.currentCondition, goalManager.getGoalConditionParameters());
 
-
-		//hudManager.showGoalPopUp(myWinCondition[0],word,quantity,goalLetters);
+		hudManager.showGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters());
 	}
 
 	IEnumerator check()
@@ -716,7 +721,8 @@ public class GameManager : MonoBehaviour
 		if(checkIfExistEnoughGems(gemsPrice))
 		{
 			UserDataManager.instance.playerGems -= gemsPrice;
-			//hudManager.setGems(UserDataManager.instance.playerGems);
+			hudManager.actualizeGems(UserDataManager.instance.playerGems);
+
 			return true;
 		}
 		Debug.Log("Fondos insuficientes");
@@ -824,11 +830,12 @@ public class GameManager : MonoBehaviour
 
 	protected void actualizeHUDInfo()
 	{
-		/*hudManager.setMovements (remainingMoves);
-		hudManager.setPoints (pointsCount);
+		hudManager.actualizeMovements (remainingMoves);
+		hudManager.actualizePoints (pointsCount);
 
-		actualizeWordsCompletedWinCondition ();
-		actualizePointsWinCondition ();*/
+
+		//actualizeWordsCompletedWinCondition ();
+		//actualizePointsWinCondition ();
 	}
 
 	protected void showScoreTextOnHud(Vector3 pos,int amount)
