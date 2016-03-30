@@ -201,7 +201,7 @@ public class GoalManager : MonoBehaviour
 
 		for(int i = 0; i < word.Count; i++)
 		{
-			index = goalLetters.IndexOf(word[i].abcChar.character);
+			index = goalLetters.IndexOf(word[i].abcChar.character.ToLower());
 
 			if(index != -1)
 			{
@@ -233,7 +233,7 @@ public class GoalManager : MonoBehaviour
 
 	private void processWordForGoalWords(List<Letter> word)
 	{
-		string sWord = getStringFromWord(word);
+		string sWord = getStringFromWord(word).ToLower();
 
 		if(goalWords.IndexOf(sWord) != -1)
 		{
