@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 
 	public GameObject bonificationPiecePrefab;
 
+	protected bool gameOver = false;
+
 	protected int pointsCount = 0;
 
 	protected int totalMoves;
@@ -326,6 +328,7 @@ public class GameManager : MonoBehaviour
 	protected void addPoints(int amount)
 	{
 		pointsCount += amount;
+		goalManager.submitPoints (amount);
 	}
 
 	protected void substractMoves(int amount)
@@ -460,15 +463,16 @@ public class GameManager : MonoBehaviour
 	IEnumerator check()
 	{
 		yield return new WaitForSeconds (.2f);
-		if(!wordManager.checkIfAWordIsPossible(gridCharacters))
+		if(!wordManager.checkIfAWordIsPossible(gridCharacters) || remainingMoves <= 0)
 		{
+			Debug.Log ("Perdio de verdad");
 			audioManager.PlayLoseAudio();
 		}
 	}
 
 	protected void checkIfLoose()
 	{
-		if(!cellManager.checkIfOnePieceCanFit(pieceManager.getShowingPieces()) || remainingMoves == 0)
+		if(!cellManager.checkIfOnePieceCanFit(pieceManager.getShowingPieces()) || remainingMoves == 0 && !gameOver)
 		{
 			if(remainingMoves == 0)
 			{
@@ -502,9 +506,13 @@ public class GameManager : MonoBehaviour
 
 	private void OnLevelGoalAchieved()
 	{
-		Debug.Log("Gano de verdad.");
-		unlockPowerUp();
-		Invoke("winBonification",piecePositionedDelay*2);
+		if (!gameOver) 
+		{
+			Debug.Log ("Gano de verdad.");
+			gameOver = true;
+			unlockPowerUp ();
+			Invoke ("winBonification", piecePositionedDelay * 2);
+		}
 	}
 
 	protected void winBonification()
@@ -527,7 +535,7 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			if (remainingMoves != 0) 
+			if (remainingMoves > 0) 
 			{
 				addMovementPoint ();
 			}
