@@ -12,24 +12,36 @@ public class GoalManager : MonoBehaviour
 	public const string OBSTACLES	= "obstacles";//Obstaculos que remover
 	public const string POINTS		= "points";//Una cantidad de puntos que alcanzar
 
-	public string currentCondition { get; }
+	protected string _currentCondition;
+	public string currentCondition { get{return _currentCondition;} protected set{_currentCondition = value;}}
 
-	public List<string> goalLetters { get; }
-	public List<string> usedLetters { get; }
+	protected List<string> _goalLetters;
+	public List<string> goalLetters { get{return _goalLetters;} protected set{_goalLetters = value;}}
 
-	public int goalObstacles { get; }
+	protected List<string> _usedLetters;
+	public List<string> usedLetters { get{return _usedLetters;} protected set{_usedLetters = value;}}
+
+	protected int _goalObstacles;
+	public int goalObstacles  { get{return _goalObstacles;} protected set{_goalObstacles = value;}}
 	public int obstaclesCount;
 
-	public int goalPoints { get; }
+	protected int _goalPoints;
+	public int goalPoints  { get{return _goalPoints;} protected set{_goalPoints = value;}}
 	public int pointsCount;
 
-	public int goalWordsCount { get; }
-	public int wordsCount { get; }
+	protected int _goalWordsCount;
+	public int goalWordsCount  { get{return _goalWordsCount;} protected set{_goalWordsCount = value;}}
 
-	public List<string> goalWords { get; }
-	public List<string> goalWordsToShow { get; }
+	protected int _wordsCount;
+	public int wordsCount  { get{return _wordsCount;} protected set{_wordsCount = value;}}
 
-	private delegate void DOnGoalAchieved();
+	protected List<string> _goalWords;
+	public List<string> goalWords  { get{return _goalWords;} protected set{_goalWords = value;}}
+
+	protected List<string> _goalWordsToShow;
+	public List<string> goalWordsToShow  { get{return _goalWordsToShow;} protected set{_goalWordsToShow = value;}}
+
+	public delegate void DOnGoalAchieved();
 	public DOnGoalAchieved OnGoalAchieved;
 
 	public void initializeFromString(string goal)
@@ -125,7 +137,7 @@ public class GoalManager : MonoBehaviour
 	{
 		pointsCount += points;
 
-		if(pointsCount >= goalPoints)
+		if(pointsCount >= goalPoints && currentCondition == POINTS)
 		{
 			if(OnGoalAchieved != null)
 			{
@@ -150,7 +162,7 @@ public class GoalManager : MonoBehaviour
 		case WORD:
 		case SYNONYMOUS:
 		case ANTONYMS:
-			processWordForGoalWords();
+			processWordForGoalWords(word);
 			break; 
 		}
 	}
@@ -242,5 +254,7 @@ public class GoalManager : MonoBehaviour
 		}
 
 		result.ToLower();
+
+		return result;
 	}
 }

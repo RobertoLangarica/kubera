@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 
@@ -57,9 +58,9 @@ public class HUDManager : MonoBehaviour
 	public void actualizePoints(int pointsCount)
 	{
 		points.text = pointsCount.ToString();
-		hudStars.setMeterPoints (pointsCount);
+		//hudStars.setMeterPoints (pointsCount);
 
-		scoreText.text = lettersPointsTitle.text = GameTextManager.instance.getTextByID ("hudPuntaje");
+		scoreText.text = lettersPointsTitle.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SCORE_HUD_TITLE_ID);
 	}
 		
 	public void actualizeMovements(int movments)
@@ -100,7 +101,7 @@ public class HUDManager : MonoBehaviour
 		
 	public void setStarsData(float[] scores)
 	{
-		hudStars.setStarsData (scores);
+		//hudStars.setStarsData (scores);
 	}		
 		
 	public void setLevelName(string name)
@@ -132,19 +133,19 @@ public class HUDManager : MonoBehaviour
 	 **/
 	public void setPointsCondition(int pointsNeed, int pointsMade)
 	{
-		goalText.text = GameTextManager.instance.changeTextWords(
-			GameTextManager.instance.getTextByID("goalByPointsCondition"),new string[2]{"pointsMade","pointsNeed"},new string[2]{pointsMade.ToString(),pointsNeed.ToString()});
+		goalText.text = MultiLanguageTextManager.instance.multipleReplace(
+			MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_POINT_ID),new string[2]{"{{pointsMade}}","{{pointsNeed}}"},new string[2]{pointsMade.ToString(),pointsNeed.ToString()});
 	}
 
 	public void setWordsCondition(int wordsNeeded,int wordsMade)
 	{
-		goalText.text = GameTextManager.instance.changeTextWords(
-			GameTextManager.instance.getTextByID("goalByWordsCondition"),new string[2]{"wordsMade","wordNeed"},new string[2]{wordsMade.ToString(),wordsNeeded.ToString()});
+		goalText.text = MultiLanguageTextManager.instance.multipleReplace(
+			MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_ID),new string[2]{"{{wordsMade}}","{{wordNeed}}"},new string[2]{wordsMade.ToString(),wordsNeeded.ToString()});
 	}
 
 	public void setLettersCondition(List<string> letters = null)
 	{
-		goalLettersText.text = GameTextManager.instance.getTextByID("goalByLettersCondition");
+		goalLettersText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_LETTERS_ID);
 		for (int i = 0; i < letters.Count; i++) 
 		{
 			GameObject letter =  Instantiate(uiLetter) as GameObject;
@@ -179,8 +180,7 @@ public class HUDManager : MonoBehaviour
 		//TODO: Usar un replace que no necesite estar creando arreglos
 		//goalText.text = GameTextManager.instance.getTextByID("goalByObstaclesCondition").Replace("goalObstacleLetters",value.ToString())
 
-		goalText.text = GameTextManager.instance.changeTextWords(
-			GameTextManager.instance.getTextByID("goalByObstaclesCondition"),new string[1]{"goalObstacleLetters"},new string[1]{value.ToString()});
+		goalText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_OBSTACLES_ID).Replace("{{goalObstacleLetters}}",value.ToString());
 	}
 
 	public void setWordCondition(string word)
@@ -188,8 +188,7 @@ public class HUDManager : MonoBehaviour
 		//TODO: Los textos que se usan como codigo para reemplazar deben ser menos coloquiales para evitar que se reesccriban
 		//TODO: goalSin != {{goalSin}} o [[goalSin]] o <<goalSin>> o <code>goalSin</code> Algo que indique a quien edite estas cadenas que no debe de modificarse
 		//TODO: Usar un replace que no necesite estar creando arreglos
-		goalText.text = GameTextManager.instance.changeTextWords(
-			GameTextManager.instance.getTextByID("goalBy1WordCondition"),new string[1]{"goalWord"},new string[1]{word});
+		goalText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_1_WORD_ID).Replace("{{goalWord}}",word);
 	}
 
 	public void setSynCondition(string word)
@@ -197,8 +196,7 @@ public class HUDManager : MonoBehaviour
 		//TODO: Los textos que se usan como codigo para reemplazar deben ser menos coloquiales para evitar que se reesccriban
 		//TODO: goalSin != {{goalSin}} o [[goalSin]] o <<goalSin>> o <code>goalSin</code> Algo que indique a quien edite estas cadenas que no debe de modificarse
 		//TODO: Usar un replace que no necesite estar creando arreglos
-		goalText.text = GameTextManager.instance.changeTextWords(
-			GameTextManager.instance.getTextByID("goalBySynonymousCondition"),new string[1]{"goalSin"},new string[1]{word});
+		goalText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_SYNONYMOUS_ID).Replace("{{goalSin}}",word);
 	}
 
 	public void setAntCondition(string word)
@@ -206,8 +204,7 @@ public class HUDManager : MonoBehaviour
 		//TODO: Los textos que se usan como codigo para reemplazar deben ser menos coloquiales para evitar que se reesccriban
 		//TODO: goalSin != {{goalSin}} o [[goalSin]] o <<goalSin>> o <code>goalSin</code> Algo que indique a quien edite estas cadenas que no debe de modificarse
 		//TODO: Usar un replace que no necesite estar creando arreglos
-		goalText.text = GameTextManager.instance.changeTextWords(
-			GameTextManager.instance.getTextByID("goalByAntonymCondition"),new string[1]{"goalAnt"},new string[1]{word});
+		goalText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_ANTONYM_ID).Replace("{{goalAnt}}",word);
 	}
 		
 	public void destroyLetterFound(string letterFound)
@@ -288,63 +285,65 @@ public class HUDManager : MonoBehaviour
 	}
 
 
-	public void showGoalPopUp(string goalCondition, Object parameters)
+	public void showGoalPopUp(string goalCondition, System.Object parameters)
 	{
 		Text goalText = goalPopUp.transform.FindChild("Objective").GetComponent<Text>();
-		string textId;
-		string textToReplace;
-		string replacement;
+		string textId = string.Empty;
+		string textToReplace = string.Empty;
+		string replacement = string.Empty;
 
 		switch(goalCondition)
 		{
 		case GoalManager.LETTERS:
-			textId = "goalByLettersObjectivePopUp";
-			textToReplace = "goalLetters";
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_LETTERS_ID;
+			textToReplace = "{{goalLetters}}";
 
 			replacement = "";
-			List<Letter> letters = (List<Letter>)parameters;
+			IEnumerable letters = parameters as IEnumerable;
 
-			for (int i = 0; i < letters.Count; i++) 
+			foreach (object letter in letters) 
 			{
-				replacement += letters[i];
-				replacement += (i == letters.Count-1 ? ".":", ");
+				replacement += letter.ToString ();
+				replacement += ", ";
 			}
+			replacement.Remove(replacement.LastIndexOf (","));
+			replacement += ".";
 
 			break;
 		case GoalManager.OBSTACLES:
-			textId = "goalByObstaclesObjectivePopUp";
-			textToReplace = "goalObstacleLetters";
-			replacement = ((int)parameters).ToString();
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_OBSTACLES_ID;
+			textToReplace = "{{goalObstacleLetters}}";
+			replacement = (Convert.ToInt32(parameters)).ToString();
 			break;
 		case GoalManager.POINTS:
-			textId = "goalByPointsObjectivePopUp";
-			textToReplace = "goalPoints";
-			replacement = ((int)parameters).ToString();
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_POINTS_ID;
+			textToReplace = "{{goalPoints}}";
+			replacement = (Convert.ToInt32(parameters)).ToString();
 			break;
 		case GoalManager.WORDS_COUNT:
-			textId = "goalByWordsObjectivePopUp";
-			textToReplace = "goalWords";
-			replacement = ((int)parameters).ToString();
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_WORDS_ID;
+			textToReplace = "{{goalWords}}";
+			replacement = (Convert.ToInt32(parameters)).ToString();
 			break;
 		case GoalManager.SYNONYMOUS:
-			textId = "goalBySynonymousObjectivePopUp";
-			textToReplace = "goalSin";
-			replacement = (string) parameters;
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID;
+			textToReplace = "{{goalSin}}";
+			replacement = parameters.ToString();
 			break;
 		case GoalManager.WORD:
-			textId = "goalBy1WordObjectivePopUp";
-			textToReplace = "goalWord";
-			replacement = (string) parameters;
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_1_WORD_ID;
+			textToReplace = "{{goalWord}}";
+			replacement = parameters.ToString();
 			break;
 		
 		case GoalManager.ANTONYMS:
-			textId = "goalByAntonymObjectivePopUp";
-			textToReplace = "goalAnt";
-			replacement = (string) parameters;
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_ANTONYM_ID;
+			textToReplace = "{{goalAnt}}";
+			replacement = parameters.ToString();
 			break;
 		}
 
-		goalText.text = GameTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
+		goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
 
 		goalPopUp.SetActive(true);
 	}
@@ -357,7 +356,7 @@ public class HUDManager : MonoBehaviour
 	public void quitGamePopUp()
 	{
 		exitGamePopUp.SetActive (true);
-		exitText.text = GameTextManager.instance.getTextByID ("exitText");
+		exitText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.EXIT_POPUP_ID);
 		Vector3 v3 = new Vector3 ();
 		v3 = exitContent.anchoredPosition;
 

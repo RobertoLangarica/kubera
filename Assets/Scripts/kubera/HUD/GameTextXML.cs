@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 
 [XmlRoot("gameText")]
-public class GameTextXML
+public class MultiLanguageTextXML
 {
 	protected List<TextXML> _texts = new List<TextXML>();
 	
@@ -15,10 +15,10 @@ public class GameTextXML
 		get{return _texts.ToArray();}
 	}
 	
-	public static GameTextXML LoadFromText(string text) 
+	public static MultiLanguageTextXML LoadFromText(string text) 
 	{
-		var serializer = new XmlSerializer(typeof(GameTextXML));
-		return serializer.Deserialize(new StringReader(text)) as GameTextXML;
+		var serializer = new XmlSerializer(typeof(MultiLanguageTextXML));
+		return serializer.Deserialize(new StringReader(text)) as MultiLanguageTextXML;
 	}
 
 	public TextXML getTextByID(string id)
