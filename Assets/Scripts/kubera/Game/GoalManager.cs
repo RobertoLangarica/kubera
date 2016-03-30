@@ -12,22 +12,34 @@ public class GoalManager : MonoBehaviour
 	public const string OBSTACLES	= "obstacles";//Obstaculos que remover
 	public const string POINTS		= "points";//Una cantidad de puntos que alcanzar
 
-	public string currentCondition { get{return currentCondition;} protected set{currentCondition = value;}}
+	protected string _currentCondition;
+	public string currentCondition { get{return _currentCondition;} protected set{_currentCondition = value;}}
 
-	public List<string> goalLetters { get{return goalLetters;} protected set{goalLetters = value;}}
-	public List<string> usedLetters { get{return usedLetters;} protected set{usedLetters = value;}}
+	protected List<string> _goalLetters;
+	public List<string> goalLetters { get{return _goalLetters;} protected set{_goalLetters = value;}}
 
-	public int goalObstacles  { get{return goalObstacles;} protected set{goalObstacles = value;}}
+	protected List<string> _usedLetters;
+	public List<string> usedLetters { get{return _usedLetters;} protected set{_usedLetters = value;}}
+
+	protected int _goalObstacles;
+	public int goalObstacles  { get{return _goalObstacles;} protected set{_goalObstacles = value;}}
 	public int obstaclesCount;
 
-	public int goalPoints  { get{return goalPoints;} protected set{goalPoints = value;}}
+	protected int _goalPoints;
+	public int goalPoints  { get{return _goalPoints;} protected set{_goalPoints = value;}}
 	public int pointsCount;
 
-	public int goalWordsCount  { get{return goalWordsCount;} protected set{goalWordsCount = value;}}
-	public int wordsCount  { get{return wordsCount;} protected set{wordsCount = value;}}
+	protected int _goalWordsCount;
+	public int goalWordsCount  { get{return _goalWordsCount;} protected set{_goalWordsCount = value;}}
 
-	public List<string> goalWords  { get{return goalWords;} protected set{goalWords = value;}}
-	public List<string> goalWordsToShow  { get{return goalWordsToShow;} protected set{goalWordsToShow = value;}}
+	protected int _wordsCount;
+	public int wordsCount  { get{return _wordsCount;} protected set{_wordsCount = value;}}
+
+	protected List<string> _goalWords;
+	public List<string> goalWords  { get{return _goalWords;} protected set{_goalWords = value;}}
+
+	protected List<string> _goalWordsToShow;
+	public List<string> goalWordsToShow  { get{return _goalWordsToShow;} protected set{_goalWordsToShow = value;}}
 
 	public delegate void DOnGoalAchieved();
 	public DOnGoalAchieved OnGoalAchieved;

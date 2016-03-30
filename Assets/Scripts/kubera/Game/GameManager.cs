@@ -51,6 +51,15 @@ public class GameManager : MonoBehaviour
 	void Start()
 	{
 		wordManager = FindObjectOfType<WordManager>();
+		cellManager = FindObjectOfType<CellsManager>();
+		powerupManager = FindObjectOfType<PowerUpManager>();
+		hudManager = FindObjectOfType<HUDManager> ();
+		audioManager = FindObjectOfType<AudioManager>();
+		pieceManager = FindObjectOfType<PieceManager>();
+		inputPiece = FindObjectOfType<InputPiece>();
+		inputWords = FindObjectOfType<InputWords>();
+		goalManager = FindObjectOfType<GoalManager>();
+
 		wordManager.setMaxAllowedLetters(PersistentData.instance.maxWordLength);
 		wordManager.gridLettersParent = gridLettersContainer;
 		//LetterSize
@@ -60,24 +69,11 @@ public class GameManager : MonoBehaviour
 		lettersizeDelta.y = Mathf.Abs(lettersizeDelta.y);
 		wordManager.gridLettersSizeDelta = new Vector2(lettersizeDelta.x, lettersizeDelta.y);
 
-		cellManager = FindObjectOfType<CellsManager>();
-
-		powerupManager = FindObjectOfType<PowerUpManager>();
 		powerupManager.OnPowerupCanceled = OnPowerupCanceled;
 		powerupManager.OnPowerupCompleted = OnPowerupCompleted;
 
-		pieceManager = FindObjectOfType<PieceManager>();
-
-		hudManager = FindObjectOfType<HUDManager> ();
-
-		audioManager = FindObjectOfType<AudioManager>();
-
-		inputPiece = FindObjectOfType<InputPiece>();
 		inputPiece.OnDrop += OnPieceDropped;
 
-		inputWords = FindObjectOfType<InputWords>();
-
-		goalManager = FindObjectOfType<GoalManager>();
 		goalManager.OnGoalAchieved += OnLevelGoalAchieved;
 
 		//TODO: Leer las gemas de algun lado
@@ -209,7 +205,8 @@ public class GameManager : MonoBehaviour
 
 	void Update()
 	{
-		hudManager.setLettersPoints (wordManager.wordPoints);
+		//TODO: mover de lugar la funcion
+		//hudManager.setLettersPoints (wordManager.wordPoints);
 	}
 
 	private void OnPieceDropped(GameObject obj)
@@ -440,16 +437,16 @@ public class GameManager : MonoBehaviour
 	protected void getWinCondition()
 	{
 		//TODO: Mostrar solo la informacion necesaria
-		hudManager.setLettersCondition(goalManager.goalLetters);
+		/*hudManager.setLettersCondition(goalManager.goalLetters);
 		hudManager.setObstaclesCondition (goalManager.obstaclesCount);
 		hudManager.setWordCondition (goalManager.goalWordsToShow[0]);
 		hudManager.setSynCondition (goalManager.goalWordsToShow[0]);
 		hudManager.setAntCondition(goalManager.goalWordsToShow[0]);
-		hudManager.setPointsCondition(goalManager.goalPoints, pointsCount);
+		hudManager.setPointsCondition(goalManager.goalPoints, pointsCount);*/
 		//hudManager.setWordsCondition(goalManager.goalWordsCount);
 
 		//Se muestra el objetivo al inicio del nivel
-		hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
+		//hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
 
 
 		//hudManager.showGoalPopUp(myWinCondition[0],word,quantity,goalLetters);

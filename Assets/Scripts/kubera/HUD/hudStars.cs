@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class HUDMetterAndStars
+public class HUDMetterAndStars : MonoBehaviour
 {
 	public Image pointsMeter;
 	public Image[] Stars;

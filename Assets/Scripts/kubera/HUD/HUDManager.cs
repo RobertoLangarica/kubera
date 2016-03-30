@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 
@@ -57,7 +58,7 @@ public class HUDManager : MonoBehaviour
 	public void actualizePoints(int pointsCount)
 	{
 		points.text = pointsCount.ToString();
-		hudStars.setMeterPoints (pointsCount);
+		//hudStars.setMeterPoints (pointsCount);
 
 		scoreText.text = lettersPointsTitle.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SCORE_HUD_TITLE_ID);
 	}
@@ -100,7 +101,7 @@ public class HUDManager : MonoBehaviour
 		
 	public void setStarsData(float[] scores)
 	{
-		hudStars.setStarsData (scores);
+		//hudStars.setStarsData (scores);
 	}		
 		
 	public void setLevelName(string name)
@@ -284,12 +285,12 @@ public class HUDManager : MonoBehaviour
 	}
 
 
-	public void showGoalPopUp(string goalCondition, Object parameters)
+	public void showGoalPopUp(string goalCondition, System.Object parameters)
 	{
 		Text goalText = goalPopUp.transform.FindChild("Objective").GetComponent<Text>();
-		string textId;
-		string textToReplace;
-		string replacement;
+		string textId = string.Empty;
+		string textToReplace = string.Empty;
+		string replacement = string.Empty;
 
 		switch(goalCondition)
 		{
@@ -298,29 +299,31 @@ public class HUDManager : MonoBehaviour
 			textToReplace = "{{goalLetters}}";
 
 			replacement = "";
-			List<Letter> letters = parameters as List<Letter>;
+			IEnumerable letters = parameters as IEnumerable;
 
-			for (int i = 0; i < letters.Count; i++) 
+			foreach (object letter in letters) 
 			{
-				replacement += letters[i];
-				replacement += (i == letters.Count-1 ? ".":", ");
+				replacement += letter.ToString ();
+				replacement += ", ";
 			}
+			replacement.Remove(replacement.LastIndexOf (","));
+			replacement += ".";
 
 			break;
 		case GoalManager.OBSTACLES:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_OBSTACLES_ID;
 			textToReplace = "{{goalObstacleLetters}}";
-			replacement = (int.Parse(parameters)).ToString();
+			replacement = (Convert.ToInt32(parameters)).ToString();
 			break;
 		case GoalManager.POINTS:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_POINTS_ID;
 			textToReplace = "{{goalPoints}}";
-			replacement = (int.Parse(parameters)).ToString();
+			replacement = (Convert.ToInt32(parameters)).ToString();
 			break;
 		case GoalManager.WORDS_COUNT:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_WORDS_ID;
 			textToReplace = "{{goalWords}}";
-			replacement = (int.Parse(parameters)).ToString();
+			replacement = (Convert.ToInt32(parameters)).ToString();
 			break;
 		case GoalManager.SYNONYMOUS:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID;

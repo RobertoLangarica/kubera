@@ -121,5 +121,7 @@ public class MultiLanguageTextManager
 				Debug.LogWarning("EL TEXTO NO SE MODIFICO, los arreglos para modificar el texto son diferentes");
 			}
 		}
+
+		return resultText;
 	}
 }
