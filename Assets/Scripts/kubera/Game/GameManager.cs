@@ -447,13 +447,14 @@ public class GameManager : MonoBehaviour
 		hudManager.setSynCondition (goalManager.goalWordsToShow[0]);
 		hudManager.setAntCondition(goalManager.goalWordsToShow[0]);
 		hudManager.setPointsCondition(goalManager.goalPoints, pointsCount);*/
+
 		//hudManager.setWordsCondition(goalManager.goalWordsCount);
 
 		//Se muestra el objetivo al inicio del nivel
-		//hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
+		hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
+		hudManager.setWinCondition (goalManager.currentCondition, goalManager.getGoalConditionParameters());
 
-
-		//hudManager.showGoalPopUp(myWinCondition[0],word,quantity,goalLetters);
+		hudManager.showGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters());
 	}
 
 	IEnumerator check()

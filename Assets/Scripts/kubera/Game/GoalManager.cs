@@ -51,10 +51,10 @@ public class GoalManager : MonoBehaviour
 		string parameters= data[1];
 
 		currentCondition = condition;
-
+		
 		switch(condition)
 		{
-		case LETTERS:
+		case LETTERS:			
 			configureForLetters(parameters);
 			break;
 		case OBSTACLES:
@@ -256,5 +256,27 @@ public class GoalManager : MonoBehaviour
 		result.ToLower();
 
 		return result;
+	}
+
+	public object getGoalConditionParameters()
+	{
+		
+		switch (currentCondition) 
+		{
+		case LETTERS:
+			return goalLetters;
+		case OBSTACLES:
+			return goalObstacles;
+		case POINTS:
+			return goalPoints;
+		case WORDS_COUNT:
+			return goalWordsCount;
+		case SYNONYMOUS:			
+		case WORD:			
+		case ANTONYMS:
+			return goalWordsToShow;
+		default:
+			return null;
+		}
 	}
 }

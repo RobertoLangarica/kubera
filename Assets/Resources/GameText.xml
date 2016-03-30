@@ -60,7 +60,7 @@
 		<text id="goalByPointsCondition">
 			<languages>
 				<language id="english" text="Made: {{pointsMade}} points of  {{pointsNeed}} ."/>
-				<language id="spanish" text="Van: {{pointsMade}} puntos de {{pointsNeed}} ."/>
+				<language id="spanish" text="{{pointsMade}} / {{pointsNeed}}"/>
 				<language id="default" text="Van: {{pointsMade}} puntos de {{pointsNeed}} ."/>
 			</languages>
 		</text>
