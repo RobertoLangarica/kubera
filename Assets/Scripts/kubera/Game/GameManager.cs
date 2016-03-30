@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
 		inputPiece.OnDrop += OnPieceDropped;
 
 		goalManager.OnGoalAchieved += OnLevelGoalAchieved;
-
+		goalManager.OnLetterFound += hudManager.destroyLetterFound;
 		//TODO: Leer las gemas de algun lado
 		UserDataManager.instance.playerGems = 300;
 

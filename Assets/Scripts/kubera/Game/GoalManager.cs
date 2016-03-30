@@ -44,6 +44,9 @@ public class GoalManager : MonoBehaviour
 	public delegate void DOnGoalAchieved();
 	public DOnGoalAchieved OnGoalAchieved;
 
+	public delegate void DOnLetterFound(string letter);
+	public DOnLetterFound OnLetterFound;
+
 	public void initializeFromString(string goal)
 	{
 		string[] data = goal.Split('-');
@@ -207,6 +210,7 @@ public class GoalManager : MonoBehaviour
 			{
 				usedLetters.Add(goalLetters[index]);
 				goalLetters.RemoveAt(index);
+				OnLetterFound (word[i].abcChar.character);
 
 				if(goalLetters.Count == 0)
 				{
