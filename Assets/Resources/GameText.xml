@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <gameText>
 	<texts>
-		<text id="hudPuntaje">
+		<text id="hudScore">
 			<languages>
 				<language id="english" text="Points:"/>
 				<language id="spanish" text="Puntos:"/>
@@ -10,65 +10,65 @@
 		</text>
 		<text id="goalByPointsObjectivePopUp">
 			<languages>
-				<language id="english" text="Get: goalPoints points."/>
-				<language id="spanish" text="Obten: goalPoints puntos."/>
-				<language id="default" text="Obten: goalPoints puntos."/>
+				<language id="english" text="Get: {{goalPoints}} points."/>
+				<language id="spanish" text="Obten: {{goalPoints}} puntos."/>
+				<language id="default" text="Obten: {{goalPoints}} puntos."/>
 			</languages>
 		</text>
 		<text id="goalByWordsObjectivePopUp">
 			<languages>
-				<language id="english" text="Create: goalWords words."/>
-				<language id="spanish" text="Forma: goalWords palabras."/>
-				<language id="default" text="Forma: goalWords puntos."/>
+				<language id="english" text="Create: {{goalWords}} words."/>
+				<language id="spanish" text="Forma: {{goalWords}} palabras."/>
+				<language id="default" text="Forma: {{goalWords}} puntos."/>
 			</languages>
 		</text>
 		<text id="goalByLettersObjectivePopUp">
 			<languages>
-				<language id="english" text="Use: goalLetters"/>
-				<language id="spanish" text="Usa: goalLetters"/>
-				<language id="default" text="Usa: goalLetters"/>
+				<language id="english" text="Use: {{goalLetters}}"/>
+				<language id="spanish" text="Usa: {{goalLetters}}"/>
+				<language id="default" text="Usa: {{goalLetters}}"/>
 			</languages>
 		</text>
 		<text id="goalByObstaclesObjectivePopUp">
 			<languages>
-				<language id="english" text="Use: goalObstacleLetters black letters."/>
-				<language id="spanish" text="Usa: goalObstacleLetters letras negras."/>
-				<language id="default" text="Usa: goalObstacleLetters letras negras."/>
+				<language id="english" text="Use: {{goalObstacleLetters}} black letters."/>
+				<language id="spanish" text="Usa: {{goalObstacleLetters}} letras negras."/>
+				<language id="default" text="Usa: {{goalObstacleLetters}} letras negras."/>
 			</languages>
 		</text>
 		<text id="goalBy1WordObjectivePopUp">
 			<languages>
-				<language id="english" text="Create: goalWord ."/>
-				<language id="spanish" text="Forma: goalWord ."/>
-				<language id="default" text="Forma: goalWord ."/>
+				<language id="english" text="Create: {{goalWord}} ."/>
+				<language id="spanish" text="Forma: {{goalWord}} ."/>
+				<language id="default" text="Forma: {{goalWord}} ."/>
 			</languages>
 		</text>
 		<text id="goalBySynonymousObjectivePopUp">
 			<languages>
-				<language id="english" text="Synonymous of: goalSin ."/>
-				<language id="spanish" text="Sinonimo de: goalSin ."/>
-				<language id="default" text="Sinonimo de: goalSin ."/>
+				<language id="english" text="Synonymous of: {{goalSin}} ."/>
+				<language id="spanish" text="Sinonimo de: {{goalSin}} ."/>
+				<language id="default" text="Sinonimo de: {{goalSin}} ."/>
 			</languages>
 		</text>
 		<text id="goalByAntonymObjectivePopUp">
 			<languages>
-				<language id="english" text="Antonym of: goalAnt ."/>
-				<language id="spanish" text="Antonimo de: goalAnt ."/>
-				<language id="default" text="Antonimo de: goalAnt ."/>
+				<language id="english" text="Antonym of: {{goalAnt}} ."/>
+				<language id="spanish" text="Antonimo de: {{goalAnt}} ."/>
+				<language id="default" text="Antonimo de: {{goalAnt}} ."/>
 			</languages>
 		</text>
 		<text id="goalByPointsCondition">
 			<languages>
-				<language id="english" text="Made: pointsMade points of  pointsNeed ."/>
-				<language id="spanish" text="Van: pointsMade puntos de pointsNeed ."/>
-				<language id="default" text="Van: pointsMade puntos de pointsNeed ."/>
+				<language id="english" text="Made: {{pointsMade}} points of  {{pointsNeed}} ."/>
+				<language id="spanish" text="{{pointsMade}} / {{pointsNeed}}"/>
+				<language id="default" text="Van: {{pointsMade}} puntos de {{pointsNeed}} ."/>
 			</languages>
 		</text>
 		<text id="goalByWordsCondition">
 			<languages>
-				<language id="english" text="Made: wordsMade words of  wordNeed ."/>
-				<language id="spanish" text="Van: wordsMade palabras de wordNeed ."/>
-				<language id="default" text="Van: wordsMade palabras de wordNeed ."/>
+				<language id="english" text="Made: {{wordsMade}} words of  {{wordNeed}} ."/>
+				<language id="spanish" text="Van: {{wordsMade}} palabras de {{wordNeed}} ."/>
+				<language id="default" text="Van: {{wordsMade}} palabras de {{wordNeed}} ."/>
 			</languages>
 		</text>
 		<text id="goalByLettersCondition">
@@ -80,30 +80,30 @@
 		</text>
 		<text id="goalByObstaclesCondition">
 			<languages>
-				<language id="english" text="Use: goalObstacleLetters black letters."/>
-				<language id="spanish" text="Usa: goalObstacleLetters letras negras."/>
-				<language id="default" text="Usa: goalObstacleLetters letras negras."/>
+				<language id="english" text="Use: {{goalObstacleLetters}} black letters."/>
+				<language id="spanish" text="Usa: {{goalObstacleLetters}} letras negras."/>
+				<language id="default" text="Usa: {{goalObstacleLetters}} letras negras."/>
 			</languages>
 		</text>
 		<text id="goalBy1WordCondition">
 			<languages>
-				<language id="english" text="Create: goalWord ."/>
-				<language id="spanish" text="Forma: goalWord ."/>
-				<language id="default" text="Forma: goalWord ."/>
+				<language id="english" text="Create: {{goalWord}} ."/>
+				<language id="spanish" text="Forma: {{goalWord}} ."/>
+				<language id="default" text="Forma: {{goalWord}} ."/>
 			</languages>
 		</text>
 		<text id="goalBySynonymousCondition">
 			<languages>
-				<language id="english" text="Synonymous of: goalSin ."/>
-				<language id="spanish" text="Sinonimo de: goalSin ."/>
-				<language id="default" text="Sinonimo de: goalSin ."/>
+				<language id="english" text="Synonymous of: {{goalSin}} ."/>
+				<language id="spanish" text="Sinonimo de: {{goalSin}} ."/>
+				<language id="default" text="Sinonimo de: {{goalSin}} ."/>
 			</languages>
 		</text>
 		<text id="goalByAntonymCondition">
 			<languages>
-				<language id="english" text="Antonym of: goalAnt ."/>
-				<language id="spanish" text="Antonimo de: goalAnt ."/>
-				<language id="default" text="Antonimo de: goalAnt ."/>
+				<language id="english" text="Antonym of: {{goalAnt}} ."/>
+				<language id="spanish" text="Antonimo de: {{goalAnt}} ."/>
+				<language id="default" text="Antonimo de: {{goalAnt}} ."/>
 			</languages>
 		</text>
 		<text id="exitText">

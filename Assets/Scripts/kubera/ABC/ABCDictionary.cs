@@ -85,7 +85,19 @@ namespace ABC
 		 **/ 
 		public bool validateChar(ABCChar c)
 		{
-			return tree.validateChar(c);
+			if(c.wildcard)
+			{
+				//El arbol no conoce los caracteres
+				//Adignamos el caracter que toma este comodin
+				bool result = tree.validateChar(c);
+				c.character = getStringByValue(c.value);
+
+				return result;
+			}
+			else
+			{
+				return tree.validateChar(c);	
+			}
 		}
 
 		public bool isCompleteWord()

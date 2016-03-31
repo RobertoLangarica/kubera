@@ -6,7 +6,7 @@ public class Cell : MonoBehaviour
 {
 	public enum EType
 	{
-		NORMAL,COLORED,EMPTY,OBSTACLE_LETTER,VISIBLE_OBSTACLE_LETTER,TUTORIAL_LETTER
+		NORMAL,COLORED,EMPTY,OBSTACLE_LETTER,EMPTY_VISIBLE_CELL,TUTORIAL_LETTER
 	}
 
 	public Piece.EType contentType;
@@ -21,7 +21,7 @@ public class Cell : MonoBehaviour
 	 * 2 = Cubo de color que se agrega desde el inicio
 	 * 4 = Celda vacia (si cuenta para la linea)
 	 * 8 = Letra como obstaculo
-	 * 16 = Letra como obstaculo pero visible
+	 * 16 = Celda vaci pero visible
 	 * 32 = Letra tutorial
 	 * 
 	 * El siguiente nibble se utiliza para los colores que se marcan en la bandera 2.

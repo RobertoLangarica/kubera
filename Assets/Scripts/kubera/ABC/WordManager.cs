@@ -429,10 +429,10 @@ public class WordManager : MonoBehaviour
 	{
 		string result = "";
 
-		//character es desconfiable por los comodines (usamos value)
 		foreach(Letter l in letters)
 		{
-			result = result+wordsValidator.getStringByValue(l.abcChar.value);
+			//result = result+wordsValidator.getStringByValue(l.abcChar.value);
+			result = result + l.abcChar.character;
 		}
 
 		return result;

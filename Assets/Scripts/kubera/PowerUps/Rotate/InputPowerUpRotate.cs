@@ -110,7 +110,7 @@ public class InputPowerUpRotate : MonoBehaviour
 			{	
 				if(currentSelected)
 				{
-					if (gameManager.dropPieceOnGrid (currentSelected.GetComponent<Piece> ())) 
+					if (gameManager.tryToDropOnGrid (currentSelected.GetComponent<Piece> ())) 
 					{
 						onPiecePositionatedCompleted (false,currentSelected.GetComponent<Piece> ().createdIndex);
 						reset();
