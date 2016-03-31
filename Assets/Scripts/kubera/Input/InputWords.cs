@@ -31,7 +31,7 @@ public class InputWords : MonoBehaviour
 
 		lastTimeDraggedFrame = Time.frameCount;
 
-		canDeleteLetter = false;
+
 		switch(gesture.Phase)
 		{
 		case (ContinuousGesturePhase.Started):
@@ -40,7 +40,7 @@ public class InputWords : MonoBehaviour
 				{
 					return;
 				}
-
+				canDeleteLetter = false;
 				letter = gesture.Raycast.Hit2D.transform.gameObject;
 
 				onDragStart(letter);

@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
 		//TODO: el release no manda un random
 		if(PersistentData.instance.currentLevel == null)
 		{
-			configureLevel(PersistentData.instance.levelsData.levels[0]);
+			configureLevel(PersistentData.instance.getRandomLevel());
 		}
 		else
 		{
