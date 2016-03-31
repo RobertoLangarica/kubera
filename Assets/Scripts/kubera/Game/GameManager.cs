@@ -529,7 +529,7 @@ public class GameManager : MonoBehaviour
 
 	protected void winBonificationActions()
 	{
-		if(cellManager.getAllEmptyCells().Length > 0)
+		if(cellManager.getAllEmptyCells().Length > 0 &&remainingMoves > 0 )
 		{
 			add1x1Block ();
 		}
@@ -556,6 +556,7 @@ public class GameManager : MonoBehaviour
 
 	protected void addMovementPoint()
 	{
+		print ("S");
 		addPoints (1);
 		substractMoves (1);
 	}
@@ -567,7 +568,7 @@ public class GameManager : MonoBehaviour
 
 		cell = emptyCells [Random.Range (0, emptyCells.Length - 1)];
 
-		substractMoves (1);
+
 		GameObject go = GameObject.Instantiate (bonificationPiecePrefab) as GameObject;
 
 		go.GetComponent<Piece> ().currentType = cellManager.colorRandom ();
@@ -575,6 +576,7 @@ public class GameManager : MonoBehaviour
 		cellManager.occupyAndConfigureCell(cell,go,go.GetComponent<Piece> ().currentType,true);
 
 		showScoreTextOnHud (cell.transform.position, 1);
+		substractMoves (1);
 		addPoints(1);
 
 	}
