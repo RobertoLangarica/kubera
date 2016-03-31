@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
 	public Transform gridLettersContainer;
 	public float gridLettersSizeMultiplier = 0.9f;
 
+	protected int sizeGridX = 8;
+	protected int sizeGridY = 8;
+
 	protected List<Cell> cellToLetter;
 
 	protected int currentWildCardsActivated;
@@ -125,7 +128,7 @@ public class GameManager : MonoBehaviour
 		hudManager.actualizePoints(0);
 
 	
-		cellManager.resizeGrid(10,10);
+		cellManager.resizeGrid(sizeGridX,sizeGridY);
 		populateGridFromLevel(level);
 
 		getWinCondition();
