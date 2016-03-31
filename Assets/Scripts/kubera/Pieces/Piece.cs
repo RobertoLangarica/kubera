@@ -5,7 +5,7 @@ using System;
 
 public class Piece : MonoBehaviour 
 {
-	public enum EType
+	public enum EColor
 	{
 		NONE,
 		AQUA,
@@ -16,9 +16,17 @@ public class Piece : MonoBehaviour
 		MAGENTA,
 		RED,
 		YELLOW,
+		LETTER_OBSTACLE
+	}
+
+	public enum EType
+	{
+		NONE,
+		PIECE,
 		LETTER,
 		LETTER_OBSTACLE
 	}
+
 
 	public Color COLOR_AQUA				= new Color(0.376f, 0.698f, 0.639f); 
 	public Color COLOR_BLACK			= new Color(0.180f, 0.188f, 0.192f);
@@ -36,6 +44,8 @@ public class Piece : MonoBehaviour
 
 	protected EType _currentType;
 	protected Color rendererColor;
+
+	public EColor currentColor;
 
 	[HideInInspector]public GameObject parent;
 
@@ -68,7 +78,7 @@ public class Piece : MonoBehaviour
 			return;
 		}
 
-		Color color = getColorOfType(currentType);
+		Color color = getColorOfType(currentColor);
 			
 		foreach(GameObject piece in squares)
 		{
@@ -76,30 +86,31 @@ public class Piece : MonoBehaviour
 		}
 	}
 
-	public Color getColorOfType(EType type)
+	public Color getColorOfType(EColor color)
 	{
-		switch(type)
+		print (color);
+
+		switch(color)
 		{
-		case EType.AQUA:
+		case EColor.AQUA:
 			return COLOR_AQUA;
-		case EType.BLACK:
+		case EColor.BLACK:
 			return COLOR_BLACK;
-		case EType.LETTER_OBSTACLE:
+		case EColor.LETTER_OBSTACLE:
 			return COLOR_LETTER_OBSTACLE;
-		case EType.BLUE:
+		case EColor.BLUE:
 			return COLOR_BLUE;
-		case EType.GREEN:
+		case EColor.GREEN:
 			return COLOR_GREEN;
-		case EType.GREY:
+		case EColor.GREY:
 			return COLOR_GREY;
-		case EType.MAGENTA:
+		case EColor.MAGENTA:
 			return COLOR_MAGENTA;
-		case EType.RED:
+		case EColor.RED:
 			return COLOR_RED;
-		case EType.YELLOW:
+		case EColor.YELLOW:
 			return COLOR_YELLOW;
 		}
-
 		return COLOR_NONE;
 	}
 		

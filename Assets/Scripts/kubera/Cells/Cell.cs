@@ -10,6 +10,7 @@ public class Cell : MonoBehaviour
 	}
 
 	public Piece.EType contentType;
+	public Piece.EColor contentColor;
 	public bool available;
 	public bool occupied;
 	public GameObject content;
@@ -137,25 +138,25 @@ public class Cell : MonoBehaviour
 		switch(color)
 		{
 		case(1):
-			contentType = Piece.EType.AQUA;
+			contentColor = Piece.EColor.AQUA;
 			break;
 		case(2):
-			contentType = Piece.EType.BLUE;
+			contentColor = Piece.EColor.BLUE;
 			break;
 		case(3):
-			contentType = Piece.EType.GREEN;
+			contentColor = Piece.EColor.GREEN;
 			break;
 		case(4):
-			contentType = Piece.EType.MAGENTA;
+			contentColor = Piece.EColor.MAGENTA;
 			break;
 		case(5):
-			contentType = Piece.EType.RED;
+			contentColor = Piece.EColor.RED;
 			break;
 		case(6):
-			contentType = Piece.EType.YELLOW;
+			contentColor = Piece.EColor.YELLOW;
 			break;
 		case(7):
-			contentType = Piece.EType.GREY;
+			contentColor = Piece.EColor.GREY;
 			break;
 		}
 	}
