@@ -196,6 +196,24 @@ public class HUDManager : MonoBehaviour
 		goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
 	}
 
+	public void actualizePointsOnWinCondition(string pointsMade, string pointsNeed)
+	{
+		string textId = string.Empty;
+
+		textId = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_POINT_ID);
+		goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
+			new string[2]{ "{{pointsMade}}", "{{pointsNeed}}" }, new string[2]{ pointsMade, pointsNeed });
+	}
+
+	public void actualizeWordsMadeOnWinCondition(string wordsMade, string wordsNeed)
+	{
+		string textId = string.Empty;
+
+		textId = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_ID);
+		goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
+			new string[2]{ "{{wordsMade}}", "{{wordNeed}}" }, new string[2]{ wordsMade, wordsNeed });
+	}
+
 	protected void setSizeOfContainer(int maxSize = 5)
 	{
 		GridLayoutGroup gridLayoutGroup = goalLettersContainer.GetComponent<GridLayoutGroup>();

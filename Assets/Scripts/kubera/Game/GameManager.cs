@@ -81,13 +81,15 @@ public class GameManager : MonoBehaviour
 
 		goalManager.OnGoalAchieved += OnLevelGoalAchieved;
 		goalManager.OnLetterFound += hudManager.destroyLetterFound;
+
+		wordManager.onWordChange += actualizeWordPoints;
 		//TODO: Leer las gemas de algun lado
 		UserDataManager.instance.playerGems = 300;
 
 		//TODO: el release no manda un random
 		if(PersistentData.instance.currentLevel == null)
 		{
-			configureLevel(PersistentData.instance.getRandomLevel());
+			configureLevel(PersistentData.instance.levelsData.levels[0]);
 		}
 		else
 		{
@@ -111,7 +113,6 @@ public class GameManager : MonoBehaviour
 
 		remainingMoves = totalMoves = currentLevel.moves;
 
-
 		hudManager.actualizeGems(UserDataManager.instance.playerGems);
 
 		hudManager.setLevelName (currentLevel.name);
@@ -133,6 +134,7 @@ public class GameManager : MonoBehaviour
 
 		getWinCondition();
 		actualizeHUDInfo();
+		actualizeWordPoints ();
 	}
 
 	protected void readLettersFromLevel(Level level)
@@ -559,7 +561,6 @@ public class GameManager : MonoBehaviour
 
 	protected void addMovementPoint()
 	{
-		print ("S");
 		addPoints (1);
 		substractMoves (1);
 	}
@@ -838,9 +839,26 @@ public class GameManager : MonoBehaviour
 		hudManager.actualizeMovements (remainingMoves);
 		hudManager.actualizePoints (pointsCount);
 
-
+		actualizeWinCondition ();
 		//actualizeWordsCompletedWinCondition ();
 		//actualizePointsWinCondition ();
+	}
+
+	protected void actualizeWinCondition()
+	{
+		switch (goalManager.currentCondition) {
+		case GoalManager.POINTS:
+			hudManager.actualizePointsOnWinCondition (goalManager.pointsCount.ToString(),goalManager.goalPoints.ToString());
+			break;
+		case GoalManager.WORDS_COUNT:
+			hudManager.actualizeWordsMadeOnWinCondition (goalManager.wordsCount.ToString(),goalManager.goalWords.ToString());
+			break;
+		}
+	}
+
+	protected void actualizeWordPoints()
+	{
+		hudManager.setLettersPoints (wordManager.wordPoints);
 	}
 
 	protected void showScoreTextOnHud(Vector3 pos,int amount)

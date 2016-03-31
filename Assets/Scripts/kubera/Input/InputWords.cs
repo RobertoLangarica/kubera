@@ -90,7 +90,7 @@ public class InputWords : MonoBehaviour
 
 	void OnLetterWordTap(TapGesture gesture)
 	{
-		if (allowInput && gesture.Raycast.Hit2D ) 
+		if (allowInput && canDeleteLetter && gesture.Raycast.Hit2D) 
 		{	
 			onTapToDelete(gesture.Raycast.Hit2D.transform.gameObject);
 		}
