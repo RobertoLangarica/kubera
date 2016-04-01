@@ -99,7 +99,8 @@ public class PieceManager : MonoBehaviour
 	{
 		GameObject go = GameObject.Instantiate (singleSquarePrefab) as GameObject;
 		Piece piece = go.GetComponent<Piece>();
-		piece.currentType = (Piece.EType)colorIndex;
+		piece.currentType = Piece.EType.PIECE;
+		piece.currentColor = (Piece.EColor)colorIndex;
 
 		return piece;
 	}

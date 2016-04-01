@@ -51,6 +51,9 @@ public class WordManager : MonoBehaviour
 	private RandomPool<ABCChar> obstaclesLettersPool;
 	private RandomPool<ABCChar> tutorialLettersPool;
 
+	public delegate void DOnWordChange();
+	public DOnWordChange onWordChange;
+
 	void Start()
 	{
 		letters = new List<Letter>(maxLetters);
@@ -103,7 +106,6 @@ public class WordManager : MonoBehaviour
 			//Se va agregar
 			addLetterFromGrid(letter);
 		}
-
 	}
 
 	private void onLetterTap(GameObject go)
@@ -385,7 +387,9 @@ public class WordManager : MonoBehaviour
 
 		afterWordValidation();
 		activateWordDeleteBtn(isThereAnyLetterOnContainer());
-		changeDeleteState(EDeleteState.WORD);		
+		changeDeleteState(EDeleteState.WORD);
+
+		onWordChange ();
 	}
 
 	private void updateWordPoints()

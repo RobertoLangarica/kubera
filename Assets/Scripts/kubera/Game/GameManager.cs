@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
 	public Transform gridLettersContainer;
 	public float gridLettersSizeMultiplier = 0.9f;
 
+	protected int sizeGridX = 8;
+	protected int sizeGridY = 8;
+
 	protected List<Cell> cellToLetter;
 
 	protected int currentWildCardsActivated;
@@ -78,6 +81,8 @@ public class GameManager : MonoBehaviour
 
 		goalManager.OnGoalAchieved += OnLevelGoalAchieved;
 		goalManager.OnLetterFound += hudManager.destroyLetterFound;
+
+		wordManager.onWordChange += actualizeWordPoints;
 		//TODO: Leer las gemas de algun lado
 		UserDataManager.instance.playerGems = 300;
 
@@ -108,7 +113,6 @@ public class GameManager : MonoBehaviour
 
 		remainingMoves = totalMoves = currentLevel.moves;
 
-
 		hudManager.actualizeGems(UserDataManager.instance.playerGems);
 
 		hudManager.setLevelName (currentLevel.name);
@@ -125,11 +129,12 @@ public class GameManager : MonoBehaviour
 		hudManager.actualizePoints(0);
 
 	
-		cellManager.resizeGrid(10,10);
+		cellManager.resizeGrid(sizeGridX,sizeGridY);
 		populateGridFromLevel(level);
 
 		getWinCondition();
 		actualizeHUDInfo();
+		actualizeWordPoints ();
 	}
 
 	protected void readLettersFromLevel(Level level)
@@ -149,7 +154,6 @@ public class GameManager : MonoBehaviour
 
 	protected void populateGridFromLevel(Level level)
 	{
-		GameObject cellContent = null;
 		string[] levelGridData = level.grid.Split(',');
 		int cellType = 0;
 
@@ -166,13 +170,13 @@ public class GameManager : MonoBehaviour
 			{
 				//Cuadro de color
 				Piece content = pieceManager.getSingleSquarePiece(cellType>>6);
-				cellManager.occupyAndConfigureCell(i,content.gameObject,content.currentType,true);
+				cellManager.occupyAndConfigureCell(i,content.gameObject,content.currentType,content.currentColor,true);
 			}
 			else if((cellType & 0x8) == 0x8)
 			{	
 				//Obstaculo
 				Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.OBSTACLE);
-				cellManager.occupyAndConfigureCell(i,letter.gameObject,Piece.EType.LETTER_OBSTACLE,true);
+				cellManager.occupyAndConfigureCell(i,letter.gameObject,Piece.EType.LETTER_OBSTACLE,Piece.EColor.NONE,true);
 				//obstaclesCount++;
 
 				gridCharacters.Add(letter);
@@ -181,7 +185,7 @@ public class GameManager : MonoBehaviour
 			{	
 				//De tutorial
 				Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.TUTORIAL);
-				cellManager.occupyAndConfigureCell(i,letter.gameObject,Piece.EType.LETTER,true);
+				cellManager.occupyAndConfigureCell(i,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
 				tutorialLetters.Add(letter);
 
 				gridCharacters.Add(letter);
@@ -253,7 +257,7 @@ public class GameManager : MonoBehaviour
 
 		for(int i=0; i< cells.Count; i++)
 		{ 
-			cellManager.occupyAndConfigureCell (cells [i], piece.squares [i], piece.currentType);
+			cellManager.occupyAndConfigureCell (cells [i], piece.squares [i], piece.currentType,piece.currentColor);
 
 			//Cada cuadro reeparentado para dejar de usar su contenedor actual
 			//y manipularlo individualmente
@@ -307,7 +311,7 @@ public class GameManager : MonoBehaviour
 					Vector3 cellPosition =  cells [i] [j].transform.position + (new Vector3 (cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x,
 						-cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
 
-					cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, Piece.EType.LETTER);
+					cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
 					letter.gameObject.transform.DOMove (cellPosition, 0);
 					gridCharacters.Add(letter);
 				}
@@ -529,7 +533,7 @@ public class GameManager : MonoBehaviour
 
 	protected void winBonificationActions()
 	{
-		if(cellManager.getAllEmptyCells().Length > 0)
+		if(cellManager.getAllEmptyCells().Length > 0 &&remainingMoves > 0 )
 		{
 			add1x1Block ();
 		}
@@ -541,9 +545,9 @@ public class GameManager : MonoBehaviour
 			}
 			else
 			{
-				if(cellManager.getPredominantColor() != Piece.EType.NONE)
+				if(cellManager.existType(Piece.EType.PIECE))
 				{
-					cellToLetter.AddRange (cellManager.getCellsOfSameType (cellManager.getPredominantColor ()));
+					cellToLetter.AddRange (cellManager.getCellsOfSameType (Piece.EType.PIECE));
 				}
 				StartCoroutine (addWinLetterAfterActions ());
 				actualizeHUDInfo ();
@@ -567,14 +571,15 @@ public class GameManager : MonoBehaviour
 
 		cell = emptyCells [Random.Range (0, emptyCells.Length - 1)];
 
-		substractMoves (1);
+
 		GameObject go = GameObject.Instantiate (bonificationPiecePrefab) as GameObject;
 
-		go.GetComponent<Piece> ().currentType = cellManager.colorRandom ();
+		go.GetComponent<Piece> ().currentColor = cellManager.colorRandom ();
 
-		cellManager.occupyAndConfigureCell(cell,go,go.GetComponent<Piece> ().currentType,true);
+		cellManager.occupyAndConfigureCell(cell,go,Piece.EType.PIECE,Piece.EColor.AQUA,true);
 
 		showScoreTextOnHud (cell.transform.position, 1);
+		substractMoves (1);
 		addPoints(1);
 
 	}
@@ -591,7 +596,7 @@ public class GameManager : MonoBehaviour
 		if (cellToLetter.Count > 0) 
 		{
 			Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
-			cellManager.occupyAndConfigureCell (cellToLetter [random],letter.gameObject,Piece.EType.LETTER,true);
+			cellManager.occupyAndConfigureCell (cellToLetter [random],letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
@@ -605,9 +610,9 @@ public class GameManager : MonoBehaviour
 
 	protected void useBombs()
 	{
-		if(cellManager.getPredominantColor() != Piece.EType.NONE)
+		if(cellManager.existType(Piece.EType.PIECE))
 		{
-			cellToLetter = new List<Cell>(cellManager.getCellsOfSameType(cellManager.getPredominantColor()));
+			cellToLetter.AddRange (cellManager.getCellsOfSameType (Piece.EType.PIECE));
 			StartCoroutine (addWinLetterAfterActions ());
 		}
 		else
@@ -833,9 +838,26 @@ public class GameManager : MonoBehaviour
 		hudManager.actualizeMovements (remainingMoves);
 		hudManager.actualizePoints (pointsCount);
 
-
+		actualizeWinCondition ();
 		//actualizeWordsCompletedWinCondition ();
 		//actualizePointsWinCondition ();
+	}
+
+	protected void actualizeWinCondition()
+	{
+		switch (goalManager.currentCondition) {
+		case GoalManager.POINTS:
+			hudManager.actualizePointsOnWinCondition (goalManager.pointsCount.ToString(),goalManager.goalPoints.ToString());
+			break;
+		case GoalManager.WORDS_COUNT:
+			hudManager.actualizeWordsMadeOnWinCondition (goalManager.wordsCount.ToString(),goalManager.goalWords.ToString());
+			break;
+		}
+	}
+
+	protected void actualizeWordPoints()
+	{
+		hudManager.setLettersPoints (wordManager.wordPoints);
 	}
 
 	protected void showScoreTextOnHud(Vector3 pos,int amount)

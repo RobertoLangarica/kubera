@@ -181,7 +181,6 @@ public class GoalManager : MonoBehaviour
 				count++;
 			}
 		}
-
 		submitObstacles(count);
 	}
 
@@ -189,7 +188,7 @@ public class GoalManager : MonoBehaviour
 	{
 		obstaclesCount += obstacles;
 
-		if(obstaclesCount >= goalPoints)
+		if(obstaclesCount >= goalObstacles)
 		{
 			if(OnGoalAchieved != null)
 			{
@@ -204,7 +203,7 @@ public class GoalManager : MonoBehaviour
 
 		for(int i = 0; i < word.Count; i++)
 		{
-			index = goalLetters.IndexOf(word[i].abcChar.character.ToLower());
+			index = goalLetters.IndexOf(word[i].abcChar.character);
 
 			if(index != -1)
 			{
@@ -237,7 +236,7 @@ public class GoalManager : MonoBehaviour
 
 	private void processWordForGoalWords(List<Letter> word)
 	{
-		string sWord = getStringFromWord(word).ToLower();
+		string sWord = getStringFromWord(word);
 
 		if(goalWords.IndexOf(sWord) != -1)
 		{

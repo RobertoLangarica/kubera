@@ -93,8 +93,11 @@ namespace LevelBuilder
 			{
 				dataCount.Add (button.dataValue, 0);
 			}
-
-			dataCount [tile.getValue ()]--;
+			
+			if (dataCount.ContainsKey (tile.getValue ())) 
+			{
+				dataCount [tile.getValue ()]--;
+			}
 			dataCount [button.dataValue]++;
 			tile.setDataValue(button.dataValue);
 			tile.setSpriteToShow (button.spriteToshow);

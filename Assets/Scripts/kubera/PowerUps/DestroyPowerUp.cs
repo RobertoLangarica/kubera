@@ -41,16 +41,13 @@ public class DestroyPowerUp : PowerupBase
 
 		if(cellSelected != null)
 		{
-			if(cellSelected.contentType != Piece.EType.LETTER 
-				&& cellSelected.contentType != Piece.EType.LETTER_OBSTACLE
-				&& cellSelected.contentType != Piece.EType.NONE
-				&& cellSelected.occupied)
+			if(cellSelected.contentType == Piece.EType.PIECE && cellSelected.occupied)
 			{
-				Cell[] selection = cellsManager.getCellsOfSameType(cellSelected);
+				Cell[] selection = cellsManager.getCellsOfSameColor(cellSelected);
 
 				for(int i = 0;i < selection.Length;i++)
 				{
-					cellsManager.occupyAndConfigureCell(selection[i],wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL).gameObject,Piece.EType.LETTER,true);
+					cellsManager.occupyAndConfigureCell(selection[i],wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL).gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
 				}
 
 				DestroyImmediate(destroyGO);
