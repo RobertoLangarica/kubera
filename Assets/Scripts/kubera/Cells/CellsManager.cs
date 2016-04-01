@@ -35,6 +35,9 @@ public class CellsManager : MonoBehaviour
 
 			Vector3 cellInitialPosition = transform.position;
 			GameObject cellInstance = null;
+			float cellSize = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y;
+			float cellScale = (((cellSize * 100) * 100) / (Screen.height*0.125f)) * 0.01f;
+			//cellSize *= cellScale;
 
 			for(int i = 0;i < _rows;i++)
 			{
@@ -44,10 +47,11 @@ public class CellsManager : MonoBehaviour
 					cellInstance.GetComponent<SpriteRenderer> ().sortingOrder = -1;
 					cellInstance.transform.SetParent(transform);
 					cells.Add(cellInstance.GetComponent<Cell>());
+					cellInstance.transform.localScale = new Vector3 (cellScale,cellScale,cellScale);
 					
-					cellInitialPosition.x += cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x + 0.03f;
+					cellInitialPosition.x += cellSize;
 				}
-				cellInitialPosition.y -= cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y + 0.03f;
+				cellInitialPosition.y -= cellSize;
 				cellInitialPosition.x = transform.position.x;
 			}
 			return true;
