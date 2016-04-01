@@ -88,7 +88,7 @@ public class Piece : MonoBehaviour
 
 	public Color getColorOfType(EColor color)
 	{
-		print (color);
+		//print (color);
 
 		switch(color)
 		{
