@@ -7,6 +7,7 @@ public class LifesHUDManager : MonoBehaviour
 {
 	public Text lifesCount;
 	public Text lifesTimer;
+	public GameObject lifesPopUp;
 
 	public int timeForLifeInMinutes;
 
@@ -14,6 +15,10 @@ public class LifesHUDManager : MonoBehaviour
 	protected int currentMinutes;
 	protected int currentSeconds;
 	protected float updateLifeTimer;
+
+	//TODO: controlarlo en otro lado
+	public delegate void DOnStopScrollMap(bool stop);
+	public DOnStopScrollMap OnStopInput;
 
 	void Start()
 	{
@@ -174,5 +179,21 @@ public class LifesHUDManager : MonoBehaviour
 		}
 
 		return result;
+	}
+
+	public void openLifePopUp()
+	{
+		bool open = lifesPopUp.activeSelf;
+
+		if(open)
+		{
+			lifesPopUp.SetActive (false);
+			OnStopInput (false);
+		}
+		else
+		{
+			lifesPopUp.SetActive (true);
+			OnStopInput (true);
+		}
 	}
 }

@@ -307,7 +307,6 @@ public class HUDManager : MonoBehaviour
 		}
 	}
 
-
 	public void showGoalPopUp(string goalCondition, System.Object parameters)
 	{
 		Text goalText = goalPopUp.transform.FindChild("Objective").GetComponent<Text>();
