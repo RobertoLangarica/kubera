@@ -82,6 +82,8 @@ public class GameManager : MonoBehaviour
 		goalManager.OnGoalAchieved += OnLevelGoalAchieved;
 		goalManager.OnLetterFound += hudManager.destroyLetterFound;
 
+		hudManager.OnPopUpCompleted += popUpCompleted;
+
 		wordManager.onWordChange += actualizeWordPoints;
 		//TODO: Leer las gemas de algun lado
 		UserDataManager.instance.playerGems = 300;
@@ -461,7 +463,8 @@ public class GameManager : MonoBehaviour
 		hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
 		hudManager.setWinCondition (goalManager.currentCondition, goalManager.getGoalConditionParameters());
 
-		hudManager.showGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters());
+		hudManager.setGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters());
+		activatePopUp ("goalPopUp");
 	}
 
 	IEnumerator check()
@@ -790,8 +793,25 @@ public class GameManager : MonoBehaviour
 	public void closeObjectivePopUp()
 	{
 		audioManager.PlayButtonAudio();
-		hudManager.hideGoalPopUp ();
+		//hudManager.hideGoalPopUp ();
 		allowGameInput ();
+	}
+
+	public void popUpCompleted (string action ="")
+	{
+		switch (action) {
+		case "endGame":
+			break;
+		default:
+			allowGameInput (true);	
+			break;
+		}
+	}
+
+	public void activatePopUp(string popUpName)
+	{
+		allowGameInput (false);
+		hudManager.activatePopUp (popUpName);
 	}
 		
 	public void activateMusic()
@@ -829,8 +849,7 @@ public class GameManager : MonoBehaviour
 	public void quitGame()
 	{
 		audioManager.PlayButtonAudio();
-
-		hudManager.quitGamePopUp ();
+		activatePopUp ("exitGame");
 	}
 
 	protected void actualizeHUDInfo()

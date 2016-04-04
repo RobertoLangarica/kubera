@@ -22,7 +22,6 @@ public class HUDManager : MonoBehaviour
 	public Transform showingPiecesContainer;
 
 	public GameObject GemsChargeGO;
-	public GameObject secondChanceLock;
 	public GameObject uiLetter;
 
 	public Text goalText;
@@ -31,9 +30,7 @@ public class HUDManager : MonoBehaviour
 
 	public GameObject PointerOnScene;
 
-	public GameObject exitGamePopUp;
-	public Text exitText;
-	public RectTransform exitContent;
+
 
 	public Image[] musicImages;
 	public Image[] soundsImages;
@@ -43,16 +40,24 @@ public class HUDManager : MonoBehaviour
 
 	public Vector3 initialPieceScale = new Vector3(2.5f,2.5f,2.5f);
 
-	public GameObject goalPopUp;
+	public GameObject modal;
 
 	protected ScoreTextPool scorePool;
 	protected List<GameObject> lettersToFound = new List<GameObject>();
 	protected HUDMetterAndStars hudStars;
+	protected PopUpManager popUpManager;
+
+	public delegate void DPopUpNotification(string action ="");
+	public DPopUpNotification OnPopUpCompleted;
 
 	void Start () 
 	{
 		hudStars = FindObjectOfType<HUDMetterAndStars> ();
 		scorePool = FindObjectOfType<ScoreTextPool>();
+		popUpManager = FindObjectOfType <PopUpManager> ();
+
+		popUpManager.OnPopUpCompleted += popUpCompleted;
+
 	}
 		
 	public void actualizePoints(int pointsCount)
@@ -125,7 +130,7 @@ public class HUDManager : MonoBehaviour
 
 	public void setSecondChanceLock(bool activate)
 	{
-		secondChanceLock.SetActive(activate);
+		modal.SetActive(activate);
 	}
 
 	/**
@@ -307,9 +312,9 @@ public class HUDManager : MonoBehaviour
 		}
 	}
 
-	public void showGoalPopUp(string goalCondition, System.Object parameters)
+	public void setGoalPopUp(string goalCondition, System.Object parameters)
 	{
-		Text goalText = goalPopUp.transform.FindChild("Objective").GetComponent<Text>();
+		//Text goalText = goalPopUp.transform.FindChild("Objective").GetComponent<Text>();
 		string textId = string.Empty;
 		string textToReplace = string.Empty;
 		string replacement = string.Empty;
@@ -365,34 +370,11 @@ public class HUDManager : MonoBehaviour
 			break;
 		}
 
-		goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
+		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement));
 
-		goalPopUp.SetActive(true);
-	}
-		
-	public void hideGoalPopUp()
-	{
-		goalPopUp.SetActive(false);
-	}
-
-	public void quitGamePopUp()
-	{
-		exitGamePopUp.SetActive (true);
-		exitText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.EXIT_POPUP_ID);
-		Vector3 v3 = new Vector3 ();
-		v3 = exitContent.anchoredPosition;
-
-		exitContent.DOAnchorPos (new Vector3(exitContent.anchoredPosition.x,0), 1.5f).SetEase(Ease.OutBack).OnComplete(()=>
-			{
-				exitContent.DOAnchorPos (new Vector3(exitContent.anchoredPosition.x,0), 1.5f).OnComplete(()=>
-					{
-						exitContent.DOAnchorPos (-v3, 1.0f).SetEase(Ease.InBack).OnComplete(()=>
-							{
-								//TODO: salirnos del nivel y hacerle perder una vida, etc.
-								print("perdio");
-							});
-					});
-			});
+		//goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
+		//activatePopUp("goalPopUp");
+		//goalPopUp.SetActive(true);
 	}
 
 	public void setStateMusic(bool activate)
@@ -427,5 +409,17 @@ public class HUDManager : MonoBehaviour
 	public void activateLettersPoints(bool activate)
 	{
 		lettersPoints.enabled = activate;
+	}
+
+	public void activatePopUp(string popUpName)
+	{
+		popUpManager.activatePowerUp (popUpName);
+		modal.SetActive (true);
+	}
+
+	private void popUpCompleted(string action ="")
+	{
+		OnPopUpCompleted (action);
+		modal.SetActive (false);
 	}
 }
