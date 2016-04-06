@@ -7,6 +7,7 @@ public class LifesHUDManager : MonoBehaviour
 {
 	public Text lifesCount;
 	public Text lifesTimer;
+	public GameObject lifesPopUp;
 
 	public int timeForLifeInMinutes;
 
@@ -14,6 +15,7 @@ public class LifesHUDManager : MonoBehaviour
 	protected int currentMinutes;
 	protected int currentSeconds;
 	protected float updateLifeTimer;
+
 
 	void Start()
 	{
@@ -175,4 +177,6 @@ public class LifesHUDManager : MonoBehaviour
 
 		return result;
 	}
+
+
 }

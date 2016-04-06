@@ -26,6 +26,7 @@ public class WordManager : MonoBehaviour
 
 
 	public GameObject wordCompleteButton;
+	public GameObject wordDeleteButton;
 	public Image deleteButtonImage;
 	public Sprite deleteCharacterState;
 	public Sprite deleteWordState;
@@ -183,7 +184,7 @@ public class WordManager : MonoBehaviour
 		//Los comodines no se pueden destruir
 		if(!letter.abcChar.wildcard && isOverDeleteArea(letter.transform.localPosition))
 		{
-			removeLetter(letter);
+			//removeLetter(letter);
 		}
 		else
 		{
@@ -363,14 +364,17 @@ public class WordManager : MonoBehaviour
 			wordsValidator.validateChar(l.abcChar);
 		}
 
-		afterWordValidation();
+		//afterWordValidation();
 	}
 
 	private void afterWordValidation()
 	{
-		activateWordCompleteBtn(wordsValidator.isCompleteWord());
+		bool completeWord = wordsValidator.isCompleteWord ();
 
-		if(wordsValidator.isCompleteWord())
+		activateWordCompleteBtn(completeWord);
+		activateWordDeleteBtn (!completeWord,isThereAnyLetterOnContainer());
+
+		if(completeWord)
 		{
 			Debug.Log("Se completo: "+getCurrentWordOnList());
 		}
@@ -381,12 +385,24 @@ public class WordManager : MonoBehaviour
 		wordCompleteButton.SetActive (active);
 	}
 
+	public void activateWordDeleteBtn(bool activate,bool isThereAnyLetterOnContainer = false)
+	{
+		if(activate && isThereAnyLetterOnContainer)
+		{
+			wordDeleteButton.SetActive (true);
+		}
+		else
+		{
+			wordDeleteButton.SetActive (false);
+		}
+	}
+
 	private void onLettersChange()
 	{
 		updateWordPoints();
 
+		//activateWordDeleteBtn(isThereAnyLetterOnContainer());
 		afterWordValidation();
-		activateWordDeleteBtn(isThereAnyLetterOnContainer());
 		changeDeleteState(EDeleteState.WORD);
 
 		onWordChange ();
@@ -442,11 +458,6 @@ public class WordManager : MonoBehaviour
 		return result;
 	}
 
-	public void activateWordDeleteBtn(bool active)
-	{
-		deleteButtonImage.gameObject.SetActive(active);
-	}
-
 	private bool isThereAnyLetterOnContainer()
 	{
 		return (letterContainer.transform.childCount == 0 ? false:true); 
@@ -460,7 +471,7 @@ public class WordManager : MonoBehaviour
 			deleteButtonImage.sprite = deleteWordState;
 			break;
 		case EDeleteState.CHARACTER:
-			deleteButtonImage.sprite = deleteCharacterState;
+			//deleteButtonImage.sprite = deleteCharacterState;
 			break;
 		}
 	}

@@ -82,6 +82,8 @@ public class GameManager : MonoBehaviour
 		goalManager.OnGoalAchieved += OnLevelGoalAchieved;
 		goalManager.OnLetterFound += hudManager.destroyLetterFound;
 
+		hudManager.OnPopUpCompleted += popUpCompleted;
+
 		wordManager.onWordChange += actualizeWordPoints;
 		//TODO: Leer las gemas de algun lado
 		UserDataManager.instance.playerGems = 300;
@@ -89,7 +91,7 @@ public class GameManager : MonoBehaviour
 		//TODO: el release no manda un random
 		if(PersistentData.instance.currentLevel == null)
 		{
-			configureLevel(PersistentData.instance.levelsData.levels[0]);
+			configureLevel(PersistentData.instance.getRandomLevel());
 		}
 		else
 		{
@@ -154,7 +156,6 @@ public class GameManager : MonoBehaviour
 
 	protected void populateGridFromLevel(Level level)
 	{
-		GameObject cellContent = null;
 		string[] levelGridData = level.grid.Split(',');
 		int cellType = 0;
 
@@ -171,13 +172,13 @@ public class GameManager : MonoBehaviour
 			{
 				//Cuadro de color
 				Piece content = pieceManager.getSingleSquarePiece(cellType>>6);
-				cellManager.occupyAndConfigureCell(i,content.gameObject,content.currentType,true);
+				cellManager.occupyAndConfigureCell(i,content.gameObject,content.currentType,content.currentColor,true);
 			}
 			else if((cellType & 0x8) == 0x8)
 			{	
 				//Obstaculo
 				Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.OBSTACLE);
-				cellManager.occupyAndConfigureCell(i,letter.gameObject,Piece.EType.LETTER_OBSTACLE,true);
+				cellManager.occupyAndConfigureCell(i,letter.gameObject,Piece.EType.LETTER_OBSTACLE,Piece.EColor.NONE,true);
 				//obstaclesCount++;
 
 				gridCharacters.Add(letter);
@@ -186,7 +187,7 @@ public class GameManager : MonoBehaviour
 			{	
 				//De tutorial
 				Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.TUTORIAL);
-				cellManager.occupyAndConfigureCell(i,letter.gameObject,Piece.EType.LETTER,true);
+				cellManager.occupyAndConfigureCell(i,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
 				tutorialLetters.Add(letter);
 
 				gridCharacters.Add(letter);
@@ -258,7 +259,7 @@ public class GameManager : MonoBehaviour
 
 		for(int i=0; i< cells.Count; i++)
 		{ 
-			cellManager.occupyAndConfigureCell (cells [i], piece.squares [i], piece.currentType);
+			cellManager.occupyAndConfigureCell (cells [i], piece.squares [i], piece.currentType,piece.currentColor);
 
 			//Cada cuadro reeparentado para dejar de usar su contenedor actual
 			//y manipularlo individualmente
@@ -312,7 +313,7 @@ public class GameManager : MonoBehaviour
 					Vector3 cellPosition =  cells [i] [j].transform.position + (new Vector3 (cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x,
 						-cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
 
-					cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, Piece.EType.LETTER);
+					cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
 					letter.gameObject.transform.DOMove (cellPosition, 0);
 					gridCharacters.Add(letter);
 				}
@@ -462,7 +463,8 @@ public class GameManager : MonoBehaviour
 		hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
 		hudManager.setWinCondition (goalManager.currentCondition, goalManager.getGoalConditionParameters());
 
-		hudManager.showGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters());
+		hudManager.setGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters());
+		activatePopUp ("goalPopUp");
 	}
 
 	IEnumerator check()
@@ -546,9 +548,9 @@ public class GameManager : MonoBehaviour
 			}
 			else
 			{
-				if(cellManager.getPredominantColor() != Piece.EType.NONE)
+				if(cellManager.existType(Piece.EType.PIECE))
 				{
-					cellToLetter.AddRange (cellManager.getCellsOfSameType (cellManager.getPredominantColor ()));
+					cellToLetter.AddRange (cellManager.getCellsOfSameType (Piece.EType.PIECE));
 				}
 				StartCoroutine (addWinLetterAfterActions ());
 				actualizeHUDInfo ();
@@ -575,9 +577,9 @@ public class GameManager : MonoBehaviour
 
 		GameObject go = GameObject.Instantiate (bonificationPiecePrefab) as GameObject;
 
-		go.GetComponent<Piece> ().currentType = cellManager.colorRandom ();
+		go.GetComponent<Piece> ().currentColor = cellManager.colorRandom ();
 
-		cellManager.occupyAndConfigureCell(cell,go,go.GetComponent<Piece> ().currentType,true);
+		cellManager.occupyAndConfigureCell(cell,go,Piece.EType.PIECE,Piece.EColor.AQUA,true);
 
 		showScoreTextOnHud (cell.transform.position, 1);
 		substractMoves (1);
@@ -597,7 +599,7 @@ public class GameManager : MonoBehaviour
 		if (cellToLetter.Count > 0) 
 		{
 			Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
-			cellManager.occupyAndConfigureCell (cellToLetter [random],letter.gameObject,Piece.EType.LETTER,true);
+			cellManager.occupyAndConfigureCell (cellToLetter [random],letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
@@ -611,9 +613,9 @@ public class GameManager : MonoBehaviour
 
 	protected void useBombs()
 	{
-		if(cellManager.getPredominantColor() != Piece.EType.NONE)
+		if(cellManager.existType(Piece.EType.PIECE))
 		{
-			cellToLetter = new List<Cell>(cellManager.getCellsOfSameType(cellManager.getPredominantColor()));
+			cellToLetter.AddRange (cellManager.getCellsOfSameType (Piece.EType.PIECE));
 			StartCoroutine (addWinLetterAfterActions ());
 		}
 		else
@@ -791,8 +793,25 @@ public class GameManager : MonoBehaviour
 	public void closeObjectivePopUp()
 	{
 		audioManager.PlayButtonAudio();
-		hudManager.hideGoalPopUp ();
+		//hudManager.hideGoalPopUp ();
 		allowGameInput ();
+	}
+
+	public void popUpCompleted (string action ="")
+	{
+		switch (action) {
+		case "endGame":
+			break;
+		default:
+			allowGameInput (true);	
+			break;
+		}
+	}
+
+	public void activatePopUp(string popUpName)
+	{
+		allowGameInput (false);
+		hudManager.activatePopUp (popUpName);
 	}
 		
 	public void activateMusic()
@@ -830,8 +849,7 @@ public class GameManager : MonoBehaviour
 	public void quitGame()
 	{
 		audioManager.PlayButtonAudio();
-
-		hudManager.quitGamePopUp ();
+		activatePopUp ("exitGame");
 	}
 
 	protected void actualizeHUDInfo()
