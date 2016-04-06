@@ -99,6 +99,8 @@ public class GameManager : MonoBehaviour
 		{
 			configureLevel(PersistentData.instance.currentLevel);	
 		}
+
+		//TODO: Control de flujo de juego con un init
 	}
 
 	private void configureLevel(Level level)
@@ -214,13 +216,6 @@ public class GameManager : MonoBehaviour
 				}
 			}	
 		}
-	}
-
-	//TODO: update vacio
-	void Update()
-	{
-		//TODO: mover de lugar la funcion
-		//hudManager.setLettersPoints (wordManager.wordPoints);
 	}
 
 	private void OnPieceDropped(GameObject obj)
@@ -858,6 +853,7 @@ public class GameManager : MonoBehaviour
 	}
 
 	//TODO: esta funcion no actualiza info de la HUD es mas bien el status del jeugo (hay que ver un mejor nombre)
+	//TODO: Esta funcion deberia ser mas granular, al llamarla ya mandenle los puntos y la condicion de victoria
 	protected void actualizeHUDInfo()
 	{
 		hudManager.actualizeMovements (remainingMoves);

@@ -213,9 +213,7 @@ public class UserDataManager
 		}		
 		set
 		{
-			//TODO: porque alocar un entero cuando el terciario puede ser inline
-			int tempBool = value == false ? 0 : 1;
-			PlayerPrefs.SetInt("soundEffectsSetting",tempBool);
+			PlayerPrefs.SetInt("soundEffectsSetting",(int)(value == false ? 0 : 1));
 		}
 	}
 
