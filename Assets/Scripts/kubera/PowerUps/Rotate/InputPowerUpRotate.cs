@@ -280,6 +280,8 @@ public class InputPowerUpRotate : MonoBehaviour
 		{
 			hudManager.activateRotateImage (false, posOnScene);
 		}
+
+
 	}
 
 }
