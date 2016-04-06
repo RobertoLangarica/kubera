@@ -107,18 +107,22 @@ public class GameManager : MonoBehaviour
 
 		initLettersFromLevel(level);
 		initPiecesFromLevel(level);
+		initGoalsFromLevel(level);
 
-		cellToLetter = new List<Cell> ();
-
-		allowGameInput(false);
 
 		remainingMoves = totalMoves = currentLevel.moves;
-
-
-
 	
 		cellManager.resizeGrid(sizeGridX,sizeGridY);
 		populateGridFromLevel(level);
+
+		//TODO: Si no es parte de la configuracion del nivel no debe ir aqui
+		cellToLetter = new List<Cell> ();//Esta inicializacion va aqui?
+
+
+		allowGameInput(false);//TODO: el input no es configuracion de nivel
+
+		//Las cosas de la hud que no se icializen con info del nivel hay que quitarlas
+		//Si hay que mandar a la hud a un estado default antes de iniciar el juego hay que hacerlo en alguna llamada explicita
 
 		initHudValues();
 		actualizeHUDInfo();
@@ -212,6 +216,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	//TODO: update vacio
 	void Update()
 	{
 		//TODO: mover de lugar la funcion
