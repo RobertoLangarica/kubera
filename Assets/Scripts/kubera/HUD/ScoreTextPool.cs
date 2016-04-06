@@ -21,16 +21,16 @@ public class ScoreTextPool : MonoBehaviour
 			addTextToThePool();
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
+	/*TODO: Hay que tener congruencia en los terminos, se usa deactivateText
+	 * y se piden textos libres getFreeText en lugar de textos desactivados
+	 * Que se unifique a liberados o desocupados
+	*/
 	public Text getFreeText()
 	{
 		current++;
 
+		//TODO: Hay que manejar 2 listas una deactivos y una de inactivos (es lo mas comun en una pool)
 		if(current == pool.Count)
 		{
 			if(pool[0].text != "Unoccupied")
@@ -52,6 +52,7 @@ public class ScoreTextPool : MonoBehaviour
 
 	public void deativateText(Text text)
 	{
+		//TODO: integrar el manejo de las pools
 		text.text = "Unoccupied";
 		text.enabled = false;
 	}

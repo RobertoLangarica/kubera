@@ -85,7 +85,6 @@ public class MultiLanguageTextManager
 			}
 		}
 
-		//DONE: En el ciclo de arriba hay que guardar el default y aqui asignarse. No volver a repetir el proceso
 		if(resultText == string.Empty)
 		{
 			resultText = defaultText;
@@ -94,6 +93,8 @@ public class MultiLanguageTextManager
 		return resultText;
 	}
 
+
+	//TODO: Comentarios obsoletos
 	/**
 	 * * @params textToReplace{string[]}: Una lista de Textos o simbolos que se quieren remplazar. Usualmente para agregar texto dinamico.
 	 * 									Este sera ignorado si no se pasa tambien valor a newText que sea del mismo tamaño.
@@ -101,7 +102,6 @@ public class MultiLanguageTextManager
 	 * @params newText{string[]}: Una lista de Textos o simbolos que reemplazaran los textos de textToReplace. Usualmente para agregar texto dinamico.
 	 * 									Este sera ignorado si no se pasa tambien valor a textToReplace que sea del mismo tamaño.
 	 **/ 
-	//DONE: Renombrar parametros y funcion por algo mas claro( multipleReplace(target, textsToReplace, replacements)
 	public string multipleReplace(string target,string[] textToReplace,string[] replacements)
 	{
 		string resultText = target;
@@ -118,6 +118,8 @@ public class MultiLanguageTextManager
 			//DONE: mandar logError
 			else
 			{
+				//TODO: estos mensajes son para alguein que no sabe nada del codigo que manda llamar
+				//TODO: Los arreglos son obviamente diferentes y el error aqui es un tema de diferentes largos
 				Debug.LogWarning("EL TEXTO NO SE MODIFICO, los arreglos para modificar el texto son diferentes");
 			}
 		}

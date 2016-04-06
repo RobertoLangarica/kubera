@@ -30,8 +30,6 @@ public class HUDManager : MonoBehaviour
 
 	public GameObject PointerOnScene;
 
-
-
 	public Image[] musicImages;
 	public Image[] soundsImages;
 
