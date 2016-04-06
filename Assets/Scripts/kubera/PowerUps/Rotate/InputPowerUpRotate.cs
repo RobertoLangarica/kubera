@@ -250,7 +250,6 @@ public class InputPowerUpRotate : MonoBehaviour
 		if (piece.rotateTimes > 0) {
 			isRotating (true);
 
-			//DONE: Los nombres deben ser lo mas claros y simples posibles, para contar las rotaciones pudo ser un rotateCount
 			piece.rotateCount += 1;
 
 			piece.gameObject.transform.DOScale (new Vector3 (0, 0), 0.25f).OnComplete (() => {
@@ -281,6 +280,8 @@ public class InputPowerUpRotate : MonoBehaviour
 		{
 			hudManager.activateRotateImage (false, posOnScene);
 		}
+
+
 	}
 
 }

@@ -55,18 +55,19 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
-		wordManager = FindObjectOfType<WordManager>();
-		cellManager = FindObjectOfType<CellsManager>();
-		powerupManager = FindObjectOfType<PowerUpManager>();
-		hudManager = FindObjectOfType<HUDManager> ();
-		audioManager = FindObjectOfType<AudioManager>();
-		pieceManager = FindObjectOfType<PieceManager>();
-		inputPiece = FindObjectOfType<InputPiece>();
-		inputWords = FindObjectOfType<InputWords>();
-		goalManager = FindObjectOfType<GoalManager>();
+		wordManager		= FindObjectOfType<WordManager>();
+		cellManager		= FindObjectOfType<CellsManager>();
+		powerupManager	= FindObjectOfType<PowerUpManager>();
+		hudManager		= FindObjectOfType<HUDManager> ();
+		audioManager	= FindObjectOfType<AudioManager>();
+		pieceManager	= FindObjectOfType<PieceManager>();
+		inputPiece		= FindObjectOfType<InputPiece>();
+		inputWords		= FindObjectOfType<InputWords>();
+		goalManager		= FindObjectOfType<GoalManager>();
 
 		wordManager.setMaxAllowedLetters(PersistentData.instance.maxWordLength);
 		wordManager.gridLettersParent = gridLettersContainer;
+
 		//LetterSize
 		Vector3 cellSizeReference = cellManager.cellPrefab.GetComponent<SpriteRenderer>().bounds.size;
 		Vector3 lettersizeDelta = (Camera.main.WorldToScreenPoint(cellSizeReference) -Camera.main.WorldToScreenPoint(Vector3.zero)) * gridLettersSizeMultiplier;
@@ -85,6 +86,7 @@ public class GameManager : MonoBehaviour
 		hudManager.OnPopUpCompleted += popUpCompleted;
 
 		wordManager.onWordChange += actualizeWordPoints;
+
 		//TODO: Leer las gemas de algun lado
 		UserDataManager.instance.playerGems = 300;
 
@@ -103,43 +105,27 @@ public class GameManager : MonoBehaviour
 	{
 		currentLevel = level;
 
-		readLettersFromLevel(level);
-
-		pieceManager.initializePiecesFromCSV(level.pieces);
-		pieceManager.initializePiecesToShow ();
-		hudManager.showPieces (pieceManager.getShowingPieces ());
+		initLettersFromLevel(level);
+		initPiecesFromLevel(level);
 
 		cellToLetter = new List<Cell> ();
 
-		goalManager.initializeFromString(currentLevel.goal);
+		allowGameInput(false);
 
 		remainingMoves = totalMoves = currentLevel.moves;
 
-		hudManager.actualizeGems(UserDataManager.instance.playerGems);
 
-		hudManager.setLevelName (currentLevel.name);
-		hudManager.setSecondChanceLock (false);
-
-		allowGameInput(false);
-
-		float[] scoreToStar = new float[3];
-		scoreToStar [0] = currentLevel.scoreToStar1;
-		scoreToStar [1] = currentLevel.scoreToStar2;
-		scoreToStar [2] = currentLevel.scoreToStar3;
-		hudManager.setStarsData (scoreToStar);
-
-		hudManager.actualizePoints(0);
 
 	
 		cellManager.resizeGrid(sizeGridX,sizeGridY);
 		populateGridFromLevel(level);
 
-		getWinCondition();
+		initHudValues();
 		actualizeHUDInfo();
 		actualizeWordPoints ();
 	}
 
-	protected void readLettersFromLevel(Level level)
+	protected void initLettersFromLevel(Level level)
 	{
 		wordManager.initializePoolFromCSV(level.lettersPool,WordManager.EPoolType.NORMAL);
 
@@ -152,6 +138,17 @@ public class GameManager : MonoBehaviour
 		{
 			wordManager.initializePoolFromCSV(level.tutorialLettersPool.Split('-')[0],WordManager.EPoolType.TUTORIAL);
 		}
+	}
+
+	private void initPiecesFromLevel(Level level)
+	{
+		pieceManager.initializePiecesFromCSV(level.pieces);
+		pieceManager.initializePiecesToShow ();	
+	}
+
+	private void initGoalsFromLevel(Level level)
+	{
+		goalManager.initializeFromString(currentLevel.goal);	
 	}
 
 	protected void populateGridFromLevel(Level level)
@@ -447,17 +444,20 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	protected void getWinCondition()
+	protected void initHudValues()
 	{
-		//TODO: Mostrar solo la informacion necesaria
-		/*hudManager.setLettersCondition(goalManager.goalLetters);
-		hudManager.setObstaclesCondition (goalManager.obstaclesCount);
-		hudManager.setWordCondition (goalManager.goalWordsToShow[0]);
-		hudManager.setSynCondition (goalManager.goalWordsToShow[0]);
-		hudManager.setAntCondition(goalManager.goalWordsToShow[0]);
-		hudManager.setPointsCondition(goalManager.goalPoints, pointsCount);*/
+		hudManager.actualizePoints(0);
+		hudManager.showPieces (pieceManager.getShowingPieces ());
+		hudManager.actualizeGems(UserDataManager.instance.playerGems);
+		hudManager.setLevelName (currentLevel.name);
+		hudManager.setSecondChanceLock (false);
 
-		//hudManager.setWordsCondition(goalManager.goalWordsCount);
+		//TODO: Hay que quitar este arreglo, todo en la hud y en todos lados se usan 3 estrellas (y este arreglo consume memoria)
+		float[] scoreToStar = new float[3];
+		scoreToStar [0] = currentLevel.scoreToStar1;
+		scoreToStar [1] = currentLevel.scoreToStar2;
+		scoreToStar [2] = currentLevel.scoreToStar3;
+		hudManager.setStarsData (scoreToStar);
 
 		//Se muestra el objetivo al inicio del nivel
 		hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
@@ -852,16 +852,17 @@ public class GameManager : MonoBehaviour
 		activatePopUp ("exitGame");
 	}
 
+	//TODO: esta funcion no actualiza info de la HUD es mas bien el status del jeugo (hay que ver un mejor nombre)
 	protected void actualizeHUDInfo()
 	{
 		hudManager.actualizeMovements (remainingMoves);
 		hudManager.actualizePoints (pointsCount);
 
 		actualizeWinCondition ();
-		//actualizeWordsCompletedWinCondition ();
-		//actualizePointsWinCondition ();
 	}
 
+	//TODO: Esto no actualiza la condicion de victoria, actualiza la hud y el status en el que va la condicion de victoria
+	//TODO: Esta funcion deberia ser mas granular, al llamarla ya mandenle los puntos y la condicion de victoria
 	protected void actualizeWinCondition()
 	{
 		switch (goalManager.currentCondition) {
@@ -874,11 +875,14 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	//TODO: Esto no actualiza los puntos de una palabra, actualiza los puntos que muestra la hud por una palabra
+	//TODO: Hagan mas granular a esta funcion y que reciba los puntos y no los lea
 	protected void actualizeWordPoints()
 	{
 		hudManager.setLettersPoints (wordManager.wordPoints);
 	}
 
+	//TODO: showFloatingPointsAt
 	protected void showScoreTextOnHud(Vector3 pos,int amount)
 	{
 		hudManager.showScoreTextAt(pos,amount);
