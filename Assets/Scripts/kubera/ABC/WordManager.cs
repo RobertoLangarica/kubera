@@ -364,7 +364,7 @@ public class WordManager : MonoBehaviour
 			wordsValidator.validateChar(l.abcChar);
 		}
 
-		afterWordValidation();
+		//afterWordValidation();
 	}
 
 	private void afterWordValidation()
@@ -372,7 +372,7 @@ public class WordManager : MonoBehaviour
 		bool completeWord = wordsValidator.isCompleteWord ();
 
 		activateWordCompleteBtn(completeWord);
-		activateWordDeleteBtn (!completeWord);
+		activateWordDeleteBtn (!completeWord,isThereAnyLetterOnContainer());
 
 		if(completeWord)
 		{
@@ -385,17 +385,24 @@ public class WordManager : MonoBehaviour
 		wordCompleteButton.SetActive (active);
 	}
 
-	public void activateWordDeleteBtn(bool active)
+	public void activateWordDeleteBtn(bool activate,bool isThereAnyLetterOnContainer = false)
 	{
-		wordDeleteButton.SetActive (active);
+		if(activate && isThereAnyLetterOnContainer)
+		{
+			wordDeleteButton.SetActive (true);
+		}
+		else
+		{
+			wordDeleteButton.SetActive (false);
+		}
 	}
 
 	private void onLettersChange()
 	{
 		updateWordPoints();
 
-		//afterWordValidation();
 		//activateWordDeleteBtn(isThereAnyLetterOnContainer());
+		afterWordValidation();
 		changeDeleteState(EDeleteState.WORD);
 
 		onWordChange ();
