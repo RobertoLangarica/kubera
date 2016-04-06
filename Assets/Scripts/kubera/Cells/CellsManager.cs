@@ -10,6 +10,9 @@ public class CellsManager : MonoBehaviour
 	public GameObject singleSquarePiece;
 	public GameObject uiLetter;
 
+	public Transform topOfScreen;
+	public Transform bottomOfScreen;
+
 	[HideInInspector]public int columns = 0;
 	[HideInInspector]public int rows = 0;
 
@@ -35,9 +38,10 @@ public class CellsManager : MonoBehaviour
 
 			Vector3 cellInitialPosition = transform.position;
 			GameObject cellInstance = null;
-			float cellSize = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y;
-			float cellScale = (((cellSize * 100) * 100) / (Screen.height*0.125f)) * 0.01f;
-			//cellSize *= cellScale;
+			float cellSize = cellPrefab.GetComponent<SpriteRenderer>().sprite.rect.height;
+			float screenHeight = ((topOfScreen.position - bottomOfScreen.position).magnitude)*100;
+			float cellScale = (screenHeight*0.0625f) / cellSize;
+			cellSize = screenHeight*0.000625f;
 
 			for(int i = 0;i < _rows;i++)
 			{
