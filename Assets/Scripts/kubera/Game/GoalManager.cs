@@ -29,7 +29,7 @@ public class GoalManager : MonoBehaviour
 	public List<string> goalWords { get; }
 	public List<string> goalWordsToShow { get; }
 
-	private delegate void DOnGoalAchieved();
+	public delegate void DOnGoalAchieved();
 	public DOnGoalAchieved OnGoalAchieved;
 
 	public void initializeFromString(string goal)
