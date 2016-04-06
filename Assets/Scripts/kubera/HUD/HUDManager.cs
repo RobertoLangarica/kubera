@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 
@@ -21,7 +22,6 @@ public class HUDManager : MonoBehaviour
 	public Transform showingPiecesContainer;
 
 	public GameObject GemsChargeGO;
-	public GameObject secondChanceLock;
 	public GameObject uiLetter;
 
 	public Text goalText;
@@ -30,9 +30,7 @@ public class HUDManager : MonoBehaviour
 
 	public GameObject PointerOnScene;
 
-	public GameObject exitGamePopUp;
-	public Text exitText;
-	public RectTransform exitContent;
+
 
 	public Image[] musicImages;
 	public Image[] soundsImages;
@@ -42,16 +40,24 @@ public class HUDManager : MonoBehaviour
 
 	public Vector3 initialPieceScale = new Vector3(2.5f,2.5f,2.5f);
 
-	public GameObject goalPopUp;
+	public GameObject modal;
 
 	protected ScoreTextPool scorePool;
 	protected List<GameObject> lettersToFound = new List<GameObject>();
 	protected HUDMetterAndStars hudStars;
+	protected PopUpManager popUpManager;
+
+	public delegate void DPopUpNotification(string action ="");
+	public DPopUpNotification OnPopUpCompleted;
 
 	void Start () 
 	{
 		hudStars = FindObjectOfType<HUDMetterAndStars> ();
 		scorePool = FindObjectOfType<ScoreTextPool>();
+		popUpManager = FindObjectOfType <PopUpManager> ();
+
+		popUpManager.OnPopUpCompleted += popUpCompleted;
+
 	}
 		
 	public void actualizePoints(int pointsCount)
@@ -124,36 +130,93 @@ public class HUDManager : MonoBehaviour
 
 	public void setSecondChanceLock(bool activate)
 	{
-		secondChanceLock.SetActive(activate);
+		modal.SetActive(activate);
 	}
 
 	/**
 	 * setea la condicion de victoria
 	 **/
-	public void setPointsCondition(int pointsNeed, int pointsMade)
+	public void setWinCondition (string goalCondition, System.Object parameters)
 	{
-		goalText.text = MultiLanguageTextManager.instance.multipleReplace(
-			MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_POINT_ID),new string[2]{"{{pointsMade}}","{{pointsNeed}}"},new string[2]{pointsMade.ToString(),pointsNeed.ToString()});
-	}
+		string textId = string.Empty;
+		string textToReplace = string.Empty;
+		string replacement = string.Empty;
 
-	public void setWordsCondition(int wordsNeeded,int wordsMade)
-	{
-		goalText.text = MultiLanguageTextManager.instance.multipleReplace(
-			MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_ID),new string[2]{"{{wordsMade}}","{{wordNeed}}"},new string[2]{wordsMade.ToString(),wordsNeeded.ToString()});
-	}
-
-	public void setLettersCondition(List<string> letters = null)
-	{
-		goalLettersText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_LETTERS_ID);
-		for (int i = 0; i < letters.Count; i++) 
+		switch (goalCondition)
 		{
-			GameObject letter =  Instantiate(uiLetter) as GameObject;
-			letter.name = letters [i];
-			lettersToFound.Add (letter);
-			letter.GetComponentInChildren<Text> ().text = letters[i];
-			letter.transform.SetParent (goalLettersContainer.transform,false);
+		case GoalManager.LETTERS:
+
+			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_LETTERS_ID;
+			textToReplace = "{{goalLetters}}";
+
+			IEnumerable letters = parameters as IEnumerable;
+
+			foreach (object val in letters) 
+			{
+				GameObject letter =  Instantiate(uiLetter) as GameObject;
+				letter.name = val.ToString();
+				lettersToFound.Add (letter);
+				letter.GetComponentInChildren<Text> ().text = val.ToString();
+				letter.transform.SetParent (goalLettersContainer.transform,false);
+			}
+			setSizeOfContainer (lettersToFound.Count);
+
+			break;
+		case GoalManager.OBSTACLES:
+			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_OBSTACLES_ID;
+			textToReplace = "{{goalObstacleLetters}}";
+			replacement = (Convert.ToInt32(parameters)).ToString();
+			break;
+		case GoalManager.POINTS:
+			textId = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_POINT_ID);
+			goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
+				new string[2]{ "{{pointsMade}}", "{{pointsNeed}}" }, new string[2]{ "0", (Convert.ToInt32 (parameters)).ToString () });
+			/*textToReplace = "{{goalPoints}}";
+			replacement = "0 / " + (Convert.ToInt32 (parameters)).ToString ();*/
+			return;
+			break;
+		case GoalManager.WORDS_COUNT:
+			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_ID;
+			textToReplace = "{{goalWords}}";
+			replacement = "0 / "+(Convert.ToInt32(parameters)).ToString();
+			break;
+		case GoalManager.SYNONYMOUS:
+			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_SYNONYMOUS_ID;
+			textToReplace = "{{goalSin}}";
+			replacement = parameters.ToString();
+			break;
+		case GoalManager.WORD:
+			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_1_WORD_ID;
+			textToReplace = "{{goalWord}}";
+			replacement = parameters.ToString();
+			break;
+
+		case GoalManager.ANTONYMS:
+			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_ANTONYM_ID;
+			textToReplace = "{{goalAnt}}";
+			replacement = parameters.ToString();
+			break;
 		}
-		setSizeOfContainer (letters.Count);
+
+		goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
+	}
+
+	public void actualizePointsOnWinCondition(string pointsMade, string pointsNeed)
+	{
+		string textId = string.Empty;
+
+		textId = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_POINT_ID);
+		goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
+			new string[2]{ "{{pointsMade}}", "{{pointsNeed}}" }, new string[2]{ pointsMade, pointsNeed });
+	}
+
+	public void actualizeWordsMadeOnWinCondition(string wordsMade, string wordsNeed)
+	{
+		string textId = string.Empty;
+
+		textId = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_ID);
+		goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
+			new string[2]{ "{{wordsMade}}", "{{wordNeed}}" }, new string[2]{ wordsMade, wordsNeed });
 	}
 
 	protected void setSizeOfContainer(int maxSize = 5)
@@ -170,40 +233,6 @@ public class HUDManager : MonoBehaviour
 			gridLayoutGroup.cellSize = new Vector2(goalLettersContainer.GetComponent<RectTransform>().rect.height*.8f
 				,goalLettersContainer.GetComponent<RectTransform>().rect.height*.8f);
 		}
-	}
-
-	public void setObstaclesCondition(int value=0)
-	{
-		//TODO: Los textos que se usan como codigo para reemplazar deben ser menos coloquiales para evitar que se reesccriban
-		//TODO: goalSin != {{goalSin}} o [[goalSin]] o <<goalSin>> o <code>goalSin</code> Algo que indique a quien edite estas cadenas que no debe de modificarse
-		//TODO: Usar un replace que no necesite estar creando arreglos
-		//goalText.text = GameTextManager.instance.getTextByID("goalByObstaclesCondition").Replace("goalObstacleLetters",value.ToString())
-
-		goalText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_OBSTACLES_ID).Replace("{{goalObstacleLetters}}",value.ToString());
-	}
-
-	public void setWordCondition(string word)
-	{
-		//TODO: Los textos que se usan como codigo para reemplazar deben ser menos coloquiales para evitar que se reesccriban
-		//TODO: goalSin != {{goalSin}} o [[goalSin]] o <<goalSin>> o <code>goalSin</code> Algo que indique a quien edite estas cadenas que no debe de modificarse
-		//TODO: Usar un replace que no necesite estar creando arreglos
-		goalText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_1_WORD_ID).Replace("{{goalWord}}",word);
-	}
-
-	public void setSynCondition(string word)
-	{
-		//TODO: Los textos que se usan como codigo para reemplazar deben ser menos coloquiales para evitar que se reesccriban
-		//TODO: goalSin != {{goalSin}} o [[goalSin]] o <<goalSin>> o <code>goalSin</code> Algo que indique a quien edite estas cadenas que no debe de modificarse
-		//TODO: Usar un replace que no necesite estar creando arreglos
-		goalText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_SYNONYMOUS_ID).Replace("{{goalSin}}",word);
-	}
-
-	public void setAntCondition(string word)
-	{
-		//TODO: Los textos que se usan como codigo para reemplazar deben ser menos coloquiales para evitar que se reesccriban
-		//TODO: goalSin != {{goalSin}} o [[goalSin]] o <<goalSin>> o <code>goalSin</code> Algo que indique a quien edite estas cadenas que no debe de modificarse
-		//TODO: Usar un replace que no necesite estar creando arreglos
-		goalText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_ANTONYM_ID).Replace("{{goalAnt}}",word);
 	}
 		
 	public void destroyLetterFound(string letterFound)
@@ -283,13 +312,12 @@ public class HUDManager : MonoBehaviour
 		}
 	}
 
-
-	public void showGoalPopUp(string goalCondition, Object parameters)
+	public void setGoalPopUp(string goalCondition, System.Object parameters)
 	{
-		Text goalText = goalPopUp.transform.FindChild("Objective").GetComponent<Text>();
-		string textId;
-		string textToReplace;
-		string replacement;
+		//Text goalText = goalPopUp.transform.FindChild("Objective").GetComponent<Text>();
+		string textId = string.Empty;
+		string textToReplace = string.Empty;
+		string replacement = string.Empty;
 
 		switch(goalCondition)
 		{
@@ -298,76 +326,55 @@ public class HUDManager : MonoBehaviour
 			textToReplace = "{{goalLetters}}";
 
 			replacement = "";
-			List<Letter> letters = (List<Letter>)parameters;
+			IEnumerable letters = parameters as IEnumerable;
 
-			for (int i = 0; i < letters.Count; i++) 
+			foreach (object letter in letters) 
 			{
-				replacement += letters[i];
-				replacement += (i == letters.Count-1 ? ".":", ");
+				replacement += letter.ToString ();
+				replacement += ", ";
 			}
+			replacement = replacement.Remove(replacement.LastIndexOf (","));
+			replacement += ".";
 
 			break;
 		case GoalManager.OBSTACLES:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_OBSTACLES_ID;
 			textToReplace = "{{goalObstacleLetters}}";
-			replacement = ((int)parameters).ToString();
+			replacement = (Convert.ToInt32(parameters)).ToString();
 			break;
 		case GoalManager.POINTS:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_POINTS_ID;
 			textToReplace = "{{goalPoints}}";
-			replacement = ((int)parameters).ToString();
+			replacement = (Convert.ToInt32(parameters)).ToString();
 			break;
 		case GoalManager.WORDS_COUNT:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_WORDS_ID;
 			textToReplace = "{{goalWords}}";
-			replacement = ((int)parameters).ToString();
+			replacement = (Convert.ToInt32(parameters)).ToString();
 			break;
 		case GoalManager.SYNONYMOUS:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID;
 			textToReplace = "{{goalSin}}";
-			replacement = (string) parameters;
+			replacement = parameters.ToString();
 			break;
 		case GoalManager.WORD:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_1_WORD_ID;
 			textToReplace = "{{goalWord}}";
-			replacement = (string) parameters;
+			replacement = parameters.ToString();
 			break;
 		
 		case GoalManager.ANTONYMS:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_ANTONYM_ID;
 			textToReplace = "{{goalAnt}}";
-			replacement = (string) parameters;
+			replacement = parameters.ToString();
 			break;
 		}
 
-		goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
+		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement));
 
-		goalPopUp.SetActive(true);
-	}
-		
-	public void hideGoalPopUp()
-	{
-		goalPopUp.SetActive(false);
-	}
-
-	public void quitGamePopUp()
-	{
-		exitGamePopUp.SetActive (true);
-		exitText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.EXIT_POPUP_ID);
-		Vector3 v3 = new Vector3 ();
-		v3 = exitContent.anchoredPosition;
-
-		exitContent.DOAnchorPos (new Vector3(exitContent.anchoredPosition.x,0), 1.5f).SetEase(Ease.OutBack).OnComplete(()=>
-			{
-				exitContent.DOAnchorPos (new Vector3(exitContent.anchoredPosition.x,0), 1.5f).OnComplete(()=>
-					{
-						exitContent.DOAnchorPos (-v3, 1.0f).SetEase(Ease.InBack).OnComplete(()=>
-							{
-								//TODO: salirnos del nivel y hacerle perder una vida, etc.
-								print("perdio");
-							});
-					});
-			});
+		//goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
+		//activatePopUp("goalPopUp");
+		//goalPopUp.SetActive(true);
 	}
 
 	public void setStateMusic(bool activate)
@@ -402,5 +409,17 @@ public class HUDManager : MonoBehaviour
 	public void activateLettersPoints(bool activate)
 	{
 		lettersPoints.enabled = activate;
+	}
+
+	public void activatePopUp(string popUpName)
+	{
+		popUpManager.activatePowerUp (popUpName);
+		modal.SetActive (true);
+	}
+
+	private void popUpCompleted(string action ="")
+	{
+		OnPopUpCompleted (action);
+		modal.SetActive (false);
 	}
 }

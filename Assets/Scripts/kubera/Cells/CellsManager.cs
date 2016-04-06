@@ -35,6 +35,9 @@ public class CellsManager : MonoBehaviour
 
 			Vector3 cellInitialPosition = transform.position;
 			GameObject cellInstance = null;
+			float cellSize = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y;
+			float cellScale = (((cellSize * 100) * 100) / (Screen.height*0.125f)) * 0.01f;
+			//cellSize *= cellScale;
 
 			for(int i = 0;i < _rows;i++)
 			{
@@ -44,10 +47,11 @@ public class CellsManager : MonoBehaviour
 					cellInstance.GetComponent<SpriteRenderer> ().sortingOrder = -1;
 					cellInstance.transform.SetParent(transform);
 					cells.Add(cellInstance.GetComponent<Cell>());
+					cellInstance.transform.localScale = new Vector3 (cellScale,cellScale,cellScale);
 					
-					cellInitialPosition.x += cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x + 0.03f;
+					cellInitialPosition.x += cellSize;
 				}
-				cellInitialPosition.y -= cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y + 0.03f;
+				cellInitialPosition.y -= cellSize;
 				cellInitialPosition.x = transform.position.x;
 			}
 			return true;
@@ -354,20 +358,21 @@ public class CellsManager : MonoBehaviour
 	/**
 	 * Ocupa la celda indicada y le asigna el contenido y tipo indicado
 	 **/ 
-	public void occupyAndConfigureCell(int cellIndex,GameObject content, Piece.EType type,bool positionate = false)
+	public void occupyAndConfigureCell(int cellIndex,GameObject content, Piece.EType type, Piece.EColor color,bool positionate = false)
 	{
-		occupyAndConfigureCell(cells[cellIndex],content,type,positionate);
+		occupyAndConfigureCell(cells[cellIndex],content,type,color,positionate);
 	}
 
 	/**
 	 * Ocupa la celda indicada y le asigna el contenido y tipo indicado
 	 **/ 
-	public void occupyAndConfigureCell(Cell cell,GameObject content, Piece.EType type,bool positionate = false)
+	public void occupyAndConfigureCell(Cell cell,GameObject content, Piece.EType type, Piece.EColor color,bool positionate = false)
 	{
 		cell.occupied = true;
 
 		setCellContent(cell, content, true,positionate);//destroy
-		setCellContentType(cell, type);
+		setCellContentType (cell, type);
+		setCellContentColor (cell, color);
 	}
 
 	/**
@@ -419,6 +424,21 @@ public class CellsManager : MonoBehaviour
 	public void setCellContentType(Cell cell, Piece.EType type)
 	{
 		cell.contentType = type;
+	}
+
+	public void setCellContentColor(int cellIndex,Piece.EColor color)
+	{
+		setCellContentColor(cells[cellIndex],color);
+	}
+
+	public void setCellContentColor(int x, int y, Piece.EColor color)
+	{
+		setCellContentColor(getCellAt(x,y),color);
+	}
+
+	public void setCellContentColor(Cell cell, Piece.EColor color)
+	{
+		cell.contentColor = color;
 	}
 
 	public void setCellType(int cellIndex, int cellType)
@@ -474,7 +494,7 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @params cell{Cell}: La celda que se usara como base para tomar su color y buscar las demas
 	 */
-	public Cell[] getCellNeighborsOfSameType(Cell cell)
+	public Cell[] getCellNeighborsOfSameColor(Cell cell)
 	{
 		List<Cell> finalList = new List<Cell>();
 		List<Cell> pendingList = new List<Cell>();
@@ -483,15 +503,66 @@ public class CellsManager : MonoBehaviour
 			
 		while(pendingList.Count > 0)
 		{
-			searchNeigboursOfSameType(pendingList[0],ref finalList,ref pendingList);
+			searchNeigboursOfSameColor(pendingList[0],ref finalList,ref pendingList);
 		}
 
 		return finalList.ToArray();
 	}
 
+	/*
+	 * Busca celdas del mismo color en sus vecinos verticales y horizontales
+	 * 
+	 * @params cell{Cell}: La celda de la que se evaluaran los vecinos
+	 * 
+	 * @params final{List<Cell>}: En esta lista se agregan las celdas a las que ya se les evaluo el vecino
+	 * 
+	 * @params pending{List<Cell>}: En esta lista se van agregando las celdas que tienen el mismo color, pero que aun no han sido evaluadas
+	 */
+	protected void searchNeigboursOfSameColor(Cell cell,ref List<Cell> final, ref List<Cell> pending)
+	{
+		int cX = cells.IndexOf(cell)%columns;
+		int cY = cells.IndexOf(cell)/columns;
+		Cell tempC = null;
+
+		tempC = getCellAt(cX,cY-1);
+		if(tempC != null)
+		{
+			if(tempC.contentColor == cell.contentColor && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			{
+				pending.Add(tempC);
+			}
+		}
+		tempC = getCellAt(cX-1,cY);
+		if(tempC != null)
+		{
+			if(tempC.contentColor == cell.contentColor && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			{
+				pending.Add(tempC);
+			}
+		}
+		tempC = getCellAt(cX+1,cY);
+		if(tempC != null)
+		{
+			if(tempC.contentColor == cell.contentColor && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			{
+				pending.Add(tempC);
+			}
+		}
+		tempC = getCellAt(cX,cY+1);
+		if(tempC != null)
+		{
+			if(tempC.contentColor == cell.contentColor && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
+			{
+				pending.Add(tempC);
+			}
+		}
+		pending.Remove(cell);
+		final.Add(cell);
+	}
+
 
 	/*
-	 * Busca la celdas que sean del mismo color en toda la grid y los agrega a 'selected'
+	 * Busca la celdas que sean del mismo tipo en toda la grid y los agrega a 'selected'
 	 * 
 	 * @params cell{Cell}: Celda de la que se tomara su color comop parametro para evaluar
 	 */
@@ -507,6 +578,30 @@ public class CellsManager : MonoBehaviour
 		for(int i = 0;i < cells.Count;i++)
 		{
 			if(cells[i].contentType == cellType)
+			{
+				selection.Add(cells[i]);
+			}
+		}
+		return selection.ToArray();
+	}
+
+	/*
+	 * Busca la celdas que sean del mismo color en toda la grid y los agrega a 'selected'
+	 * 
+	 * @params cell{Cell}: Celda de la que se tomara su color comop parametro para evaluar
+	 */
+	public Cell[] getCellsOfSameColor(Cell cell)
+	{
+		return getCellsOfSameColor(cell.contentColor);
+	}
+
+	public Cell[] getCellsOfSameColor(Piece.EColor cellColor)
+	{
+		List<Cell> selection = new List<Cell>();
+
+		for(int i = 0;i < cells.Count;i++)
+		{
+			if(cells[i].contentColor == cellColor)
 			{
 				selection.Add(cells[i]);
 			}
@@ -558,57 +653,6 @@ public class CellsManager : MonoBehaviour
 		}
 	}
 
-	/*
-	 * Busca celdas del mismo color en sus vecinos verticales y horizontales
-	 * 
-	 * @params cell{Cell}: La celda de la que se evaluaran los vecinos
-	 * 
-	 * @params final{List<Cell>}: En esta lista se agregan las celdas a las que ya se les evaluo el vecino
-	 * 
-	 * @params pending{List<Cell>}: En esta lista se van agregando las celdas que tienen el mismo color, pero que aun no han sido evaluadas
-	 */
-	protected void searchNeigboursOfSameType(Cell cell,ref List<Cell> final, ref List<Cell> pending)
-	{
-		int cX = cells.IndexOf(cell)%columns;
-		int cY = cells.IndexOf(cell)/columns;
-		Cell tempC = null;
-
-		tempC = getCellAt(cX,cY-1);
-		if(tempC != null)
-		{
-			if(tempC.contentType == cell.contentType && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
-			{
-				pending.Add(tempC);
-			}
-		}
-		tempC = getCellAt(cX-1,cY);
-		if(tempC != null)
-		{
-			if(tempC.contentType == cell.contentType && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
-			{
-				pending.Add(tempC);
-			}
-		}
-		tempC = getCellAt(cX+1,cY);
-		if(tempC != null)
-		{
-			if(tempC.contentType == cell.contentType && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
-			{
-				pending.Add(tempC);
-			}
-		}
-		tempC = getCellAt(cX,cY+1);
-		if(tempC != null)
-		{
-			if(tempC.contentType == cell.contentType && pending.IndexOf(tempC) == -1 && final.IndexOf(tempC) == -1)
-			{
-				pending.Add(tempC);
-			}
-		}
-		pending.Remove(cell);
-		final.Add(cell);
-	}
-
 	public Cell[] getAllEmptyCells()
 	{
 		List<Cell> result = new List<Cell>();
@@ -623,10 +667,10 @@ public class CellsManager : MonoBehaviour
 		return result.ToArray();
 	}
 
-	public Piece.EType colorRandom()
+	public Piece.EColor colorRandom()
 	{
 		//HACK: Este rango existe por combinar tipos y colores
-		return (Piece.EType)Random.Range (1, 9);
+		return (Piece.EColor)Random.Range (1, 9);
 	}
 
 	public Piece.EType getPredominantColor()
@@ -662,5 +706,17 @@ public class CellsManager : MonoBehaviour
 
 		return (Piece.EType)index;
 
+	}
+
+	public bool existType(Piece.EType type)
+	{
+		for(int i = 0;i < cells.Count;i++)
+		{
+			if(cells[i].contentType == type)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 }

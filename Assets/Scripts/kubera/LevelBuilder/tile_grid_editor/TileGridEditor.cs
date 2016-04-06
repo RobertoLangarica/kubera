@@ -37,12 +37,18 @@ namespace LevelBuilder
 
 				gridTiles = gridTilesContainer.GetComponentsInChildren<GridTile>(true);
 
-				dataCount = new Dictionary<int, int>();
+				if(dataCount == null)
+				{
+					dataCount = new Dictionary<int, int>();
+				}
 
 				foreach(GridTile tile in gridTiles)
 				{
 					tile.onClick+= onTileClick;
-					setTileValueWithButton(tile,normalButtonTile);
+					if(dataCount.Count == 0)
+					{
+						setTileValueWithButton (tile, normalButtonTile);
+					}
 				}
 			}
 
@@ -83,10 +89,18 @@ namespace LevelBuilder
 
 		private void setTileValueWithButton(GridTile tile, ButtonTile button)
 		{
-			dataCount[tile.getValue()]--;
-			dataCount[button.dataValue]++;
+			if (!dataCount.ContainsKey (button.dataValue)) 
+			{
+				dataCount.Add (button.dataValue, 0);
+			}
+			
+			if (dataCount.ContainsKey (tile.getValue ())) 
+			{
+				dataCount [tile.getValue ()]--;
+			}
+			dataCount [button.dataValue]++;
 			tile.setDataValue(button.dataValue);
-			tile.setSpriteToShow(button.spriteToshow);
+			tile.setSpriteToShow (button.spriteToshow);
 		}
 
 		public void sincronizeDataWithCSV(string csv)

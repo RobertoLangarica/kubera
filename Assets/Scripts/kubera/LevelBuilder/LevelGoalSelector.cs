@@ -362,7 +362,7 @@ namespace LevelBuilder
 
 			//TODO: Aqui fuerzo a minusculas para no hacerlo en runtime, checar si alguna meta se conflictua
 			//TODO: Si hay algun conflicto hay que homogeneizar  todo a minusculas o mayusculas
-			return result.ToLower();
+			return result;
 		}
 
 		public bool isObstacles()

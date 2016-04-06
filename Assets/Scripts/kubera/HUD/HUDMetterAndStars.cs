@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class HUDMetterAndStars
+public class HUDMetterAndStars : MonoBehaviour
 {
 	public Image pointsMeter;
 	public Image[] Stars;
@@ -27,8 +27,8 @@ public class HUDMetterAndStars
 	 **/
 	public void setStarsData(float[] scores)
 	{
-		setStarsPosition ();
 		scoreToReachStar = scores;
+		setStarsPosition ();
 	}		
 
 	/**
@@ -37,9 +37,10 @@ public class HUDMetterAndStars
 	public void setStarsPosition()
 	{
 		float pointMetterwidth = pointsMeter.rectTransform.rect.width;
-		Stars[0].rectTransform.localPosition = new Vector3(Stars[0].rectTransform.localPosition.x, scoreToReachStar[0] / scoreToReachStar [2] * pointMetterwidth);
-		Stars[1].rectTransform.localPosition = new Vector3(Stars[1].rectTransform.localPosition.x, scoreToReachStar[1] / scoreToReachStar [2] * pointMetterwidth);
-		Stars[2].rectTransform.localPosition = new Vector3(Stars[2].rectTransform.localPosition.x, scoreToReachStar[2] / scoreToReachStar [2] * pointMetterwidth);
+
+		Stars[0].rectTransform.anchoredPosition = new Vector3(scoreToReachStar[0] / scoreToReachStar [2] * pointMetterwidth, 0);
+		Stars[1].rectTransform.anchoredPosition = new Vector3(scoreToReachStar[1] / scoreToReachStar [2] * pointMetterwidth, 0);
+		Stars [2].rectTransform.anchoredPosition =  new Vector2(pointMetterwidth,0);
 	}
 
 	/**
