@@ -16,10 +16,12 @@ public class AudioManager : MonoBehaviour
 
 	public AudioSource audioSource;
 
-	[HideInInspector]
-	public bool soundEffects;
+	[HideInInspector]public bool soundEffects;
 
+	//TODO: Audio source no tiene contexto de mainAudio
+	//TODO: La diferencia tecnica que veo es Play vs PlayOneShot, puede usarse Audio y FX o Music y Audio...
 	protected bool _mainAudio;
+	protected int currentMainThemeIndex;
 
 	[HideInInspector]
 	public bool mainAudio
@@ -42,7 +44,6 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
-	protected int currentMainThemeIndex;
 
 	void Start()
 	{
@@ -52,6 +53,7 @@ public class AudioManager : MonoBehaviour
 		OnLevelWasLoaded();
 	}
 
+	//TODO: Hay que optar por la simplesa en los nombres OnLevelLoaded hace la misma chamba
 	void OnLevelWasLoaded()
 	{
 		switch(SceneManager.GetActiveScene().name)
@@ -64,6 +66,7 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
+	//TODO: Nombre??
 	public bool PlayLeLineCreatedAudio()
 	{
 		if(lineCreatedAudio != null && soundEffects)
@@ -114,6 +117,7 @@ public class AudioManager : MonoBehaviour
 		return false;
 	}
 
+	//TODO un nombre que no denote la existencia de mas de uno
 	public bool PauseMainAudio()
 	{
 		if(mainThemes[currentMainThemeIndex] != null)
@@ -123,6 +127,7 @@ public class AudioManager : MonoBehaviour
 		return false;
 	}
 
+	//TODO un nombre que no denote la existencia de mas de uno
 	public bool PlayMainAudio()
 	{
 		if(mainThemes[currentMainThemeIndex] != null && mainAudio)

@@ -147,6 +147,7 @@ namespace LevelBuilder
 			toMuchWords ();
 		}
 
+		//TODO: Ant?? Sin??: Nombre mas explicito (y es Synonym no Si...)
 		public bool isAntOrSinOn()
 		{
 			if(toggleAnt.isOn || toggleSin.isOn)
@@ -360,8 +361,6 @@ namespace LevelBuilder
 				result += word;
 			}	
 
-			//TODO: Aqui fuerzo a minusculas para no hacerlo en runtime, checar si alguna meta se conflictua
-			//TODO: Si hay algun conflicto hay que homogeneizar  todo a minusculas o mayusculas
 			return result;
 		}
 

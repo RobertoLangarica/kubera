@@ -41,15 +41,19 @@ public class UserDataManager
 	}
 
 	/**
+	 * Resuelve los problemas entre versiones
+	 **/ 
+	protected void resolveVersion()
+	{
+		PlayerPrefs.SetInt("version",version);
+	}
+
+	/**
 	 * Crea los datos por primera vez y con los valores por default
-	 * 
 	 **/
 	protected void createDefaultData()
 	{
-		//se inicializa a la version actual
 		PlayerPrefs.SetInt("version",version);
-
-		//Lenguaje del sistema operativo
 		PlayerPrefs.SetString("language",getOSLanguage());
 	}
 
@@ -68,7 +72,7 @@ public class UserDataManager
 				return;
 			}
 
-			if(languageSupported(value))
+			if(isLanguageSupported(value))
 			{
 				PlayerPrefs.SetString("language",value);
 			}
@@ -81,14 +85,6 @@ public class UserDataManager
 			//Que se configure el juego para el lenguaje (en este caso diccionarios)
 			PersistentData.instance.configureGameForLanguage();
 		}
-	}
-
-	/**
-	 * Resuelve los problemas entre versiones
-	 **/ 
-	protected void resolveVersion()
-	{
-		PlayerPrefs.SetInt("version",version);
 	}
 
 	/**
@@ -120,7 +116,7 @@ public class UserDataManager
 	/**
 	 * Indica si un lenguaje es soportado por el juego
 	 **/ 
-	protected bool languageSupported(string language)
+	protected bool isLanguageSupported(string language)
 	{
 		//[HARDCODING] no pude poner el enum convertido a cadena en minusculas porque se queja el switch
 		switch(language)
@@ -134,7 +130,8 @@ public class UserDataManager
 	}
 
 	public void foo(){}
-	
+
+	//TODO: Un nombre que indique pregunta y no accion ya que devuelve bool isRota....
 	public bool rotatePowerUpAvailable
 	{
 		get
@@ -147,7 +144,8 @@ public class UserDataManager
 			PlayerPrefs.SetInt("rotatePowerUpUses",tempBool);
 		}
 	}
-	
+
+	//TODO: Un nombre que indique pregunta y no accion ya que devuelve bool isOne....
 	public bool onePiecePowerUpAvailable
 	{
 		get
@@ -156,11 +154,13 @@ public class UserDataManager
 		}		
 		set
 		{
+			//TODO: porque alocar un entero cuando el terciario puede ser inline
 			int tempBool = value == false ? 0 : 1;
 			PlayerPrefs.SetInt("onePiecePowerUpUses",tempBool);
 		}
 	}
-	
+
+	//TODO: Un nombre que indique pregunta y no accion ya que devuelve bool isWild....
 	public bool wildCardPowerUpAvailable
 	{
 		get
@@ -169,11 +169,13 @@ public class UserDataManager
 		}		
 		set
 		{
+			//TODO: porque alocar un entero cuando el terciario puede ser inline
 			int tempBool = value == false ? 0 : 1;
 			PlayerPrefs.SetInt("wildCardPowerUpUses",tempBool);
 		}
 	}
-	
+
+	//TODO: Un nombre que indique pregunta y no accion ya que devuelve bool isDestroy....
 	public bool destroyPowerUpAvailable
 	{
 		get
@@ -182,11 +184,12 @@ public class UserDataManager
 		}		
 		set
 		{
+			//TODO: porque alocar un entero cuando el terciario puede ser inline
 			int tempBool = value == false ? 0 : 1;
 			PlayerPrefs.SetInt("destroyPowerUpUses",tempBool);
 		}
 	}
-
+	//TODO: Un nombre que indique pregunta y no accion ya que devuelve bool isDestro....
 	public bool destroyNeighborsPowerUpAvailable
 	{
 		get
@@ -195,11 +198,13 @@ public class UserDataManager
 		}		
 		set
 		{
+			//TODO: porque alocar un entero cuando el terciario puede ser inline
 			int tempBool = value == false ? 0 : 1;
 			PlayerPrefs.SetInt("destroyNeighborsPowerUpUses",tempBool);
 		}
 	}
 
+	//TODO: soundEffectsSetting que es?? devuelve true/false es una bandera de que
 	public bool soundEffectsSetting
 	{
 		get
@@ -208,11 +213,11 @@ public class UserDataManager
 		}		
 		set
 		{
-			int tempBool = value == false ? 0 : 1;
-			PlayerPrefs.SetInt("soundEffectsSetting",tempBool);
+			PlayerPrefs.SetInt("soundEffectsSetting",(int)(value == false ? 0 : 1));
 		}
 	}
 
+	//TODO: musicSetting que es?? devuelve true/false es una bandera de que
 	public bool musicSetting
 	{
 		get
@@ -221,6 +226,7 @@ public class UserDataManager
 		}		
 		set
 		{
+			//TODO: porque alocar un entero cuando el terciario puede ser inline
 			int tempBool = value == false ? 0 : 1;
 			PlayerPrefs.SetInt("musicSetting",tempBool);
 		}
@@ -264,6 +270,8 @@ public class UserDataManager
 
 	public void giveLifeToPlayer(int amount = 1)
 	{
+		//TODO: pLayerLifes es un getter/setter que escribe en PlayerPrefs
+		//Hay que reducir esos llamados truncando el valor antes de grabarlo
 		playerLifes += amount;
 
 		if (playerLifes > maximumLifes) 
