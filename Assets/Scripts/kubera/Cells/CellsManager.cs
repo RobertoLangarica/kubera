@@ -15,6 +15,7 @@ public class CellsManager : MonoBehaviour
 
 	[HideInInspector]public int columns = 0;
 	[HideInInspector]public int rows = 0;
+	[HideInInspector]public float cellSize;
 
 	//Todas las celdas del grid
 	protected List<Cell> cells;
@@ -38,7 +39,7 @@ public class CellsManager : MonoBehaviour
 
 			Vector3 cellInitialPosition = transform.position;
 			GameObject cellInstance = null;
-			float cellSize = cellPrefab.GetComponent<SpriteRenderer>().sprite.rect.height;
+			cellSize = cellPrefab.GetComponent<SpriteRenderer>().sprite.rect.height;
 			float screenHeight = ((topOfScreen.position - bottomOfScreen.position).magnitude)*100;
 			float cellScale = (screenHeight*0.0625f) / cellSize;
 			cellSize = screenHeight*0.000625f;

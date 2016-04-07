@@ -67,12 +67,6 @@ public class GameManager : MonoBehaviour
 
 		wordManager.setMaxAllowedLetters(PersistentData.instance.maxWordLength);
 		wordManager.gridLettersParent = gridLettersContainer;
-		//LetterSize
-		Vector3 cellSizeReference = cellManager.cellPrefab.GetComponent<SpriteRenderer>().bounds.size;
-		Vector3 lettersizeDelta = (Camera.main.WorldToScreenPoint(cellSizeReference) -Camera.main.WorldToScreenPoint(Vector3.zero)) * gridLettersSizeMultiplier;
-		lettersizeDelta.x = Mathf.Abs(lettersizeDelta.x);
-		lettersizeDelta.y = Mathf.Abs(lettersizeDelta.y);
-		wordManager.gridLettersSizeDelta = new Vector2(lettersizeDelta.x, lettersizeDelta.y);
 
 		powerupManager.OnPowerupCanceled = OnPowerupCanceled;
 		powerupManager.OnPowerupCompleted = OnPowerupCompleted;
@@ -132,6 +126,15 @@ public class GameManager : MonoBehaviour
 
 	
 		cellManager.resizeGrid(sizeGridX,sizeGridY);
+
+		//LetterSize       //Depende del tamaño de las celdas que se aclcula en el resizeGrid
+		Vector3 cellSizeReference = new Vector3(cellManager.cellSize,cellManager.cellSize,1);
+		Vector3 lettersizeDelta = (Camera.main.WorldToScreenPoint(cellSizeReference) -Camera.main.WorldToScreenPoint(Vector3.zero)) * gridLettersSizeMultiplier;
+		lettersizeDelta.x = Mathf.Abs(lettersizeDelta.x);
+		lettersizeDelta.y = Mathf.Abs(lettersizeDelta.y);
+		Debug.Log (cellManager.cellSize);
+		wordManager.gridLettersSizeDelta = new Vector2(lettersizeDelta.x , lettersizeDelta.y);
+
 		populateGridFromLevel(level);
 
 		getWinCondition();
