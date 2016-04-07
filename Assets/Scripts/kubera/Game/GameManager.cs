@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
 
 		initLettersFromLevel(level);
 		initPiecesFromLevel(level);
-
+		initGoalsFromLevel (level);
 		cellToLetter = new List<Cell> ();
 
 		allowGameInput(false);
@@ -446,18 +446,18 @@ public class GameManager : MonoBehaviour
 
 	protected void initHudValues()
 	{
-		hudManager.actualizePoints(0);
-		hudManager.showPieces (pieceManager.getShowingPieces ());
-		hudManager.actualizeGems(UserDataManager.instance.playerGems);
-		hudManager.setLevelName (currentLevel.name);
-		hudManager.setSecondChanceLock (false);
-
 		//TODO: Hay que quitar este arreglo, todo en la hud y en todos lados se usan 3 estrellas (y este arreglo consume memoria)
 		float[] scoreToStar = new float[3];
 		scoreToStar [0] = currentLevel.scoreToStar1;
 		scoreToStar [1] = currentLevel.scoreToStar2;
 		scoreToStar [2] = currentLevel.scoreToStar3;
 		hudManager.setStarsData (scoreToStar);
+
+		hudManager.actualizePoints(0);
+		hudManager.showPieces (pieceManager.getShowingPieces ());
+		hudManager.actualizeGems(UserDataManager.instance.playerGems);
+		hudManager.setLevelName (currentLevel.name);
+		hudManager.setSecondChanceLock (false);
 
 		//Se muestra el objetivo al inicio del nivel
 		hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
