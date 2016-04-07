@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 70ebe5c30e3f32a4e804ace1df52b89a
-timeCreated: 1459958810
+timeCreated: 1459984946
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -70,7 +70,7 @@ TextureImporter:
   maxTextureSize: 4096
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -1056,14 +1056,14 @@ TextureImporter:
         y: 1383
         width: 264
         height: 264
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -132, y: 132}
-        - {x: -132, y: -132}
-        - {x: 132, y: -132}
-        - {x: 132, y: 132}
+      - - {x: 0, y: 0}
+        - {x: 0, y: -264}
+        - {x: 264, y: -264}
+        - {x: 264, y: 0}
     - name: game_info_background
       rect:
         serializedVersion: 2

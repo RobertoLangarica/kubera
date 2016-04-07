@@ -68,13 +68,6 @@ public class GameManager : MonoBehaviour
 		wordManager.setMaxAllowedLetters(PersistentData.instance.maxWordLength);
 		wordManager.gridLettersParent = gridLettersContainer;
 
-		//LetterSize
-		Vector3 cellSizeReference = cellManager.cellPrefab.GetComponent<SpriteRenderer>().bounds.size;
-		Vector3 lettersizeDelta = (Camera.main.WorldToScreenPoint(cellSizeReference) -Camera.main.WorldToScreenPoint(Vector3.zero)) * gridLettersSizeMultiplier;
-		lettersizeDelta.x = Mathf.Abs(lettersizeDelta.x);
-		lettersizeDelta.y = Mathf.Abs(lettersizeDelta.y);
-		wordManager.gridLettersSizeDelta = new Vector2(lettersizeDelta.x, lettersizeDelta.y);
-
 		powerupManager.OnPowerupCanceled = OnPowerupCanceled;
 		powerupManager.OnPowerupCompleted = OnPowerupCompleted;
 
@@ -99,6 +92,8 @@ public class GameManager : MonoBehaviour
 		{
 			configureLevel(PersistentData.instance.currentLevel);	
 		}
+
+		//TODO: Control de flujo de juego con un init
 	}
 
 	private void configureLevel(Level level)
@@ -107,17 +102,38 @@ public class GameManager : MonoBehaviour
 
 		initLettersFromLevel(level);
 		initPiecesFromLevel(level);
+
 		initGoalsFromLevel (level);
 		cellToLetter = new List<Cell> ();
 
 		allowGameInput(false);
 
+
 		remainingMoves = totalMoves = currentLevel.moves;
+	
+		cellManager.resizeGrid(sizeGridX,sizeGridY);
+		populateGridFromLevel(level);
+
+		//TODO: Si no es parte de la configuracion del nivel no debe ir aqui
+		cellToLetter = new List<Cell> ();//Esta inicializacion va aqui?
 
 
+		allowGameInput(false);//TODO: el input no es configuracion de nivel
+
+		//Las cosas de la hud que no se icializen con info del nivel hay que quitarlas
+		//Si hay que mandar a la hud a un estado default antes de iniciar el juego hay que hacerlo en alguna llamada explicita
 
 	
 		cellManager.resizeGrid(sizeGridX,sizeGridY);
+
+		//LetterSize       //Depende del tamaño de las celdas que se aclcula en el resizeGrid
+		Vector3 cellSizeReference = new Vector3(cellManager.cellSize,cellManager.cellSize,1);
+		Vector3 lettersizeDelta = (Camera.main.WorldToScreenPoint(cellSizeReference) -Camera.main.WorldToScreenPoint(Vector3.zero)) * gridLettersSizeMultiplier;
+		lettersizeDelta.x = Mathf.Abs(lettersizeDelta.x);
+		lettersizeDelta.y = Mathf.Abs(lettersizeDelta.y);
+		Debug.Log (cellManager.cellSize);
+		wordManager.gridLettersSizeDelta = new Vector2(lettersizeDelta.x , lettersizeDelta.y);
+
 		populateGridFromLevel(level);
 
 		initHudValues();
@@ -210,12 +226,6 @@ public class GameManager : MonoBehaviour
 				}
 			}	
 		}
-	}
-
-	void Update()
-	{
-		//TODO: mover de lugar la funcion
-		//hudManager.setLettersPoints (wordManager.wordPoints);
 	}
 
 	private void OnPieceDropped(GameObject obj)
@@ -853,6 +863,7 @@ public class GameManager : MonoBehaviour
 	}
 
 	//TODO: esta funcion no actualiza info de la HUD es mas bien el status del jeugo (hay que ver un mejor nombre)
+	//TODO: Esta funcion deberia ser mas granular, al llamarla ya mandenle los puntos y la condicion de victoria
 	protected void actualizeHUDInfo()
 	{
 		hudManager.actualizeMovements (remainingMoves);
