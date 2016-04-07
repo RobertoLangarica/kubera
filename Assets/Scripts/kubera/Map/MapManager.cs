@@ -25,7 +25,7 @@ public class MapManager : MonoBehaviour {
 
 	public void openPopUp(string popUpName)
 	{
-		popUpManager.activatePowerUp (popUpName);
+		popUpManager.activatePopUp (popUpName);
 		stopInput (true);
 	}
 
