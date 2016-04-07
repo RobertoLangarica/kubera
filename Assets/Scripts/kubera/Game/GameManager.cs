@@ -104,15 +104,8 @@ public class GameManager : MonoBehaviour
 		initPiecesFromLevel(level);
 
 		initGoalsFromLevel (level);
-		cellToLetter = new List<Cell> ();
-
-		allowGameInput(false);
-
 
 		remainingMoves = totalMoves = currentLevel.moves;
-	
-		cellManager.resizeGrid(sizeGridX,sizeGridY);
-		populateGridFromLevel(level);
 
 		//TODO: Si no es parte de la configuracion del nivel no debe ir aqui
 		cellToLetter = new List<Cell> ();//Esta inicializacion va aqui?
