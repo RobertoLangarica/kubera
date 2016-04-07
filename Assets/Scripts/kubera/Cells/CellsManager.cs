@@ -17,6 +17,8 @@ public class CellsManager : MonoBehaviour
 	[HideInInspector]public int rows = 0;
 	[HideInInspector]public float cellSize;
 
+	protected float cellScalePercentage = 0.059f;
+
 	//Todas las celdas del grid
 	protected List<Cell> cells;
 
@@ -41,8 +43,8 @@ public class CellsManager : MonoBehaviour
 			GameObject cellInstance = null;
 			cellSize = cellPrefab.GetComponent<SpriteRenderer>().sprite.rect.height;
 			float screenHeight = ((topOfScreen.position - bottomOfScreen.position).magnitude)*100;
-			float cellScale = (screenHeight*0.0625f) / cellSize;
-			cellSize = screenHeight*0.000625f;
+			float cellScale = (screenHeight*cellScalePercentage) / cellSize;
+			cellSize = screenHeight * (cellScalePercentage*0.01f);
 
 			for(int i = 0;i < _rows;i++)
 			{
