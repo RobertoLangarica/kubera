@@ -40,7 +40,7 @@ button_powerupwildcard_normal;1045;42;250;258;0.528;0.5116279069767442
 game_arrows;1411;1383;234;264;0.5;0.5
 game_background_level;1825;1899;144;144;0.5;0.5
 game_cube;1551;1779;264;264;0.5;0.5
-game_grid;869;1383;264;264;0.5;0.5
+game_grid;869;1383;264;264;0;1
 game_info_background;5;1747;1536;296;0.5;0.5
 game_powerups_background;5;1657;1536;80;0.5;0.5
 game_progress_background;5;1138;822;235;0.5;0.5021276595744681
