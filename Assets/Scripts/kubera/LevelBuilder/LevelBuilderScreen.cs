@@ -403,7 +403,7 @@ namespace LevelBuilder
 
 		public void OnResetABCSelector2()
 		{
-			abcSelector.sincronizeDataWithCSV (defaultLetters);
+			abcSelector.sincronizeDataWithCSV (defaultLetters2);
 		}
 
 		public void OnEreaseABCSelector()
