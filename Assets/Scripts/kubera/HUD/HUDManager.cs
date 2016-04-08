@@ -40,7 +40,7 @@ public class HUDManager : MonoBehaviour
 
 	public GameObject modal;
 
-	protected ScoreTextPool scorePool;
+	protected FloatingTextPool scorePool;
 	protected List<GameObject> lettersToFound = new List<GameObject>();
 	protected HUDMetterAndStars hudStars;
 	protected PopUpManager popUpManager;
@@ -51,7 +51,7 @@ public class HUDManager : MonoBehaviour
 	void Start () 
 	{
 		hudStars = FindObjectOfType<HUDMetterAndStars> ();
-		scorePool = FindObjectOfType<ScoreTextPool>();
+		scorePool = FindObjectOfType<FloatingTextPool>();
 		popUpManager = FindObjectOfType <PopUpManager> ();
 
 		popUpManager.OnPopUpCompleted += popUpCompleted;

@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
 	public Transform gridLettersContainer;
 	public float gridLettersSizeMultiplier = 0.9f;
 
+	public List<int> linesCreatedPoints = new List<int> ();
+	public List<int> linesCreatedGems = new List<int> ();
+
 	protected int sizeGridX = 8;
 	protected int sizeGridY = 8;
 
@@ -78,7 +81,7 @@ public class GameManager : MonoBehaviour
 
 		hudManager.OnPopUpCompleted += popUpCompleted;
 
-		wordManager.onWordChange += actualizeWordPoints;
+		wordManager.onWordChange += refreshCurrentWordScoreOnHUD;
 
 		//TODO: Leer las gemas de algun lado
 		UserDataManager.instance.playerGems = 300;
@@ -119,19 +122,19 @@ public class GameManager : MonoBehaviour
 	
 		cellManager.resizeGrid(sizeGridX,sizeGridY);
 
-		//LetterSize       //Depende del tamaño de las celdas que se aclcula en el resizeGrid
+		//LetterSize       
+		//Depende del tamaño de las celdas que se aclcula en el resizeGrid
 		Vector3 cellSizeReference = new Vector3(cellManager.cellSize,cellManager.cellSize,1);
 		Vector3 lettersizeDelta = (Camera.main.WorldToScreenPoint(cellSizeReference) -Camera.main.WorldToScreenPoint(Vector3.zero)) * gridLettersSizeMultiplier;
 		lettersizeDelta.x = Mathf.Abs(lettersizeDelta.x);
 		lettersizeDelta.y = Mathf.Abs(lettersizeDelta.y);
-		Debug.Log (cellManager.cellSize);
 		wordManager.gridLettersSizeDelta = new Vector2(lettersizeDelta.x , lettersizeDelta.y);
 
 		populateGridFromLevel(level);
 
 		initHudValues();
 		actualizeHUDInfo();
-		actualizeWordPoints ();
+		refreshCurrentWordScoreOnHUD (wordManager.wordPoints);
 	}
 
 	protected void initLettersFromLevel(Level level)
@@ -294,7 +297,7 @@ public class GameManager : MonoBehaviour
 
 			//Damos puntos por cada cuadro en la pieza
 			onUsersAction(piece.squares.Length);
-			showScoreTextOnHud (piece.transform.position, piece.squares.Length);
+			showFloatingPointsAt (piece.transform.position, piece.squares.Length);
 		}
 
 		Destroy(piece.gameObject);
@@ -407,6 +410,10 @@ public class GameManager : MonoBehaviour
 		{
 			audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LINE_CREATED);
 		}
+
+
+		addPoints(linesCreatedPoints[totalLines-1]);
+		UserDataManager.instance.playerGems += linesCreatedGems[totalLines-1];
 
 		switch(totalLines)
 		{
@@ -584,7 +591,7 @@ public class GameManager : MonoBehaviour
 
 		cellManager.occupyAndConfigureCell(cell,go,Piece.EType.PIECE,Piece.EColor.AQUA,true);
 
-		showScoreTextOnHud (cell.transform.position, 1);
+		showFloatingPointsAt (cell.transform.position, 1);
 		substractMoves (1);
 		addPoints(1);
 
@@ -657,7 +664,7 @@ public class GameManager : MonoBehaviour
 			amount = vocalPoints;
 		}
 
-		showScoreTextOnHud (cell.transform.position, amount);
+		showFloatingPointsAt (cell.transform.position, amount);
 		addPoints(amount);
 
 		actualizeHUDInfo ();
@@ -668,30 +675,28 @@ public class GameManager : MonoBehaviour
 		inputPiece.allowInput = allowInput;
 		inputWords.allowInput = allowInput;
 	}
-
-	//TODO: Hay que tener congruencia en los nombres y si ya se usa unlock entonces las variables
-	// que sean unlock o viceversa que se use unblock
+		
 	protected void unlockPowerUp()
 	{
 		if(currentLevel.unblockBlock)
 		{
-			UserDataManager.instance.onePiecePowerUpAvailable = true;
+			UserDataManager.instance.isOnePiecePowerUpUnlocked = true;
 		}
 		if(currentLevel.unblockBomb)
 		{
-			UserDataManager.instance.destroyNeighborsPowerUpAvailable = true;
+			UserDataManager.instance.isDestroyNeighborsPowerUpUnlocked = true;
 		}
 		if(currentLevel.unblockDestroy)
 		{
-			UserDataManager.instance.destroyPowerUpAvailable = true;
+			UserDataManager.instance.isDestroyPowerUpUnlocked = true;
 		}
 		if(currentLevel.unblockRotate)
 		{
-			UserDataManager.instance.rotatePowerUpAvailable = true;
+			UserDataManager.instance.isRotatePowerUpUnlocked = true;
 		}
 		if(currentLevel.unblockWildcard)
 		{
-			UserDataManager.instance.wildCardPowerUpAvailable = true;
+			UserDataManager.instance.isWildCardPowerUpUnlocked = true;
 		}
 	}
 
@@ -824,12 +829,12 @@ public class GameManager : MonoBehaviour
 		if(audioManager.musicActive)
 		{
 			audioManager.musicActive = false;
-			UserDataManager.instance.musicSetting = false;
+			UserDataManager.instance.isMusicActive = false;
 		}
 		else
 		{
 			audioManager.musicActive = true;
-			UserDataManager.instance.musicSetting = true;
+			UserDataManager.instance.isMusicActive = true;
 		}
 	}
 
@@ -840,12 +845,12 @@ public class GameManager : MonoBehaviour
 		if(audioManager.soundEffectsActive)
 		{
 			audioManager.soundEffectsActive = false;
-			UserDataManager.instance.soundEffectsSetting = false;
+			UserDataManager.instance.isSoundEffectsActive = false;
 		}
 		else
 		{
 			audioManager.soundEffectsActive = true;
-			UserDataManager.instance.soundEffectsSetting = true;
+			UserDataManager.instance.isSoundEffectsActive = true;
 		}
 	}
 
@@ -879,15 +884,12 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	//TODO: Esto no actualiza los puntos de una palabra, actualiza los puntos que muestra la hud por una palabra
-	//TODO: Hagan mas granular a esta funcion y que reciba los puntos y no los lea
-	protected void actualizeWordPoints()
+	protected void refreshCurrentWordScoreOnHUD(int wordScore)
 	{
-		hudManager.setLettersPoints (wordManager.wordPoints);
+		hudManager.setLettersPoints (wordScore);
 	}
 
-	//TODO: showFloatingPointsAt
-	protected void showScoreTextOnHud(Vector3 pos,int amount)
+	protected void showFloatingPointsAt(Vector3 pos,int amount)
 	{
 		hudManager.showScoreTextAt(pos,amount);
 	}

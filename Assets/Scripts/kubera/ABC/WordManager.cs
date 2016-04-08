@@ -52,7 +52,7 @@ public class WordManager : MonoBehaviour
 	private RandomPool<ABCChar> obstaclesLettersPool;
 	private RandomPool<ABCChar> tutorialLettersPool;
 
-	public delegate void DOnWordChange();
+	public delegate void DOnWordChange(int wordValue);
 	public DOnWordChange onWordChange;
 
 	void Start()
@@ -405,7 +405,7 @@ public class WordManager : MonoBehaviour
 		afterWordValidation();
 		changeDeleteState(EDeleteState.WORD);
 
-		onWordChange ();
+		onWordChange (wordPoints);
 	}
 
 	private void updateWordPoints()

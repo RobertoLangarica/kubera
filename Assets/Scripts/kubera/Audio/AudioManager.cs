@@ -27,8 +27,6 @@ public class AudioManager : MonoBehaviour
 
 	[HideInInspector]public bool soundEffectsActive;
 
-	//TODO: Audio source no tiene contexto de mainAudio
-	//TODO: La diferencia tecnica que veo es Play vs PlayOneShot, puede usarse Audio y FX o Music y Audio...
 	protected bool _musicActive;
 	protected int currentMainThemeIndex;
 
@@ -56,8 +54,8 @@ public class AudioManager : MonoBehaviour
 
 	void Start()
 	{
-		soundEffectsActive = UserDataManager.instance.soundEffectsSetting;
-		musicActive = UserDataManager.instance.musicSetting;
+		soundEffectsActive = UserDataManager.instance.isSoundEffectsActive;
+		musicActive = UserDataManager.instance.isMusicActive;
 
 		OnLevelWasLoaded();
 	}

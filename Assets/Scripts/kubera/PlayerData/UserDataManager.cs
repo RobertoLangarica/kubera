@@ -131,8 +131,7 @@ public class UserDataManager
 
 	public void foo(){}
 
-	//TODO: Un nombre que indique pregunta y no accion ya que devuelve bool isRota....
-	public bool rotatePowerUpAvailable
+	public bool isRotatePowerUpUnlocked
 	{
 		get
 		{
@@ -140,13 +139,11 @@ public class UserDataManager
 		}		
 		set
 		{
-			int tempBool = value == false ? 0 : 1;
-			PlayerPrefs.SetInt("rotatePowerUpUses",tempBool);
+			PlayerPrefs.SetInt("rotatePowerUpUses",value == false ? 0 : 1);
 		}
 	}
 
-	//TODO: Un nombre que indique pregunta y no accion ya que devuelve bool isOne....
-	public bool onePiecePowerUpAvailable
+	public bool isOnePiecePowerUpUnlocked
 	{
 		get
 		{
@@ -154,14 +151,11 @@ public class UserDataManager
 		}		
 		set
 		{
-			//TODO: porque alocar un entero cuando el terciario puede ser inline
-			int tempBool = value == false ? 0 : 1;
-			PlayerPrefs.SetInt("onePiecePowerUpUses",tempBool);
+			PlayerPrefs.SetInt("onePiecePowerUpUses",value == false ? 0 : 1);
 		}
 	}
 
-	//TODO: Un nombre que indique pregunta y no accion ya que devuelve bool isWild....
-	public bool wildCardPowerUpAvailable
+	public bool isWildCardPowerUpUnlocked
 	{
 		get
 		{
@@ -169,14 +163,11 @@ public class UserDataManager
 		}		
 		set
 		{
-			//TODO: porque alocar un entero cuando el terciario puede ser inline
-			int tempBool = value == false ? 0 : 1;
-			PlayerPrefs.SetInt("wildCardPowerUpUses",tempBool);
+			PlayerPrefs.SetInt("wildCardPowerUpUses",value == false ? 0 : 1);
 		}
 	}
 
-	//TODO: Un nombre que indique pregunta y no accion ya que devuelve bool isDestroy....
-	public bool destroyPowerUpAvailable
+	public bool isDestroyPowerUpUnlocked
 	{
 		get
 		{
@@ -184,13 +175,11 @@ public class UserDataManager
 		}		
 		set
 		{
-			//TODO: porque alocar un entero cuando el terciario puede ser inline
-			int tempBool = value == false ? 0 : 1;
-			PlayerPrefs.SetInt("destroyPowerUpUses",tempBool);
+			PlayerPrefs.SetInt("destroyPowerUpUses",value == false ? 0 : 1);
 		}
 	}
-	//TODO: Un nombre que indique pregunta y no accion ya que devuelve bool isDestro....
-	public bool destroyNeighborsPowerUpAvailable
+
+	public bool isDestroyNeighborsPowerUpUnlocked
 	{
 		get
 		{
@@ -198,14 +187,11 @@ public class UserDataManager
 		}		
 		set
 		{
-			//TODO: porque alocar un entero cuando el terciario puede ser inline
-			int tempBool = value == false ? 0 : 1;
-			PlayerPrefs.SetInt("destroyNeighborsPowerUpUses",tempBool);
+			PlayerPrefs.SetInt("destroyNeighborsPowerUpUses",value == false ? 0 : 1);
 		}
 	}
 
-	//TODO: soundEffectsSetting que es?? devuelve true/false es una bandera de que
-	public bool soundEffectsSetting
+	public bool isSoundEffectsActive
 	{
 		get
 		{
@@ -213,12 +199,11 @@ public class UserDataManager
 		}		
 		set
 		{
-			PlayerPrefs.SetInt("soundEffectsSetting",(int)(value == false ? 0 : 1));
+			PlayerPrefs.SetInt("soundEffectsSetting",value == false ? 0 : 1);
 		}
 	}
 
-	//TODO: musicSetting que es?? devuelve true/false es una bandera de que
-	public bool musicSetting
+	public bool isMusicActive
 	{
 		get
 		{
@@ -226,9 +211,7 @@ public class UserDataManager
 		}		
 		set
 		{
-			//TODO: porque alocar un entero cuando el terciario puede ser inline
-			int tempBool = value == false ? 0 : 1;
-			PlayerPrefs.SetInt("musicSetting",tempBool);
+			PlayerPrefs.SetInt("musicSetting",value == false ? 0 : 1);
 		}
 	}
 

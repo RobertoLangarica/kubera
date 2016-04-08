@@ -14,7 +14,7 @@ public class ScoreText : MonoBehaviour
 
 	public Text myText;
 
-	protected ScoreTextPool pool;
+	protected FloatingTextPool pool;
 
 	protected float lerpPercent;
 	protected bool animate = false;
@@ -33,7 +33,7 @@ public class ScoreText : MonoBehaviour
 
 		if(pool == null)
 		{
-			pool = FindObjectOfType<ScoreTextPool>();
+			pool = FindObjectOfType<FloatingTextPool>();
 		}
 	}
 
@@ -55,7 +55,7 @@ public class ScoreText : MonoBehaviour
 			{
 				lerpPercent = 0;
 				animate = false;
-				pool.deativateText(myText);
+				pool.releaseText(myText);
 			}
 		}
 	}
@@ -71,7 +71,7 @@ public class ScoreText : MonoBehaviour
 	{
 		if(pool == null)
 		{
-			pool = FindObjectOfType<ScoreTextPool>();
+			pool = FindObjectOfType<FloatingTextPool>();
 		}
 
 		transform.position = start;
