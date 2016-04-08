@@ -238,7 +238,7 @@ public class GameManager : MonoBehaviour
 		if (cellManager.canPositionateAll (piece.squares)) 
 		{
 			putPiecesOnGrid (piece);
-			audioManager.PlayPiecePositionedAudio();
+			audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.PIECE_POSITIONATED);
 			List<List<Cell>> cells = cellManager.getCompletedVerticalAndHorizontalLines ();
 			//Puntos por las lineas creadas
 			linesCreated (cells.Count);
@@ -405,7 +405,7 @@ public class GameManager : MonoBehaviour
 		//TODO: Estos puntajes que sean configurables en el editor
 		if(totalLines > 0)
 		{
-			audioManager.PlayLeLineCreatedAudio();
+			audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LINE_CREATED);
 		}
 
 		switch(totalLines)
@@ -476,7 +476,7 @@ public class GameManager : MonoBehaviour
 		if(!wordManager.checkIfAWordIsPossible(gridCharacters) || remainingMoves <= 0)
 		{
 			Debug.Log ("Perdio de verdad");
-			audioManager.PlayLoseAudio();
+			audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);
 		}
 	}
 
@@ -527,7 +527,7 @@ public class GameManager : MonoBehaviour
 
 	protected void winBonification()
 	{
-		audioManager.PlayWonAudio();
+		audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.WON);
 
 		allowGameInput (false);
 
@@ -788,14 +788,14 @@ public class GameManager : MonoBehaviour
 
 	public void activateSettings(bool activate)
 	{
-		audioManager.PlayButtonAudio();
+		audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 
 		hudManager.activateSettings (activate);
 	}
 
 	public void closeObjectivePopUp()
 	{
-		audioManager.PlayButtonAudio();
+		audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		//hudManager.hideGoalPopUp ();
 		allowGameInput ();
 	}
@@ -819,39 +819,39 @@ public class GameManager : MonoBehaviour
 		
 	public void activateMusic()
 	{
-		audioManager.PlayButtonAudio();
+		audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 
-		if(audioManager.mainAudio)
+		if(audioManager.musicActive)
 		{
-			audioManager.mainAudio = false;
+			audioManager.musicActive = false;
 			UserDataManager.instance.musicSetting = false;
 		}
 		else
 		{
-			audioManager.mainAudio = true;
+			audioManager.musicActive = true;
 			UserDataManager.instance.musicSetting = true;
 		}
 	}
 
 	public void activateSounds()
 	{
-		audioManager.PlayButtonAudio();
+		audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		
-		if(audioManager.soundEffects)
+		if(audioManager.soundEffectsActive)
 		{
-			audioManager.soundEffects = false;
+			audioManager.soundEffectsActive = false;
 			UserDataManager.instance.soundEffectsSetting = false;
 		}
 		else
 		{
-			audioManager.soundEffects = true;
+			audioManager.soundEffectsActive = true;
 			UserDataManager.instance.soundEffectsSetting = true;
 		}
 	}
 
 	public void quitGame()
 	{
-		audioManager.PlayButtonAudio();
+		audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		activatePopUp ("exitGame");
 	}
 

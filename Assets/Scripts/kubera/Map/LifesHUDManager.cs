@@ -12,16 +12,14 @@ public class LifesHUDManager : MonoBehaviour
 	public int timeForLifeInMinutes;
 
 	protected bool showTimer;
-	protected int currentMinutes;
-	protected int currentSeconds;
+	protected int currentMinutes = 0;
+	protected int currentSeconds = 60;
 	protected float updateLifeTimer;
 
 
 	void Start()
 	{
 		showTimer = false;
-
-		Debug.Log (UserDataManager.instance.playerLifes.ToString());
 
 		if (UserDataManager.instance.playerLifes < UserDataManager.instance.maximumLifes) 
 		{
@@ -41,16 +39,35 @@ public class LifesHUDManager : MonoBehaviour
 			updateLifeTimer += Time.deltaTime;
 		}
 
-		if (Input.GetKeyUp (KeyCode.A)) 
+		//Prueba para las vidas
+		/*if (Input.GetKeyUp (KeyCode.A)) 
 		{
 			setLifeDate ();
+			Debug.Log ("Se setea la fecha de la ultima vez que se sale del mapa");
 		}
+		if (Input.GetKeyUp (KeyCode.B)) 
+		{
+			UserDataManager.instance.giveLifeToPlayer (-3);
+			Debug.Log ("Se quitan las vidas");
+		}
+		if (Input.GetKeyUp (KeyCode.C))
+		{
+			UserDataManager.instance.giveLifeToPlayer (UserDataManager.instance.maximumLifes);
+			Debug.Log ("Se dan todas las vidas");
+		}
+		if (Input.GetKeyUp (KeyCode.D))
+		{
+			updateLifesSinceLastPlay ();
+			Debug.Log ("Se inicia el update");
+		}*/
 	}
 
 	protected void updateLifesSinceLastPlay()
 	{
-		double toWait = 240;//calculateTotalWaitingTime ();
-		double sinceLastPlay = 220;//lifeDateDifferenceInSecs ();
+		double toWait = calculateTotalWaitingTime ();
+		Debug.Log (toWait);
+		double sinceLastPlay = lifeDateDifferenceInSecs ();
+		Debug.Log (sinceLastPlay);
 		double difference = 0;
 		int minutes = 0;
 		int lifesGained = 0;
@@ -65,7 +82,11 @@ public class LifesHUDManager : MonoBehaviour
 
 			//Se entregan las vidas que se hayan juntado
 			Debug.Log(lifesGained);
-			//UserDataManager.instance.giveLifeToPlayer (lifesGained);
+			UserDataManager.instance.giveLifeToPlayer (lifesGained);
+
+			int missingLifes = UserDataManager.instance.maximumLifes - UserDataManager.instance.playerLifes;
+
+			difference -= (missingLifes - 1) * 60;
 
 			//Se dejan solos los segundos
 			minutes = (int)difference / 60;
@@ -79,20 +100,20 @@ public class LifesHUDManager : MonoBehaviour
 		} 
 		else 
 		{
-			//UserDataManager.instance.giveLifeToPlayer (UserDataManager.instance.maximumLifes);
+			UserDataManager.instance.giveLifeToPlayer (UserDataManager.instance.maximumLifes);
 		}
 	}
 
 	protected double calculateTotalWaitingTime()
 	{
-		return (double)(timeForLifeInMinutes * (UserDataManager.instance.maximumLifes - int.Parse(lifesCount.text)));
+		return (double)(timeForLifeInMinutes * (UserDataManager.instance.maximumLifes - UserDataManager.instance.playerLifes) * 60);
 	}
 
 	protected double lifeDateDifferenceInSecs()
 	{
 		DateTime lastDate = DateTime.ParseExact (UserDataManager.instance.lifeTimerDate,"dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
-		TimeSpan? span = DateTime.Now - lastDate;
+		TimeSpan? span = DateTime.UtcNow - lastDate;
 
 		return span.Value.TotalSeconds;
 	}
@@ -121,8 +142,7 @@ public class LifesHUDManager : MonoBehaviour
 
 	protected void gotALife()
 	{
-		Debug.Log ("Gano una vida");
-		//UserDataManager.instance.giveLifeToPlayer ();
+		UserDataManager.instance.giveLifeToPlayer ();
 
 		if (UserDataManager.instance.playerLifes == UserDataManager.instance.maximumLifes) 
 		{
@@ -152,14 +172,9 @@ public class LifesHUDManager : MonoBehaviour
 	{
 		int seconds = (((timeForLifeInMinutes - 1) - currentMinutes) * 60) + (60 - currentSeconds);
 
-		Debug.Log (seconds);
+		DateTime lastDate = DateTime.UtcNow.AddSeconds(-seconds);
 
-		DateTime lastDate = DateTime.UtcNow.AddSeconds(seconds);
-
-		Debug.Log (DateTime.UtcNow.ToString("dd-MM-yyyy HH:mm:ss"));
-		Debug.Log (lastDate.ToString("dd-MM-yyyy HH:mm:ss"));
-
-		//UserDataManager.instance.lifeTimerDate = lastDate.ToString ("dd-MM-yyyy HH:mm:ss");
+		UserDataManager.instance.lifeTimerDate = lastDate.ToString ("dd-MM-yyyy HH:mm:ss");
 	}
 
 	protected string numberToTimeFormat(int number)

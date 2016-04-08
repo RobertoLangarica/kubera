@@ -6,40 +6,49 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour 
 {
-	public AudioClip lineCreatedAudio;
-	public AudioClip piecePositionedAudio;
-	public AudioClip buttonAudio;
-	public AudioClip wonAudio;
-	public AudioClip loseAudio;
+	public enum ESOUND_EFFECTS
+	{
+		LINE_CREATED,
+		PIECE_POSITIONATED,
+		BUTTON,
+		WON,
+		LOSE
+	}
 
-	public List<AudioClip> mainThemes;
+	public AudioClip lineCreatedEffect;
+	public AudioClip piecePositionedEffect;
+	public AudioClip buttonEffect;
+	public AudioClip wonEffect;
+	public AudioClip loseEffect;
+
+	public List<AudioClip> musicList;
 
 	public AudioSource audioSource;
 
-	[HideInInspector]public bool soundEffects;
+	[HideInInspector]public bool soundEffectsActive;
 
 	//TODO: Audio source no tiene contexto de mainAudio
 	//TODO: La diferencia tecnica que veo es Play vs PlayOneShot, puede usarse Audio y FX o Music y Audio...
-	protected bool _mainAudio;
+	protected bool _musicActive;
 	protected int currentMainThemeIndex;
 
 	[HideInInspector]
-	public bool mainAudio
+	public bool musicActive
 	{
 		get{
-			return _mainAudio;
+			return _musicActive;
 		}
 
 		set{
-			_mainAudio = value;
+			_musicActive = value;
 
-			if(_mainAudio == true)
+			if(_musicActive == true)
 			{
-				PlayMainAudio();
+				PlayCurrentMusic();
 			}
 			else
 			{
-				PauseMainAudio();
+				PauseCurrentMusic();
 			}
 		}
 	}
@@ -47,92 +56,79 @@ public class AudioManager : MonoBehaviour
 
 	void Start()
 	{
-		soundEffects = UserDataManager.instance.soundEffectsSetting;
-		mainAudio = UserDataManager.instance.musicSetting;
+		soundEffectsActive = UserDataManager.instance.soundEffectsSetting;
+		musicActive = UserDataManager.instance.musicSetting;
 
 		OnLevelWasLoaded();
 	}
 
-	//TODO: Hay que optar por la simplesa en los nombres OnLevelLoaded hace la misma chamba
 	void OnLevelWasLoaded()
 	{
+		PauseCurrentMusic();
 		switch(SceneManager.GetActiveScene().name)
 		{
 		case("Game"):
-			PauseMainAudio();
 			currentMainThemeIndex = 0;
-			PlayMainAudio();
 			break;
 		}
+		PlayCurrentMusic();
 	}
 
-	//TODO: Nombre??
-	public bool PlayLeLineCreatedAudio()
+	public bool PlaySoundEffect(ESOUND_EFFECTS effect)
 	{
-		if(lineCreatedAudio != null && soundEffects)
+		AudioClip clip = null;
+
+		switch (effect) 
 		{
-			audioSource.PlayOneShot(lineCreatedAudio);
+		case(ESOUND_EFFECTS.LINE_CREATED):
+			clip = lineCreatedEffect;
+			break;
+		case(ESOUND_EFFECTS.PIECE_POSITIONATED):
+			clip = piecePositionedEffect;
+			break;
+		case(ESOUND_EFFECTS.BUTTON):
+			clip = buttonEffect;
+			break;
+		case(ESOUND_EFFECTS.WON):
+			clip = wonEffect;
+			break;
+		case(ESOUND_EFFECTS.LOSE):
+			clip = loseEffect;
+			break;
 		}
-		//Sound was not assigned
+
+		if (clip != null) 
+		{
+			return PlayAudioClipOneShot (clip);
+		}
+
 		return false;
 	}
 
-	public bool PlayPiecePositionedAudio()
+	public bool PlayAudioClipOneShot(AudioClip clip)
 	{
-		if(piecePositionedAudio != null && soundEffects)
+		if (soundEffectsActive) 
 		{
-			audioSource.PlayOneShot(piecePositionedAudio);
+			audioSource.PlayOneShot (clip);
+			return true;
 		}
-		//Sound was not assigned
 		return false;
 	}
 
-	public bool PlayLoseAudio()
+	public bool PauseCurrentMusic()
 	{
-		if(loseAudio != null && soundEffects)
-		{
-			audioSource.PlayOneShot(loseAudio);
-		}
-		//Sound was not assigned
-		return false;
-	}
-
-	public bool PlayWonAudio()
-	{
-		if(wonAudio != null && soundEffects)
-		{
-			audioSource.PlayOneShot(wonAudio);
-		}
-		//Sound was not assigned
-		return false;
-	}
-
-	public bool PlayButtonAudio()
-	{
-		if(buttonAudio != null && soundEffects)
-		{
-			audioSource.PlayOneShot(buttonAudio);
-		}
-		//Sound was not assigned
-		return false;
-	}
-
-	//TODO un nombre que no denote la existencia de mas de uno
-	public bool PauseMainAudio()
-	{
-		if(mainThemes[currentMainThemeIndex] != null)
+		if(musicList[currentMainThemeIndex] != null)
 		{
 			audioSource.Stop();
 		}
 		return false;
 	}
 
-	//TODO un nombre que no denote la existencia de mas de uno
-	public bool PlayMainAudio()
+	public bool PlayCurrentMusic()
 	{
-		if(mainThemes[currentMainThemeIndex] != null && mainAudio)
+		if(musicList[currentMainThemeIndex] != null && musicActive)
 		{
-			audioSource.clip = mainThemes[currentMainThemeIndex];
+			audioSource.clip = musicList[currentMainThemeIndex];
 			audioSource.Play();
 		}
 		return false;

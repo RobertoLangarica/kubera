@@ -270,13 +270,19 @@ public class UserDataManager
 
 	public void giveLifeToPlayer(int amount = 1)
 	{
-		//TODO: pLayerLifes es un getter/setter que escribe en PlayerPrefs
-		//Hay que reducir esos llamados truncando el valor antes de grabarlo
-		playerLifes += amount;
+		int totalLifes = playerLifes + amount;
 
-		if (playerLifes > maximumLifes) 
+		if (totalLifes > maximumLifes) 
 		{
 			playerLifes = maximumLifes;
+		} 
+		else if (totalLifes < 0) 
+		{
+			playerLifes = 0;
+		}
+		else 
+		{
+			playerLifes = totalLifes;
 		}
 	}
 }
