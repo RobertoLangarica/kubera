@@ -19,7 +19,7 @@ public class PopUpManager : MonoBehaviour {
 		}
 	}
 
-	public void activatePowerUp(string popUpName)
+	public void activatePopUp(string popUpName)
 	{
 		PopUpBase popup = getPopupByName(popUpName);
 

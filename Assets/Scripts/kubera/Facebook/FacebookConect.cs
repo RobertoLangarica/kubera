@@ -2,16 +2,20 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class FacebookConectMessage : MonoBehaviour {
+public class FacebookConect : MonoBehaviour {
 
 	public Button conect;
-	public Text textInfo;
 
 	protected FBLog fbLog;
 
 	public void Awake()
 	{
 		fbLog = FindObjectOfType<FBLog> ();
+
+		if(fbLog == null)
+		{
+			fbLog =  gameObject.AddComponent<FBLog> ();
+		}
 	}
 
 	public void conectFacebook()

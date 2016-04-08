@@ -18,6 +18,7 @@ public class FBLog : MonoBehaviour {
 
 	public void InitCallback()
 	{
+		onLoginComplete += foo;
 		Debug.Log("InitCallback");
 
 		// App Launch events should be logged on app launch & app resume
@@ -34,6 +35,8 @@ public class FBLog : MonoBehaviour {
 			onLoginComplete (false);
 		}
 	}
+
+	protected void foo(bool foo){}
 
 	private void OnLoginComplete()
 	{

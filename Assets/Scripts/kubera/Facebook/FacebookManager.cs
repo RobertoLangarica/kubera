@@ -73,8 +73,9 @@ public class FacebookManager : MonoBehaviour
 			if(!facebookConectMessageCreated)
 			{
 				//crear FacebookConectMessage
+				print ("creando mensaje para conectar");
 				conectFacebook = Instantiate (FacebookConectMessage);
-				conectFacebook.transform.SetParent (panelMessages);
+				conectFacebook.transform.SetParent (panelMessages,false);
 				facebookConectMessageCreated = true;
 			}
 		}

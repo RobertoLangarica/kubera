@@ -401,6 +401,11 @@ namespace LevelBuilder
 			abcSelector.sincronizeDataWithCSV (defaultLetters);
 		}
 
+		public void OnResetABCSelector2()
+		{
+			abcSelector.sincronizeDataWithCSV (defaultLetters);
+		}
+
 		public void OnEreaseABCSelector()
 		{
 			abcSelector.createEmptyData();
