@@ -414,7 +414,7 @@ public class HUDManager : MonoBehaviour
 
 	public void activatePopUp(string popUpName)
 	{
-		popUpManager.activatePowerUp (popUpName);
+		popUpManager.activatePopUp (popUpName);
 		modal.SetActive (true);
 	}
 

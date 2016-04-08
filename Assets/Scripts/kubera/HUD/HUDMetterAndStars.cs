@@ -5,6 +5,7 @@ public class HUDMetterAndStars : MonoBehaviour
 {
 	public Image pointsMeter;
 	public Image[] Stars;
+	public Image[] Lines;
 
 	[HideInInspector]
 	public float[] scoreToReachStar;
@@ -13,12 +14,17 @@ public class HUDMetterAndStars : MonoBehaviour
 	bool star2Reached;
 	bool star3Reached;
 
+	void Start()
+	{
+		pointsMeter.rectTransform.anchorMax = new Vector3 (0, 1, 0);//pointsMeter.rectTransform.rect.width;
+	}
+
 	/**
 	 * setea el medidor de puntos
 	 **/
 	public void setMeterPoints(int points)
 	{
-		pointsMeter.fillAmount = (float) points / scoreToReachStar [2];
+		pointsMeter.rectTransform.anchorMax = new Vector3 ((float) points / scoreToReachStar [2],1,0);
 		actualizeStars (points);
 	}
 
@@ -38,8 +44,8 @@ public class HUDMetterAndStars : MonoBehaviour
 	{
 		float pointMetterwidth = pointsMeter.rectTransform.rect.width;
 
-		Stars[0].rectTransform.anchoredPosition = new Vector3(scoreToReachStar[0] / scoreToReachStar [2] * pointMetterwidth, 0);
-		Stars[1].rectTransform.anchoredPosition = new Vector3(scoreToReachStar[1] / scoreToReachStar [2] * pointMetterwidth, 0);
+		Lines[0].rectTransform.anchoredPosition = new Vector3(scoreToReachStar[0] / scoreToReachStar [2] * pointMetterwidth, 0);
+		Lines[1].rectTransform.anchoredPosition = new Vector3(scoreToReachStar[1] / scoreToReachStar [2] * pointMetterwidth, 0);
 		Stars [2].rectTransform.anchoredPosition =  new Vector2(pointMetterwidth,0);
 	}
 
