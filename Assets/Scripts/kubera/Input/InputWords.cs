@@ -20,6 +20,25 @@ public class InputWords : MonoBehaviour
 	public float letterSpeed = 0.5f;
 	public bool allowInput = true;
 	protected bool canDeleteLetter = true;
+	protected bool drag = false;
+	public Vector3 offsetPositionOverFinger = new Vector3(0,0.5f,0);
+	float offset = 0;
+
+	protected Vector3 firstPosition;
+
+	protected Vector2 objectSize;
+
+	void Start()
+	{
+		onDragFinish += foo;
+		onDragUpdate += foo;
+		onDragStart += foo;
+		onTap += foo;
+		onTapToDelete += foo;
+
+	}
+	public void foo(GameObject go){}
+
 
 	void OnDrag(DragGesture gesture) 
 	{
@@ -31,7 +50,6 @@ public class InputWords : MonoBehaviour
 
 		lastTimeDraggedFrame = Time.frameCount;
 
-
 		switch(gesture.Phase)
 		{
 		case (ContinuousGesturePhase.Started):
@@ -40,10 +58,15 @@ public class InputWords : MonoBehaviour
 				{
 					return;
 				}
+				offset = letter.transform.position.y;
+
 				canDeleteLetter = false;
-				letter = gesture.Raycast.Hit2D.transform.gameObject;
+				//letter = gesture.Raycast.Hit2D.transform.gameObject;
+				offset += objectSize.y;
 
 				onDragStart(letter);
+				print ("S");
+				drag = true;
 			}	
 			break;
 
@@ -53,7 +76,8 @@ public class InputWords : MonoBehaviour
 				{return;}
 					
 				Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-				tempV3.y = letter.transform.position.y;
+
+				tempV3.y = offset;
 				tempV3.z = letter.transform.position.z;
 				moveTo(letter,tempV3,letterSpeed);
 
@@ -67,17 +91,70 @@ public class InputWords : MonoBehaviour
 				{
 					return;
 				}
-					
-				onDragFinish(letter);
+				//letter.transform.position = firstPosition;
+				//onDragFinish(letter);
+				//DOTween.Kill ("InputW_Dragging");
 
-				letter = null;
+				//letter.transform.position = new Vector3 (letter.transform.position.x, 0, 0);	
 
-				DOTween.Kill ("InputW_Dragging");
-				canDeleteLetter = true;
+				//letter = null;
+
+				//canDeleteLetter = true;
 
 			}
 			break;
 		}
+	}
+
+	void OnFingerDown(FingerDownEvent gesture)
+	{
+		if (allowInput && gesture.Raycast.Hit2D) 
+		{
+			letter = gesture.Raycast.Hit2D.transform.gameObject;
+			firstPosition = letter.transform.position;
+
+			if(objectSize.x == 0 && gesture.Raycast.GameObject.GetComponent<BoxCollider2D>())
+			{				
+				objectSize = gesture.Raycast.GameObject.GetComponent<BoxCollider2D> ().bounds.size;
+				print (objectSize);
+			}
+		}
+	}
+
+	void OnLongPress(LongPressGesture gesture)
+	{
+		if(allowInput && gesture.Raycast.Hit2D)
+		{
+			Vector3 tempV3 = new Vector3 ();
+
+			offset = letter.transform.position.y;
+			offset += objectSize.y;
+
+			tempV3.x = letter.transform.position.x;
+			tempV3.y = offset;//offset;
+			tempV3.z = letter.transform.position.z;
+
+			letter.transform.position = tempV3;
+
+			//moveTo(letter,tempV3,letterSpeed);
+			canDeleteLetter = false;
+			onDragStart(letter);
+
+		}
+	}
+
+	void OnFingerUp(FingerUpEvent gesture)
+	{
+		if (allowInput && canDeleteLetter == false&& gesture.Raycast.Hit2D != null) 
+		{
+			onDragFinish(letter);
+
+			letter.transform.position = new Vector3(letter.transform.position.x,firstPosition.y,0);
+			DOTween.Kill ("InputW_Dragging");
+			letter = null;
+		}
+		canDeleteLetter = true;
+		drag = false;
 	}
 
 	void OnLetterGridTap(TapGesture gesture)
