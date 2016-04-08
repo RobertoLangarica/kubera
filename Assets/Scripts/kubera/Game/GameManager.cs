@@ -405,53 +405,13 @@ public class GameManager : MonoBehaviour
 
 	public void linesCreated(int totalLines)
 	{
-		//TODO: Estos puntajes que sean configurables en el editor
 		if(totalLines > 0)
 		{
 			audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LINE_CREATED);
 		}
 
-
 		addPoints(linesCreatedPoints[totalLines-1]);
 		UserDataManager.instance.playerGems += linesCreatedGems[totalLines-1];
-
-		switch(totalLines)
-		{
-		case(1):
-			{
-				addPoints(5);
-			}
-			break;
-		case(2):
-			{
-				addPoints(15);
-			}
-			break;
-		case(3):
-			{
-				addPoints(30);
-				UserDataManager.instance.playerGems += 1;
-			}
-			break;
-		case(4):
-			{
-				addPoints(50);
-				UserDataManager.instance.playerGems += 2;
-			}
-			break;
-		case(5):
-			{
-				addPoints(75);
-				UserDataManager.instance.playerGems += 4;
-			}
-			break;
-		case(6):
-			{
-				addPoints(105);
-				UserDataManager.instance.playerGems += 6;
-			}
-			break;
-		}
 	}
 
 	protected void initHudValues()
