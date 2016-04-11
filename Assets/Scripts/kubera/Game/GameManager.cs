@@ -47,7 +47,6 @@ public class GameManager : MonoBehaviour
 	private PowerUpManager	powerupManager;
 	private PieceManager 	pieceManager;
 	private HUDManager 	 	hudManager;
-	private AudioManager 	audioManager;
 	private InputPiece 		inputPiece;
 	private InputWords 		inputWords;
 	private GoalManager		goalManager;
@@ -62,7 +61,6 @@ public class GameManager : MonoBehaviour
 		cellManager		= FindObjectOfType<CellsManager>();
 		powerupManager	= FindObjectOfType<PowerUpManager>();
 		hudManager		= FindObjectOfType<HUDManager> ();
-		audioManager	= FindObjectOfType<AudioManager>();
 		pieceManager	= FindObjectOfType<PieceManager>();
 		inputPiece		= FindObjectOfType<InputPiece>();
 		inputWords		= FindObjectOfType<InputWords>();
@@ -83,10 +81,6 @@ public class GameManager : MonoBehaviour
 
 		wordManager.onWordChange += refreshCurrentWordScoreOnHUD;
 
-		//TODO: Leer las gemas de algun lado
-		UserDataManager.instance.playerGems = 300;
-
-		//TODO: el release no manda un random
 		if(PersistentData.instance.currentLevel == null)
 		{
 			configureLevel(PersistentData.instance.getRandomLevel());
@@ -109,16 +103,6 @@ public class GameManager : MonoBehaviour
 		initGoalsFromLevel (level);
 
 		remainingMoves = totalMoves = currentLevel.moves;
-
-		//TODO: Si no es parte de la configuracion del nivel no debe ir aqui
-		cellToLetter = new List<Cell> ();//Esta inicializacion va aqui?
-
-
-		allowGameInput(false);//TODO: el input no es configuracion de nivel
-
-		//Las cosas de la hud que no se icializen con info del nivel hay que quitarlas
-		//Si hay que mandar a la hud a un estado default antes de iniciar el juego hay que hacerlo en alguna llamada explicita
-
 	
 		cellManager.resizeGrid(sizeGridX,sizeGridY);
 
@@ -241,7 +225,7 @@ public class GameManager : MonoBehaviour
 		if (cellManager.canPositionateAll (piece.squares)) 
 		{
 			putPiecesOnGrid (piece);
-			audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.PIECE_POSITIONATED);
+			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.PIECE_POSITIONATED);
 			List<List<Cell>> cells = cellManager.getCompletedVerticalAndHorizontalLines ();
 			//Puntos por las lineas creadas
 			linesCreated (cells.Count);
@@ -407,11 +391,11 @@ public class GameManager : MonoBehaviour
 	{
 		if(totalLines > 0)
 		{
-			audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LINE_CREATED);
+			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LINE_CREATED);
 		}
 
 		addPoints(linesCreatedPoints[totalLines]);
-		UserDataManager.instance.playerGems += linesCreatedGems[totalLines];
+		UserDataManager.instance.giveGemsToPlayer(linesCreatedGems[totalLines]);
 	}
 
 	protected void initHudValues()
@@ -443,7 +427,7 @@ public class GameManager : MonoBehaviour
 		if(!wordManager.checkIfAWordIsPossible(gridCharacters) || remainingMoves <= 0)
 		{
 			Debug.Log ("Perdio de verdad");
-			audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);
+			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);
 		}
 	}
 
@@ -494,7 +478,7 @@ public class GameManager : MonoBehaviour
 
 	protected void winBonification()
 	{
-		audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.WON);
+		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.WON);
 
 		allowGameInput (false);
 
@@ -735,6 +719,7 @@ public class GameManager : MonoBehaviour
 	public void tryToActivatePowerup(int powerupTypeIndex)
 	{
 		//TODO: Chequeo con transaction manager para ver que onda con las gemas
+		//TODO: Checar lo del precio de los powerUps
 		allowGameInput(false);
 
 		powerupManager.activatePowerUp((PowerupBase.EType) powerupTypeIndex);
@@ -753,14 +738,14 @@ public class GameManager : MonoBehaviour
 
 	public void activateSettings(bool activate)
 	{
-		audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
+		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 
 		hudManager.activateSettings (activate);
 	}
 
 	public void closeObjectivePopUp()
 	{
-		audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
+		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		//hudManager.hideGoalPopUp ();
 		allowGameInput ();
 	}
@@ -781,42 +766,10 @@ public class GameManager : MonoBehaviour
 		allowGameInput (false);
 		hudManager.activatePopUp (popUpName);
 	}
-		
-	public void activateMusic()
-	{
-		audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
-
-		if(audioManager.musicActive)
-		{
-			audioManager.musicActive = false;
-			UserDataManager.instance.isMusicActive = false;
-		}
-		else
-		{
-			audioManager.musicActive = true;
-			UserDataManager.instance.isMusicActive = true;
-		}
-	}
-
-	public void activateSounds()
-	{
-		audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
-		
-		if(audioManager.soundEffectsActive)
-		{
-			audioManager.soundEffectsActive = false;
-			UserDataManager.instance.isSoundEffectsActive = false;
-		}
-		else
-		{
-			audioManager.soundEffectsActive = true;
-			UserDataManager.instance.isSoundEffectsActive = true;
-		}
-	}
 
 	public void quitGame()
 	{
-		audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
+		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		activatePopUp ("exitGame");
 	}
 
