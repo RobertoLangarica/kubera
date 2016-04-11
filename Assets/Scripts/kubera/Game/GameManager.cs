@@ -410,8 +410,8 @@ public class GameManager : MonoBehaviour
 			audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LINE_CREATED);
 		}
 
-		addPoints(linesCreatedPoints[totalLines-1]);
-		UserDataManager.instance.playerGems += linesCreatedGems[totalLines-1];
+		addPoints(linesCreatedPoints[totalLines]);
+		UserDataManager.instance.playerGems += linesCreatedGems[totalLines];
 	}
 
 	protected void initHudValues()
