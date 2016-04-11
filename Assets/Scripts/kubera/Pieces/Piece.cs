@@ -40,6 +40,8 @@ public class Piece : MonoBehaviour
 	public Color COLOR_NONE				= new Color(1, 1, 1);
 
 	public GameObject[] squares;
+	public SpriteRenderer[] squaresSprite;
+	public SpriteRenderer[] shadows;
 	public EType starterType;
 
 	protected EType _currentType;
@@ -62,10 +64,14 @@ public class Piece : MonoBehaviour
 	void Start () 
 	{
 		squares = new GameObject[transform.childCount];
+		squaresSprite = new SpriteRenderer[transform.childCount];
+		shadows = new SpriteRenderer[transform.childCount];
 
 		for(int i=0; i<transform.childCount; i++)
 		{
 			squares [i] = transform.GetChild (i).gameObject;
+			squaresSprite [i] = squares [i].GetComponent<SpriteRenderer> ();
+			shadows [i] = squares [i].transform.GetChild(0).GetComponent<SpriteRenderer> ();
 		}
 	
 		currentType = starterType;
@@ -79,11 +85,15 @@ public class Piece : MonoBehaviour
 		}
 
 		Color color = getColorOfType(currentColor);
-			
-		foreach(GameObject piece in squares)
+
+		foreach(SpriteRenderer piece in squaresSprite)
+		{
+			piece.color = color;
+		}
+		/*foreach(GameObject piece in squares)
 		{
 			piece.GetComponent<SpriteRenderer>().color = color;
-		}
+		}*/
 	}
 
 	public Color getColorOfType(EColor color)
