@@ -241,8 +241,6 @@ public class GameManager : MonoBehaviour
 	{
 		if (cellManager.canPositionateAll (piece.squares)) 
 		{
-			//animationDropPiece (piece);
-
 			putPiecesOnGrid (piece);
 
 			audioManager.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.PIECE_POSITIONATED);
@@ -285,7 +283,7 @@ public class GameManager : MonoBehaviour
 		}*/
 	}
 
-	IEnumerator animationDropPiece(Transform t,Piece piece = null)
+	IEnumerator animationDropPiece(Transform t)
 	{
 		yield return new WaitForSeconds (piecePositionedDelay*1.05f);
 
@@ -293,14 +291,7 @@ public class GameManager : MonoBehaviour
 
 		t.DOScale (t.localScale * 0.8f, 0.1f).OnComplete (()=>
 			{
-				t.DOScale(size,.1f).OnComplete(()=>
-					{
-						if(piece != null)
-						{
-							/*putPiecesOnGrid (piece);
-							StartCoroutine(afterPiecePositioned(piece));*/
-						}
-					});
+				t.DOScale(size,.1f);
 			});
 	}
 
