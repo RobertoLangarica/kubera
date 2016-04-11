@@ -65,7 +65,6 @@ public class InputWords : MonoBehaviour
 				offset += objectSize.y;
 
 				onDragStart(letter);
-				print ("S");
 				drag = true;
 			}	
 			break;

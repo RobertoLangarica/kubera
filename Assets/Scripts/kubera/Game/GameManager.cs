@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
 		powerupManager.OnPowerupCompleted = OnPowerupCompleted;
 
 		inputPiece.OnDrop += OnPieceDropped;
+		inputPiece.OnSelected += setShadow;
 
 		goalManager.OnGoalAchieved += OnLevelGoalAchieved;
 		goalManager.OnLetterFound += hudManager.destroyLetterFound;
@@ -217,7 +218,7 @@ public class GameManager : MonoBehaviour
 			inputPiece.returnSelectedToInitialState (0.1f);
 		}
 
-		inputPiece.reset();
+		//inputPiece.reset();
 	}
 
 	public bool tryToDropOnGrid(Piece piece)
@@ -231,6 +232,7 @@ public class GameManager : MonoBehaviour
 			linesCreated (cells.Count);
 			convertLinesToLetters(cells);
 			StartCoroutine(afterPiecePositioned(piece));
+
 			actualizeHUDInfo ();
 			return true;
 		}
@@ -256,6 +258,8 @@ public class GameManager : MonoBehaviour
 				-cells[i].GetComponent<SpriteRenderer> ().bounds.extents.y, 0));
 			
 			piece.squares[i].transform.DOMove (piecePosition, piecePositionedDelay);
+
+			StartCoroutine (animationDropPiece (piece.squares [i].transform));
 		}
 
 		//Solo se posicionan los cuadros de la pieza
@@ -263,6 +267,18 @@ public class GameManager : MonoBehaviour
 		{
 			piece.squares[i].transform.SetParent(piece.transform.parent);
 		}*/
+	}
+
+	IEnumerator animationDropPiece(Transform t)
+	{
+		yield return new WaitForSeconds (piecePositionedDelay*1.05f);
+
+		Vector3 size = t.localScale;
+
+		t.DOScale (t.localScale * 0.8f, 0.1f).OnComplete (()=>
+			{
+				t.DOScale(size,.1f);
+			});
 	}
 
 	IEnumerator afterPiecePositioned(Piece piece)
@@ -283,6 +299,13 @@ public class GameManager : MonoBehaviour
 			onUsersAction(piece.squares.Length);
 			showFloatingPointsAt (piece.transform.position, piece.squares.Length);
 		}
+
+		setShadow (piece, false);
+
+		List<List<Cell>> cells = cellManager.getCompletedVerticalAndHorizontalLines ();
+		//Puntos por las lineas creadas
+		linesCreated (cells.Count);
+		convertLinesToLetters(cells);
 
 		Destroy(piece.gameObject);
 	}
@@ -306,6 +329,18 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	//TODO: checar nombre
+	private void setShadow (GameObject obj, bool showing = true)
+	{
+		Piece piece = obj.GetComponent<Piece> ();
+		setShadow (piece, showing);
+	}
+
+	private void setShadow (Piece piece, bool showing = true)
+	{
+		pieceManager.showingShadow (piece, showing);
 	}
 
 	//TODO: checar el nombre de la funcion
@@ -395,6 +430,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		addPoints(linesCreatedPoints[totalLines]);
+		//TODO: hacer lineas no debe de dar gemas
 		UserDataManager.instance.giveGemsToPlayer(linesCreatedGems[totalLines]);
 	}
 
@@ -678,26 +714,13 @@ public class GameManager : MonoBehaviour
 	protected bool tryToUseGems(int gemsPrice = 0)
 	{
 		//TODO: TransactionManager?
-		if(checkIfExistEnoughGems(gemsPrice))
+		if(TransactionManager.instance.tryToUseGems(gemsPrice))
 		{
-			UserDataManager.instance.playerGems -= gemsPrice;
 			hudManager.actualizeGems(UserDataManager.instance.playerGems);
 
 			return true;
 		}
 		Debug.Log("Fondos insuficientes");
-		return false;
-	}
-
-	/**
-	 * checa si existen suficientes gemas para hacer la transaccion
-	 **/
-	public bool checkIfExistEnoughGems(int gemsPrice)
-	{
-		if(UserDataManager.instance.playerGems >= gemsPrice)
-		{
-			return true;
-		}
 		return false;
 	}
 

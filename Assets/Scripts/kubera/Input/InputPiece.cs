@@ -12,6 +12,9 @@ public class InputPiece : MonoBehaviour
 	public DOnDragNotification OnDrop;
 	public DOnDragNotification OnDragStart;
 
+	public delegate void DOnSelectedNotification(GameObject target,bool selected);
+	public DOnSelectedNotification OnSelected;
+
 	protected bool somethingDragged = false;
 	protected int lastTimeDraggedFrame;
 	protected GameObject currentSelected = null;
@@ -50,8 +53,10 @@ public class InputPiece : MonoBehaviour
 					posOverFinger += offsetPositionOverFinger;
 					moveTo(currentSelected,posOverFinger,pieceSpeed);
 
+					DOTween.Kill("Input_SelectedScale",false);
 
 					currentSelected.transform.DOScale(selectedScale,.1f).SetId("Input_SelectedScale");
+					OnSelected (currentSelected,true);
 				}
 			}	
 			break;
@@ -122,8 +127,14 @@ public class InputPiece : MonoBehaviour
 			posOverFinger.z = -1;
 			posOverFinger += offsetPositionOverFinger;
 
-			moveTo(currentSelected,posOverFinger,pieceSpeed);
-			currentSelected.transform.DOScale(selectedScale,.1f).SetId("Input_SelectedScale");
+			currentSelected.transform.DOScale (currentSelected.transform.localScale * 0.8f, 0.1f).OnComplete (()=>
+				{
+					moveTo(currentSelected,posOverFinger,pieceSpeed); 
+					currentSelected.transform.DOScale(selectedScale,.1f).SetId("Input_SelectedScale").OnComplete(()=>{/*Debug.LogError("S");*/});
+					OnSelected (currentSelected,true);
+				});
+
+
 			isLongPressed = true;
 		}
 	}
@@ -135,6 +146,7 @@ public class InputPiece : MonoBehaviour
 			returnSelectedToInitialState(0.1f);
 			reset();
 		}
+
 		isLongPressed = false;
 
 		somethingDragged = false;
@@ -159,6 +171,7 @@ public class InputPiece : MonoBehaviour
 			currentSelected.transform.DOScale (piece.initialPieceScale, .1f).SetId("Input_ScalePosition");
 			currentSelected.transform.DOMove (piece.positionOnScene, .1f).SetId("Input_InitialPosition").OnComplete(()=>{allowInput = true; });
 		}
+		OnSelected (currentSelected,false);
 	}
 
 	public void reset()
