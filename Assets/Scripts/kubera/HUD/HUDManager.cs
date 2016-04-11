@@ -277,7 +277,7 @@ public class HUDManager : MonoBehaviour
 	{
 		Vector3 finish = scorePosition;
 		Text poolText = scorePool.getFreeText();
-		ScoreText bText = poolText.gameObject.GetComponent<ScoreText>();
+		FloatingText bText = poolText.gameObject.GetComponent<FloatingText>();
 
 		poolText.text = score.ToString();
 
