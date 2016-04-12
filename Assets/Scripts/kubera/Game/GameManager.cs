@@ -327,7 +327,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 	}
-
+	//TODO: checar funcionamiento
 	IEnumerator startAnimationFlipPiece(GameObject obj, Cell cell)
 	{
 		AnimatedSprite animSprite = obj.GetComponent < AnimatedSprite> ();

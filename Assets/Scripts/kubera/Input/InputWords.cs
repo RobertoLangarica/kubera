@@ -144,7 +144,7 @@ public class InputWords : MonoBehaviour
 
 	void OnFingerUp(FingerUpEvent gesture)
 	{
-		if (allowInput && canDeleteLetter == false && gesture.Raycast.Hit2D.collider != null) 
+		if (allowInput && canDeleteLetter == false && letter) 
 		{
 			onDragFinish(letter);
 
