@@ -41,8 +41,6 @@ public class WordManager : MonoBehaviour
 	private int siblingIndexAfterDrag;
 	private Vector2[] lettersPositions;
 
-	private float letterPrefabHeight = 0;
-
 	[HideInInspector]public Vector3 deleteBtnPosition;
 
 	protected GridLayoutGroup wordContainerLayout;
@@ -298,9 +296,6 @@ public class WordManager : MonoBehaviour
 
 	private void lettersCountChange ()
 	{
-		//wordContainerLayout
-		Transform container = letterContainer.transform;
-
 		float data;
 		float widthGrid = wordContainerRectTransform.rect.width;
 		float childCount = letterContainer.transform.childCount; 

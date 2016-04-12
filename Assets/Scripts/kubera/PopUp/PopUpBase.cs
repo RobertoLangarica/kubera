@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PopUpBase : MonoBehaviour {
 
-	public string name;
+	new public string name;
 	public GameObject popUp;
 
 	public delegate void DPopUpNotification(string action ="");

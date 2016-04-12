@@ -26,7 +26,7 @@ public class RandomPool<T>
 		return temporal;
 	}
 
-	protected List<T> randomizeList<T>(List<T> target)
+	protected List<T> randomizeList(List<T> target)
 	{
 		List<T> result = new List<T>();
 		List<T> temporal = new List<T>(target);

@@ -233,7 +233,6 @@ public class GameManager : MonoBehaviour
 			convertLinesToLetters(cells);
 			StartCoroutine(afterPiecePositioned(piece));
 
-			actualizeHUDInfo ();
 			return true;
 		}
 
@@ -310,6 +309,8 @@ public class GameManager : MonoBehaviour
 		convertLinesToLetters(cells);
 
 		Destroy(piece.gameObject);
+
+		actualizeHUDInfo ();
 	}
 
 	private void convertLinesToLetters(List<List<Cell>> cells)
