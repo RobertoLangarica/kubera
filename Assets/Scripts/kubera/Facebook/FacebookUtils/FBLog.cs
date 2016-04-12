@@ -74,8 +74,9 @@ public class FBLog : MonoBehaviour {
 	void OnApplicationPause (bool pauseStatus)
 	{
 		#if UNITY_EDITOR
-		return;
+			return;
 		#endif
+
 		#if UNITY_ANDROID || UNITY_IOS
 		// Check the pauseStatus to see if we are in the foreground
 		// or background

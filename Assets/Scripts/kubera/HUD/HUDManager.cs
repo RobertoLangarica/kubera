@@ -172,10 +172,12 @@ public class HUDManager : MonoBehaviour
 			textId = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_POINT_ID);
 			goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
 				new string[2]{ "{{pointsMade}}", "{{pointsNeed}}" }, new string[2]{ "0", (Convert.ToInt32 (parameters)).ToString () });
-			/*textToReplace = "{{goalPoints}}";
-			replacement = "0 / " + (Convert.ToInt32 (parameters)).ToString ();*/
+			/*TODO: Que todos usen break y aqui return 
+			 * puede provocar errores si se modifica algo despues del switch
+			 * y quien lo modifica desconoce este return.
+			 * */
+			//TODO: Que este case quede homogeneo y no necesite un return
 			return;
-			break;
 		case GoalManager.WORDS_COUNT:
 			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_ID;
 			textToReplace = "{{goalWords}}";
