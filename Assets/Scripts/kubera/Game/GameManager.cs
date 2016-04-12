@@ -518,6 +518,8 @@ public class GameManager : MonoBehaviour
 
 		allowGameInput (false);
 
+		cellToLetter = new List<Cell> ();
+
 		//Se limpian las letras 
 		wordManager.removeAllLetters();
 
