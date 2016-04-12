@@ -221,7 +221,7 @@ public class UserDataManager
 		{
 			return PlayerPrefs.GetInt("playerGems");
 		}		
-		set
+		protected set
 		{
 			PlayerPrefs.SetInt("playerGems",value);
 		}
@@ -267,6 +267,18 @@ public class UserDataManager
 		{
 			playerLifes = totalLifes;
 		}
+	}
+
+	public void giveGemsToPlayer(int amount = 1)
+	{
+		int totalLifes = playerGems + amount;
+			
+		playerGems = totalLifes;
+	}
+
+	public void setGems(int newAmount)
+	{
+		playerGems = newAmount;
 	}
 }
 
