@@ -252,6 +252,8 @@ public class GameManager : MonoBehaviour
 
 			piece.squares [i].GetComponent<Collider2D> ().enabled = true;
 
+			piece.squares [i].GetComponent<SpriteRenderer> ().sortingOrder = -1;
+
 			piecePosition =  cells[i].transform.position + (new Vector3 (cells[i].GetComponent<SpriteRenderer> ().bounds.extents.x,
 				-cells[i].GetComponent<SpriteRenderer> ().bounds.extents.y, 0));
 			
@@ -312,16 +314,17 @@ public class GameManager : MonoBehaviour
 
 	private void convertLinesToLetters(List<List<Cell>> cells)
 	{
+		float count = 0;
+
 		for (int i = 0; i < cells.Count; i++) 
 		{
 			for(int j=0; j<cells[i].Count; j++)
 			{
 				if (cells [i] [j].contentType != Piece.EType.LETTER) 
 				{
+					count++;
 
-
-
-					StartCoroutine( startAnimationFlipPiece (cells [i] [j].content,cells[i][j]));
+					StartCoroutine( startAnimationFlipPiece (cells [i] [j].content,cells[i][j],0.2f*count));
 					/*cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
 					letter.gameObject.transform.DOMove (cellPosition, 0);
 					gridCharacters.Add(letter);*/
@@ -329,9 +332,12 @@ public class GameManager : MonoBehaviour
 			}
 		}
 	}
+
 	//TODO: checar funcionamiento
-	IEnumerator startAnimationFlipPiece(GameObject obj, Cell cell)
+	IEnumerator startAnimationFlipPiece(GameObject obj, Cell cell,float delayTime)
 	{
+		yield return new WaitForSeconds (delayTime);
+
 		AnimatedSprite animSprite = obj.GetComponent < AnimatedSprite> ();
 		if(animSprite)
 		{
@@ -340,18 +346,23 @@ public class GameManager : MonoBehaviour
 			animSprite.enabled = true;
 			animSprite.autoUpdate = true;
 
-			yield return new WaitForSeconds (0.25f );
+			yield return new WaitUntil (()=>animSprite.sequences[0].currentFrame >= 14);
+			cell.content.GetComponent<SpriteRenderer> ().color = Color.white;
 
-			animSprite.enabled = false;
-			animSprite.autoUpdate = false;
-			yield return new WaitForSeconds (0.01f );
+			yield return new WaitUntil (()=>animSprite.sequences[0].currentFrame >= 23);
 
 			Vector3 cellPosition =  cell .transform.position + (new Vector3 (cell.GetComponent<SpriteRenderer> ().bounds.extents.x,
 				-cell .GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
 
+			letter.gameObject.transform.position = cellPosition;
+
+			yield return new WaitUntil (()=> animSprite.sequences[0].currentFrame >= 26);
+
+			animSprite.enabled = false;
+			animSprite.autoUpdate = false;
+
 			cellManager.occupyAndConfigureCell (cell, letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
-					letter.gameObject.transform.DOMove (cellPosition, 0);
-					gridCharacters.Add(letter);
+			gridCharacters.Add(letter);
 		}
 	}
 
@@ -829,8 +840,6 @@ public class GameManager : MonoBehaviour
 			hudManager.actualizePointsOnWinCondition (goalManager.pointsCount.ToString(),goalManager.goalPoints.ToString());
 			break;
 		case GoalManager.WORDS_COUNT:
-			Debug.Log (goalManager.wordsCount.ToString ());
-			Debug.Log (goalManager.goalWordsCount.ToString());
 			hudManager.actualizeWordsMadeOnWinCondition (goalManager.wordsCount.ToString(),goalManager.goalWordsCount.ToString());
 			break;
 		}
