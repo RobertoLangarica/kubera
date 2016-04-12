@@ -92,14 +92,14 @@ public class MultiLanguageTextManager
 
 		return resultText;
 	}
-
-
-	//TODO: Comentarios obsoletos
+		
 	/**
-	 * * @params textToReplace{string[]}: Una lista de Textos o simbolos que se quieren remplazar. Usualmente para agregar texto dinamico.
+	 * @params target{string}: La cadena en la que se buscará el texto de textToReplace para poder sustituirlo
+	 * 
+	 * @params textToReplace{string[]}: Una lista de Textos o simbolos que se quieren remplazar. Usualmente para agregar texto dinamico.
 	 * 									Este sera ignorado si no se pasa tambien valor a newText que sea del mismo tamaño.
 	 * 
-	 * @params newText{string[]}: Una lista de Textos o simbolos que reemplazaran los textos de textToReplace. Usualmente para agregar texto dinamico.
+	 * @params replacements{string[]}: Una lista de Textos o simbolos que reemplazaran los textos de textToReplace. Usualmente para agregar texto dinamico.
 	 * 									Este sera ignorado si no se pasa tambien valor a textToReplace que sea del mismo tamaño.
 	 **/ 
 	public string multipleReplace(string target,string[] textToReplace,string[] replacements)
@@ -108,19 +108,17 @@ public class MultiLanguageTextManager
 
 		if(textToReplace != null && replacements != null)
 		{
-			if(textToReplace.Length == replacements.Length)
+			if (textToReplace.Length == replacements.Length) 
 			{
-				for(int i = 0;i < replacements.Length;i++)
+				for (int i = 0; i < replacements.Length; i++) 
 				{
-					resultText = resultText.Replace(textToReplace[i],replacements[i]);
+					resultText = resultText.Replace (textToReplace [i], replacements [i]);
 				}
-			}
-			//DONE: mandar logError
-			else
+			} 
+			else 
 			{
-				//TODO: estos mensajes son para alguein que no sabe nada del codigo que manda llamar
-				//TODO: Los arreglos son obviamente diferentes y el error aqui es un tema de diferentes largos
-				Debug.LogWarning("EL TEXTO NO SE MODIFICO, los arreglos para modificar el texto son diferentes");
+				//DONE: Cambie el mensaje a ingles y agrege que el error es por diferentes lengths
+				Debug.LogWarning("THE TEXT HAS NOT CHANGED, because the two list has diferent legths");
 			}
 		}
 

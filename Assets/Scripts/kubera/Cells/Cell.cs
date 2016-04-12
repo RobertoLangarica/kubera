@@ -100,8 +100,6 @@ public class Cell : MonoBehaviour
 			available = false;
 			content = null;
 
-			//TODO: Que onda con estos cambios temporales
-			//Cambio Temporal
 			GetComponent<SpriteRenderer>().enabled = false;
 		}
 		if((type & 0x8) == 0x8)
@@ -110,18 +108,6 @@ public class Cell : MonoBehaviour
 			contentType = Piece.EType.LETTER_OBSTACLE;
 			occupied = true;
 			available = false;
-		}
-
-		if((type & 0x10) == 0x10)
-		{
-			contentType = Piece.EType.NONE;
-			occupied = true;
-			available = false;
-			content = null;
-
-			//TODO: Que onda con estos cambios temporales
-			//Cambio Temporal
-			GetComponent<SpriteRenderer>().color = Color.cyan;
 		}
 
 		if((type & 0x20) == 0x20)

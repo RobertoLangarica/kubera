@@ -40,7 +40,7 @@ public class HUDManager : MonoBehaviour
 
 	public GameObject modal;
 
-	protected ScoreTextPool scorePool;
+	protected FloatingTextPool scorePool;
 	protected List<GameObject> lettersToFound = new List<GameObject>();
 	protected HUDMetterAndStars hudStars;
 	protected PopUpManager popUpManager;
@@ -51,7 +51,7 @@ public class HUDManager : MonoBehaviour
 	void Start () 
 	{
 		hudStars = FindObjectOfType<HUDMetterAndStars> ();
-		scorePool = FindObjectOfType<ScoreTextPool>();
+		scorePool = FindObjectOfType<FloatingTextPool>();
 		popUpManager = FindObjectOfType <PopUpManager> ();
 
 		popUpManager.OnPopUpCompleted += popUpCompleted;
@@ -172,10 +172,12 @@ public class HUDManager : MonoBehaviour
 			textId = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_POINT_ID);
 			goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
 				new string[2]{ "{{pointsMade}}", "{{pointsNeed}}" }, new string[2]{ "0", (Convert.ToInt32 (parameters)).ToString () });
-			/*textToReplace = "{{goalPoints}}";
-			replacement = "0 / " + (Convert.ToInt32 (parameters)).ToString ();*/
+			/*TODO: Que todos usen break y aqui return 
+			 * puede provocar errores si se modifica algo despues del switch
+			 * y quien lo modifica desconoce este return.
+			 * */
+			//TODO: Que este case quede homogeneo y no necesite un return
 			return;
-			break;
 		case GoalManager.WORDS_COUNT:
 			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_ID;
 			textToReplace = "{{goalWords}}";
@@ -277,7 +279,7 @@ public class HUDManager : MonoBehaviour
 	{
 		Vector3 finish = scorePosition;
 		Text poolText = scorePool.getFreeText();
-		ScoreText bText = poolText.gameObject.GetComponent<ScoreText>();
+		FloatingText bText = poolText.gameObject.GetComponent<FloatingText>();
 
 		poolText.text = score.ToString();
 

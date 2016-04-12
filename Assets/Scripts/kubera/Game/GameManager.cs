@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
 	public Transform gridLettersContainer;
 	public float gridLettersSizeMultiplier = 0.9f;
 
+	public List<int> linesCreatedPoints = new List<int> ();
+	public List<int> linesCreatedGems = new List<int> ();
+
 	protected int sizeGridX = 8;
 	protected int sizeGridY = 8;
 
@@ -44,7 +47,6 @@ public class GameManager : MonoBehaviour
 	private PowerUpManager	powerupManager;
 	private PieceManager 	pieceManager;
 	private HUDManager 	 	hudManager;
-	private AudioManager 	audioManager;
 	private InputPiece 		inputPiece;
 	private InputWords 		inputWords;
 	private GoalManager		goalManager;
@@ -59,7 +61,6 @@ public class GameManager : MonoBehaviour
 		cellManager		= FindObjectOfType<CellsManager>();
 		powerupManager	= FindObjectOfType<PowerUpManager>();
 		hudManager		= FindObjectOfType<HUDManager> ();
-		audioManager	= FindObjectOfType<AudioManager>();
 		pieceManager	= FindObjectOfType<PieceManager>();
 		inputPiece		= FindObjectOfType<InputPiece>();
 		inputWords		= FindObjectOfType<InputWords>();
@@ -72,18 +73,15 @@ public class GameManager : MonoBehaviour
 		powerupManager.OnPowerupCompleted = OnPowerupCompleted;
 
 		inputPiece.OnDrop += OnPieceDropped;
+		inputPiece.OnSelected += setShadow;
 
 		goalManager.OnGoalAchieved += OnLevelGoalAchieved;
 		goalManager.OnLetterFound += hudManager.destroyLetterFound;
 
 		hudManager.OnPopUpCompleted += popUpCompleted;
 
-		wordManager.onWordChange += actualizeWordPoints;
+		wordManager.onWordChange += refreshCurrentWordScoreOnHUD;
 
-		//TODO: Leer las gemas de algun lado
-		UserDataManager.instance.playerGems = 300;
-
-		//TODO: el release no manda un random
 		if(PersistentData.instance.currentLevel == null)
 		{
 			configureLevel(PersistentData.instance.getRandomLevel());
@@ -106,32 +104,22 @@ public class GameManager : MonoBehaviour
 		initGoalsFromLevel (level);
 
 		remainingMoves = totalMoves = currentLevel.moves;
-
-		//TODO: Si no es parte de la configuracion del nivel no debe ir aqui
-		cellToLetter = new List<Cell> ();//Esta inicializacion va aqui?
-
-
-		allowGameInput(false);//TODO: el input no es configuracion de nivel
-
-		//Las cosas de la hud que no se icializen con info del nivel hay que quitarlas
-		//Si hay que mandar a la hud a un estado default antes de iniciar el juego hay que hacerlo en alguna llamada explicita
-
 	
 		cellManager.resizeGrid(sizeGridX,sizeGridY);
 
-		//LetterSize       //Depende del tamaño de las celdas que se aclcula en el resizeGrid
+		//LetterSize       
+		//Depende del tamaño de las celdas que se aclcula en el resizeGrid
 		Vector3 cellSizeReference = new Vector3(cellManager.cellSize,cellManager.cellSize,1);
 		Vector3 lettersizeDelta = (Camera.main.WorldToScreenPoint(cellSizeReference) -Camera.main.WorldToScreenPoint(Vector3.zero)) * gridLettersSizeMultiplier;
 		lettersizeDelta.x = Mathf.Abs(lettersizeDelta.x);
 		lettersizeDelta.y = Mathf.Abs(lettersizeDelta.y);
-		Debug.Log (cellManager.cellSize);
 		wordManager.gridLettersSizeDelta = new Vector2(lettersizeDelta.x , lettersizeDelta.y);
 
 		populateGridFromLevel(level);
 
 		initHudValues();
 		actualizeHUDInfo();
-		actualizeWordPoints ();
+		refreshCurrentWordScoreOnHUD (wordManager.wordPoints);
 	}
 
 	protected void initLettersFromLevel(Level level)
@@ -238,13 +226,10 @@ public class GameManager : MonoBehaviour
 		if (cellManager.canPositionateAll (piece.squares)) 
 		{
 			putPiecesOnGrid (piece);
-			audioManager.PlayPiecePositionedAudio();
-			List<List<Cell>> cells = cellManager.getCompletedVerticalAndHorizontalLines ();
-			//Puntos por las lineas creadas
-			linesCreated (cells.Count);
-			convertLinesToLetters(cells);
+			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.PIECE_POSITIONATED);
+
 			StartCoroutine(afterPiecePositioned(piece));
-			actualizeHUDInfo ();
+
 			return true;
 		}
 
@@ -265,10 +250,14 @@ public class GameManager : MonoBehaviour
 			//y manipularlo individualmente
 			piece.squares[i].transform.SetParent(piece.transform.parent);
 
+			piece.squares [i].GetComponent<Collider2D> ().enabled = true;
+
 			piecePosition =  cells[i].transform.position + (new Vector3 (cells[i].GetComponent<SpriteRenderer> ().bounds.extents.x,
 				-cells[i].GetComponent<SpriteRenderer> ().bounds.extents.y, 0));
 			
 			piece.squares[i].transform.DOMove (piecePosition, piecePositionedDelay);
+
+			StartCoroutine (animationDropPiece (piece.squares [i].transform));
 		}
 
 		//Solo se posicionan los cuadros de la pieza
@@ -276,6 +265,18 @@ public class GameManager : MonoBehaviour
 		{
 			piece.squares[i].transform.SetParent(piece.transform.parent);
 		}*/
+	}
+
+	IEnumerator animationDropPiece(Transform t)
+	{
+		yield return new WaitForSeconds (piecePositionedDelay*1.05f);
+
+		Vector3 size = t.localScale;
+
+		t.DOScale (t.localScale * 0.8f, 0.1f).OnComplete (()=>
+			{
+				t.DOScale(size,.1f);
+			});
 	}
 
 	IEnumerator afterPiecePositioned(Piece piece)
@@ -294,10 +295,19 @@ public class GameManager : MonoBehaviour
 
 			//Damos puntos por cada cuadro en la pieza
 			onUsersAction(piece.squares.Length);
-			showScoreTextOnHud (piece.transform.position, piece.squares.Length);
+			showFloatingPointsAt (piece.transform.position, piece.squares.Length);
 		}
 
+		setShadow (piece, false);
+
+		List<List<Cell>> cells = cellManager.getCompletedVerticalAndHorizontalLines ();
+		//Puntos por las lineas creadas
+		linesCreated (cells.Count);
+		convertLinesToLetters(cells);
+
 		Destroy(piece.gameObject);
+
+		actualizeHUDInfo ();
 	}
 
 	private void convertLinesToLetters(List<List<Cell>> cells)
@@ -308,17 +318,54 @@ public class GameManager : MonoBehaviour
 			{
 				if (cells [i] [j].contentType != Piece.EType.LETTER) 
 				{
-					Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
 
-					Vector3 cellPosition =  cells [i] [j].transform.position + (new Vector3 (cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x,
-						-cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
 
-					cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
+
+					StartCoroutine( startAnimationFlipPiece (cells [i] [j].content,cells[i][j]));
+					/*cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
 					letter.gameObject.transform.DOMove (cellPosition, 0);
-					gridCharacters.Add(letter);
+					gridCharacters.Add(letter);*/
 				}
 			}
 		}
+	}
+	//TODO: checar funcionamiento
+	IEnumerator startAnimationFlipPiece(GameObject obj, Cell cell)
+	{
+		AnimatedSprite animSprite = obj.GetComponent < AnimatedSprite> ();
+		if(animSprite)
+		{
+			Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
+
+			animSprite.enabled = true;
+			animSprite.autoUpdate = true;
+
+			yield return new WaitForSeconds (0.25f );
+
+			animSprite.enabled = false;
+			animSprite.autoUpdate = false;
+			yield return new WaitForSeconds (0.01f );
+
+			Vector3 cellPosition =  cell .transform.position + (new Vector3 (cell.GetComponent<SpriteRenderer> ().bounds.extents.x,
+				-cell .GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
+
+			cellManager.occupyAndConfigureCell (cell, letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
+					letter.gameObject.transform.DOMove (cellPosition, 0);
+					gridCharacters.Add(letter);
+		}
+	}
+
+
+	//TODO: checar nombre
+	private void setShadow (GameObject obj, bool showing = true)
+	{
+		Piece piece = obj.GetComponent<Piece> ();
+		setShadow (piece, showing);
+	}
+
+	private void setShadow (Piece piece, bool showing = true)
+	{
+		pieceManager.showingShadow (piece, showing);
 	}
 
 	//TODO: checar el nombre de la funcion
@@ -402,49 +449,14 @@ public class GameManager : MonoBehaviour
 
 	public void linesCreated(int totalLines)
 	{
-		//TODO: Estos puntajes que sean configurables en el editor
 		if(totalLines > 0)
 		{
-			audioManager.PlayLeLineCreatedAudio();
+			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LINE_CREATED);
 		}
 
-		switch(totalLines)
-		{
-		case(1):
-			{
-				addPoints(5);
-			}
-			break;
-		case(2):
-			{
-				addPoints(15);
-			}
-			break;
-		case(3):
-			{
-				addPoints(30);
-				UserDataManager.instance.playerGems += 1;
-			}
-			break;
-		case(4):
-			{
-				addPoints(50);
-				UserDataManager.instance.playerGems += 2;
-			}
-			break;
-		case(5):
-			{
-				addPoints(75);
-				UserDataManager.instance.playerGems += 4;
-			}
-			break;
-		case(6):
-			{
-				addPoints(105);
-				UserDataManager.instance.playerGems += 6;
-			}
-			break;
-		}
+		addPoints(linesCreatedPoints[totalLines]);
+		//TODO: hacer lineas no debe de dar gemas
+		UserDataManager.instance.giveGemsToPlayer(linesCreatedGems[totalLines]);
 	}
 
 	protected void initHudValues()
@@ -476,7 +488,7 @@ public class GameManager : MonoBehaviour
 		if(!wordManager.checkIfAWordIsPossible(gridCharacters) || remainingMoves <= 0)
 		{
 			Debug.Log ("Perdio de verdad");
-			audioManager.PlayLoseAudio();
+			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);
 		}
 	}
 
@@ -527,17 +539,19 @@ public class GameManager : MonoBehaviour
 
 	protected void winBonification()
 	{
-		audioManager.PlayWonAudio();
+		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.WON);
 
 		allowGameInput (false);
+
+		cellToLetter = new List<Cell> ();
 
 		//Se limpian las letras 
 		wordManager.removeAllLetters();
 
-		winBonificationActions();
+		expendMovement();
 	}
 
-	protected void winBonificationActions()
+	protected void expendMovement()
 	{
 		if(cellManager.getAllEmptyCells().Length > 0 &&remainingMoves > 0 )
 		{
@@ -561,7 +575,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 		actualizeHUDInfo ();
-		StartCoroutine (continueWinBonificationActions ());
+		StartCoroutine (continueExpendingMovements ());
 	}
 
 	protected void addMovementPoint()
@@ -584,15 +598,15 @@ public class GameManager : MonoBehaviour
 
 		cellManager.occupyAndConfigureCell(cell,go,Piece.EType.PIECE,Piece.EColor.AQUA,true);
 
-		showScoreTextOnHud (cell.transform.position, 1);
+		showFloatingPointsAt (cell.transform.position, 1);
 		substractMoves (1);
 		addPoints(1);
 
 	}
-	IEnumerator continueWinBonificationActions()
+	IEnumerator continueExpendingMovements()
 	{
 		yield return new WaitForSeconds (.2f);
-		winBonificationActions ();
+		expendMovement ();
 	}
 
 	IEnumerator addWinLetterAfterActions()
@@ -606,19 +620,6 @@ public class GameManager : MonoBehaviour
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
-			StartCoroutine (addWinLetterAfterActions ());
-		}
-		else
-		{
-			useBombs();
-		}
-	}
-
-	protected void useBombs()
-	{
-		if(cellManager.existType(Piece.EType.PIECE))
-		{
-			cellToLetter.AddRange (cellManager.getCellsOfSameType (Piece.EType.PIECE));
 			StartCoroutine (addWinLetterAfterActions ());
 		}
 		else
@@ -657,7 +658,7 @@ public class GameManager : MonoBehaviour
 			amount = vocalPoints;
 		}
 
-		showScoreTextOnHud (cell.transform.position, amount);
+		showFloatingPointsAt (cell.transform.position, amount);
 		addPoints(amount);
 
 		actualizeHUDInfo ();
@@ -668,30 +669,28 @@ public class GameManager : MonoBehaviour
 		inputPiece.allowInput = allowInput;
 		inputWords.allowInput = allowInput;
 	}
-
-	//TODO: Hay que tener congruencia en los nombres y si ya se usa unlock entonces las variables
-	// que sean unlock o viceversa que se use unblock
+		
 	protected void unlockPowerUp()
 	{
 		if(currentLevel.unblockBlock)
 		{
-			UserDataManager.instance.onePiecePowerUpAvailable = true;
+			UserDataManager.instance.isOnePiecePowerUpUnlocked = true;
 		}
 		if(currentLevel.unblockBomb)
 		{
-			UserDataManager.instance.destroyNeighborsPowerUpAvailable = true;
+			UserDataManager.instance.isDestroyNeighborsPowerUpUnlocked = true;
 		}
 		if(currentLevel.unblockDestroy)
 		{
-			UserDataManager.instance.destroyPowerUpAvailable = true;
+			UserDataManager.instance.isDestroyPowerUpUnlocked = true;
 		}
 		if(currentLevel.unblockRotate)
 		{
-			UserDataManager.instance.rotatePowerUpAvailable = true;
+			UserDataManager.instance.isRotatePowerUpUnlocked = true;
 		}
 		if(currentLevel.unblockWildcard)
 		{
-			UserDataManager.instance.wildCardPowerUpAvailable = true;
+			UserDataManager.instance.isWildCardPowerUpUnlocked = true;
 		}
 	}
 
@@ -729,26 +728,13 @@ public class GameManager : MonoBehaviour
 	protected bool tryToUseGems(int gemsPrice = 0)
 	{
 		//TODO: TransactionManager?
-		if(checkIfExistEnoughGems(gemsPrice))
+		if(TransactionManager.instance.tryToUseGems(gemsPrice))
 		{
-			UserDataManager.instance.playerGems -= gemsPrice;
 			hudManager.actualizeGems(UserDataManager.instance.playerGems);
 
 			return true;
 		}
 		Debug.Log("Fondos insuficientes");
-		return false;
-	}
-
-	/**
-	 * checa si existen suficientes gemas para hacer la transaccion
-	 **/
-	public bool checkIfExistEnoughGems(int gemsPrice)
-	{
-		if(UserDataManager.instance.playerGems >= gemsPrice)
-		{
-			return true;
-		}
 		return false;
 	}
 
@@ -770,6 +756,7 @@ public class GameManager : MonoBehaviour
 	public void tryToActivatePowerup(int powerupTypeIndex)
 	{
 		//TODO: Chequeo con transaction manager para ver que onda con las gemas
+		//TODO: Checar lo del precio de los powerUps
 		allowGameInput(false);
 
 		powerupManager.activatePowerUp((PowerupBase.EType) powerupTypeIndex);
@@ -788,14 +775,14 @@ public class GameManager : MonoBehaviour
 
 	public void activateSettings(bool activate)
 	{
-		audioManager.PlayButtonAudio();
+		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 
 		hudManager.activateSettings (activate);
 	}
 
 	public void closeObjectivePopUp()
 	{
-		audioManager.PlayButtonAudio();
+		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		//hudManager.hideGoalPopUp ();
 		allowGameInput ();
 	}
@@ -816,42 +803,10 @@ public class GameManager : MonoBehaviour
 		allowGameInput (false);
 		hudManager.activatePopUp (popUpName);
 	}
-		
-	public void activateMusic()
-	{
-		audioManager.PlayButtonAudio();
-
-		if(audioManager.mainAudio)
-		{
-			audioManager.mainAudio = false;
-			UserDataManager.instance.musicSetting = false;
-		}
-		else
-		{
-			audioManager.mainAudio = true;
-			UserDataManager.instance.musicSetting = true;
-		}
-	}
-
-	public void activateSounds()
-	{
-		audioManager.PlayButtonAudio();
-		
-		if(audioManager.soundEffects)
-		{
-			audioManager.soundEffects = false;
-			UserDataManager.instance.soundEffectsSetting = false;
-		}
-		else
-		{
-			audioManager.soundEffects = true;
-			UserDataManager.instance.soundEffectsSetting = true;
-		}
-	}
 
 	public void quitGame()
 	{
-		audioManager.PlayButtonAudio();
+		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		activatePopUp ("exitGame");
 	}
 
@@ -874,20 +829,19 @@ public class GameManager : MonoBehaviour
 			hudManager.actualizePointsOnWinCondition (goalManager.pointsCount.ToString(),goalManager.goalPoints.ToString());
 			break;
 		case GoalManager.WORDS_COUNT:
-			hudManager.actualizeWordsMadeOnWinCondition (goalManager.wordsCount.ToString(),goalManager.goalWords.ToString());
+			Debug.Log (goalManager.wordsCount.ToString ());
+			Debug.Log (goalManager.goalWordsCount.ToString());
+			hudManager.actualizeWordsMadeOnWinCondition (goalManager.wordsCount.ToString(),goalManager.goalWordsCount.ToString());
 			break;
 		}
 	}
 
-	//TODO: Esto no actualiza los puntos de una palabra, actualiza los puntos que muestra la hud por una palabra
-	//TODO: Hagan mas granular a esta funcion y que reciba los puntos y no los lea
-	protected void actualizeWordPoints()
+	protected void refreshCurrentWordScoreOnHUD(int wordScore)
 	{
-		hudManager.setLettersPoints (wordManager.wordPoints);
+		hudManager.setLettersPoints (wordScore);
 	}
 
-	//TODO: showFloatingPointsAt
-	protected void showScoreTextOnHud(Vector3 pos,int amount)
+	protected void showFloatingPointsAt(Vector3 pos,int amount)
 	{
 		hudManager.showScoreTextAt(pos,amount);
 	}

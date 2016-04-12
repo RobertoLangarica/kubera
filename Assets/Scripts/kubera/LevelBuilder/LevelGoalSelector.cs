@@ -18,8 +18,8 @@ namespace LevelBuilder
 		public Toggle toggleLetters;
 		public Toggle toggleWordsCount;
 		public Toggle toggleWord;
-		public Toggle toggleSin;
-		public Toggle toggleAnt;
+		public Toggle synonymToogle;
+		public Toggle antonymToggle;
 		public Toggle toggleObstacles;
 
 		public Selectable selectablePoints;
@@ -119,7 +119,7 @@ namespace LevelBuilder
 
 		public void toMuchWords()
 		{
-			if(!isAntOrSinOn() && wordPopup.getInputValues().Length > 1)
+			if(!isItAntonymOrSynonym() && wordPopup.getInputValues().Length > 1)
 			{
 				wordPopup.showWarning("Se tomara el primero de la lista.");
 			}
@@ -131,26 +131,26 @@ namespace LevelBuilder
 
 		public void onToggleAnt()
 		{
-			if(toggleAnt.isOn)
+			if(antonymToggle.isOn)
 			{
-				toggleSin.isOn = false;
+				synonymToogle.isOn = false;
 			}
 			toMuchWords ();
 		}
 
 		public void onToggleSin()
 		{
-			if(toggleSin.isOn)
+			if(synonymToogle.isOn)
+				
 			{
-				toggleAnt.isOn = false;
+				antonymToggle.isOn = false;
 			}
 			toMuchWords ();
 		}
 
-		//TODO: Ant?? Sin??: Nombre mas explicito (y es Synonym no Si...)
-		public bool isAntOrSinOn()
+		public bool isItAntonymOrSynonym()
 		{
-			if(toggleAnt.isOn || toggleSin.isOn)
+			if(antonymToggle.isOn || synonymToogle.isOn)
 			{
 				return true;
 			}
@@ -276,7 +276,7 @@ namespace LevelBuilder
 				activateDeleteWord ();
 				toMuchWords ();
 				toggleWord.isOn = true;
-				toggleSin.isOn = true;
+				synonymToogle.isOn = true;
 			}
 			else if(goal[0] == "ant")
 			{
@@ -286,7 +286,7 @@ namespace LevelBuilder
 				activateDeleteWord ();
 				toMuchWords ();
 				toggleWord.isOn = true;
-				toggleAnt.isOn = true;
+				antonymToggle.isOn = true;
 			}
 		}
 			
@@ -310,7 +310,7 @@ namespace LevelBuilder
 			{
 				result = "obstacles-";
 			}
-			else if(toggleSin.isOn)
+			else if(synonymToogle.isOn)
 			{
 				//Primero se guarda con acentos luego sin acentos
 				string[] words = wordPopup.getInputValues();
@@ -329,7 +329,7 @@ namespace LevelBuilder
 					}
 				}
 			}			
-			else if(toggleAnt.isOn)
+			else if(antonymToggle.isOn)
 			{
 				//Primero se guarda con acentos luego sin acentos
 				string[] words = wordPopup.getInputValues();

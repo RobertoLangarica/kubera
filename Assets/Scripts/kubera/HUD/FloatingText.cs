@@ -6,7 +6,7 @@ using System.Collections;
  * Clase creada para evitar el uso de Tweens en los textos del dinero que dan los edificios.
  * Este texto es manipulado por una pool que verifica el estado de los textos para saber si esta disponible o no.
  */
-public class ScoreText : MonoBehaviour 
+public class FloatingText : MonoBehaviour 
 {
 	/*Valores de tuneo para el movimiento del texto*/
 	public float steps;
@@ -14,7 +14,7 @@ public class ScoreText : MonoBehaviour
 
 	public Text myText;
 
-	protected ScoreTextPool pool;
+	protected FloatingTextPool pool;
 
 	protected float lerpPercent;
 	protected bool animate = false;
@@ -33,7 +33,7 @@ public class ScoreText : MonoBehaviour
 
 		if(pool == null)
 		{
-			pool = FindObjectOfType<ScoreTextPool>();
+			pool = FindObjectOfType<FloatingTextPool>();
 		}
 	}
 
@@ -55,7 +55,7 @@ public class ScoreText : MonoBehaviour
 			{
 				lerpPercent = 0;
 				animate = false;
-				pool.deativateText(myText);
+				pool.releaseText(myText);
 			}
 		}
 	}
@@ -71,7 +71,7 @@ public class ScoreText : MonoBehaviour
 	{
 		if(pool == null)
 		{
-			pool = FindObjectOfType<ScoreTextPool>();
+			pool = FindObjectOfType<FloatingTextPool>();
 		}
 
 		transform.position = start;
