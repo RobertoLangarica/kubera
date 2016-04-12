@@ -27,6 +27,7 @@ public class InputWords : MonoBehaviour
 	//Foa animation on grid
 	public float scalePercent = 0.8f;
 	public float animationTime = 0.5f;
+	protected bool allowAnimation = true;
 
 	protected Vector3 firstPosition;
 
@@ -162,14 +163,17 @@ public class InputWords : MonoBehaviour
 
 	void OnLetterGridTap(TapGesture gesture)
 	{
-		if(allowInput && gesture.Raycast.Hit2D)
+		if(allowInput && gesture.Raycast.Hit2D && allowAnimation)
 		{		
 			GameObject target = gesture.Raycast.Hit2D.transform.gameObject;
 			Vector3 finalScale = target.transform.localScale;
 
+			allowAnimation = false;
+
 			target.transform.localScale = finalScale * scalePercent;
 
-			target.transform.DOScale (finalScale, animationTime);
+			DOTween.Kill ("InputW_Grid_Scale_Selection");
+			target.transform.DOScale (finalScale, animationTime).SetId ("InputW_Grid_Scale_Selection").OnComplete(()=>{allowAnimation = true;});
 
 			if (target.layer == LayerMask.NameToLayer ("LetterOnGrid")) 
 			{

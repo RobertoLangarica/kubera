@@ -359,7 +359,10 @@ public class WordManager : MonoBehaviour
 	IEnumerator resizeBoxCollider(GameObject letter)
 	{
 		yield return new WaitForSeconds (0.1f);
-		letter.GetComponent<BoxCollider2D> ().size = letter.GetComponent<Image> ().rectTransform.rect.size;
+		if (letter != null) 
+		{
+			letter.GetComponent<BoxCollider2D> ().size = letter.GetComponent<Image> ().rectTransform.rect.size;
+		}
 	}
 
 	public void setMaxAllowedLetters(int allowedLetters)
