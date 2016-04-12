@@ -829,7 +829,9 @@ public class GameManager : MonoBehaviour
 			hudManager.actualizePointsOnWinCondition (goalManager.pointsCount.ToString(),goalManager.goalPoints.ToString());
 			break;
 		case GoalManager.WORDS_COUNT:
-			hudManager.actualizeWordsMadeOnWinCondition (goalManager.wordsCount.ToString(),goalManager.goalWords.ToString());
+			Debug.Log (goalManager.wordsCount.ToString ());
+			Debug.Log (goalManager.goalWordsCount.ToString());
+			hudManager.actualizeWordsMadeOnWinCondition (goalManager.wordsCount.ToString(),goalManager.goalWordsCount.ToString());
 			break;
 		}
 	}
