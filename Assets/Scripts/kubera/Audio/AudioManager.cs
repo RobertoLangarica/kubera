@@ -25,6 +25,8 @@ public class AudioManager : MonoBehaviour
 
 	public AudioSource audioSource;
 
+	public static AudioManager instance = null;
+
 	[HideInInspector]public bool soundEffectsActive;
 
 	protected bool _musicActive;
@@ -51,6 +53,10 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
+	void Awake()
+	{
+		instance = this;
+	}
 
 	void Start()
 	{

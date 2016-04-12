@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using ABC;
+using DG.Tweening;
 
 public class WordManager : MonoBehaviour 
 {
@@ -53,6 +54,10 @@ public class WordManager : MonoBehaviour
 
 	public delegate void DOnWordChange(int wordValue);
 	public DOnWordChange onWordChange;
+
+	//Letter to take the position for the selectedAnim
+	protected Letter lastSelected;
+	public float selectAnimationTime = 1;
 
 	void Start()
 	{
@@ -217,6 +222,7 @@ public class WordManager : MonoBehaviour
 			clone.type = gridReference.type;
 			clone.letterReference = gridReference;
 			clone.updateTexts();
+			lastSelected = gridReference;
 
 			gridReference.letterReference = clone;
 
@@ -233,7 +239,7 @@ public class WordManager : MonoBehaviour
 	{
 		letter.select();
 		saveAndValidateLetter(letter);
-		addLetterToContainer(letter);
+		selectLetterAnimation(letter);
 
 		onLettersChange();
 	}
@@ -318,6 +324,26 @@ public class WordManager : MonoBehaviour
 		updateLetterBoxCollider (letter.gameObject);
 
 		lettersCountChange ();
+	}
+
+	private void selectLetterAnimation(Letter letter)
+	{
+		letter.transform.SetParent(letterContainer.transform.parent,false);
+		letter.transform.position = lastSelected.transform.position;
+
+		GridLayoutGroup grid = letterContainer.GetComponent<GridLayoutGroup> ();
+		letter.GetComponent<RectTransform> ().sizeDelta = grid.cellSize;
+
+		Vector3 finalPos = letterContainer.transform.position;
+
+		if (letterContainer.transform.childCount > 0) 
+		{
+			finalPos = letterContainer.transform.GetChild (letterContainer.transform.childCount - 1).position;
+			finalPos.x += grid.cellSize.x * 2 * 0.01f;
+		}
+
+		letter.transform.DOMove (finalPos, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letter);});
+
 	}
 
 	private void updateLetterBoxCollider(GameObject letter)
