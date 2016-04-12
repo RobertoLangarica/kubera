@@ -113,11 +113,13 @@ public class PieceManager : MonoBehaviour
 			if(showing)
 			{
 				//print (piece.squaresSprite[i].sortingOrder);
-				piece.shadows [i].sortingOrder = piece.squaresSprite[i].sortingOrder ++;
+				piece.shadows [i].sortingOrder = 0;
+				piece.squaresSprite[i].sortingOrder = 1 ;
 			}
 			else
 			{
-				piece.shadows [i].sortingOrder = piece.squaresSprite[i].sortingOrder --;
+				piece.shadows [i].sortingOrder = -1;
+				piece.squaresSprite[i].sortingOrder = 0;
 			}
 		}
 	}

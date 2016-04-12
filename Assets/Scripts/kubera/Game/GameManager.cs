@@ -218,7 +218,7 @@ public class GameManager : MonoBehaviour
 			inputPiece.returnSelectedToInitialState (0.1f);
 		}
 
-		//inputPiece.reset();
+		inputPiece.reset();
 	}
 
 	public bool tryToDropOnGrid(Piece piece)
@@ -227,10 +227,7 @@ public class GameManager : MonoBehaviour
 		{
 			putPiecesOnGrid (piece);
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.PIECE_POSITIONATED);
-			List<List<Cell>> cells = cellManager.getCompletedVerticalAndHorizontalLines ();
-			//Puntos por las lineas creadas
-			linesCreated (cells.Count);
-			convertLinesToLetters(cells);
+
 			StartCoroutine(afterPiecePositioned(piece));
 
 			return true;
@@ -319,18 +316,43 @@ public class GameManager : MonoBehaviour
 			{
 				if (cells [i] [j].contentType != Piece.EType.LETTER) 
 				{
-					Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
 
-					Vector3 cellPosition =  cells [i] [j].transform.position + (new Vector3 (cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x,
-						-cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
 
-					cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
+
+					StartCoroutine( startAnimationFlipPiece (cells [i] [j].content,cells[i][j]));
+					/*cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
 					letter.gameObject.transform.DOMove (cellPosition, 0);
-					gridCharacters.Add(letter);
+					gridCharacters.Add(letter);*/
 				}
 			}
 		}
 	}
+
+	IEnumerator startAnimationFlipPiece(GameObject obj, Cell cell)
+	{
+		AnimatedSprite animSprite = obj.GetComponent < AnimatedSprite> ();
+		if(animSprite)
+		{
+			Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
+
+			animSprite.enabled = true;
+			animSprite.autoUpdate = true;
+
+			yield return new WaitForSeconds (0.25f );
+
+			animSprite.enabled = false;
+			animSprite.autoUpdate = false;
+			yield return new WaitForSeconds (0.01f );
+
+			Vector3 cellPosition =  cell .transform.position + (new Vector3 (cell.GetComponent<SpriteRenderer> ().bounds.extents.x,
+				-cell .GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
+
+			cellManager.occupyAndConfigureCell (cell, letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
+					letter.gameObject.transform.DOMove (cellPosition, 0);
+					gridCharacters.Add(letter);
+		}
+	}
+
 
 	//TODO: checar nombre
 	private void setShadow (GameObject obj, bool showing = true)

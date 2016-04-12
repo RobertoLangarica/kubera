@@ -7,6 +7,7 @@ public class InputBlockPowerUp : MonoBehaviour
 	Vector3 butonPowerUpBlockPosition;
 
 	public Vector3 offsetPositionOverFinger = new Vector3(0,1.5f,0);
+	public Vector3 initialScale = new Vector3(4,4,4);
 	public float pieceSpeed = 0.3f;
 
 	protected bool somethingDragged = false;
@@ -35,6 +36,7 @@ public class InputBlockPowerUp : MonoBehaviour
 		butonPowerUpBlockPosition = bottonPosition;
 		butonPowerUpBlockPosition.z = 0;
 		currentSelected = blockGO;
+		blockGO.transform.localScale = initialScale;
 		moveTo(currentSelected,butonPowerUpBlockPosition,pieceSpeed);
 		blockGO.name = "Block";
 
