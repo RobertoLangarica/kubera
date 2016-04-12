@@ -254,6 +254,8 @@ public class GameManager : MonoBehaviour
 			//y manipularlo individualmente
 			piece.squares[i].transform.SetParent(piece.transform.parent);
 
+			piece.squares [i].GetComponent<Collider2D> ().enabled = true;
+
 			piecePosition =  cells[i].transform.position + (new Vector3 (cells[i].GetComponent<SpriteRenderer> ().bounds.extents.x,
 				-cells[i].GetComponent<SpriteRenderer> ().bounds.extents.y, 0));
 			
@@ -523,10 +525,10 @@ public class GameManager : MonoBehaviour
 		//Se limpian las letras 
 		wordManager.removeAllLetters();
 
-		winBonificationActions();
+		expendMovement();
 	}
 
-	protected void winBonificationActions()
+	protected void expendMovement()
 	{
 		if(cellManager.getAllEmptyCells().Length > 0 &&remainingMoves > 0 )
 		{
@@ -550,7 +552,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 		actualizeHUDInfo ();
-		StartCoroutine (continueWinBonificationActions ());
+		StartCoroutine (continueExpendingMovements ());
 	}
 
 	protected void addMovementPoint()
@@ -578,10 +580,10 @@ public class GameManager : MonoBehaviour
 		addPoints(1);
 
 	}
-	IEnumerator continueWinBonificationActions()
+	IEnumerator continueExpendingMovements()
 	{
 		yield return new WaitForSeconds (.2f);
-		winBonificationActions ();
+		expendMovement ();
 	}
 
 	IEnumerator addWinLetterAfterActions()
@@ -595,19 +597,6 @@ public class GameManager : MonoBehaviour
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
-			StartCoroutine (addWinLetterAfterActions ());
-		}
-		else
-		{
-			useBombs();
-		}
-	}
-
-	protected void useBombs()
-	{
-		if(cellManager.existType(Piece.EType.PIECE))
-		{
-			cellToLetter.AddRange (cellManager.getCellsOfSameType (Piece.EType.PIECE));
 			StartCoroutine (addWinLetterAfterActions ());
 		}
 		else

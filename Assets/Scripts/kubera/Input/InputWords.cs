@@ -24,6 +24,10 @@ public class InputWords : MonoBehaviour
 	public Vector3 offsetPositionOverFinger = new Vector3(0,0.5f,0);
 	float offset = 0;
 
+	//Foa animation on grid
+	public float scalePercent = 0.8f;
+	public float animationTime = 0.5f;
+
 	protected Vector3 firstPosition;
 
 	protected Vector2 objectSize;
@@ -160,7 +164,17 @@ public class InputWords : MonoBehaviour
 	{
 		if(allowInput && gesture.Raycast.Hit2D)
 		{		
-			onTap(gesture.Raycast.Hit2D.transform.gameObject);
+			GameObject target = gesture.Raycast.Hit2D.transform.gameObject;
+			Vector3 finalScale = target.transform.localScale;
+
+			target.transform.localScale = finalScale * scalePercent;
+
+			target.transform.DOScale (finalScale, animationTime);
+
+			if (target.layer == LayerMask.NameToLayer ("LetterOnGrid")) 
+			{
+				onTap(gesture.Raycast.Hit2D.transform.gameObject);
+			}
 		}
 	}
 
