@@ -218,14 +218,17 @@ public class GameManager : MonoBehaviour
 			inputPiece.returnSelectedToInitialState (0.1f);
 		}
 
-		//inputPiece.reset();
+		inputPiece.reset();
 	}
 
 	public bool tryToDropOnGrid(Piece piece)
 	{
-		if (cellManager.canPositionateAll (piece.squares)) 
+		Debug.Log("Try to position: "+piece.squares.Length);
+		List<Cell> cellsUnderPiece = cellManager.getFreeCellsUnderPiece(piece);
+
+		if (cellsUnderPiece.Count == piece.squares.Length) 
 		{
-			putPiecesOnGrid (piece);
+			putPiecesOnGrid (piece, cellsUnderPiece);
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.PIECE_POSITIONATED);
 			List<List<Cell>> cells = cellManager.getCompletedVerticalAndHorizontalLines ();
 			//Puntos por las lineas creadas
@@ -239,22 +242,20 @@ public class GameManager : MonoBehaviour
 		return false;
 	}
 
-	private void putPiecesOnGrid(Piece piece)
+	private void putPiecesOnGrid(Piece piece, List<Cell> cellsUnderPiece)
 	{
-		List<Cell> cells = new List<Cell> ();
-		cells = cellManager.getCellsUnderPiece (piece);
 		Vector3 piecePosition;
 
-		for(int i=0; i< cells.Count; i++)
+		for(int i=0; i< cellsUnderPiece.Count; i++)
 		{ 
-			cellManager.occupyAndConfigureCell (cells [i], piece.squares [i], piece.currentType,piece.currentColor);
+			cellManager.occupyAndConfigureCell (cellsUnderPiece [i], piece.squares [i], piece.currentType,piece.currentColor);
 
 			//Cada cuadro reeparentado para dejar de usar su contenedor actual
 			//y manipularlo individualmente
 			piece.squares[i].transform.SetParent(piece.transform.parent);
 
-			piecePosition =  cells[i].transform.position + (new Vector3 (cells[i].GetComponent<SpriteRenderer> ().bounds.extents.x,
-				-cells[i].GetComponent<SpriteRenderer> ().bounds.extents.y, 0));
+			piecePosition =  cellsUnderPiece[i].transform.position + (new Vector3 (cellsUnderPiece[i].GetComponent<SpriteRenderer> ().bounds.extents.x,
+				-cellsUnderPiece[i].GetComponent<SpriteRenderer> ().bounds.extents.y, 0));
 			
 			piece.squares[i].transform.DOMove (piecePosition, piecePositionedDelay);
 
@@ -272,12 +273,15 @@ public class GameManager : MonoBehaviour
 	{
 		yield return new WaitForSeconds (piecePositionedDelay*1.05f);
 
-		Vector3 size = t.localScale;
+		if(t != null)
+		{
+			Vector3 size = t.localScale;
 
 		t.DOScale (t.localScale * 0.8f, 0.1f).OnComplete (()=>
 			{
 				t.DOScale(size,.1f);
 			});
+		}
 	}
 
 	IEnumerator afterPiecePositioned(Piece piece)

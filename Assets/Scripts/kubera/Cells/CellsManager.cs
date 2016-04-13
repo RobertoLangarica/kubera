@@ -45,6 +45,8 @@ public class CellsManager : MonoBehaviour
 			float screenHeight = ((topOfScreen.position - bottomOfScreen.position).magnitude)*100;
 			float cellScale = (screenHeight*cellScalePercentage) / cellSize;
 			cellSize = screenHeight * (cellScalePercentage*0.01f);
+			float gap = cellSize * 0.1f;
+			gap = 0;
 
 			for(int i = 0;i < _rows;i++)
 			{
@@ -56,9 +58,9 @@ public class CellsManager : MonoBehaviour
 					cells.Add(cellInstance.GetComponent<Cell>());
 					cellInstance.transform.localScale = new Vector3 (cellScale,cellScale,cellScale);
 					
-					cellInitialPosition.x += cellSize;
+					cellInitialPosition.x += cellSize + gap;
 				}
-				cellInitialPosition.y -= cellSize;
+				cellInitialPosition.y -= cellSize + gap;
 				cellInitialPosition.x = transform.position.x;
 			}
 			return true;
@@ -116,31 +118,45 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @return Celda bajo el punto o nulo si no existe
 	 */
-	public Cell getCellUnderPoint(Vector2 point)
+	public Cell getCellUnderPoint(Vector3 point)
 	{
 		Vector3 cellPos;
 		float cellWidth, cellHeight;
-		SpriteRenderer renderer;
+		SpriteRenderer spriteRenderer;
 
+
+
+		Cell result = null;
+		int i = 0;
 		foreach(Cell cell in cells)
 		{
 			cellPos		= cell.transform.position;
-			renderer	= cell.gameObject.GetComponent<SpriteRenderer>();
-			cellWidth	= renderer.bounds.size.x;
-			cellHeight	= renderer.bounds.size.y;
+			spriteRenderer	= cell.gameObject.GetComponent<SpriteRenderer>();
+			cellWidth	= spriteRenderer.bounds.size.x;
+			cellHeight	= spriteRenderer.bounds.size.y;
+			point.z = spriteRenderer.bounds.center.z;
+
+			/*if(spriteRenderer.bounds.Contains(point))
+			{
+				return cell;
+			}*/
 
 			if(point.x > cellPos.x && point.x < (cellPos.x + cellWidth) &&
 				point.y < cellPos.y && point.y > (cellPos.y - cellHeight))
 			{
-				return cell;
+				if(result == null)
+				{
+					result = cell;
+				}
+				i++;
+				//return cell;
 			}
 		}
-		return null;
-	}
 
-	public Cell getCellUnderPoint(Vector3 point)
-	{
-		return getCellUnderPoint(new Vector2(point.x, point.y));
+
+		Debug.Log("Cells under point: ["+i+"]");
+		return result;
+		return null;
 	}
 
 	/*
@@ -307,14 +323,13 @@ public class CellsManager : MonoBehaviour
 	 */
 	public bool canPositionateAll(GameObject[] objects)
 	{
-		List<Vector3> positions = new List<Vector3>(objects.Length);
-
+		Vector3[] positions = new Vector3[objects.Length];
 		for(int i = 0;i < objects.Length;i++)
 		{
-			positions.Add(objects[i].transform.position);	
+			positions[i] = objects[i].transform.position;
 		}
 
-		return canPositionateAll(positions.ToArray());
+		return canPositionateAll(positions);
 	}
 	
 	/*
@@ -348,15 +363,44 @@ public class CellsManager : MonoBehaviour
 	}
 		
 	/**
-	 * Devuelve las celdas debajo de una pieza
+	 * Devuelve las celdas debajo de una pieza.
+	 * Si se le indica breakIfEmpty = true, detiene la busqueda en cuanto 
+	 * no se encuentra una celda debajo
 	 **/ 
-	public List<Cell> getCellsUnderPiece(Piece piece)
+	public List<Cell> getCellsUnderPiece(Piece piece, bool breakIfEmpty = true)
 	{
 		List<Cell> result = new List<Cell>();
+		Cell cell;
 
 		for(int i = 0;i < piece.squares.Length;i++)
 		{
-			result.Add(getCellUnderPoint(piece.squares[i].transform.position));
+			cell = getCellUnderPoint(piece.squares[i].transform.position);
+			if(cell != null)
+			{
+				result.Add(cell);		
+			}
+			else if(breakIfEmpty)
+			{
+				break;
+			}
+		}
+
+		return result;
+	}
+
+	/**
+	 * Devuelve las celdas bajo la pieza que esten libres para posicionarse
+	 **/ 
+	public List<Cell> getFreeCellsUnderPiece(Piece piece)
+	{
+		List<Cell> result = getCellsUnderPiece(piece,true);
+
+		for(int i = result.Count-1;i >= 0 ;i--)
+		{
+			if(result[i].occupied || !result[i].canPositionateOnThisCell())
+			{
+				result.RemoveAt(i);	
+			}
 		}
 
 		return result;
@@ -478,13 +522,15 @@ public class CellsManager : MonoBehaviour
 			{
 				for(int i = 0;i < piecesList.Count;i++)
 				{
-					
 					offset = (val.transform.position + moveLittle) - piecesList[i].squares[0].transform.position;
+
 					vecArr = new Vector3[piecesList[i].squares.Length];
+
 					for(int j = 0;j < piecesList[i].squares.Length;j++)
 					{
 						vecArr[j] = piecesList[i].squares[j].transform.position + offset;
 					}
+
 					if(canPositionateAll(vecArr))
 					{
 						return true;

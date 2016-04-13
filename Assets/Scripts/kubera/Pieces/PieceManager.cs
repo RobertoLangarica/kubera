@@ -109,15 +109,18 @@ public class PieceManager : MonoBehaviour
 	{
 		for(int i=0; i<piece.shadows.Length; i++)
 		{
-			piece.shadows [i].enabled = showing;
-			if(showing)
+			if(piece.shadows [i] != null)
 			{
-				//print (piece.squaresSprite[i].sortingOrder);
-				piece.shadows [i].sortingOrder = piece.squaresSprite[i].sortingOrder ++;
-			}
-			else
-			{
-				piece.shadows [i].sortingOrder = piece.squaresSprite[i].sortingOrder --;
+				piece.shadows [i].enabled = showing;
+				if(showing)
+				{
+					//print (piece.squaresSprite[i].sortingOrder);
+					piece.shadows [i].sortingOrder = piece.squaresSprite[i].sortingOrder ++;
+				}
+				else
+				{
+					piece.shadows [i].sortingOrder = piece.squaresSprite[i].sortingOrder --;
+				}
 			}
 		}
 	}
