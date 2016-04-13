@@ -256,9 +256,6 @@ public class GameManager : MonoBehaviour
 
 			piece.squares [i].GetComponent<Collider2D> ().enabled = true;
 
-			//TODO: Sorting layers
-			//piece.squares [i].GetComponent<SpriteRenderer> ().sortingOrder = -1;
-
 			Transform target = piece.squares[i].transform;
 
 			target.DOMove (piecePosition, piecePositionedDelay);
@@ -310,7 +307,7 @@ public class GameManager : MonoBehaviour
 					count++;
 
 					//TODO: Ese tiempo hardcodeado por el count esta raro, hay que usar algun callback
-					StartCoroutine( startAnimationFlipPiece (cells [i] [j].content,cells[i][j],0.05f*count));
+					StartCoroutine( startFlashPiece (cells [i] [j].content,cells[i][j],0.05f*count));
 					/*cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
 					letter.gameObject.transform.DOMove (cellPosition, 0);
 					gridCharacters.Add(letter);*/
@@ -319,16 +316,30 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	IEnumerator startFlashPiece(GameObject obj, Cell cell,float delayTime)
+	{
+		FlashColor flashColor = obj.GetComponent<FlashColor> ();
+		SpriteRenderer spriteRenderer = obj.GetComponent<SpriteRenderer> ();
+
+		yield return new WaitForSeconds (0.1f);
+		flashColor.startFlash (spriteRenderer,0.1f);
+		yield return new WaitForSeconds (0.2f);
+		flashColor.startFlash (spriteRenderer,0.3f);
+
+		yield return new WaitForSeconds (0);
+		StartCoroutine( startAnimationFlipPiece (obj,cell,delayTime));
+	}
+
 	//TODO: checar funcionamiento
 	IEnumerator startAnimationFlipPiece(GameObject obj, Cell cell,float delayTime)
 	{
+		AnimatedSprite animSprite = obj.GetComponent < AnimatedSprite> ();
 		yield return new WaitForSeconds (delayTime);
 
-		AnimatedSprite animSprite = obj.GetComponent < AnimatedSprite> ();
 		if(animSprite)
 		{
 			Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
-
+			letter.gameObject.SetActive(false);
 			animSprite.enabled = true;
 			animSprite.autoUpdate = true;
 
@@ -341,6 +352,7 @@ public class GameManager : MonoBehaviour
 				-cell .GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
 
 			letter.gameObject.transform.position = cellPosition;
+			letter.gameObject.SetActive(true);
 
 			yield return new WaitUntil (()=> animSprite.sequences[0].currentFrame >= 26);
 
