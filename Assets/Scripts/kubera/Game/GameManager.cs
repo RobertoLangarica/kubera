@@ -262,7 +262,7 @@ public class GameManager : MonoBehaviour
 			Transform target = piece.squares[i].transform;
 
 			target.DOMove (piecePosition, piecePositionedDelay);
-			target.DOScale(target.localScale* 0.8f, 0.1f).SetDelay(piecePositionedDelay);
+			target.DOScale(target.localScale* 0.8f, 0.1f).SetDelay(piecePositionedDelay).OnComplete(()=>{setShadow (piece, false);});
 			target.DOScale(target.localScale, 0.1f).SetDelay(piecePositionedDelay+0.1f);
 		}
 	}
@@ -286,7 +286,6 @@ public class GameManager : MonoBehaviour
 			showFloatingPointsAt (piece.transform.position, piece.squares.Length);
 		}
 
-		setShadow (piece, false);
 
 		List<List<Cell>> cells = cellManager.getCompletedVerticalAndHorizontalLines ();
 		//Puntos por las lineas creadas
