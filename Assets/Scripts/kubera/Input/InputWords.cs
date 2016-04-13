@@ -24,6 +24,11 @@ public class InputWords : MonoBehaviour
 	public Vector3 offsetPositionOverFinger = new Vector3(0,0.5f,0);
 	float offset = 0;
 
+	//Foa animation on grid
+	public float scalePercent = 0.8f;
+	public float animationTime = 0.5f;
+	protected bool allowAnimation = true;
+
 	protected Vector3 firstPosition;
 
 	protected Vector2 objectSize;
@@ -144,7 +149,7 @@ public class InputWords : MonoBehaviour
 
 	void OnFingerUp(FingerUpEvent gesture)
 	{
-		if (allowInput && canDeleteLetter == false && gesture.Raycast.Hit2D.collider != null) 
+		if (allowInput && canDeleteLetter == false && letter) 
 		{
 			onDragFinish(letter);
 
@@ -158,9 +163,22 @@ public class InputWords : MonoBehaviour
 
 	void OnLetterGridTap(TapGesture gesture)
 	{
-		if(allowInput && gesture.Raycast.Hit2D)
+		if(allowInput && gesture.Raycast.Hit2D && allowAnimation)
 		{		
-			onTap(gesture.Raycast.Hit2D.transform.gameObject);
+			GameObject target = gesture.Raycast.Hit2D.transform.gameObject;
+			Vector3 finalScale = target.transform.localScale;
+
+			allowAnimation = false;
+
+			target.transform.localScale = finalScale * scalePercent;
+
+			DOTween.Kill ("InputW_Grid_Scale_Selection");
+			target.transform.DOScale (finalScale, animationTime).SetId ("InputW_Grid_Scale_Selection").OnComplete(()=>{allowAnimation = true;});
+
+			if (target.layer == LayerMask.NameToLayer ("LetterOnGrid")) 
+			{
+				onTap(gesture.Raycast.Hit2D.transform.gameObject);
+			}
 		}
 	}
 

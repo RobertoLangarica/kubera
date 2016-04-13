@@ -246,7 +246,7 @@ public class SerializedSequence
 		pos.z = imageReference.gameObject.transform.position.z;
 		
 		//imageReference.gameObject.transform.localPosition = pos;
-		imageReference.gameObject.transform.localScale = transformInfo.scale;
+		//imageReference.gameObject.transform.localScale = transformInfo.scale;
 	}
 
 	public void reset()

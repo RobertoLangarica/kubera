@@ -230,10 +230,7 @@ public class GameManager : MonoBehaviour
 		{
 			putPiecesOnGrid (piece, cellsUnderPiece);
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.PIECE_POSITIONATED);
-			List<List<Cell>> cells = cellManager.getCompletedVerticalAndHorizontalLines ();
-			//Puntos por las lineas creadas
-			linesCreated (cells.Count);
-			convertLinesToLetters(cells);
+
 			StartCoroutine(afterPiecePositioned(piece));
 
 			return true;
@@ -256,8 +253,13 @@ public class GameManager : MonoBehaviour
 
 			piecePosition =  cellsUnderPiece[i].transform.position + (new Vector3 (cellsUnderPiece[i].GetComponent<SpriteRenderer> ().bounds.extents.x,
 				-cellsUnderPiece[i].GetComponent<SpriteRenderer> ().bounds.extents.y, 0));
+
+			piece.squares [i].GetComponent<Collider2D> ().enabled = true;
+
+			//TODO: Sorting layers
+			piece.squares [i].GetComponent<SpriteRenderer> ().sortingOrder = -1;
 			
-			piece.squares[i].transform.DOMove (piecePosition, piecePositionedDelay);
+			piece.squares[i].transform.DOMove (piecePosition, piecePositionedDelay).OnComplete<Tweener>(animationDropPiece);
 
 			StartCoroutine (animationDropPiece (piece.squares [i].transform));
 		}
@@ -269,7 +271,7 @@ public class GameManager : MonoBehaviour
 		}*/
 	}
 
-	IEnumerator animationDropPiece(Transform t)
+	/*IEnumerator animationDropPiece(Transform t)
 	{
 		yield return new WaitForSeconds (piecePositionedDelay*1.05f);
 
@@ -282,6 +284,22 @@ public class GameManager : MonoBehaviour
 				t.DOScale(size,.1f);
 			});
 		}
+	}*/
+
+	private void animationDropPiece(Tweener tweener)
+	{
+		Debug.Log(tweener.target);
+		/*yield return new WaitForSeconds (piecePositionedDelay*1.05f);
+
+		if(t != null)
+		{
+			Vector3 size = t.localScale;
+
+			t.DOScale (t.localScale * 0.8f, 0.1f).OnComplete (()=>
+				{
+					t.DOScale(size,.1f);
+				});
+		}*/
 	}
 
 	IEnumerator afterPiecePositioned(Piece piece)
@@ -317,24 +335,58 @@ public class GameManager : MonoBehaviour
 
 	private void convertLinesToLetters(List<List<Cell>> cells)
 	{
+		float count = 0;
+
 		for (int i = 0; i < cells.Count; i++) 
 		{
 			for(int j=0; j<cells[i].Count; j++)
 			{
 				if (cells [i] [j].contentType != Piece.EType.LETTER) 
 				{
-					Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
+					count++;
 
-					Vector3 cellPosition =  cells [i] [j].transform.position + (new Vector3 (cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x,
-						-cells [i] [j].GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
-
-					cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
+					StartCoroutine( startAnimationFlipPiece (cells [i] [j].content,cells[i][j],0.2f*count));
+					/*cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
 					letter.gameObject.transform.DOMove (cellPosition, 0);
-					gridCharacters.Add(letter);
+					gridCharacters.Add(letter);*/
 				}
 			}
 		}
 	}
+
+	//TODO: checar funcionamiento
+	IEnumerator startAnimationFlipPiece(GameObject obj, Cell cell,float delayTime)
+	{
+		yield return new WaitForSeconds (delayTime);
+
+		AnimatedSprite animSprite = obj.GetComponent < AnimatedSprite> ();
+		if(animSprite)
+		{
+			Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
+
+			animSprite.enabled = true;
+			animSprite.autoUpdate = true;
+
+			yield return new WaitUntil (()=>animSprite.sequences[0].currentFrame >= 14);
+			cell.content.GetComponent<SpriteRenderer> ().color = Color.white;
+
+			yield return new WaitUntil (()=>animSprite.sequences[0].currentFrame >= 23);
+
+			Vector3 cellPosition =  cell .transform.position + (new Vector3 (cell.GetComponent<SpriteRenderer> ().bounds.extents.x,
+				-cell .GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
+
+			letter.gameObject.transform.position = cellPosition;
+
+			yield return new WaitUntil (()=> animSprite.sequences[0].currentFrame >= 26);
+
+			animSprite.enabled = false;
+			animSprite.autoUpdate = false;
+
+			cellManager.occupyAndConfigureCell (cell, letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
+			gridCharacters.Add(letter);
+		}
+	}
+
 
 	//TODO: checar nombre
 	private void setShadow (GameObject obj, bool showing = true)
@@ -528,10 +580,10 @@ public class GameManager : MonoBehaviour
 		//Se limpian las letras 
 		wordManager.removeAllLetters();
 
-		winBonificationActions();
+		expendMovement();
 	}
 
-	protected void winBonificationActions()
+	protected void expendMovement()
 	{
 		if(cellManager.getAllEmptyCells().Length > 0 &&remainingMoves > 0 )
 		{
@@ -555,7 +607,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 		actualizeHUDInfo ();
-		StartCoroutine (continueWinBonificationActions ());
+		StartCoroutine (continueExpendingMovements ());
 	}
 
 	protected void addMovementPoint()
@@ -583,10 +635,10 @@ public class GameManager : MonoBehaviour
 		addPoints(1);
 
 	}
-	IEnumerator continueWinBonificationActions()
+	IEnumerator continueExpendingMovements()
 	{
 		yield return new WaitForSeconds (.2f);
-		winBonificationActions ();
+		expendMovement ();
 	}
 
 	IEnumerator addWinLetterAfterActions()
@@ -600,19 +652,6 @@ public class GameManager : MonoBehaviour
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
-			StartCoroutine (addWinLetterAfterActions ());
-		}
-		else
-		{
-			useBombs();
-		}
-	}
-
-	protected void useBombs()
-	{
-		if(cellManager.existType(Piece.EType.PIECE))
-		{
-			cellToLetter.AddRange (cellManager.getCellsOfSameType (Piece.EType.PIECE));
 			StartCoroutine (addWinLetterAfterActions ());
 		}
 		else
@@ -822,7 +861,7 @@ public class GameManager : MonoBehaviour
 			hudManager.actualizePointsOnWinCondition (goalManager.pointsCount.ToString(),goalManager.goalPoints.ToString());
 			break;
 		case GoalManager.WORDS_COUNT:
-			hudManager.actualizeWordsMadeOnWinCondition (goalManager.wordsCount.ToString(),goalManager.goalWords.ToString());
+			hudManager.actualizeWordsMadeOnWinCondition (goalManager.wordsCount.ToString(),goalManager.goalWordsCount.ToString());
 			break;
 		}
 	}

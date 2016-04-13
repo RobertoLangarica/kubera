@@ -58,6 +58,7 @@ public class WordManager : MonoBehaviour
 	//Letter to take the position for the selectedAnim
 	protected Letter lastSelected;
 	public float selectAnimationTime = 1;
+	public GameObject gridInvisibleChild;
 
 	void Start()
 	{
@@ -323,7 +324,7 @@ public class WordManager : MonoBehaviour
 		//para que tengan el collider del tamaño del objeto
 		updateLetterBoxCollider (letter.gameObject);
 
-		lettersCountChange ();
+		gridInvisibleChild.transform.SetParent (letterContainer.transform.parent);
 	}
 
 	private void selectLetterAnimation(Letter letter)
@@ -339,10 +340,14 @@ public class WordManager : MonoBehaviour
 		if (letterContainer.transform.childCount > 0) 
 		{
 			finalPos = letterContainer.transform.GetChild (letterContainer.transform.childCount - 1).position;
-			finalPos.x += grid.cellSize.x * 2 * 0.01f;
+			finalPos.x += (grid.cellSize.x + grid.spacing.x) * 0.01f;
 		}
 
 		letter.transform.DOMove (finalPos, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letter);});
+
+
+		gridInvisibleChild.transform.SetParent(letterContainer.transform);
+		lettersCountChange ();
 
 	}
 
@@ -354,7 +359,10 @@ public class WordManager : MonoBehaviour
 	IEnumerator resizeBoxCollider(GameObject letter)
 	{
 		yield return new WaitForSeconds (0.1f);
-		letter.GetComponent<BoxCollider2D> ().size = letter.GetComponent<Image> ().rectTransform.rect.size;
+		if (letter != null) 
+		{
+			letter.GetComponent<BoxCollider2D> ().size = letter.GetComponent<Image> ().rectTransform.rect.size;
+		}
 	}
 
 	public void setMaxAllowedLetters(int allowedLetters)
