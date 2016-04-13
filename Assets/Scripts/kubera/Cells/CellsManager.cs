@@ -19,6 +19,8 @@ public class CellsManager : MonoBehaviour
 
 	protected float cellScalePercentage = 0.059f;
 
+	protected float percentOfTheCellForInnerRect = 0.05f;
+
 	//Todas las celdas del grid
 	protected List<Cell> cells;
 
@@ -118,24 +120,34 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @return Celda bajo el punto o nulo si no existe
 	 */
-	public Cell getCellUnderPoint(Vector3 point)
+	public Cell getCellUnderPoint(Vector3 point,bool useOffset = false)
 	{
-		Vector3 cellPos;
+		float offset;
 		SpriteRenderer spriteRenderer;
-
-
 
 		Cell result = null;
 		int i = 0;
 		foreach(Cell cell in cells)
 		{
-			cellPos		= cell.transform.position;
 			spriteRenderer	= cell.gameObject.GetComponent<SpriteRenderer>();
 			point.z = spriteRenderer.bounds.center.z;
 
-			if(spriteRenderer.bounds.Contains(point))
+			offset = spriteRenderer.bounds.size.x * percentOfTheCellForInnerRect;
+
+			if (useOffset) 
 			{
-				return cell;
+				if (spriteRenderer.bounds.Contains (new Vector3 (point.x - offset, point.y + offset, point.z)) &&
+				    spriteRenderer.bounds.Contains (new Vector3 (point.x + offset, point.y - offset, point.z))) 
+				{
+					return cell;
+				}
+			}
+			else 
+			{
+				if (spriteRenderer.bounds.Contains (point)) 
+				{
+					return cell;
+				}
 			}
 		}
 
@@ -357,7 +369,7 @@ public class CellsManager : MonoBehaviour
 
 		for(int i = 0;i < piece.squares.Length;i++)
 		{
-			cell = getCellUnderPoint(piece.squares[i].transform.position);
+			cell = getCellUnderPoint(piece.squares[i].transform.position,true);
 			if(cell != null)
 			{
 				result.Add(cell);		

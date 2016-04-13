@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
 	public float gridLettersSizeMultiplier = 0.9f;
 
 	public List<int> linesCreatedPoints = new List<int> ();
-	public List<int> linesCreatedGems = new List<int> ();
 
 	protected int sizeGridX = 8;
 	protected int sizeGridY = 8;
@@ -424,8 +423,6 @@ public class GameManager : MonoBehaviour
 		}
 
 		addPoints(linesCreatedPoints[totalLines]);
-		//TODO: hacer lineas no debe de dar gemas
-		UserDataManager.instance.giveGemsToPlayer(linesCreatedGems[totalLines]);
 	}
 
 	protected void initHudValues()
