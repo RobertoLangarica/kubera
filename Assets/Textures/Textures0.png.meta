@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 70ebe5c30e3f32a4e804ace1df52b89a
-timeCreated: 1460420170
+timeCreated: 1460515793
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -749,15 +749,15 @@ TextureImporter:
         y: 990
         width: 135
         height: 135
-      alignment: 9
-      pivot: {x: 0.43703705, y: 0.54814816}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -52, y: 61}
-        - {x: -59, y: 59}
-        - {x: -59, y: -74}
-        - {x: 76, y: -74}
-        - {x: 76, y: 61}
+      - - {x: -60.5, y: 67.5}
+        - {x: -67.5, y: 65.5}
+        - {x: -67.5, y: -67.5}
+        - {x: 67.5, y: -67.5}
+        - {x: 67.5, y: 67.5}
     - name: button_config_down
       rect:
         serializedVersion: 2
