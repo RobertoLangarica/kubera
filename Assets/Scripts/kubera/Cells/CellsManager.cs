@@ -121,7 +121,6 @@ public class CellsManager : MonoBehaviour
 	public Cell getCellUnderPoint(Vector3 point)
 	{
 		Vector3 cellPos;
-		float cellWidth, cellHeight;
 		SpriteRenderer spriteRenderer;
 
 
@@ -132,30 +131,14 @@ public class CellsManager : MonoBehaviour
 		{
 			cellPos		= cell.transform.position;
 			spriteRenderer	= cell.gameObject.GetComponent<SpriteRenderer>();
-			cellWidth	= spriteRenderer.bounds.size.x;
-			cellHeight	= spriteRenderer.bounds.size.y;
 			point.z = spriteRenderer.bounds.center.z;
 
-			/*if(spriteRenderer.bounds.Contains(point))
+			if(spriteRenderer.bounds.Contains(point))
 			{
 				return cell;
-			}*/
-
-			if(point.x > cellPos.x && point.x < (cellPos.x + cellWidth) &&
-				point.y < cellPos.y && point.y > (cellPos.y - cellHeight))
-			{
-				if(result == null)
-				{
-					result = cell;
-				}
-				i++;
-				//return cell;
 			}
 		}
 
-
-		Debug.Log("Cells under point: ["+i+"]");
-		return result;
 		return null;
 	}
 

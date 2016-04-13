@@ -223,7 +223,6 @@ public class GameManager : MonoBehaviour
 
 	public bool tryToDropOnGrid(Piece piece)
 	{
-		Debug.Log("Try to position: "+piece.squares.Length);
 		List<Cell> cellsUnderPiece = cellManager.getFreeCellsUnderPiece(piece);
 
 		if (cellsUnderPiece.Count == piece.squares.Length) 
@@ -231,6 +230,7 @@ public class GameManager : MonoBehaviour
 			putPiecesOnGrid (piece, cellsUnderPiece);
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.PIECE_POSITIONATED);
 
+			//Tomamos en cuenta los tiempos de todos los twens de posicionamiento
 			StartCoroutine(afterPiecePositioned(piece));
 
 			return true;
@@ -257,54 +257,19 @@ public class GameManager : MonoBehaviour
 			piece.squares [i].GetComponent<Collider2D> ().enabled = true;
 
 			//TODO: Sorting layers
-			piece.squares [i].GetComponent<SpriteRenderer> ().sortingOrder = -1;
-			
-			piece.squares[i].transform.DOMove (piecePosition, piecePositionedDelay).OnComplete<Tweener>(animationDropPiece);
+			//piece.squares [i].GetComponent<SpriteRenderer> ().sortingOrder = -1;
 
-			StartCoroutine (animationDropPiece (piece.squares [i].transform));
+			Transform target = piece.squares[i].transform;
+
+			target.DOMove (piecePosition, piecePositionedDelay);
+			target.DOScale(target.localScale* 0.8f, 0.1f).SetDelay(piecePositionedDelay);
+			target.DOScale(target.localScale, 0.1f).SetDelay(piecePositionedDelay+0.1f);
 		}
-
-		//Solo se posicionan los cuadros de la pieza
-		/*for(int i = 0;i < piece.squares.Length;i++)
-		{
-			piece.squares[i].transform.SetParent(piece.transform.parent);
-		}*/
-	}
-
-	/*IEnumerator animationDropPiece(Transform t)
-	{
-		yield return new WaitForSeconds (piecePositionedDelay*1.05f);
-
-		if(t != null)
-		{
-			Vector3 size = t.localScale;
-
-		t.DOScale (t.localScale * 0.8f, 0.1f).OnComplete (()=>
-			{
-				t.DOScale(size,.1f);
-			});
-		}
-	}*/
-
-	private void animationDropPiece(Tweener tweener)
-	{
-		Debug.Log(tweener.target);
-		/*yield return new WaitForSeconds (piecePositionedDelay*1.05f);
-
-		if(t != null)
-		{
-			Vector3 size = t.localScale;
-
-			t.DOScale (t.localScale * 0.8f, 0.1f).OnComplete (()=>
-				{
-					t.DOScale(size,.1f);
-				});
-		}*/
 	}
 
 	IEnumerator afterPiecePositioned(Piece piece)
 	{
-		yield return new WaitForSeconds (piecePositionedDelay*1.05f);
+		yield return new WaitForSeconds (piecePositionedDelay+0.25f);
 
 		if(pieceManager.isAShowedPiece(piece))
 		{
@@ -345,7 +310,8 @@ public class GameManager : MonoBehaviour
 				{
 					count++;
 
-					StartCoroutine( startAnimationFlipPiece (cells [i] [j].content,cells[i][j],0.2f*count));
+					//TODO: Ese tiempo hardcodeado por el count esta raro, hay que usar algun callback
+					StartCoroutine( startAnimationFlipPiece (cells [i] [j].content,cells[i][j],0.05f*count));
 					/*cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
 					letter.gameObject.transform.DOMove (cellPosition, 0);
 					gridCharacters.Add(letter);*/
