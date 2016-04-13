@@ -115,12 +115,11 @@ public class PieceManager : MonoBehaviour
 				piece.shadows [i].enabled = showing;
 				if(showing)
 				{
-					//print (piece.squaresSprite[i].sortingOrder);
-					piece.shadows [i].sortingOrder = piece.squaresSprite[i].sortingOrder ++;
+					piece.squaresSprite [i].sortingLayerName = "Selected";
 				}
 				else
 				{
-					piece.shadows [i].sortingOrder = piece.squaresSprite[i].sortingOrder --;
+					piece.squaresSprite [i].sortingLayerName = "Piece";
 				}
 			}
 		}
