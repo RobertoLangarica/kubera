@@ -545,6 +545,11 @@ public class CellsManager : MonoBehaviour
 		return finalList.ToArray();
 	}
 
+	public Vector2 getCellXYPosition(Cell cell)
+	{
+		return new Vector2 (cells.IndexOf(cell)%columns,cells.IndexOf(cell)/columns);
+	}
+
 	/*
 	 * Busca celdas del mismo color en sus vecinos verticales y horizontales
 	 * 
@@ -556,8 +561,9 @@ public class CellsManager : MonoBehaviour
 	 */
 	protected void searchNeigboursOfSameColor(Cell cell,ref List<Cell> final, ref List<Cell> pending)
 	{
-		int cX = cells.IndexOf(cell)%columns;
-		int cY = cells.IndexOf(cell)/columns;
+		Vector2 cellXY = getCellXYPosition (cell);
+		int cX = (int)cellXY.x;
+		int cY = (int)cellXY.y;
 		Cell tempC = null;
 
 		tempC = getCellAt(cX,cY-1);

@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour
 	private InputWords 		inputWords;
 	private GoalManager		goalManager;
 
+	private LinesCreatedAnimation linesAnimation;
+
 	private Level currentLevel;
 	private List<Letter> gridCharacters = new List<Letter>();
 
@@ -65,6 +67,9 @@ public class GameManager : MonoBehaviour
 		inputPiece		= FindObjectOfType<InputPiece>();
 		inputWords		= FindObjectOfType<InputWords>();
 		goalManager		= FindObjectOfType<GoalManager>();
+		linesAnimation 	= FindObjectOfType<LinesCreatedAnimation> ();
+
+		linesAnimation.OnAnimationFinish += OnLinesAnimationEnded;
 
 		wordManager.setMaxAllowedLetters(PersistentData.instance.maxWordLength);
 		wordManager.gridLettersParent = gridLettersContainer;
@@ -296,7 +301,7 @@ public class GameManager : MonoBehaviour
 
 	private void convertLinesToLetters(List<List<Cell>> cells)
 	{
-		float count = 0;
+		List<Cell> cellsToAnimate = new List<Cell> ();
 
 		for (int i = 0; i < cells.Count; i++) 
 		{
@@ -304,66 +309,21 @@ public class GameManager : MonoBehaviour
 			{
 				if (cells [i] [j].contentType != Piece.EType.LETTER) 
 				{
-					count++;
-
 					//TODO: Ese tiempo hardcodeado por el count esta raro, hay que usar algun callback
-					StartCoroutine( startFlashPiece (cells [i] [j].content,cells[i][j],0.05f*count));
-					/*cellManager.occupyAndConfigureCell (cells [i] [j], letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
-					letter.gameObject.transform.DOMove (cellPosition, 0);
-					gridCharacters.Add(letter);*/
+					//StartCoroutine( startFlashPiece (cells [i] [j].content,cells[i][j],0.05f*count));
+					cellsToAnimate.Add(cells[i][j]);
 				}
 			}
 		}
+
+		linesAnimation.configurateAnimation(cellsToAnimate,cellManager,wordManager);
 	}
 
-	IEnumerator startFlashPiece(GameObject obj, Cell cell,float delayTime)
+	protected void OnLinesAnimationEnded(Cell cell,Letter letter, Piece.EType type, Piece.EColor color)
 	{
-		FlashColor flashColor = obj.GetComponent<FlashColor> ();
-		SpriteRenderer spriteRenderer = obj.GetComponent<SpriteRenderer> ();
-
-		yield return new WaitForSeconds (0.1f);
-		flashColor.startFlash (spriteRenderer,0.1f);
-		yield return new WaitForSeconds (0.2f);
-		flashColor.startFlash (spriteRenderer,0.3f);
-
-		yield return new WaitForSeconds (0);
-		StartCoroutine( startAnimationFlipPiece (obj,cell,delayTime));
+		cellManager.occupyAndConfigureCell (cell,letter.gameObject,type,color);
+		gridCharacters.Add(letter);
 	}
-
-	//TODO: checar funcionamiento
-	IEnumerator startAnimationFlipPiece(GameObject obj, Cell cell,float delayTime)
-	{
-		AnimatedSprite animSprite = obj.GetComponent < AnimatedSprite> ();
-		yield return new WaitForSeconds (delayTime);
-
-		if(animSprite)
-		{
-			Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
-			letter.gameObject.SetActive(false);
-			animSprite.enabled = true;
-			animSprite.autoUpdate = true;
-
-			yield return new WaitUntil (()=>animSprite.sequences[0].currentFrame >= 14);
-			cell.content.GetComponent<SpriteRenderer> ().color = Color.white;
-
-			yield return new WaitUntil (()=>animSprite.sequences[0].currentFrame >= 23);
-
-			Vector3 cellPosition =  cell .transform.position + (new Vector3 (cell.GetComponent<SpriteRenderer> ().bounds.extents.x,
-				-cell .GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
-
-			letter.gameObject.transform.position = cellPosition;
-			letter.gameObject.SetActive(true);
-
-			yield return new WaitUntil (()=> animSprite.sequences[0].currentFrame >= 26);
-
-			animSprite.enabled = false;
-			animSprite.autoUpdate = false;
-
-			cellManager.occupyAndConfigureCell (cell, letter.gameObject, Piece.EType.LETTER,Piece.EColor.NONE);
-			gridCharacters.Add(letter);
-		}
-	}
-
 
 	//TODO: checar nombre
 	private void setShadow (GameObject obj, bool showing = true)
