@@ -507,9 +507,13 @@ public class CellsManager : MonoBehaviour
 	public bool checkIfOnePieceCanFit(List<Piece> piecesList)
 	{
 		Vector3 offset = Vector3.zero;
-		float extentsX = cellPrefab.gameObject.GetComponent<SpriteRenderer>().bounds.extents.x;
+		float extentsX = cellSize * 0.5f;
+		float betweenSquaresDist = (piecesList [0].squares [0].transform.position - piecesList [0].squares [1].transform.position).magnitude;
 		Vector3 moveLittle = new Vector3(extentsX,-extentsX,0);
 		Vector3[] vecArr;
+
+		float percent = ((extentsX * 200) / betweenSquaresDist) * 0.01f;
+
 
 		foreach(Cell val in cells)
 		{
@@ -521,9 +525,12 @@ public class CellsManager : MonoBehaviour
 
 					vecArr = new Vector3[piecesList[i].squares.Length];
 
-					for(int j = 0;j < piecesList[i].squares.Length;j++)
+					vecArr[0] = piecesList[i].squares[0].transform.position + offset;
+					for(int j = 1;j < piecesList[i].squares.Length;j++)
 					{
-						vecArr[j] = piecesList[i].squares[j].transform.position + offset;
+						vecArr[j] = (((piecesList[i].squares[j].transform.position -
+							piecesList[i].squares[0].transform.position) * percent) +
+							piecesList[i].squares[0].transform.position) + offset;
 					}
 
 					if(canPositionateAll(vecArr))

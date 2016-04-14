@@ -8,8 +8,6 @@ using DG.Tweening;
 public class GameManager : MonoBehaviour 
 {
 	public Text scoreText;
-	public GameObject retryPopUp;
-	public GameObject notEnoughLifesPopUp;
 
 	public GameObject bonificationPiecePrefab;
 
@@ -20,9 +18,6 @@ public class GameManager : MonoBehaviour
 	protected int totalMoves;
 	protected int remainingMoves;
 
-	public int secondChanceMovements = 5;
-	public int secondChanceBombs = 2;
-	protected int secondChanceTimes = 0;
 	protected int bombsUsed = 0;
 	public float piecePositionedDelay = 0.1f;
 
@@ -52,6 +47,8 @@ public class GameManager : MonoBehaviour
 
 	private LinesCreatedAnimation linesAnimation;
 
+	private SecondChancePopUp secondChance;
+
 	private Level currentLevel;
 	private List<Letter> gridCharacters = new List<Letter>();
 
@@ -67,6 +64,10 @@ public class GameManager : MonoBehaviour
 		inputWords		= FindObjectOfType<InputWords>();
 		goalManager		= FindObjectOfType<GoalManager>();
 		linesAnimation 	= FindObjectOfType<LinesCreatedAnimation> ();
+		secondChance 	= FindObjectOfType<SecondChancePopUp> ();
+
+		secondChance.OnSecondChanceAquired += secondChanceBought;
+		secondChance.gameObject.SetActive (false);
 
 		linesAnimation.OnCellFlipped += OnCellFlipped; 
 
@@ -83,6 +84,7 @@ public class GameManager : MonoBehaviour
 		goalManager.OnLetterFound += hudManager.destroyLetterFound;
 
 		hudManager.OnPopUpCompleted += popUpCompleted;
+		hudManager.OnPiecesScaled += checkIfLoose;
 
 		wordManager.onWordChange += refreshCurrentWordScoreOnHUD;
 
@@ -272,12 +274,15 @@ public class GameManager : MonoBehaviour
 	{
 		yield return new WaitForSeconds (piecePositionedDelay+0.25f);
 
+		bool piecesWhereCreated = false;
+
 		if(pieceManager.isAShowedPiece(piece))
 		{
 			pieceManager.removeFromShowedPieces (piece);
 
 			if (pieceManager.getShowingPieces ().Count == 0) 
 			{
+				piecesWhereCreated = true;
 				pieceManager.initializePiecesToShow ();
 				hudManager.showPieces (pieceManager.getShowingPieces ());
 			}
@@ -289,9 +294,17 @@ public class GameManager : MonoBehaviour
 
 
 		List<List<Cell>> cells = cellManager.getCompletedVerticalAndHorizontalLines ();
-		//Puntos por las lineas creadas
-		linesCreated (cells.Count);
-		convertLinesToLetters(cells);
+
+		if (cells.Count != 0) 
+		{
+			//Puntos por las lineas creadas
+			linesCreated (cells.Count);
+			convertLinesToLetters (cells);
+		} 
+		else if(!piecesWhereCreated)
+		{
+			checkIfLoose ();
+		}
 
 		Destroy(piece.gameObject);
 
@@ -321,7 +334,9 @@ public class GameManager : MonoBehaviour
 	protected void OnCellFlipped(Cell cell, Letter letter)
 	{
 		cellManager.occupyAndConfigureCell (cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE);
-		gridCharacters.Add(letter);	
+		gridCharacters.Add(letter);
+
+		checkIfLoose ();
 	}
 
 	//TODO: checar nombre
@@ -342,8 +357,6 @@ public class GameManager : MonoBehaviour
 		addPoints (earnedPoints);
 		substractMoves(movementsUsed);
 		actualizeHUDInfo ();
-
-		checkIfLoose ();
 	}
 
 	protected void addPoints(int amount)
@@ -386,6 +399,7 @@ public class GameManager : MonoBehaviour
 
 		wordManager.removeAllLetters();
 
+		checkIfLoose ();
 	}
 
 	/**
@@ -448,18 +462,13 @@ public class GameManager : MonoBehaviour
 		activatePopUp ("goalPopUp");
 	}
 
-	IEnumerator check()
-	{
-		yield return new WaitForSeconds (.2f);
-		if(!wordManager.checkIfAWordIsPossible(gridCharacters) || remainingMoves <= 0)
-		{
-			Debug.Log ("Perdio de verdad");
-			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);
-		}
-	}
-
 	protected void checkIfLoose()
 	{
+		if (linesAnimation.isOnAnimation) 
+		{
+			return;
+		}
+
 		if(!cellManager.checkIfOnePieceCanFit(pieceManager.getShowingPieces()) || remainingMoves == 0 && !gameOver)
 		{
 			if(remainingMoves == 0)
@@ -490,6 +499,24 @@ public class GameManager : MonoBehaviour
 			StartCoroutine(check());
 
 		}
+	}
+
+	IEnumerator check()
+	{
+		yield return new WaitForSeconds (.2f);
+		if(!wordManager.checkIfAWordIsPossible(gridCharacters) || remainingMoves <= 0)
+		{
+			Debug.Log ("Perdio de verdad");
+			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);
+
+			activatePopUp ("SecondChance");
+		}
+	}
+
+	protected void secondChanceBought()
+	{
+		remainingMoves += secondChance.secondChanceMovements;
+		actualizeHUDInfo ();
 	}
 
 	private void OnLevelGoalAchieved()
@@ -569,6 +596,7 @@ public class GameManager : MonoBehaviour
 		addPoints(1);
 
 	}
+
 	IEnumerator continueExpendingMovements()
 	{
 		yield return new WaitForSeconds (.2f);
@@ -658,65 +686,6 @@ public class GameManager : MonoBehaviour
 		{
 			UserDataManager.instance.isWildCardPowerUpUnlocked = true;
 		}
-	}
-
-	protected void secondWind()
-	{
-		int secondChancePrice = 0;
-
-		switch(secondChanceTimes)
-		{
-		case(0):
-			secondChancePrice = 10;
-			break;
-		case(1):
-			secondChancePrice = 15;
-			break;
-		case(2):
-			secondChancePrice = 20;
-			break;
-		default:
-			secondChancePrice = 30;
-			break;
-		}
-
-		if(tryToUseGems(secondChancePrice))
-		{
-			secondChanceTimes++;
-
-			remainingMoves += secondChanceMovements;
-			actualizeHUDInfo ();
-
-			//inputGameController.activateSecondChanceLocked();
-		}
-	}
-
-	protected bool tryToUseGems(int gemsPrice = 0)
-	{
-		//TODO: TransactionManager?
-		if(TransactionManager.instance.tryToUseGems(gemsPrice))
-		{
-			hudManager.actualizeGems(UserDataManager.instance.playerGems);
-
-			return true;
-		}
-		Debug.Log("Fondos insuficientes");
-		return false;
-	}
-
-	public void CancelRetry()
-	{
-		UserDataManager.instance.giveLifeToPlayer (-1);
-	}
-
-	public void Retry()
-	{
-		
-	}
-
-	public void RefillLifes()
-	{
-		UserDataManager.instance.giveLifeToPlayer (UserDataManager.instance.maximumLifes);
 	}
 
 	public void tryToActivatePowerup(int powerupTypeIndex)

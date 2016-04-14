@@ -4,19 +4,17 @@ using System.Collections.Generic;
 
 public class LinesCreatedAnimation : MonoBehaviour 
 {
-	public delegate void DOnFlipComplete(Cell cell,Letter letter);
+	public delegate void DOnAnimationFinish(Cell cell,Letter letter);
 
-	public DOnFlipComplete OnCellFlipped;
+	public DOnAnimationFinish OnCellFlipped;
+	public bool isOnAnimation;
 
 	public float betweenFlashTime = 0.1f;
 	public float cellsDelayTime = 0.5f;
 
 	protected List<Cell> cellsToAnimate;
-	protected WordManager wordManager;
 
-	protected Dictionary<int,bool> animatedPiece;
-
-	public void configurateAnimation(List<Cell> cells, List<Letter> letters)
+	public void configurateAnimation(List<Cell> cells,List<Letter> letters)
 	{
 		cellsToAnimate = new List<Cell> (cells);
 
@@ -24,6 +22,7 @@ public class LinesCreatedAnimation : MonoBehaviour
 		{
 			Square square = cellsToAnimate [i].content.GetComponent<Square> ();
 			letters [i].gameObject.SetActive (false);
+			isOnAnimation = true;
 			StartCoroutine (startFlashPiece(square,cellsToAnimate[i],letters[i]));
 		}
 	}
@@ -50,10 +49,24 @@ public class LinesCreatedAnimation : MonoBehaviour
 	public void flipCallBack(Square square, Cell cellParent, Letter letterContent)
 	{
 		square.OnCellFlipped -= flipCallBack;
+
+		if (cellsToAnimate.IndexOf (cellParent) == (cellsToAnimate.Count - 1)) 
+		{
+			isOnAnimation = false;
+		}
+
 		OnCellFlipped (cellParent,letterContent);
 	}
 
 	/*IEnumerator startAnimationFlipPiece(GameObject obj, Cell cell,float delayTime)
+
+		flashColor.startFlash (spriteRenderer,0.3f);
+
+		yield return new WaitForSeconds (betweenFlashTime);
+		StartCoroutine( startAnimationFlipPiece (cell.content,cell,cellsDelayTime * (cellsToAnimate.IndexOf(cell)+1)));
+	}
+
+	IEnumerator startAnimationFlipPiece(GameObject obj, Cell cell,float delayTime)
 	{
 		AnimatedSprite animSprite = obj.GetComponent < AnimatedSprite> ();
 		yield return new WaitForSeconds (delayTime);
@@ -78,10 +91,38 @@ public class LinesCreatedAnimation : MonoBehaviour
 
 			yield return new WaitUntil (()=> animSprite.sequences[0].currentFrame >= 26);
 
-			animSprite.enabled = false;
-			animSprite.autoUpdate = false;
+			Debug.Log (isOnAnimation);
 
-			OnCellFlipped (cell,letter);
+
+			OnAnimationFinish (cell,letter,Piece.EType.LETTER,Piece.EColor.NONE);
 		}
+	}
+
+	/*public List<Cell> orderCellsLikeAWave(List<Cell> linesCells,Cell originCell)
+	{
+		List<Cell> orderedCells = new List<Cell>();
+		List<Vector2> linesCellsXY = new List<Vector2>();
+		Vector2 originXY = cellManager.getCellXYPosition (originCell);
+		Vector2 tempXY = Vector2.zero;
+		int count = 0;
+		int counter = 1;
+
+		orderedCells.Add (originCell);
+
+		for (int i = 0; i < linesCells.Count; i++) 
+		{
+			linesCellsXY.Add (cellManager.getCellXYPosition(linesCells[i]));
+		}
+
+		linesCellsXY.Remove (originXY);
+
+		while (count < cellManager.columns) 
+		{
+			for (int i = 0; i < counter; i++) 
+			{
+			}
+		}
+
+		return orderedCells;
 	}*/
 }
