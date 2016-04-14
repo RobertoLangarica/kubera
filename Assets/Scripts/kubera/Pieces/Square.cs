@@ -3,11 +3,15 @@ using System.Collections;
 
 public class Square : MonoBehaviour 
 {
+	public delegate void DOnFlipComplete(Square square, Cell cell,Letter letter);
+	public DOnFlipComplete OnCellFlipped;
 
 	public FlashColor flash;
 	public AnimatedSprite flipAnimation;
 	public SpriteRenderer spriteRenderer;
 
+	protected Cell cellParent;
+	protected Letter letter;
 	void Start () 
 	{
 		flipAnimation.enabled = false;
@@ -36,37 +40,38 @@ public class Square : MonoBehaviour
 		//Callback	
 	}
 
-	public doFlip(Cell cellParent, Letter letterAfterFlip, float delay )
+	public void doFlip(Cell cellParent, Letter letterAfterFlip, float delay )
 	{
 		letterAfterFlip.gameObject.SetActive(false);
+		this.cellParent = cellParent;
+		letter = letterAfterFlip;
 
-
-		Invoke("flipAnimation")
+		Invoke("startFlipAnimation");
 	}
 
-	IEnumerator flipAnimation()
+	IEnumerator startFlipAnimation(float delayTime)
 	{
 		yield return new WaitForSeconds (delayTime);
 
 		flipAnimation.enabled = true;
 		flipAnimation.autoUpdate = true;
 
-		yield return new WaitUntil (()=>animSprite.sequences[0].currentFrame >= 14);
-		cell.content.GetComponent<SpriteRenderer> ().color = Color.white;
+		yield return new WaitUntil (()=>flipAnimation.sequences[0].currentFrame >= 14);
+		cellParent.content.GetComponent<SpriteRenderer> ().color = Color.white;
 
-		yield return new WaitUntil (()=>animSprite.sequences[0].currentFrame >= 23);
+		yield return new WaitUntil (()=>flipAnimation.sequences[0].currentFrame >= 23);
 
-		Vector3 cellPosition =  cell .transform.position + (new Vector3 (cell.GetComponent<SpriteRenderer> ().bounds.extents.x,
-			-cell .GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
+		Vector3 cellPosition =  cellParent .transform.position + (new Vector3 (cellParent.GetComponent<SpriteRenderer> ().bounds.extents.x,
+			-cellParent .GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
 
 		letter.gameObject.transform.position = cellPosition;
 		letter.gameObject.SetActive(true);
 
-		yield return new WaitUntil (()=> animSprite.sequences[0].currentFrame >= 26);
+		yield return new WaitUntil (()=> flipAnimation.sequences[0].currentFrame >= 26);
 
-		animSprite.enabled = false;
-		animSprite.autoUpdate = false;
+		flipAnimation.enabled = false;
+		flipAnimation.autoUpdate = false;
 
-		OnCellFlipped (cell,letter);
+		OnCellFlipped (this, cellParent,letter);
 	}
 }
