@@ -12,20 +12,12 @@ public class FlashColor : MonoBehaviour {
 
 	protected bool coloring;
 	protected Color currentColor;
-	protected Color initialColor;
 	protected float inverseColorTime;
 	protected float colorElapsed;
 	protected Color destinationColor;
-	protected SpriteRenderer spriteRenderer;
+	[HideInInspector]public SpriteRenderer spriteRenderer;
 	protected float percent;
 
-	void Start()
-	{
-		onFinish = foo;
-	}
-	
-	void foo(){}
-	
 	void Update () 
 	{
 		if(coloring)
@@ -36,16 +28,12 @@ public class FlashColor : MonoBehaviour {
 
 			if(currentColor == destinationColor)
 			{
-				//if(currentColor == initialColor)
-				//{
-					coloring = false;
-					onFinish();
-				//}
-				/*else
+				coloring = false;
+
+				if(OnFinish != null)
 				{
-					destinationColor = initialColor;
-					colorElapsed = 0;
-				}*/
+					onFinish();	
+				}
 			}
 
 			spriteRenderer.color = currentColor;
@@ -55,15 +43,8 @@ public class FlashColor : MonoBehaviour {
 
 	public void startFlash(SpriteRenderer renderer, float delay = 0.2f)
 	{
-		if(coloring)
-		{
-			return;
-		}
-
 		inverseColorTime = (1.0f/delay)*0.5f;
-		spriteRenderer = renderer;
 		currentColor = colorToFlash;
-		initialColor = spriteRenderer.color;
 		destinationColor = spriteRenderer.color;
 		spriteRenderer.color = colorToFlash;
 

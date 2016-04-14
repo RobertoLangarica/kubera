@@ -4,30 +4,30 @@ using System.Collections.Generic;
 
 public class LinesCreatedAnimation : MonoBehaviour 
 {
-	public delegate void DAnimationFinished(Cell cell,Letter letter, Piece.EType type, Piece.EColor color);
+	public delegate void DOnFlipComplete(Cell cell,Letter letter);
 
-	public DAnimationFinished OnAnimationFinish;
+	public DOnFlipComplete OnCellFlipped;
 
 	public float betweenFlashTime = 0.1f;
 	public float cellsDelayTime = 0.5f;
 
 	protected List<Cell> cellsToAnimate;
-	protected CellsManager cellManager;
 	protected WordManager wordManager;
 
-	public void configurateAnimation(List<Cell> cells,CellsManager cellM,WordManager wordM)
+	protected Dictionary<int,bool> animatedPiece;
+
+	public void configurateAnimation(List<Cell> cells, List<Letter> letters)
 	{
 		cellsToAnimate = new List<Cell> (cells);
-		cellManager = cellM;
-		wordManager = wordM;
 
 		for (int i = 0; i < cellsToAnimate.Count; i++) 
 		{
+			letters[i].gameObject.SetActive(false)
 			StartCoroutine (startFlashPiece(cellsToAnimate[i]));
 		}
 	}
 
-	IEnumerator startFlashPiece(Cell cell)
+	IEnumerator startFlashPiece(Square square, Cell cellParent, Letter letterContent)
 	{
 		FlashColor flashColor = cell.content.GetComponent<FlashColor> ();
 		SpriteRenderer spriteRenderer = cell.content.GetComponent<SpriteRenderer> ();
@@ -36,10 +36,16 @@ public class LinesCreatedAnimation : MonoBehaviour
 		flashColor.startFlash (spriteRenderer,0.1f);
 		yield return new WaitForSeconds (betweenFlashTime * 2);
 		flashColor.startFlash (spriteRenderer,0.3f);
-
 		yield return new WaitForSeconds (betweenFlashTime);
+
+
+		//TODO:Iniciar flip en Square
+		//TODO: escuchar callback onFlipped de square
+		//TODO: Mandar callback hacia afuer
 		StartCoroutine( startAnimationFlipPiece (cell.content,cell,cellsDelayTime * (cellsToAnimate.IndexOf(cell)+1)));
 	}
+
+
 
 	IEnumerator startAnimationFlipPiece(GameObject obj, Cell cell,float delayTime)
 	{
@@ -69,35 +75,7 @@ public class LinesCreatedAnimation : MonoBehaviour
 			animSprite.enabled = false;
 			animSprite.autoUpdate = false;
 
-			OnAnimationFinish (cell,letter,Piece.EType.LETTER,Piece.EColor.NONE);
+			OnCellFlipped (cell,letter);
 		}
 	}
-
-	/*public List<Cell> orderCellsLikeAWave(List<Cell> linesCells,Cell originCell)
-	{
-		List<Cell> orderedCells = new List<Cell>();
-		List<Vector2> linesCellsXY = new List<Vector2>();
-		Vector2 originXY = cellManager.getCellXYPosition (originCell);
-		Vector2 tempXY = Vector2.zero;
-		int count = 0;
-		int counter = 1;
-
-		orderedCells.Add (originCell);
-
-		for (int i = 0; i < linesCells.Count; i++) 
-		{
-			linesCellsXY.Add (cellManager.getCellXYPosition(linesCells[i]));
-		}
-
-		linesCellsXY.Remove (originXY);
-
-		while (count < cellManager.columns) 
-		{
-			for (int i = 0; i < counter; i++) 
-			{
-			}
-		}
-
-		return orderedCells;
-	}*/
 }

@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 		goalManager		= FindObjectOfType<GoalManager>();
 		linesAnimation 	= FindObjectOfType<LinesCreatedAnimation> ();
 
-		linesAnimation.OnAnimationFinish += OnLinesAnimationEnded;
+		linesAnimation.OnCellFlipped += OnCellFlipped; 
 
 		wordManager.setMaxAllowedLetters(PersistentData.instance.maxWordLength);
 		wordManager.gridLettersParent = gridLettersContainer;
@@ -301,7 +301,8 @@ public class GameManager : MonoBehaviour
 
 	private void convertLinesToLetters(List<List<Cell>> cells)
 	{
-		List<Cell> cellsToAnimate = new List<Cell> ();
+		List<Cell>  cellsToAnimate = new List<Cell> ();
+		List<Letter> letters = new List<Letter>();
 
 		for (int i = 0; i < cells.Count; i++) 
 		{
@@ -309,20 +310,19 @@ public class GameManager : MonoBehaviour
 			{
 				if (cells [i] [j].contentType != Piece.EType.LETTER) 
 				{
-					//TODO: Ese tiempo hardcodeado por el count esta raro, hay que usar algun callback
-					//StartCoroutine( startFlashPiece (cells [i] [j].content,cells[i][j],0.05f*count));
 					cellsToAnimate.Add(cells[i][j]);
+					letters.Add(wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL));
 				}
 			}
 		}
 
-		linesAnimation.configurateAnimation(cellsToAnimate,cellManager,wordManager);
+		linesAnimation.configurateAnimation(cellsToAnimate,letters);
 	}
 
-	protected void OnLinesAnimationEnded(Cell cell,Letter letter, Piece.EType type, Piece.EColor color)
+	protected void OnCellFlipped(Cell cell, Letter letter)
 	{
-		cellManager.occupyAndConfigureCell (cell,letter.gameObject,type,color);
-		gridCharacters.Add(letter);
+		cellManager.occupyAndConfigureCell (cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE);
+		gridCharacters.Add(letter);	
 	}
 
 	//TODO: checar nombre
