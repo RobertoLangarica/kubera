@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 		secondChance.OnSecondChanceAquired += secondChanceBought;
 		secondChance.gameObject.SetActive (false);
 
-		linesAnimation.OnAnimationFinish += OnLinesAnimationEnded;
+		linesAnimation.OnCellFlipped += OnCellFlipped; 
 
 		wordManager.setMaxAllowedLetters(PersistentData.instance.maxWordLength);
 		wordManager.gridLettersParent = gridLettersContainer;
@@ -313,7 +313,8 @@ public class GameManager : MonoBehaviour
 
 	private void convertLinesToLetters(List<List<Cell>> cells)
 	{
-		List<Cell> cellsToAnimate = new List<Cell> ();
+		List<Cell>  cellsToAnimate = new List<Cell> ();
+		List<Letter> letters = new List<Letter>();
 
 		for (int i = 0; i < cells.Count; i++) 
 		{
@@ -322,16 +323,17 @@ public class GameManager : MonoBehaviour
 				if (cells [i] [j].contentType != Piece.EType.LETTER) 
 				{
 					cellsToAnimate.Add(cells[i][j]);
+					letters.Add(wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL));
 				}
 			}
 		}
 
-		linesAnimation.configurateAnimation(cellsToAnimate,cellManager,wordManager);
+		linesAnimation.configurateAnimation(cellsToAnimate,letters);
 	}
 
-	protected void OnLinesAnimationEnded(Cell cell,Letter letter, Piece.EType type, Piece.EColor color)
+	protected void OnCellFlipped(Cell cell, Letter letter)
 	{
-		cellManager.occupyAndConfigureCell (cell,letter.gameObject,type,color);
+		cellManager.occupyAndConfigureCell (cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE);
 		gridCharacters.Add(letter);
 
 		checkIfLoose ();
