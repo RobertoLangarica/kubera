@@ -67,6 +67,6 @@ public class Square : MonoBehaviour
 		animSprite.enabled = false;
 		animSprite.autoUpdate = false;
 
-		OnCellFlipped (cell,letter);
+		OnCellFlipped (this,cell,letter);
 	}
 }
