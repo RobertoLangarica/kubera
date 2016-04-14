@@ -396,7 +396,7 @@ public class WordManager : MonoBehaviour
 	{
 		wordContainerLayout.enabled = activate;
 	}
-
+		
 	private void resetValidationToSiblingOrder ()
 	{
 		letters.Clear();

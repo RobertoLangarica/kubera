@@ -28,8 +28,8 @@ public class InputWords : MonoBehaviour
 	//Foa animation on grid
 	public float scalePercent = 0.8f;
 	public float animationTime = 0.5f;
-	public bool allowAnimation = true;
-	public bool allowAnimation2 = true;
+	protected bool allowPushDownAnimation = true;
+	protected bool allowAnimation = true;
 
 	protected Vector3 firstPosition;
 
@@ -165,13 +165,13 @@ public class InputWords : MonoBehaviour
 
 	void OnLetterGridFingerDown(FingerDownEvent gesture)
 	{
-		if (allowInput && gesture.Raycast.Hit2D && allowAnimation) 
+		if (allowInput && gesture.Raycast.Hit2D && allowPushDownAnimation) 
 		{
 			target = gesture.Raycast.Hit2D.transform.gameObject;
 			Vector3 finalScale = target.transform.localScale;
 			target.transform.localScale = finalScale * scalePercent;
+			allowPushDownAnimation = false;
 			allowAnimation = false;
-			allowAnimation2 = false;
 		}
 	}
 
@@ -181,13 +181,13 @@ public class InputWords : MonoBehaviour
 		{
 			Vector3 finalScale = target.transform.localScale / scalePercent;
 
-			if(!allowAnimation2)
+			if(!allowAnimation)
 			{			
-				allowAnimation2 = true;
+				allowAnimation = true;
 				DOTween.Kill ("InputW_Grid_Scale_Selection");
 				target.transform.DOScale (finalScale, animationTime).OnComplete(()=>
 					{
-						allowAnimation = true;
+						allowPushDownAnimation = true;
 						target = null;
 					});
 			}
@@ -197,7 +197,7 @@ public class InputWords : MonoBehaviour
 
 	void OnLetterGridTap(TapGesture gesture)
 	{
-		if(allowInput && gesture.Raycast.Hit2D && allowAnimation2)
+		if(allowInput && gesture.Raycast.Hit2D && allowAnimation)
 		{		
 			GameObject target = gesture.Raycast.Hit2D.transform.gameObject;
 
@@ -205,16 +205,10 @@ public class InputWords : MonoBehaviour
 				{
 					onTap(gesture.Raycast.Hit2D.transform.gameObject);
 				}	
-
-			//Invoke ("activateAllowAnimation", animationTime);
-
 		}
 	}
 
-	void activateAllowAnimation()
-	{
-		allowAnimation = true;
-	}
+
 
 	void OnLetterWordTap(TapGesture gesture)
 	{
