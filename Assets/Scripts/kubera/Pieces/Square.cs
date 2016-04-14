@@ -72,6 +72,7 @@ public class Square : MonoBehaviour
 		flipAnimation.enabled = false;
 		flipAnimation.autoUpdate = false;
 
+
 		OnCellFlipped (this, cellParent,letter);
 	}
 }
