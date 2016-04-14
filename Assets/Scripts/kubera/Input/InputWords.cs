@@ -7,6 +7,7 @@ public class InputWords : MonoBehaviour
 {
 	protected int lastTimeDraggedFrame;
 	protected GameObject letter;
+	protected GameObject target;
 
 	//Para notificar estados del drag a otros objetos
 	public delegate void DInputWordNotification(GameObject letter);
@@ -27,7 +28,8 @@ public class InputWords : MonoBehaviour
 	//Foa animation on grid
 	public float scalePercent = 0.8f;
 	public float animationTime = 0.5f;
-	protected bool allowAnimation = true;
+	public bool allowAnimation = true;
+	public bool allowAnimation2 = true;
 
 	protected Vector3 firstPosition;
 
@@ -161,25 +163,57 @@ public class InputWords : MonoBehaviour
 		drag = false;
 	}
 
+	void OnLetterGridFingerDown(FingerDownEvent gesture)
+	{
+		if (allowInput && gesture.Raycast.Hit2D && allowAnimation) 
+		{
+			target = gesture.Raycast.Hit2D.transform.gameObject;
+			Vector3 finalScale = target.transform.localScale;
+			target.transform.localScale = finalScale * scalePercent;
+			allowAnimation = false;
+			allowAnimation2 = false;
+		}
+	}
+
+	void OnLetterGridFingerUp(FingerUpEvent gesture)
+	{
+		if (allowInput && target != null) 
+		{
+			Vector3 finalScale = target.transform.localScale / scalePercent;
+
+			if(!allowAnimation2)
+			{			
+				allowAnimation2 = true;
+				DOTween.Kill ("InputW_Grid_Scale_Selection");
+				target.transform.DOScale (finalScale, animationTime).OnComplete(()=>
+					{
+						allowAnimation = true;
+						target = null;
+					});
+			}
+
+		}
+	}
+
 	void OnLetterGridTap(TapGesture gesture)
 	{
-		if(allowInput && gesture.Raycast.Hit2D && allowAnimation)
+		if(allowInput && gesture.Raycast.Hit2D && allowAnimation2)
 		{		
 			GameObject target = gesture.Raycast.Hit2D.transform.gameObject;
-			Vector3 finalScale = target.transform.localScale;
-
-			allowAnimation = false;
-
-			target.transform.localScale = finalScale * scalePercent;
-
-			DOTween.Kill ("InputW_Grid_Scale_Selection");
-			target.transform.DOScale (finalScale, animationTime).SetId ("InputW_Grid_Scale_Selection").OnComplete(()=>{allowAnimation = true;});
 
 			if (target.layer == LayerMask.NameToLayer ("LetterOnGrid")) 
-			{
-				onTap(gesture.Raycast.Hit2D.transform.gameObject);
-			}
+				{
+					onTap(gesture.Raycast.Hit2D.transform.gameObject);
+				}	
+
+			//Invoke ("activateAllowAnimation", animationTime);
+
 		}
+	}
+
+	void activateAllowAnimation()
+	{
+		allowAnimation = true;
 	}
 
 	void OnLetterWordTap(TapGesture gesture)

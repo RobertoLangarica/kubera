@@ -66,9 +66,6 @@ public class LinesCreatedAnimation : MonoBehaviour
 
 			yield return new WaitUntil (()=> animSprite.sequences[0].currentFrame >= 26);
 
-			animSprite.enabled = false;
-			animSprite.autoUpdate = false;
-
 			OnAnimationFinish (cell,letter,Piece.EType.LETTER,Piece.EColor.NONE);
 		}
 	}

@@ -386,7 +386,7 @@ public class WordManager : MonoBehaviour
 	{
 		if(!wordsValidator.isAWordPossible(pool))
 		{
-			print("perdio de verdad");
+			print("no se puede hacer palabra");
 			return false;
 		}
 		return true;
@@ -415,7 +415,10 @@ public class WordManager : MonoBehaviour
 
 		foreach(Letter l in letters)
 		{
-			wordsValidator.validateChar(l.abcChar);
+			if(l != null)
+			{
+				wordsValidator.validateChar(l.abcChar);
+			}
 		}
 
 		//afterWordValidation();
@@ -469,6 +472,10 @@ public class WordManager : MonoBehaviour
 
 		for (int i = 0; i < letters.Count; i++) 
 		{
+			if(letters[i] == null)
+			{
+				continue;
+			}
 			switch (letters[i].abcChar.pointsOrMultiple) 
 			{
 			case("x2"):
