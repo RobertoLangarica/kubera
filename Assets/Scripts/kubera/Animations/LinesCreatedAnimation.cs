@@ -7,6 +7,7 @@ public class LinesCreatedAnimation : MonoBehaviour
 	public delegate void DAnimationFinished(Cell cell,Letter letter, Piece.EType type, Piece.EColor color);
 
 	public DAnimationFinished OnAnimationFinish;
+	public bool isOnAnimation;
 
 	public float betweenFlashTime = 0.1f;
 	public float cellsDelayTime = 0.5f;
@@ -23,6 +24,7 @@ public class LinesCreatedAnimation : MonoBehaviour
 
 		for (int i = 0; i < cellsToAnimate.Count; i++) 
 		{
+			isOnAnimation = true;
 			StartCoroutine (startFlashPiece(cellsToAnimate[i]));
 		}
 	}
@@ -65,6 +67,12 @@ public class LinesCreatedAnimation : MonoBehaviour
 			letter.gameObject.SetActive(true);
 
 			yield return new WaitUntil (()=> animSprite.sequences[0].currentFrame >= 26);
+
+			Debug.Log (isOnAnimation);
+			if (cellsToAnimate.IndexOf (cell) == (cellsToAnimate.Count - 1)) 
+			{
+				isOnAnimation = false;
+			}
 
 			OnAnimationFinish (cell,letter,Piece.EType.LETTER,Piece.EColor.NONE);
 		}
