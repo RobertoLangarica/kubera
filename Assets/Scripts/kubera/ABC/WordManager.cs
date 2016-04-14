@@ -22,6 +22,7 @@ public class WordManager : MonoBehaviour
 	public GameObject gridLetterPrefab;
 	public GameObject letterPrefab;
 	public GameObject letterContainer;
+	protected Transform letterContainerTransform;
 	[HideInInspector]public Transform gridLettersParent;
 	[HideInInspector]public Vector2 gridLettersSizeDelta;
 
@@ -60,6 +61,7 @@ public class WordManager : MonoBehaviour
 	public float selectAnimationTime = 1;
 	public GameObject gridInvisibleChild;
 
+
 	void Start()
 	{
 		letters = new List<Letter>(maxLetters);
@@ -74,6 +76,7 @@ public class WordManager : MonoBehaviour
 
 		wordContainerLayout.cellSize = new Vector2(cellSize,cellSize);
 
+		letterContainerTransform = letterContainer.transform;
 
 		wordsValidator = FindObjectOfType<ABCDictionary>();
 
@@ -128,24 +131,22 @@ public class WordManager : MonoBehaviour
 
 	private void fillLettersPositions()
 	{
-		Transform container = letterContainer.transform;
-		lettersPositions = new Vector2[container.childCount];
-		for(int i=0; i< container.childCount; i++)
+		lettersPositions = new Vector2[letterContainerTransform.childCount];
+		for(int i=0; i< letterContainerTransform.childCount; i++)
 		{
-			lettersPositions[i] = container.GetChild(i).GetComponent<RectTransform>().anchoredPosition;
+			lettersPositions[i] = letterContainerTransform.GetChild(i).GetComponent<RectTransform>().anchoredPosition;
 		}
 	}
 
 	private void OnLetterDragging(GameObject letter)
 	{
-		Transform container = letterContainer.transform;
 		RectTransform letterRect = letter.GetComponent<RectTransform>();
 
-		for(int i = 0; i< container.childCount; i++)
+		for(int i = 0; i< letterContainerTransform.childCount; i++)
 		{			
-			if(container.GetChild(i).gameObject != letter)
+			if(letterContainerTransform.GetChild(i).gameObject != letter)
 			{
-				RectTransform childRect = container.GetChild(i).GetComponent<RectTransform>();
+				RectTransform childRect = letterContainerTransform.GetChild(i).GetComponent<RectTransform>();
 
 				if( 	childRect.anchoredPosition.x > (letterRect.anchoredPosition.x - (letterRect.rect.width*0.2f) ) 
 					&&	childRect.anchoredPosition.x < (letterRect.anchoredPosition.x + (letterRect.rect.width*0.2f) ) )
@@ -155,9 +156,9 @@ public class WordManager : MonoBehaviour
 						//izquierda a derecha
 						siblingIndexAfterDrag = i;
 
-						for(int j=container.childCount-2; j>=i; j--)
+						for(int j=letterContainerTransform.childCount-2; j>=i; j--)
 						{
-							RectTransform childPosition = container.GetChild (j).GetComponent<RectTransform> ();
+							RectTransform childPosition = letterContainerTransform.GetChild (j).GetComponent<RectTransform> ();
 							childPosition.anchoredPosition = new Vector2(lettersPositions[j+1].x,childPosition.anchoredPosition.y);
 						}
 					}
@@ -168,7 +169,7 @@ public class WordManager : MonoBehaviour
 
 						for(int j =0; j<=i; j++)
 						{
-							RectTransform childPosition = container.GetChild (j).GetComponent<RectTransform> ();
+							RectTransform childPosition = letterContainerTransform.GetChild (j).GetComponent<RectTransform> ();
 							childPosition.anchoredPosition = new Vector2(lettersPositions[j].x,childPosition.anchoredPosition.y);
 						}
 					}
@@ -292,13 +293,15 @@ public class WordManager : MonoBehaviour
 
 		onLettersChange();
 		lettersCountChange ();
+		gridInvisibleChild.transform.SetParent(letterContainerTransform.parent);
+
 	}
 
 	private void lettersCountChange ()
 	{
 		float data;
 		float widthGrid = wordContainerRectTransform.rect.width;
-		float childCount = letterContainer.transform.childCount; 
+		float childCount =letterContainerTransform.childCount; 
 
 		data = wordContainerLayout.cellSize.x * childCount;
 		data = widthGrid - data;
@@ -318,35 +321,34 @@ public class WordManager : MonoBehaviour
 	private void addLetterToContainer(Letter letter)
 	{
 		//Agregamos la letra al ultimo
-		letter.transform.SetParent(letterContainer.transform,false);
+		letter.transform.SetParent(letterContainerTransform,false);
 
 		//TODO: Porque se hace este resize
 		//para que tengan el collider del tamaño del objeto
 		updateLetterBoxCollider (letter.gameObject);
 
-		gridInvisibleChild.transform.SetParent (letterContainer.transform.parent);
+		gridInvisibleChild.transform.SetParent (letterContainerTransform.parent);
 	}
 
 	private void selectLetterAnimation(Letter letter)
 	{
-		letter.transform.SetParent(letterContainer.transform.parent,false);
+		letter.transform.SetParent(letterContainerTransform.parent,false);
 		letter.transform.position = lastSelected.transform.position;
 
-		GridLayoutGroup grid = letterContainer.GetComponent<GridLayoutGroup> ();
-		letter.GetComponent<RectTransform> ().sizeDelta = grid.cellSize;
+		letter.GetComponent<RectTransform> ().sizeDelta = wordContainerLayout.cellSize;
 
-		Vector3 finalPos = letterContainer.transform.position;
+		Vector3 finalPos = letterContainerTransform.position;
 
-		if (letterContainer.transform.childCount > 0) 
+		if (letterContainerTransform.childCount > 0) 
 		{
-			finalPos = letterContainer.transform.GetChild (letterContainer.transform.childCount - 1).position;
-			finalPos.x += (grid.cellSize.x + grid.spacing.x) * 0.01f;
+			finalPos = letterContainerTransform.GetChild (letterContainerTransform.childCount - 1).position;
+			finalPos.x += (wordContainerLayout.cellSize.x + wordContainerLayout.spacing.x) * 0.01f;
 		}
 
 		letter.transform.DOMove (finalPos, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letter);});
 
 
-		gridInvisibleChild.transform.SetParent(letterContainer.transform);
+		gridInvisibleChild.transform.SetParent(letterContainerTransform);
 		lettersCountChange ();
 
 	}
@@ -401,9 +403,9 @@ public class WordManager : MonoBehaviour
 	{
 		letters.Clear();
 
-		for(int i=0; i<letterContainer.transform.childCount; i++)
+		for(int i=0; i<letterContainerTransform.childCount; i++)
 		{
-			letters.Add(letterContainer.transform.GetChild(i).GetComponent<Letter>());
+			letters.Add(letterContainerTransform.GetChild(i).GetComponent<Letter>());
 		}
 
 		validateAllLetters();
@@ -521,7 +523,7 @@ public class WordManager : MonoBehaviour
 
 	private bool isThereAnyLetterOnContainer()
 	{
-		return (letterContainer.transform.childCount == 0 ? false:true); 
+		return (letterContainerTransform.childCount == 0 ? false:true); 
 	}
 
 	public void changeDeleteState(EDeleteState state)
