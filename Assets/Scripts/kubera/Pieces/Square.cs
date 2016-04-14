@@ -23,21 +23,21 @@ public class Square : MonoBehaviour
 	{
 		flash.enabled = true;
 
-
-		flash.startFlash();
+		flash.startFlash(spriteRenderer,0.1f);
 		flash.onFinish += secondFlash;
 	}
 
 
 	public void secondFlash()
 	{
-		flash.startFlash();
-		flash.onFinish += secondFlash;
+		flash.onFinish -= secondFlash;
+		flash.startFlash(spriteRenderer,0.3f);
+		flash.onFinish += onDoubleFlashCompleted;
 	}
 
 	private void onDoubleFlashCompleted()
 	{
-		//Callback	
+		//flash.enabled = false;
 	}
 
 	public void doFlip(Cell cellParent, Letter letterAfterFlip, float delay )
@@ -46,7 +46,7 @@ public class Square : MonoBehaviour
 		this.cellParent = cellParent;
 		letter = letterAfterFlip;
 
-		Invoke("startFlipAnimation");
+		StartCoroutine (startFlipAnimation (delay*0.2f));
 	}
 
 	IEnumerator startFlipAnimation(float delayTime)

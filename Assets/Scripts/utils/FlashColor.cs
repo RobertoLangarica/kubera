@@ -30,7 +30,7 @@ public class FlashColor : MonoBehaviour {
 			{
 				coloring = false;
 
-				if(OnFinish != null)
+				if(onFinish != null)
 				{
 					onFinish();	
 				}

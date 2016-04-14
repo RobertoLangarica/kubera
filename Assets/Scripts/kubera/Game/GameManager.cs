@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour
 			{
 				//Cuadro de color
 				Piece content = pieceManager.getSingleSquarePiece(cellType>>6);
-				cellManager.occupyAndConfigureCell(i,content.gameObject,content.currentType,content.currentColor,true);
+				cellManager.occupyAndConfigureCell(i,content.gameObject.transform.GetChild (0).gameObject,content.currentType,content.currentColor,true);
 			}
 			else if((cellType & 0x8) == 0x8)
 			{	

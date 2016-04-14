@@ -22,32 +22,38 @@ public class LinesCreatedAnimation : MonoBehaviour
 
 		for (int i = 0; i < cellsToAnimate.Count; i++) 
 		{
-			letters[i].gameObject.SetActive(false)
-			StartCoroutine (startFlashPiece(cellsToAnimate[i]));
+			Square square = cellsToAnimate [i].content.GetComponent<Square> ();
+			letters [i].gameObject.SetActive (false);
+			StartCoroutine (startFlashPiece(square,cellsToAnimate[i],letters[i]));
 		}
 	}
 
 	IEnumerator startFlashPiece(Square square, Cell cellParent, Letter letterContent)
 	{
-		FlashColor flashColor = cell.content.GetComponent<FlashColor> ();
-		SpriteRenderer spriteRenderer = cell.content.GetComponent<SpriteRenderer> ();
+		square.flash.enabled = true;
 
 		yield return new WaitForSeconds (betweenFlashTime);
-		flashColor.startFlash (spriteRenderer,0.1f);
+		square.flash.startFlash (square.spriteRenderer,0.1f);
 		yield return new WaitForSeconds (betweenFlashTime * 2);
-		flashColor.startFlash (spriteRenderer,0.3f);
+		square.flash.startFlash (square.spriteRenderer,0.1f);
 		yield return new WaitForSeconds (betweenFlashTime);
 
 
 		//TODO:Iniciar flip en Square
 		//TODO: escuchar callback onFlipped de square
 		//TODO: Mandar callback hacia afuer
-		StartCoroutine( startAnimationFlipPiece (cell.content,cell,cellsDelayTime * (cellsToAnimate.IndexOf(cell)+1)));
+		square.OnCellFlipped += flipCallBack;
+		square.doFlip(cellParent,letterContent,cellsDelayTime * (cellsToAnimate.IndexOf(cellParent)+1));
+		//StartCoroutine( startAnimationFlipPiece (cell.content,cell,cellsDelayTime * (cellsToAnimate.IndexOf(cell)+1)));
 	}
 
+	public void flipCallBack(Square square, Cell cellParent, Letter letterContent)
+	{
+		square.OnCellFlipped -= flipCallBack;
+		OnCellFlipped (cellParent,letterContent);
+	}
 
-
-	IEnumerator startAnimationFlipPiece(GameObject obj, Cell cell,float delayTime)
+	/*IEnumerator startAnimationFlipPiece(GameObject obj, Cell cell,float delayTime)
 	{
 		AnimatedSprite animSprite = obj.GetComponent < AnimatedSprite> ();
 		yield return new WaitForSeconds (delayTime);
@@ -77,5 +83,5 @@ public class LinesCreatedAnimation : MonoBehaviour
 
 			OnCellFlipped (cell,letter);
 		}
-	}
+	}*/
 }

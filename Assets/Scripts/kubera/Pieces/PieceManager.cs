@@ -89,6 +89,19 @@ public class PieceManager : MonoBehaviour
 			{
 				prefabs.Add((GameObject)Resources.Load(info[1]));
 				prefabs[prefabs.Count-1].SetActive(false);
+
+				//changeSquares
+				/*for(int k=0; k<prefabs [prefabs.Count - 1].GetComponent<Piece> ().squares.Length; k++)
+				{
+					if(!prefabs [prefabs.Count - 1].GetComponent<Piece> ().squares[k].gameObject.GetComponent<Square>())
+					{
+						print ("S");
+						Square square= prefabs [prefabs.Count - 1].GetComponent<Piece> ().squares[k].gameObject.AddComponent<Square> ();
+						square.flash = square.gameObject.GetComponent<FlashColor> ();
+						square.flipAnimation = square.gameObject.GetComponent<AnimatedSprite> ();
+						square.spriteRenderer = square.gameObject.GetComponent<SpriteRenderer> ();
+					}
+				}*/
 			}
 		}
 
