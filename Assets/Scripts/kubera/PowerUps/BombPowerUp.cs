@@ -24,7 +24,7 @@ public class BombPowerUp : PowerupBase
 		bombInput = FindObjectOfType<InputBombAndDestroy>();
 		wordManager = FindObjectOfType<WordManager>();
 
-		for(int i=0; i<8; i++)
+		for(int i=0; i<1; i++)
 		{
 			addAnimationToThePool ();
 		}
@@ -110,7 +110,8 @@ public class BombPowerUp : PowerupBase
 			Square square = selectionList [random].content.GetComponent<Square> ();
 
 			Letter letter = wordManager.getGridLetterFromPool (WordManager.EPoolType.NORMAL);
-			letter.enabled = false;
+			letter.gameObject.SetActive(false);
+
 			StartCoroutine (startAnimation (square, selectionList [random], letter, 0.1f));
 			selectionList.Remove (selectionList [random]);
 
@@ -121,7 +122,8 @@ public class BombPowerUp : PowerupBase
 	IEnumerator startAnimation(Square square,Cell cellParent,Letter letter,float delay)
 	{
 		AnimatedSprite animSprite = getFreeAnimation ();
-		letter.enabled = false;
+		letter.gameObject.SetActive(false);
+
 
 		Vector3 cellPosition =  cellParent.transform.position + (new Vector3 (cellParent.GetComponent<SpriteRenderer> ().bounds.extents.x,
 			-cellParent .GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
@@ -134,17 +136,16 @@ public class BombPowerUp : PowerupBase
 		animSprite.enabled = true;
 		animSprite.autoUpdate = true;
 		yield return new WaitUntil (()=> animSprite.sequences[0].currentFrame >= 6);
+		square.OnCellFlipped += callbackOnFliped;
+		square.doFlip (cellParent, letter, delay);
 
-
-		//yield return new WaitUntil (()=> animSprite.sequences[0].currentFrame >= 11);
+		yield return new WaitUntil (()=> animSprite.sequences[0].currentFrame >= 11);
 
 		animSprite.enabled = false;
 		animSprite.autoUpdate = false;
 		animSprite.sequences [0].currentFrame = 0;
 		releaseAnimation (animSprite);
-		yield return new WaitForSeconds (0.1f);
-		square.OnCellFlipped += callbackOnFliped;
-		square.doFlip (cellParent, letter, delay);
+
 	}
 
 	public AnimatedSprite getFreeAnimation()
