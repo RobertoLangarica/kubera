@@ -522,7 +522,7 @@ public class GameManager : MonoBehaviour
 
 	protected void secondChanceBought()
 	{
-		remainingMoves += secondChance.secondChanceMovements;
+		remainingMoves += secondChance.movements;
 		actualizeHUDInfo ();
 	}
 
