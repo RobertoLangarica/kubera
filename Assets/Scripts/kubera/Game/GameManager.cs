@@ -525,6 +525,7 @@ public class GameManager : MonoBehaviour
 	{
 		remainingMoves += secondChance.movements;
 		actualizeHUDInfo ();
+		secondChanceBomb ();
 	}
 
 	//TODO: un mejor nombre
@@ -718,7 +719,7 @@ public class GameManager : MonoBehaviour
 
 	protected bool canActivatePowerUp(PowerupBase.EType type)
 	{
-		if(type == PowerupBase.EType.BOMB && bombsUsed > 0)
+		if(type != PowerupBase.EType.BOMB && bombsUsed > 0)
 		{
 			return false;
 		}
