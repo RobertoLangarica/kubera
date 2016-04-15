@@ -8,12 +8,16 @@ public class SecondChancePopUp : PopUpBase
 
 	public DSecondChanceNotification OnSecondChanceAquired;
 
-	public int secondChanceMovements = 5;
-	public int secondChanceBombs = 2;
-	public Text price;
+	public int movements = 5;
+	public int bombs = 2;
+	public Text priceText;
+	public Text movementsText;
+	public Text bombsText;
+
+	public GameObject discountDisplay;
 
 	protected int secondChanceTimes = 0;
-	protected int secondChancePrice;
+	protected int price;
 
 	public override void activate()
 	{
@@ -27,25 +31,34 @@ public class SecondChancePopUp : PopUpBase
 		switch(secondChanceTimes)
 		{
 		case(0):
-			secondChancePrice = 10;
+			price = 10;
 			break;
 		case(1):
-			secondChancePrice = 15;
+			price = 15;
 			break;
 		case(2):
-			secondChancePrice = 20;
+			price = 20;
 			break;
 		default:
-			secondChancePrice = 30;
+			price = 30;
 			break;
 		}
 
-		price.text = secondChancePrice.ToString ();
+		checkDiscount ();
 	}
 
-	protected void buyASecondChance()
+	protected void checkDiscount()
 	{
-		if(TransactionManager.instance.tryToUseGems(secondChancePrice))
+		if (!TransactionManager.instance.checkIfExistEnoughGems (price)) 
+		{
+			price = (int)(price * 0.5f);
+		}
+		priceText.text = price.ToString ();
+	}
+
+	public void buyASecondChance()
+	{
+		if(TransactionManager.instance.tryToUseGems(price))
 		{
 			secondChanceTimes++;
 
@@ -53,8 +66,15 @@ public class SecondChancePopUp : PopUpBase
 			{
 				OnSecondChanceAquired ();
 			}
+
+			popUp.SetActive (false);
 		}
 
 		Debug.Log("Fondos insuficientes");
+	}
+
+	public void giveUp()
+	{
+		popUp.SetActive (false);
 	}
 }
