@@ -46,8 +46,8 @@ public class GameManager : MonoBehaviour
 	private GoalManager		goalManager;
 
 	private LinesCreatedAnimation linesAnimation;
-
 	private SecondChancePopUp secondChance;
+	private SecondChanceModals secondChanceModals;
 
 	private Level currentLevel;
 	private List<Letter> gridCharacters = new List<Letter>();
@@ -56,22 +56,23 @@ public class GameManager : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.A))
 		{
-			allowGameInput (false);
+			secondChanceBomb ();
 		}
 	}
 
 	void Start()
 	{
-		wordManager		= FindObjectOfType<WordManager>();
-		cellManager		= FindObjectOfType<CellsManager>();
-		powerupManager	= FindObjectOfType<PowerUpManager>();
-		hudManager		= FindObjectOfType<HUDManager> ();
-		pieceManager	= FindObjectOfType<PieceManager>();
-		inputPiece		= FindObjectOfType<InputPiece>();
-		inputWords		= FindObjectOfType<InputWords>();
-		goalManager		= FindObjectOfType<GoalManager>();
-		linesAnimation 	= FindObjectOfType<LinesCreatedAnimation> ();
-		secondChance 	= FindObjectOfType<SecondChancePopUp> ();
+		wordManager			= FindObjectOfType<WordManager>();
+		cellManager			= FindObjectOfType<CellsManager>();
+		powerupManager		= FindObjectOfType<PowerUpManager>();
+		hudManager			= FindObjectOfType<HUDManager> ();
+		pieceManager		= FindObjectOfType<PieceManager>();
+		inputPiece			= FindObjectOfType<InputPiece>();
+		inputWords			= FindObjectOfType<InputWords>();
+		goalManager			= FindObjectOfType<GoalManager>();
+		linesAnimation 		= FindObjectOfType<LinesCreatedAnimation> ();
+		secondChance 		= FindObjectOfType<SecondChancePopUp> ();
+		secondChanceModals 	= FindObjectOfType<SecondChanceModals> ();
 
 		secondChance.OnSecondChanceAquired += secondChanceBought;
 		secondChance.gameObject.SetActive (false);
@@ -530,7 +531,9 @@ public class GameManager : MonoBehaviour
 	// el control de las bombas e interrumpir el juego hasta que ponga las bombas
 	protected void secondChanceBomb()
 	{
-		
+		allowGameInput (false);
+		secondChanceModals.activateModals (true);
+		bombsUsed = secondChance.bombs;
 	}
 
 	private void OnLevelGoalAchieved()
@@ -707,19 +710,42 @@ public class GameManager : MonoBehaviour
 		//TODO: Chequeo con transaction manager para ver que onda con las gemas
 		//TODO: Checar lo del precio de los powerUps
 		allowGameInput(false);
-
-		powerupManager.activatePowerUp((PowerupBase.EType) powerupTypeIndex);
+		if(canActivatePowerUp((PowerupBase.EType) powerupTypeIndex))
+		{
+			powerupManager.activatePowerUp((PowerupBase.EType) powerupTypeIndex);
+		}
 	}
 
-	private void OnPowerupCanceled()
+	protected bool canActivatePowerUp(PowerupBase.EType type)
+	{
+		if(type == PowerupBase.EType.BOMB && bombsUsed > 0)
+		{
+			return false;
+		}
+		return true;
+	}
+
+	private void OnPowerupCanceled(PowerupBase.EType type)
 	{
 		allowGameInput(true);
 	}
 
-	private void OnPowerupCompleted()
+	private void OnPowerupCompleted(PowerupBase.EType type)
 	{
 		//TODO: consumimos gemas
-		allowGameInput(true);
+		if(type == PowerupBase.EType.BOMB && bombsUsed > 0)
+		{
+			bombsUsed--;
+			if(bombsUsed == 0)
+			{
+				allowGameInput (true);
+				secondChanceModals.activateModals (false);
+			}
+		}
+		else
+		{
+			allowGameInput(true);
+		}
 	}
 
 	public void activateSettings(bool activate)
