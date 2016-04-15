@@ -52,6 +52,13 @@ public class GameManager : MonoBehaviour
 	private Level currentLevel;
 	private List<Letter> gridCharacters = new List<Letter>();
 
+	void Update()
+	{
+		if(Input.GetKeyDown(KeyCode.A))
+		{
+			allowGameInput (false);
+		}
+	}
 
 	void Start()
 	{
@@ -517,6 +524,13 @@ public class GameManager : MonoBehaviour
 	{
 		remainingMoves += secondChance.secondChanceMovements;
 		actualizeHUDInfo ();
+	}
+
+	//TODO: un mejor nombre
+	// el control de las bombas e interrumpir el juego hasta que ponga las bombas
+	protected void secondChanceBomb()
+	{
+		
 	}
 
 	private void OnLevelGoalAchieved()
