@@ -63,6 +63,10 @@ public class InputWords : MonoBehaviour
 			{	
 				if (!gesture.Raycast.Hit2D) 
 				{
+					if(!allowAnimation)
+					{		
+						animationFingerUp ();
+					}
 					return;
 				}
 				offset = letter.transform.position.y;
@@ -179,20 +183,26 @@ public class InputWords : MonoBehaviour
 	{
 		if (allowInput && target != null) 
 		{
-			Vector3 finalScale = target.transform.localScale / scalePercent;
 
 			if(!allowAnimation)
-			{			
-				allowAnimation = true;
-				DOTween.Kill ("InputW_Grid_Scale_Selection");
-				target.transform.DOScale (finalScale, animationTime).OnComplete(()=>
-					{
-						allowPushDownAnimation = true;
-						target = null;
-					});
+			{		
+				animationFingerUp ();
 			}
-
 		}
+	}
+
+	void animationFingerUp()
+	{
+		Vector3 finalScale = target.transform.localScale / scalePercent;
+
+		allowAnimation = true;
+
+		DOTween.Kill ("InputW_Grid_Scale_Selection");
+		target.transform.DOScale (finalScale, animationTime).OnComplete(()=>
+			{
+				allowPushDownAnimation = true;
+				target = null;
+			});
 	}
 
 	void OnLetterGridTap(TapGesture gesture)
