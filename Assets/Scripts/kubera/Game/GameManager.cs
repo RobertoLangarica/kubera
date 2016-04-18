@@ -464,7 +464,8 @@ public class GameManager : MonoBehaviour
 
 	protected void checkIfLoose()
 	{
-		if (linesAnimation.isOnAnimation) 
+		//HACK: al inicio del nivel que sirve en los tutoriales
+		if (linesAnimation.isOnAnimation || remainingMoves == currentLevel.moves) 
 		{
 			return;
 		}
