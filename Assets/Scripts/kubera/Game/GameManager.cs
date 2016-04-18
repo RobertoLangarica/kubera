@@ -322,8 +322,12 @@ public class GameManager : MonoBehaviour
 			{
 				if (cells [i] [j].contentType != Piece.EType.LETTER) 
 				{
-					cellsToAnimate.Add(cells[i][j]);
-					letters.Add(wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL));
+					if(cellsToAnimate.IndexOf(cells[i][j]) == -1)
+					{
+						cellsToAnimate.Add(cells[i][j]);
+
+						letters.Add(wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL));						
+					}
 				}
 			}
 		}
