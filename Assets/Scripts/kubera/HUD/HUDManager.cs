@@ -61,8 +61,7 @@ public class HUDManager : MonoBehaviour
 
 	}
 
-	//TODO: setter de points
-	public void actualizePoints(int pointsCount)
+	public void updateTextPoints(int pointsCount)
 	{
 		points.text = pointsCount.ToString();
 		hudStars.setMeterPoints (pointsCount);
@@ -70,14 +69,12 @@ public class HUDManager : MonoBehaviour
 		scoreText.text = lettersPointsTitle.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SCORE_HUD_TITLE_ID);
 	}
 		
-	//TODO: setter de movements
-	public void actualizeMovements(int movments)
+	public void updateTextMovements(int movments)
 	{
 		movementsText.text = movments.ToString();
 	}
 
-	//TODO: setter de gems
-	public void actualizeGems (int gems)
+	public void updateTextGems (int gems)
 	{
 		gemsText.text = gems.ToString();
 	}

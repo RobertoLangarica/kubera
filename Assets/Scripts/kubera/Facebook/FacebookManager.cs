@@ -206,7 +206,6 @@ public class FacebookManager : MonoBehaviour
 			return;
 		}
 
-		//TODO: objeto de llave no correcto
 		FB.AppRequest ("Give me a key!", // A message for the user
 			OGActionType.ASKFOR, // Can be .Send or .AskFor depending on what you want to do with the object.
 			"795229890609809", // Here we put the object id we got as a result before.		             
@@ -247,7 +246,6 @@ public class FacebookManager : MonoBehaviour
 			return;
 		}
 
-		//TODO: objeto de llave no correcto
 		FB.AppRequest ("Give me a key!", // A message for the user
 			OGActionType.ASKFOR, // Can be .Send or .AskFor depending on what you want to do with the object.
 			"795229890609809", // Here we put the object id we got as a result before.		             
