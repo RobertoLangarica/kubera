@@ -75,6 +75,8 @@ public class SecondChancePopUp : PopUpBase
 			}
 
 			popUp.SetActive (false);
+			OnComplete ();
+
 			Debug.Log (UserDataManager.instance.playerGems);
 
 			OnComplete ();

@@ -61,8 +61,6 @@ public class DestroyPowerUp : PowerupBase
 		{
 			if(cellSelected.contentType == Piece.EType.PIECE && cellSelected.occupied)
 			{
-				Cell[] selection = cellsManager.getCellsOfSameColor(cellSelected);
-
 				StartCoroutine (startAnim (cellSelected));
 
 				DestroyImmediate(destroyGO);
@@ -97,7 +95,7 @@ public class DestroyPowerUp : PowerupBase
 
 	IEnumerator startAnim(Cell cellSelected)
 	{
-		Cell[] selection =  cellsManager.getCellNeighborsOfSameColor(cellSelected);
+		Cell[] selection =  cellsManager.getCellsOfSameColor(cellSelected);
 		List<Cell> selectionList = new List<Cell>();
 		for(int i=0; i<selection.Length; i++)
 		{

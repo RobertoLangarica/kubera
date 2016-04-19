@@ -47,18 +47,10 @@ public class GameManager : MonoBehaviour
 
 	private LinesCreatedAnimation linesAnimation;
 	private SecondChancePopUp secondChance;
-	private SecondChanceModals secondChanceModals;
+	private SecondChanceFreeBombs secondChanceModals;
 
 	private Level currentLevel;
 	private List<Letter> gridCharacters = new List<Letter>();
-
-	void Update()
-	{
-		if(Input.GetKeyDown(KeyCode.A))
-		{
-			secondChanceBomb ();
-		}
-	}
 
 	void Start()
 	{
@@ -72,7 +64,7 @@ public class GameManager : MonoBehaviour
 		goalManager			= FindObjectOfType<GoalManager>();
 		linesAnimation 		= FindObjectOfType<LinesCreatedAnimation> ();
 		secondChance 		= FindObjectOfType<SecondChancePopUp> ();
-		secondChanceModals 	= FindObjectOfType<SecondChanceModals> ();
+		secondChanceModals 	= FindObjectOfType<SecondChanceFreeBombs> ();
 
 		secondChance.OnSecondChanceAquired += secondChanceBought;
 		secondChance.gameObject.SetActive (false);
@@ -330,8 +322,12 @@ public class GameManager : MonoBehaviour
 			{
 				if (cells [i] [j].contentType != Piece.EType.LETTER) 
 				{
-					cellsToAnimate.Add(cells[i][j]);
-					letters.Add(wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL));
+					if(cellsToAnimate.IndexOf(cells[i][j]) == -1)
+					{
+						cellsToAnimate.Add(cells[i][j]);
+
+						letters.Add(wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL));						
+					}
 				}
 			}
 		}
@@ -472,7 +468,8 @@ public class GameManager : MonoBehaviour
 
 	protected void checkIfLoose()
 	{
-		if (linesAnimation.isOnAnimation) 
+		//HACK: al inicio del nivel que sirve en los tutoriales
+		if (linesAnimation.isOnAnimation || remainingMoves == currentLevel.moves) 
 		{
 			return;
 		}
@@ -533,9 +530,9 @@ public class GameManager : MonoBehaviour
 	// el control de las bombas e interrumpir el juego hasta que ponga las bombas
 	protected void secondChanceBomb()
 	{
-		allowGameInput (false);
-		secondChanceModals.activateModals (true);
-		bombsUsed = secondChance.bombs;
+		bombsUsed += secondChance.bombs;
+		secondChanceModals.actualizeFreeBombs (bombsUsed);
+		secondChanceModals.activateFreeBombs (true);
 	}
 
 	private void OnLevelGoalAchieved()
@@ -720,10 +717,8 @@ public class GameManager : MonoBehaviour
 
 	protected bool canActivatePowerUp(PowerupBase.EType type)
 	{
-		if(type != PowerupBase.EType.BOMB && bombsUsed > 0)
-		{
-			return false;
-		}
+		//Checa si tiene dinero para usar el poder
+		//transaction manager
 		return true;
 	}
 
@@ -735,19 +730,34 @@ public class GameManager : MonoBehaviour
 	private void OnPowerupCompleted(PowerupBase.EType type)
 	{
 		//TODO: consumimos gemas
+		if(isBombAndSecondChance(type))
+		{
+			useFreeBomb ();
+		}
+		
+
+		allowGameInput(true);
+	}
+
+	protected void useFreeBomb()
+	{
+		bombsUsed--;
+
+		secondChanceModals.actualizeFreeBombs (bombsUsed);
+
+		if(bombsUsed == 0)
+		{
+			secondChanceModals.activateFreeBombs (false);
+		}
+	}
+
+	protected bool isBombAndSecondChance(PowerupBase.EType type)
+	{
 		if(type == PowerupBase.EType.BOMB && bombsUsed > 0)
 		{
-			bombsUsed--;
-			if(bombsUsed == 0)
-			{
-				allowGameInput (true);
-				secondChanceModals.activateModals (false);
-			}
+			return true;
 		}
-		else
-		{
-			allowGameInput(true);
-		}
+		return false;
 	}
 
 	public void activateSettings(bool activate)
