@@ -76,6 +76,8 @@ public class SecondChancePopUp : PopUpBase
 
 			popUp.SetActive (false);
 			Debug.Log (UserDataManager.instance.playerGems);
+
+			OnComplete ();
 		}
 
 		Debug.Log("Fondos insuficientes");
@@ -89,5 +91,7 @@ public class SecondChancePopUp : PopUpBase
 		{
 			OnGiveUp ();
 		}
+			
+		OnComplete ();
 	}
 }

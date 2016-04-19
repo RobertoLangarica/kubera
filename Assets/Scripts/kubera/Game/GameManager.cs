@@ -509,6 +509,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	//TODO: cambiar nombre
 	IEnumerator check()
 	{
 		yield return new WaitForSeconds (.2f);

@@ -165,7 +165,11 @@ public class LifesHUDManager : MonoBehaviour
 		{
 			lifesTimer.text = "Lleno";
 		}
-		lifesCount.text = UserDataManager.instance.playerLifes.ToString();
+
+		if (lifesCount != null) 
+		{
+			lifesCount.text = UserDataManager.instance.playerLifes.ToString ();
+		}
 	}
 
 	protected void setLifeDate()
