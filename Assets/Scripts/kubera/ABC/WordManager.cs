@@ -62,7 +62,7 @@ public class WordManager : MonoBehaviour
 	public GameObject gridInvisibleChild;
 
 
-	void Start()
+	void Awake()
 	{
 		letters = new List<Letter>(maxLetters);
 
