@@ -19,6 +19,8 @@ public class CellsManager : MonoBehaviour
 
 	protected float cellScalePercentage = 0.059f;
 
+	protected float percentOfTheCellForInnerRect = 0.05f;
+
 	//Todas las celdas del grid
 	protected List<Cell> cells;
 
@@ -45,6 +47,8 @@ public class CellsManager : MonoBehaviour
 			float screenHeight = ((topOfScreen.position - bottomOfScreen.position).magnitude)*100;
 			float cellScale = (screenHeight*cellScalePercentage) / cellSize;
 			cellSize = screenHeight * (cellScalePercentage*0.01f);
+			float gap = cellSize * 0.1f;
+			gap = 0;
 
 			for(int i = 0;i < _rows;i++)
 			{
@@ -56,9 +60,9 @@ public class CellsManager : MonoBehaviour
 					cells.Add(cellInstance.GetComponent<Cell>());
 					cellInstance.transform.localScale = new Vector3 (cellScale,cellScale,cellScale);
 					
-					cellInitialPosition.x += cellSize;
+					cellInitialPosition.x += cellSize + gap;
 				}
-				cellInitialPosition.y -= cellSize;
+				cellInitialPosition.y -= cellSize + gap;
 				cellInitialPosition.x = transform.position.x;
 			}
 			return true;
@@ -116,31 +120,38 @@ public class CellsManager : MonoBehaviour
 	 * 
 	 * @return Celda bajo el punto o nulo si no existe
 	 */
-	public Cell getCellUnderPoint(Vector2 point)
+	public Cell getCellUnderPoint(Vector3 point,bool useOffset = false)
 	{
-		Vector3 cellPos;
-		float cellWidth, cellHeight;
-		SpriteRenderer renderer;
+		float offset;
+		SpriteRenderer spriteRenderer;
 
+		Cell result = null;
+		int i = 0;
 		foreach(Cell cell in cells)
 		{
-			cellPos		= cell.transform.position;
-			renderer	= cell.gameObject.GetComponent<SpriteRenderer>();
-			cellWidth	= renderer.bounds.size.x;
-			cellHeight	= renderer.bounds.size.y;
+			spriteRenderer	= cell.gameObject.GetComponent<SpriteRenderer>();
+			point.z = spriteRenderer.bounds.center.z;
 
-			if(point.x > cellPos.x && point.x < (cellPos.x + cellWidth) &&
-				point.y < cellPos.y && point.y > (cellPos.y - cellHeight))
+			offset = spriteRenderer.bounds.size.x * percentOfTheCellForInnerRect;
+
+			if (useOffset) 
 			{
-				return cell;
+				if (spriteRenderer.bounds.Contains (new Vector3 (point.x - offset, point.y + offset, point.z)) &&
+				    spriteRenderer.bounds.Contains (new Vector3 (point.x + offset, point.y - offset, point.z))) 
+				{
+					return cell;
+				}
+			}
+			else 
+			{
+				if (spriteRenderer.bounds.Contains (point)) 
+				{
+					return cell;
+				}
 			}
 		}
-		return null;
-	}
 
-	public Cell getCellUnderPoint(Vector3 point)
-	{
-		return getCellUnderPoint(new Vector2(point.x, point.y));
+		return null;
 	}
 
 	/*
@@ -307,14 +318,13 @@ public class CellsManager : MonoBehaviour
 	 */
 	public bool canPositionateAll(GameObject[] objects)
 	{
-		List<Vector3> positions = new List<Vector3>(objects.Length);
-
+		Vector3[] positions = new Vector3[objects.Length];
 		for(int i = 0;i < objects.Length;i++)
 		{
-			positions.Add(objects[i].transform.position);	
+			positions[i] = objects[i].transform.position;
 		}
 
-		return canPositionateAll(positions.ToArray());
+		return canPositionateAll(positions);
 	}
 	
 	/*
@@ -348,15 +358,44 @@ public class CellsManager : MonoBehaviour
 	}
 		
 	/**
-	 * Devuelve las celdas debajo de una pieza
+	 * Devuelve las celdas debajo de una pieza.
+	 * Si se le indica breakIfEmpty = true, detiene la busqueda en cuanto 
+	 * no se encuentra una celda debajo
 	 **/ 
-	public List<Cell> getCellsUnderPiece(Piece piece)
+	public List<Cell> getCellsUnderPiece(Piece piece, bool breakIfEmpty = true)
 	{
 		List<Cell> result = new List<Cell>();
+		Cell cell;
 
 		for(int i = 0;i < piece.squares.Length;i++)
 		{
-			result.Add(getCellUnderPoint(piece.squares[i].transform.position));
+			cell = getCellUnderPoint(piece.squares[i].transform.position,true);
+			if(cell != null)
+			{
+				result.Add(cell);		
+			}
+			else if(breakIfEmpty)
+			{
+				break;
+			}
+		}
+
+		return result;
+	}
+
+	/**
+	 * Devuelve las celdas bajo la pieza que esten libres para posicionarse
+	 **/ 
+	public List<Cell> getFreeCellsUnderPiece(Piece piece)
+	{
+		List<Cell> result = getCellsUnderPiece(piece,true);
+
+		for(int i = result.Count-1;i >= 0 ;i--)
+		{
+			if(result[i].occupied || !result[i].canPositionateOnThisCell())
+			{
+				result.RemoveAt(i);	
+			}
 		}
 
 		return result;
@@ -468,9 +507,13 @@ public class CellsManager : MonoBehaviour
 	public bool checkIfOnePieceCanFit(List<Piece> piecesList)
 	{
 		Vector3 offset = Vector3.zero;
-		float extentsX = cellPrefab.gameObject.GetComponent<SpriteRenderer>().bounds.extents.x;
+		float extentsX = cellSize * 0.5f;
+		float betweenSquaresDist = (piecesList [0].squares [0].transform.position - piecesList [0].squares [1].transform.position).magnitude;
 		Vector3 moveLittle = new Vector3(extentsX,-extentsX,0);
 		Vector3[] vecArr;
+
+		float percent = ((extentsX * 200) / betweenSquaresDist) * 0.01f;
+
 
 		foreach(Cell val in cells)
 		{
@@ -478,13 +521,18 @@ public class CellsManager : MonoBehaviour
 			{
 				for(int i = 0;i < piecesList.Count;i++)
 				{
-					
 					offset = (val.transform.position + moveLittle) - piecesList[i].squares[0].transform.position;
+
 					vecArr = new Vector3[piecesList[i].squares.Length];
-					for(int j = 0;j < piecesList[i].squares.Length;j++)
+
+					vecArr[0] = piecesList[i].squares[0].transform.position + offset;
+					for(int j = 1;j < piecesList[i].squares.Length;j++)
 					{
-						vecArr[j] = piecesList[i].squares[j].transform.position + offset;
+						vecArr[j] = (((piecesList[i].squares[j].transform.position -
+							piecesList[i].squares[0].transform.position) * percent) +
+							piecesList[i].squares[0].transform.position) + offset;
 					}
+
 					if(canPositionateAll(vecArr))
 					{
 						return true;
@@ -516,6 +564,11 @@ public class CellsManager : MonoBehaviour
 		return finalList.ToArray();
 	}
 
+	public Vector2 getCellXYPosition(Cell cell)
+	{
+		return new Vector2 (cells.IndexOf(cell)%columns,cells.IndexOf(cell)/columns);
+	}
+
 	/*
 	 * Busca celdas del mismo color en sus vecinos verticales y horizontales
 	 * 
@@ -527,8 +580,9 @@ public class CellsManager : MonoBehaviour
 	 */
 	protected void searchNeigboursOfSameColor(Cell cell,ref List<Cell> final, ref List<Cell> pending)
 	{
-		int cX = cells.IndexOf(cell)%columns;
-		int cY = cells.IndexOf(cell)/columns;
+		Vector2 cellXY = getCellXYPosition (cell);
+		int cX = (int)cellXY.x;
+		int cY = (int)cellXY.y;
 		Cell tempC = null;
 
 		tempC = getCellAt(cX,cY-1);

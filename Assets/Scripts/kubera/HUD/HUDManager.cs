@@ -48,6 +48,9 @@ public class HUDManager : MonoBehaviour
 	public delegate void DPopUpNotification(string action ="");
 	public DPopUpNotification OnPopUpCompleted;
 
+	public delegate void DNotifyEvent ();
+	public DNotifyEvent OnPiecesScaled;
+
 	void Start () 
 	{
 		hudStars = FindObjectOfType<HUDMetterAndStars> ();
@@ -310,7 +313,14 @@ public class HUDManager : MonoBehaviour
 			pieces[i].positionOnScene = pieces[i].transform.position;
 			pieces[i].initialPieceScale = initialPieceScale;
 			pieces[i].transform.localScale = new Vector3 (0, 0, 0);
-			pieces[i].transform.DOScale(initialPieceScale, 0.25f);
+			if (i == (pieces.Count - 1)) 
+			{
+				pieces [i].transform.DOScale (initialPieceScale, 0.25f).OnComplete (()=>{OnPiecesScaled();});
+			} 
+			else 
+			{
+				pieces[i].transform.DOScale(initialPieceScale, 0.25f);
+			}
 			pieces[i].transform.SetParent (showingPiecesContainer,false);
 		}
 	}

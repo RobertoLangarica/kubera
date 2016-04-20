@@ -6,9 +6,11 @@ public class PowerUpManager : MonoBehaviour
 {
 	public List<PowerupBase> powerups;
 
-	public delegate void DPowerUpNotification();
+	public delegate void DPowerUpNotification(PowerupBase.EType type);
 	public DPowerUpNotification OnPowerupCanceled;
 	public DPowerUpNotification OnPowerupCompleted;
+
+	protected PowerupBase powerup;
 
 	void Start()
 	{
@@ -23,7 +25,7 @@ public class PowerUpManager : MonoBehaviour
 
 	public void activatePowerUp(PowerupBase.EType wichOne)
 	{
-		PowerupBase powerup = getPowerupByType(wichOne);
+		powerup = getPowerupByType(wichOne);
 
 		if(powerup == null)
 		{
@@ -54,7 +56,7 @@ public class PowerUpManager : MonoBehaviour
 	{
 		if(OnPowerupCanceled != null)
 		{
-			OnPowerupCanceled();
+			OnPowerupCanceled(powerup.type);
 		}
 	}
 
@@ -62,7 +64,7 @@ public class PowerUpManager : MonoBehaviour
 	{
 		if(OnPowerupCompleted != null)
 		{
-			OnPowerupCompleted();
+			OnPowerupCompleted(powerup.type);
 		}
 	}
 }

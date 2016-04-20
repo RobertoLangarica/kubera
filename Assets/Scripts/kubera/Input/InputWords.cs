@@ -7,6 +7,7 @@ public class InputWords : MonoBehaviour
 {
 	protected int lastTimeDraggedFrame;
 	protected GameObject letter;
+	protected GameObject target;
 
 	//Para notificar estados del drag a otros objetos
 	public delegate void DInputWordNotification(GameObject letter);
@@ -27,6 +28,7 @@ public class InputWords : MonoBehaviour
 	//Foa animation on grid
 	public float scalePercent = 0.8f;
 	public float animationTime = 0.5f;
+	protected bool allowPushDownAnimation = true;
 	protected bool allowAnimation = true;
 
 	protected Vector3 firstPosition;
@@ -61,6 +63,10 @@ public class InputWords : MonoBehaviour
 			{	
 				if (!gesture.Raycast.Hit2D) 
 				{
+					if(!allowAnimation)
+					{		
+						animationFingerUp ();
+					}
 					return;
 				}
 				offset = letter.transform.position.y;
@@ -161,26 +167,58 @@ public class InputWords : MonoBehaviour
 		drag = false;
 	}
 
+	void OnLetterGridFingerDown(FingerDownEvent gesture)
+	{
+		if (allowInput && gesture.Raycast.Hit2D && allowPushDownAnimation) 
+		{
+			target = gesture.Raycast.Hit2D.transform.gameObject;
+			Vector3 finalScale = target.transform.localScale;
+			target.transform.localScale = finalScale * scalePercent;
+			allowPushDownAnimation = false;
+			allowAnimation = false;
+		}
+	}
+
+	void OnLetterGridFingerUp(FingerUpEvent gesture)
+	{
+		if (allowInput && target != null) 
+		{
+
+			if(!allowAnimation)
+			{		
+				animationFingerUp ();
+			}
+		}
+	}
+
+	void animationFingerUp()
+	{
+		Vector3 finalScale = target.transform.localScale / scalePercent;
+
+		allowAnimation = true;
+
+		DOTween.Kill ("InputW_Grid_Scale_Selection");
+		target.transform.DOScale (finalScale, animationTime).OnComplete(()=>
+			{
+				allowPushDownAnimation = true;
+				target = null;
+			});
+	}
+
 	void OnLetterGridTap(TapGesture gesture)
 	{
 		if(allowInput && gesture.Raycast.Hit2D && allowAnimation)
 		{		
 			GameObject target = gesture.Raycast.Hit2D.transform.gameObject;
-			Vector3 finalScale = target.transform.localScale;
-
-			allowAnimation = false;
-
-			target.transform.localScale = finalScale * scalePercent;
-
-			DOTween.Kill ("InputW_Grid_Scale_Selection");
-			target.transform.DOScale (finalScale, animationTime).SetId ("InputW_Grid_Scale_Selection").OnComplete(()=>{allowAnimation = true;});
 
 			if (target.layer == LayerMask.NameToLayer ("LetterOnGrid")) 
-			{
-				onTap(gesture.Raycast.Hit2D.transform.gameObject);
-			}
+				{
+					onTap(gesture.Raycast.Hit2D.transform.gameObject);
+				}	
 		}
 	}
+
+
 
 	void OnLetterWordTap(TapGesture gesture)
 	{

@@ -89,6 +89,19 @@ public class PieceManager : MonoBehaviour
 			{
 				prefabs.Add((GameObject)Resources.Load(info[1]));
 				prefabs[prefabs.Count-1].SetActive(false);
+
+				//changeSquares
+				/*for(int k=0; k<prefabs [prefabs.Count - 1].GetComponent<Piece> ().squares.Length; k++)
+				{
+					if(!prefabs [prefabs.Count - 1].GetComponent<Piece> ().squares[k].gameObject.GetComponent<Square>())
+					{
+						print ("S");
+						Square square= prefabs [prefabs.Count - 1].GetComponent<Piece> ().squares[k].gameObject.AddComponent<Square> ();
+						square.flash = square.gameObject.GetComponent<FlashColor> ();
+						square.flipAnimation = square.gameObject.GetComponent<AnimatedSprite> ();
+						square.spriteRenderer = square.gameObject.GetComponent<SpriteRenderer> ();
+					}
+				}*/
 			}
 		}
 
@@ -107,19 +120,20 @@ public class PieceManager : MonoBehaviour
 
 	public void showingShadow(Piece piece,bool showing)
 	{
+		//TODO: Cambio a manejo de SortingLayers
 		for(int i=0; i<piece.shadows.Length; i++)
 		{
-			piece.shadows [i].enabled = showing;
-			if(showing)
+			if(piece.shadows [i] != null)
 			{
-				//print (piece.squaresSprite[i].sortingOrder);
-				piece.shadows [i].sortingOrder = 0;
-				piece.squaresSprite[i].sortingOrder = 1 ;
-			}
-			else
-			{
-				piece.shadows [i].sortingOrder = -1;
-				piece.squaresSprite[i].sortingOrder = 0;
+				piece.shadows [i].enabled = showing;
+				if(showing)
+				{
+					piece.squaresSprite [i].sortingLayerName = "Selected";
+				}
+				else
+				{
+					piece.squaresSprite [i].sortingLayerName = "Piece";
+				}
 			}
 		}
 	}
