@@ -62,7 +62,7 @@ public class WordManager : MonoBehaviour
 	public GameObject gridInvisibleChild;
 
 
-	void Start()
+	void Awake()
 	{
 		letters = new List<Letter>(maxLetters);
 
@@ -297,16 +297,15 @@ public class WordManager : MonoBehaviour
 
 	}
 
-	private void lettersCountChange ()
+	private void lettersCountChange (int readjustingInvisibleChild=0)
 	{
 		float data;
 		float widthGrid = wordContainerRectTransform.rect.width;
-		float childCount =letterContainerTransform.childCount; 
+		float childCount =letterContainerTransform.childCount+readjustingInvisibleChild; 
 
 		data = wordContainerLayout.cellSize.x * childCount;
 		data = widthGrid - data;
 		data = (data / childCount - 1);
-
 
 		if(data < 0)
 		{
@@ -323,8 +322,7 @@ public class WordManager : MonoBehaviour
 		//Agregamos la letra al ultimo
 		letter.transform.SetParent(letterContainerTransform,false);
 
-		//TODO: Porque se hace este resize
-		//para que tengan el collider del tamaño del objeto
+		//Se actualiza el tamaño del collider al tamaño de la letra
 		updateLetterBoxCollider (letter.gameObject);
 
 		gridInvisibleChild.transform.SetParent (letterContainerTransform.parent);
@@ -333,6 +331,8 @@ public class WordManager : MonoBehaviour
 	private void selectLetterAnimation(Letter letter)
 	{
 		letter.transform.SetParent(letterContainerTransform.parent,false);
+		lettersCountChange (1);
+
 		letter.transform.position = lastSelected.transform.position;
 
 		letter.GetComponent<RectTransform> ().sizeDelta = wordContainerLayout.cellSize;
@@ -345,11 +345,10 @@ public class WordManager : MonoBehaviour
 			finalPos.x += (wordContainerLayout.cellSize.x + wordContainerLayout.spacing.x) * 0.01f;
 		}
 
-		letter.transform.DOMove (finalPos, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letter);});
+		letter.transform.DOMove (finalPos, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letter); });
 
 
 		gridInvisibleChild.transform.SetParent(letterContainerTransform);
-		lettersCountChange ();
 
 	}
 
@@ -361,10 +360,15 @@ public class WordManager : MonoBehaviour
 	IEnumerator resizeBoxCollider(GameObject letter)
 	{
 		yield return new WaitForSeconds (0.1f);
+
+		BoxCollider2D letterCollider;
 		if (letter != null) 
 		{
-			letter.GetComponent<BoxCollider2D> ().size = letter.GetComponent<Image> ().rectTransform.rect.size;
+			letterCollider = letter.GetComponent<BoxCollider2D> ();
+			letterCollider.size = letter.GetComponent<Image> ().rectTransform.rect.size;
+			letterCollider.enabled = true;
 		}
+		lettersCountChange ();
 	}
 
 	public void setMaxAllowedLetters(int allowedLetters)
