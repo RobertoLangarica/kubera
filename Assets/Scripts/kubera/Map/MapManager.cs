@@ -6,13 +6,13 @@ public class MapManager : MonoBehaviour {
 
 	public ScrollRect scrollRect;
 	public GameObject modal;
-	protected LifesHUDManager lifesHUDManager;
+	protected LifesManager lifesHUDManager;
 	protected PopUpManager popUpManager;
 
 	void Start()
 	{
 		popUpManager = FindObjectOfType<PopUpManager> ();
-		lifesHUDManager = FindObjectOfType<LifesHUDManager> ();
+		lifesHUDManager = FindObjectOfType<LifesManager> ();
 
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;

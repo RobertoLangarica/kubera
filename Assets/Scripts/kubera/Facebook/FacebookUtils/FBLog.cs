@@ -44,7 +44,6 @@ public class FBLog : MonoBehaviour {
 
 		if (!FB.IsLoggedIn)
 		{
-			//TODO: hacer el boton de login activo para que el usuario intente conectarse
 			onLoginComplete (false);
 			//facebookBtn.SetActive (true);
 		}

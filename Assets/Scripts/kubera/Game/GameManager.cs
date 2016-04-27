@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
 
 	private LinesCreatedAnimation linesAnimation;
 	private SecondChancePopUp secondChance;
-	private SecondChanceFreeBombs secondChanceModals;
+	private SecondChanceFreeBombs SecondChanceFreeBombs;
 
 	private Level currentLevel;
 	private List<Letter> gridCharacters = new List<Letter>();
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
 		goalManager			= FindObjectOfType<GoalManager>();
 		linesAnimation 		= FindObjectOfType<LinesCreatedAnimation> ();
 		secondChance 		= FindObjectOfType<SecondChancePopUp> ();
-		secondChanceModals 	= FindObjectOfType<SecondChanceFreeBombs> ();
+		SecondChanceFreeBombs 	= FindObjectOfType<SecondChanceFreeBombs> ();
 
 		secondChance.OnSecondChanceAquired += secondChanceBought;
 		secondChance.gameObject.SetActive (false);
@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
 		populateGridFromLevel(level);
 
 		initHudValues();
-		actualizeHUDInfo();
+		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
 		refreshCurrentWordScoreOnHUD (wordManager.wordPoints);
 	}
 
@@ -300,7 +300,7 @@ public class GameManager : MonoBehaviour
 			//Puntos por las lineas creadas
 			linesCreated (cells.Count);
 			convertLinesToLetters (cells);
-		} 
+		}
 		else if(!piecesWhereCreated)
 		{
 			checkIfLoose ();
@@ -308,7 +308,7 @@ public class GameManager : MonoBehaviour
 
 		Destroy(piece.gameObject);
 
-		actualizeHUDInfo ();
+		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
 	}
 
 	private void convertLinesToLetters(List<List<Cell>> cells)
@@ -325,6 +325,8 @@ public class GameManager : MonoBehaviour
 					if(cellsToAnimate.IndexOf(cells[i][j]) == -1)
 					{
 						cellsToAnimate.Add(cells[i][j]);
+
+						cellManager.setCellContentType (cells[i][j], Piece.EType.LETTER);
 
 						letters.Add(wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL));						
 					}
@@ -360,7 +362,7 @@ public class GameManager : MonoBehaviour
 	{
 		addPoints (earnedPoints);
 		substractMoves(movementsUsed);
-		actualizeHUDInfo ();
+		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
 	}
 
 	protected void addPoints(int amount)
@@ -452,9 +454,9 @@ public class GameManager : MonoBehaviour
 		scoreToStar [2] = currentLevel.scoreToStar3;
 		hudManager.setStarsData (scoreToStar);
 
-		hudManager.actualizePoints(0);
+		hudManager.updateTextPoints(0);
 		hudManager.showPieces (pieceManager.getShowingPieces ());
-		hudManager.actualizeGems(UserDataManager.instance.playerGems);
+		hudManager.updateTextGems(UserDataManager.instance.playerGems);
 		hudManager.setLevelName (currentLevel.name);
 		hudManager.setSecondChanceLock (false);
 
@@ -506,6 +508,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	//TODO: cambiar nombre
 	IEnumerator check()
 	{
 		yield return new WaitForSeconds (.2f);
@@ -521,17 +524,15 @@ public class GameManager : MonoBehaviour
 	protected void secondChanceBought()
 	{
 		remainingMoves += secondChance.movements;
-		actualizeHUDInfo ();
-		secondChanceBomb ();
+		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
+		secondChanceFreeBombs ();
 	}
 
-	//TODO: un mejor nombre
-	// el control de las bombas e interrumpir el juego hasta que ponga las bombas
-	protected void secondChanceBomb()
+	protected void secondChanceFreeBombs()
 	{
 		bombsUsed += secondChance.bombs;
-		secondChanceModals.actualizeFreeBombs (bombsUsed);
-		secondChanceModals.activateFreeBombs (true);
+		SecondChanceFreeBombs.actualizeFreeBombs (bombsUsed);
+		SecondChanceFreeBombs.activateFreeBombs (true);
 	}
 
 	private void OnLevelGoalAchieved()
@@ -578,11 +579,11 @@ public class GameManager : MonoBehaviour
 					cellToLetter.AddRange (cellManager.getCellsOfSameType (Piece.EType.PIECE));
 				}
 				StartCoroutine (addWinLetterAfterActions ());
-				actualizeHUDInfo ();
+				updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
 				return;
 			}
 		}
-		actualizeHUDInfo ();
+		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
 		StartCoroutine (continueExpendingMovements ());
 	}
 
@@ -670,7 +671,7 @@ public class GameManager : MonoBehaviour
 		showFloatingPointsAt (cell.transform.position, amount);
 		addPoints(amount);
 
-		actualizeHUDInfo ();
+		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
 	}
 
 	protected void allowGameInput(bool allowInput = true)
@@ -728,10 +729,14 @@ public class GameManager : MonoBehaviour
 
 	private void OnPowerupCompleted(PowerupBase.EType type)
 	{
-		//TODO: consumimos gemas
 		if(isBombAndSecondChance(type))
 		{
 			useFreeBomb ();
+		}
+		else
+		{
+			//TODO: consumimos gemas
+
 		}
 		
 
@@ -742,11 +747,11 @@ public class GameManager : MonoBehaviour
 	{
 		bombsUsed--;
 
-		secondChanceModals.actualizeFreeBombs (bombsUsed);
+		SecondChanceFreeBombs.actualizeFreeBombs (bombsUsed);
 
 		if(bombsUsed == 0)
 		{
-			secondChanceModals.activateFreeBombs (false);
+			SecondChanceFreeBombs.activateFreeBombs (false);
 		}
 	}
 
@@ -796,21 +801,21 @@ public class GameManager : MonoBehaviour
 		activatePopUp ("exitGame");
 	}
 
-	//TODO: esta funcion no actualiza info de la HUD es mas bien el status del jeugo (hay que ver un mejor nombre)
-	//TODO: Esta funcion deberia ser mas granular, al llamarla ya mandenle los puntos y la condicion de victoria
-	protected void actualizeHUDInfo()
+	//DONE:Le cambie el nombre de actualizeHudInfo a updateHudGameInfo 
+	// esta funcion no actualiza info de la HUD es mas bien el status del jeugo (hay que ver un mejor nombre)
+	protected void updateHudGameInfo (int remainingMoves,int pointsCount,string goalCondition)
 	{
-		hudManager.actualizeMovements (remainingMoves);
-		hudManager.actualizePoints (pointsCount);
+		hudManager.updateTextMovements (remainingMoves);
+		hudManager.updateTextPoints (pointsCount);
 
-		actualizeWinCondition ();
+		updateHudWinCondition (goalCondition);
 	}
 
-	//TODO: Esto no actualiza la condicion de victoria, actualiza la hud y el status en el que va la condicion de victoria
-	//TODO: Esta funcion deberia ser mas granular, al llamarla ya mandenle los puntos y la condicion de victoria
-	protected void actualizeWinCondition()
+	//DONE: Esto no actualiza la condicion de victoria, actualiza la hud y el status en el que va la condicion de victoria
+	//DONE: updateHudWinCondition 
+	protected void updateHudWinCondition(string goalCondition)
 	{
-		switch (goalManager.currentCondition) {
+		switch (goalCondition) {
 		case GoalManager.POINTS:
 			hudManager.actualizePointsOnWinCondition (goalManager.pointsCount.ToString(),goalManager.goalPoints.ToString());
 			break;

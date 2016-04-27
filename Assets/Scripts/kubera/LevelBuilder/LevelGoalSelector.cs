@@ -167,12 +167,12 @@ namespace LevelBuilder
 			{
 				wordPopup.showWarning("Se requieren minimo 3 caracteres.");
 			}
-			else if(!isValidWord(wordPopup.getInputValue()))
+			else if(!isValidWord(wordPopup.getInputValueWithoutAcents()))
 			{
 				wordPopup.showWarning("Palabra no válida para el diccionario.");
 				wordPopup.activateAdd(true);
 			}
-			else if(isPreviouslyUsedWord(wordPopup.getInputValue()))
+			else if(isPreviouslyUsedWord(wordPopup.getInputValueWithoutAcents()))
 			{
 				wordPopup.showWarning("Ya se utiliza en niveles creados anteriormente");
 			}
@@ -262,6 +262,7 @@ namespace LevelBuilder
 			else if(goal[0] == "word")
 			{
 				//wordPopup.setInputValue(goal[1].Split('_')[0]);
+				wordPopup.resetWords ();
 				wordPopup.setWords (goal[1].Split(','));
 				wordPopup.actualizeInputValues();
 				activateDeleteWord ();
@@ -320,14 +321,17 @@ namespace LevelBuilder
 				for(int i=0; i<words.Length; i++)
 				{
 					word = words[i];
+					word =word.ToUpper ();
 					result += word+"_";
 					word = words[i].Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+					word =word.ToUpper ();
 					result += word;
 					if(i+1 < words.Length)
 					{
 						result += ",";
 					}
 				}
+				print (result);
 			}			
 			else if(antonymToggle.isOn)
 			{
@@ -339,14 +343,17 @@ namespace LevelBuilder
 				for(int i=0; i<words.Length; i++)
 				{
 					word = words[i];
+					word =word.ToUpper ();
 					result += word+"_";
 					word = words[i].Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+					word =word.ToUpper ();
 					result += word;
 					if(i+1 < words.Length)
 					{
 						result += ",";
 					}
 				}
+				print (result);
 			}
 			else if(toggleWord.isOn)
 			{
@@ -354,11 +361,13 @@ namespace LevelBuilder
 				string words = wordPopup.getInputValues()[0];
 				string word;
 				result = "word-";
-
 				word = words;
+				word =word.ToUpper ();
 				result += word+"_";
 				word = words.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+				word =word.ToUpper ();
 				result += word;
+				print (result);
 			}	
 
 			return result;
