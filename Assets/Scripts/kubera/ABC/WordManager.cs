@@ -38,7 +38,9 @@ public class WordManager : MonoBehaviour
 	[HideInInspector]public ABCDictionary wordsValidator;
 
 	private int maxLetters = 10;
-	[HideInInspector]public List<Letter> letters;
+	private int l = 0;
+	/*[HideInInspector]*/
+public List<Letter> letters;
 	private int siblingIndexAfterDrag;
 	private Vector2[] lettersPositions;
 
@@ -60,6 +62,7 @@ public class WordManager : MonoBehaviour
 	protected Letter lastSelected;
 	public float selectAnimationTime = 1;
 	public GameObject gridInvisibleChild;
+	public List<GameObject> gridInvisibleChildren;
 
 
 	void Start()
@@ -286,22 +289,33 @@ public class WordManager : MonoBehaviour
 	public void removeLetter(Letter letter)
 	{
 		letter.deselect();
-		GameObject.DestroyImmediate(letter.gameObject);
 		letters.Remove(letter);
+		GameObject.DestroyImmediate(letter.gameObject);
 
 		resetValidationToSiblingOrder();
 
 		onLettersChange();
-		lettersCountChange ();
-		gridInvisibleChild.transform.SetParent(letterContainerTransform.parent);
-
+		/*for(int i=0; i<gridInvisibleChildren.Count; i++)
+		{
+			if(gridInvisibleChildren[i].transform.parent != letterContainer.transform.parent)
+			{
+				gridInvisibleChildren[i].transform.SetParent(letterContainerTransform.parent);
+				break;
+			}
+			if(i == gridInvisibleChildren.Count-1 )
+			{
+				print ("omg");
+			}
+		}*/
 	}
 
 	private void lettersCountChange (int readjustingInvisibleChild=0)
 	{
 		float data;
 		float widthGrid = wordContainerRectTransform.rect.width;
-		float childCount =letterContainerTransform.childCount+readjustingInvisibleChild; 
+		float childCount =letters.Count; 
+
+		print (childCount);
 
 		data = wordContainerLayout.cellSize.x * childCount;
 		data = widthGrid - data;
@@ -325,13 +339,20 @@ public class WordManager : MonoBehaviour
 		//Se actualiza el tamaño del collider al tamaño de la letra
 		updateLetterBoxCollider (letter.gameObject);
 
-		gridInvisibleChild.transform.SetParent (letterContainerTransform.parent);
+
+		for(int i=0; i<gridInvisibleChildren.Count; i++)
+		{
+			if(gridInvisibleChildren[i].transform.parent != letterContainer.transform.parent)
+			{
+				gridInvisibleChildren[i].transform.SetParent(letterContainerTransform.parent);
+				break;
+			}
+		}
 	}
 
 	private void selectLetterAnimation(Letter letter)
 	{
 		letter.transform.SetParent(letterContainerTransform.parent,false);
-		lettersCountChange (1);
 
 		letter.transform.position = lastSelected.transform.position;
 
@@ -345,10 +366,19 @@ public class WordManager : MonoBehaviour
 			finalPos.x += (wordContainerLayout.cellSize.x + wordContainerLayout.spacing.x) * 0.01f;
 		}
 
-		letter.transform.DOMove (finalPos, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letter); });
+		letter.transform.DOMove (finalPos, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letter); }).SetId(letter.index);
 
 
-		gridInvisibleChild.transform.SetParent(letterContainerTransform);
+		//gridInvisibleChild.transform.SetParent(letterContainerTransform);
+
+		for(int i=0; i<gridInvisibleChildren.Count; i++)
+		{
+			if(gridInvisibleChildren[i].transform.parent == letterContainer.transform.parent)
+			{
+				gridInvisibleChildren[i].transform.SetParent(letterContainerTransform);
+				break;
+			}
+		}
 
 	}
 
@@ -368,7 +398,6 @@ public class WordManager : MonoBehaviour
 			letterCollider.size = letter.GetComponent<Image> ().rectTransform.rect.size;
 			letterCollider.enabled = true;
 		}
-		lettersCountChange ();
 	}
 
 	public void setMaxAllowedLetters(int allowedLetters)
@@ -469,6 +498,7 @@ public class WordManager : MonoBehaviour
 		changeDeleteState(EDeleteState.WORD);
 
 		onWordChange (wordPoints);
+		lettersCountChange ();
 	}
 
 	private void updateWordPoints()
@@ -480,6 +510,7 @@ public class WordManager : MonoBehaviour
 		{
 			if(letters[i] == null)
 			{
+				letters.Remove (letters [i]);
 				continue;
 			}
 			switch (letters[i].abcChar.pointsOrMultiple) 
