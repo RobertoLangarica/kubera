@@ -528,15 +528,15 @@ namespace LevelBuilder
 
 		public bool wordExistInDictionary(string word)
 		{
-			word = word.ToLowerInvariant();
-			word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+			word = word.ToUpperInvariant();
+			word = word.Replace('Á','A').Replace('É','E').Replace('Í','I').Replace('Ó','Ó').Replace('Ú','U').Replace('Ü','U');
 			return PersistentData.instance.abcDictionary.isValidWord(word);
 		}
 
 		public bool wordExistInPreviousLevels(string word)
 		{
-			word = word.ToLowerInvariant();
-			word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+			word = word.ToUpperInvariant();
+			word = word.Replace('Á','A').Replace('É','E').Replace('Í','I').Replace('Ó','Ó').Replace('Ú','U').Replace('Ü','U');
 
 			foreach(Level lvl in PersistentData.instance.levelsData.levels)
 			{
@@ -564,8 +564,8 @@ namespace LevelBuilder
 
 		public void addWordToDictionary(string word)
 		{
-			word = word.ToLowerInvariant();
-			word = word.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+			word = word.ToUpperInvariant();
+			word = word.Replace('Á','A').Replace('É','E').Replace('Í','I').Replace('Ó','Ó').Replace('Ú','U').Replace('Ü','U');
 			PersistentData.instance.addWordToDictionary(word,languageSelector.options[languageSelector.value].text);
 			PersistentData.instance.abcDictionary.registerNewWord(word);
 			PersistentData.instance.serializeAndSaveDictionary(languageSelector.options[languageSelector.value].text);

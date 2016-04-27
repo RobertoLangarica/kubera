@@ -65,7 +65,7 @@ public List<Letter> letters;
 	public List<GameObject> gridInvisibleChildren;
 
 
-	void Start()
+	void Awake()
 	{
 		letters = new List<Letter>(maxLetters);
 

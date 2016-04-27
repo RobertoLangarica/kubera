@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 
-public class LifesHUDManager : MonoBehaviour 
+public class LifesManager : MonoBehaviour 
 {
 	public Text lifesCount;
 	public Text lifesTimer;
@@ -62,12 +62,22 @@ public class LifesHUDManager : MonoBehaviour
 		}*/
 	}
 
+	public void takeALife()
+	{
+		if (UserDataManager.instance.playerLifes == UserDataManager.instance.maximumLifes) 
+		{
+			setLifeDate ();
+		}
+
+		UserDataManager.instance.giveLifeToPlayer (-1);
+
+		//setLifeDate ();
+	}
+
 	protected void updateLifesSinceLastPlay()
 	{
 		double toWait = calculateTotalWaitingTime ();
-		Debug.Log (toWait);
 		double sinceLastPlay = lifeDateDifferenceInSecs ();
-		Debug.Log (sinceLastPlay);
 		double difference = 0;
 		int minutes = 0;
 		int lifesGained = 0;
@@ -81,12 +91,17 @@ public class LifesHUDManager : MonoBehaviour
 			lifesGained = (int)minutes / timeForLifeInMinutes;
 
 			//Se entregan las vidas que se hayan juntado
-			Debug.Log(lifesGained);
-			UserDataManager.instance.giveLifeToPlayer (lifesGained);
+			if (lifesGained > 0) 
+			{
+				Debug.Log (lifesGained);
+				UserDataManager.instance.giveLifeToPlayer (lifesGained);
+
+				updateDateOnData (lifesGained);
+			}
 
 			int missingLifes = UserDataManager.instance.maximumLifes - UserDataManager.instance.playerLifes;
 
-			difference -= (missingLifes - 1) * 60;
+			difference -= (missingLifes - 1) * (60 * timeForLifeInMinutes);
 
 			//Se dejan solos los segundos
 			minutes = (int)difference / 60;
@@ -152,6 +167,8 @@ public class LifesHUDManager : MonoBehaviour
 		{
 			currentMinutes = timeForLifeInMinutes;
 			currentSeconds = 0;
+
+			updateDateOnData (1);
 		}
 	}
 
@@ -174,9 +191,16 @@ public class LifesHUDManager : MonoBehaviour
 
 	protected void setLifeDate()
 	{
-		int seconds = (((timeForLifeInMinutes - 1) - currentMinutes) * 60) + (60 - currentSeconds);
+		DateTime lastDate = DateTime.UtcNow;
 
-		DateTime lastDate = DateTime.UtcNow.AddSeconds(-seconds);
+		UserDataManager.instance.lifeTimerDate = lastDate.ToString ("dd-MM-yyyy HH:mm:ss");
+	}
+
+	protected void updateDateOnData(int lifesRegained)
+	{
+		DateTime lastDate = DateTime.ParseExact (UserDataManager.instance.lifeTimerDate,"dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+
+		lastDate = lastDate.AddSeconds (lifesRegained * timeForLifeInMinutes *60);
 
 		UserDataManager.instance.lifeTimerDate = lastDate.ToString ("dd-MM-yyyy HH:mm:ss");
 	}
