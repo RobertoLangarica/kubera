@@ -71,16 +71,6 @@ public List<Letter> letters;
 
 		deleteBtnPosition = deleteButtonImage.transform.localPosition;
 
-		//Tamaño de las celdas
-		wordContainerLayout = letterContainer.GetComponent<GridLayoutGroup>();
-		wordContainerRectTransform = letterContainer.GetComponent<RectTransform> ();
-
-		float cellSize = wordContainerRectTransform.rect.height * 0.9f;
-
-		wordContainerLayout.cellSize = new Vector2(cellSize,cellSize);
-
-		letterContainerTransform = letterContainer.transform;
-
 		wordsValidator = FindObjectOfType<ABCDictionary>();
 
 		inputWords = FindObjectOfType<InputWords> ();
@@ -96,6 +86,19 @@ public List<Letter> letters;
 
 		activateWordDeleteBtn(false);
 		activateWordCompleteBtn(false);
+	}
+
+	void Start()
+	{
+		//Tamaño de las celdas
+		wordContainerLayout = letterContainer.GetComponent<GridLayoutGroup>();
+		wordContainerRectTransform = letterContainer.GetComponent<RectTransform> ();
+
+		float cellSize = wordContainerRectTransform.rect.height * 0.9f;
+
+		wordContainerLayout.cellSize = new Vector2(cellSize,cellSize);
+
+		letterContainerTransform = letterContainer.transform;
 	}
 
 	private void OnGridLetterTapped(GameObject go)

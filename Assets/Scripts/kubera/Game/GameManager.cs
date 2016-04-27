@@ -300,7 +300,7 @@ public class GameManager : MonoBehaviour
 			//Puntos por las lineas creadas
 			linesCreated (cells.Count);
 			convertLinesToLetters (cells);
-		} 
+		}
 		else if(!piecesWhereCreated)
 		{
 			checkIfLoose ();
@@ -325,6 +325,8 @@ public class GameManager : MonoBehaviour
 					if(cellsToAnimate.IndexOf(cells[i][j]) == -1)
 					{
 						cellsToAnimate.Add(cells[i][j]);
+
+						cellManager.setCellContentType (cells[i][j], Piece.EType.LETTER);
 
 						letters.Add(wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL));						
 					}
