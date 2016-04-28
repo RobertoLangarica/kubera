@@ -142,6 +142,7 @@ public class HUDManager : MonoBehaviour
 		string textId = string.Empty;
 		string textToReplace = string.Empty;
 		string replacement = string.Empty;
+		List<string> word = new List<string>();
 
 		goalText.text = "";
 
@@ -186,18 +187,20 @@ public class HUDManager : MonoBehaviour
 		case GoalManager.SYNONYMOUS:
 			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_SYNONYMOUS_ID;
 			textToReplace = "{{goalSin}}";
-			replacement = parameters.ToString();
+			word= (List<string>)parameters;
+			replacement = word[0];
 			break;
 		case GoalManager.WORD:
 			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_1_WORD_ID;
 			textToReplace = "{{goalWord}}";
-			replacement = parameters.ToString();
+			word= (List<string>)parameters;
+			replacement = word[0];
 			break;
-
 		case GoalManager.ANTONYMS:
 			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_ANTONYM_ID;
 			textToReplace = "{{goalAnt}}";
-			replacement = parameters.ToString();
+			word= (List<string>)parameters;
+			replacement = word[0];
 			break;
 		}
 
@@ -331,6 +334,7 @@ public class HUDManager : MonoBehaviour
 		string textId = string.Empty;
 		string textToReplace = string.Empty;
 		string replacement = string.Empty;
+		List<string> word = new List<string> ();
 
 		switch(goalCondition)
 		{
@@ -368,18 +372,20 @@ public class HUDManager : MonoBehaviour
 		case GoalManager.SYNONYMOUS:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID;
 			textToReplace = "{{goalSin}}";
-			replacement = parameters.ToString();
+			word= (List<string>)parameters;
+			replacement = word[0];
 			break;
 		case GoalManager.WORD:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_1_WORD_ID;
 			textToReplace = "{{goalWord}}";
-			replacement = parameters.ToString();
-			break;
-		
+			word= (List<string>)parameters;
+			replacement = word[0];
+			break;		
 		case GoalManager.ANTONYMS:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_ANTONYM_ID;
 			textToReplace = "{{goalAnt}}";
-			replacement = parameters.ToString();
+			word= (List<string>)parameters;
+			replacement = word[0];
 			break;
 		}
 

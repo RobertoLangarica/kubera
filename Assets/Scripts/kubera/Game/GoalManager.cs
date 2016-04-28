@@ -256,7 +256,7 @@ public class GoalManager : MonoBehaviour
 			result = result + letter.abcChar.character;
 		}
 
-		result.ToLower();
+		//result.ToLower();
 
 		return result;
 	}
