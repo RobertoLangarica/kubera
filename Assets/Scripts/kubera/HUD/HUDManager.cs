@@ -143,6 +143,8 @@ public class HUDManager : MonoBehaviour
 		string textToReplace = string.Empty;
 		string replacement = string.Empty;
 
+		goalText.text = "";
+
 		switch (goalCondition)
 		{
 		case GoalManager.LETTERS:
@@ -169,15 +171,13 @@ public class HUDManager : MonoBehaviour
 			replacement = (Convert.ToInt32(parameters)).ToString();
 			break;
 		case GoalManager.POINTS:
-			textId = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_POINT_ID);
+			textId = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.GOAL_CONDITION_BY_POINT_ID);
 			goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
-				new string[2]{ "{{pointsMade}}", "{{pointsNeed}}" }, new string[2]{ "0", (Convert.ToInt32 (parameters)).ToString () });
-			/*TODO: Que todos usen break y aqui return 
-			 * puede provocar errores si se modifica algo despues del switch
-			 * y quien lo modifica desconoce este return.
-			 * */
-			//TODO: Que este case quede homogeneo y no necesite un return
-			return;
+				new string[2]{ "{{pointsMade}}", "{{pointsNeed}}" }, new string[2] {
+				"0",
+				(Convert.ToInt32 (parameters)).ToString ()
+			});
+			break;
 		case GoalManager.WORDS_COUNT:
 			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_ID;
 			textToReplace = "{{goalWords}}";
@@ -201,7 +201,10 @@ public class HUDManager : MonoBehaviour
 			break;
 		}
 
-		goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
+		if (goalText.text == "") 
+		{
+			goalText.text = MultiLanguageTextManager.instance.getTextByID (textId).Replace (textToReplace, replacement);
+		}
 	}
 
 	public void actualizePointsOnWinCondition(string pointsMade, string pointsNeed)
