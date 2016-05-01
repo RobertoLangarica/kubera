@@ -61,8 +61,7 @@ public class HUDManager : MonoBehaviour
 
 	}
 
-	//TODO: setter de points
-	public void actualizePoints(int pointsCount)
+	public void updateTextPoints(int pointsCount)
 	{
 		points.text = pointsCount.ToString();
 		hudStars.setMeterPoints (pointsCount);
@@ -70,14 +69,12 @@ public class HUDManager : MonoBehaviour
 		scoreText.text = lettersPointsTitle.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SCORE_HUD_TITLE_ID);
 	}
 		
-	//TODO: setter de movements
-	public void actualizeMovements(int movments)
+	public void updateTextMovements(int movments)
 	{
 		movementsText.text = movments.ToString();
 	}
 
-	//TODO: setter de gems
-	public void actualizeGems (int gems)
+	public void updateTextGems (int gems)
 	{
 		gemsText.text = gems.ToString();
 	}
@@ -145,6 +142,7 @@ public class HUDManager : MonoBehaviour
 		string textId = string.Empty;
 		string textToReplace = string.Empty;
 		string replacement = string.Empty;
+		List<string> word = new List<string>();
 
 		switch (goalCondition)
 		{
@@ -189,18 +187,20 @@ public class HUDManager : MonoBehaviour
 		case GoalManager.SYNONYMOUS:
 			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_SYNONYMOUS_ID;
 			textToReplace = "{{goalSin}}";
-			replacement = parameters.ToString();
+			word= (List<string>)parameters;
+			replacement = word[0];
 			break;
 		case GoalManager.WORD:
 			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_1_WORD_ID;
 			textToReplace = "{{goalWord}}";
-			replacement = parameters.ToString();
+			word= (List<string>)parameters;
+			replacement = word[0];
 			break;
-
 		case GoalManager.ANTONYMS:
 			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_ANTONYM_ID;
 			textToReplace = "{{goalAnt}}";
-			replacement = parameters.ToString();
+			word= (List<string>)parameters;
+			replacement = word[0];
 			break;
 		}
 
@@ -331,6 +331,7 @@ public class HUDManager : MonoBehaviour
 		string textId = string.Empty;
 		string textToReplace = string.Empty;
 		string replacement = string.Empty;
+		List<string> word = new List<string> ();
 
 		switch(goalCondition)
 		{
@@ -368,18 +369,20 @@ public class HUDManager : MonoBehaviour
 		case GoalManager.SYNONYMOUS:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID;
 			textToReplace = "{{goalSin}}";
-			replacement = parameters.ToString();
+			word= (List<string>)parameters;
+			replacement = word[0];
 			break;
 		case GoalManager.WORD:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_1_WORD_ID;
 			textToReplace = "{{goalWord}}";
-			replacement = parameters.ToString();
-			break;
-		
+			word= (List<string>)parameters;
+			replacement = word[0];
+			break;		
 		case GoalManager.ANTONYMS:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_ANTONYM_ID;
 			textToReplace = "{{goalAnt}}";
-			replacement = parameters.ToString();
+			word= (List<string>)parameters;
+			replacement = word[0];
 			break;
 		}
 

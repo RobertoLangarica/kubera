@@ -120,7 +120,6 @@ public class PieceManager : MonoBehaviour
 
 	public void showingShadow(Piece piece,bool showing)
 	{
-		//TODO: Cambio a manejo de SortingLayers
 		for(int i=0; i<piece.shadows.Length; i++)
 		{
 			if(piece.shadows [i] != null)

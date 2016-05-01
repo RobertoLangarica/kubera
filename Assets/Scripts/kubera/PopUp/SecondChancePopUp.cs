@@ -20,6 +20,8 @@ public class SecondChancePopUp : PopUpBase
 	protected int secondChanceTimes = 0;
 	protected int price;
 
+	protected PopUpManager popUpManager;
+
 	public override void activate()
 	{
 		popUp.SetActive (true);
@@ -28,6 +30,8 @@ public class SecondChancePopUp : PopUpBase
 		bombsText.text = bombs.ToString ();
 
 		setPrice ();
+
+		popUpManager = FindObjectOfType<PopUpManager> ();
 	}
 
 	protected void setPrice()
@@ -64,7 +68,6 @@ public class SecondChancePopUp : PopUpBase
 
 	public void buyASecondChance()
 	{
-		Debug.Log (UserDataManager.instance.playerGems);
 		if(TransactionManager.instance.tryToUseGems(price))
 		{
 			secondChanceTimes++;
@@ -76,8 +79,6 @@ public class SecondChancePopUp : PopUpBase
 
 			popUp.SetActive (false);
 			OnComplete ();
-
-			Debug.Log (UserDataManager.instance.playerGems);
 		}
 
 		Debug.Log("Fondos insuficientes");
@@ -91,5 +92,9 @@ public class SecondChancePopUp : PopUpBase
 		{
 			OnGiveUp ();
 		}
+			
+		OnComplete ();
+
+		popUpManager.activatePopUp ("RetryPopUp");
 	}
 }

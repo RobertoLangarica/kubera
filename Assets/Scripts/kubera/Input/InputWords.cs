@@ -61,6 +61,11 @@ public class InputWords : MonoBehaviour
 		{
 		case (ContinuousGesturePhase.Started):
 			{	
+				if(letter == null)
+				{
+					return;
+				}
+
 				if (!gesture.Raycast.Hit2D) 
 				{
 					if(!allowAnimation)
@@ -69,6 +74,7 @@ public class InputWords : MonoBehaviour
 					}
 					return;
 				}
+
 				offset = letter.transform.position.y;
 
 				canDeleteLetter = false;
@@ -217,8 +223,6 @@ public class InputWords : MonoBehaviour
 				}	
 		}
 	}
-
-
 
 	void OnLetterWordTap(TapGesture gesture)
 	{

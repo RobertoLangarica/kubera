@@ -22,7 +22,7 @@ public class PersistentData : MonoBehaviour
 
 	public bool loadSerializedDictionary = true;
 	public int maxWordLength = 10;
-	[HideInInspector]public int levelNumer = -1;
+	[HideInInspector]public int levelNumber = -1;
 	[HideInInspector]public Level currentLevel;
 	[HideInInspector]public Levels levelsData;
 	[HideInInspector]public ABCDictionary abcDictionary;
@@ -54,7 +54,7 @@ public class PersistentData : MonoBehaviour
 		instance = this;
 		DontDestroyOnLoad(this);
 
-		setLevelNumber(levelNumer);
+		setLevelNumber(levelNumber);
 	}
 
 	void Start()
@@ -96,7 +96,7 @@ public class PersistentData : MonoBehaviour
 		Resources.UnloadAsset(levels);
 
 		//CurrentLevel
-		currentLevel = levelsData.getLevelByNumber(levelNumer);
+		currentLevel = levelsData.getLevelByNumber(levelNumber);
 
 		//Alfabeto
 		TextAsset abc = Resources.Load("ABCData/ABC_"+language) as TextAsset;
@@ -195,11 +195,11 @@ public class PersistentData : MonoBehaviour
 	 **/ 
 	public void setLevelNumber(int value,bool fromBuilder = false)
 	{
-		levelNumer = value;
+		levelNumber = value;
 
 		if(levelsData != null)
 		{
-			currentLevel = levelsData.getLevelByNumber(levelNumer);
+			currentLevel = levelsData.getLevelByNumber(levelNumber);
 
 			if(fromBuilder)
 			{

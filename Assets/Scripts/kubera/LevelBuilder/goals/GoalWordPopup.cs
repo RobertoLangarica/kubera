@@ -33,6 +33,11 @@ namespace LevelBuilder
 			inputWord.text = "";
 		}
 
+		public void resetWords()
+		{
+			words = new List<string>();
+		}
+
 		public void activateAdd(bool active)
 		{
 			btnAdd.interactable = active;
@@ -81,6 +86,17 @@ namespace LevelBuilder
 		public void setInputValue(string text)
 		{
 			inputWord.text = text;
+		}
+
+		public string getInputValueWithoutAcents()
+		{
+			string word = inputWord.text;
+			string newWord ="";
+			for(int i=0; i<word.Length; i++)
+			{
+				newWord += word[i].ToString().Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+			}
+			return newWord;
 		}
 
 		public string getInputValue()
