@@ -131,6 +131,7 @@ public List<Letter> letters;
 		activateGridLayout (false);
 		fillLettersPositions ();
 		siblingIndexAfterDrag = target.transform.GetSiblingIndex();
+		print (siblingIndexAfterDrag);
 		setSiblingIndex (target, maxLetters);
 		changeDeleteState(EDeleteState.CHARACTER);
 	}
@@ -189,30 +190,13 @@ public List<Letter> letters;
 	{
 		Letter letter = target.GetComponent<Letter>();
 
-		//Los comodines no se pueden destruir
-		if(!letter.abcChar.wildcard && isOverDeleteArea(letter.transform.localPosition))
-		{
-			//removeLetter(letter);
-		}
-		else
-		{
-			setSiblingIndex (letter.gameObject, siblingIndexAfterDrag);
-		}
+
+		setSiblingIndex (letter.gameObject, siblingIndexAfterDrag);
+
 
 		activateGridLayout (true);
 		resetValidationToSiblingOrder();
 		onLettersChange();
-	}
-
-	private bool isOverDeleteArea(Vector3 target)
-	{
-		if( 	target.x > (deleteBtnPosition.x - (deleteButtonImage.rectTransform.rect.width*0.5f) ) 
-			&& 	target.x < (deleteBtnPosition.x + (deleteButtonImage.rectTransform.rect.width*0.5f) )  )
-		{
-			return true;	
-		}
-
-		return false;
 	}
 
 	private void setSiblingIndex(GameObject target, int siblingPosition)
@@ -318,7 +302,6 @@ public List<Letter> letters;
 		float widthGrid = wordContainerRectTransform.rect.width;
 		float childCount =letters.Count; 
 
-		print (childCount);
 
 		data = wordContainerLayout.cellSize.x * childCount;
 		data = widthGrid - data;
