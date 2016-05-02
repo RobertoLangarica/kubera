@@ -463,7 +463,7 @@ public List<Letter> letters;
 		wordCompleteButton.SetActive (active);
 	}
 
-	public void activateWordDeleteBtn(bool activate,bool isThereAnyLetterOnContainer = false)
+	public void activateWordDeleteBtn(bool activate,bool isThereAnyLetterOnContainer = true)
 	{
 		if(activate && isThereAnyLetterOnContainer)
 		{
@@ -479,7 +479,7 @@ public List<Letter> letters;
 	{
 		updateWordPoints();
 
-		//activateWordDeleteBtn(isThereAnyLetterOnContainer());
+		activateWordDeleteBtn(isThereAnyLetterOnContainer());
 		afterWordValidation();
 		changeDeleteState(EDeleteState.WORD);
 
@@ -544,7 +544,7 @@ public List<Letter> letters;
 
 	private bool isThereAnyLetterOnContainer()
 	{
-		return (letterContainerTransform.childCount == 0 ? false:true); 
+		return (letters.Count == 0 ? false:true); 
 	}
 
 	public void changeDeleteState(EDeleteState state)
