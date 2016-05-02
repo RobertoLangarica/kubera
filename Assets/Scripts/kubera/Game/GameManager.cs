@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
 	private GoalManager		goalManager;
 
 	private LinesCreatedAnimation linesAnimation;
+	private BombAnimation bombAnimation;
 	private SecondChancePopUp secondChance;
 	private SecondChanceFreeBombs SecondChanceFreeBombs;
 
@@ -63,6 +64,7 @@ public class GameManager : MonoBehaviour
 		inputWords			= FindObjectOfType<InputWords>();
 		goalManager			= FindObjectOfType<GoalManager>();
 		linesAnimation 		= FindObjectOfType<LinesCreatedAnimation> ();
+		bombAnimation 		= FindObjectOfType<BombAnimation> ();
 		secondChance 		= FindObjectOfType<SecondChancePopUp> ();
 		SecondChanceFreeBombs 	= FindObjectOfType<SecondChanceFreeBombs> ();
 
@@ -549,6 +551,8 @@ public class GameManager : MonoBehaviour
 	{
 		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.WON);
 
+		bombAnimation.OnAllAnimationsCompleted += destroyAndCountAllLetters;
+
 		allowGameInput (false);
 
 		cellToLetter = new List<Cell> ();
@@ -604,7 +608,7 @@ public class GameManager : MonoBehaviour
 
 		go.GetComponent<Piece> ().currentColor = cellManager.colorRandom ();
 
-		cellManager.occupyAndConfigureCell(cell,go,Piece.EType.PIECE,Piece.EColor.AQUA,true);
+		cellManager.occupyAndConfigureCell(cell,go.transform.GetChild(0).gameObject,Piece.EType.PIECE,Piece.EColor.AQUA,true);
 
 		showFloatingPointsAt (cell.transform.position, 1);
 		substractMoves (1);
@@ -624,8 +628,8 @@ public class GameManager : MonoBehaviour
 
 		if (cellToLetter.Count > 0) 
 		{
-			Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
-			cellManager.occupyAndConfigureCell (cellToLetter [random],letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
+			StartCoroutine (bombAnimation.startSinglePieceAnimation (cellToLetter [random]));
+
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
@@ -633,7 +637,7 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			destroyAndCountAllLetters();
+			//destroyAndCountAllLetters();
 		}
 	}
 
