@@ -348,7 +348,7 @@ public class GameManager : MonoBehaviour
 		checkIfLoose ();
 	}
 
-	private void showShadowOnPiece (GameObject obj, bool showing = true)
+	public void showShadowOnPiece (GameObject obj, bool showing = true)
 	{
 		Piece piece = obj.GetComponent<Piece> ();
 		showShadowOnPiece (piece, showing);
