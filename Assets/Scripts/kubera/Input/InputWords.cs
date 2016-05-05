@@ -97,7 +97,7 @@ public class InputWords : MonoBehaviour
 				tempV3.z = letter.transform.position.z;
 				moveTo(letter,tempV3,letterSpeed);
 
-				onDragUpdate (letter);							
+				onDragUpdate (letter);	
 			}
 			break;
 
@@ -110,11 +110,11 @@ public class InputWords : MonoBehaviour
 				//letter.transform.position = firstPosition;
 				//onDragFinish(letter);
 				//DOTween.Kill ("InputW_Dragging");
-
+				//
 				//letter.transform.position = new Vector3 (letter.transform.position.x, 0, 0);	
-
+				//
 				//letter = null;
-
+				//
 				//canDeleteLetter = true;
 
 			}
