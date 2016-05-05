@@ -62,8 +62,10 @@ public List<Letter> letters;
 	protected Letter lastSelected;
 	public float selectAnimationTime = 1;
 	public GameObject gridInvisibleChild;
-	public List<GameObject> gridInvisibleChildren;
 
+	public List<GameObject> gridInvisibleChildren;
+	public List<GameObject> freeChildren = new List<GameObject>();
+	public List<GameObject> occupiedChildren = new List<GameObject>();
 
 	void Awake()
 	{
@@ -99,6 +101,19 @@ public List<Letter> letters;
 		wordContainerLayout.cellSize = new Vector2(cellSize,cellSize);
 
 		letterContainerTransform = letterContainer.transform;
+
+		for(int i=0; i<1; i++)
+		{
+			addInvisibleChildrenToPool ();
+		}
+	}
+
+	void addInvisibleChildrenToPool()
+	{
+		GameObject go;
+		go = GameObject.Instantiate(gridInvisibleChild);
+		freeChildren.Add(go);
+		go.transform.SetParent(letterContainerTransform.parent,false);
 	}
 
 	private void OnGridLetterTapped(GameObject go)
@@ -346,26 +361,56 @@ public List<Letter> letters;
 
 		Vector3 finalPos = letterContainerTransform.position;
 
+		GameObject go = getFreeChild ();
+		go.transform.SetParent (letterContainerTransform);
+
 		if (letterContainerTransform.childCount > 0) 
 		{
 			finalPos = letterContainerTransform.GetChild (letterContainerTransform.childCount - 1).position;
 			finalPos.x += (wordContainerLayout.cellSize.x + wordContainerLayout.spacing.x) * 0.01f;
 		}
 
-		letter.transform.DOMove (finalPos, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letter); }).SetId(letter.index);
+		print (go.transform.position);
+		print (go.transform.localPosition);
+		print (finalPos);
+		finalPos = go.transform.position;
+		letter.transform.DOMove (finalPos, selectAnimationTime).OnUpdate(()=>{finalPos = go.transform.position;}).OnComplete(()=>{addLetterToContainer(letter); releaseChild(go);}).SetId(letter.index);
 
+	}
 
-		//gridInvisibleChild.transform.SetParent(letterContainerTransform);
-
-		for(int i=0; i<gridInvisibleChildren.Count; i++)
+	public GameObject getFreeChild()
+	{
+		if(freeChildren.Count == 0)
 		{
-			if(gridInvisibleChildren[i].transform.parent == letterContainer.transform.parent)
+			addInvisibleChildrenToPool();
+		}
+
+		GameObject child = freeChildren[0];
+		freeChildren.RemoveAt (0);
+
+		occupiedChildren.Add (child);
+
+
+
+		return child;
+	}
+
+	public void releaseChild(GameObject child)
+	{
+		for(int i=0; i<occupiedChildren.Count; i++)
+		{
+			if(occupiedChildren[i] == child)
 			{
-				gridInvisibleChildren[i].transform.SetParent(letterContainerTransform);
-				break;
+				child.transform.SetParent(letterContainerTransform.parent);
+				occupiedChildren.Remove (child);
 			}
 		}
 
+		freeChildren.Add (child);
+		for(int i=0; i<freeChildren.Count; i++)
+		{
+			freeChildren [i].transform.position = freeChildren [freeChildren.Count - 1].transform.position;
+		}
 	}
 
 	private void updateLetterBoxCollider(GameObject letter)
