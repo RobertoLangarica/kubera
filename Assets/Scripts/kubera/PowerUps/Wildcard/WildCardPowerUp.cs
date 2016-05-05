@@ -10,6 +10,8 @@ public class WildCardPowerUp : PowerupBase
 	public Transform powerUpButton;
 	public RectTransform wordsContainer;
 
+	public KeyBoardManager keyBoard;
+
 	protected InputBombAndDestroy inputPowerUp;
 
 	protected GameObject powerUpGO;
@@ -81,8 +83,15 @@ public class WildCardPowerUp : PowerupBase
 
 	public void addWildcard()
 	{
-		wordManager.addLetter(wordManager.getWildcard (powerUpScore));
-		OnComplete ();
+		if (wordManager.isAddLetterAllowed ()) 
+		{
+			wordManager.addLetter (wordManager.getWildcard (powerUpScore),false);
+			OnComplete ();
+		}
+		else
+		{
+			cancelPowerUp ();
+		}
 	}
 
 	protected void completePowerUp()

@@ -33,6 +33,8 @@ public class WordManager : MonoBehaviour
 	public Sprite deleteCharacterState;
 	public Sprite deleteWordState;
 
+	public KeyBoardManager keyBoard;
+
 	private InputWords inputWords;
 
 	[HideInInspector]public ABCDictionary wordsValidator;
@@ -120,9 +122,14 @@ public List<Letter> letters;
 	private void onLetterTap(GameObject go)
 	{
 		Letter letter = go.GetComponent<Letter>();
-		if(!letter.abcChar.wildcard)
+		if (!letter.abcChar.wildcard) 
 		{
-			removeLetter(letter);
+			removeLetter (letter);
+		} 
+		else 
+		{
+			keyBoard.setSelectedWildCard (letter);
+			keyBoard.showKeyBoardForWildCard ();
 		}
 	}
 
@@ -222,16 +229,29 @@ public List<Letter> letters;
 		}
 	}
 
-	private bool isAddLetterAllowed()
+	public bool isAddLetterAllowed()
 	{
 		return letters.Count < maxLetters;
 	}
 
-	public void addLetter(Letter letter)
+	public void addLetter(Letter letter,bool withAnimation = true)
 	{
+		if (letter.abcChar.wildcard) 
+		{
+			keyBoard.setSelectedWildCard (letter);
+		}
+
 		letter.select();
 		saveAndValidateLetter(letter);
-		selectLetterAnimation(letter);
+
+		if (withAnimation) 
+		{
+			selectLetterAnimation (letter);
+		} 
+		else 
+		{
+			addLetterToContainer(letter);
+		}
 
 		onLettersChange();
 	}
@@ -255,7 +275,7 @@ public List<Letter> letters;
 		while(count > 0)
 		{
 			--count;
-			if(!letters[count].abcChar.wildcard)
+			if(!letters[count].abcChar.wildcard || includeWildcards)
 			{
 				removeLetter (letters [count]);
 			}
@@ -679,5 +699,22 @@ public List<Letter> letters;
 		collider.size =  rectT.rect.size;
 
 		return go.GetComponent<Letter>();
+	}
+
+	public void setValuesToWildCard(Letter wildCard,string character)
+	{
+		ABCChar abcChar = new ABCChar ();
+
+		abcChar.wildcard = true;
+		abcChar.character = character;
+		abcChar.pointsOrMultiple = "x3";
+
+		wildCard.abcChar = abcChar;
+
+		wildCard.updateTexts ();
+
+		resetValidationToSiblingOrder ();
+		afterWordValidation ();
+		onLettersChange ();
 	}
 }

@@ -405,7 +405,7 @@ public class GameManager : MonoBehaviour
 		onUsersAction (wordManager.wordPoints);
 		removeLettersFromGrid(wordManager.letters, true);
 
-		wordManager.removeAllLetters();
+		wordManager.removeAllLetters(true);
 
 		checkIfLoose ();
 	}
@@ -635,10 +635,6 @@ public class GameManager : MonoBehaviour
 			yield return new WaitForSeconds (.2f);
 			StartCoroutine (addWinLetterAfterActions ());
 		}
-		else
-		{
-			//destroyAndCountAllLetters();
-		}
 	}
 
 	protected void destroyAndCountAllLetters()
@@ -677,8 +673,10 @@ public class GameManager : MonoBehaviour
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
 	}
 
-	protected void allowGameInput(bool allowInput = true)
+	public void allowGameInput(bool allowInput = true)
 	{
+		Debug.Log (allowInput);
+
 		inputPiece.allowInput = allowInput;
 		inputWords.allowInput = allowInput;
 	}
@@ -787,9 +785,14 @@ public class GameManager : MonoBehaviour
 		case "endGame":
 			break;
 		default:
-			allowGameInput (true);	
+			Invoke ("allowInputFromInvoke", 0.5f);
 			break;
 		}
+	}
+
+	protected void allowInputFromInvoke()
+	{
+		allowGameInput();
 	}
 
 	public void activatePopUp(string popUpName)

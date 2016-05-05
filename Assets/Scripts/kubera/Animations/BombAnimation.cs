@@ -89,7 +89,6 @@ public class BombAnimation : MonoBehaviour
 		animSprite.enabled = true;
 		animSprite.autoUpdate = true;
 		yield return new WaitUntil (()=> animSprite.sequences[0].currentFrame >= 6);
-		Debug.Log (square);
 		square.OnCellFlipped += callbackOnFliped;
 		square.doFlip (cellParent, letter, delay);
 

@@ -85,7 +85,7 @@ namespace ABC
 		 **/ 
 		public bool validateChar(ABCChar c)
 		{
-			if(c.wildcard)
+			if(c.wildcard && c.character == ".")
 			{
 				//El arbol no conoce los caracteres
 				//Adignamos el caracter que toma este comodin
