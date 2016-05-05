@@ -675,8 +675,6 @@ public class GameManager : MonoBehaviour
 
 	public void allowGameInput(bool allowInput = true)
 	{
-		Debug.Log (allowInput);
-
 		inputPiece.allowInput = allowInput;
 		inputWords.allowInput = allowInput;
 	}

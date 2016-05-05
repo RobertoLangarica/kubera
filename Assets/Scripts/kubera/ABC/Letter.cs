@@ -19,6 +19,7 @@ public class Letter : MonoBehaviour
 	[HideInInspector] public EType type;
 	[HideInInspector] public bool selected;
 	[HideInInspector]public int index;//Indice del caracter en WordManager
+	[HideInInspector]public bool wildCard;
 	protected bool textActualized; //texto actualizado
 
 	public ABCChar abcChar;
