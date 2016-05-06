@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class SettingsButton : MonoBehaviour 
 {
 	public void activateMusic()
 	{
-		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
+		if (PersistentData.instance.startLevel > 7) 
+		{
+			PersistentData.instance.startLevel -= 2;
+			SceneManager.LoadScene ("Game");
+		}
+		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 
 		if(AudioManager.instance.musicActive)
 		{
@@ -16,12 +22,13 @@ public class SettingsButton : MonoBehaviour
 		{
 			AudioManager.instance.musicActive = true;
 			UserDataManager.instance.isMusicActive = true;
-		}
+		}*/
 	}
 
 	public void activateSounds()
 	{
-		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
+		SceneManager.LoadScene ("Game");
+		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 
 		if(AudioManager.instance.soundEffectsActive)
 		{
@@ -32,6 +39,6 @@ public class SettingsButton : MonoBehaviour
 		{
 			AudioManager.instance.soundEffectsActive = true;
 			UserDataManager.instance.isSoundEffectsActive = true;
-		}
+		}*/
 	}
 }

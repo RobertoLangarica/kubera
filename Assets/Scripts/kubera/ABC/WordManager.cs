@@ -189,15 +189,7 @@ public List<Letter> letters;
 	{
 		Letter letter = target.GetComponent<Letter>();
 
-		//Los comodines no se pueden destruir
-		if(!letter.abcChar.wildcard && isOverDeleteArea(letter.transform.localPosition))
-		{
-			//removeLetter(letter);
-		}
-		else
-		{
-			setSiblingIndex (letter.gameObject, siblingIndexAfterDrag);
-		}
+		setSiblingIndex (letter.gameObject, siblingIndexAfterDrag);
 
 		activateGridLayout (true);
 		resetValidationToSiblingOrder();

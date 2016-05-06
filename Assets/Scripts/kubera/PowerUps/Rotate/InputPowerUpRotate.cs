@@ -90,6 +90,7 @@ public class InputPowerUpRotate : MonoBehaviour
 					moveTo(currentSelected,posOverFinger,pieceSpeed);
 					currentSelected.transform.DOScale(selectedScale,.1f).SetId("InputRotate_SelectedScale");
 
+					gameManager.setShadow (currentSelected, true);
 				}
 			}	
 			break;
@@ -157,6 +158,7 @@ public class InputPowerUpRotate : MonoBehaviour
 
 			moveTo(currentSelected,posOverFinger,pieceSpeed);
 			currentSelected.transform.DOScale(selectedScale,.1f).SetId("InputRotate_SelectedScale");
+			gameManager.setShadow (currentSelected, true);
 
 			isLongPressed = true;
 		}
@@ -199,6 +201,8 @@ public class InputPowerUpRotate : MonoBehaviour
 			currentSelected.transform.DOMove (piece.positionOnScene, .1f).SetId("InputRotate_InitialPosition").OnComplete(()=>{allowInput = true; });;
 			currentSelected.transform.DOScale (piece.initialPieceScale, .1f).SetId("InputRotate_SelectedScale");
 		}
+		gameManager.setShadow (currentSelected, true);
+
 	}
 
 	public void reset()

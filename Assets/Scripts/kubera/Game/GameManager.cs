@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using ABC;
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour 
 {
@@ -46,6 +47,7 @@ public class GameManager : MonoBehaviour
 	private GoalManager		goalManager;
 
 	private LinesCreatedAnimation linesAnimation;
+	private BombAnimation bombAnimation;
 	private SecondChancePopUp secondChance;
 	private SecondChanceFreeBombs SecondChanceFreeBombs;
 
@@ -63,6 +65,7 @@ public class GameManager : MonoBehaviour
 		inputWords			= FindObjectOfType<InputWords>();
 		goalManager			= FindObjectOfType<GoalManager>();
 		linesAnimation 		= FindObjectOfType<LinesCreatedAnimation> ();
+		bombAnimation = FindObjectOfType<BombAnimation> ();
 		secondChance 		= FindObjectOfType<SecondChancePopUp> ();
 		SecondChanceFreeBombs 	= FindObjectOfType<SecondChanceFreeBombs> ();
 
@@ -88,16 +91,30 @@ public class GameManager : MonoBehaviour
 
 		wordManager.onWordChange += refreshCurrentWordScoreOnHUD;
 
-		if(PersistentData.instance.currentLevel == null)
+		if(PersistentData.instance)
 		{
-			configureLevel(PersistentData.instance.getRandomLevel());
-		}
-		else
-		{
-			configureLevel(PersistentData.instance.currentLevel);	
+			configureLevel(PersistentData.instance.getNextLevel());
 		}
 
 		//TODO: Control de flujo de juego con un init
+	}
+
+	void Update()
+	{
+		if (Input.GetKeyUp (KeyCode.R)) 
+		{
+			PersistentData.instance.startLevel = 6;
+			SceneManager.LoadScene ("Game");
+		}
+		if (Input.GetKeyUp (KeyCode.N)) 
+		{
+			SceneManager.LoadScene ("Game");
+		}
+		if (Input.GetKeyUp (KeyCode.B) && PersistentData.instance.startLevel > 7) 
+		{
+			PersistentData.instance.startLevel -= 2;
+			SceneManager.LoadScene ("Game");
+		}
 	}
 
 	private void configureLevel(Level level)
@@ -346,7 +363,7 @@ public class GameManager : MonoBehaviour
 	}
 
 	//TODO: checar nombre
-	private void setShadow (GameObject obj, bool showing = true)
+	public void setShadow (GameObject obj, bool showing = true)
 	{
 		Piece piece = obj.GetComponent<Piece> ();
 		setShadow (piece, showing);
@@ -517,7 +534,7 @@ public class GameManager : MonoBehaviour
 			Debug.Log ("Perdio de verdad");
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);
 
-			activatePopUp ("SecondChance");
+			activatePopUp ("RetryPopUp");
 		}
 	}
 
@@ -549,6 +566,8 @@ public class GameManager : MonoBehaviour
 	protected void winBonification()
 	{
 		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.WON);
+
+		bombAnimation.OnAllAnimationsCompleted += destroyAndCountAllLetters;
 
 		allowGameInput (false);
 
@@ -605,7 +624,7 @@ public class GameManager : MonoBehaviour
 
 		go.GetComponent<Piece> ().currentColor = cellManager.colorRandom ();
 
-		cellManager.occupyAndConfigureCell(cell,go,Piece.EType.PIECE,Piece.EColor.AQUA,true);
+		cellManager.occupyAndConfigureCell(cell,go.transform.GetChild(0).gameObject,Piece.EType.PIECE,Piece.EColor.AQUA,true);
 
 		showFloatingPointsAt (cell.transform.position, 1);
 		substractMoves (1);
@@ -625,16 +644,12 @@ public class GameManager : MonoBehaviour
 
 		if (cellToLetter.Count > 0) 
 		{
-			Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
-			cellManager.occupyAndConfigureCell (cellToLetter [random],letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
+			StartCoroutine (bombAnimation.startSinglePieceAnimation(cellToLetter[random]));
+
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
 			StartCoroutine (addWinLetterAfterActions ());
-		}
-		else
-		{
-			destroyAndCountAllLetters();
 		}
 	}
 
@@ -657,6 +672,10 @@ public class GameManager : MonoBehaviour
 		if (cellToLetter.Count > 0) 
 		{			
 			StartCoroutine (destroyLetter ());
+		} 
+		else 
+		{
+			SceneManager.LoadScene ("Game");
 		}
 	}
 
@@ -797,8 +816,10 @@ public class GameManager : MonoBehaviour
 
 	public void quitGame()
 	{
-		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
-		activatePopUp ("exitGame");
+		PersistentData.instance.startLevel = 6;
+		SceneManager.LoadScene ("Game");
+		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
+		activatePopUp ("exitGame");*/
 	}
 
 	//DONE:Le cambie el nombre de actualizeHudInfo a updateHudGameInfo 
@@ -834,4 +855,4 @@ public class GameManager : MonoBehaviour
 	{
 		hudManager.showScoreTextAt(pos,amount);
 	}
-}
+}//jmu3039
