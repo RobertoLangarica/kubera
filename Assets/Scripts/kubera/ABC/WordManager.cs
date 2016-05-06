@@ -292,7 +292,7 @@ public List<Letter> letters;
 
 	public void addLetter(Letter letter,bool withAnimation = true)
 	{
-		if (letter.abcChar.wildcard) 
+		if (letter.wildCard) 
 		{
 			keyBoard.setSelectedWildCard (letter);
 		}
@@ -727,11 +727,11 @@ public List<Letter> letters;
 	public Letter getWildcard(string pointsOrMultiple)
 	{			
 		Letter letter = Instantiate(letterPrefab).GetComponent<Letter>();
-		string wildcardValue = ".";
+		string wildcardValue = "S";
 
 		ABCChar abc = new ABCChar();
 		abc.value = wordsValidator.getCharValue(wildcardValue);
-		abc.wildcard = true;
+		abc.wildcard = false;
 		abc.character = wildcardValue;
 		abc.pointsOrMultiple = pointsOrMultiple;
 
@@ -739,6 +739,7 @@ public List<Letter> letters;
 		letter.abcChar = abc;
 
 		letter.updateTexts();
+		letter.wildCard = true;
 
 		return letter;
 	}
@@ -790,17 +791,14 @@ public List<Letter> letters;
 
 	public void setValuesToWildCard(Letter wildCard,string character)
 	{
-		ABCChar abcChar = new ABCChar ();
-
-		abcChar.wildcard = false;
-		abcChar.character = character;
-		abcChar.pointsOrMultiple = "x3";
-
+		Debug.Log (wildCard + "nn1");
 		wildCard.wildCard = true;
-		wildCard.abcChar = abcChar;
+		wildCard.abcChar.character = character;
+		wildCard.abcChar.pointsOrMultiple = "x3";
 
-		wildCard.updateTexts ();
+		wildCard.updateTexts();
 
+		saveAndValidateLetter(wildCard);
 		resetValidationToSiblingOrder ();
 		afterWordValidation ();
 		onLettersChange ();
