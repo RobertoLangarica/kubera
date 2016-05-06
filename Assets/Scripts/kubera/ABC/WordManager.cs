@@ -137,7 +137,7 @@ public List<Letter> letters;
 	private void onLetterTap(GameObject go)
 	{
 		Letter letter = go.GetComponent<Letter>();
-		if (!letter.abcChar.wildcard) 
+		if (!letter.abcChar.wildcard && !letter.wildCard) 
 		{
 			removeLetter (letter);
 		} 
@@ -153,7 +153,6 @@ public List<Letter> letters;
 		activateGridLayout (false);
 		fillLettersPositions ();
 		siblingIndexAfterDrag = target.transform.GetSiblingIndex();
-		print (siblingIndexAfterDrag);
 		setSiblingIndex (target, maxLetters);
 		changeDeleteState(EDeleteState.CHARACTER);
 	}
@@ -754,10 +753,11 @@ public List<Letter> letters;
 	{
 		ABCChar abcChar = new ABCChar ();
 
-		abcChar.wildcard = true;
+		abcChar.wildcard = false;
 		abcChar.character = character;
 		abcChar.pointsOrMultiple = "x3";
 
+		wildCard.wildCard = true;
 		wildCard.abcChar = abcChar;
 
 		wildCard.updateTexts ();
