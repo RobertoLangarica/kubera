@@ -65,7 +65,6 @@ public List<Letter> letters;
 	public float selectAnimationTime = 1;
 	public GameObject gridInvisibleChild;
 
-	public List<GameObject> gridInvisibleChildren;
 	public List<GameObject> freeChildren = new List<GameObject>();
 	public List<GameObject> occupiedChildren = new List<GameObject>();
 
@@ -114,6 +113,7 @@ public List<Letter> letters;
 	{
 		GameObject go;
 		go = GameObject.Instantiate(gridInvisibleChild);
+		go.name = "stock";
 		freeChildren.Add(go);
 		go.transform.SetParent(letterContainerTransform.parent,false);
 	}
@@ -130,13 +130,55 @@ public List<Letter> letters;
 		else
 		{
 			//Se va agregar
+			StartCoroutine( existTween ());
 			addLetterFromGrid(letter);
 		}
+	}
+
+	IEnumerator existTween()
+	{
+		yield return new WaitForSeconds (0);
+		List<Tween> tweens = new List<Tween> ();
+		int index = 0;
+		for(int i=0; i<letters.Count; i++)
+		{			
+			tweens = DOTween.TweensById (letters[i].GetInstanceID());
+			if(tweens != null)
+			{
+				//Transform a = (Transform)tweens [0].target;
+				//a.DOMove (occupiedChildren [index].transform.position, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letters [i]); releaseChild(occupiedChildren [index]); reacomodateChildrenSiblingOrder();}).SetId(letters[i].GetInstanceID());
+
+				DOTween.Kill (letters [i].GetInstanceID ());
+				Letter letter = letters [i];
+				
+				GameObject go = occupiedChildren [index];
+
+				correctAnimation (letter, go);
+				//StartCoroutine (callback (selectAnimationTime,i,index));
+
+				index++;
+			}
+		}
+	}
+
+	private void correctAnimation(Letter letter,GameObject go)
+	{
+		letter.transform.DOMove (go.transform.position, selectAnimationTime).OnComplete (() => {callback (letter,go);}).SetId (letter.GetInstanceID ());
+
+	}
+
+	private void callback(Letter letter,GameObject go)
+	{
+		addLetterToContainer (letter);
+		releaseChild (go);
+		reacomodateChildrenSiblingOrder ();
 	}
 
 	private void onLetterTap(GameObject go)
 	{
 		Letter letter = go.GetComponent<Letter>();
+
+
 		if (!letter.abcChar.wildcard && !letter.wildCard) 
 		{
 			removeLetter (letter);
@@ -311,6 +353,10 @@ public List<Letter> letters;
 	{
 		letter.deselect();
 		letters.Remove(letter);
+		if (DOTween.IsTweening (letter.GetInstanceID()))
+		{
+			DOTween.Complete (letter.GetInstanceID());
+		}
 		GameObject.DestroyImmediate(letter.gameObject);
 
 		resetValidationToSiblingOrder();
@@ -358,16 +404,6 @@ public List<Letter> letters;
 
 		//Se actualiza el tamaño del collider al tamaño de la letra
 		updateLetterBoxCollider (letter.gameObject);
-
-
-		for(int i=0; i<gridInvisibleChildren.Count; i++)
-		{
-			if(gridInvisibleChildren[i].transform.parent != letterContainer.transform.parent)
-			{
-				gridInvisibleChildren[i].transform.SetParent(letterContainerTransform.parent);
-				break;
-			}
-		}
 	}
 
 	private void selectLetterAnimation(Letter letter)
@@ -378,27 +414,30 @@ public List<Letter> letters;
 
 		letter.GetComponent<RectTransform> ().sizeDelta = wordContainerLayout.cellSize;
 
-		Vector3 finalPos = letterContainerTransform.position;
-
 		GameObject go = getFreeChild ();
 		go.transform.SetParent (letterContainerTransform);
 
-		print (go.transform.position);
-
 		StartCoroutine (doLetterAnimation(letter,go));
-
 	}
 
 	IEnumerator doLetterAnimation(Letter letter,GameObject finalPosObj)
 	{
-		yield return new WaitForSeconds (0.01f);
+		yield return new WaitForSeconds (0);
 		/*if (letterContainerTransform.childCount > 0) 
 		{
 			finalPos = letterContainerTransform.GetChild (letterContainerTransform.childCount - 1).position;
 			finalPos.x += (wordContainerLayout.cellSize.x + wordContainerLayout.spacing.x) * 0.01f;
 		}*/
-		letter.transform.DOMove ( finalPosObj.transform.position, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letter); releaseChild(finalPosObj);}).SetId(letter.index);
+		//moveLetter (letter, finalPosObj, selectAnimationTime);
+		letter.transform.DOMove ( finalPosObj.transform.position, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letter); releaseChild(finalPosObj); reacomodateChildrenSiblingOrder();}).SetId(letter.GetInstanceID());
+	}
 
+	protected void reacomodateChildrenSiblingOrder()
+	{
+		for(int i=0; i<occupiedChildren.Count; i++)
+		{
+			occupiedChildren[i].transform.SetAsLastSibling();
+		}
 	}
 
 	public GameObject getFreeChild()
