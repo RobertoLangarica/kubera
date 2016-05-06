@@ -384,17 +384,21 @@ public List<Letter> letters;
 		GameObject go = getFreeChild ();
 		go.transform.SetParent (letterContainerTransform);
 
-		if (letterContainerTransform.childCount > 0) 
+		print (go.transform.position);
+
+		StartCoroutine (doLetterAnimation(letter,go));
+
+	}
+
+	IEnumerator doLetterAnimation(Letter letter,GameObject finalPosObj)
+	{
+		yield return new WaitForSeconds (0.01f);
+		/*if (letterContainerTransform.childCount > 0) 
 		{
 			finalPos = letterContainerTransform.GetChild (letterContainerTransform.childCount - 1).position;
 			finalPos.x += (wordContainerLayout.cellSize.x + wordContainerLayout.spacing.x) * 0.01f;
-		}
-
-		print (go.transform.position);
-		print (go.transform.localPosition);
-		print (finalPos);
-		finalPos = go.transform.position;
-		letter.transform.DOMove (finalPos, selectAnimationTime).OnUpdate(()=>{finalPos = go.transform.position;}).OnComplete(()=>{addLetterToContainer(letter); releaseChild(go);}).SetId(letter.index);
+		}*/
+		letter.transform.DOMove ( finalPosObj.transform.position, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letter); releaseChild(finalPosObj);}).SetId(letter.index);
 
 	}
 
