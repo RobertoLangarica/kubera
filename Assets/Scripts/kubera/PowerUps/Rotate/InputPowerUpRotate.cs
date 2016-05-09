@@ -276,6 +276,9 @@ public class InputPowerUpRotate : MonoBehaviour
 		GameObject go = GameObject.Instantiate (piece.toRotateObject) as GameObject;
 		Piece newPiece = go.GetComponent<Piece> ();
 		initializeNewPiece (piece, newPiece);
+		go.transform.SetParent (hudManager.showingPiecesContainer);
+		pieceManager.showingPieces.Remove (piece);
+		pieceManager.showingPieces.Add (newPiece);
 
 		go.transform.localScale = new Vector3 (0, 0, 0);
 		go.transform.position = position;
