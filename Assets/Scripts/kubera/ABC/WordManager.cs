@@ -711,7 +711,7 @@ public class WordManager : MonoBehaviour
 	public Letter getWildcard(string pointsOrMultiple)
 	{			
 		Letter letter = Instantiate(letterPrefab).GetComponent<Letter>();
-		string wildcardValue = "S";
+		string wildcardValue = ".";
 
 		ABCChar abc = new ABCChar();
 		abc.value = wordsValidator.getCharValue(wildcardValue);
@@ -719,7 +719,7 @@ public class WordManager : MonoBehaviour
 		abc.character = wildcardValue;
 		abc.pointsOrMultiple = pointsOrMultiple;
 
-		letter.type = Letter.EType.NORMAL;
+		letter.type = Letter.EType.WILD_CARD;
 		letter.abcChar = abc;
 
 		letter.updateTexts();
@@ -775,13 +775,23 @@ public class WordManager : MonoBehaviour
 
 	public void setValuesToWildCard(Letter wildCard,string character)
 	{
-		Debug.Log (wildCard + "nn1");
+
+		ABCChar abc = new ABCChar ();
+
+		abc.wildcard = false;
+		abc.character = character;
+		abc.pointsOrMultiple = "x3";
+		abc.value = wordsValidator.getCharValue(character);
+
 		wildCard.wildCard = true;
-		wildCard.abcChar.character = character;
-		wildCard.abcChar.pointsOrMultiple = "x3";
+
+		wildCard.initializeFromABCChar (abc);
+
+		wildCard.type = Letter.EType.WILD_CARD;
 
 		wildCard.updateTexts();
-		
+		wildCard.updateColor ();
+
 		saveAndValidateLetter(wildCard);
 		resetValidationToSiblingOrder ();
 		afterWordValidation ();

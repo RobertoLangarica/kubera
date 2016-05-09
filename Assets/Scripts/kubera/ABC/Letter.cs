@@ -7,7 +7,7 @@ public class Letter : MonoBehaviour
 {
 	public enum EType
 	{
-		OBSTACLE, NORMAL	
+		OBSTACLE, NORMAL,WILD_CARD	
 	}
 
 	public Image myImage;
@@ -52,6 +52,8 @@ public class Letter : MonoBehaviour
 			return Color.black;
 		case EType.NORMAL:
 			return Color.white;
+		case EType.WILD_CARD:
+			return Color.cyan;
 		}
 		return Color.white;
 	}
