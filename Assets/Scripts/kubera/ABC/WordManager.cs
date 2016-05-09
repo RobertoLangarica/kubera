@@ -23,6 +23,7 @@ public class WordManager : MonoBehaviour
 	public GameObject letterPrefab;
 	public GameObject letterContainer;
 	protected Transform letterContainerTransform;
+	public Transform preLetterContainerTransform;
 	[HideInInspector]public Transform gridLettersParent;
 	[HideInInspector]public Vector2 gridLettersSizeDelta;
 
@@ -40,7 +41,8 @@ public class WordManager : MonoBehaviour
 	[HideInInspector]public ABCDictionary wordsValidator;
 
 	private int maxLetters = 10;
-	[HideInInspector] public List<Letter> letters;
+	/*[HideInInspector]*/
+	public List<Letter> letters;
 	private int siblingIndexAfterDrag;
 	private Vector2[] lettersPositions;
 
@@ -124,23 +126,28 @@ public class WordManager : MonoBehaviour
 		{
 			//Se va eliminar
 			removeLetter(letter.letterReference);
+			StartCoroutine( correctTweens ());
 		}
 		else
 		{
 			//Se va agregar
-			StartCoroutine( correctTweens ());
-			addLetterFromGrid(letter);
+			if (isAddLetterAllowed ()) 
+			{
+				StartCoroutine( correctTweens ());
+				addLetterFromGrid (letter);
+			}
 		}
 	}
 
-	IEnumerator correctTweens()
+	IEnumerator correctTweens (float delay = 0)
 	{
-		yield return new WaitForSeconds (0);
+		yield return new WaitForSeconds (delay);
 		List<Tween> tweens = new List<Tween> ();
 		int index = 0;
 		for(int i=0; i<letters.Count; i++)
 		{			
 			tweens = DOTween.TweensById (letters[i].GetInstanceID());
+
 			if(tweens != null)
 			{
 				//Transform a = (Transform)tweens [0].target;
@@ -148,7 +155,7 @@ public class WordManager : MonoBehaviour
 
 				DOTween.Kill (letters [i].GetInstanceID ());
 				Letter letter = letters [i];
-				
+
 				GameObject go = occupiedChildren [index];
 
 				fixMoveAnimation (letter, go);
@@ -162,7 +169,6 @@ public class WordManager : MonoBehaviour
 	private void fixMoveAnimation(Letter letter,GameObject go)
 	{
 		letter.transform.DOMove (go.transform.position, selectAnimationTime).OnComplete (() => {callback (letter,go);}).SetId (letter.GetInstanceID ());
-
 	}
 
 	private void callback(Letter letter,GameObject go)
@@ -251,9 +257,7 @@ public class WordManager : MonoBehaviour
 	{
 		Letter letter = target.GetComponent<Letter>();
 
-
 		setSiblingIndex (letter.gameObject, siblingIndexAfterDrag);
-
 
 		activateGridLayout (true);
 		resetValidationToSiblingOrder();
@@ -267,20 +271,17 @@ public class WordManager : MonoBehaviour
 
 	public void addLetterFromGrid(Letter gridReference)
 	{
-		if(isAddLetterAllowed())
-		{
-			//Clone para la visualizacion en WordManager
-			Letter clone = Instantiate(letterPrefab).GetComponent<Letter>();
-			clone.abcChar = gridReference.abcChar;
-			clone.type = gridReference.type;
-			clone.letterReference = gridReference;
-			clone.updateTexts();
-			lastSelected = gridReference;
+		//Clone para la visualizacion en WordManager
+		Letter clone = Instantiate(letterPrefab).GetComponent<Letter>();
+		clone.abcChar = gridReference.abcChar;
+		clone.type = gridReference.type;
+		clone.letterReference = gridReference;
+		clone.updateTexts();
+		lastSelected = gridReference;
 
-			gridReference.letterReference = clone;
-
-			addLetter(clone);
-		}
+		gridReference.letterReference = clone;
+		//clone.transform.SetParent (preLetterContainerTransform,false);
+		addLetter(clone);
 	}
 
 	public bool isAddLetterAllowed()
@@ -360,7 +361,6 @@ public class WordManager : MonoBehaviour
 		resetValidationToSiblingOrder();
 
 		onLettersChange();
-
 	}
 
 	private void lettersCountChange (int readjustingInvisibleChild=0)
@@ -395,7 +395,7 @@ public class WordManager : MonoBehaviour
 
 	private void selectLetterAnimation(Letter letter)
 	{
-		letter.transform.SetParent(letterContainerTransform.parent,false);
+		letter.transform.SetParent(preLetterContainerTransform,false);
 
 		letter.transform.position = lastSelected.transform.position;
 
@@ -410,12 +410,7 @@ public class WordManager : MonoBehaviour
 	IEnumerator doLetterAnimation(Letter letter,GameObject finalPosObj)
 	{
 		yield return new WaitForSeconds (0);
-		/*if (letterContainerTransform.childCount > 0) 
-		{
-			finalPos = letterContainerTransform.GetChild (letterContainerTransform.childCount - 1).position;
-			finalPos.x += (wordContainerLayout.cellSize.x + wordContainerLayout.spacing.x) * 0.01f;
-		}*/
-		//moveLetter (letter, finalPosObj, selectAnimationTime);
+
 		letter.transform.DOMove ( finalPosObj.transform.position, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letter); releaseChild(finalPosObj); reacomodateChildrenSiblingOrder();}).SetId(letter.GetInstanceID());
 	}
 
@@ -518,7 +513,14 @@ public class WordManager : MonoBehaviour
 
 		for(int i=0; i<letterContainerTransform.childCount; i++)
 		{
-			letters.Add(letterContainerTransform.GetChild(i).GetComponent<Letter>());
+			if(letterContainerTransform.GetChild(i).name != "stock")
+			{
+				letters.Add (letterContainerTransform.GetChild (i).GetComponent<Letter> ());
+			}
+		}
+		for(int i=0; i<preLetterContainerTransform.childCount; i++)
+		{
+			letters.Add(preLetterContainerTransform.GetChild(i).GetComponent<Letter>());
 		}
 
 		validateAllLetters();
@@ -588,11 +590,6 @@ public class WordManager : MonoBehaviour
 
 		for (int i = 0; i < letters.Count; i++) 
 		{
-			if(letters[i] == null)
-			{
-				letters.Remove (letters [i]);
-				continue;
-			}
 			switch (letters[i].abcChar.pointsOrMultiple) 
 			{
 			case("x2"):
