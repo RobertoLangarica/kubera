@@ -29,6 +29,7 @@ public class InputPowerUpRotate : MonoBehaviour
 	protected GameObject currentSelected = null;
 
 	public Vector3 selectedInitialScale   = new Vector3(2.5f,2.5f,2.5f);
+	public float rotateSpeed = 0.25f;
 
 	protected Vector3 selectedInitialPosition;
 
@@ -250,24 +251,48 @@ public class InputPowerUpRotate : MonoBehaviour
 			return;
 		}
 
-		if (piece.rotateTimes > 0) {
+		if (piece.toRotateObject != null) 
+		{
 			isRotating (true);
 
-			piece.rotateCount += 1;
+			StartCoroutine( changePiece (piece,piece.transform.position, rotateSpeed));
 
-			piece.gameObject.transform.DOScale (new Vector3 (0, 0), 0.25f).OnComplete (() => {
+			piece.gameObject.transform.DOScale (new Vector3 (0, 0), rotateSpeed).OnComplete (() => {
 
-				piece.transform.localRotation = Quaternion.Euler(new Vector3(0,0,piece.transform.rotation.eulerAngles.z+90));
+				/*piece.transform.localRotation = Quaternion.Euler(new Vector3(0,0,piece.transform.rotation.eulerAngles.z+90));
 
 				piece.transform.DOScale (selectedInitialScale, 0.25f).OnComplete (() => {
 					isRotating(false);
-				});
-			});
+				});*/
 
-			if (piece.rotateCount > piece.rotateTimes) {
-				piece.rotateCount = 0;
-			}
+				DestroyImmediate(piece.gameObject);
+			});
 		}
+	}
+
+	IEnumerator changePiece (Piece piece, Vector3 position, float delay =0)
+	{
+		yield return new WaitForSeconds(delay);
+		GameObject go = GameObject.Instantiate (piece.toRotateObject) as GameObject;
+		Piece newPiece = go.GetComponent<Piece> ();
+		initializeNewPiece (piece, newPiece);
+		go.transform.SetParent (hudManager.showingPiecesContainer);
+		pieceManager.showingPieces.Remove (piece);
+		pieceManager.showingPieces.Add (newPiece);
+
+		go.transform.localScale = new Vector3 (0, 0, 0);
+		go.transform.position = position;
+		go.SetActive (true);
+		go.transform.DOScale (selectedInitialScale, 0.25f).OnComplete (() => {
+			isRotating (false);
+		});
+	}
+
+	protected void initializeNewPiece (Piece oldPiece, Piece piece)
+	{
+		piece.createdIndex = oldPiece.createdIndex;
+		piece.positionOnScene = oldPiece.positionOnScene;
+		piece.initialPieceScale = oldPiece.initialPieceScale;
 	}
 
 	public void activateRotateImage(bool activate,int posOnScene =-1)
@@ -283,10 +308,7 @@ public class InputPowerUpRotate : MonoBehaviour
 		{
 			hudManager.activateRotateImage (false, posOnScene);
 		}
-
-
 	}
-
 }
 
 

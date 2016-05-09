@@ -47,7 +47,9 @@ public class Letter : MonoBehaviour
 		switch(type)
 		{
 		case EType.OBSTACLE:
-			return Color.grey;
+			txtLetter.color = Color.white;
+			txtPoints.color = Color.white;
+			return Color.black;
 		case EType.NORMAL:
 			return Color.white;
 		case EType.WILD_CARD:

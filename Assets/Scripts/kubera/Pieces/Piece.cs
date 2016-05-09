@@ -49,17 +49,13 @@ public class Piece : MonoBehaviour
 
 	public EColor currentColor;
 
-	[HideInInspector]public GameObject parent;
-
 	[HideInInspector]public int createdIndex = 0;
-
-	[HideInInspector]public int rotateTimes = 0;
-
-	[HideInInspector]public int rotateCount = 0;
 
 	[HideInInspector]public Vector3 positionOnScene;
 
 	[HideInInspector]public Vector3 initialPieceScale;
+
+	public GameObject toRotateObject;
 
 	void Start () 
 	{

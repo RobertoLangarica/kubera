@@ -40,9 +40,7 @@ public class WordManager : MonoBehaviour
 	[HideInInspector]public ABCDictionary wordsValidator;
 
 	private int maxLetters = 10;
-	private int l = 0;
-	/*[HideInInspector]*/
-public List<Letter> letters;
+	[HideInInspector] public List<Letter> letters;
 	private int siblingIndexAfterDrag;
 	private Vector2[] lettersPositions;
 
@@ -64,8 +62,9 @@ public List<Letter> letters;
 	protected Letter lastSelected;
 	public float selectAnimationTime = 1;
 	public GameObject gridInvisibleChild;
-	public List<GameObject> gridInvisibleChildren;
 
+	public List<GameObject> freeChildren = new List<GameObject>();
+	public List<GameObject> occupiedChildren = new List<GameObject>();
 
 	void Awake()
 	{
@@ -101,6 +100,20 @@ public List<Letter> letters;
 		wordContainerLayout.cellSize = new Vector2(cellSize,cellSize);
 
 		letterContainerTransform = letterContainer.transform;
+
+		for(int i=0; i<1; i++)
+		{
+			addInvisibleChildrenToPool ();
+		}
+	}
+
+	void addInvisibleChildrenToPool()
+	{
+		GameObject go;
+		go = GameObject.Instantiate(gridInvisibleChild);
+		go.name = "stock";
+		freeChildren.Add(go);
+		go.transform.SetParent(letterContainerTransform.parent,false);
 	}
 
 	private void OnGridLetterTapped(GameObject go)
@@ -115,13 +128,55 @@ public List<Letter> letters;
 		else
 		{
 			//Se va agregar
+			StartCoroutine( correctTweens ());
 			addLetterFromGrid(letter);
 		}
+	}
+
+	IEnumerator correctTweens()
+	{
+		yield return new WaitForSeconds (0);
+		List<Tween> tweens = new List<Tween> ();
+		int index = 0;
+		for(int i=0; i<letters.Count; i++)
+		{			
+			tweens = DOTween.TweensById (letters[i].GetInstanceID());
+			if(tweens != null)
+			{
+				//Transform a = (Transform)tweens [0].target;
+				//a.DOMove (occupiedChildren [index].transform.position, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letters [i]); releaseChild(occupiedChildren [index]); reacomodateChildrenSiblingOrder();}).SetId(letters[i].GetInstanceID());
+
+				DOTween.Kill (letters [i].GetInstanceID ());
+				Letter letter = letters [i];
+				
+				GameObject go = occupiedChildren [index];
+
+				fixMoveAnimation (letter, go);
+				//StartCoroutine (callback (selectAnimationTime,i,index));
+
+				index++;
+			}
+		}
+	}
+
+	private void fixMoveAnimation(Letter letter,GameObject go)
+	{
+		letter.transform.DOMove (go.transform.position, selectAnimationTime).OnComplete (() => {callback (letter,go);}).SetId (letter.GetInstanceID ());
+
+	}
+
+	private void callback(Letter letter,GameObject go)
+	{
+		addLetterToContainer (letter);
+		releaseChild (go);
+		reacomodateChildrenSiblingOrder ();
 	}
 
 	private void onLetterTap(GameObject go)
 	{
 		Letter letter = go.GetComponent<Letter>();
+
+
 		if (!letter.abcChar.wildcard && !letter.wildCard) 
 		{
 			removeLetter (letter);
@@ -265,7 +320,7 @@ public List<Letter> letters;
 		letters.Add(letter);
 		wordsValidator.validateChar(letter.abcChar);
 
-		afterWordValidation();
+		//afterWordValidation();
 	}
 
 	public void removeAllLetters(bool includeWildcards = false)
@@ -274,7 +329,7 @@ public List<Letter> letters;
 		while(count > 0)
 		{
 			--count;
-			if(!letters[count].abcChar.wildcard || includeWildcards)
+			if(!letters[count].wildCard || includeWildcards)
 			{
 				removeLetter (letters [count]);
 			}
@@ -296,23 +351,16 @@ public List<Letter> letters;
 	{
 		letter.deselect();
 		letters.Remove(letter);
+		if (DOTween.IsTweening (letter.GetInstanceID()))
+		{
+			DOTween.Complete (letter.GetInstanceID());
+		}
 		GameObject.DestroyImmediate(letter.gameObject);
 
 		resetValidationToSiblingOrder();
 
 		onLettersChange();
-		/*for(int i=0; i<gridInvisibleChildren.Count; i++)
-		{
-			if(gridInvisibleChildren[i].transform.parent != letterContainer.transform.parent)
-			{
-				gridInvisibleChildren[i].transform.SetParent(letterContainerTransform.parent);
-				break;
-			}
-			if(i == gridInvisibleChildren.Count-1 )
-			{
-				print ("omg");
-			}
-		}*/
+
 	}
 
 	private void lettersCountChange (int readjustingInvisibleChild=0)
@@ -343,16 +391,6 @@ public List<Letter> letters;
 
 		//Se actualiza el tamaño del collider al tamaño de la letra
 		updateLetterBoxCollider (letter.gameObject);
-
-
-		for(int i=0; i<gridInvisibleChildren.Count; i++)
-		{
-			if(gridInvisibleChildren[i].transform.parent != letterContainer.transform.parent)
-			{
-				gridInvisibleChildren[i].transform.SetParent(letterContainerTransform.parent);
-				break;
-			}
-		}
 	}
 
 	private void selectLetterAnimation(Letter letter)
@@ -363,28 +401,65 @@ public List<Letter> letters;
 
 		letter.GetComponent<RectTransform> ().sizeDelta = wordContainerLayout.cellSize;
 
-		Vector3 finalPos = letterContainerTransform.position;
+		GameObject go = getFreeChild ();
+		go.transform.SetParent (letterContainerTransform);
 
-		if (letterContainerTransform.childCount > 0) 
+		StartCoroutine (doLetterAnimation(letter,go));
+	}
+
+	IEnumerator doLetterAnimation(Letter letter,GameObject finalPosObj)
+	{
+		yield return new WaitForSeconds (0);
+		/*if (letterContainerTransform.childCount > 0) 
 		{
 			finalPos = letterContainerTransform.GetChild (letterContainerTransform.childCount - 1).position;
 			finalPos.x += (wordContainerLayout.cellSize.x + wordContainerLayout.spacing.x) * 0.01f;
+		}*/
+		//moveLetter (letter, finalPosObj, selectAnimationTime);
+		letter.transform.DOMove ( finalPosObj.transform.position, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letter); releaseChild(finalPosObj); reacomodateChildrenSiblingOrder();}).SetId(letter.GetInstanceID());
+	}
+
+	protected void reacomodateChildrenSiblingOrder()
+	{
+		for(int i=0; i<occupiedChildren.Count; i++)
+		{
+			occupiedChildren[i].transform.SetAsLastSibling();
+		}
+	}
+
+	public GameObject getFreeChild()
+	{
+		if(freeChildren.Count == 0)
+		{
+			addInvisibleChildrenToPool();
 		}
 
-		letter.transform.DOMove (finalPos, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letter); }).SetId(letter.index);
+		GameObject child = freeChildren[0];
+		freeChildren.RemoveAt (0);
+
+		occupiedChildren.Add (child);
 
 
-		//gridInvisibleChild.transform.SetParent(letterContainerTransform);
 
-		for(int i=0; i<gridInvisibleChildren.Count; i++)
+		return child;
+	}
+
+	public void releaseChild(GameObject child)
+	{
+		for(int i=0; i<occupiedChildren.Count; i++)
 		{
-			if(gridInvisibleChildren[i].transform.parent == letterContainer.transform.parent)
+			if(occupiedChildren[i] == child)
 			{
-				gridInvisibleChildren[i].transform.SetParent(letterContainerTransform);
-				break;
+				child.transform.SetParent(letterContainerTransform.parent);
+				occupiedChildren.Remove (child);
 			}
 		}
 
+		freeChildren.Add (child);
+		for(int i=0; i<freeChildren.Count; i++)
+		{
+			freeChildren [i].transform.position = freeChildren [freeChildren.Count - 1].transform.position;
+		}
 	}
 
 	private void updateLetterBoxCollider(GameObject letter)
@@ -723,6 +798,5 @@ public List<Letter> letters;
 		saveAndValidateLetter(wildCard);
 		resetValidationToSiblingOrder ();
 		afterWordValidation ();
-		onLettersChange ();
 	}
 }
