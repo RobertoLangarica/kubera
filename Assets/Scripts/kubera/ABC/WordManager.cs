@@ -40,9 +40,7 @@ public class WordManager : MonoBehaviour
 	[HideInInspector]public ABCDictionary wordsValidator;
 
 	private int maxLetters = 10;
-	private int l = 0;
-	/*[HideInInspector]*/
-public List<Letter> letters;
+	[HideInInspector] public List<Letter> letters;
 	private int siblingIndexAfterDrag;
 	private Vector2[] lettersPositions;
 

@@ -255,7 +255,7 @@ public class InputPowerUpRotate : MonoBehaviour
 		{
 			isRotating (true);
 
-			StartCoroutine( fix (piece,piece.transform.position, rotateSpeed));
+			StartCoroutine( changePiece (piece,piece.transform.position, rotateSpeed));
 
 			piece.gameObject.transform.DOScale (new Vector3 (0, 0), rotateSpeed).OnComplete (() => {
 
@@ -270,21 +270,26 @@ public class InputPowerUpRotate : MonoBehaviour
 		}
 	}
 
-	IEnumerator fix (Piece piece, Vector3 position, float delay =0)
+	IEnumerator changePiece (Piece piece, Vector3 position, float delay =0)
 	{
 		yield return new WaitForSeconds(delay);
-		GameObject newPiece = GameObject.Instantiate (piece.toRotateObject) as GameObject;
-		Piece p = newPiece.GetComponent<Piece> ();
-		p.createdIndex = piece.createdIndex;
-		p.positionOnScene = piece.positionOnScene;
-		p.initialPieceScale = piece.initialPieceScale;
+		GameObject go = GameObject.Instantiate (piece.toRotateObject) as GameObject;
+		Piece newPiece = go.GetComponent<Piece> ();
+		initializeNewPiece (piece, newPiece);
 
-		newPiece.transform.localScale = new Vector3 (0, 0, 0);
-		newPiece.transform.position = position;
-		newPiece.SetActive (true);
-		newPiece.transform.DOScale (selectedInitialScale, 0.25f).OnComplete (() => {
+		go.transform.localScale = new Vector3 (0, 0, 0);
+		go.transform.position = position;
+		go.SetActive (true);
+		go.transform.DOScale (selectedInitialScale, 0.25f).OnComplete (() => {
 			isRotating (false);
 		});
+	}
+
+	protected void initializeNewPiece (Piece oldPiece, Piece piece)
+	{
+		piece.createdIndex = oldPiece.createdIndex;
+		piece.positionOnScene = oldPiece.positionOnScene;
+		piece.initialPieceScale = oldPiece.initialPieceScale;
 	}
 
 	public void activateRotateImage(bool activate,int posOnScene =-1)
