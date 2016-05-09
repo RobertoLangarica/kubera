@@ -130,12 +130,12 @@ public List<Letter> letters;
 		else
 		{
 			//Se va agregar
-			StartCoroutine( existTween ());
+			StartCoroutine( correctTweens ());
 			addLetterFromGrid(letter);
 		}
 	}
 
-	IEnumerator existTween()
+	IEnumerator correctTweens()
 	{
 		yield return new WaitForSeconds (0);
 		List<Tween> tweens = new List<Tween> ();
@@ -153,7 +153,7 @@ public List<Letter> letters;
 				
 				GameObject go = occupiedChildren [index];
 
-				correctAnimation (letter, go);
+				fixMoveAnimation (letter, go);
 				//StartCoroutine (callback (selectAnimationTime,i,index));
 
 				index++;
@@ -161,7 +161,7 @@ public List<Letter> letters;
 		}
 	}
 
-	private void correctAnimation(Letter letter,GameObject go)
+	private void fixMoveAnimation(Letter letter,GameObject go)
 	{
 		letter.transform.DOMove (go.transform.position, selectAnimationTime).OnComplete (() => {callback (letter,go);}).SetId (letter.GetInstanceID ());
 
@@ -322,7 +322,7 @@ public List<Letter> letters;
 		letters.Add(letter);
 		wordsValidator.validateChar(letter.abcChar);
 
-		afterWordValidation();
+		//afterWordValidation();
 	}
 
 	public void removeAllLetters(bool includeWildcards = false)
@@ -331,7 +331,7 @@ public List<Letter> letters;
 		while(count > 0)
 		{
 			--count;
-			if(!letters[count].abcChar.wildcard || includeWildcards)
+			if(!letters[count].wildCard || includeWildcards)
 			{
 				removeLetter (letters [count]);
 			}
@@ -362,18 +362,7 @@ public List<Letter> letters;
 		resetValidationToSiblingOrder();
 
 		onLettersChange();
-		/*for(int i=0; i<gridInvisibleChildren.Count; i++)
-		{
-			if(gridInvisibleChildren[i].transform.parent != letterContainer.transform.parent)
-			{
-				gridInvisibleChildren[i].transform.SetParent(letterContainerTransform.parent);
-				break;
-			}
-			if(i == gridInvisibleChildren.Count-1 )
-			{
-				print ("omg");
-			}
-		}*/
+
 	}
 
 	private void lettersCountChange (int readjustingInvisibleChild=0)
@@ -797,10 +786,9 @@ public List<Letter> letters;
 		wildCard.abcChar.pointsOrMultiple = "x3";
 
 		wildCard.updateTexts();
-
+		
 		saveAndValidateLetter(wildCard);
 		resetValidationToSiblingOrder ();
 		afterWordValidation ();
-		onLettersChange ();
 	}
 }
