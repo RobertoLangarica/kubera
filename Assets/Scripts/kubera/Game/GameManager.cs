@@ -513,7 +513,7 @@ public class GameManager : MonoBehaviour
 	IEnumerator checkForAPossibleWord()
 	{
 		yield return new WaitForSeconds (.2f);
-		if(!wordManager.checkIfAWordIsPossible(gridCharacters) || remainingMoves <= 0)
+		if((!wordManager.checkIfAWordIsPossible(gridCharacters) || remainingMoves <= 0) && !gameOver)
 		{
 			Debug.Log ("Perdio de verdad");
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);
