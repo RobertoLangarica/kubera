@@ -6,7 +6,7 @@ public class SettingsButton : MonoBehaviour
 {
 	public void activateMusic()
 	{
-		if (PersistentData.instance.startLevel > 7) 
+		if (PersistentData.instance.startLevel > 1) 
 		{
 			PersistentData.instance.startLevel -= 2;
 			SceneManager.LoadScene ("Game");
