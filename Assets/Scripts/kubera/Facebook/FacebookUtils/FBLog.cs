@@ -7,12 +7,19 @@ public class FBLog : MonoBehaviour {
 	public delegate void DOnLoginComplete(bool complete);
 
 	public DOnLoginComplete onLoginComplete;
+
+	public bool isLoggedIn;
 	void Awake()
 	{
 		// Initialize FB SDK
 		if (!FB.IsInitialized)
 		{
 			FB.Init(InitCallback);
+		}
+
+		if(FB.IsLoggedIn)
+		{
+			isLoggedIn = true;
 		}
 	}
 

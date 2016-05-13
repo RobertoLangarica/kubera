@@ -24,7 +24,9 @@ public class FacebookManager : MonoBehaviour
 	protected List<string> askedKeys = new List<string>();
 	protected List<string> giftKeys = new List<string>();
 
-	public List<object> friends = new List<object> ();
+	public List<object> gameFriends = new List<object> ();
+	public List<object> invitableFriends = new List<object> ();
+
 	public Dictionary<string, Texture> friendImages = new Dictionary<string, Texture>();
 
 	public int maxUsersPerMessage = 5;
@@ -37,16 +39,20 @@ public class FacebookManager : MonoBehaviour
 		fbGraph = FindObjectOfType<FBGraph> ();
 		fbLog = FindObjectOfType<FBLog> ();
 		facebookNews = FindObjectOfType<FacebookNews> ();
+		playerInfo = FindObjectOfType<PlayerInfo> ();
+	}
 
+	void Start()
+	{
 		fbLog.onLoginComplete += OnLoginComplete;
 
-		playerInfo = FindObjectOfType<PlayerInfo> ();
-
 		fbGraph.OnPlayerInfo += showPlayerInfo;
-		fbGraph.OnGetFriends += addFriends;
+		fbGraph.OnGetGameFriends += addGameFriends;
+		fbGraph.OnGetInvitableFriends += addInivitableFriends;
 		fbGraph.OnGetFriendTextures += addFriendsTexture;
 		fbGraph.onFinishGettingFriends += startFillMessageData;
 
+		OnLoginComplete (fbLog.isLoggedIn);
 	}
 
 	protected void OnLoginComplete(bool complete)
@@ -59,7 +65,6 @@ public class FacebookManager : MonoBehaviour
 			fbGraph.GetPlayerInfo();
 			fbGraph.GetFriends();
 			fbGraph.GetInvitableFriends();
-			//FBGraph.GetScores();
 
 			getFriendsAppRequests ();
 			if(conectFacebook != null)
@@ -86,9 +91,14 @@ public class FacebookManager : MonoBehaviour
 		
 	}
 
-	protected void addFriends(List<object> moreFriends)
+	protected void addGameFriends(List<object> gameFriends)
 	{
-		friends.AddRange (moreFriends);
+		gameFriends.AddRange (gameFriends);
+	}
+
+	protected void addInivitableFriends(List<object> invitableFriends)
+	{
+		invitableFriends.AddRange (invitableFriends);
 	}
 
 	protected void addFriendsTexture(string id, Texture image)
@@ -472,6 +482,15 @@ public class FacebookManager : MonoBehaviour
 				j = 0;
 			}
 		}
+	}
+
+	void OnDestroy() {
+		fbLog.onLoginComplete -= OnLoginComplete;
+		fbGraph.OnPlayerInfo -= showPlayerInfo;
+		fbGraph.OnGetGameFriends -= addGameFriends;
+		fbGraph.OnGetInvitableFriends -= addInivitableFriends;
+		fbGraph.OnGetFriendTextures -= addFriendsTexture;
+		fbGraph.onFinishGettingFriends -= startFillMessageData;
 	}
 
 }

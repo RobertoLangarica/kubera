@@ -20,7 +20,8 @@ public class FBGraph : MonoBehaviour
 	public delegate void DOnFinishGetingFriends();
 
 	public DOnGetPlayerInfo OnPlayerInfo;
-	public DOnGetFriends OnGetFriends;
+	public DOnGetFriends OnGetGameFriends;
+	public DOnGetFriends OnGetInvitableFriends;
 	public DOnAddTextureFriend OnGetFriendTextures;
 	public DOnFinishGetingFriends onFinishGettingFriends;
 
@@ -113,7 +114,7 @@ public class FBGraph : MonoBehaviour
 	//
 	public void GetFriends ()
 	{
-		string queryString = "/me/friends?fields=id,first_name,picture.width(128).height(128)&limit=100";
+		string queryString = "/me/friends?fields=id,first_name,picture.width(128).height(128)&limit=200";
 		FB.API(queryString, HttpMethod.GET, GetFriendsCallback);
 	}
 
@@ -133,6 +134,8 @@ public class FBGraph : MonoBehaviour
 		{
 			var friendsList = (List<object>)dataList;
 			CacheFriends(friendsList);
+			OnGetGameFriends (friendsList);
+
 			onFinishGettingFriends ();
 		}
 	}
@@ -156,7 +159,7 @@ public class FBGraph : MonoBehaviour
 	//
 	public void GetInvitableFriends ()
 	{
-		string queryString = "/me/invitable_friends?fields=id,first_name,picture.width(128).height(128)&limit=100";
+		string queryString = "/me/invitable_friends?fields=id,first_name,picture.width(128).height(128)&limit=200";
 		FB.API(queryString, HttpMethod.GET, GetInvitableFriendsCallback);
 	}
 
@@ -181,7 +184,6 @@ public class FBGraph : MonoBehaviour
 
 	private void CacheFriends (List<object> newFriends)
 	{
-		OnGetFriends (newFriends);
 		Dictionary<string, object> friend;
 
 		foreach(Dictionary<string,object> f in newFriends)
