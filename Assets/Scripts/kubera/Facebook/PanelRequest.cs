@@ -71,9 +71,9 @@ public class PanelRequest : MonoBehaviour {
 		}
 	}
 
-	public void setParent(Transform parent)
+	public void setParent(Transform parent, bool worldPositionStays)
 	{
-		transform.SetParent (parent);
+		transform.SetParent (parent,worldPositionStays);
 	}
 
 	public void selectRequestState(ERequestState requestState)
@@ -204,7 +204,7 @@ public class PanelRequest : MonoBehaviour {
 	public void addFriendPicture (Texture texture)
 	{
 		GameObject go = Instantiate (friendImage)as GameObject;
-		go.transform.SetParent (panelFriendsImage.transform);
+		go.transform.SetParent (panelFriendsImage.transform,false);
 		go.GetComponent<FriendImage> ().setFriendImage (texture);
 	}
 

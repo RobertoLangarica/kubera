@@ -14,17 +14,26 @@ public class FBGraph : MonoBehaviour
 	// Make a Graph API GET call to /me/ to retrieve a player's information
 	// See: https://developers.facebook.com/docs/graph-api/reference/user/
 
-	public delegate void DOnGetPlayerInfo(string name, Texture picture);
+	public delegate void DOnGetPlayerInfo(string id, string name);
 	public delegate void DOnGetFriends(List<object> friends);
+	public delegate void DOnGetAppRequest(List<object> friends);
 	public delegate void DOnAddTextureFriend(string id, Texture picture);
-	public delegate void DOnFinishGetingFriends();
+	public delegate void DOnFinishGetingInfo();
 
 	public DOnGetPlayerInfo OnPlayerInfo;
 	public DOnGetFriends OnGetGameFriends;
 	public DOnGetFriends OnGetInvitableFriends;
+	public DOnGetAppRequest OnGetAppRequest;
 	public DOnAddTextureFriend OnGetFriendTextures;
-	public DOnFinishGetingFriends onFinishGettingFriends;
+	public DOnFinishGetingInfo onFinishGettingInfo;
 
+	protected bool gameFriendsReady;
+	protected bool invitableFriendsReady;
+	protected bool appRequestReady;
+	protected bool playerInfoReady;
+	protected bool texturesFriendReady;
+	protected int texturesCount;
+	protected int texturesAdded;
 	public void GetPlayerInfo()
 	{
 		string queryString = "/me?fields=id,first_name,picture.width(120).height(120)";
@@ -33,6 +42,9 @@ public class FBGraph : MonoBehaviour
 
 	private void GetPlayerInfoCallback(IGraphResult result)
 	{
+		bool textureReady = false;
+		bool infoReady = false;
+
 		Debug.Log("GetPlayerInfoCallback");
 		if (result.Error != null)
 		{
@@ -41,13 +53,16 @@ public class FBGraph : MonoBehaviour
 		}
 		//Debug.Log(result.RawResult);
 
-		// Save player name
-		string name = "";
-		if (result.ResultDictionary.TryGetValue("first_name", out name))
+		// Save player id
+		string id = "";
+		if (result.ResultDictionary.TryGetValue("id", out id))
 		{
-			//name = nombre del usuario
-			//GameStateManager.Username = name;
+			
 		}
+
+		string name = "";
+		result.ResultDictionary.TryGetValue ("first_name", out name);
+		
 
 		//Fetch player profile picture from the URL returned
 		string playerImgUrl = GraphUtil.DeserializePictureURL(result.ResultDictionary);
@@ -58,12 +73,29 @@ public class FBGraph : MonoBehaviour
 				{
 					//Imagen del usuario
 					//GameStateManager.UserTexture = pictureTexture;
-					OnPlayerInfo (name, pictureTexture);
+
 				}
+				OnGetFriendTextures (id,pictureTexture);
+				textureReady = true;
+				setPlayerInfoReady(infoReady,textureReady);
 				//print("finishPLAYERINFO");
 			});
+		
+		OnPlayerInfo (id,name);
+		infoReady = true;
+		setPlayerInfoReady(infoReady,textureReady);
+	}
 
-
+	protected void setPlayerInfoReady(bool nameId, bool texture)
+	{
+		if(!playerInfoReady)
+		{
+			if(nameId && texture)
+			{
+				playerInfoReady = true;
+				AllinfoGathered ();
+			}
+		}
 	}
 
 	// In the above request it takes two network calls to fetch the player's profile picture.
@@ -135,8 +167,8 @@ public class FBGraph : MonoBehaviour
 			var friendsList = (List<object>)dataList;
 			CacheFriends(friendsList);
 			OnGetGameFriends (friendsList);
-
-			onFinishGettingFriends ();
+			gameFriendsReady = true;
+			AllinfoGathered ();
 		}
 	}
 
@@ -179,13 +211,15 @@ public class FBGraph : MonoBehaviour
 		{
 			var invitableFriendsList = (List<object>)dataList;
 			CacheFriends(invitableFriendsList);
+			invitableFriendsReady = true;
+			AllinfoGathered ();
 		}
 	}
 
 	private void CacheFriends (List<object> newFriends)
 	{
 		Dictionary<string, object> friend;
-
+		texturesCount += newFriends.Count;
 		foreach(Dictionary<string,object> f in newFriends)
 		{
 			friend =  f as Dictionary<string, object>;
@@ -208,11 +242,73 @@ public class FBGraph : MonoBehaviour
 					//GameStateManager.UserTexture = pictureTexture;
 					texture = pictureTexture;
 					OnGetFriendTextures (friendID, pictureTexture);
-
+					textureAdded();
 				}
 			});
 		return texture;
 	}
+
+	private void textureAdded()
+	{
+		texturesAdded++;
+		if(texturesAdded == texturesCount)
+		{
+			if(gameFriendsReady && invitableFriendsReady)
+			{
+				texturesFriendReady = true;
+				AllinfoGathered ();
+			}
+		}
+	}
+
 	#endregion
 
-}
+	#region Request
+	public void getFriendsAppRequests()
+	{
+		FB.API("/me?fields=apprequests{from,data}",HttpMethod.GET,getFriendsAppRequestsCallback);
+	}
+
+	protected void getFriendsAppRequestsCallback(IGraphResult result) 
+	{
+		if (result.Error != null)
+		{
+			Debug.LogError(result.Error);
+			return;
+		}
+
+		if (!result.ResultDictionary.ContainsKey ("apprequests"))
+		{
+			//deleteAppRequest ((string)dict["id"]);
+			print ("none friendsRequest ");
+			appRequestReady = true;
+			AllinfoGathered ();
+			return;
+		}
+
+		//print (dict.Keys.ToCommaSeparateList ());
+		print ("getfriends true");
+		object dataObject;
+		List<object> apprequestsData = new List<object>();
+
+		//print ("************ " +(string) dict["id"]);
+		if (result.ResultDictionary.TryGetValue ("apprequests", out dataObject)) 
+		{
+			apprequestsData = (List<object>)(((Dictionary<string, object>)dataObject) ["data"]);
+		}
+		OnGetAppRequest (apprequestsData);
+		appRequestReady = true;
+		AllinfoGathered ();
+	}
+	#endregion
+
+	protected void AllinfoGathered()
+	{
+		
+		if(gameFriendsReady&& invitableFriendsReady && appRequestReady && playerInfoReady && texturesFriendReady)
+		{
+			onFinishGettingInfo ();
+		}
+
+	}   
+}        
