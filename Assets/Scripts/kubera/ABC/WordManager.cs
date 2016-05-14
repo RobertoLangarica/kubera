@@ -22,7 +22,7 @@ public class WordManager : MonoBehaviour
 	public GameObject gridLetterPrefab;
 	public GameObject letterPrefab;
 	public GameObject letterContainer;
-	protected Transform letterContainerTransform;
+	public Transform letterContainerTransform;
 	[HideInInspector]public Transform gridLettersParent;
 	[HideInInspector]public Vector2 gridLettersSizeDelta;
 
@@ -45,8 +45,8 @@ public List<Letter> letters;
 
 	[HideInInspector]public Vector3 deleteBtnPosition;
 
-	protected GridLayoutGroup wordContainerLayout;
-	protected RectTransform wordContainerRectTransform;
+	public GridLayoutGroup wordContainerLayout;
+	public RectTransform wordContainerRectTransform;
 
 	[HideInInspector]public int wordPoints;
 
@@ -90,14 +90,14 @@ public List<Letter> letters;
 	void Start()
 	{
 		//Tamaño de las celdas
-		wordContainerLayout = letterContainer.GetComponent<GridLayoutGroup>();
-		wordContainerRectTransform = letterContainer.GetComponent<RectTransform> ();
+		//wordContainerLayout = letterContainer.GetComponent<GridLayoutGroup>();
+		//wordContainerRectTransform = letterContainer.GetComponent<RectTransform> ();
 
 		float cellSize = wordContainerRectTransform.rect.height * 0.9f;
 
 		wordContainerLayout.cellSize = new Vector2(cellSize,cellSize);
 
-		letterContainerTransform = letterContainer.transform;
+		//letterContainerTransform = letterContainer.transform;
 	}
 
 	private void OnGridLetterTapped(GameObject go)
@@ -552,6 +552,8 @@ public List<Letter> letters;
 
 	private bool isThereAnyLetterOnContainer()
 	{
+		Debug.Log (letterContainerTransform);
+		Debug.Log (letterContainerTransform.childCount);
 		return (letterContainerTransform.childCount == 0 ? false:true); 
 	}
 

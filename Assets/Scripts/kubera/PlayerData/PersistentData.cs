@@ -36,7 +36,7 @@ public class PersistentData : MonoBehaviour
 	[HideInInspector]
 	public bool fromGameToEdit;
 
-	public int startLevel = 6;
+	public int startLevel = 1;
 
 	void Awake() 
 	{
@@ -224,7 +224,7 @@ public class PersistentData : MonoBehaviour
 
 		if (currentLevel == null) 
 		{
-			startLevel = 6;
+			startLevel = 1;
 			setLevelNumber (startLevel);
 		}
 

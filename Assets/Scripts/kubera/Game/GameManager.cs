@@ -103,14 +103,14 @@ public class GameManager : MonoBehaviour
 	{
 		if (Input.GetKeyUp (KeyCode.R)) 
 		{
-			PersistentData.instance.startLevel = 6;
+			PersistentData.instance.startLevel -= 1;
 			SceneManager.LoadScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.N)) 
 		{
 			SceneManager.LoadScene ("Game");
 		}
-		if (Input.GetKeyUp (KeyCode.B) && PersistentData.instance.startLevel > 7) 
+		if (Input.GetKeyUp (KeyCode.B) && PersistentData.instance.startLevel > 1) 
 		{
 			PersistentData.instance.startLevel -= 2;
 			SceneManager.LoadScene ("Game");
@@ -793,9 +793,14 @@ public class GameManager : MonoBehaviour
 		case "endGame":
 			break;
 		default:
-			allowGameInput (true);	
+			Invoke ("popUpAllowInput",0.5f);
 			break;
 		}
+	}
+
+	public void popUpAllowInput()
+	{
+		allowGameInput (true);	
 	}
 
 	public void activatePopUp(string popUpName)
@@ -806,7 +811,7 @@ public class GameManager : MonoBehaviour
 
 	public void quitGame()
 	{
-		PersistentData.instance.startLevel = 6;
+		PersistentData.instance.startLevel -= 1;
 		SceneManager.LoadScene ("Game");
 		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		activatePopUp ("exitGame");*/
