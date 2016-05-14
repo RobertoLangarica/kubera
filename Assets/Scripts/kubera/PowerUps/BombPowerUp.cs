@@ -43,7 +43,7 @@ public class BombPowerUp : PowerupBase
 		{
 			if(cellSelected.contentType == Piece.EType.PIECE && cellSelected.occupied)
 			{
-				StartCoroutine (bombAnimation.startSameColorSearchAnimation (cellSelected));
+				StartCoroutine (bombAnimation.startSameColorSearchAnimation(cellSelected));
 
 				DestroyImmediate(bombGO);
 				bombInput.OnDrop -= powerUpPositioned;

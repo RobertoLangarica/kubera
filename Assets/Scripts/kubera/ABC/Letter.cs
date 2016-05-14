@@ -7,7 +7,7 @@ public class Letter : MonoBehaviour
 {
 	public enum EType
 	{
-		OBSTACLE, NORMAL	
+		OBSTACLE, NORMAL,WILD_CARD	
 	}
 
 	public Image myImage;
@@ -19,6 +19,7 @@ public class Letter : MonoBehaviour
 	[HideInInspector] public EType type;
 	[HideInInspector] public bool selected;
 	[HideInInspector]public int index;//Indice del caracter en WordManager
+	[HideInInspector]public bool wildCard;
 	protected bool textActualized; //texto actualizado
 
 	public ABCChar abcChar;
@@ -46,9 +47,13 @@ public class Letter : MonoBehaviour
 		switch(type)
 		{
 		case EType.OBSTACLE:
-			return Color.grey;
+			txtLetter.color = Color.white;
+			txtPoints.color = Color.white;
+			return Color.black;
 		case EType.NORMAL:
 			return Color.white;
+		case EType.WILD_CARD:
+			return Color.cyan;
 		}
 		return Color.white;
 	}
@@ -61,7 +66,7 @@ public class Letter : MonoBehaviour
 	private void markAsSelected()
 	{
 		selected=true;
-		updateColorToSelected ();
+		updateColorToSelectedBasedOnType ();
 	}
 
 	private void markAsUnselected()
@@ -93,11 +98,22 @@ public class Letter : MonoBehaviour
 		letterReference = null;
 	}
 
-	protected void updateColorToSelected()
+	protected void updateColorToSelectedBasedOnType()
 	{
 		if(myImage == null){return;}
 
-		myImage.color = selectedColor;	
+
+		switch(type)
+		{
+		case EType.OBSTACLE:
+			txtLetter.color = selectedColor;
+			txtPoints.color = selectedColor;
+			myImage.color = Color.black;
+			break;
+		case EType.NORMAL:
+			myImage.color = selectedColor;
+			break;
+		}
 	}
 
 	public void updateTexts()

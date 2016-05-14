@@ -323,7 +323,7 @@ namespace LevelBuilder
 					word = words[i];
 					word =word.ToUpper ();
 					result += word+"_";
-					word = words[i].Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+					word = words[i].Replace('Á','A').Replace('É','E').Replace('Í','I').Replace('Ó','O').Replace('Ú','U').Replace('Ü','U');
 					word =word.ToUpper ();
 					result += word;
 					if(i+1 < words.Length)
@@ -345,7 +345,7 @@ namespace LevelBuilder
 					word = words[i];
 					word =word.ToUpper ();
 					result += word+"_";
-					word = words[i].Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+					word = words[i].Replace('Á','A').Replace('É','E').Replace('Í','I').Replace('Ó','O').Replace('Ú','U').Replace('Ü','U');
 					word =word.ToUpper ();
 					result += word;
 					if(i+1 < words.Length)
@@ -364,7 +364,7 @@ namespace LevelBuilder
 				word = words;
 				word =word.ToUpper ();
 				result += word+"_";
-				word = words.Replace('á','a').Replace('é','e').Replace('í','i').Replace('ó','o').Replace('ú','u').Replace('ü','u');
+				word = words.Replace('Á','A').Replace('É','E').Replace('Í','I').Replace('Ó','O').Replace('Ú','U').Replace('Ü','U');
 				word =word.ToUpper ();
 				result += word;
 				print (result);

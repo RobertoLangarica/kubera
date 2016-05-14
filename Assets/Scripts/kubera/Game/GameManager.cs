@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
 		inputWords			= FindObjectOfType<InputWords>();
 		goalManager			= FindObjectOfType<GoalManager>();
 		linesAnimation 		= FindObjectOfType<LinesCreatedAnimation> ();
-		bombAnimation = FindObjectOfType<BombAnimation> ();
+		bombAnimation 		= FindObjectOfType<BombAnimation> ();
 		secondChance 		= FindObjectOfType<SecondChancePopUp> ();
 		SecondChanceFreeBombs 	= FindObjectOfType<SecondChanceFreeBombs> ();
 
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
 		powerupManager.OnPowerupCompleted = OnPowerupCompleted;
 
 		inputPiece.OnDrop += OnPieceDropped;
-		inputPiece.OnSelected += setShadow;
+		inputPiece.OnSelected += showShadowOnPiece;
 
 		goalManager.OnGoalAchieved += OnLevelGoalAchieved;
 		goalManager.OnLetterFound += hudManager.destroyLetterFound;
@@ -189,6 +189,7 @@ public class GameManager : MonoBehaviour
 			{
 				//Cuadro de color
 				Piece content = pieceManager.getSingleSquarePiece(cellType>>6);
+				content.squares [0].GetComponent<Collider2D> ().enabled = true;
 				cellManager.occupyAndConfigureCell(i,content.gameObject.transform.GetChild (0).gameObject,content.currentType,content.currentColor,true);
 			}
 			else if((cellType & 0x8) == 0x8)
@@ -282,7 +283,7 @@ public class GameManager : MonoBehaviour
 			Transform target = piece.squares[i].transform;
 
 			target.DOMove (piecePosition, piecePositionedDelay);
-			target.DOScale(target.localScale* 0.8f, 0.1f).SetDelay(piecePositionedDelay).OnComplete(()=>{setShadow (piece, false);});
+			target.DOScale(target.localScale* 0.8f, 0.1f).SetDelay(piecePositionedDelay).OnComplete(()=>{showShadowOnPiece (piece, false);});
 			target.DOScale(target.localScale, 0.1f).SetDelay(piecePositionedDelay+0.1f);
 		}
 	}
@@ -362,14 +363,13 @@ public class GameManager : MonoBehaviour
 		checkIfLose ();
 	}
 
-	//TODO: checar nombre
-	public void setShadow (GameObject obj, bool showing = true)
+	public void showShadowOnPiece (GameObject obj, bool showing = true)
 	{
 		Piece piece = obj.GetComponent<Piece> ();
-		setShadow (piece, showing);
+		showShadowOnPiece (piece, showing);
 	}
 
-	private void setShadow (Piece piece, bool showing = true)
+	private void showShadowOnPiece (Piece piece, bool showing = true)
 	{
 		pieceManager.showingShadow (piece, showing);
 	}
@@ -420,7 +420,7 @@ public class GameManager : MonoBehaviour
 		onUsersAction (wordManager.wordPoints);
 		removeLettersFromGrid(wordManager.letters, true);
 
-		wordManager.removeAllLetters();
+		wordManager.removeAllLetters(true);
 
 		checkIfLose ();
 	}
@@ -511,7 +511,6 @@ public class GameManager : MonoBehaviour
 			}
 
 			StartCoroutine(checkIfReallyLost());
-
 		}
 	}
 
@@ -634,8 +633,7 @@ public class GameManager : MonoBehaviour
 
 		if (cellToLetter.Count > 0) 
 		{
-			StartCoroutine (bombAnimation.startSinglePieceAnimation(cellToLetter[random]));
-
+			StartCoroutine (bombAnimation.startSinglePieceAnimation (cellToLetter [random]));
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
@@ -683,7 +681,7 @@ public class GameManager : MonoBehaviour
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
 	}
 
-	protected void allowGameInput(bool allowInput = true)
+	public void allowGameInput(bool allowInput = true)
 	{
 		inputPiece.allowInput = allowInput;
 		inputWords.allowInput = allowInput;
@@ -793,14 +791,15 @@ public class GameManager : MonoBehaviour
 		case "endGame":
 			break;
 		default:
-			Invoke ("popUpAllowInput",0.5f);
+		
+				Invoke ("allowInputFromInvoke", 0.5f);
 			break;
 		}
 	}
 
-	public void popUpAllowInput()
+	protected void allowInputFromInvoke()
 	{
-		allowGameInput (true);	
+		allowGameInput();
 	}
 
 	public void activatePopUp(string popUpName)

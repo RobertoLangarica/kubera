@@ -22,7 +22,7 @@ public class ExitGamePopUp : PopUpBase {
 					{
 						exitContent.DOAnchorPos (-v3, 1.0f).SetEase(Ease.InBack).OnComplete(()=>
 							{
-								//TODO: salirnos del nivel y hacerle perder una vida, etc.
+								//TODO: salirnos del nivel
 								print("perdio");
 								popUpCompleted("endGame");
 							});

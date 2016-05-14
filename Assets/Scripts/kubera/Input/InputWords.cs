@@ -97,7 +97,7 @@ public class InputWords : MonoBehaviour
 				tempV3.z = letter.transform.position.z;
 				moveTo(letter,tempV3,letterSpeed);
 
-				onDragUpdate (letter);							
+				onDragUpdate (letter);	
 			}
 			break;
 
@@ -110,11 +110,11 @@ public class InputWords : MonoBehaviour
 				//letter.transform.position = firstPosition;
 				//onDragFinish(letter);
 				//DOTween.Kill ("InputW_Dragging");
-
+				//
 				//letter.transform.position = new Vector3 (letter.transform.position.x, 0, 0);	
-
+				//
 				//letter = null;
-
+				//
 				//canDeleteLetter = true;
 
 			}
@@ -122,6 +122,7 @@ public class InputWords : MonoBehaviour
 		}
 	}
 
+	//Letters on Word
 	void OnFingerDown(FingerDownEvent gesture)
 	{
 		if (allowInput && gesture.Raycast.Hit2D) 
@@ -189,7 +190,6 @@ public class InputWords : MonoBehaviour
 	{
 		if (allowInput && target != null) 
 		{
-
 			if(!allowAnimation)
 			{		
 				animationFingerUp ();
@@ -213,14 +213,12 @@ public class InputWords : MonoBehaviour
 
 	void OnLetterGridTap(TapGesture gesture)
 	{
-		if(allowInput && gesture.Raycast.Hit2D && allowAnimation)
+		if(allowInput && target&& allowAnimation)
 		{		
-			GameObject target = gesture.Raycast.Hit2D.transform.gameObject;
-
 			if (target.layer == LayerMask.NameToLayer ("LetterOnGrid")) 
-				{
-					onTap(gesture.Raycast.Hit2D.transform.gameObject);
-				}	
+			{
+				onTap(target);
+			}	
 		}
 	}
 
