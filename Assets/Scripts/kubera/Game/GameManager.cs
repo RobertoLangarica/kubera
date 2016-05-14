@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
 		goalManager.OnLetterFound += hudManager.destroyLetterFound;
 
 		hudManager.OnPopUpCompleted += popUpCompleted;
-		hudManager.OnPiecesScaled += checkIfLoose;
+		hudManager.OnPiecesScaled += checkIfLose;
 
 		wordManager.onWordChange += refreshCurrentWordScoreOnHUD;
 
@@ -320,7 +320,7 @@ public class GameManager : MonoBehaviour
 		}
 		else if(!piecesWhereCreated)
 		{
-			checkIfLoose ();
+			checkIfLose ();
 		}
 
 		Destroy(piece.gameObject);
@@ -359,7 +359,7 @@ public class GameManager : MonoBehaviour
 		cellManager.occupyAndConfigureCell (cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE);
 		gridCharacters.Add(letter);
 
-		checkIfLoose ();
+		checkIfLose ();
 	}
 
 	//TODO: checar nombre
@@ -422,7 +422,7 @@ public class GameManager : MonoBehaviour
 
 		wordManager.removeAllLetters();
 
-		checkIfLoose ();
+		checkIfLose ();
 	}
 
 	/**
@@ -485,7 +485,7 @@ public class GameManager : MonoBehaviour
 		activatePopUp ("goalPopUp");
 	}
 
-	protected void checkIfLoose()
+	protected void checkIfLose()
 	{
 		//HACK: al inicio del nivel que sirve en los tutoriales
 		if (linesAnimation.isOnAnimation || remainingMoves == currentLevel.moves) 
@@ -501,35 +501,25 @@ public class GameManager : MonoBehaviour
 			}
 
 			Debug.Log ("No puede poner piezas");
-			while(true)
-			{
-				bool pass = true;
-				for(int i=0; i < gridCharacters.Count; i++)
-				{
-					if(!gridCharacters[i])
-					{
-						gridCharacters.RemoveAt(i);
-						i--;
-						pass = false;
-					}
-				}
 
-				if(pass)
+			for(int i = gridCharacters.Count-1; i >= 0; i--)
+			{
+				if(!gridCharacters[i])
 				{
-					break;
+					gridCharacters.RemoveAt(i);
 				}
 			}
 
-			StartCoroutine(check());
+			StartCoroutine(checkIfReallyLost());
 
 		}
 	}
 
-	//TODO: cambiar nombre
-	IEnumerator check()
+	IEnumerator checkIfReallyLost()
 	{
-		yield return new WaitForSeconds (.2f);
-		if(!wordManager.checkIfAWordIsPossible(gridCharacters) || remainingMoves <= 0 && !gameOver)
+		yield return new WaitForEndOfFrame();
+
+		if(!gameOver && (remainingMoves <= 0 || !wordManager.checkIfAWordIsPossible(gridCharacters)))
 		{
 			Debug.Log ("Perdio de verdad");
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);

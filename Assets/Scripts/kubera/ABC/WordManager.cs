@@ -38,7 +38,6 @@ public class WordManager : MonoBehaviour
 	[HideInInspector]public ABCDictionary wordsValidator;
 
 	private int maxLetters = 10;
-	private int l = 0;
 	/*[HideInInspector]*/
 public List<Letter> letters;
 	private int siblingIndexAfterDrag;
@@ -310,7 +309,7 @@ public List<Letter> letters;
 		float widthGrid = wordContainerRectTransform.rect.width;
 		float childCount =letters.Count; 
 
-		print (childCount);
+		//print (childCount);
 
 		data = wordContainerLayout.cellSize.x * childCount;
 		data = widthGrid - data;
