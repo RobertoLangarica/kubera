@@ -33,7 +33,7 @@ public class TransactionManager : MonoBehaviour
 			return true;
 		}
 
-		Debug.Log ("NOt enough gems on players acount");
+		Debug.LogWarning ("NOt enough gems on players acount");
 		return false;
 	}
 }
