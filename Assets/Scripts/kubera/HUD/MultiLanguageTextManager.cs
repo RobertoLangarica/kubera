@@ -118,7 +118,7 @@ public class MultiLanguageTextManager
 			else 
 			{
 				//DONE: Cambie el mensaje a ingles y agrege que el error es por diferentes lengths
-				Debug.LogWarning("THE TEXT HAS NOT CHANGED, because the two list has diferent legths");
+				Debug.LogWarning("THE TEXT HAS NOT CHANGED, because the two lists have diferent legth");
 			}
 		}
 

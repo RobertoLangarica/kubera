@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
 	private GoalManager		goalManager;
 
 	private LinesCreatedAnimation linesAnimation;
+	private BombAnimation bombAnimation;
 	private SecondChancePopUp secondChance;
 	private SecondChanceFreeBombs SecondChanceFreeBombs;
 
@@ -63,6 +64,7 @@ public class GameManager : MonoBehaviour
 		inputWords			= FindObjectOfType<InputWords>();
 		goalManager			= FindObjectOfType<GoalManager>();
 		linesAnimation 		= FindObjectOfType<LinesCreatedAnimation> ();
+		bombAnimation 		= FindObjectOfType<BombAnimation> ();
 		secondChance 		= FindObjectOfType<SecondChancePopUp> ();
 		SecondChanceFreeBombs 	= FindObjectOfType<SecondChanceFreeBombs> ();
 
@@ -78,7 +80,7 @@ public class GameManager : MonoBehaviour
 		powerupManager.OnPowerupCompleted = OnPowerupCompleted;
 
 		inputPiece.OnDrop += OnPieceDropped;
-		inputPiece.OnSelected += setShadow;
+		inputPiece.OnSelected += showShadowOnPiece;
 
 		goalManager.OnGoalAchieved += OnLevelGoalAchieved;
 		goalManager.OnLetterFound += hudManager.destroyLetterFound;
@@ -172,6 +174,7 @@ public class GameManager : MonoBehaviour
 			{
 				//Cuadro de color
 				Piece content = pieceManager.getSingleSquarePiece(cellType>>6);
+				content.squares [0].GetComponent<Collider2D> ().enabled = true;
 				cellManager.occupyAndConfigureCell(i,content.gameObject.transform.GetChild (0).gameObject,content.currentType,content.currentColor,true);
 			}
 			else if((cellType & 0x8) == 0x8)
@@ -265,7 +268,7 @@ public class GameManager : MonoBehaviour
 			Transform target = piece.squares[i].transform;
 
 			target.DOMove (piecePosition, piecePositionedDelay);
-			target.DOScale(target.localScale* 0.8f, 0.1f).SetDelay(piecePositionedDelay).OnComplete(()=>{setShadow (piece, false);});
+			target.DOScale(target.localScale* 0.8f, 0.1f).SetDelay(piecePositionedDelay).OnComplete(()=>{showShadowOnPiece (piece, false);});
 			target.DOScale(target.localScale, 0.1f).SetDelay(piecePositionedDelay+0.1f);
 		}
 	}
@@ -345,14 +348,13 @@ public class GameManager : MonoBehaviour
 		checkIfLoose ();
 	}
 
-	//TODO: checar nombre
-	private void setShadow (GameObject obj, bool showing = true)
+	public void showShadowOnPiece (GameObject obj, bool showing = true)
 	{
 		Piece piece = obj.GetComponent<Piece> ();
-		setShadow (piece, showing);
+		showShadowOnPiece (piece, showing);
 	}
 
-	private void setShadow (Piece piece, bool showing = true)
+	private void showShadowOnPiece (Piece piece, bool showing = true)
 	{
 		pieceManager.showingShadow (piece, showing);
 	}
@@ -403,7 +405,7 @@ public class GameManager : MonoBehaviour
 		onUsersAction (wordManager.wordPoints);
 		removeLettersFromGrid(wordManager.letters, true);
 
-		wordManager.removeAllLetters();
+		wordManager.removeAllLetters(true);
 
 		checkIfLoose ();
 	}
@@ -503,13 +505,12 @@ public class GameManager : MonoBehaviour
 				}
 			}
 
-			StartCoroutine(check());
+			StartCoroutine(checkForAPossibleWord());
 
 		}
 	}
 
-	//TODO: cambiar nombre
-	IEnumerator check()
+	IEnumerator checkForAPossibleWord()
 	{
 		yield return new WaitForSeconds (.2f);
 		if(!wordManager.checkIfAWordIsPossible(gridCharacters) || remainingMoves <= 0)
@@ -549,6 +550,8 @@ public class GameManager : MonoBehaviour
 	protected void winBonification()
 	{
 		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.WON);
+
+		bombAnimation.OnAllAnimationsCompleted += destroyAndCountAllLetters;
 
 		allowGameInput (false);
 
@@ -605,7 +608,7 @@ public class GameManager : MonoBehaviour
 
 		go.GetComponent<Piece> ().currentColor = cellManager.colorRandom ();
 
-		cellManager.occupyAndConfigureCell(cell,go,Piece.EType.PIECE,Piece.EColor.AQUA,true);
+		cellManager.occupyAndConfigureCell(cell,go.transform.GetChild(0).gameObject,Piece.EType.PIECE,Piece.EColor.AQUA,true);
 
 		showFloatingPointsAt (cell.transform.position, 1);
 		substractMoves (1);
@@ -625,16 +628,12 @@ public class GameManager : MonoBehaviour
 
 		if (cellToLetter.Count > 0) 
 		{
-			Letter letter = wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL);
-			cellManager.occupyAndConfigureCell (cellToLetter [random],letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
+			StartCoroutine (bombAnimation.startSinglePieceAnimation (cellToLetter [random]));
+
 			cellToLetter.RemoveAt (random);
 
 			yield return new WaitForSeconds (.2f);
 			StartCoroutine (addWinLetterAfterActions ());
-		}
-		else
-		{
-			destroyAndCountAllLetters();
 		}
 	}
 
@@ -674,7 +673,7 @@ public class GameManager : MonoBehaviour
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
 	}
 
-	protected void allowGameInput(bool allowInput = true)
+	public void allowGameInput(bool allowInput = true)
 	{
 		inputPiece.allowInput = allowInput;
 		inputWords.allowInput = allowInput;
@@ -784,9 +783,14 @@ public class GameManager : MonoBehaviour
 		case "endGame":
 			break;
 		default:
-			allowGameInput (true);	
+			Invoke ("allowInputFromInvoke", 0.5f);
 			break;
 		}
+	}
+
+	protected void allowInputFromInvoke()
+	{
+		allowGameInput();
 	}
 
 	public void activatePopUp(string popUpName)

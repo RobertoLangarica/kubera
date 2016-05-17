@@ -127,10 +127,10 @@ public class InputPiece : MonoBehaviour
 			posOverFinger.z = -1;
 			posOverFinger += offsetPositionOverFinger;
 
-			currentSelected.transform.DOScale (currentSelected.transform.localScale * 0.8f, 0.1f).OnComplete (()=>
+			currentSelected.transform.DOScale (currentSelected.transform.localScale * 0.8f, 0.1f).SetId(currentSelected).OnComplete (()=>
 				{
 					moveTo(currentSelected,posOverFinger,pieceSpeed); 
-					currentSelected.transform.DOScale(selectedScale,.1f).SetId("Input_SelectedScale").OnComplete(()=>{/*Debug.LogError("S");*/});
+					currentSelected.transform.DOScale(selectedScale,.1f).SetId("Input_SelectedScale").OnComplete(()=>{});
 					OnSelected (currentSelected,true);
 				});
 
@@ -143,6 +143,7 @@ public class InputPiece : MonoBehaviour
 	{
 		if(!somethingDragged && currentSelected != null && isLongPressed)
 		{		
+			DOTween.Kill (currentSelected);
 			returnSelectedToInitialState(0.1f);
 			reset();
 		}
