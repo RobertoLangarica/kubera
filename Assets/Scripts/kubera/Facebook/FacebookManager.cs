@@ -24,7 +24,10 @@ public class FacebookManager : MonoBehaviour
 	protected List<string> askedKeys = new List<string>();
 	protected List<string> giftKeys = new List<string>();
 
-	public List<object> friends = new List<object> ();
+	public object currentPlayerInfo = new List<object> ();
+	public List<object> gameFriends = new List<object> ();
+	public List<object> invitableFriends = new List<object> ();
+
 	public Dictionary<string, Texture> friendImages = new Dictionary<string, Texture>();
 
 	public int maxUsersPerMessage = 5;
@@ -37,16 +40,23 @@ public class FacebookManager : MonoBehaviour
 		fbGraph = FindObjectOfType<FBGraph> ();
 		fbLog = FindObjectOfType<FBLog> ();
 		facebookNews = FindObjectOfType<FacebookNews> ();
+		playerInfo = FindObjectOfType<PlayerInfo> ();
+	}
 
+	void Start()
+	{
 		fbLog.onLoginComplete += OnLoginComplete;
 
-		playerInfo = FindObjectOfType<PlayerInfo> ();
-
 		fbGraph.OnPlayerInfo += showPlayerInfo;
-		fbGraph.OnGetFriends += addFriends;
+		fbGraph.OnGetGameFriends += addGameFriends;
+		fbGraph.OnGetInvitableFriends += addInivitableFriends;
 		fbGraph.OnGetFriendTextures += addFriendsTexture;
-		fbGraph.onFinishGettingFriends += startFillMessageData;
 
+		fbGraph.OnGetAppRequest += chanelData;
+
+		fbGraph.onFinishGettingInfo += startFillMessageData;
+
+		OnLoginComplete (fbLog.isLoggedIn);
 	}
 
 	protected void OnLoginComplete(bool complete)
@@ -59,13 +69,11 @@ public class FacebookManager : MonoBehaviour
 			fbGraph.GetPlayerInfo();
 			fbGraph.GetFriends();
 			fbGraph.GetInvitableFriends();
-			//FBGraph.GetScores();
 
-			getFriendsAppRequests ();
+			fbGraph.getFriendsAppRequests ();
 			if(conectFacebook != null)
 			{
 				DestroyImmediate (conectFacebook);
-				print (conectFacebook);
 			}
 		}
 		else
@@ -81,14 +89,19 @@ public class FacebookManager : MonoBehaviour
 		}
 	}
 
-	protected void showPlayerInfo(string name, Texture picture)
+	protected void showPlayerInfo(string id, string name)
 	{
 		
 	}
 
-	protected void addFriends(List<object> moreFriends)
+	protected void addGameFriends(List<object> gameFriends)
 	{
-		friends.AddRange (moreFriends);
+		gameFriends.AddRange (gameFriends);
+	}
+
+	protected void addInivitableFriends(List<object> invitableFriends)
+	{
+		invitableFriends.AddRange (invitableFriends);
 	}
 
 	protected void addFriendsTexture(string id, Texture image)
@@ -270,41 +283,7 @@ public class FacebookManager : MonoBehaviour
 			}
 		);
 	}
-
-	protected void getFriendsAppRequests()
-	{
-		FB.API("/me?fields=apprequests{from,data}",HttpMethod.GET,getFriendsAppRequestsCallback);
-	}
-
-	protected void getFriendsAppRequestsCallback(IGraphResult result) 
-	{
-		if (result.Error != null)
-		{
-			Debug.LogError(result.Error);
-			return;
-		}
-
-		Dictionary<string,object> dict = Json.Deserialize(result.RawResult) as Dictionary<string,object>;
-
-		if (!dict.ContainsKey ("apprequests"))
-		{
-			//deleteAppRequest ((string)dict["id"]);
-			print ("none friendsRequest ");
-			return;
-		}
-
-		//print (dict.Keys.ToCommaSeparateList ());
-		print ("getfriends true");
-		object dataObject;
-		List<object> apprequestsData = new List<object>();
-
-		//print ("************ " +(string) dict["id"]);
-		if (dict.TryGetValue ("apprequests", out dataObject)) 
-		{
-			apprequestsData = (List<object>)(((Dictionary<string, object>)dataObject) ["data"]);
-		}
-		chanelData (apprequestsData);
-	}
+		
 
 	protected void chanelData(List<object> data)
 	{
@@ -449,9 +428,9 @@ public class FacebookManager : MonoBehaviour
 			{
 				go = GameObject.Instantiate(friendRequest);
 				pR = go.GetComponent<PanelRequest> ();
-				pR.setParent (panelMessages);
+				pR.setParent (panelMessages,false);
 				pR.facebookManager = this;
-				pR.selectRequestState (PanelRequest.ERequestState.KEY);
+				pR.selectRequestState (requestState);
 				pR.selectAction (PanelRequest.EAction.SEND);
 				pR.selectTextButton ();
 				pR.selectImage ();
@@ -472,6 +451,19 @@ public class FacebookManager : MonoBehaviour
 				j = 0;
 			}
 		}
+	}
+
+	void OnDestroy() {
+		fbLog.onLoginComplete -= OnLoginComplete;
+
+		fbGraph.OnPlayerInfo -= showPlayerInfo;
+		fbGraph.OnGetGameFriends -= addGameFriends;
+		fbGraph.OnGetInvitableFriends -= addInivitableFriends;
+		fbGraph.OnGetFriendTextures -= addFriendsTexture;
+
+		fbGraph.OnGetAppRequest -= chanelData;
+
+		fbGraph.onFinishGettingInfo -= startFillMessageData;
 	}
 
 }

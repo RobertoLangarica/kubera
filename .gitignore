@@ -21,6 +21,11 @@ obj/
 *.booproj
 
 #=============#
+# Administrativos#
+#=============#
+Administrativos/*
+
+#=============#
 # Protobuf#
 #=============#
 CustomSerialization/
