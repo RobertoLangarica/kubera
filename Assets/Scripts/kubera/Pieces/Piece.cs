@@ -30,14 +30,14 @@ public class Piece : MonoBehaviour
 	}
 
 	public Color COLOR_YELLOW			= new Color(1, 1, 0); 
-	public Color COLOR_MAGENTA			= new Color(0.890, 0.011f, 0.549f);
+	public Color COLOR_MAGENTA			= new Color(0.890f, 0.011f, 0.549f);
 	public Color COLOR_CYAN				= new Color(0, 0.623f, 1);
 	public Color COLOR_GREEN			= new Color(0, 0.788f, 0.278f);
 	public Color COLOR_RED				= new Color(1, 0, 0);
-	public Color COLOR_PURPLE			= new Color(0.501, 0.113, 0.498);
+	public Color COLOR_PURPLE			= new Color(0.501f, 0.113f, 0.498f);
 	public Color COLOR_BLUE				= new Color(0, 0.247f, 1);
 	public Color COLOR_ORANGE			= new Color(1, 0.380f, 0);
-	public Color COLOR_VIOLET			= new Color(0.282, 0.156, 0.670f);
+	public Color COLOR_VIOLET			= new Color(0.282f, 0.156f, 0.670f);
 	public Color COLOR_TURQUOISE		= new Color(0, 0.776f, 0.560f);
 	public Color COLOR_LETTER_OBSTACLE	= new Color(0, 0, 0);
 	public Color COLOR_NONE				= new Color(1, 1, 1);
