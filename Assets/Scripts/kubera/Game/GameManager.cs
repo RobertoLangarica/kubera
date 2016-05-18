@@ -613,7 +613,7 @@ public class GameManager : MonoBehaviour
 
 		go.GetComponent<Piece> ().currentColor = cellManager.colorRandom ();
 
-		cellManager.occupyAndConfigureCell(cell,go.transform.GetChild(0).gameObject,Piece.EType.PIECE,Piece.EColor.AQUA,true);
+		cellManager.occupyAndConfigureCell(cell,go.transform.GetChild(0).gameObject,Piece.EType.PIECE,Piece.EColor.YELLOW,true);
 
 		showFloatingPointsAt (cell.transform.position, 1);
 		substractMoves (1);
