@@ -2,12 +2,12 @@
 using UnityEngine.UI;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class LifesManager : MonoBehaviour 
 {
-	public Text lifesCount;
-	public Text lifesTimer;
-	public GameObject lifesPopUp;
+	public List<Text> lifesCount = new List<Text> ();
+	public List<Text> lifesTimer = new List<Text> ();
 
 	public int timeForLifeInMinutes;
 
@@ -25,6 +25,8 @@ public class LifesManager : MonoBehaviour
 		{
 			updateLifesSinceLastPlay ();
 		}
+
+		refreshHUD ();
 	}
 
 	void Update()
@@ -176,16 +178,25 @@ public class LifesManager : MonoBehaviour
 	{
 		if (showTimer) 
 		{
-			lifesTimer.text = numberToTimeFormat (currentMinutes) + ":" + numberToTimeFormat (currentSeconds);
+			for (int i = 0; i < lifesTimer.Count; i++) 
+			{
+				lifesTimer[i].text = numberToTimeFormat (currentMinutes) + ":" + numberToTimeFormat (currentSeconds);
+			}
 		} 
 		else 
 		{
-			lifesTimer.text = "Lleno";
+			for (int i = 0; i < lifesTimer.Count; i++) 
+			{
+				lifesTimer[i].text = "Lleno";
+			}
 		}
 
 		if (lifesCount != null) 
 		{
-			lifesCount.text = UserDataManager.instance.playerLifes.ToString ();
+			for (int i = 0; i < lifesCount.Count; i++) 
+			{
+				lifesCount[i].text = UserDataManager.instance.playerLifes.ToString ();
+			}
 		}
 	}
 

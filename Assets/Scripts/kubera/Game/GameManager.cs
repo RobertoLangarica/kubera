@@ -849,4 +849,4 @@ public class GameManager : MonoBehaviour
 	{
 		hudManager.showScoreTextAt(pos,amount);
 	}
-}//jmu3039
+}
