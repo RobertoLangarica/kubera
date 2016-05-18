@@ -125,7 +125,6 @@ public class CellsManager : MonoBehaviour
 		float offset;
 		SpriteRenderer spriteRenderer;
 
-		Cell result = null;
 		int i = 0;
 		foreach(Cell cell in cells)
 		{

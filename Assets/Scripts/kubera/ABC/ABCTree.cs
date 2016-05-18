@@ -511,7 +511,7 @@ namespace ABC.Tree
 				}
 			}
 
-			//Limpiamos la lista e usados
+			//Limpiamos la lista de usados
 			used.Clear();
 
 
@@ -546,14 +546,23 @@ namespace ABC.Tree
 									c.used = false;
 								}
 
+								used.Clear();
+
 								return result;
 
 							}
 							else
 							{
+								//removemos el unico marcado como usado
 								used[0].used = false;
 								used.Clear();
 							}
+						}
+						else
+						{
+							//removemos el unico marcado como usado
+							used[0].used = false;
+							used.Clear();
 						}
 					}
 				}
@@ -570,7 +579,7 @@ namespace ABC.Tree
 		{
 			ABCChar tmp;
 			bool result = false;
-			int prevused = used.Count;
+			//int prevused = used.Count;
 
 			foreach(ABCNode val in current.children)
 			{
@@ -601,17 +610,26 @@ namespace ABC.Tree
 							{
 								break;
 							}
+							else
+							{
+								//Removemos el ultimo nodo agregado
+								used[used.Count-1].used = false;
+								used.RemoveAt(used.Count-1);
+							}
 						}
 						else
 						{
 							//Ya no hay caracteres
+							//Removemos el ultimo nodo agregado
+							used[used.Count-1].used = false;
+							used.RemoveAt(used.Count-1);
 							break;
 						}
 					}
 				}
 			}
 
-			if(!result)
+			/*if(!result)
 			{
 				//Devolvemos a en desuso los caracteres que se marcaron como tal en esta llamada
 				int dif = used.Count - prevused;
@@ -620,7 +638,8 @@ namespace ABC.Tree
 					used[used.Count-1].used = false;
 					used.RemoveAt(used.Count-1);
 				}
-			}
+			}*/
+
 
 			return result;
 		}

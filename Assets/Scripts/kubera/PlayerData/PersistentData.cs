@@ -36,6 +36,8 @@ public class PersistentData : MonoBehaviour
 	[HideInInspector]
 	public bool fromGameToEdit;
 
+	public int startLevel = 1;
+
 	void Awake() 
 	{
 		GameObject[] go = GameObject.FindGameObjectsWithTag ("persistentData");
@@ -210,6 +212,22 @@ public class PersistentData : MonoBehaviour
 
 	public Level getRandomLevel()
 	{
+		return levelsData.levels[0];
 		return levelsData.levels[Random.Range(0,levelsData.levels.Length)];
+	}
+
+	public Level getNextLevel()
+	{
+		setLevelNumber (startLevel);
+
+		startLevel++;
+
+		if (currentLevel == null) 
+		{
+			startLevel = 1;
+			setLevelNumber (startLevel);
+		}
+
+		return currentLevel;
 	}
 }

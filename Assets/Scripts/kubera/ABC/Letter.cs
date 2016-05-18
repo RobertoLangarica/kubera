@@ -66,7 +66,7 @@ public class Letter : MonoBehaviour
 	private void markAsSelected()
 	{
 		selected=true;
-		updateColorToSelected ();
+		updateColorToSelectedBasedOnType ();
 	}
 
 	private void markAsUnselected()
@@ -98,11 +98,22 @@ public class Letter : MonoBehaviour
 		letterReference = null;
 	}
 
-	protected void updateColorToSelected()
+	protected void updateColorToSelectedBasedOnType()
 	{
 		if(myImage == null){return;}
 
-		myImage.color = selectedColor;	
+
+		switch(type)
+		{
+		case EType.OBSTACLE:
+			txtLetter.color = selectedColor;
+			txtPoints.color = selectedColor;
+			myImage.color = Color.black;
+			break;
+		case EType.NORMAL:
+			myImage.color = selectedColor;
+			break;
+		}
 	}
 
 	public void updateTexts()
