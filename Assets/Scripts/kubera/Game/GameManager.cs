@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
 
 		if(PersistentData.instance)
 		{
-			configureLevel(PersistentData.instance.getNextLevel());
+			configureLevel(PersistentData.instance.currentLevel);
 		}
 
 		//TODO: Control de flujo de juego con un init
