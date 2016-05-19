@@ -5,6 +5,8 @@ public class TransactionManager : MonoBehaviour
 {
 	public static TransactionManager instance = null;
 
+	protected bool isTest = true;
+
 	void Awake()
 	{
 		instance = this;
@@ -18,6 +20,11 @@ public class TransactionManager : MonoBehaviour
 
 	public bool checkIfExistEnoughGems(int gemsPrice)
 	{
+		if (isTest) 
+		{
+			return true;
+		}
+
 		if(UserDataManager.instance.playerGems >= gemsPrice)
 		{
 			return true;
@@ -27,6 +34,11 @@ public class TransactionManager : MonoBehaviour
 
 	public bool tryToUseGems(int gems)
 	{
+		if (isTest) 
+		{
+			return true;
+		}
+
 		if (TransactionManager.instance.checkIfExistEnoughGems (gems)) 
 		{
 			UserDataManager.instance.giveGemsToPlayer (-gems);
