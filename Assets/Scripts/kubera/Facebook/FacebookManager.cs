@@ -12,6 +12,7 @@ public class FacebookManager : MonoBehaviour
 	protected FacebookNews facebookNews;
 	protected PlayerInfo playerInfo;
 	protected FBLog fbLog;
+	protected FBRequestPanel fbRequestPanel;
 
 	public Transform panelMessages;
 	public GameObject friendRequest;
@@ -28,7 +29,7 @@ public class FacebookManager : MonoBehaviour
 	public List<object> gameFriends = new List<object> ();
 	public List<object> invitableFriends = new List<object> ();
 
-	public Dictionary<string, Texture> friendImages = new Dictionary<string, Texture>();
+	public Dictionary<string, Texture> friendsImage = new Dictionary<string, Texture>();
 
 	public int maxUsersPerMessage = 5;
 	protected int messageCount;
@@ -41,6 +42,7 @@ public class FacebookManager : MonoBehaviour
 		fbLog = FindObjectOfType<FBLog> ();
 		facebookNews = FindObjectOfType<FacebookNews> ();
 		playerInfo = FindObjectOfType<PlayerInfo> ();
+		fbRequestPanel = FindObjectOfType<FBRequestPanel> ();
 	}
 
 	void Start()
@@ -54,7 +56,7 @@ public class FacebookManager : MonoBehaviour
 
 		fbGraph.OnGetAppRequest += chanelData;
 
-		fbGraph.onFinishGettingInfo += startFillMessageData;
+		fbGraph.onFinishGettingInfo += fillMessageData;
 
 		OnLoginComplete (fbLog.isLoggedIn);
 	}
@@ -96,22 +98,24 @@ public class FacebookManager : MonoBehaviour
 
 	protected void addGameFriends(List<object> gameFriends)
 	{
-		gameFriends.AddRange (gameFriends);
+		this.gameFriends.AddRange (gameFriends);
+		fillRequestPanel (gameFriends, FBRequestPanel.EFriendsType.GAME);
 	}
 
 	protected void addInivitableFriends(List<object> invitableFriends)
 	{
-		invitableFriends.AddRange (invitableFriends);
+		this.invitableFriends.AddRange (invitableFriends);
+		fillRequestPanel (invitableFriends, FBRequestPanel.EFriendsType.INVITABLE);
 	}
 
 	protected void addFriendsTexture(string id, Texture image)
 	{
-		friendImages.Add (id, image);
+		friendsImage.Add (id, image);
 	}
 
 	protected Texture getfriendTextureByID (string id)
 	{
-		return friendImages [id];
+		return friendsImage [id];
 	}
 
 	public void acceptGift(bool life, int giftCount)
@@ -272,6 +276,30 @@ public class FacebookManager : MonoBehaviour
 		);
 	}
 
+	public void askKey(List<string> idsFriends)
+	{
+		if(idsFriends.Count<50)
+		{
+			return;
+		}
+		FB.AppRequest ("Give me a life!", OGActionType.ASKFOR, "795229890609809", idsFriends, "askKey", // Here you can put in any data you want
+			"Ask a life to your friend", // A title
+			delegate (IAppRequestResult result) {
+				Debug.Log (result.RawResult);
+			}
+		);
+	}
+
+	public void askLife(List<string> idsFriends)
+	{
+		FB.AppRequest ("Give me a life!", OGActionType.ASKFOR, "101162080284933", idsFriends, "askLife", // Here you can put in any data you want
+			"Ask a life to your friend", // A title
+			delegate (IAppRequestResult result) {
+				Debug.Log (result.RawResult);
+			}
+		);
+	}
+		
 	public void requestNewFriends()
 	{
 		//a todos tus amigos
@@ -299,7 +327,6 @@ public class FacebookManager : MonoBehaviour
 
 			saveDataOnList (dataType, firstName, playerID, requestID);
 			gotMessage ();
-			actualizeMessageNumber ();
 		}
 	}
 
@@ -393,28 +420,14 @@ public class FacebookManager : MonoBehaviour
 		messageCount++;
 	}
 
-	protected void actualizeMessageNumber()
-	{
-		facebookNews.actualizeMessageNumber (messageCount.ToString());
-	}
-
-	protected void startFillMessageData()
-	{
-		StartCoroutine (waitForFillMessageData());
-	}
-
-	IEnumerator waitForFillMessageData()
-	{
-		yield return new WaitForSeconds(1);
-		fillMessageData ();
-	}
-
 	protected void fillMessageData ()
 	{
 		fillData (askedKeys, PanelRequest.ERequestState.KEY, PanelRequest.EAction.SEND);
 		fillData (askedLifes, PanelRequest.ERequestState.LIFE, PanelRequest.EAction.SEND);
 		fillData (giftKeys, PanelRequest.ERequestState.KEY, PanelRequest.EAction.ACCEPT);
 		fillData (giftLifes, PanelRequest.ERequestState.LIFE, PanelRequest.EAction.ACCEPT);
+
+		actualizeMessageNumber ();
 	}
 
 	protected void fillData(List<string> requested, PanelRequest.ERequestState requestState, PanelRequest.EAction action)
@@ -453,6 +466,11 @@ public class FacebookManager : MonoBehaviour
 		}
 	}
 
+	protected void actualizeMessageNumber()
+	{
+		facebookNews.actualizeMessageNumber (messageCount.ToString());
+	}
+
 	void OnDestroy() {
 		fbLog.onLoginComplete -= OnLoginComplete;
 
@@ -463,8 +481,13 @@ public class FacebookManager : MonoBehaviour
 
 		fbGraph.OnGetAppRequest -= chanelData;
 
-		fbGraph.onFinishGettingInfo -= startFillMessageData;
+		fbGraph.onFinishGettingInfo -= fillMessageData;
 	}
 
+	public void fillRequestPanel(List<object> friends, FBRequestPanel.EFriendsType friendType)
+	{
+		print (fbRequestPanel);
+		fbRequestPanel.initializeFriendsController (FBRequestPanel.ERequestType.ASK_LIFES, friends,friendType);
+	}
 }
 

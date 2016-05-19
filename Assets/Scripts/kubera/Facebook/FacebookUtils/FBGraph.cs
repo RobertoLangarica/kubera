@@ -31,12 +31,12 @@ public class FBGraph : MonoBehaviour
 	protected bool invitableFriendsReady;
 	protected bool appRequestReady;
 	protected bool playerInfoReady;
-	protected bool texturesFriendReady;
+	protected bool texturesFriendReady;// = true;
 	protected int texturesCount;
 	protected int texturesAdded;
 	public void GetPlayerInfo()
 	{
-		string queryString = "/me?fields=id,first_name,picture.width(120).height(120)";
+		string queryString = "/me?fields=id,first_name,picture.width(60).height(60)";
 		FB.API(queryString, HttpMethod.GET, GetPlayerInfoCallback);
 	}
 
@@ -146,7 +146,7 @@ public class FBGraph : MonoBehaviour
 	//
 	public void GetFriends ()
 	{
-		string queryString = "/me/friends?fields=id,first_name,picture.width(128).height(128)&limit=200";
+		string queryString = "/me/friends?fields=id,name,picture.width(60).height(60)&limit=200";
 		FB.API(queryString, HttpMethod.GET, GetFriendsCallback);
 	}
 
@@ -191,7 +191,7 @@ public class FBGraph : MonoBehaviour
 	//
 	public void GetInvitableFriends ()
 	{
-		string queryString = "/me/invitable_friends?fields=id,first_name,picture.width(128).height(128)&limit=200";
+		string queryString = "/me/invitable_friends?fields=id,name,picture.width(60).height(60)&limit=200";
 		FB.API(queryString, HttpMethod.GET, GetInvitableFriendsCallback);
 	}
 
@@ -211,6 +211,7 @@ public class FBGraph : MonoBehaviour
 		{
 			var invitableFriendsList = (List<object>)dataList;
 			CacheFriends(invitableFriendsList);
+			OnGetInvitableFriends (invitableFriendsList);
 			invitableFriendsReady = true;
 			AllinfoGathered ();
 		}
@@ -307,6 +308,7 @@ public class FBGraph : MonoBehaviour
 		
 		if(gameFriendsReady&& invitableFriendsReady && appRequestReady && playerInfoReady && texturesFriendReady)
 		{
+			print("onFinishGettingInfo");
 			onFinishGettingInfo ();
 		}
 
