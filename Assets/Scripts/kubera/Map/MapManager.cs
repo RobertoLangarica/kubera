@@ -27,6 +27,7 @@ public class MapManager : MonoBehaviour
 
 	protected List<MapLevel> mapLevels;
 
+	public FBFriendsRequestPanel fbFriendsRequestPanel;
 	void Start()
 	{
 		popUpManager = FindObjectOfType<PopUpManager> ();
@@ -57,6 +58,18 @@ public class MapManager : MonoBehaviour
 	private void OnPopupCompleted(string action ="")
 	{
 		stopInput(false);
+		switch (action) {
+		case "needLifes":
+			openPopUp ("fbFriendsRequestPanel");
+			fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_LIFES);
+			break;
+		case "needKeys":
+			popUpManager.activatePopUp ("fbFriendsRequestPanel");
+			fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_KEYS);
+			break;
+		default:
+			break;
+		}
 	}
 
 	protected void updateLevelIcon(MapLevel level)

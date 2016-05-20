@@ -21,11 +21,16 @@ public class FullLifesPopUp : PopUpBase
 
 	public void closePressed()
 	{
-		OnPopUpCompleted ();
+		popUp.SetActive (false);
+		OnComplete ();
 	}
 
 	public void askForLifes()
 	{
+		//TODO: hacer animacion de cerrado
+		popUp.SetActive (false);
+		//cuando se cierre hacer stuff de facebook
 		//TODO:Hacer stuff de facebook
+		OnPopUpCompleted ("needLifes");
 	}
 }

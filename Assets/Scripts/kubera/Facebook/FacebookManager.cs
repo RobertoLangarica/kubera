@@ -12,11 +12,12 @@ public class FacebookManager : MonoBehaviour
 	protected FacebookNews facebookNews;
 	protected PlayerInfo playerInfo;
 	protected FBLog fbLog;
-	protected FBRequestPanel fbRequestPanel;
+	public FBFriendsRequestPanel fbRequestPanel;
 
 	public Transform panelMessages;
 	public GameObject friendRequest;
 	public GameObject FacebookConectMessage;
+	public GameObject facebookConectOnRequest;
 
 	protected bool facebookConectMessageCreated;
 
@@ -42,7 +43,6 @@ public class FacebookManager : MonoBehaviour
 		fbLog = FindObjectOfType<FBLog> ();
 		facebookNews = FindObjectOfType<FacebookNews> ();
 		playerInfo = FindObjectOfType<PlayerInfo> ();
-		fbRequestPanel = FindObjectOfType<FBRequestPanel> ();
 	}
 
 	void Start()
@@ -76,6 +76,7 @@ public class FacebookManager : MonoBehaviour
 			if(conectFacebook != null)
 			{
 				DestroyImmediate (conectFacebook);
+				DestroyImmediate (facebookConectOnRequest);
 			}
 		}
 		else
@@ -99,13 +100,13 @@ public class FacebookManager : MonoBehaviour
 	protected void addGameFriends(List<object> gameFriends)
 	{
 		this.gameFriends.AddRange (gameFriends);
-		fillRequestPanel (gameFriends, FBRequestPanel.EFriendsType.GAME);
+		fillRequestPanel (gameFriends, FBFriendsRequestPanel.EFriendsType.GAME);
 	}
 
 	protected void addInivitableFriends(List<object> invitableFriends)
 	{
 		this.invitableFriends.AddRange (invitableFriends);
-		fillRequestPanel (invitableFriends, FBRequestPanel.EFriendsType.INVITABLE);
+		fillRequestPanel (invitableFriends, FBFriendsRequestPanel.EFriendsType.INVITABLE);
 	}
 
 	protected void addFriendsTexture(string id, Texture image)
@@ -115,10 +116,15 @@ public class FacebookManager : MonoBehaviour
 
 	protected Texture getfriendTextureByID (string id)
 	{
+		if(!friendsImage.ContainsKey(id))
+		{
+			Debug.LogWarning ("no texture");
+			return new Texture ();
+		}
 		return friendsImage [id];
 	}
 
-	public void acceptGift(bool life, int giftCount)
+	public void acceptGift(bool life, int giftCount,GameObject requestToDelete, string bossReached = "0")
 	{
 		if(life)
 		{
@@ -128,9 +134,10 @@ public class FacebookManager : MonoBehaviour
 		{
 			print("recibi " + giftCount + ": llaves");	
 		}
+		DestroyImmediate (requestToDelete);
 	}
 
-	public void sendGift(bool life, List<string> friendsIDs)
+	public void sendGift (bool life, List<string> friendsIDs,GameObject requestToDelete, string bossReached = "0")
 	{
 		if(life)
 		{
@@ -138,8 +145,9 @@ public class FacebookManager : MonoBehaviour
 		}
 		else
 		{
-			sendKey (friendsIDs);
+			sendKey (friendsIDs,bossReached);
 		}
+		DestroyImmediate (requestToDelete);
 	}
 
 	protected bool canPublish()
@@ -168,7 +176,7 @@ public class FacebookManager : MonoBehaviour
 			"101162080284933", // Here we put the object id we got as a result before.		             
 			friendsIDs,// The id of the sender.
 			//null,20,
-			"life", // Here you can put in any data you want
+			"SendLife", // Here you can put in any data you want
 			"Send a life to your friend", // A title
 			delegate (IAppRequestResult result) {
 				Debug.Log(result.RawResult);
@@ -176,7 +184,7 @@ public class FacebookManager : MonoBehaviour
 		);
 	}
 
-	public void sendKey(List<string> friendsIDs)
+	public void sendKey(List<string> friendsIDs,string bossReached)
 	{
 		if (!canPublish())
 		{
@@ -188,88 +196,8 @@ public class FacebookManager : MonoBehaviour
 			"795229890609809", // Here we put the object id we got as a result before.		             
 			friendsIDs,// The id of the sender.
 			//null,20,
-			"key", // Here you can put in any data you want
+			"SendKey,"+bossReached, // Here you can put in any data you want
 			"Send a key to your friend", // A title
-			delegate (IAppRequestResult result) {
-				Debug.Log(result.RawResult);
-			}
-		);
-	}
-
-	public void askLifeToInvitableFriends()
-	{
-		if (!canPublish())
-		{
-			return;
-		}
-
-		FB.AppRequest ("Give me a life!", // A message for the user
-			OGActionType.ASKFOR, // Can be .Send or .AskFor depending on what you want to do with the object.
-			"101162080284933", // Here we put the object id we got as a result before.		             
-			new List<object> (){ "app_users" },// The id of the sender.
-			null,20,
-			"askLife", // Here you can put in any data you want
-			"Ask a life to your friend", // A title
-			delegate (IAppRequestResult result) {
-				Debug.Log(result.RawResult);
-			}
-		);
-	}
-
-	public void askKeyToInvitableFriends()
-	{
-		if (!canPublish())
-		{
-			return;
-		}
-
-		FB.AppRequest ("Give me a key!", // A message for the user
-			OGActionType.ASKFOR, // Can be .Send or .AskFor depending on what you want to do with the object.
-			"795229890609809", // Here we put the object id we got as a result before.		             
-			new List<object> (){ "app_users" },// The id of the sender.
-			null,20,
-			"askKey", // Here you can put in any data you want
-			"Ask a life to your friend", // A title
-			delegate (IAppRequestResult result) {
-				Debug.Log(result.RawResult);
-			}
-		);
-	}
-
-	public void askLifeToFriends()
-	{
-		if (!canPublish())
-		{
-			return;
-		}
-
-		FB.AppRequest ("Give me a life!", // A message for the user
-			OGActionType.ASKFOR, // Can be .Send or .AskFor depending on what you want to do with the object.
-			"101162080284933", // Here we put the object id we got as a result before.		             
-			null,// The id of the sender.
-			null,20,
-			"askLife", // Here you can put in any data you want
-			"Ask a life to your friend", // A title
-			delegate (IAppRequestResult result) {
-				Debug.Log(result.RawResult);
-			}
-		);
-	}
-
-	public void askKeyToFriends()
-	{
-		if (!canPublish())
-		{
-			return;
-		}
-
-		FB.AppRequest ("Give me a key!", // A message for the user
-			OGActionType.ASKFOR, // Can be .Send or .AskFor depending on what you want to do with the object.
-			"795229890609809", // Here we put the object id we got as a result before.		             
-			null,// The id of the sender.
-			null,20,
-			"askKey", // Here you can put in any data you want
-			"Ask a life to your friend", // A title
 			delegate (IAppRequestResult result) {
 				Debug.Log(result.RawResult);
 			}
@@ -282,7 +210,7 @@ public class FacebookManager : MonoBehaviour
 		{
 			return;
 		}
-		FB.AppRequest ("Give me a life!", OGActionType.ASKFOR, "795229890609809", idsFriends, "askKey", // Here you can put in any data you want
+		FB.AppRequest ("Give me a key!", OGActionType.ASKFOR, "795229890609809", idsFriends, "askKey,"+PersistentData.instance.bossReached.ToString(), // Here you can put in any data you want
 			"Ask a life to your friend", // A title
 			delegate (IAppRequestResult result) {
 				Debug.Log (result.RawResult);
@@ -343,17 +271,7 @@ public class FacebookManager : MonoBehaviour
 				addToList (askedLifes, firstName, playerID, requestID);
 			}
 			break;
-		case "askKey":			
-			if(idExistOnList (askedKeys,playerID))
-			{
-				deleteAppRequest (requestID);
-			}
-			else
-			{
-				addToList (askedKeys, firstName,playerID, requestID);
-			}
-			break;
-		case "life":			
+		case "sendLife":			
 			if(idExistOnList (giftLifes,playerID))
 			{
 				deleteAppRequest (requestID);
@@ -363,17 +281,47 @@ public class FacebookManager : MonoBehaviour
 				addToList (giftLifes, firstName, playerID, requestID);
 			}
 			break;
-		case "key":			
-			if(idExistOnList (giftKeys,playerID))
-			{
-				deleteAppRequest (requestID);
-			}
-			else
-			{
-				addToList (giftKeys, firstName, playerID, requestID);
-			}
-			break;
 		default:
+			print (type);
+			if (type.Contains("askKey"))
+			{
+				string[] splitType = type.Split (',');
+				int bossReached = 0;
+				if(splitType.Length >1)
+				{
+					bossReached = int.Parse (splitType [1]);
+				}
+
+				if(idExistOnList (askedKeys,playerID) || bossReached < PersistentData.instance.bossReached)
+				{
+					deleteAppRequest (requestID);
+				}
+				else
+				{
+					addToList (askedKeys, firstName,playerID, requestID, bossReached);
+				}
+			}
+			else if(type.Contains("sendKey"))
+			{
+				string[] splitType = type.Split (',');
+				int bossReached = 0;
+				if(splitType.Length >1)
+				{
+					bossReached = int.Parse (splitType [1]);
+				}
+
+				if(askedKeys.Count == maxUsersPerMessage || idExistOnList (giftKeys,playerID))
+				{
+					deleteAppRequest (requestID);
+				}
+				else
+				{
+					addToList (giftKeys, firstName, playerID, requestID, bossReached);
+				}
+			}
+				
+			//if(type)
+
 			break;
 		}
 	}
@@ -392,9 +340,16 @@ public class FacebookManager : MonoBehaviour
 		return false;
 	}
 
-	protected void addToList (List<string> List,string firstName, string playerID, string requestID)
+	protected void addToList (List<string> List,string firstName, string playerID, string requestID,int bossReached=-1)
 	{
-		List.Add (firstName+"-"+playerID+"-"+requestID);
+		if(bossReached == -1)
+		{			
+			List.Add (firstName+"-"+playerID+"-"+requestID);
+		}
+		else
+		{
+			List.Add (firstName+"-"+playerID+"-"+requestID+"-"+bossReached);
+		}
 	}
 
 	public void deleteAppRequest(string id)
@@ -422,29 +377,47 @@ public class FacebookManager : MonoBehaviour
 
 	protected void fillMessageData ()
 	{
-		fillData (askedKeys, PanelRequest.ERequestState.KEY, PanelRequest.EAction.SEND);
-		fillData (askedLifes, PanelRequest.ERequestState.LIFE, PanelRequest.EAction.SEND);
-		fillData (giftKeys, PanelRequest.ERequestState.KEY, PanelRequest.EAction.ACCEPT);
-		fillData (giftLifes, PanelRequest.ERequestState.LIFE, PanelRequest.EAction.ACCEPT);
+		fillData (askedKeys, PanelAppRequest.ERequestState.KEY, PanelAppRequest.EAction.SEND);
+		fillData (giftKeys, PanelAppRequest.ERequestState.KEY, PanelAppRequest.EAction.ACCEPT);
+		fillData (askedLifes, PanelAppRequest.ERequestState.LIFE, PanelAppRequest.EAction.SEND);
+		fillData (giftLifes, PanelAppRequest.ERequestState.LIFE, PanelAppRequest.EAction.ACCEPT);
 
 		actualizeMessageNumber ();
 	}
-
-	protected void fillData(List<string> requested, PanelRequest.ERequestState requestState, PanelRequest.EAction action)
+		
+	protected void fillData(List<string> requested, PanelAppRequest.ERequestState requestState, PanelAppRequest.EAction action, bool askedKeys = false)
 	{
 		GameObject go;
-		PanelRequest pR = null;
+		PanelAppRequest pR = null;
+
+		if(askedKeys)
+		{
+			string requestedSorted = "";
+			for(int i=0; i<requested.Count; i++)
+			{
+				for(int j=0; j< requested.Count -1; j++)
+				{
+					if(int.Parse (requested[j].Split(',')[3]) > int.Parse(requested[j+1].Split(',')[3]))
+					{
+						requestedSorted = requested [j+1];
+						requested [j + 1] = requested [j];
+						requested [j] = requestedSorted;
+					}
+				}
+			}
+		}
+
 
 		for(int i=0, j=0; i<requested.Count; i++, j++)
 		{
 			if (j == 0) 
 			{
 				go = GameObject.Instantiate(friendRequest);
-				pR = go.GetComponent<PanelRequest> ();
+				pR = go.GetComponent<PanelAppRequest> ();
 				pR.setParent (panelMessages,false);
 				pR.facebookManager = this;
 				pR.selectRequestState (requestState);
-				pR.selectAction (PanelRequest.EAction.SEND);
+				pR.selectAction (PanelAppRequest.EAction.SEND);
 				pR.selectTextButton ();
 				pR.selectImage ();
 			}
@@ -453,15 +426,29 @@ public class FacebookManager : MonoBehaviour
 
 			pR.addFriendPicture (getfriendTextureByID (requested [i].Split ('-')[1]));
 
+			if(askedKeys) 
+			{	
+				if (i == requested.Count - 1 || j == maxUsersPerMessage) 
+				{
+					pR.selectText ();
+				}
 
-			if(i == requested.Count-1 || j == maxUsersPerMessage)
-			{
-				pR.selectText ();
+				if (j == maxUsersPerMessage) 
+				{
+					j = 0;
+				}
 			}
-
-			if(j==maxUsersPerMessage)
+			else
 			{
-				j = 0;
+				if (i == requested.Count - 1 || j == maxUsersPerMessage /*|| requested[i].Split(',')[3] != requested[i+1].Split(',')[3]*/ ) 
+				{
+					pR.selectText ();
+				}
+
+				if (j == maxUsersPerMessage/* || requested[i].Split(',')[3] != requested[i+1].Split(',')[3] */) 
+				{
+					j = 0;
+				}
 			}
 		}
 	}
@@ -484,10 +471,10 @@ public class FacebookManager : MonoBehaviour
 		fbGraph.onFinishGettingInfo -= fillMessageData;
 	}
 
-	public void fillRequestPanel(List<object> friends, FBRequestPanel.EFriendsType friendType)
+	public void fillRequestPanel(List<object> friends, FBFriendsRequestPanel.EFriendsType friendType)
 	{
 		print (fbRequestPanel);
-		fbRequestPanel.initializeFriendsController (FBRequestPanel.ERequestType.ASK_LIFES, friends,friendType);
+		fbRequestPanel.initializeFriendsController (FBFriendsRequestPanel.ERequestType.ASK_LIFES, friends,friendType);
 	}
 }
 

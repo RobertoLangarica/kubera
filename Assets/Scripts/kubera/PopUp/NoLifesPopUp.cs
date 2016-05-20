@@ -34,6 +34,7 @@ public class NoLifesPopUp : PopUpBase
 
 	public void closePressed()
 	{
+		popUp.SetActive (false);
 		OnPopUpCompleted ();
 		if (SceneManager.GetActiveScene ().name != "Levels") 
 		{
@@ -55,7 +56,7 @@ public class NoLifesPopUp : PopUpBase
 			lifesManager.takeALife ();
 
 			popUp.SetActive (false);
-			OnComplete ();
+			OnComplete ("needLifes");
 		}
 
 		Debug.Log("Fondos insuficientes");

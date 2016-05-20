@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Facebook.Unity;
 
-public class FBRequestPanel : MonoBehaviour {
+public class FBFriendsRequestPanel : PopUpBase {
 
 	public enum ERequestType
 	{
@@ -38,7 +38,25 @@ public class FBRequestPanel : MonoBehaviour {
 		changeBetweenFriends (true);
 		invitableFriends.OnActivated = activateAllSelected;
 		gameFriends.OnActivated = activateAllSelected;
-		this.gameObject.SetActive (false);
+
+	}
+
+	public override void activate()
+	{
+		popUp.SetActive (true);
+	}
+
+	public void closePressed()
+	{
+		popUp.SetActive (false);
+
+		OnPopUpCompleted ();
+	}
+
+	public void openFriendsRequestPanel(ERequestType requestType,EFriendsType friendsType = EFriendsType.INVITABLE)
+	{
+		currentRequestType = requestType;
+		currentFriendType = friendsType;
 	}
 
 	public void changeBetweenFriends(bool invitableFriends)
