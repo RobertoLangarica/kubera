@@ -523,7 +523,7 @@ public class GameManager : MonoBehaviour
 			Debug.Log ("Perdio de verdad");
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);
 
-			activatePopUp ("RetryPopUp");
+			activatePopUp ("SecondChance");
 		}
 	}
 
