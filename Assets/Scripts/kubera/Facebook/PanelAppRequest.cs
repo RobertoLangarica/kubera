@@ -194,7 +194,8 @@ public class PanelAppRequest : MonoBehaviour {
 	public void addFriendPicture (Texture texture)
 	{
 		GameObject go = Instantiate (friendImage)as GameObject;
-		go.transform.SetParent (panelFriendsImage.transform,false);
+		go.transform.SetParent (panelFriendsImage.transform, false);
+
 		go.GetComponent<FriendImage> ().setFriendImage (texture);
 	}
 

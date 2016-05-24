@@ -74,7 +74,7 @@ public class FriendsController : MonoBehaviour {
 		return ids;
 	}
 
-	public void addFriend(string id, string imageURL, string userName)
+	public void addFriend(string id, string imageURL, string userName,Texture image = null)
 	{
 		GameObject go = Instantiate (requestFriend)as GameObject;
 		go.transform.SetParent (friendPanel,false);
@@ -82,7 +82,14 @@ public class FriendsController : MonoBehaviour {
 		friend = go.GetComponent<Friend>();
 
 		friend.id = id;
-		friend.getTextureFromURL (imageURL);
+		if(image != null)
+		{
+			friend.setFriendImage (image);
+		}
+		else
+		{
+			friend.getTextureFromURL (imageURL);
+		}
 		friend.userName.text = userName;
 		friends.Add (friend);
 	}

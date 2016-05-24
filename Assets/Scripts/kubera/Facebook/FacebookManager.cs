@@ -17,7 +17,6 @@ public class FacebookManager : MonoBehaviour
 	public Transform panelMessages;
 	public GameObject friendRequest;
 	public GameObject FacebookConectMessage;
-	public GameObject facebookConectOnRequest;
 
 	protected bool facebookConectMessageCreated;
 
@@ -26,9 +25,6 @@ public class FacebookManager : MonoBehaviour
 	protected List<string> askedKeys = new List<string>();
 	protected List<string> giftKeys = new List<string>();
 
-	public object currentPlayerInfo = new List<object> ();
-	public List<object> gameFriends = new List<object> ();
-	public List<object> invitableFriends = new List<object> ();
 
 	public Dictionary<string, Texture> friendsImage = new Dictionary<string, Texture>();
 
@@ -52,7 +48,8 @@ public class FacebookManager : MonoBehaviour
 		fbGraph.OnPlayerInfo += showPlayerInfo;
 		fbGraph.OnGetGameFriends += addGameFriends;
 		fbGraph.OnGetInvitableFriends += addInivitableFriends;
-		fbGraph.OnGetFriendTextures += addFriendsTexture;
+		fbGraph.OnGetFriendTextures += addFriendsImage;
+		fbGraph.onFinishGettingFriends += mergeFriends;
 
 		fbGraph.OnGetAppRequest += chanelData;
 
@@ -67,16 +64,17 @@ public class FacebookManager : MonoBehaviour
 
 		if (complete)
 		{
-			// Begin querying the Graph API for Facebook data
-			fbGraph.GetPlayerInfo();
-			fbGraph.GetFriends();
-			fbGraph.GetInvitableFriends();
+			if(canRequestMoreFriends())
+			{
+				fbGraph.GetPlayerInfo();
+				fbGraph.GetFriends();
+				fbGraph.GetInvitableFriends();
+			}
 
 			fbGraph.getFriendsAppRequests ();
 			if(conectFacebook != null)
 			{
 				DestroyImmediate (conectFacebook);
-				DestroyImmediate (facebookConectOnRequest);
 			}
 		}
 		else
@@ -92,6 +90,16 @@ public class FacebookManager : MonoBehaviour
 		}
 	}
 
+	public bool canRequestMoreFriends()
+	{
+		print (FacebookPersistentData.instance.infoRequested);
+		if(FacebookPersistentData.instance.infoRequested)
+		{
+			return false;
+		}
+		return true;
+	}
+
 	protected void showPlayerInfo(string id, string name)
 	{
 		
@@ -99,29 +107,28 @@ public class FacebookManager : MonoBehaviour
 
 	protected void addGameFriends(List<object> gameFriends)
 	{
-		this.gameFriends.AddRange (gameFriends);
+		FacebookPersistentData.instance.addGameFriend (gameFriends);
+
 		fillRequestPanel (gameFriends, FBFriendsRequestPanel.EFriendsType.GAME);
 	}
 
 	protected void addInivitableFriends(List<object> invitableFriends)
 	{
-		this.invitableFriends.AddRange (invitableFriends);
-		fillRequestPanel (invitableFriends, FBFriendsRequestPanel.EFriendsType.INVITABLE);
+		FacebookPersistentData.instance.addInvitableFriend (invitableFriends);
 	}
 
-	protected void addFriendsTexture(string id, Texture image)
+	protected void mergeFriends()
 	{
-		friendsImage.Add (id, image);
+		FacebookPersistentData.instance.mergeFriends ();
+		fillRequestPanel (FacebookPersistentData.instance.allFriends, FBFriendsRequestPanel.EFriendsType.ALL);
 	}
 
-	protected Texture getfriendTextureByID (string id)
+	protected void addFriendsImage(string id, Texture image)
 	{
-		if(!friendsImage.ContainsKey(id))
-		{
-			Debug.LogWarning ("no texture");
-			return new Texture ();
+		if(FacebookPersistentData.instance.containTextureByID(id))
+		{			
+			FacebookPersistentData.instance.addFriendImage (id, image);
 		}
-		return friendsImage [id];
 	}
 
 	public void acceptGift(bool life, int giftCount,GameObject requestToDelete, string bossReached = "0")
@@ -377,6 +384,7 @@ public class FacebookManager : MonoBehaviour
 
 	protected void fillMessageData ()
 	{
+		sortData (askedKeys);
 		fillData (askedKeys, PanelAppRequest.ERequestState.KEY, PanelAppRequest.EAction.SEND);
 		fillData (giftKeys, PanelAppRequest.ERequestState.KEY, PanelAppRequest.EAction.ACCEPT);
 		fillData (askedLifes, PanelAppRequest.ERequestState.LIFE, PanelAppRequest.EAction.SEND);
@@ -384,32 +392,34 @@ public class FacebookManager : MonoBehaviour
 
 		actualizeMessageNumber ();
 	}
+
+	protected void sortData(List<string> requested)
+	{
+		string requestedSorted = "";
+		for(int i=0; i<requested.Count; i++)
+		{
+			for(int j=0; j< requested.Count -1; j++)
+			{
+				if(int.Parse (requested[j].Split(',')[3]) > int.Parse(requested[j+1].Split(',')[3]))
+				{
+					requestedSorted = requested [j+1];
+					requested [j + 1] = requested [j];
+					requested [j] = requestedSorted;
+				}
+			}
+		}
+	}
 		
-	protected void fillData(List<string> requested, PanelAppRequest.ERequestState requestState, PanelAppRequest.EAction action, bool askedKeys = false)
+	protected void fillData(List<string> requested, PanelAppRequest.ERequestState requestState, PanelAppRequest.EAction action,bool askedKeys = false)
 	{
 		GameObject go;
 		PanelAppRequest pR = null;
 
-		if(askedKeys)
-		{
-			string requestedSorted = "";
-			for(int i=0; i<requested.Count; i++)
-			{
-				for(int j=0; j< requested.Count -1; j++)
-				{
-					if(int.Parse (requested[j].Split(',')[3]) > int.Parse(requested[j+1].Split(',')[3]))
-					{
-						requestedSorted = requested [j+1];
-						requested [j + 1] = requested [j];
-						requested [j] = requestedSorted;
-					}
-				}
-			}
-		}
-
-
 		for(int i=0, j=0; i<requested.Count; i++, j++)
 		{
+			string id="";
+			id = requested [i].Split ('-') [1];
+
 			if (j == 0) 
 			{
 				go = GameObject.Instantiate(friendRequest);
@@ -423,8 +433,17 @@ public class FacebookManager : MonoBehaviour
 			}
 
 			pR.addIds (requested[i]);
+			Texture texture = getfriendTextureByID (id);
 
-			pR.addFriendPicture (getfriendTextureByID (requested [i].Split ('-')[1]));
+			if(texture == null)
+			{
+				StartCoroutine (requestImage (pR, id));
+			}
+			else
+			{
+				pR.addFriendPicture (texture);
+			}
+
 
 			if(askedKeys) 
 			{	
@@ -453,6 +472,33 @@ public class FacebookManager : MonoBehaviour
 		}
 	}
 
+	protected Texture getfriendTextureByID (string id)
+	{
+		if(!FacebookPersistentData.instance.containTextureByID(id))
+		{
+			Texture friendTexture = FacebookPersistentData.instance.getTextureFromURL (FacebookPersistentData.instance.getFriendPictureUrl (FacebookPersistentData.instance.getFriendInfo (id)));
+			return friendTexture;
+		}
+		return FacebookPersistentData.instance.friendsImage [id];
+	}
+
+
+	IEnumerator requestImage(PanelAppRequest pR, string id)
+	{
+		int requested = 0;
+		FacebookPersistentData.instance.getTextureFromURL (FacebookPersistentData.instance.getFriendPictureUrl (FacebookPersistentData.instance.getFriendInfo (id)),delegate(Texture pictureTexture)
+			{
+				if(pictureTexture != null)
+				{	
+					FacebookPersistentData.instance.addFriendImage(id,pictureTexture);
+					pR.addFriendPicture (pictureTexture);
+				}
+				requested = 1;
+			});
+
+		yield return new WaitUntil(()=>requested == 1 );
+	}
+
 	protected void actualizeMessageNumber()
 	{
 		facebookNews.actualizeMessageNumber (messageCount.ToString());
@@ -464,7 +510,7 @@ public class FacebookManager : MonoBehaviour
 		fbGraph.OnPlayerInfo -= showPlayerInfo;
 		fbGraph.OnGetGameFriends -= addGameFriends;
 		fbGraph.OnGetInvitableFriends -= addInivitableFriends;
-		fbGraph.OnGetFriendTextures -= addFriendsTexture;
+		fbGraph.OnGetFriendTextures -= addFriendsImage;
 
 		fbGraph.OnGetAppRequest -= chanelData;
 
@@ -473,7 +519,6 @@ public class FacebookManager : MonoBehaviour
 
 	public void fillRequestPanel(List<object> friends, FBFriendsRequestPanel.EFriendsType friendType)
 	{
-		print (fbRequestPanel);
 		fbRequestPanel.initializeFriendsController (FBFriendsRequestPanel.ERequestType.ASK_LIFES, friends,friendType);
 	}
 }

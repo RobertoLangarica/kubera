@@ -15,7 +15,7 @@ public class FBFriendsRequestPanel : PopUpBase {
 	public enum EFriendsType
 	{
 		GAME,
-		INVITABLE
+		ALL
 	}
 
 	public Text requestText;
@@ -26,6 +26,7 @@ public class FBFriendsRequestPanel : PopUpBase {
 	public Toggle selectAll;
 	public ERequestType currentRequestType;
 	public EFriendsType currentFriendType;
+	public int maxFriendsToShow = 200;
 
 	protected bool allFriendsSelected;
 	protected bool friendsInitialized;
@@ -53,7 +54,7 @@ public class FBFriendsRequestPanel : PopUpBase {
 		OnPopUpCompleted ();
 	}
 
-	public void openFriendsRequestPanel(ERequestType requestType,EFriendsType friendsType = EFriendsType.INVITABLE)
+	public void openFriendsRequestPanel(ERequestType requestType,EFriendsType friendsType = EFriendsType.ALL)
 	{
 		currentRequestType = requestType;
 		currentFriendType = friendsType;
@@ -67,7 +68,7 @@ public class FBFriendsRequestPanel : PopUpBase {
 			gameFriends.gameObject.SetActive (false);
 			allFriendsSelected = true;
 			activateAllSelected (true);
-			currentFriendType = EFriendsType.INVITABLE;
+			currentFriendType = EFriendsType.ALL;
 		}
 		else
 		{
@@ -150,7 +151,7 @@ public class FBFriendsRequestPanel : PopUpBase {
 		case EFriendsType.GAME:
 			initializeFriendsController (gameFriends, this.gameFriends);
 			break;
-		case EFriendsType.INVITABLE:
+		case EFriendsType.ALL:
 			initializeFriendsController (gameFriends, this.invitableFriends);
 			break;
 		default:
@@ -160,13 +161,22 @@ public class FBFriendsRequestPanel : PopUpBase {
 
 	public void initializeFriendsController(List<object> friends,FriendsController friendController)
 	{
-		for(int i=0; i<friends.Count; i++)
+		for(int i=0; i<friends.Count && i<maxFriendsToShow; i++)
 		{
 			Dictionary<string,object> friendInfo = ((Dictionary<string,object>)(friends [i]));
 			string playerID = (string)friendInfo ["id"];
+			string playerImgUrl ="";
 			//print (friendInfo.Keys.ToCommaSeparateList ());
 			string playerName = (string)friendInfo ["name"];
-			string playerImgUrl = GraphUtil.DeserializePictureURL(friendInfo);
+			Texture playerImage = new Texture();
+			if(FacebookPersistentData.instance.containTextureByID(playerID))
+			{
+				playerImage = FacebookPersistentData.instance.getTextureById (playerID);
+			}
+			else
+			{				
+				playerImgUrl = GraphUtil.DeserializePictureURL(friendInfo);
+			}
 
 			friendController.addFriend (playerID,playerImgUrl, playerName);
 		}
@@ -248,7 +258,7 @@ public class FBFriendsRequestPanel : PopUpBase {
 		{
 		case EFriendsType.GAME:
 			return gameFriends.getFriendsActivatedID ();
-		case EFriendsType.INVITABLE:
+		case EFriendsType.ALL:
 			return invitableFriends.getFriendsActivatedID ();
 		}
 		return null;
