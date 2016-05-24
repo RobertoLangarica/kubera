@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
 
 		if(PersistentData.instance)
 		{
-			configureLevel(PersistentData.instance.getNextLevel());
+			configureLevel(PersistentData.instance.currentLevel);
 		}
 
 		//TODO: Control de flujo de juego con un init
@@ -523,7 +523,7 @@ public class GameManager : MonoBehaviour
 			Debug.Log ("Perdio de verdad");
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);
 
-			activatePopUp ("RetryPopUp");
+			activatePopUp ("SecondChance");
 		}
 	}
 
@@ -613,7 +613,7 @@ public class GameManager : MonoBehaviour
 
 		go.GetComponent<Piece> ().currentColor = cellManager.colorRandom ();
 
-		cellManager.occupyAndConfigureCell(cell,go.transform.GetChild(0).gameObject,Piece.EType.PIECE,Piece.EColor.AQUA,true);
+		cellManager.occupyAndConfigureCell(cell,go.transform.GetChild(0).gameObject,Piece.EType.PIECE,Piece.EColor.YELLOW,true);
 
 		showFloatingPointsAt (cell.transform.position, 1);
 		substractMoves (1);
@@ -849,4 +849,4 @@ public class GameManager : MonoBehaviour
 	{
 		hudManager.showScoreTextAt(pos,amount);
 	}
-}//jmu3039
+}

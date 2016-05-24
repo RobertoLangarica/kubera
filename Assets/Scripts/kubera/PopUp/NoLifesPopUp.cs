@@ -7,7 +7,7 @@ public class NoLifesPopUp : PopUpBase
 {
 	public Text title;
 	public Text lifeTimer;
-	public Text flowText;
+	public Text descriptionText;
 	public Text askButton;
 	public Text rechargeButton;
 
@@ -25,17 +25,21 @@ public class NoLifesPopUp : PopUpBase
 		title.text = "te quedaste sin vidas";
 
 		lifeTimer.text = "Seguro lo lograras";
-		flowText.text = "Seguro lo lograras";
+		descriptionText.text = "Seguro lo lograras";
 		askButton.text = "Seguro lo lograras";
 		rechargeButton.text = "Seguro lo lograras";
 
-		priceText.text = "Seguro lo lograras";
+		priceText.text = price.ToString ();
 	}
 
 	public void closePressed()
 	{
+		popUp.SetActive (false);
 		OnPopUpCompleted ();
-		SceneManager.LoadScene ("Levels");
+		if (SceneManager.GetActiveScene ().name != "Levels") 
+		{
+			SceneManager.LoadScene ("Levels");
+		}
 	}
 
 	public void askForLifes()
@@ -52,7 +56,7 @@ public class NoLifesPopUp : PopUpBase
 			lifesManager.takeALife ();
 
 			popUp.SetActive (false);
-			OnComplete ();
+			OnComplete ("needLifes");
 		}
 
 		Debug.Log("Fondos insuficientes");

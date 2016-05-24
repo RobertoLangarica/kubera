@@ -26,6 +26,14 @@ public class FriendImage : MonoBehaviour {
 
 	public void setFriendImage(Texture picture)
 	{
-		setFriendPicture (picture);
+		if(picture == null)
+		{
+			//Prender imagen de espera
+		}
+		else
+		{
+			setFriendPicture (picture);
+
+		}
 	} 
 }

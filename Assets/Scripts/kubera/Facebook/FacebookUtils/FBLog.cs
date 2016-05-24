@@ -9,12 +9,17 @@ public class FBLog : MonoBehaviour {
 	public DOnLoginComplete onLoginComplete;
 
 	public bool isLoggedIn;
-	void Awake()
+	void Start()
 	{
 		// Initialize FB SDK
 		if (!FB.IsInitialized)
 		{
+			print ("not IsInitialized ");
 			FB.Init(InitCallback);
+		}
+		else
+		{
+			print ("IsInitialized");
 		}
 
 		if(FB.IsLoggedIn)
@@ -68,7 +73,7 @@ public class FBLog : MonoBehaviour {
 		//facebookBtn.SetActive (false);
 
 		// Call Facebook Login for Read permissions of 'public_profile', 'user_friends', and 'email'
-		FBPermissions.PromptForLogin(OnLoginComplete);
+		FBPermissions.PromptForLogin();
 		FBPermissions.PromptForPublish(OnLoginComplete);
 	}
 

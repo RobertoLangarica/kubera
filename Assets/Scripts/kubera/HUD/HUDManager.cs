@@ -287,7 +287,7 @@ public class HUDManager : MonoBehaviour
 		Text poolText = scorePool.getFreeText();
 		FloatingText bText = poolText.gameObject.GetComponent<FloatingText>();
 
-		poolText.text = score.ToString();
+		poolText.text = "+" + score.ToString();
 
 		scorePosition.z = 0;
 		finish.y += 2;// HACK: poolText.rectTransform.rect.height;
