@@ -8,7 +8,9 @@ using System.Text;
 public class Levels
 {
 	protected List<Level> _levels = new List<Level>();
-	
+
+	public Dictionary<int,List<Level>> worlds;
+
 	public Levels(){}
 	
 	public void Save(string path)
@@ -99,5 +101,47 @@ public class Levels
 	public void addLevel(Level level)
 	{
 		_levels.Add(level);
+	}
+
+	public void fillWorlds()
+	{
+		worlds = new Dictionary<int, List<Level>>();
+
+		foreach(Level level in _levels)
+		{
+			if(worlds.ContainsKey(level.world))
+			{
+				worlds[level.world].Add(level);
+			}
+			else
+			{
+				worlds.Add(level.world, new List<Level>());
+			}
+		}
+
+		foreach(List<Level> world in worlds)
+		{
+			world.Sort((x,y)=>string.Compare(x.name,y.name));
+		}
+	}
+
+	public List<Level> getWorldByIndex(int index)
+	{
+		if(worlds.ContainsKey(index))
+		{
+			return worlds[index];
+		}
+
+		return null;
+	}
+
+	public List<Level> getLevelWorld(Level level)
+	{
+		return getWorldByIndex(level.world);
+	}
+
+	public List<Level> getLevelWorld(string levelName)
+	{
+		return getLevelWorld(getLevelByName(levelName));
 	}
 }

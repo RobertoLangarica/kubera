@@ -67,5 +67,11 @@ public class Level
 	 * Puntos para obtener una estrella al pasar el nivel
 	 **/ 
 	[XmlAttribute("scoreToStar3")]public int scoreToStar3;
-	
+
+	/**
+	 * Mundo al que pertenece el nivel
+	 **/ 
+	[XmlAttribute("world")]public int world;
+	 
+	[XmlAttribute("isBoss")]public int isBoss;
 }

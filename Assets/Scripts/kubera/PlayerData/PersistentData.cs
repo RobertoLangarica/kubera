@@ -95,6 +95,7 @@ public class PersistentData : MonoBehaviour
 		//Niveles
 		TextAsset levels = (TextAsset)Resources.Load ("levels_"+language);
 		levelsData = Levels.LoadFromText(levels.text);
+		levelsData.fillWorlds();
 		Resources.UnloadAsset(levels);
 
 		//CurrentLevel
