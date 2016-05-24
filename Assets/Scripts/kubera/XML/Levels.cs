@@ -119,9 +119,9 @@ public class Levels
 			}
 		}
 
-		foreach(List<Level> world in worlds)
+		foreach(KeyValuePair<int,List<Level>> item in worlds)
 		{
-			world.Sort((x,y)=>string.Compare(x.name,y.name));
+			item.Value.Sort((x,y)=>string.Compare(x.name,y.name));
 		}
 	}
 
