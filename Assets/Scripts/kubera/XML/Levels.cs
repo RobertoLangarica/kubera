@@ -9,6 +9,7 @@ public class Levels
 {
 	protected List<Level> _levels = new List<Level>();
 
+	[XmlIgnoreAttribute]
 	public Dictionary<int,List<Level>> worlds;
 
 	public Levels(){}

@@ -73,5 +73,5 @@ public class Level
 	 **/ 
 	[XmlAttribute("world")]public int world;
 	 
-	[XmlAttribute("isBoss")]public int isBoss;
+	[XmlAttribute("isBoss")]public bool isBoss;
 }
