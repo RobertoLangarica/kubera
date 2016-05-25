@@ -43,6 +43,12 @@ namespace LevelBuilder
 		public Toggle[] powerupToggles;
 		public LoadingIndicator loadingIndicator;
 
+		public InputField inputWorld;
+		public Toggle bossToggle;
+		public InputField inputFriendsNeeded;
+		public InputField inputStarsNeeded;
+		public InputField inputGemsNeeded;
+
 		public GameObject saveAsPopUp;
 		private InputField saveAsInput;
 		private Text saveAsWarning;
@@ -118,6 +124,11 @@ namespace LevelBuilder
 			inputStar1.text = "10";
 			inputStar2.text = "20";
 			inputStar3.text = "30";
+
+			inputWorld.text = "0";
+			inputFriendsNeeded.text = "1";
+			inputStarsNeeded.text = "20";
+			inputGemsNeeded.text = "10";
 
 			foreach(Toggle toggle in powerupToggles)
 			{
@@ -242,6 +253,12 @@ namespace LevelBuilder
 			lvlToSave.scoreToStar1 = int.Parse(inputStar1.text);
 			lvlToSave.scoreToStar2 = int.Parse(inputStar2.text);
 			lvlToSave.scoreToStar3 = int.Parse(inputStar3.text);
+			lvlToSave.world = int.Parse (inputWorld.text);
+			lvlToSave.isBoss = bossToggle.isOn;
+			lvlToSave.friendsNeeded = int.Parse(inputFriendsNeeded.text);
+			lvlToSave.gemsNeeded = int.Parse(inputGemsNeeded.text);
+			lvlToSave.starsNeeded = int.Parse(inputStarsNeeded.text);
+
 
 			//Agregamos el conteo de obstaculos para esa meta
 			if(levelGoalSelector.isObstacles())
@@ -288,6 +305,12 @@ namespace LevelBuilder
 			inputStar1.text = level.scoreToStar1.ToString();
 			inputStar2.text = level.scoreToStar2.ToString();
 			inputStar3.text = level.scoreToStar3.ToString();
+			inputWorld.text = level.world.ToString ();
+			bossToggle.isOn = level.isBoss;
+			inputFriendsNeeded.text = level.friendsNeeded.ToString ();
+			inputGemsNeeded.text = level.gemsNeeded.ToString ();
+			inputStarsNeeded.text = level.starsNeeded.ToString ();
+
 
 			if(level.tutorialLettersPool != null)
 			{

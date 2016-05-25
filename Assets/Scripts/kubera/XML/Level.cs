@@ -74,4 +74,8 @@ public class Level
 	[XmlAttribute("world")]public int world;
 	 
 	[XmlAttribute("isBoss")]public bool isBoss;
+
+	[XmlAttribute("friendsNeeded")]	public int friendsNeeded;
+	[XmlAttribute("starsNeeded")]	public int starsNeeded;
+	[XmlAttribute("gemsNeeded")]	public int gemsNeeded;
 }
