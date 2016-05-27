@@ -39,6 +39,7 @@ public class MapManager : MonoBehaviour
 
 		for (int i = 0; i < mapLevels.Count; i++) 
 		{
+			mapLevels [i].OnOpen += openBossUnlockerPopUp;
 			updateLevelIcon (mapLevels [i]);
 			updateLevelStars (mapLevels[i]);
 		}
@@ -129,5 +130,11 @@ public class MapManager : MonoBehaviour
 		{
 			openPopUp (missingLifes_PopUp);
 		}
+	}
+
+	public void openBossUnlockerPopUp(int friendsNeeded,int gemsNeeded,int starsNeeded)
+	{
+		openPopUp ("bossLocked");
+		FindObjectOfType<BossLocked> ().initializeValues (friendsNeeded, gemsNeeded, starsNeeded);
 	}
 }

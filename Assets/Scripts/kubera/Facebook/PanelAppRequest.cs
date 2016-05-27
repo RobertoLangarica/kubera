@@ -231,6 +231,7 @@ public class PanelAppRequest : MonoBehaviour {
 			}
 		}
 
+		//TODO: checar si se enviaron
 		for(int i=0; i<friendInfo.Count; i++)
 		{
 			print (friendInfo [i].Split ('-') [2]);
