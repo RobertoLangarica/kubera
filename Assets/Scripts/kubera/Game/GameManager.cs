@@ -255,10 +255,12 @@ public class GameManager : MonoBehaviour
 	private void OnPieceDropped(GameObject obj)
 	{
 		Piece piece = obj.GetComponent<Piece>();
+		allowGameInput (false);
 
 		if(!tryToDropOnGrid(piece))
 		{
 			inputPiece.returnSelectedToInitialState (0.1f);
+			allowGameInput (true);
 		}
 
 		inputPiece.reset();
@@ -340,7 +342,12 @@ public class GameManager : MonoBehaviour
 		}
 		else if(!piecesWhereCreated)
 		{
+			allowGameInput (true);
 			checkIfLose ();
+		}
+		else
+		{
+			allowGameInput (true);
 		}
 
 		Destroy(piece.gameObject);
@@ -380,6 +387,7 @@ public class GameManager : MonoBehaviour
 		gridCharacters.Add(letter);
 
 		checkIfLose ();
+		allowGameInput (true);
 	}
 
 	public void showShadowOnPiece (GameObject obj, bool showing = true)
