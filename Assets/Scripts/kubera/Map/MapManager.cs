@@ -22,6 +22,9 @@ public class MapManager : MonoBehaviour
 	public Sprite twoStars;
 	public Sprite threeStars;
 
+	public int currentWorld;
+	public List<GameObject> worlds;
+
 	protected LifesManager lifesHUDManager;
 	protected PopUpManager popUpManager;
 
@@ -35,7 +38,7 @@ public class MapManager : MonoBehaviour
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 
-		mapLevels = new List<MapLevel>(FindObjectsOfType<MapLevel> ());
+		mapLevels = new List<MapLevel>(worlds[currentWorld].GetComponentsInChildren<MapLevel> ());
 
 		for (int i = 0; i < mapLevels.Count; i++) 
 		{

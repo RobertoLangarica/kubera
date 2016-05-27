@@ -5,7 +5,6 @@ using DG.Tweening;
 public class RotatePowerUp : PowerupBase
 {
 	public GameObject powerUpBlock;
-	public Transform powerUpButton;
 	public RectTransform piecesPanel;
 
 	protected InputPowerUpRotate inputPowerUpRotate;
@@ -66,7 +65,7 @@ public class RotatePowerUp : PowerupBase
 			powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId ("RotatePowerUP_Scale").OnComplete (() => {
 
 				DestroyImmediate (powerUpGO);
-				cancelPowerUp ();
+				cancel ();
 			});
 		}
 		else 
@@ -93,12 +92,13 @@ public class RotatePowerUp : PowerupBase
 	protected void completePowerUp()
 	{
 		inputPowerUpRotate.OnPowerupRotateCompleted -= completePowerUp;
+		Debug.Log ("Completado");
 		OnComplete ();
 		inputPowerUpRotate.enabled = false;
 		this.gameObject.SetActive( false);
 	}
 
-	protected void cancelPowerUp()
+	public override void cancel()
 	{
 		//print ("cancelPowerUp");
 		OnCancel ();

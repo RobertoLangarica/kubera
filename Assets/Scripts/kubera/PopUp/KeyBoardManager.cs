@@ -11,6 +11,9 @@ public class KeyBoardManager : MonoBehaviour
 
 	public WildCardPowerUp powerUP;
 
+	public delegate void DLetterPressed(string str);
+	public DLetterPressed OnLetterSelected;
+
 	protected Letter wildCardSelected;
 	protected WordManager wordManager;
 	protected GameManager gameManager;
@@ -22,11 +25,20 @@ public class KeyBoardManager : MonoBehaviour
 
 		calculateCellSize ();
 
-		gameObject.SetActive (false);
-
 		powerUP.OnPowerupCompleted += showKeyBoardForWildCard;
 
-		PersistentData.instance.onDictionaryFinished += dictionaryReadyToread;
+		OnLetterSelected += setLetterToWildCard;
+
+		if (wordManager.wordsValidator.getAlfabet () == null) 
+		{
+			PersistentData.instance.onDictionaryFinished += dictionaryReadyToread;
+		} 
+		else 
+		{
+			dictionaryReadyToread ();
+		}
+
+		gameObject.SetActive (false);
 	}
 
 	protected void calculateCellSize()
@@ -82,7 +94,12 @@ public class KeyBoardManager : MonoBehaviour
 	{
 		Button btn = letter.gameObject.AddComponent<Button> ();
 
-		btn.onClick.AddListener (()=>{setLetterToWildCard(letter.abcChar.character);});
+		btn.onClick.AddListener (()=>{
+			if (OnLetterSelected != null) 
+			{
+				OnLetterSelected (letter.abcChar.character);
+			}
+		});
 	}
 
 	public void hideKeyBoard()
@@ -102,7 +119,12 @@ public class KeyBoardManager : MonoBehaviour
 		wildCardSelected = wildCard;
 	}
 
-	protected void setLetterToWildCard(string character)
+	public Letter getSelectedWildCard()
+	{
+		return wildCardSelected;
+	}
+
+	public void setLetterToWildCard(string character)
 	{
 		wordManager.setValuesToWildCard (wildCardSelected, character);
 
