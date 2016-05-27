@@ -30,8 +30,12 @@ public class GameManager : MonoBehaviour
 
 	public List<int> linesCreatedPoints = new List<int> ();
 
+	public InputPowerUpRotate inputRotate;
+
 	protected int sizeGridX = 8;
 	protected int sizeGridY = 8;
+
+	protected bool rotationActive;
 
 	protected List<Cell> cellToLetter;
 
@@ -91,6 +95,9 @@ public class GameManager : MonoBehaviour
 
 		wordManager.onWordChange += refreshCurrentWordScoreOnHUD;
 
+		powerupManager.getPowerupByType (PowerupBase.EType.ROTATE).OnPowerupCompleted += rotationDeactivated;
+		inputRotate.OnRotateArrowsActivated += rotationActivated;
+
 		if(PersistentData.instance)
 		{
 			configureLevel(PersistentData.instance.currentLevel);
@@ -115,6 +122,18 @@ public class GameManager : MonoBehaviour
 			PersistentData.instance.startLevel -= 2;
 			SceneManager.LoadScene ("Game");
 		}
+	}
+
+	protected void rotationActivated(GameObject go)
+	{
+		rotationActive = true;
+		Debug.Log (rotationActive);
+	}
+
+	protected void rotationDeactivated()
+	{
+		rotationActive = false;
+		Debug.Log (rotationActive);
 	}
 
 	private void configureLevel(Level level)
@@ -487,13 +506,36 @@ public class GameManager : MonoBehaviour
 
 	protected void checkIfLose()
 	{
+		bool canFit = false;
+
 		//HACK: al inicio del nivel que sirve en los tutoriales
 		if (linesAnimation.isOnAnimation || remainingMoves == currentLevel.moves) 
 		{
 			return;
 		}
 
-		if(!cellManager.checkIfOnePieceCanFit(pieceManager.getShowingPieces()) || remainingMoves == 0 && !gameOver)
+		if (!rotationActive) 
+		{
+			canFit = cellManager.checkIfOnePieceCanFit (pieceManager.getShowingPieces ());
+		} 
+		else 
+		{
+			List<Piece> tempList = new List<Piece> (pieceManager.getShowingPieces ());
+			Piece tempPiece= null;
+
+			for (int i = 0; i < pieceManager.getShowingPieces ().Count; i++) 
+			{
+				tempPiece = pieceManager.getShowingPieces () [i].toRotateObject.GetComponent<Piece> ();
+				for (int j = 0; j < 3; j++) 
+				{
+					tempList.Add (tempPiece);
+					tempPiece = tempPiece.toRotateObject.GetComponent<Piece> ();
+				}
+			}
+			canFit = cellManager.checkIfOnePieceCanFit (tempList);
+		}
+
+		if(!canFit || remainingMoves == 0 && !gameOver)
 		{
 			if(remainingMoves == 0)
 			{

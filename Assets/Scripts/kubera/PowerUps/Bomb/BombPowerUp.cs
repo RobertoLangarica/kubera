@@ -5,7 +5,6 @@ using DG.Tweening;
 public class BombPowerUp : PowerupBase 
 {
 	public GameObject powerUpBlock;
-	public Transform powerUpButton;
 
 	protected CellsManager cellsManager;
 	protected InputBombAndDestroy bombInput;
@@ -52,16 +51,16 @@ public class BombPowerUp : PowerupBase
 			}
 			else 
 			{
-				powerUPCanceled();
+				cancel();
 			}
 		}
 		else
 		{
-			powerUPCanceled();
+			cancel();
 		}
 	}
 
-	public void powerUPCanceled()
+	public override void cancel()
 	{
 		bombGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("BombPowerUP_Move");
 		bombGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId ("BombPowerUP_Scale").OnComplete (() => {
