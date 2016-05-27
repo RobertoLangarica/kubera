@@ -12,7 +12,7 @@ public class BlockPowerUp : PowerupBase
 	void Start()
 	{
 		inputBlockPowerUp = FindObjectOfType<InputBlockPowerUp> ();
-		inputBlockPowerUp.OnPowerupCanceled += cancelPowerUp;
+		inputBlockPowerUp.OnPowerupCanceled += cancel;
 		inputBlockPowerUp.OnPowerupCompleted += completePowerUp;
 
 		inputBlockPowerUp.enabled = false;
@@ -31,7 +31,7 @@ public class BlockPowerUp : PowerupBase
 		OnComplete ();
 	}
 
-	protected void cancelPowerUp()
+	public override void cancel()
 	{
 		inputBlockPowerUp.enabled = false;
 		OnCancel ();

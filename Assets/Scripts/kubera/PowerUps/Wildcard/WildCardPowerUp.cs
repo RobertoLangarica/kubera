@@ -7,7 +7,6 @@ public class WildCardPowerUp : PowerupBase
 {
 	public string powerUpScore = "x3";
 	public GameObject powerUpWildCard;
-	public Transform powerUpButton;
 	public RectTransform wordsContainer;
 
 	public KeyBoardManager keyBoard;
@@ -71,7 +70,7 @@ public class WildCardPowerUp : PowerupBase
 
 				DestroyImmediate(powerUpGO);
 			});
-			cancelPowerUp ();
+			cancel ();
 			return;
 		}
 		powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId ("WildCardPowerUP_Scale").OnComplete (() => {
@@ -90,7 +89,7 @@ public class WildCardPowerUp : PowerupBase
 		}
 		else
 		{
-			cancelPowerUp ();
+			cancel ();
 		}
 	}
 
@@ -100,7 +99,7 @@ public class WildCardPowerUp : PowerupBase
 		this.gameObject.SetActive( false);
 	}
 
-	protected void cancelPowerUp()
+	public override void cancel ()
 	{
 		OnCancel ();
 		this.gameObject.SetActive( false);

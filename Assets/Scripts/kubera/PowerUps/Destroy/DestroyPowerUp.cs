@@ -7,7 +7,6 @@ public class DestroyPowerUp : PowerupBase
 {
 	public AnimatedSprite Animation;
 	public GameObject powerUpBlock;
-	public Transform powerUpButton;
 
 	protected CellsManager cellsManager;
 	protected InputBombAndDestroy bombInput;
@@ -70,16 +69,16 @@ public class DestroyPowerUp : PowerupBase
 			}
 			else 
 			{
-				powerUPCanceled();
+				cancel();
 			}
 		}
 		else
 		{
-			powerUPCanceled();
+			cancel();
 		}
 	}
 
-	public void powerUPCanceled()
+	public override void cancel()
 	{
 		destroyGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("DestroyPowerUP_Move");
 		destroyGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("DestroyPowerUP_Scale").OnComplete (() => {
