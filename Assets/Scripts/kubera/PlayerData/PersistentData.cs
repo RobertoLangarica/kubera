@@ -23,6 +23,7 @@ public class PersistentData : MonoBehaviour
 	public bool loadSerializedDictionary = true;
 	public int maxWordLength = 10;
 	[HideInInspector]public int levelNumber = -1;
+	[HideInInspector]public int bossReached = 0;
 	[HideInInspector]public Level currentLevel;
 	[HideInInspector]public Levels levelsData;
 	[HideInInspector]public ABCDictionary abcDictionary;
@@ -95,6 +96,7 @@ public class PersistentData : MonoBehaviour
 		//Niveles
 		TextAsset levels = (TextAsset)Resources.Load ("levels_"+language);
 		levelsData = Levels.LoadFromText(levels.text);
+		levelsData.fillWorlds();
 		Resources.UnloadAsset(levels);
 
 		//CurrentLevel

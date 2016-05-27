@@ -46,11 +46,9 @@ public class Friend : MonoBehaviour {
 	{
 		GraphUtil.LoadImgFromURL(url, delegate(Texture pictureTexture)
 			{
-				// Setup the User's profile picture
 				if (pictureTexture != null)
 				{
-					//Imagen del usuario
-					//GameStateManager.UserTexture = pictureTexture;
+					FacebookPersistentData.instance.addFriendImage(id,pictureTexture);
 					setFriendImage(pictureTexture);
 				}
 			});

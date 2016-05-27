@@ -22,11 +22,11 @@ public class KeyBoardManager : MonoBehaviour
 
 		calculateCellSize ();
 
-		fillContainer (wordManager.wordsValidator.getAlfabet());
-
 		gameObject.SetActive (false);
 
 		powerUP.OnPowerupCompleted += showKeyBoardForWildCard;
+
+		PersistentData.instance.onDictionaryFinished += dictionaryReadyToread;
 	}
 
 	protected void calculateCellSize()
@@ -37,6 +37,11 @@ public class KeyBoardManager : MonoBehaviour
 		width = (width - (container.padding.left * 2) - (container.spacing.x * (container.constraintCount - 1))) / container.constraintCount;
 
 		container.cellSize = new Vector2 (width,width);
+	}
+
+	public void dictionaryReadyToread()
+	{
+		fillContainer (wordManager.wordsValidator.getAlfabet());
 	}
 
 	protected void fillContainer(List<ABCUnit> alphabet)

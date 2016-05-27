@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class PanelRequest : MonoBehaviour {
+public class PanelAppRequest : MonoBehaviour {
 
 	public enum ERequestState
 	{
@@ -30,7 +30,7 @@ public class PanelRequest : MonoBehaviour {
 	public EAction actionChosed;
 
 	public int maxFriends = 5;
-	protected GridLayoutGroup gridLayoutGroup;
+	public GridLayoutGroup gridLayoutGroup;
 
 	protected List<string> friendInfo = new List<string>();//0 name 1 id 2 requestId
 
@@ -46,8 +46,6 @@ public class PanelRequest : MonoBehaviour {
 
 	void Start()
 	{
-		gridLayoutGroup = panelFriendsImage.GetComponent<GridLayoutGroup>();
-		facebookManager = FindObjectOfType<FacebookManager> ();
 		StartCoroutine (setSizeOfObject());
 	}
 	IEnumerator setSizeOfObject()
@@ -58,17 +56,9 @@ public class PanelRequest : MonoBehaviour {
 
 	public void SizeOfObject()
 	{
-		//print ((panelFriendsImage.GetComponent<RectTransform> ().rect.width -gridLayoutGroup.padding.left/maxFriends)-gridLayoutGroup.spacing.x);
-		if(((panelFriendsImage.GetComponent<RectTransform> ().rect.width -gridLayoutGroup.padding.left /maxFriends )-gridLayoutGroup.spacing.x) < panelFriendsImage.GetComponent<RectTransform> ().rect.height *.8f)
-		{
-			gridLayoutGroup.cellSize = new Vector2((panelFriendsImage.GetComponent<RectTransform> ().rect.width -gridLayoutGroup.padding.left /maxFriends )-gridLayoutGroup.spacing.x
-				,(panelFriendsImage.GetComponent<RectTransform> ().rect.width -gridLayoutGroup.padding.left /maxFriends )-gridLayoutGroup.spacing.x);
-		}
-		else
-		{
-			gridLayoutGroup.cellSize = new Vector2(panelFriendsImage.GetComponent<RectTransform>().rect.height*.8f
-				,panelFriendsImage.GetComponent<RectTransform>().rect.height*.8f);
-		}
+		float cellSize = ((panelFriendsImage.GetComponent<RectTransform> ().rect.width -gridLayoutGroup.padding.left)/maxFriends)-gridLayoutGroup.spacing.x;
+
+		gridLayoutGroup.cellSize = new Vector2(cellSize,cellSize);
 	}
 
 	public void setParent(Transform parent, bool worldPositionStays)
@@ -204,7 +194,8 @@ public class PanelRequest : MonoBehaviour {
 	public void addFriendPicture (Texture texture)
 	{
 		GameObject go = Instantiate (friendImage)as GameObject;
-		go.transform.SetParent (panelFriendsImage.transform,false);
+		go.transform.SetParent (panelFriendsImage.transform, false);
+
 		go.GetComponent<FriendImage> ().setFriendImage (texture);
 	}
 
@@ -214,16 +205,17 @@ public class PanelRequest : MonoBehaviour {
 		{
 			if(stateRequested == ERequestState.KEY)
 			{
-				facebookManager.acceptGift (false, friendInfo.Count);
+				facebookManager.acceptGift (false, friendInfo.Count,this.gameObject,friendInfo [0].Split ('-') [3]);
 			}
 			else
 			{
-				facebookManager.acceptGift (true, friendInfo.Count);
+				facebookManager.acceptGift (true, friendInfo.Count,this.gameObject);
 			}
 		}
 		else if(actionChosed == EAction.SEND)
 		{
 			List<string> friendsIDs = new List<string> ();
+
 			for(int i=0; i<friendInfo.Count; i++)
 			{
 				friendsIDs.Add (friendInfo [i].Split ('-') [1]);
@@ -231,11 +223,11 @@ public class PanelRequest : MonoBehaviour {
 
 			if(stateRequested == ERequestState.KEY)
 			{				
-				facebookManager.sendGift (false, friendsIDs);
+				facebookManager.sendGift (false, friendsIDs,this.gameObject,friendInfo [0].Split ('-') [3]);
 			}
 			else
 			{
-				facebookManager.sendGift (true, friendsIDs);
+				facebookManager.sendGift (true, friendsIDs,this.gameObject);
 			}
 		}
 

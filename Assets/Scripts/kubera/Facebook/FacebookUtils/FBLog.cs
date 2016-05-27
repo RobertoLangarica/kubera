@@ -11,8 +11,6 @@ public class FBLog : MonoBehaviour {
 	public bool isLoggedIn;
 	void Start()
 	{
-		print ("awake ");
-		Debug.Log ("awake");
 		// Initialize FB SDK
 		if (!FB.IsInitialized)
 		{

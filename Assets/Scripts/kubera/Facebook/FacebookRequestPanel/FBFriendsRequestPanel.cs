@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Facebook.Unity;
 
-public class FBRequestPanel : MonoBehaviour {
+public class FBFriendsRequestPanel : PopUpBase {
 
 	public enum ERequestType
 	{
@@ -15,7 +15,7 @@ public class FBRequestPanel : MonoBehaviour {
 	public enum EFriendsType
 	{
 		GAME,
-		INVITABLE
+		ALL
 	}
 
 	public Text requestText;
@@ -26,6 +26,7 @@ public class FBRequestPanel : MonoBehaviour {
 	public Toggle selectAll;
 	public ERequestType currentRequestType;
 	public EFriendsType currentFriendType;
+	public int maxFriendsToShow = 200;
 
 	protected bool allFriendsSelected;
 	protected bool friendsInitialized;
@@ -38,7 +39,25 @@ public class FBRequestPanel : MonoBehaviour {
 		changeBetweenFriends (true);
 		invitableFriends.OnActivated = activateAllSelected;
 		gameFriends.OnActivated = activateAllSelected;
-		this.gameObject.SetActive (false);
+
+	}
+
+	public override void activate()
+	{
+		popUp.SetActive (true);
+	}
+
+	public void closePressed()
+	{
+		popUp.SetActive (false);
+
+		OnPopUpCompleted ();
+	}
+
+	public void openFriendsRequestPanel(ERequestType requestType,EFriendsType friendsType = EFriendsType.ALL)
+	{
+		currentRequestType = requestType;
+		currentFriendType = friendsType;
 	}
 
 	public void changeBetweenFriends(bool invitableFriends)
@@ -49,7 +68,7 @@ public class FBRequestPanel : MonoBehaviour {
 			gameFriends.gameObject.SetActive (false);
 			allFriendsSelected = true;
 			activateAllSelected (true);
-			currentFriendType = EFriendsType.INVITABLE;
+			currentFriendType = EFriendsType.ALL;
 		}
 		else
 		{
@@ -132,7 +151,7 @@ public class FBRequestPanel : MonoBehaviour {
 		case EFriendsType.GAME:
 			initializeFriendsController (gameFriends, this.gameFriends);
 			break;
-		case EFriendsType.INVITABLE:
+		case EFriendsType.ALL:
 			initializeFriendsController (gameFriends, this.invitableFriends);
 			break;
 		default:
@@ -142,13 +161,22 @@ public class FBRequestPanel : MonoBehaviour {
 
 	public void initializeFriendsController(List<object> friends,FriendsController friendController)
 	{
-		for(int i=0; i<friends.Count; i++)
+		for(int i=0; i<friends.Count && i<maxFriendsToShow; i++)
 		{
 			Dictionary<string,object> friendInfo = ((Dictionary<string,object>)(friends [i]));
 			string playerID = (string)friendInfo ["id"];
+			string playerImgUrl ="";
 			//print (friendInfo.Keys.ToCommaSeparateList ());
 			string playerName = (string)friendInfo ["name"];
-			string playerImgUrl = GraphUtil.DeserializePictureURL(friendInfo);
+			Texture playerImage = new Texture();
+			if(FacebookPersistentData.instance.containTextureByID(playerID))
+			{
+				playerImage = FacebookPersistentData.instance.getTextureById (playerID);
+			}
+			else
+			{				
+				playerImgUrl = GraphUtil.DeserializePictureURL(friendInfo);
+			}
 
 			friendController.addFriend (playerID,playerImgUrl, playerName);
 		}
@@ -230,7 +258,7 @@ public class FBRequestPanel : MonoBehaviour {
 		{
 		case EFriendsType.GAME:
 			return gameFriends.getFriendsActivatedID ();
-		case EFriendsType.INVITABLE:
+		case EFriendsType.ALL:
 			return invitableFriends.getFriendsActivatedID ();
 		}
 		return null;

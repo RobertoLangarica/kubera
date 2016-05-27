@@ -26,6 +26,7 @@ public class FBGraph : MonoBehaviour
 	public DOnGetAppRequest OnGetAppRequest;
 	public DOnAddTextureFriend OnGetFriendTextures;
 	public DOnFinishGetingInfo onFinishGettingInfo;
+	public DOnFinishGetingInfo onFinishGettingFriends;
 
 	protected bool gameFriendsReady;
 	protected bool invitableFriendsReady;
@@ -146,7 +147,7 @@ public class FBGraph : MonoBehaviour
 	//
 	public void GetFriends ()
 	{
-		string queryString = "/me/friends?fields=id,name,picture.width(60).height(60)&limit=200";
+		string queryString = "/me/friends?fields=id,name,picture.width(60).height(60)";
 		FB.API(queryString, HttpMethod.GET, GetFriendsCallback);
 	}
 
@@ -168,6 +169,7 @@ public class FBGraph : MonoBehaviour
 			CacheFriends(friendsList);
 			OnGetGameFriends (friendsList);
 			gameFriendsReady = true;
+			mergeFriends ();
 			AllinfoGathered ();
 		}
 	}
@@ -213,6 +215,7 @@ public class FBGraph : MonoBehaviour
 			CacheFriends(invitableFriendsList);
 			OnGetInvitableFriends (invitableFriendsList);
 			invitableFriendsReady = true;
+			mergeFriends ();
 			AllinfoGathered ();
 		}
 	}
@@ -228,6 +231,14 @@ public class FBGraph : MonoBehaviour
 			string playerImgUrl = GraphUtil.DeserializePictureURL(friend);
 
 			getTextureFromURL (playerImgUrl,(string)friend ["id"]);
+		}
+	}
+
+	private void mergeFriends()
+	{
+		if(gameFriendsReady && invitableFriendsReady)
+		{
+			onFinishGettingFriends ();
 		}
 	}
 
