@@ -16,6 +16,8 @@ public class PowerUpManager : MonoBehaviour
 
 	void Start()
 	{
+		allowPowerUps = true;
+
 		foreach(PowerupBase powerup in powerups)
 		{
 			if (powerup != null) {

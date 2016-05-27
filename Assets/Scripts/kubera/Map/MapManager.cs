@@ -22,6 +22,9 @@ public class MapManager : MonoBehaviour
 	public Sprite twoStars;
 	public Sprite threeStars;
 
+	public int currentWorld;
+	public List<GameObject> worlds;
+
 	protected LifesManager lifesHUDManager;
 	protected PopUpManager popUpManager;
 
@@ -35,11 +38,10 @@ public class MapManager : MonoBehaviour
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 
-		mapLevels = new List<MapLevel>(FindObjectsOfType<MapLevel> ());
+		mapLevels = new List<MapLevel>(worlds[currentWorld].GetComponentsInChildren<MapLevel> ());
 
 		for (int i = 0; i < mapLevels.Count; i++) 
 		{
-			mapLevels [i].OnOpen += openBossUnlockerPopUp;
 			updateLevelIcon (mapLevels [i]);
 			updateLevelStars (mapLevels[i]);
 		}
@@ -130,11 +132,5 @@ public class MapManager : MonoBehaviour
 		{
 			openPopUp (missingLifes_PopUp);
 		}
-	}
-
-	public void openBossUnlockerPopUp(int friendsNeeded,int gemsNeeded,int starsNeeded)
-	{
-		openPopUp ("bossLocked");
-		FindObjectOfType<BossLocked> ().initializeValues (friendsNeeded, gemsNeeded, starsNeeded);
 	}
 }

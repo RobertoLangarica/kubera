@@ -49,11 +49,13 @@ public class TutorialBase : MonoBehaviour
 
 	protected WordManager wordManager;
 	protected GameManager gameManager;
+	protected CellsManager cellManager;
 
 	protected virtual void Start()
 	{
 		gameManager = FindObjectOfType<GameManager> ();
 		wordManager = FindObjectOfType<WordManager> ();
+		cellManager = FindObjectOfType<CellsManager> ();
 	}
 
 	public virtual bool canMoveToNextPhase()
