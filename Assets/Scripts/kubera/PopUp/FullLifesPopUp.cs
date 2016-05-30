@@ -31,6 +31,6 @@ public class FullLifesPopUp : PopUpBase
 		popUp.SetActive (false);
 		//cuando se cierre hacer stuff de facebook
 		//TODO:Hacer stuff de facebook
-		OnPopUpCompleted ("needLifes");
+		OnPopUpCompleted (this,"needLifes");
 	}
 }

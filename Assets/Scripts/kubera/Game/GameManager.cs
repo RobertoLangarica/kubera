@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
 
 		powerupManager.OnPowerupCanceled = OnPowerupCanceled;
 		powerupManager.OnPowerupCompleted = OnPowerupCompleted;
+		powerupManager.OnPowerupCompletedNoGems = OnPowerupCompletedNoGems;
 
 		inputPiece.OnDrop += OnPieceDropped;
 		inputPiece.OnSelected += showShadowOnPiece;
@@ -257,7 +258,7 @@ public class GameManager : MonoBehaviour
 		Piece piece = obj.GetComponent<Piece>();
 		allowGameInput (false);
 
-		if(!tryToDropOnGrid(piece))
+		if(!dropOnGrid(piece))
 		{
 			inputPiece.returnSelectedToInitialState (0.1f);
 			allowGameInput (true);
@@ -266,12 +267,22 @@ public class GameManager : MonoBehaviour
 		inputPiece.reset();
 	}
 
-	public bool tryToDropOnGrid(Piece piece)
+	public bool canDropOnGrid(Piece piece)
 	{
 		List<Cell> cellsUnderPiece = cellManager.getFreeCellsUnderPiece(piece);
-
 		if (cellsUnderPiece.Count == piece.squares.Length) 
 		{
+			return true;
+		}
+		return false;
+	}
+
+	public bool dropOnGrid(Piece piece)
+	{
+		if (canDropOnGrid(piece)) 
+		{
+			List<Cell> cellsUnderPiece = cellManager.getFreeCellsUnderPiece(piece);
+
 			putPiecesOnGrid (piece, cellsUnderPiece);
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.PIECE_POSITIONATED);
 
@@ -768,17 +779,22 @@ public class GameManager : MonoBehaviour
 		//TODO: Chequeo con transaction manager para ver que onda con las gemas
 		//TODO: Checar lo del precio de los powerUps
 		allowGameInput(false);
-		if(canActivatePowerUp((PowerupBase.EType) powerupTypeIndex))
-		{
-			powerupManager.activatePowerUp((PowerupBase.EType) powerupTypeIndex);
-		}
+
+		powerupManager.activatePowerUp((PowerupBase.EType) powerupTypeIndex,canActivatePowerUp((PowerupBase.EType) powerupTypeIndex));
 	}
 
 	protected bool canActivatePowerUp(PowerupBase.EType type)
 	{
 		//Checa si tiene dinero para usar el poder
 		//transaction manager
-		return true;
+		if(TransactionManager.instance.tryToUseGems(TransactionManager.instance.powerUpPrices(type)))
+		{			
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	private void OnPowerupCanceled(PowerupBase.EType type)
@@ -798,6 +814,15 @@ public class GameManager : MonoBehaviour
 
 		}
 		
+
+		allowGameInput(true);
+	}
+
+	private void OnPowerupCompletedNoGems(PowerupBase.EType type)
+	{
+		//TODO: abrimos el popUp de no Gems
+		print ("noGems");
+		activatePopUp ("NoGemsPopUp");
 
 		allowGameInput(true);
 	}

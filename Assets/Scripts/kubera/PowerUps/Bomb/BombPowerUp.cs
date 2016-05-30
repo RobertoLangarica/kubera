@@ -10,6 +10,7 @@ public class BombPowerUp : PowerupBase
 	protected InputBombAndDestroy bombInput;
 	protected BombAnimation bombAnimation;
 
+	protected bool canUse;
 	protected GameObject bombGO;
 
 	void Start () 
@@ -19,7 +20,7 @@ public class BombPowerUp : PowerupBase
 		bombAnimation = FindObjectOfType<BombAnimation> ();
 	}
 
-	public override void activate()
+	public override void activate(bool canUse)
 	{
 		if (bombGO != null) 
 		{
@@ -32,6 +33,7 @@ public class BombPowerUp : PowerupBase
 		bombInput.enabled = true;
 		bombInput.setCurrentSelected(bombGO);
 		bombInput.OnDrop += powerUpPositioned;
+		this.canUse = canUse;
 	}
 
 	public void powerUpPositioned()
@@ -42,12 +44,19 @@ public class BombPowerUp : PowerupBase
 		{
 			if(cellSelected.contentType == Piece.EType.PIECE && cellSelected.occupied)
 			{
-				StartCoroutine (bombAnimation.startSameColorSearchAnimation(cellSelected));
+				if(canUse)
+				{
+					StartCoroutine (bombAnimation.startSameColorSearchAnimation(cellSelected));
+					DestroyImmediate(bombGO);
+					bombInput.OnDrop -= powerUpPositioned;
+					bombInput.enabled = false;
 
-				DestroyImmediate(bombGO);
-				bombInput.OnDrop -= powerUpPositioned;
-				bombInput.enabled = false;
-				OnComplete ();
+					OnComplete ();
+				}
+				else
+				{
+					onCompletedNoGems ();
+				}
 			}
 			else 
 			{
@@ -72,5 +81,20 @@ public class BombPowerUp : PowerupBase
 		bombInput.enabled = false;
 
 		OnCancel();
+	}
+
+	public void onCompletedNoGems()
+	{
+		bombGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("BombPowerUP_Move");
+		bombGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId ("BombPowerUP_Scale").OnComplete (() => {
+
+			DestroyImmediate (bombGO);
+		});
+
+		bombInput.OnDrop -= powerUpPositioned;
+		bombInput.enabled = false;
+
+		OnCompletedNoGems ();
+
 	}
 }

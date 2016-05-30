@@ -400,5 +400,26 @@
 				<language id="default" text="las veces que necesites para pasar el nivel."/>
 			</languages>
 		</text>
+		<text id="NoGemsPopUpTitle">
+			<languages>
+				<language id="english" text="Not enough Gems"/>
+				<language id="spanish" text="Gemmas Insuficientes"/>
+				<language id="default" text="Gemmas Insuficientes"/>
+			</languages>
+		</text>
+		<text id="NoGemsPopUpInfo">
+			<languages>
+				<language id="english" text="Visit Shopika to buy awesome products and get Gems."/>
+				<language id="spanish" text="Visita Shopika para comprar fabulosos productos y obtener gemas."/>
+				<language id="default" text="Visita Shopika para comprar fabulosos productos y obtener gemas."/>
+			</languages>
+		</text>
+		<text id="NoGemsPopUpButton">
+			<languages>
+				<language id="english" text="Go shopping"/>
+				<language id="spanish" text="Ir de compras"/>
+				<language id="default" text="Ir de compras"/>
+			</languages>
+		</text>
 	</texts>
 </gameText>
