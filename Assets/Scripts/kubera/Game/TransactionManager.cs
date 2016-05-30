@@ -5,7 +5,7 @@ public class TransactionManager : MonoBehaviour
 {
 	public static TransactionManager instance = null;
 
-	protected bool isTest = false;
+	protected bool isTest = true;
 
 	void Awake()
 	{
