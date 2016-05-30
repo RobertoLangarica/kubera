@@ -12,6 +12,7 @@ public class RotatePowerUp : PowerupBase
 	protected InputWords inputWords;
 
 	protected GameObject powerUpGO;
+	protected bool canUse;
 
 	void Start()
 	{
@@ -23,7 +24,7 @@ public class RotatePowerUp : PowerupBase
 		this.gameObject.SetActive( false);
 	}
 
-	public override void activate ()
+	public override void activate (bool canUse)
 	{
 		this.gameObject.SetActive( true);
 		if (powerUpGO != null) 
@@ -37,8 +38,10 @@ public class RotatePowerUp : PowerupBase
 		inputPowerUp.enabled = true;
 		inputPowerUp.setCurrentSelected(powerUpGO);
 		inputPowerUp.OnDrop += powerUpPositioned;
+		inputPowerUpRotate.canUse = canUse;
 
 		inputWords.allowInput = true;
+		this.canUse = canUse;
 	}
 
 	public void powerUpPositioned()
@@ -70,23 +73,37 @@ public class RotatePowerUp : PowerupBase
 		}
 		else 
 		{
+			if(!canUse)
+			{
+				powerUpGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId ("RotatePowerUP_Move");
+			}
+
 			powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId ("RotatePowerUP_Scale").OnComplete (() => {
 
 				DestroyImmediate (powerUpGO);
-				powerUpActivateRotate ();
+				powerUpActivateRotate (canUse);
 			});
+
 		}
 		inputPowerUp.OnDrop -= powerUpPositioned;
 
 	}
 
-	public void powerUpActivateRotate()
+	public void powerUpActivateRotate(bool canUse)
 	{
-		inputPowerUpRotate.gameObject.SetActive (true);
-		inputPowerUpRotate.enabled = true;
+		
 		inputPowerUp.OnDrop -= powerUpPositioned;
-		inputPowerUpRotate.OnPowerupRotateCompleted += completePowerUp;
-		inputPowerUpRotate.startRotate ();
+		if(canUse)
+		{
+			inputPowerUpRotate.gameObject.SetActive (true);
+			inputPowerUpRotate.enabled = true;
+			inputPowerUpRotate.startRotate ();
+			inputPowerUpRotate.OnPowerupRotateCompleted += completePowerUp;
+		}
+		else
+		{
+			OnCompletedNoGems ();
+		}
 	}
 
 	protected void completePowerUp()

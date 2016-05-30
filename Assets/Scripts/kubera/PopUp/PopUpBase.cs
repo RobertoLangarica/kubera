@@ -6,19 +6,20 @@ public class PopUpBase : MonoBehaviour {
 	new public string name;
 	public GameObject popUp;
 
-	public delegate void DPopUpNotification(string action ="");
+	public delegate void DPopUpNotification(PopUpBase thisPopUp, string action ="");
 	public DPopUpNotification OnPopUpCompleted;
 
 	public virtual void activate()
 	{
-
+		popUp.SetActive (true);
 	}
 
 	protected void OnComplete(string action ="")
 	{
+		popUp.SetActive (false);
 		if(OnPopUpCompleted != null)
 		{
-			OnPopUpCompleted(action);
+			OnPopUpCompleted(this,action);
 		}	
 	}
 }

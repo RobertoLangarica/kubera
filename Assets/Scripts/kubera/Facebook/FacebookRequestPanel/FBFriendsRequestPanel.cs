@@ -51,7 +51,7 @@ public class FBFriendsRequestPanel : PopUpBase {
 	{
 		popUp.SetActive (false);
 
-		OnPopUpCompleted ();
+		OnPopUpCompleted (this);
 	}
 
 	public void openFriendsRequestPanel(ERequestType requestType,EFriendsType friendsType = EFriendsType.ALL)

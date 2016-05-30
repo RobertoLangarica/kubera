@@ -5,7 +5,7 @@ public class TransactionManager : MonoBehaviour
 {
 	public static TransactionManager instance = null;
 
-	protected bool isTest = true;
+	protected bool isTest = false;
 
 	void Awake()
 	{
@@ -38,7 +38,7 @@ public class TransactionManager : MonoBehaviour
 		{
 			return true;
 		}
-
+	
 		if (TransactionManager.instance.checkIfExistEnoughGems (gems)) 
 		{
 			UserDataManager.instance.giveGemsToPlayer (-gems);
@@ -47,5 +47,23 @@ public class TransactionManager : MonoBehaviour
 
 		Debug.LogWarning ("NOt enough gems on players acount");
 		return false;
+	}
+
+	public int powerUpPrices(PowerupBase.EType powerUptype)
+	{
+		switch (powerUptype) {
+		case PowerupBase.EType.BLOCK:
+			return 	30;
+		case PowerupBase.EType.BOMB: 
+			return 	15;
+		case PowerupBase.EType.DESTROY:
+			return 	70;
+		case PowerupBase.EType.ROTATE:
+			return 	50;
+		case PowerupBase.EType.WILDCARD:
+			return 	100;
+		}
+
+		return 0;
 	}
 }

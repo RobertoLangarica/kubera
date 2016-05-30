@@ -16,7 +16,7 @@ public class WildCardPowerUp : PowerupBase
 	protected GameObject powerUpGO;
 
 	protected WordManager wordManager;
-
+	protected bool canUse;
 	void Start()
 	{
 		wordManager = FindObjectOfType<WordManager> ();
@@ -26,7 +26,7 @@ public class WildCardPowerUp : PowerupBase
 		this.gameObject.SetActive( false);
 	}
 
-	public override void activate ()
+	public override void activate (bool canUse)
 	{
 		this.gameObject.SetActive( true);
 		if (powerUpGO != null) 
@@ -40,6 +40,7 @@ public class WildCardPowerUp : PowerupBase
 		inputPowerUp.enabled = true;
 		inputPowerUp.setCurrentSelected(powerUpGO);
 		inputPowerUp.OnDrop += powerUpPositioned;
+		this.canUse = canUse;
 	}
 
 	public void powerUpPositioned()
@@ -82,6 +83,11 @@ public class WildCardPowerUp : PowerupBase
 
 	public void addWildcard()
 	{
+		if(!canUse)
+		{
+			completePowerUpNoGems ();
+			return;
+		}
 		if (wordManager.isAddLetterAllowed ()) 
 		{
 			wordManager.addLetter (wordManager.getWildcard (powerUpScore),false);
@@ -96,6 +102,13 @@ public class WildCardPowerUp : PowerupBase
 	protected void completePowerUp()
 	{
 		OnComplete ();
+		this.gameObject.SetActive( false);
+	}
+
+	protected void completePowerUpNoGems()
+	{
+		powerUpGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("WildCardPowerUP_Move");
+		OnCompletedNoGems ();
 		this.gameObject.SetActive( false);
 	}
 

@@ -9,6 +9,8 @@ public class PopUpManager : MonoBehaviour {
 	public delegate void DPopUpNotification(string action ="");
 	public DPopUpNotification OnPopUpCompleted;
 
+	public List<PopUpBase> openPopUps = new List<PopUpBase>();
+
 	void Start()
 	{
 		foreach(PopUpBase popup in popups)
@@ -25,10 +27,11 @@ public class PopUpManager : MonoBehaviour {
 
 		if(popup == null)
 		{
-			completePopUp();
+			completePopUp(popup);
 		}
 		else
 		{
+			openPopUps.Add (popup);
 			popup.activate();
 		}
 	}
@@ -48,8 +51,13 @@ public class PopUpManager : MonoBehaviour {
 		return null;
 	}
 
-	private void completePopUp(string action ="")
+	private void completePopUp(PopUpBase popup = null, string action ="")
 	{
+		if(popup != null)
+		{
+			openPopUps.Remove (popup);
+		}
+
 		if(OnPopUpCompleted != null)
 		{
 			OnPopUpCompleted(action);
