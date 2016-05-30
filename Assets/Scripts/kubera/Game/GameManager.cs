@@ -724,6 +724,8 @@ public class GameManager : MonoBehaviour
 		} 
 		else 
 		{
+			//Gano y a se termino win bonification
+			PersistentData.instance.fromLevelBuilder = true;
 			SceneManager.LoadScene ("Game");
 		}
 	}
