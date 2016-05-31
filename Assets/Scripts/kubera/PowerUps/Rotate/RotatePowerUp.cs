@@ -38,7 +38,6 @@ public class RotatePowerUp : PowerupBase
 		inputPowerUp.enabled = true;
 		inputPowerUp.setCurrentSelected(powerUpGO);
 		inputPowerUp.OnDrop += powerUpPositioned;
-		inputPowerUpRotate.canUse = canUse;
 
 		inputWords.allowInput = true;
 		this.canUse = canUse;
@@ -91,7 +90,6 @@ public class RotatePowerUp : PowerupBase
 
 	public void powerUpActivateRotate(bool canUse)
 	{
-		
 		inputPowerUp.OnDrop -= powerUpPositioned;
 		if(canUse)
 		{

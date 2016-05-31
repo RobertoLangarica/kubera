@@ -38,7 +38,6 @@ public class InputPowerUpRotate : MonoBehaviour
 
 	protected bool allowInputDuringRotate = true;
 	protected bool isLongPressed = false;
-	public bool canUse;
 
 	void Start()
 	{
@@ -113,7 +112,7 @@ public class InputPowerUpRotate : MonoBehaviour
 			{	
 				if(currentSelected)
 				{
-					if(gameManager.canDropOnGrid(currentSelected.GetComponent<Piece>()))
+					if(!gameManager.canDropOnGrid(currentSelected.GetComponent<Piece>()))
 					{
 						returnSelectedToInitialState();
 						reset();	

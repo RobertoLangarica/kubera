@@ -24,7 +24,12 @@ public class HUDMetterAndStars : MonoBehaviour
 	 **/
 	public void setMeterPoints(int points)
 	{
-		pointsMeter.rectTransform.anchorMax = new Vector3 ((float) points / scoreToReachStar [2],1,0);
+		float size = (float)points / scoreToReachStar [2];
+		if (size >= 1)
+		{
+			size = 1;
+		}
+		pointsMeter.rectTransform.anchorMax = new Vector3 (size,1,0);
 		actualizeStars (points);
 	}
 

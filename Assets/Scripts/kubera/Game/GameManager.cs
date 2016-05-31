@@ -128,7 +128,6 @@ public class GameManager : MonoBehaviour
 	protected void rotationActivated(GameObject go)
 	{
 		rotationActive = true;
-		Debug.Log (rotationActive);
 	}
 
 	protected void rotationDeactivated()
