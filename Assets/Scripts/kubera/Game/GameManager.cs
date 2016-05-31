@@ -581,6 +581,7 @@ public class GameManager : MonoBehaviour
 
 		if(!gameOver && (remainingMoves <= 0 || !wordManager.checkIfAWordIsPossible(gridCharacters)))
 		{
+			allowGameInput (false);
 			Debug.Log ("Perdio de verdad");
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);
 
@@ -593,6 +594,7 @@ public class GameManager : MonoBehaviour
 		remainingMoves += secondChance.movements;
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
 		secondChanceFreeBombs ();
+		allowGameInput (true);
 	}
 
 	protected void secondChanceFreeBombs()
@@ -606,6 +608,7 @@ public class GameManager : MonoBehaviour
 	{
 		if (!gameOver) 
 		{
+			allowGameInput (false);
 			Debug.Log ("Gano de verdad.");
 			gameOver = true;
 			unlockPowerUp ();
@@ -787,7 +790,8 @@ public class GameManager : MonoBehaviour
 	{
 		//Checa si tiene dinero para usar el poder
 		//transaction manager
-		if(TransactionManager.instance.tryToUseGems(TransactionManager.instance.powerUpPrices(type)))
+		print (powerupManager.getPowerupByType(type).isFree);
+		if(powerupManager.getPowerupByType(type).isFree || TransactionManager.instance.tryToUseGems(TransactionManager.instance.powerUpPrices(type)))
 		{			
 			return true;
 		}

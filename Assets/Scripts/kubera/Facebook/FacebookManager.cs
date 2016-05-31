@@ -20,9 +20,13 @@ public class FacebookManager : MonoBehaviour
 
 	protected bool facebookConectMessageCreated;
 
+	///Vidas que pedi
 	protected List<string> askedLifes = new List<string>();
+	///vidas que me dieron
 	protected List<string> giftLifes = new List<string>();
+	///laves que pedi
 	protected List<string> askedKeys = new List<string>();
+	///llaves que me dieron
 	protected List<string> giftKeys = new List<string>();
 
 
@@ -133,6 +137,7 @@ public class FacebookManager : MonoBehaviour
 
 	public void acceptGift(bool life, int giftCount,GameObject requestToDelete, string bossReached = "0")
 	{
+		//TODO: 
 		if(life)
 		{
 			print("recibi " + giftCount + ": vidas");	
@@ -217,7 +222,7 @@ public class FacebookManager : MonoBehaviour
 		{
 			return;
 		}
-		FB.AppRequest ("Give me a key!", OGActionType.ASKFOR, "795229890609809", idsFriends, "askKey,"+PersistentData.instance.bossReached.ToString(), // Here you can put in any data you want
+		FB.AppRequest ("Give me a key!", OGActionType.ASKFOR, "795229890609809", idsFriends, "askKey,"+(Data.LevelsDataManager.GetInstance ().getCurrentData ().bossReached +1).ToString(), // Here you can put in any data you want
 			"Ask a life to your friend", // A title
 			delegate (IAppRequestResult result) {
 				Debug.Log (result.RawResult);
@@ -290,6 +295,7 @@ public class FacebookManager : MonoBehaviour
 			break;
 		default:
 			print (type);
+			//llaves que me pidieron
 			if (type.Contains("askKey"))
 			{
 				string[] splitType = type.Split (',');
@@ -299,7 +305,7 @@ public class FacebookManager : MonoBehaviour
 					bossReached = int.Parse (splitType [1]);
 				}
 
-				if(idExistOnList (askedKeys,playerID) || bossReached < PersistentData.instance.bossReached)
+				if(idExistOnList (askedKeys,playerID) )
 				{
 					deleteAppRequest (requestID);
 				}
@@ -308,6 +314,7 @@ public class FacebookManager : MonoBehaviour
 					addToList (askedKeys, firstName,playerID, requestID, bossReached);
 				}
 			}
+			//llaves que pedí
 			else if(type.Contains("sendKey"))
 			{
 				string[] splitType = type.Split (',');
@@ -317,7 +324,7 @@ public class FacebookManager : MonoBehaviour
 					bossReached = int.Parse (splitType [1]);
 				}
 
-				if(askedKeys.Count == maxUsersPerMessage || idExistOnList (giftKeys,playerID))
+				if(askedKeys.Count == maxUsersPerMessage || idExistOnList (giftKeys,playerID )|| bossReached <= Data.LevelsDataManager.GetInstance ().getCurrentData ().bossReached)
 				{
 					deleteAppRequest (requestID);
 				}
@@ -385,7 +392,7 @@ public class FacebookManager : MonoBehaviour
 	protected void fillMessageData ()
 	{
 		sortData (askedKeys);
-		fillData (askedKeys, PanelAppRequest.ERequestState.KEY, PanelAppRequest.EAction.SEND);
+		fillData (askedKeys, PanelAppRequest.ERequestState.KEY, PanelAppRequest.EAction.SEND,true);
 		fillData (giftKeys, PanelAppRequest.ERequestState.KEY, PanelAppRequest.EAction.ACCEPT);
 		fillData (askedLifes, PanelAppRequest.ERequestState.LIFE, PanelAppRequest.EAction.SEND);
 		fillData (giftLifes, PanelAppRequest.ERequestState.LIFE, PanelAppRequest.EAction.ACCEPT);
@@ -447,24 +454,24 @@ public class FacebookManager : MonoBehaviour
 
 			if(askedKeys) 
 			{	
-				if (i == requested.Count - 1 || j == maxUsersPerMessage) 
+				if (i == requested.Count - 1 || j == maxUsersPerMessage || requested[i].Split(',')[3] != requested[i+1].Split(',')[3]) 
 				{
 					pR.selectText ();
 				}
 
-				if (j == maxUsersPerMessage) 
+				if (j == maxUsersPerMessage || requested[i].Split(',')[3] != requested[i+1].Split(',')[3] ) 
 				{
 					j = 0;
 				}
 			}
 			else
 			{
-				if (i == requested.Count - 1 || j == maxUsersPerMessage /*|| requested[i].Split(',')[3] != requested[i+1].Split(',')[3]*/ ) 
+				if (i == requested.Count - 1 || j == maxUsersPerMessage  ) 
 				{
 					pR.selectText ();
 				}
 
-				if (j == maxUsersPerMessage/* || requested[i].Split(',')[3] != requested[i+1].Split(',')[3] */) 
+				if (j == maxUsersPerMessage) 
 				{
 					j = 0;
 				}

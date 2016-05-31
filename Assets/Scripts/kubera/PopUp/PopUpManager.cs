@@ -32,6 +32,7 @@ public class PopUpManager : MonoBehaviour {
 		else
 		{
 			openPopUps.Add (popup);
+			popup.gameObject.transform.SetAsLastSibling ();
 			popup.activate();
 		}
 	}
