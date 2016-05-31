@@ -63,13 +63,13 @@ public class TutorialLvl1 : TutorialBase
 			allowPowerUps = false;
 
 			cells = new List<Cell> (cellManager.getAllEmptyCells ());
-			for (int i = 0; i < 4; i++) 
+			for (int i = 0; i < 2; i++) 
 			{
 				cells [i].occupied = true;
 				cells [i].cellType = Cell.EType.OBSTACLE_LETTER;
 				cells [i].contentType = Piece.EType.LETTER_OBSTACLE;
 			}
-			for (int i = 8; i < 12; i++) 
+			for (int i = 4; i < 8; i++) 
 			{
 				cells [i].occupied = true;
 				cells [i].cellType = Cell.EType.OBSTACLE_LETTER;
@@ -91,13 +91,13 @@ public class TutorialLvl1 : TutorialBase
 			allowDragPieces = true;
 			allowPowerUps = true;
 
-			for (int i = 0; i < 4; i++) 
+			for (int i = 0; i < 2; i++) 
 			{
 				cells [i].occupied = false;
 				cells [i].cellType = Cell.EType.NORMAL;
 				cells [i].contentType = Piece.EType.NONE;
 			}
-			for (int i = 8; i < 12; i++) 
+			for (int i = 4; i < 8; i++) 
 			{
 				cells [i].occupied = false;
 				cells [i].cellType = Cell.EType.NORMAL;
