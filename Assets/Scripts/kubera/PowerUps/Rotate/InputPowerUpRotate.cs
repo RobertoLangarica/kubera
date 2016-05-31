@@ -110,6 +110,7 @@ public class InputPowerUpRotate : MonoBehaviour
 
 		case (ContinuousGesturePhase.Ended):
 			{	
+				
 				if(currentSelected)
 				{
 					if(!gameManager.canDropOnGrid(currentSelected.GetComponent<Piece>()))

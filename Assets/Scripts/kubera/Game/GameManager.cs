@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
 
 		if(PersistentData.instance)
 		{
-			configureLevel(PersistentData.instance.getRandomLevel());
+			configureLevel(PersistentData.instance.currentLevel);
 		}
 
 		//TODO: Control de flujo de juego con un init
@@ -133,7 +133,6 @@ public class GameManager : MonoBehaviour
 	protected void rotationDeactivated()
 	{
 		rotationActive = false;
-		Debug.Log (rotationActive);
 	}
 
 	private void configureLevel(Level level)
@@ -269,6 +268,7 @@ public class GameManager : MonoBehaviour
 	public bool canDropOnGrid(Piece piece)
 	{
 		List<Cell> cellsUnderPiece = cellManager.getFreeCellsUnderPiece(piece);
+
 		if (cellsUnderPiece.Count == piece.squares.Length) 
 		{
 			return true;
@@ -543,11 +543,17 @@ public class GameManager : MonoBehaviour
 
 			for (int i = 0; i < pieceManager.getShowingPieces ().Count; i++) 
 			{
-				tempPiece = pieceManager.getShowingPieces () [i].toRotateObject.GetComponent<Piece> ();
-				for (int j = 0; j < 3; j++) 
+				if (pieceManager.getShowingPieces () [i].toRotateObject != null) 
 				{
-					tempList.Add (tempPiece);
-					tempPiece = tempPiece.toRotateObject.GetComponent<Piece> ();
+					tempPiece = pieceManager.getShowingPieces () [i].toRotateObject.GetComponent<Piece> ();
+					for (int j = 0; j < 3; j++) 
+					{
+						if (tempPiece != null) 
+						{
+							tempList.Add (tempPiece);
+							tempPiece = tempPiece.toRotateObject.GetComponent<Piece> ();
+						}
+					}
 				}
 			}
 			canFit = cellManager.checkIfOnePieceCanFit (tempList);
@@ -758,8 +764,11 @@ public class GameManager : MonoBehaviour
 
 	public void allowGameInput(bool allowInput = true)
 	{
-		inputPiece.allowInput = allowInput;
-		inputWords.allowInput = allowInput;
+		if (!rotationActive) 
+		{
+			inputPiece.allowInput = allowInput;
+			inputWords.allowInput = allowInput;
+		}
 	}
 		
 	protected void unlockPowerUp()
