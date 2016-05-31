@@ -111,7 +111,7 @@ public class MapManager : MonoBehaviour
 			} 
 			else 
 			{
-				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelBlocked (level.name)) 
+				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.name)) 
 				{
 					level.status = MapLevel.EMapLevelsStatus.BOSS_LOCKED;
 				}
@@ -137,7 +137,7 @@ public class MapManager : MonoBehaviour
 			}
 			else
 			{
-				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelBlocked (level.name)) 
+				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.name)) 
 				{
 					level.status = MapLevel.EMapLevelsStatus.NORMAL_LOCKED;
 				}

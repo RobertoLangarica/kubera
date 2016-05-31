@@ -170,9 +170,9 @@ public class FBFriendsRequestPanel : PopUpBase {
 			string playerName = (string)friendInfo ["name"];
 			Texture playerImage = new Texture();
 
-			if(FacebookPersistentData.instance.containTextureByID(playerID))
+			if(FacebookPersistentData.GetInstance().containTextureByID(playerID))
 			{
-				playerImage = FacebookPersistentData.instance.getTextureById (playerID);
+				playerImage = FacebookPersistentData.GetInstance().getTextureById (playerID);
 			}
 			else
 			{				

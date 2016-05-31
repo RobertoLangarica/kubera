@@ -37,11 +37,16 @@ public class Manager<T>: Manager where T : Manager
 			Destroy(instance.CachedGameObject);
 		}
 	}
+
 	public static T GetInstance()
 	{
 		return _cachedInstance;
 	}
 		
+	public static R GetCastedInstance<R>() where R:T
+	{
+		return 	((R)_cachedInstance);
+	}
 
 	protected virtual void Awake()
 	{

@@ -3,12 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Facebook.Unity;
 
-public class FacebookPersistentData : MonoBehaviour {
-
-	//Solo existe una sola instancia en todo el juego de este objeto
-	public static FacebookPersistentData instance = null;
-	private bool destroyed = false;//Indica si el objeto ya se destruyo
-
+public class FacebookPersistentData : Manager<FacebookPersistentData> 
+{
 	public object currentPlayerInfo = new List<object> ();
 	public List<object> gameFriends = new List<object> ();
 	public List<object> invitableFriends = new List<object> ();
@@ -17,33 +13,7 @@ public class FacebookPersistentData : MonoBehaviour {
 	public Dictionary<string, Texture> friendsImage = new Dictionary<string, Texture>();
 
 	public bool infoRequested;
-	void Awake() 
-	{
-		GameObject[] go = GameObject.FindGameObjectsWithTag ("persistentData");
-		for(int i=1; i< go.Length; i++)
-		{
-			DestroyImmediate (go [i]);
-		}
 
-		//No se si al mandar destroyed en el awake llegue entrar a start pero no corremos riesgos
-		if (go.Length > 1) 
-		{
-			destroyed = true;
-			return;
-		}
-
-		instance = this;
-		DontDestroyOnLoad(this);
-
-	}
-
-	void Start()
-	{
-		if(destroyed)
-		{
-			return;
-		}
-	}
 
 	public bool containTextureByID (string id)
 	{
