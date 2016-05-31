@@ -50,7 +50,6 @@ namespace Data
 
 			if(index == 0)
 			{
-				
 				if(world[0].world == 0)
 				{
 					//no hay niveles anteriores
@@ -62,7 +61,6 @@ namespace Data
 					world = levelsList.getWorldByIndex(world[0].world-1);
 					blocked = !isLevelPassed(world[world.Count-1].name);
 				}
-
 			}
 			else
 			{

@@ -92,8 +92,8 @@ public class FacebookManager : MonoBehaviour
 
 	public bool canRequestMoreFriends()
 	{
-		print (FacebookPersistentData.instance.infoRequested);
-		if(FacebookPersistentData.instance.infoRequested)
+		print (FacebookPersistentData.GetInstance().infoRequested);
+		if(FacebookPersistentData.GetInstance().infoRequested)
 		{
 			return false;
 		}
@@ -107,27 +107,27 @@ public class FacebookManager : MonoBehaviour
 
 	protected void addGameFriends(List<object> gameFriends)
 	{
-		FacebookPersistentData.instance.addGameFriend (gameFriends);
+		FacebookPersistentData.GetInstance().addGameFriend (gameFriends);
 
 		fillRequestPanel (gameFriends, FBFriendsRequestPanel.EFriendsType.GAME);
 	}
 
 	protected void addInivitableFriends(List<object> invitableFriends)
 	{
-		FacebookPersistentData.instance.addInvitableFriend (invitableFriends);
+		FacebookPersistentData.GetInstance().addInvitableFriend (invitableFriends);
 	}
 
 	protected void mergeFriends()
 	{
-		FacebookPersistentData.instance.mergeFriends ();
-		fillRequestPanel (FacebookPersistentData.instance.allFriends, FBFriendsRequestPanel.EFriendsType.ALL);
+		FacebookPersistentData.GetInstance().mergeFriends ();
+		fillRequestPanel (FacebookPersistentData.GetInstance().allFriends, FBFriendsRequestPanel.EFriendsType.ALL);
 	}
 
 	protected void addFriendsImage(string id, Texture image)
 	{
-		if(FacebookPersistentData.instance.containTextureByID(id))
+		if(FacebookPersistentData.GetInstance().containTextureByID(id))
 		{			
-			FacebookPersistentData.instance.addFriendImage (id, image);
+			FacebookPersistentData.GetInstance().addFriendImage (id, image);
 		}
 	}
 
@@ -474,23 +474,23 @@ public class FacebookManager : MonoBehaviour
 
 	protected Texture getfriendTextureByID (string id)
 	{
-		if(!FacebookPersistentData.instance.containTextureByID(id))
+		if(!FacebookPersistentData.GetInstance().containTextureByID(id))
 		{
-			Texture friendTexture = FacebookPersistentData.instance.getTextureFromURL (FacebookPersistentData.instance.getFriendPictureUrl (FacebookPersistentData.instance.getFriendInfo (id)));
+			Texture friendTexture = FacebookPersistentData.GetInstance().getTextureFromURL (FacebookPersistentData.GetInstance().getFriendPictureUrl (FacebookPersistentData.GetInstance().getFriendInfo (id)));
 			return friendTexture;
 		}
-		return FacebookPersistentData.instance.friendsImage [id];
+		return FacebookPersistentData.GetInstance().friendsImage [id];
 	}
 
 
 	IEnumerator requestImage(PanelAppRequest pR, string id)
 	{
 		int requested = 0;
-		FacebookPersistentData.instance.getTextureFromURL (FacebookPersistentData.instance.getFriendPictureUrl (FacebookPersistentData.instance.getFriendInfo (id)),delegate(Texture pictureTexture)
+		FacebookPersistentData.GetInstance().getTextureFromURL (FacebookPersistentData.GetInstance().getFriendPictureUrl (FacebookPersistentData.GetInstance().getFriendInfo (id)),delegate(Texture pictureTexture)
 			{
 				if(pictureTexture != null)
 				{	
-					FacebookPersistentData.instance.addFriendImage(id,pictureTexture);
+						FacebookPersistentData.GetInstance().addFriendImage(id,pictureTexture);
 					pR.addFriendPicture (pictureTexture);
 				}
 				requested = 1;

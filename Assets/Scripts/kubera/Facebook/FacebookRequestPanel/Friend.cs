@@ -48,7 +48,7 @@ public class Friend : MonoBehaviour {
 			{
 				if (pictureTexture != null)
 				{
-					FacebookPersistentData.instance.addFriendImage(id,pictureTexture);
+					FacebookPersistentData.GetInstance().addFriendImage(id,pictureTexture);
 					setFriendImage(pictureTexture);
 				}
 			});
