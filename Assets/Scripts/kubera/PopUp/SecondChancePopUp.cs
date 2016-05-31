@@ -80,6 +80,10 @@ public class SecondChancePopUp : PopUpBase
 			popUp.SetActive (false);
 			OnComplete ();
 		}
+		else
+		{
+			popUpManager.activatePopUp ("NoGemsPopUp");
+		}
 
 		Debug.Log("Fondos insuficientes");
 	}

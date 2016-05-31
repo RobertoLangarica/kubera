@@ -7,7 +7,6 @@ public class WildCardPowerUp : PowerupBase
 {
 	public string powerUpScore = "x3";
 	public GameObject powerUpWildCard;
-	public Transform powerUpButton;
 	public RectTransform wordsContainer;
 
 	public KeyBoardManager keyBoard;
@@ -17,7 +16,7 @@ public class WildCardPowerUp : PowerupBase
 	protected GameObject powerUpGO;
 
 	protected WordManager wordManager;
-
+	protected bool canUse;
 	void Start()
 	{
 		wordManager = FindObjectOfType<WordManager> ();
@@ -27,7 +26,7 @@ public class WildCardPowerUp : PowerupBase
 		this.gameObject.SetActive( false);
 	}
 
-	public override void activate ()
+	public override void activate (bool canUse)
 	{
 		this.gameObject.SetActive( true);
 		if (powerUpGO != null) 
@@ -41,6 +40,7 @@ public class WildCardPowerUp : PowerupBase
 		inputPowerUp.enabled = true;
 		inputPowerUp.setCurrentSelected(powerUpGO);
 		inputPowerUp.OnDrop += powerUpPositioned;
+		this.canUse = canUse;
 	}
 
 	public void powerUpPositioned()
@@ -71,7 +71,7 @@ public class WildCardPowerUp : PowerupBase
 
 				DestroyImmediate(powerUpGO);
 			});
-			cancelPowerUp ();
+			cancel ();
 			return;
 		}
 		powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId ("WildCardPowerUP_Scale").OnComplete (() => {
@@ -83,6 +83,11 @@ public class WildCardPowerUp : PowerupBase
 
 	public void addWildcard()
 	{
+		if(!canUse)
+		{
+			completePowerUpNoGems ();
+			return;
+		}
 		if (wordManager.isAddLetterAllowed ()) 
 		{
 			wordManager.addLetter (wordManager.getWildcard (powerUpScore),false);
@@ -90,7 +95,7 @@ public class WildCardPowerUp : PowerupBase
 		}
 		else
 		{
-			cancelPowerUp ();
+			cancel ();
 		}
 	}
 
@@ -100,7 +105,14 @@ public class WildCardPowerUp : PowerupBase
 		this.gameObject.SetActive( false);
 	}
 
-	protected void cancelPowerUp()
+	protected void completePowerUpNoGems()
+	{
+		powerUpGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("WildCardPowerUP_Move");
+		OnCompletedNoGems ();
+		this.gameObject.SetActive( false);
+	}
+
+	public override void cancel ()
 	{
 		OnCancel ();
 		this.gameObject.SetActive( false);

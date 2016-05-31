@@ -7,7 +7,6 @@ public class DestroyPowerUp : PowerupBase
 {
 	public AnimatedSprite Animation;
 	public GameObject powerUpBlock;
-	public Transform powerUpButton;
 
 	protected CellsManager cellsManager;
 	protected InputBombAndDestroy bombInput;
@@ -17,6 +16,7 @@ public class DestroyPowerUp : PowerupBase
 
 	protected List<AnimatedSprite> freeAnimation = new List<AnimatedSprite>();
 	protected List<AnimatedSprite> occupiedAnimation = new List<AnimatedSprite>();
+	protected bool canUse;
 
 	void Start () 
 	{
@@ -38,7 +38,7 @@ public class DestroyPowerUp : PowerupBase
 		go.transform.SetParent(transform,false);
 	}
 
-	public override void activate()
+	public override void activate(bool canUse)
 	{
 		if (destroyGO != null) 
 		{
@@ -51,6 +51,7 @@ public class DestroyPowerUp : PowerupBase
 		bombInput.enabled = true;
 		bombInput.setCurrentSelected(destroyGO);
 		bombInput.OnDrop += powerUpPositioned;
+		this.canUse = canUse;
 	}
 
 	public void powerUpPositioned()
@@ -61,25 +62,33 @@ public class DestroyPowerUp : PowerupBase
 		{
 			if(cellSelected.contentType == Piece.EType.PIECE && cellSelected.occupied)
 			{
-				StartCoroutine (startAnim (cellSelected));
+				if(canUse)
+				{
+					StartCoroutine (startAnim (cellSelected));
+					DestroyImmediate(destroyGO);
+					bombInput.OnDrop -= powerUpPositioned;
+					bombInput.enabled = false;
 
-				DestroyImmediate(destroyGO);
-				bombInput.OnDrop -= powerUpPositioned;
-				bombInput.enabled = false;
-				OnComplete ();
+					OnComplete ();
+				}
+				else
+				{
+					onCompletedNoGems ();
+				}
+
 			}
 			else 
 			{
-				powerUPCanceled();
+				cancel();
 			}
 		}
 		else
 		{
-			powerUPCanceled();
+			cancel();
 		}
 	}
 
-	public void powerUPCanceled()
+	public override void cancel()
 	{
 		destroyGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("DestroyPowerUP_Move");
 		destroyGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("DestroyPowerUP_Scale").OnComplete (() => {
@@ -182,5 +191,19 @@ public class DestroyPowerUp : PowerupBase
 		square.OnCellFlipped -= callbackOnFliped;
 		letter.enabled = true;
 		cellsManager.occupyAndConfigureCell(cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
+	}
+
+	public void onCompletedNoGems()
+	{
+		destroyGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("DestroyPowerUP_Move");
+		destroyGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("DestroyPowerUP_Scale").OnComplete (() => {
+
+			DestroyImmediate(destroyGO);
+		});
+
+		bombInput.OnDrop -= powerUpPositioned;
+		bombInput.enabled = false;
+
+		OnCompletedNoGems ();
 	}
 }

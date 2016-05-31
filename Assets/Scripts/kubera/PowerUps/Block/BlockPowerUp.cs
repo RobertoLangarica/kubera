@@ -12,17 +12,18 @@ public class BlockPowerUp : PowerupBase
 	void Start()
 	{
 		inputBlockPowerUp = FindObjectOfType<InputBlockPowerUp> ();
-		inputBlockPowerUp.OnPowerupCanceled += cancelPowerUp;
+		inputBlockPowerUp.OnPowerupCanceled += cancel;
 		inputBlockPowerUp.OnPowerupCompleted += completePowerUp;
-
+		inputBlockPowerUp.OnPowerupCompletedNoGems += completePowerUpNoGems;
+			
 		inputBlockPowerUp.enabled = false;
 	}
 
-	public override void activate ()
+	public override void activate (bool canUse)
 	{
 		inputBlockPowerUp.enabled = true;
 
-		inputBlockPowerUp.createBlock (powerUpBlock,buttonPowerUpBlock.position);
+		inputBlockPowerUp.createBlock (powerUpBlock,buttonPowerUpBlock.position,canUse);
 	}
 
 	protected void completePowerUp()
@@ -31,7 +32,13 @@ public class BlockPowerUp : PowerupBase
 		OnComplete ();
 	}
 
-	protected void cancelPowerUp()
+	protected void completePowerUpNoGems()
+	{
+		inputBlockPowerUp.enabled = false;
+		OnCompletedNoGems ();
+	}
+
+	public override void cancel()
 	{
 		inputBlockPowerUp.enabled = false;
 		OnCancel ();

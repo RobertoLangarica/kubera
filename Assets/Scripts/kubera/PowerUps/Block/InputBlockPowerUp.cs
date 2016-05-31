@@ -19,6 +19,8 @@ public class InputBlockPowerUp : MonoBehaviour
 	public delegate void DPowerUpBlockNotification();
 	public DPowerUpBlockNotification OnPowerupCanceled;
 	public DPowerUpBlockNotification OnPowerupCompleted;
+	public DPowerUpBlockNotification OnPowerupCompletedNoGems;
+	protected bool canUse;
 
 	void Start()
 	{
@@ -26,7 +28,7 @@ public class InputBlockPowerUp : MonoBehaviour
 
 	}
 
-	public void createBlock(GameObject block, Vector3 bottonPosition)
+	public void createBlock(GameObject block, Vector3 bottonPosition,bool canUse)
 	{
 		GameObject blockGO = Instantiate (block,bottonPosition,Quaternion.identity) as GameObject;
 		if (currentSelected) 
@@ -39,7 +41,7 @@ public class InputBlockPowerUp : MonoBehaviour
 		blockGO.transform.localScale = initialScale;
 		moveTo(currentSelected,butonPowerUpBlockPosition,pieceSpeed);
 		blockGO.name = "Block";
-
+		this.canUse = canUse;
 	}
 
 	void OnDrag(DragGesture gesture) 
@@ -84,7 +86,12 @@ public class InputBlockPowerUp : MonoBehaviour
 			{	
 				if(currentSelected)
 				{
-					if (gameManager.tryToDropOnGrid (currentSelected.GetComponent<Piece> ())) 
+					if(!canUse && gameManager.canDropOnGrid (currentSelected.GetComponent<Piece> ()))
+					{
+						returnSelectedToInitialState(0.2f);
+						completePowerUpNoGems ();
+					}
+					else if (gameManager.dropOnGrid (currentSelected.GetComponent<Piece> ())) 
 					{
 						reset();
 						completePowerUp (true);
@@ -154,6 +161,10 @@ public class InputBlockPowerUp : MonoBehaviour
 		{
 			OnPowerupCanceled();
 		}
+	}
+	protected void completePowerUpNoGems()
+	{
+		OnPowerupCompletedNoGems ();
 	}
 }
 

@@ -30,8 +30,12 @@ public class GameManager : MonoBehaviour
 
 	public List<int> linesCreatedPoints = new List<int> ();
 
+	public InputPowerUpRotate inputRotate;
+
 	protected int sizeGridX = 8;
 	protected int sizeGridY = 8;
+
+	protected bool rotationActive;
 
 	protected List<Cell> cellToLetter;
 
@@ -79,6 +83,7 @@ public class GameManager : MonoBehaviour
 
 		powerupManager.OnPowerupCanceled = OnPowerupCanceled;
 		powerupManager.OnPowerupCompleted = OnPowerupCompleted;
+		powerupManager.OnPowerupCompletedNoGems = OnPowerupCompletedNoGems;
 
 		inputPiece.OnDrop += OnPieceDropped;
 		inputPiece.OnSelected += showShadowOnPiece;
@@ -91,9 +96,12 @@ public class GameManager : MonoBehaviour
 
 		wordManager.onWordChange += refreshCurrentWordScoreOnHUD;
 
+		powerupManager.getPowerupByType (PowerupBase.EType.ROTATE).OnPowerupCompleted += rotationDeactivated;
+		inputRotate.OnRotateArrowsActivated += rotationActivated;
+
 		if(PersistentData.instance)
 		{
-			configureLevel(PersistentData.instance.currentLevel);
+			configureLevel(PersistentData.instance.getRandomLevel());
 		}
 
 		//TODO: Control de flujo de juego con un init
@@ -115,6 +123,17 @@ public class GameManager : MonoBehaviour
 			PersistentData.instance.startLevel -= 2;
 			SceneManager.LoadScene ("Game");
 		}
+	}
+
+	protected void rotationActivated(GameObject go)
+	{
+		rotationActive = true;
+	}
+
+	protected void rotationDeactivated()
+	{
+		rotationActive = false;
+		Debug.Log (rotationActive);
 	}
 
 	private void configureLevel(Level level)
@@ -236,21 +255,33 @@ public class GameManager : MonoBehaviour
 	private void OnPieceDropped(GameObject obj)
 	{
 		Piece piece = obj.GetComponent<Piece>();
+		allowGameInput (false);
 
-		if(!tryToDropOnGrid(piece))
+		if(!dropOnGrid(piece))
 		{
 			inputPiece.returnSelectedToInitialState (0.1f);
+			allowGameInput (true);
 		}
 
 		inputPiece.reset();
 	}
 
-	public bool tryToDropOnGrid(Piece piece)
+	public bool canDropOnGrid(Piece piece)
 	{
 		List<Cell> cellsUnderPiece = cellManager.getFreeCellsUnderPiece(piece);
-
 		if (cellsUnderPiece.Count == piece.squares.Length) 
 		{
+			return true;
+		}
+		return false;
+	}
+
+	public bool dropOnGrid(Piece piece)
+	{
+		if (canDropOnGrid(piece)) 
+		{
+			List<Cell> cellsUnderPiece = cellManager.getFreeCellsUnderPiece(piece);
+
 			putPiecesOnGrid (piece, cellsUnderPiece);
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.PIECE_POSITIONATED);
 
@@ -321,7 +352,12 @@ public class GameManager : MonoBehaviour
 		}
 		else if(!piecesWhereCreated)
 		{
+			allowGameInput (true);
 			checkIfLose ();
+		}
+		else
+		{
+			allowGameInput (true);
 		}
 
 		Destroy(piece.gameObject);
@@ -361,6 +397,7 @@ public class GameManager : MonoBehaviour
 		gridCharacters.Add(letter);
 
 		checkIfLose ();
+		allowGameInput (true);
 	}
 
 	public void showShadowOnPiece (GameObject obj, bool showing = true)
@@ -487,13 +524,36 @@ public class GameManager : MonoBehaviour
 
 	protected void checkIfLose()
 	{
+		bool canFit = false;
+
 		//HACK: al inicio del nivel que sirve en los tutoriales
 		if (linesAnimation.isOnAnimation || remainingMoves == currentLevel.moves) 
 		{
 			return;
 		}
 
-		if(!cellManager.checkIfOnePieceCanFit(pieceManager.getShowingPieces()) || remainingMoves == 0 && !gameOver)
+		if (!rotationActive) 
+		{
+			canFit = cellManager.checkIfOnePieceCanFit (pieceManager.getShowingPieces ());
+		} 
+		else 
+		{
+			List<Piece> tempList = new List<Piece> (pieceManager.getShowingPieces ());
+			Piece tempPiece= null;
+
+			for (int i = 0; i < pieceManager.getShowingPieces ().Count; i++) 
+			{
+				tempPiece = pieceManager.getShowingPieces () [i].toRotateObject.GetComponent<Piece> ();
+				for (int j = 0; j < 3; j++) 
+				{
+					tempList.Add (tempPiece);
+					tempPiece = tempPiece.toRotateObject.GetComponent<Piece> ();
+				}
+			}
+			canFit = cellManager.checkIfOnePieceCanFit (tempList);
+		}
+
+		if(!canFit || remainingMoves == 0 && !gameOver)
 		{
 			if(remainingMoves == 0)
 			{
@@ -520,10 +580,21 @@ public class GameManager : MonoBehaviour
 
 		if(!gameOver && (remainingMoves <= 0 || !wordManager.checkIfAWordIsPossible(gridCharacters)))
 		{
+			allowGameInput (false);
 			Debug.Log ("Perdio de verdad");
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);
 
-			activatePopUp ("SecondChance");
+			if(remainingMoves <=0)
+			{
+				activatePopUp ("noMovementsPopUp");
+
+			}
+			else
+			{
+				activatePopUp ("noOptionsPopUp");
+
+			}
+
 		}
 	}
 
@@ -532,6 +603,7 @@ public class GameManager : MonoBehaviour
 		remainingMoves += secondChance.movements;
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
 		secondChanceFreeBombs ();
+		allowGameInput (true);
 	}
 
 	protected void secondChanceFreeBombs()
@@ -545,10 +617,11 @@ public class GameManager : MonoBehaviour
 	{
 		if (!gameOver) 
 		{
+			allowGameInput (false);
 			Debug.Log ("Gano de verdad.");
 			gameOver = true;
 			unlockPowerUp ();
-			Invoke ("winBonification", piecePositionedDelay * 2);
+			activatePopUp ("winGamePopUp");
 		}
 	}
 
@@ -663,6 +736,8 @@ public class GameManager : MonoBehaviour
 		} 
 		else 
 		{
+			//Gano y a se termino win bonification
+			PersistentData.instance.fromLevelBuilder = true;
 			SceneManager.LoadScene ("Game");
 		}
 	}
@@ -716,17 +791,23 @@ public class GameManager : MonoBehaviour
 		//TODO: Chequeo con transaction manager para ver que onda con las gemas
 		//TODO: Checar lo del precio de los powerUps
 		allowGameInput(false);
-		if(canActivatePowerUp((PowerupBase.EType) powerupTypeIndex))
-		{
-			powerupManager.activatePowerUp((PowerupBase.EType) powerupTypeIndex);
-		}
+
+		powerupManager.activatePowerUp((PowerupBase.EType) powerupTypeIndex,canActivatePowerUp((PowerupBase.EType) powerupTypeIndex));
 	}
 
 	protected bool canActivatePowerUp(PowerupBase.EType type)
 	{
 		//Checa si tiene dinero para usar el poder
 		//transaction manager
-		return true;
+		print (powerupManager.getPowerupByType(type).isFree);
+		if(powerupManager.getPowerupByType(type).isFree || TransactionManager.instance.tryToUseGems(TransactionManager.instance.powerUpPrices(type)))
+		{			
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	private void OnPowerupCanceled(PowerupBase.EType type)
@@ -746,6 +827,15 @@ public class GameManager : MonoBehaviour
 
 		}
 		
+
+		allowGameInput(true);
+	}
+
+	private void OnPowerupCompletedNoGems(PowerupBase.EType type)
+	{
+		//TODO: abrimos el popUp de no Gems
+		print ("noGems");
+		activatePopUp ("NoGemsPopUp");
 
 		allowGameInput(true);
 	}
@@ -790,8 +880,13 @@ public class GameManager : MonoBehaviour
 		switch (action) {
 		case "endGame":
 			break;
-		default:
-		
+		case "winPopUpEnd":
+			Invoke ("winBonification", piecePositionedDelay * 2);
+			break;
+		case "loose":
+			activatePopUp ("SecondChance");
+			break;
+		default:		
 				Invoke ("allowInputFromInvoke", 0.5f);
 			break;
 		}

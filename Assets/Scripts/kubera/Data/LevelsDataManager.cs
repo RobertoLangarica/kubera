@@ -19,15 +19,16 @@ namespace Data
 
 			if(level != null)
 			{
-				level.isDirty = level.updateOnlyIncrementalValues(stars, points);
+				level.isDirty = level.isDirty || level.updateOnlyIncrementalValues(stars, points);
+				level.isDirty = level.isDirty || level.updatePassed(true);
 			}
 			else
 			{
-				level = new LevelData();
-				level.id = levelName;
-				level.points = points;
-				level.stars = stars;
-				level.isDirty = true;
+				level = new LevelData(levelName);
+				level.points	= points;
+				level.stars		= stars;
+				level.passed	= true;
+				level.isDirty	= true;
 				currentData.addLevel(level);
 			}
 
@@ -39,37 +40,84 @@ namespace Data
 
 		public bool isLevelPassed(string levelName)
 		{
-			return currentData.existLevel(levelName);
+			LevelData level = currentData.getLevelById(levelName);
+
+			if(level != null)
+			{
+				return level.passed;
+			}
+
+			return false;
 		}
 
-		public bool isLevelBlocked(string levelName)
+		public bool isLevelReached(string levelName)
 		{
 			List<Level> world = levelsList.getLevelWorld(levelName);
 			int index = getLevelWorldIndex(levelName,world);
-			bool blocked;
+			bool reached = false;
 
 			if(index == 0)
 			{
 				if(world[0].world == 0)
 				{
-					//no hay niveles anteriores
-					blocked = false;
+					//No hay nadie antes
+					reached = true;
 				}
 				else
 				{
 					//El mundo anterior
 					world = levelsList.getWorldByIndex(world[0].world-1);
-					blocked = !isLevelPassed(world[world.Count-1].name);
+					reached = isLevelPassed(world[world.Count-1].name);
 				}
 			}
 			else
 			{
-				//Nivel anterior
-				blocked = !isLevelPassed(world[index-1].name);
+				//Ya se paso el nivel anterior
+				reached = isLevelPassed(world[index-1].name);
 			}
 
-			return blocked;
+			return reached;
 		}
+
+		public bool isLevelBoss(string levelName)
+		{
+			return levelsList.getLevelByName(levelName).isBoss;
+		}
+
+		public bool isLevelLocked(string levelName)
+		{
+			LevelData level =  currentData.getLevelById(levelName);
+
+			if(level != null)
+			{
+				return level.locked;
+			}
+
+			return true;
+		}
+
+		public void unlockLevel(string levelName)
+		{
+			LevelData level =  currentData.getLevelById(levelName);
+
+			if(level != null)
+			{
+				level.isDirty = level.isDirty || level.updateLocked(false);
+			}
+			else
+			{
+				level = new LevelData(levelName);
+				level.locked = false;
+				level.isDirty = true;
+				currentData.addLevel(level);
+			}
+
+			//Cuidamos de no sobreescribir al gun valor previo
+			currentData.isDirty = currentData.isDirty || level.isDirty; 
+
+			saveLocalData(false);
+		}
+			
 
 		public int getLevelWorldIndex(string levelName, List<Level> world)
 		{
@@ -86,6 +134,21 @@ namespace Data
 			}
 
 			return -1;
+		}
+
+		public Level[] getLevesOfWorld(int worldIndex)
+		{
+			List<Level> sameWorldLevels = new List<Level> ();
+
+			for (int i = 0; i < levelsList.levels.Length; i++) 
+			{
+				if (levelsList.levels [i].world == worldIndex) 
+				{
+					sameWorldLevels.Add (levelsList.levels[i]);
+				}
+			}
+
+			return sameWorldLevels.ToArray ();
 		}
 
 		public int getLevelStars(string levelName)

@@ -15,11 +15,12 @@ public class InputPowerUpRotate : MonoBehaviour
 	public Transform pieceStock;
 
 	public delegate void DOnDragNotification(GameObject target);
-	public DOnDragNotification OnDropPieceRotated;
+	public DOnDragNotification OnRotateArrowsActivated;
 	public DOnDragNotification OnDragStartPieceRotated;
 
 	public delegate void DPowerUpRotateNotification();
 	public DPowerUpRotateNotification OnPowerupRotateCompleted;
+	public DPowerUpRotateNotification OnPieceRotated;
 
 	public delegate bool DOnFingerNotification(GameObject target);
 	public DOnFingerNotification OnDown;
@@ -111,7 +112,12 @@ public class InputPowerUpRotate : MonoBehaviour
 			{	
 				if(currentSelected)
 				{
-					if (gameManager.tryToDropOnGrid (currentSelected.GetComponent<Piece> ())) 
+					if(!gameManager.canDropOnGrid(currentSelected.GetComponent<Piece>()))
+					{
+						returnSelectedToInitialState();
+						reset();	
+					}
+					else if(gameManager.dropOnGrid (currentSelected.GetComponent<Piece> ())) 
 					{
 						onPiecePositionatedCompleted (false,currentSelected.GetComponent<Piece> ().createdIndex);
 						reset();
@@ -264,6 +270,10 @@ public class InputPowerUpRotate : MonoBehaviour
 				piece.transform.DOScale (selectedInitialScale, 0.25f).OnComplete (() => {
 					isRotating(false);
 				});*/
+				if(OnPieceRotated != null)
+				{
+					OnPieceRotated();
+				}
 
 				DestroyImmediate(piece.gameObject);
 			});
@@ -302,6 +312,11 @@ public class InputPowerUpRotate : MonoBehaviour
 			for (int j = 0; j < pieceManager.showingPieces.Count; j++) 
 			{				
 				hudManager.activateRotateImage (true, pieceManager.showingPieces[j].GetComponent<Piece>().createdIndex);
+
+				if (OnRotateArrowsActivated != null) 
+				{
+					OnRotateArrowsActivated (currentSelected);
+				}
 			}
 		}
 		else

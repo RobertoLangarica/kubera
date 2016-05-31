@@ -26,7 +26,7 @@ public class RetryPopUp : PopUpBase
 
 	public void closeRetry()
 	{
-		OnPopUpCompleted ();
+		OnPopUpCompleted (this);
 		SceneManager.LoadScene ("Levels");
 	}
 
@@ -34,7 +34,7 @@ public class RetryPopUp : PopUpBase
 	{
 		if (UserDataManager.instance.playerLifes > 0) 
 		{
-			OnPopUpCompleted ();
+			OnPopUpCompleted (this);
 
 			//lifesManager.takeALife ();
 

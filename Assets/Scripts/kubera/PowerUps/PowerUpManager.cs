@@ -6,38 +6,44 @@ public class PowerUpManager : MonoBehaviour
 {
 	public List<PowerupBase> powerups;
 
+	public bool allowPowerUps;
+
 	public delegate void DPowerUpNotification(PowerupBase.EType type);
 	public DPowerUpNotification OnPowerupCanceled;
 	public DPowerUpNotification OnPowerupCompleted;
+	public DPowerUpNotification OnPowerupCompletedNoGems;
 
 	protected PowerupBase powerup;
 
 	void Start()
 	{
+		allowPowerUps = true;
+
 		foreach(PowerupBase powerup in powerups)
 		{
 			if (powerup != null) {
 				powerup.OnPowerupCanceled += cancelPowerup;
 				powerup.OnPowerupCompleted += completePowerup;
+				powerup.OnPowerupCompletedNoGems += completePowerupNoGems;
 			}
 		}
 	}
 
-	public void activatePowerUp(PowerupBase.EType wichOne)
+	public void activatePowerUp(PowerupBase.EType wichOne,bool canUse)
 	{
-		powerup = getPowerupByType(wichOne);
+		if (allowPowerUps) 
+		{
+			powerup = getPowerupByType (wichOne);
 
-		if(powerup == null)
-		{
-			cancelPowerup();
-		}
-		else
-		{
-			powerup.activate();
+			if (powerup == null) {
+				cancelPowerup ();
+			} else {
+				powerup.activate (canUse);
+			}
 		}
 	}
 
-	private PowerupBase getPowerupByType(PowerupBase.EType type)
+	public PowerupBase getPowerupByType(PowerupBase.EType type)
 	{
 		foreach(PowerupBase powerup in powerups)
 		{
@@ -66,5 +72,23 @@ public class PowerUpManager : MonoBehaviour
 		{
 			OnPowerupCompleted(powerup.type);
 		}
+	}
+
+	private void completePowerupNoGems()
+	{
+		if(OnPowerupCompletedNoGems != null)
+		{
+			OnPowerupCompletedNoGems(powerup.type);
+		}
+	}
+
+	public PowerupBase.EType getCurrentPowerUpType()
+	{
+		return powerup.type;
+	}
+
+	public void cancelCurrentPowerUp()
+	{
+		powerup.cancel ();
 	}
 }

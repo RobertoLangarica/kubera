@@ -8,8 +8,11 @@ public class MapLevel : MonoBehaviour
 	{
 		NORMAL_LOCKED,
 		NORMAL_UNLOCKED,
+		NORMAL_PASSED,
 		BOSS_LOCKED,
-		BOSS_UNLOCKED
+		BOSS_UNLOCKED,
+		BOSS_PASSED,
+		BOSS_REACHED
 	}
 
 	public enum EMapLevelStars
@@ -29,6 +32,15 @@ public class MapLevel : MonoBehaviour
 
 	protected string lvlName;
 
+	public bool isBoss;
+
+	public int friendsNeeded;
+	public int gemsNeeded;
+	public int starsNeeded;
+
+	public delegate void DOnClickNotification();
+	public DOnClickNotification OnClickNotification;
+
 	void Start()
 	{
 		lvlName = name.Substring (2).Remove (name.Substring (2).Length-1);
@@ -37,15 +49,11 @@ public class MapLevel : MonoBehaviour
 
 	public void onClick()
 	{
-		//Go to lvl
-		print (lvlNameText.text);
-		PersistentData.instance.setLevelNumber(int.Parse(lvlNameText.text),true);
+		print (status);
 
-		ScreenManager.instance.GoToScene("Game");
-	}
-
-	public void initializeFromLevel(Level info)
-	{
-		
+		if (OnClickNotification != null) 
+		{
+			OnClickNotification ();
+		}
 	}
 }

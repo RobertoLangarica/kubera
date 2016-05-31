@@ -13,8 +13,17 @@ public class PowerupBase : MonoBehaviour
 	public delegate void DPowerUpNotification();
 	public DPowerUpNotification OnPowerupCanceled;
 	public DPowerUpNotification OnPowerupCompleted;
+	public DPowerUpNotification OnPowerupCompletedNoGems;
 
-	public virtual void activate()
+	public Transform powerUpButton;
+
+	public bool isFree;
+
+	public virtual void activate(bool canUse)
+	{
+	}
+
+	public virtual void cancel()
 	{
 		
 	}
@@ -32,6 +41,14 @@ public class PowerupBase : MonoBehaviour
 		if(OnPowerupCanceled != null)
 		{
 			OnPowerupCanceled();
+		}	
+	}
+
+	protected void OnCompletedNoGems()
+	{
+		if(OnPowerupCompletedNoGems != null)
+		{
+			OnPowerupCompletedNoGems();
 		}	
 	}
 }

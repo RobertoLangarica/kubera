@@ -8,6 +8,7 @@ namespace Data
 	[Serializable]
 	public class UserLevels : BasicData 
 	{
+		[HideInInspector]public int bossReached = 0;
 
 		public List<LevelData> levels;
 

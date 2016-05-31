@@ -24,7 +24,7 @@ public class MissingLifesPopUp : PopUpBase
 	public void closePressed()
 	{
 		popUp.SetActive (false);
-		OnPopUpCompleted ();
+		OnPopUpCompleted (this);
 	}
 
 	public void askForLifes()
@@ -33,6 +33,6 @@ public class MissingLifesPopUp : PopUpBase
 		popUp.SetActive (false);
 		//cuando se cierre hacer stuff de facebook
 		//TODO:Hacer stuff de facebook
-		OnPopUpCompleted ("needLifes");
+		OnPopUpCompleted (this,"needLifes");
 	}
 }

@@ -118,7 +118,7 @@ public class WordManager : MonoBehaviour
 		go.transform.SetParent(letterContainerTransform.parent,false);
 	}
 
-	private void OnGridLetterTapped(GameObject go)
+	public void OnGridLetterTapped(GameObject go)
 	{
 		Letter letter = go.GetComponent<Letter>();
 
@@ -178,7 +178,7 @@ public class WordManager : MonoBehaviour
 		reacomodateChildrenSiblingOrder ();
 	}
 
-	private void onLetterTap(GameObject go)
+	public void onLetterTap(GameObject go)
 	{
 		Letter letter = go.GetComponent<Letter>();
 

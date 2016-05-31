@@ -119,5 +119,10 @@ namespace Data
 		{
 			isSyncronized = true;
 		}
+
+		public T getCurrentData()
+		{
+			return currentData;
+		}
 	}
 }
