@@ -46,7 +46,7 @@ namespace Data
 		{
 			List<Level> world = levelsList.getLevelWorld(levelName);
 			int index = getLevelWorldIndex(levelName,world);
-			bool blocked;
+			bool blocked = true;
 
 			if(index == 0)
 			{
@@ -65,7 +65,7 @@ namespace Data
 			return blocked;
 		}
 
-		public void isBossReached(string levelName)
+		public bool isBossReached(string levelName)
 		{
 			return currentData.getLevelById (levelName).bossReached;
 		}
