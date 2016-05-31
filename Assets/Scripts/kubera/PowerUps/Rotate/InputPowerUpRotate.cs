@@ -113,7 +113,7 @@ public class InputPowerUpRotate : MonoBehaviour
 			{	
 				if(currentSelected)
 				{
-					if(gameManager.canDropOnGrid(currentSelected.GetComponent<Piece>()))
+					if(!gameManager.canDropOnGrid(currentSelected.GetComponent<Piece>()))
 					{
 						returnSelectedToInitialState();
 						reset();	

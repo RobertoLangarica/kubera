@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
 
 		if(PersistentData.instance)
 		{
-			configureLevel(PersistentData.instance.getRandomLevel());
+			configureLevel(PersistentData.instance.currentLevel);
 		}
 
 		//TODO: Control de flujo de juego con un init
@@ -128,13 +128,11 @@ public class GameManager : MonoBehaviour
 	protected void rotationActivated(GameObject go)
 	{
 		rotationActive = true;
-		Debug.Log (rotationActive);
 	}
 
 	protected void rotationDeactivated()
 	{
 		rotationActive = false;
-		Debug.Log (rotationActive);
 	}
 
 	private void configureLevel(Level level)
