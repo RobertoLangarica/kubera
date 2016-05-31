@@ -421,5 +421,26 @@
 				<language id="default" text="Ir de compras"/>
 			</languages>
 		</text>
+		<text id="WinTextPopUpID">
+			<languages>
+				<language id="english" text="Objective completed!"/>
+				<language id="spanish" text="¡Objetivo completado!"/>
+				<language id="default" text="¡Objetivo completado!"/>
+			</languages>
+		</text>
+		<text id="noMovementsPopUpID">
+			<languages>
+				<language id="english" text="You ran out of movements!"/>
+				<language id="spanish" text="¡Te quedaste sin movimientos!"/>
+				<language id="default" text="¡Te quedaste sin movimientos!"/>
+			</languages>
+		</text>
+		<text id="noPiecesPopUpID">
+			<languages>
+				<language id="english" text="You ran out of options!"/>
+				<language id="spanish" text="¡Tablero saturado y sin opciones!"/>
+				<language id="default" text="¡Tablero saturado y sin opciones!"/>
+			</languages>
+		</text>
 	</texts>
 </gameText>

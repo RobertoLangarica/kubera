@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
 
 		if(PersistentData.instance)
 		{
-			configureLevel(PersistentData.instance.currentLevel);
+			configureLevel(PersistentData.instance.getRandomLevel());
 		}
 
 		//TODO: Control de flujo de juego con un init
@@ -585,7 +585,17 @@ public class GameManager : MonoBehaviour
 			Debug.Log ("Perdio de verdad");
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);
 
-			activatePopUp ("SecondChance");
+			if(remainingMoves <=0)
+			{
+				activatePopUp ("noMovementsPopUp");
+
+			}
+			else
+			{
+				activatePopUp ("noOptionsPopUp");
+
+			}
+
 		}
 	}
 
@@ -612,7 +622,7 @@ public class GameManager : MonoBehaviour
 			Debug.Log ("Gano de verdad.");
 			gameOver = true;
 			unlockPowerUp ();
-			Invoke ("winBonification", piecePositionedDelay * 2);
+			activatePopUp ("winGamePopUp");
 		}
 	}
 
@@ -871,8 +881,13 @@ public class GameManager : MonoBehaviour
 		switch (action) {
 		case "endGame":
 			break;
-		default:
-		
+		case "winPopUpEnd":
+			Invoke ("winBonification", piecePositionedDelay * 2);
+			break;
+		case "loose":
+			activatePopUp ("SecondChance");
+			break;
+		default:		
 				Invoke ("allowInputFromInvoke", 0.5f);
 			break;
 		}
