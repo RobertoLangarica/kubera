@@ -107,7 +107,6 @@ public class RotatePowerUp : PowerupBase
 	protected void completePowerUp()
 	{
 		inputPowerUpRotate.OnPowerupRotateCompleted -= completePowerUp;
-		Debug.Log ("Completado");
 		OnComplete ();
 		inputPowerUpRotate.enabled = false;
 		this.gameObject.SetActive( false);
