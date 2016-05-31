@@ -12,6 +12,7 @@ public class FacebookManager : MonoBehaviour
 	protected FacebookNews facebookNews;
 	protected PlayerInfo playerInfo;
 	protected FBLog fbLog;
+	protected MapManager mapManager;
 	public FBFriendsRequestPanel fbRequestPanel;
 
 	public Transform panelMessages;
@@ -43,6 +44,7 @@ public class FacebookManager : MonoBehaviour
 		fbLog = FindObjectOfType<FBLog> ();
 		facebookNews = FindObjectOfType<FacebookNews> ();
 		playerInfo = FindObjectOfType<PlayerInfo> ();
+		mapManager = FindObjectOfType<MapManager> ();
 	}
 
 	void Start()
@@ -144,7 +146,8 @@ public class FacebookManager : MonoBehaviour
 		}
 		else
 		{
-			print("recibi " + giftCount + ": llaves");	
+			print("recibi " + giftCount + ": llaves");
+			mapManager.unlockBoss ();
 		}
 		DestroyImmediate (requestToDelete);
 	}
