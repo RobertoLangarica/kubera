@@ -38,7 +38,6 @@ public class InputPowerUpRotate : MonoBehaviour
 
 	protected bool allowInputDuringRotate = true;
 	protected bool isLongPressed = false;
-	public bool canUse;
 
 	void Start()
 	{
