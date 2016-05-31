@@ -9,6 +9,8 @@ namespace Data
 	{
 		public int stars;
 		public int points;
+		public bool unlocked;
+		public bool bossReached;
 
 		public override void updateFrom (BasicData readOnlyRemote)
 		{

@@ -53,24 +53,21 @@ namespace Data
 				
 				if(world[0].world == 0)
 				{
-					//no hay niveles anteriores
 					blocked = false;
+					currentData.getLevelById (levelName).unlocked = true;
 				}
-				else
-				{
-					//El mundo anterior
-					world = levelsList.getWorldByIndex(world[0].world-1);
-					blocked = !isLevelPassed(world[world.Count-1].name);
-				}
-
 			}
 			else
 			{
-				//Nivel anterior
-				blocked = !isLevelPassed(world[index-1].name);
+				blocked = !currentData.getLevelById (levelName).unlocked;
 			}
 
 			return blocked;
+		}
+
+		public void isBossReached(string levelName)
+		{
+			return currentData.getLevelById (levelName).bossReached;
 		}
 
 		public int getLevelWorldIndex(string levelName, List<Level> world)
@@ -88,6 +85,21 @@ namespace Data
 			}
 
 			return -1;
+		}
+
+		public Level[] getLevesOfWorld(int worldIndex)
+		{
+			List<Level> sameWorldLevels = new List<Level> ();
+
+			for (int i = 0; i < levelsList.levels.Length; i++) 
+			{
+				if (levelsList.levels [i].world == worldIndex) 
+				{
+					sameWorldLevels.Add (levelsList.levels[i]);
+				}
+			}
+
+			return sameWorldLevels.ToArray ();
 		}
 
 		public int getLevelStars(string levelName)
