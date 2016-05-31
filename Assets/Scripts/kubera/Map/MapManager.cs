@@ -206,6 +206,26 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
+	protected void setOnClickDelegates(MapLevel level)
+	{
+		switch (level.status) 
+		{
+		case(MapLevel.EMapLevelsStatus.BOSS_LOCKED):
+		case(MapLevel.EMapLevelsStatus.NORMAL_LOCKED):
+			level.OnClickNotification += OnLevelLockedPressed;
+			break;
+		case(MapLevel.EMapLevelsStatus.BOSS_PASSED):
+		case(MapLevel.EMapLevelsStatus.NORMAL_PASSED):
+		case(MapLevel.EMapLevelsStatus.BOSS_UNLOCKED):
+		case(MapLevel.EMapLevelsStatus.NORMAL_UNLOCKED):
+			level.OnClickNotification += OnLevelUnlockedPressed;
+			break;
+		case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
+			level.OnClickNotification += OnBossReachedPressed;
+			break;
+		}
+	}
+
 	protected void changeSprite(Image img,Sprite sprite)
 	{
 		img.sprite = Sprite.Create (sprite.texture, sprite.textureRect, new Vector2 (0.5f, 0.5f));
@@ -213,22 +233,34 @@ public class MapManager : MonoBehaviour
 
 	public void OnLifesPressed()
 	{
-		if (UserDataManager.instance.playerLifes == UserDataManager.instance.maximumLifes) 
-		{
+		if (UserDataManager.instance.playerLifes == UserDataManager.instance.maximumLifes) {
 			openPopUp (fullLifes_PopUp);
-		} 
-		else if (UserDataManager.instance.playerLifes == 0) 
-		{
+		} else if (UserDataManager.instance.playerLifes == 0) {
 			openPopUp (noLifes_PopUp);
-		} 
-		else 
-		{
+		} else {
 			openPopUp (missingLifes_PopUp);
 		}
+
 	}
 
 	public void unlockBoss()
 	{
-		
+	}
+
+	protected void OnBossReachedPressed(MapLevel pressed)
+	{
+		//if()
+
+		popUpManager.activatePopUp ("bossLocked");
+	}
+
+	protected void OnLevelUnlockedPressed(MapLevel pressed)
+	{
+
+	}
+
+	protected void OnLevelLockedPressed(MapLevel pressed)
+	{
+
 	}
 }

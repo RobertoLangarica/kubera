@@ -38,7 +38,7 @@ public class MapLevel : MonoBehaviour
 	public int gemsNeeded;
 	public int starsNeeded;
 
-	public delegate void DOnClickNotification();
+	public delegate void DOnClickNotification(MapLevel pressed);
 	public DOnClickNotification OnClickNotification;
 
 	void Start()
@@ -53,7 +53,7 @@ public class MapLevel : MonoBehaviour
 
 		if (OnClickNotification != null) 
 		{
-			OnClickNotification ();
+			OnClickNotification (this);
 		}
 	}
 }
