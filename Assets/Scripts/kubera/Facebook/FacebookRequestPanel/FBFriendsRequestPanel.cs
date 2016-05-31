@@ -51,7 +51,7 @@ public class FBFriendsRequestPanel : PopUpBase {
 	{
 		popUp.SetActive (false);
 
-		OnPopUpCompleted ();
+		OnPopUpCompleted (this);
 	}
 
 	public void openFriendsRequestPanel(ERequestType requestType,EFriendsType friendsType = EFriendsType.ALL)
@@ -169,6 +169,7 @@ public class FBFriendsRequestPanel : PopUpBase {
 			//print (friendInfo.Keys.ToCommaSeparateList ());
 			string playerName = (string)friendInfo ["name"];
 			Texture playerImage = new Texture();
+
 			if(FacebookPersistentData.instance.containTextureByID(playerID))
 			{
 				playerImage = FacebookPersistentData.instance.getTextureById (playerID);
@@ -177,8 +178,7 @@ public class FBFriendsRequestPanel : PopUpBase {
 			{				
 				playerImgUrl = GraphUtil.DeserializePictureURL(friendInfo);
 			}
-
-			friendController.addFriend (playerID,playerImgUrl, playerName);
+			friendController.addFriend (playerID,playerImgUrl, playerName,playerImage);
 		}
 		friendController.initializeFriends ();
 	}

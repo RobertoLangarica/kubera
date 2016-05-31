@@ -400,5 +400,47 @@
 				<language id="default" text="las veces que necesites para pasar el nivel."/>
 			</languages>
 		</text>
+		<text id="NoGemsPopUpTitle">
+			<languages>
+				<language id="english" text="Not enough Gems"/>
+				<language id="spanish" text="Gemmas Insuficientes"/>
+				<language id="default" text="Gemmas Insuficientes"/>
+			</languages>
+		</text>
+		<text id="NoGemsPopUpInfo">
+			<languages>
+				<language id="english" text="Visit Shopika to buy awesome products and get Gems."/>
+				<language id="spanish" text="Visita Shopika para comprar fabulosos productos y obtener gemas."/>
+				<language id="default" text="Visita Shopika para comprar fabulosos productos y obtener gemas."/>
+			</languages>
+		</text>
+		<text id="NoGemsPopUpButton">
+			<languages>
+				<language id="english" text="Go shopping"/>
+				<language id="spanish" text="Ir de compras"/>
+				<language id="default" text="Ir de compras"/>
+			</languages>
+		</text>
+		<text id="WinTextPopUpID">
+			<languages>
+				<language id="english" text="Objective completed!"/>
+				<language id="spanish" text="¡Objetivo completado!"/>
+				<language id="default" text="¡Objetivo completado!"/>
+			</languages>
+		</text>
+		<text id="noMovementsPopUpID">
+			<languages>
+				<language id="english" text="You ran out of movements!"/>
+				<language id="spanish" text="¡Te quedaste sin movimientos!"/>
+				<language id="default" text="¡Te quedaste sin movimientos!"/>
+			</languages>
+		</text>
+		<text id="noPiecesPopUpID">
+			<languages>
+				<language id="english" text="You ran out of options!"/>
+				<language id="spanish" text="¡Tablero saturado y sin opciones!"/>
+				<language id="default" text="¡Tablero saturado y sin opciones!"/>
+			</languages>
+		</text>
 	</texts>
 </gameText>

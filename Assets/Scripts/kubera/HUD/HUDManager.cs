@@ -439,6 +439,9 @@ public class HUDManager : MonoBehaviour
 	private void popUpCompleted(string action ="")
 	{
 		OnPopUpCompleted (action);
-		modal.SetActive (false);
+		if(popUpManager.openPopUps.Count == 0)
+		{
+			modal.SetActive (false);
+		}  
 	}
 }

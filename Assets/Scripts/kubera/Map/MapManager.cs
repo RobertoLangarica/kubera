@@ -226,4 +226,9 @@ public class MapManager : MonoBehaviour
 			openPopUp (missingLifes_PopUp);
 		}
 	}
+
+	public void unlockBoss()
+	{
+		
+	}
 }

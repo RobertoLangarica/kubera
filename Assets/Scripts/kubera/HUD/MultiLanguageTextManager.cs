@@ -22,6 +22,9 @@ public class MultiLanguageTextManager
 	public const string GOAL_CONDITION_BY_SYNONYMOUS_ID 	= "goalBySynonymousCondition";
 	public const string GOAL_CONDITION_BY_ANTONYM_ID 		= "goalByAntonymCondition";
 	public const string EXIT_POPUP_ID 						= "exitText";
+	public const string WIN_TEXT_POPUP_ID					= "WinTextPopUpID";
+	public const string NO_MOVEMENTS_POPUP_ID					= "noMovementsPopUpID";
+	public const string NO_PIECES_POPUP_ID					= "noPiecesPopUpID";
 
 	public const string TUTORIAL_LV1_PHASE1					= "Tutorial_lvl1_phase1";
 	public const string TUTORIAL_LV1_PHASE2A				= "Tutorial_lvl1_phase2A";
@@ -72,6 +75,10 @@ public class MultiLanguageTextManager
 	public const string TUTORIAL_LV64_PHASE3B				= "Tutorial_lvl64_phase3B";
 	public const string TUTORIAL_LV64_PHASE4A				= "Tutorial_lvl64_phase4A";
 	public const string TUTORIAL_LV64_PHASE4B				= "Tutorial_lvl64_phase4B";
+
+	public const string NO_GEMS_POPUP_TITLE					= "NoGemsPopUpTitle";
+	public const string NO_GEMS_POPUP_INFO					= "NoGemsPopUpInfo";
+	public const string NO_GEMS_POPUP_BUTTON				= "NoGemsPopUpButton";
 
 
 
