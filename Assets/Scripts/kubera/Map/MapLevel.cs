@@ -8,8 +8,11 @@ public class MapLevel : MonoBehaviour
 	{
 		NORMAL_LOCKED,
 		NORMAL_UNLOCKED,
+		NORMAL_PASSED,
 		BOSS_LOCKED,
-		BOSS_UNLOCKED
+		BOSS_UNLOCKED,
+		BOSS_PASSED,
+		BOSS_REACHED
 	}
 
 	public enum EMapLevelStars
@@ -29,12 +32,14 @@ public class MapLevel : MonoBehaviour
 
 	protected string lvlName;
 
-	public int friendsNeeded = 1;
-	public int gemsNeeded = 10;
-	public int starsNeeded = 100;
+	public bool isBoss;
 
-	public delegate void DOnTryOpenBlockedBoss(int friendsNeeded,int gemsNeeded,int starsNeeded);
-	public DOnTryOpenBlockedBoss OnOpen;
+	public int friendsNeeded;
+	public int gemsNeeded;
+	public int starsNeeded;
+
+	public delegate void DOnClickNotification();
+	public DOnClickNotification OnClickNotification;
 
 	void Start()
 	{
@@ -45,38 +50,10 @@ public class MapLevel : MonoBehaviour
 	public void onClick()
 	{
 		print (status);
-		switch (status) {
-		case EMapLevelsStatus.BOSS_LOCKED:
-			if(false)
-			{
-				OnOpen (friendsNeeded, gemsNeeded, starsNeeded);
-			}
-			else
-			{
-				//TODO: animacion de desbloqueo
-			}
-			break;
-		case EMapLevelsStatus.BOSS_UNLOCKED:
-			break;
-		case EMapLevelsStatus.NORMAL_LOCKED:
-			break;
-		case EMapLevelsStatus.NORMAL_UNLOCKED:
-			//Go to lvl
-			print (lvlNameText.text);
-			PersistentData.instance.setLevelNumber(int.Parse(lvlNameText.text),true);
 
-			ScreenManager.instance.GoToScene("Game");
-			break;
-		default:
-			break;
+		if (OnClickNotification != null) 
+		{
+			OnClickNotification ();
 		}
-
-	}
-
-	public void initializeFromLevel(Level info)
-	{
-		info.friendsNeeded = friendsNeeded;
-		info.gemsNeeded = gemsNeeded;
-		info.starsNeeded = starsNeeded;
 	}
 }
