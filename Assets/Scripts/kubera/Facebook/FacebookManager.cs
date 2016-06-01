@@ -147,7 +147,7 @@ public class FacebookManager : MonoBehaviour
 		else
 		{
 			print("recibi " + giftCount + ": llaves");
-			mapManager.unlockBoss ();
+			mapManager.unlockBoss (bossReached);
 		}
 		DestroyImmediate (requestToDelete);
 	}
@@ -225,7 +225,7 @@ public class FacebookManager : MonoBehaviour
 		{
 			return;
 		}
-		FB.AppRequest ("Give me a key!", OGActionType.ASKFOR, "795229890609809", idsFriends, "askKey,"+(Data.LevelsDataManager.GetInstance ().getCurrentData ().bossReached +1).ToString(), // Here you can put in any data you want
+		FB.AppRequest ("Give me a key!", OGActionType.ASKFOR, "795229890609809", idsFriends, "askKey,"+ mapManager.bossLockedPopUp.lvlName, // Here you can put in any data you want
 			"Ask a life to your friend", // A title
 			delegate (IAppRequestResult result) {
 				Debug.Log (result.RawResult);
@@ -302,10 +302,10 @@ public class FacebookManager : MonoBehaviour
 			if (type.Contains("askKey"))
 			{
 				string[] splitType = type.Split (',');
-				int bossReached = 0;
+				string bossReached = "";
 				if(splitType.Length >1)
 				{
-					bossReached = int.Parse (splitType [1]);
+					bossReached = splitType [1];
 				}
 
 				if(idExistOnList (askedKeys,playerID) )
@@ -321,13 +321,13 @@ public class FacebookManager : MonoBehaviour
 			else if(type.Contains("sendKey"))
 			{
 				string[] splitType = type.Split (',');
-				int bossReached = 0;
+				string bossReached = "";
 				if(splitType.Length >1)
 				{
-					bossReached = int.Parse (splitType [1]);
+					bossReached = splitType [1];
 				}
 
-				if(askedKeys.Count == maxUsersPerMessage || idExistOnList (giftKeys,playerID )|| bossReached <= Data.LevelsDataManager.GetInstance ().getCurrentData ().bossReached)
+				if(askedKeys.Count == maxUsersPerMessage || idExistOnList (giftKeys,playerID )|| !(Data.LevelsDataManager.GetInstance () as Data.LevelsDataManager).isLevelLocked(bossReached))
 				{
 					deleteAppRequest (requestID);
 				}
@@ -357,9 +357,9 @@ public class FacebookManager : MonoBehaviour
 		return false;
 	}
 
-	protected void addToList (List<string> List,string firstName, string playerID, string requestID,int bossReached=-1)
+	protected void addToList (List<string> List,string firstName, string playerID, string requestID,string bossReached = "")
 	{
-		if(bossReached == -1)
+		if(bossReached == "")
 		{			
 			List.Add (firstName+"-"+playerID+"-"+requestID);
 		}
