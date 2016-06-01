@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using Data;
@@ -94,7 +95,7 @@ public class MapManager : MonoBehaviour
 
 	protected void settingMapLevelInfo(MapLevel level,Level data)
 	{
-		level.name = data.name;
+		level.lvlName = data.name;
 		level.isBoss = data.isBoss;
 		level.starsNeeded = data.starsNeeded;
 		level.friendsNeeded = data.friendsNeeded;
@@ -111,13 +112,13 @@ public class MapManager : MonoBehaviour
 			} 
 			else 
 			{
-				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.name)) 
+				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelLocked (level.name)) 
 				{
 					level.status = MapLevel.EMapLevelsStatus.BOSS_LOCKED;
 				}
 				else 
 				{
-					if ((LevelsDataManager.GetInstance () as LevelsDataManager).isBossReached (level.name)) 
+					if ((LevelsDataManager.GetInstance () as LevelsDataManager).isLevelReached (level.name)) 
 					{
 						level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
 					} 
@@ -139,11 +140,11 @@ public class MapManager : MonoBehaviour
 			{
 				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.name)) 
 				{
-					level.status = MapLevel.EMapLevelsStatus.NORMAL_LOCKED;
+					level.status = MapLevel.EMapLevelsStatus.NORMAL_UNLOCKED;
 				}
 				else
 				{
-					level.status = MapLevel.EMapLevelsStatus.NORMAL_UNLOCKED;
+					level.status = MapLevel.EMapLevelsStatus.NORMAL_LOCKED;
 				}
 			}
 		}
@@ -261,6 +262,7 @@ public class MapManager : MonoBehaviour
 
 	protected void OnLevelLockedPressed(MapLevel pressed)
 	{
-
+		PersistentData.instance.currentLevel = PersistentData.instance.levelsData.getLevelByName (pressed.lvlName);
+		SceneManager.LoadScene ("Game");
 	}
 }

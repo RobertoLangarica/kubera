@@ -30,7 +30,7 @@ public class MapLevel : MonoBehaviour
 	public Image levelIcon;
 	public Image levelStars;
 
-	protected string lvlName;
+	public string lvlName;
 
 	public bool isBoss;
 
