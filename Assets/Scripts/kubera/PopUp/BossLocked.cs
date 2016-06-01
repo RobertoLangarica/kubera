@@ -12,9 +12,10 @@ public class BossLocked : PopUpBase {
 	public Text gemsNumber;
 	public Text gemsText;
 
-	public int starsNeeded;
-	public int stars;
-	public int gemsNeeded;
+	[HideInInspector]public int starsNeeded;
+	[HideInInspector]public int stars;
+	[HideInInspector]public int gemsNeeded;
+	[HideInInspector]public string lvlName;
 
 	void Start()
 	{
@@ -41,6 +42,10 @@ public class BossLocked : PopUpBase {
 	public void gemsCharge()
 	{
 		//TODO: abrir popUp de enviar a shopika
+		if (TransactionManager.instance.tryToUseGems (gemsNeeded)) 
+		{
+			FindObjectOfType<MapManager> ().unlockBoss (lvlName);
+		}
 	}
 
 	public void closePressed()
