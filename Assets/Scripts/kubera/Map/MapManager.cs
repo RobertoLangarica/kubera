@@ -257,12 +257,12 @@ public class MapManager : MonoBehaviour
 
 	protected void OnLevelUnlockedPressed(MapLevel pressed)
 	{
-
+		PersistentData.instance.currentLevel = PersistentData.instance.levelsData.getLevelByName (pressed.lvlName);
+		SceneManager.LoadScene ("Game");
 	}
 
 	protected void OnLevelLockedPressed(MapLevel pressed)
 	{
-		PersistentData.instance.currentLevel = PersistentData.instance.levelsData.getLevelByName (pressed.lvlName);
-		SceneManager.LoadScene ("Game");
+		Debug.LogWarning ("NIVEL BLOQUEADO");
 	}
 }
