@@ -164,6 +164,18 @@ namespace Data
 			return level.stars;
 		}
 
+		public int getAllEarnedStars()
+		{
+			int result = 0;
+			
+			for (int i = 0; i < levelsList.levels.Length; i++) 
+			{
+				result += getLevelStars (levelsList.levels[i].name);
+			}
+
+			return result;
+		}
+
 		public int getLevelPoints(string levelName)
 		{
 			LevelData level = currentData.getLevelById(levelName);

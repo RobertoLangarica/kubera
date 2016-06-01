@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using Data;
@@ -94,7 +95,7 @@ public class MapManager : MonoBehaviour
 
 	protected void settingMapLevelInfo(MapLevel level,Level data)
 	{
-		level.name = data.name;
+		level.lvlName = data.name;
 		level.isBoss = data.isBoss;
 		level.starsNeeded = data.starsNeeded;
 		level.friendsNeeded = data.friendsNeeded;
@@ -111,13 +112,13 @@ public class MapManager : MonoBehaviour
 			} 
 			else 
 			{
-				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.name)) 
+				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelLocked (level.name)) 
 				{
 					level.status = MapLevel.EMapLevelsStatus.BOSS_LOCKED;
 				}
 				else 
 				{
-					if ((LevelsDataManager.GetInstance () as LevelsDataManager).isBossReached (level.name)) 
+					if ((LevelsDataManager.GetInstance () as LevelsDataManager).isLevelReached (level.name)) 
 					{
 						level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
 					} 
@@ -139,11 +140,11 @@ public class MapManager : MonoBehaviour
 			{
 				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.name)) 
 				{
-					level.status = MapLevel.EMapLevelsStatus.NORMAL_LOCKED;
+					level.status = MapLevel.EMapLevelsStatus.NORMAL_UNLOCKED;
 				}
 				else
 				{
-					level.status = MapLevel.EMapLevelsStatus.NORMAL_UNLOCKED;
+					level.status = MapLevel.EMapLevelsStatus.NORMAL_LOCKED;
 				}
 			}
 		}
@@ -206,6 +207,26 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
+	protected void setOnClickDelegates(MapLevel level)
+	{
+		switch (level.status) 
+		{
+		case(MapLevel.EMapLevelsStatus.BOSS_LOCKED):
+		case(MapLevel.EMapLevelsStatus.NORMAL_LOCKED):
+			level.OnClickNotification += OnLevelLockedPressed;
+			break;
+		case(MapLevel.EMapLevelsStatus.BOSS_PASSED):
+		case(MapLevel.EMapLevelsStatus.NORMAL_PASSED):
+		case(MapLevel.EMapLevelsStatus.BOSS_UNLOCKED):
+		case(MapLevel.EMapLevelsStatus.NORMAL_UNLOCKED):
+			level.OnClickNotification += OnLevelUnlockedPressed;
+			break;
+		case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
+			level.OnClickNotification += OnBossReachedPressed;
+			break;
+		}
+	}
+
 	protected void changeSprite(Image img,Sprite sprite)
 	{
 		img.sprite = Sprite.Create (sprite.texture, sprite.textureRect, new Vector2 (0.5f, 0.5f));
@@ -213,22 +234,35 @@ public class MapManager : MonoBehaviour
 
 	public void OnLifesPressed()
 	{
-		if (UserDataManager.instance.playerLifes == UserDataManager.instance.maximumLifes) 
-		{
+		if (UserDataManager.instance.playerLifes == UserDataManager.instance.maximumLifes) {
 			openPopUp (fullLifes_PopUp);
-		} 
-		else if (UserDataManager.instance.playerLifes == 0) 
-		{
+		} else if (UserDataManager.instance.playerLifes == 0) {
 			openPopUp (noLifes_PopUp);
-		} 
-		else 
-		{
+		} else {
 			openPopUp (missingLifes_PopUp);
 		}
+
 	}
 
 	public void unlockBoss()
 	{
-		
+	}
+
+	protected void OnBossReachedPressed(MapLevel pressed)
+	{
+		//if()
+
+		popUpManager.activatePopUp ("bossLocked");
+	}
+
+	protected void OnLevelUnlockedPressed(MapLevel pressed)
+	{
+		PersistentData.instance.currentLevel = PersistentData.instance.levelsData.getLevelByName (pressed.lvlName);
+		SceneManager.LoadScene ("Game");
+	}
+
+	protected void OnLevelLockedPressed(MapLevel pressed)
+	{
+		Debug.LogWarning ("NIVEL BLOQUEADO");
 	}
 }
