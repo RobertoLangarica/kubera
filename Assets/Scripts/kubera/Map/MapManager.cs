@@ -42,10 +42,16 @@ public class MapManager : MonoBehaviour
 		lifesHUDManager = FindObjectOfType<LifesManager> ();
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
+	}
 
-		selectLevel (currentWorld);
+	void Update()
+	{
+		if (Input.GetKeyDown (KeyCode.A)) 
+		{
+			selectLevel (currentWorld);
 
-		initializeLevels ();
+			initializeLevels ();
+		}
 	}
 
 	protected void stopInput(bool stopInput)
