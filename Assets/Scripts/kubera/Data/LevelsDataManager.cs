@@ -71,7 +71,8 @@ namespace Data
 					reached = isLevelPassed(world[world.Count-1].name);
 				}
 			}
-			else if(index > 1)
+			//else if(index > 1)
+			else
 			{
 				//Ya se paso el nivel anterior
 				reached = isLevelPassed(world[index-1].name);
