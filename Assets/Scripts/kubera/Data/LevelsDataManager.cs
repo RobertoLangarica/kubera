@@ -8,8 +8,9 @@ namespace Data
 	{
 		protected Levels levelsList;
 
-		void Start()
+		protected override void Start ()
 		{
+			base.Start ();
 			levelsList = PersistentData.instance.levelsData;	
 		}
 

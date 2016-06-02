@@ -13,6 +13,7 @@ public class MapManager : MonoBehaviour
 
 	public ScrollRect scrollRect;
 	public GameObject modal;
+	public BossLocked bossLockedPopUp;
 
 	public Sprite normalLocked;
 	public Sprite normalUnlocked;
@@ -41,6 +42,16 @@ public class MapManager : MonoBehaviour
 		lifesHUDManager = FindObjectOfType<LifesManager> ();
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
+	}
+
+	void Update()
+	{
+		if (Input.GetKeyDown (KeyCode.A)) 
+		{
+			selectLevel (currentWorld);
+
+			initializeLevels ();
+		}
 	}
 
 	protected void stopInput(bool stopInput)
@@ -80,14 +91,22 @@ public class MapManager : MonoBehaviour
 
 	protected void initializeLevels()
 	{
+		Debug.Log ((LevelsDataManager.GetInstance() as LevelsDataManager));
 		List<Level> worldsLevels = new List<Level> ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevesOfWorld(currentWorld));
+		Debug.Log (worldsLevels.Count + "----------");
 		
 		for (int i = 0; i < mapLevels.Count; i++) 
 		{
+			Debug.Log ("setLEvel");
 			settingMapLevelInfo (mapLevels[i],worldsLevels[i]);
 
+			Debug.Log ("setStatus");
 			settingMapLevelStatus (mapLevels[i]);
 
+			Debug.Log ("SetClicks");
+			setOnClickDelegates (mapLevels[i]);
+
+			Debug.Log ("updateIOmg");
 			updateLevelIcon (mapLevels [i]);
 			updateLevelStars (mapLevels[i]);
 		}
@@ -244,15 +263,26 @@ public class MapManager : MonoBehaviour
 
 	}
 
-	public void unlockBoss()
+	public void unlockBoss(string lvlName)
 	{
+		(LevelsDataManager.GetInstance () as LevelsDataManager).unlockLevel (lvlName);
 	}
 
 	protected void OnBossReachedPressed(MapLevel pressed)
 	{
-		//if()
+		if ((LevelsDataManager.GetInstance () as LevelsDataManager).getAllEarnedStars() >= pressed.starsNeeded) 
+		{
+			unlockBoss (pressed.lvlName);
+		} 
+		else 
+		{
+			bossLockedPopUp.lvlName = pressed.lvlName;
+			bossLockedPopUp.starsNeeded = pressed.starsNeeded;
+			bossLockedPopUp.stars = (LevelsDataManager.GetInstance () as LevelsDataManager).getAllEarnedStars ();
+			bossLockedPopUp.gemsNeeded = pressed.gemsNeeded;
 
-		popUpManager.activatePopUp ("bossLocked");
+			popUpManager.activatePopUp ("bossLocked");
+		}
 	}
 
 	protected void OnLevelUnlockedPressed(MapLevel pressed)
