@@ -42,6 +42,10 @@ public class MapManager : MonoBehaviour
 		lifesHUDManager = FindObjectOfType<LifesManager> ();
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
+
+		//selectLevel (currentWorld);
+
+		//initializeLevels ();
 	}
 
 	void Update()
@@ -93,22 +97,18 @@ public class MapManager : MonoBehaviour
 	{
 		Debug.Log ((LevelsDataManager.GetInstance() as LevelsDataManager));
 		List<Level> worldsLevels = new List<Level> ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevesOfWorld(currentWorld));
-		Debug.Log (worldsLevels.Count + "----------");
 		
 		for (int i = 0; i < mapLevels.Count; i++) 
 		{
-			Debug.Log ("setLEvel");
 			settingMapLevelInfo (mapLevels[i],worldsLevels[i]);
 
-			Debug.Log ("setStatus");
 			settingMapLevelStatus (mapLevels[i]);
 
-			Debug.Log ("SetClicks");
 			setOnClickDelegates (mapLevels[i]);
 
-			Debug.Log ("updateIOmg");
 			updateLevelIcon (mapLevels [i]);
 			updateLevelStars (mapLevels[i]);
+			mapLevels [i].updateText ();
 		}
 	}
 
@@ -125,19 +125,19 @@ public class MapManager : MonoBehaviour
 	{
 		if (level.isBoss) 
 		{
-			if ((LevelsDataManager.GetInstance () as LevelsDataManager).isLevelPassed (level.name)) 
+			if ((LevelsDataManager.GetInstance () as LevelsDataManager).isLevelPassed (level.lvlName)) 
 			{
 				level.status = MapLevel.EMapLevelsStatus.BOSS_PASSED;
 			} 
 			else 
 			{
-				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelLocked (level.name)) 
+				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelLocked (level.lvlName)) 
 				{
 					level.status = MapLevel.EMapLevelsStatus.BOSS_LOCKED;
 				}
 				else 
 				{
-					if ((LevelsDataManager.GetInstance () as LevelsDataManager).isLevelReached (level.name)) 
+					if ((LevelsDataManager.GetInstance () as LevelsDataManager).isLevelReached (level.lvlName)) 
 					{
 						level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
 					} 
@@ -151,13 +151,15 @@ public class MapManager : MonoBehaviour
 		} 
 		else 
 		{
-			if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelPassed (level.name)) 
+			if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelPassed (level.lvlName)) 
 			{
 				level.status = MapLevel.EMapLevelsStatus.NORMAL_PASSED;
 			}
 			else
 			{
-				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.name)) 
+				Debug.Log ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelLocked (level.lvlName));
+				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.lvlName) ||
+					!(LevelsDataManager.GetInstance() as LevelsDataManager).isLevelLocked (level.lvlName)) 
 				{
 					level.status = MapLevel.EMapLevelsStatus.NORMAL_UNLOCKED;
 				}
@@ -169,7 +171,7 @@ public class MapManager : MonoBehaviour
 		}
 
 		level.stars = MapLevel.EMapLevelStars.NONE;
-		switch ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelStars (level.name)) 
+		switch ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelStars (level.lvlName)) 
 		{
 		case(1):
 			level.stars = MapLevel.EMapLevelStars.ONE;
