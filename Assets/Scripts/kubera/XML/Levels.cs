@@ -110,14 +110,12 @@ public class Levels
 
 		foreach(Level level in _levels)
 		{
-			if(worlds.ContainsKey(level.world))
-			{
-				worlds[level.world].Add(level);
-			}
-			else
+			if(!worlds.ContainsKey(level.world))
 			{
 				worlds.Add(level.world, new List<Level>());
 			}
+				
+			worlds[level.world].Add(level);
 		}
 
 		foreach(KeyValuePair<int,List<Level>> item in worlds)
