@@ -7,4 +7,14 @@
     <namespace fullname="VoxelBusters.NativePlugins" preserve="all" />
     <namespace fullname="VoxelBusters.NativePlugins.Internal" preserve="all" />
   </assembly>
+  <assembly fullname="UnityEngine">
+    <type fullname="UnityEngine.iOS.NotificationServices" preserve="all" />
+    <type fullname="UnityEngine.iOS.RemoteNotification" preserve="all" />
+    <type fullname="UnityEngine.AndroidJavaClass" preserve="all" />
+    <type fullname="UnityEngine.AndroidJavaObject" preserve="all" />
+  </assembly>
+  <assembly fullname="Parse.Unity">
+    <namespace fullname="Parse" preserve="all" />
+    <namespace fullname="Parse.Internal" preserve="all" />
+  </assembly>
 </linker>
