@@ -7,7 +7,7 @@ public class MapLevel : MonoBehaviour
 	public enum EMapLevelsStatus
 	{
 		NORMAL_LOCKED,
-		NORMAL_UNLOCKED,
+		NORMAL_REACHED,
 		NORMAL_PASSED,
 		BOSS_LOCKED,
 		BOSS_UNLOCKED,

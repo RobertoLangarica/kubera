@@ -11,7 +11,7 @@ namespace Data
 		protected override void Start ()
 		{
 			base.Start ();
-			levelsList = PersistentData.instance.levelsData;	
+			levelsList = PersistentData.GetInstance().levelsData;	
 		}
 
 		public void savePassedLevel(string levelName, int stars, int points)

@@ -37,19 +37,15 @@ public class TutorialManager : MonoBehaviour
 		linesAnimation = FindObjectOfType<LinesCreatedAnimation> ();
 
 		selectTutorial ();
-
-		if (currentTutorial != null) 
-		{
-			moveTutorialToNextPhase ();
-		} 
-		else 
-		{
-			this.enabled = false;
-		}
 	}
 
 	void Update()
 	{
+		if (currentTutorial == null) 
+		{
+			selectTutorial ();
+		}
+
 		if (currentTutorial.phaseEvent == TutorialBase.ENextPhaseEvent.TAP && (Input.touchCount >= 1 || Input.GetMouseButtonDown(0))) 
 		{
 			canCompletePhase ();
@@ -60,11 +56,19 @@ public class TutorialManager : MonoBehaviour
 	{
 		for (int i = 0; i < allTutorials.Count; i++) 
 		{
-			if (PersistentData.instance.currentLevel.name == allTutorials [i].levelName) 
+			if (PersistentData.GetInstance().currentLevel.name == allTutorials [i].levelName) 
 			{
 				currentTutorial = allTutorials [i];
-				return;
 			}
+		}
+	
+		if (currentTutorial != null) 
+		{
+			moveTutorialToNextPhase ();
+		} 
+		else 
+		{
+			this.enabled = false;
 		}
 	}
 

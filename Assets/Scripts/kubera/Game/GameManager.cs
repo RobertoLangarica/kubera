@@ -5,6 +5,7 @@ using ABC;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using Data;
 
 public class GameManager : MonoBehaviour 
 {
@@ -78,7 +79,7 @@ public class GameManager : MonoBehaviour
 
 		linesAnimation.OnCellFlipped += OnCellFlipped; 
 
-		wordManager.setMaxAllowedLetters(PersistentData.instance.maxWordLength);
+		wordManager.setMaxAllowedLetters(PersistentData.GetInstance().maxWordLength);
 		wordManager.gridLettersParent = gridLettersContainer;
 
 		powerupManager.OnPowerupCanceled = OnPowerupCanceled;
@@ -99,28 +100,37 @@ public class GameManager : MonoBehaviour
 		powerupManager.getPowerupByType (PowerupBase.EType.ROTATE).OnPowerupCompleted += rotationDeactivated;
 		inputRotate.OnRotateArrowsActivated += rotationActivated;
 
-		if(PersistentData.instance)
+		if (PersistentData.GetInstance().abcDictionary.getAlfabet () == null) 
 		{
-			configureLevel(PersistentData.instance.currentLevel);
+			PersistentData.GetInstance ().onDictionaryFinished += startGame;
+		} 
+		else 
+		{
+			startGame ();
 		}
 
 		//TODO: Control de flujo de juego con un init
+	}
+
+	protected void startGame()
+	{
+		configureLevel(PersistentData.GetInstance().currentLevel);		
 	}
 
 	void Update()
 	{
 		if (Input.GetKeyUp (KeyCode.R)) 
 		{
-			PersistentData.instance.startLevel -= 1;
+			PersistentData.GetInstance().startLevel -= 1;
 			SceneManager.LoadScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.N)) 
 		{
 			SceneManager.LoadScene ("Game");
 		}
-		if (Input.GetKeyUp (KeyCode.B) && PersistentData.instance.startLevel > 1) 
+		if (Input.GetKeyUp (KeyCode.B) && PersistentData.GetInstance().startLevel > 1) 
 		{
-			PersistentData.instance.startLevel -= 2;
+			PersistentData.GetInstance().startLevel -= 2;
 			SceneManager.LoadScene ("Game");
 		}
 	}
@@ -165,6 +175,7 @@ public class GameManager : MonoBehaviour
 
 	protected void initLettersFromLevel(Level level)
 	{
+		Debug.Log (level);
 		wordManager.initializePoolFromCSV(level.lettersPool,WordManager.EPoolType.NORMAL);
 
 		if(level.obstacleLettersPool.Length > 0)
@@ -742,9 +753,15 @@ public class GameManager : MonoBehaviour
 		} 
 		else 
 		{
+			//Se guarda en sus datos que ha pasado el nivel
+			(LevelsDataManager.GetInstance() as LevelsDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
+				hudManager.getEarnedStars(),pointsCount);
+
+			SceneManager.LoadScene ("Levels");
+
 			//Gano y a se termino win bonification
-			PersistentData.instance.fromLevelBuilder = true;
-			SceneManager.LoadScene ("Game");
+			/*PersistentData.GetInstance().fromLevelBuilder = true;
+			SceneManager.LoadScene ("Game");*/
 		}
 	}
 
@@ -914,7 +931,7 @@ public class GameManager : MonoBehaviour
 
 	public void quitGame()
 	{
-		PersistentData.instance.startLevel -= 1;
+		PersistentData.GetInstance().startLevel -= 1;
 		SceneManager.LoadScene ("Game");
 		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		activatePopUp ("exitGame");*/

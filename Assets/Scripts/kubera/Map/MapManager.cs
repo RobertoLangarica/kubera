@@ -147,7 +147,6 @@ public class MapManager : MonoBehaviour
 					}
 				}
 			}
-
 		} 
 		else 
 		{
@@ -157,11 +156,9 @@ public class MapManager : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelLocked (level.lvlName));
-				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.lvlName) ||
-					!(LevelsDataManager.GetInstance() as LevelsDataManager).isLevelLocked (level.lvlName)) 
+				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.lvlName))
 				{
-					level.status = MapLevel.EMapLevelsStatus.NORMAL_UNLOCKED;
+						level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
 				}
 				else
 				{
@@ -202,7 +199,7 @@ public class MapManager : MonoBehaviour
 		case(MapLevel.EMapLevelsStatus.NORMAL_LOCKED):
 			changeSprite (level.levelIcon,normalLocked);
 			break;
-		case(MapLevel.EMapLevelsStatus.NORMAL_UNLOCKED):
+		case(MapLevel.EMapLevelsStatus.NORMAL_REACHED):
 		case(MapLevel.EMapLevelsStatus.NORMAL_PASSED):
 			changeSprite (level.levelIcon,normalUnlocked);
 			break;
@@ -239,7 +236,7 @@ public class MapManager : MonoBehaviour
 		case(MapLevel.EMapLevelsStatus.BOSS_PASSED):
 		case(MapLevel.EMapLevelsStatus.NORMAL_PASSED):
 		case(MapLevel.EMapLevelsStatus.BOSS_UNLOCKED):
-		case(MapLevel.EMapLevelsStatus.NORMAL_UNLOCKED):
+		case(MapLevel.EMapLevelsStatus.NORMAL_REACHED):
 			level.OnClickNotification += OnLevelUnlockedPressed;
 			break;
 		case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
@@ -255,11 +252,16 @@ public class MapManager : MonoBehaviour
 
 	public void OnLifesPressed()
 	{
-		if (UserDataManager.instance.playerLifes == UserDataManager.instance.maximumLifes) {
+		if (UserDataManager.instance.playerLifes == UserDataManager.instance.maximumLifes) 
+		{
 			openPopUp (fullLifes_PopUp);
-		} else if (UserDataManager.instance.playerLifes == 0) {
+		} 
+		else if (UserDataManager.instance.playerLifes == 0) 
+		{
 			openPopUp (noLifes_PopUp);
-		} else {
+		} 
+		else 
+		{
 			openPopUp (missingLifes_PopUp);
 		}
 
@@ -289,7 +291,7 @@ public class MapManager : MonoBehaviour
 
 	protected void OnLevelUnlockedPressed(MapLevel pressed)
 	{
-		PersistentData.instance.currentLevel = PersistentData.instance.levelsData.getLevelByName (pressed.lvlName);
+		PersistentData.GetInstance ().setLevelNumber (int.Parse (pressed.lvlName));
 		SceneManager.LoadScene ("Game");
 	}
 

@@ -90,7 +90,7 @@ public class UserDataManager
 			}
 
 			//Que se configure el juego para el lenguaje (en este caso diccionarios)
-			PersistentData.instance.configureGameForLanguage();
+			PersistentData.GetInstance().configureGameForLanguage();
 		}
 	}
 
