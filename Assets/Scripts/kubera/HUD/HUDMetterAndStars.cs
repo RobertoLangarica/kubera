@@ -75,6 +75,26 @@ public class HUDMetterAndStars : MonoBehaviour
 			Stars [2].color = Color.yellow;
 		}
 	}
+
+	public int getStarsAmount()
+	{
+		int result = 0;
+
+		if (star3Reached) 
+		{
+			result = 3;
+		}
+		else if (star2Reached) 
+		{
+			result = 2;
+		}
+		else if (star3Reached) 
+		{
+			result = 1;
+		}
+
+		return result;
+	}
 }
 
 

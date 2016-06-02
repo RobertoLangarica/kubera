@@ -6,9 +6,9 @@ public class SettingsButton : MonoBehaviour
 {
 	public void activateMusic()
 	{
-		if (PersistentData.instance.startLevel > 1) 
+		if (PersistentData.GetInstance().startLevel > 1) 
 		{
-			PersistentData.instance.startLevel -= 2;
+			PersistentData.GetInstance().startLevel -= 2;
 			SceneManager.LoadScene ("Game");
 		}
 		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);

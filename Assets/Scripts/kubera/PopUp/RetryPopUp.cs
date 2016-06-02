@@ -18,8 +18,8 @@ public class RetryPopUp : PopUpBase
 		popUpManager = FindObjectOfType<PopUpManager> ();
 		lifesManager = FindObjectOfType<LifesManager> ();
 
-		PersistentData.instance.startLevel--;
-		title.text = "Nivel" + PersistentData.instance.startLevel;
+		PersistentData.GetInstance().startLevel--;
+		title.text = "Nivel" + PersistentData.GetInstance().startLevel;
 
 		content.text = "Seguro lo lograras";
 	}

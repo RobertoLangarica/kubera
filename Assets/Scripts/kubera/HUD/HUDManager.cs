@@ -61,6 +61,11 @@ public class HUDManager : MonoBehaviour
 
 	}
 
+	public int getEarnedStars()
+	{
+		return hudStars.getStarsAmount ();
+	}
+
 	public void updateTextPoints(int pointsCount)
 	{
 		points.text = pointsCount.ToString();

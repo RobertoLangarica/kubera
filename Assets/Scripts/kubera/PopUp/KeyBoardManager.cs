@@ -29,9 +29,9 @@ public class KeyBoardManager : MonoBehaviour
 
 		OnLetterSelected += setLetterToWildCard;
 
-		if (wordManager.wordsValidator.getAlfabet () == null) 
+		if (PersistentData.GetInstance().abcDictionary.getAlfabet () == null) 
 		{
-			PersistentData.instance.onDictionaryFinished += dictionaryReadyToread;
+			PersistentData.GetInstance().onDictionaryFinished += dictionaryReadyToread;
 		} 
 		else 
 		{
@@ -44,7 +44,6 @@ public class KeyBoardManager : MonoBehaviour
 	protected void calculateCellSize()
 	{
 		float width = container.GetComponent<RectTransform> ().rect.size.x;
-		Debug.Log (width);
 
 		width = (width - (container.padding.left * 2) - (container.spacing.x * (container.constraintCount - 1))) / container.constraintCount;
 
@@ -53,7 +52,7 @@ public class KeyBoardManager : MonoBehaviour
 
 	public void dictionaryReadyToread()
 	{
-		fillContainer (wordManager.wordsValidator.getAlfabet());
+		fillContainer (PersistentData.GetInstance().abcDictionary.getAlfabet ());
 	}
 
 	protected void fillContainer(List<ABCUnit> alphabet)
