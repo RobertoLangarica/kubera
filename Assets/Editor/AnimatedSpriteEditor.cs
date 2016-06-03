@@ -57,7 +57,7 @@ public class AnimatedSpriteEditor : Editor
 			}
 			*/
 
-			SerializedProperty frames = sequence.FindPropertyRelative("frames");
+			/*SerializedProperty frames = sequence.FindPropertyRelative("frames");
 
 			for(int j = 0; j < frames.arraySize; j++)
 			{
@@ -70,10 +70,10 @@ public class AnimatedSpriteEditor : Editor
 
 				if(frame.FindPropertyRelative("id").intValue == 0)
 				{
-					frame.FindPropertyRelative("id").intValue = j+1;
+					frame.FindPropertyRelative("id").intValue = j;
 					dirty = true;
 				}
-			}
+			}*/
 		}
 
 		if(dirty)
