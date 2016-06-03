@@ -15,6 +15,7 @@ namespace VoxelBusters.NativePlugins
 
 #if USES_ONE_SIGNAL
 		[SerializeField]
+
 		private		OneSignalServiceSettings		m_oneSignalSettings		= new OneSignalServiceSettings();
 #endif
 
