@@ -11,7 +11,7 @@ namespace Data
 		protected override void Start ()
 		{
 			base.Start ();
-			levelsList = PersistentData.instance.levelsData;	
+			levelsList = PersistentData.GetInstance().levelsData;	
 		}
 
 		public void savePassedLevel(string levelName, int stars, int points)
@@ -71,6 +71,7 @@ namespace Data
 					reached = isLevelPassed(world[world.Count-1].name);
 				}
 			}
+			//else if(index > 1)
 			else
 			{
 				//Ya se paso el nivel anterior

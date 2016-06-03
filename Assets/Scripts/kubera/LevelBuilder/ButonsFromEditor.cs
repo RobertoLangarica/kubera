@@ -9,9 +9,9 @@ public class ButonsFromEditor : MonoBehaviour
 
 	void Start()
 	{
-		if (PersistentData.instance.fromLevelBuilder) 
+		if (PersistentData.GetInstance().fromLevelBuilder) 
 		{
-			PersistentData.instance.fromLevelBuilder = false;
+			PersistentData.GetInstance().fromLevelBuilder = false;
 			resetSceneButton.SetActive (true);
 			toBuilderButton.SetActive (true);
 		}
@@ -25,14 +25,14 @@ public class ButonsFromEditor : MonoBehaviour
 
 	public void goBackToBuilder()
 	{
-		PersistentData.instance.fromGameToEdit = true;
+		PersistentData.GetInstance().fromGameToEdit = true;
 
 		ScreenManager.instance.GoToScene("LevelBuilder");
 	}
 
 	public void resetLevel()
 	{
-		PersistentData.instance.fromLevelBuilder = true;
+		PersistentData.GetInstance().fromLevelBuilder = true;
 		SceneManager.LoadScene ("Game");
 	}
 

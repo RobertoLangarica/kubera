@@ -74,7 +74,15 @@ public class WordManager : MonoBehaviour
 
 		deleteBtnPosition = deleteButtonImage.transform.localPosition;
 
-		wordsValidator = FindObjectOfType<ABCDictionary>();
+		if (PersistentData.GetInstance ()) 
+		{
+			
+			wordsValidator = PersistentData.GetInstance ().abcDictionary;
+		}
+		else
+		{
+			wordsValidator = FindObjectOfType<ABCDictionary> ();
+		}
 
 		inputWords = FindObjectOfType<InputWords> ();
 
@@ -683,6 +691,11 @@ public class WordManager : MonoBehaviour
 		string points_multiplier;
 		int type;
 		ABCChar abcChar;
+
+		if (wordsValidator == null) 
+		{
+			wordsValidator = PersistentData.GetInstance ().abcDictionary;
+		}
 
 		for(int i =0; i<info.Length; i++)
 		{

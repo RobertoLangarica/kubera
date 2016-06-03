@@ -12,11 +12,8 @@ using ABCSerializer;
  * necesidad de ir directamente dirigida a alguien.
  * 
  * */
-public class PersistentData : MonoBehaviour 
+public class PersistentData : Manager<PersistentData>
 {
-	//Solo existe una sola instancia en todo el juego de este objeto
-	public static PersistentData instance = null;
-
 	public delegate void DNotify();
 	public DNotify onDictionaryFinished;
 
@@ -38,24 +35,9 @@ public class PersistentData : MonoBehaviour
 
 	public int startLevel = 1;
 
-	void Awake() 
+	protected override void Awake() 
 	{
-		GameObject[] go = GameObject.FindGameObjectsWithTag ("persistentData");
-		for(int i=1; i< go.Length; i++)
-		{
-			DestroyImmediate (go [i]);
-		}
-
-		//No se si al mandar destroyed en el awake llegue entrar a start pero no corremos riesgos
-		if (go.Length > 1) 
-		{
-			destroyed = true;
-			return;
-		}
-
-		instance = this;
-		DontDestroyOnLoad(this);
-
+		base.Awake ();
 		setLevelNumber(levelNumber);
 	}
 

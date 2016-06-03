@@ -7,7 +7,7 @@ public class MapLevel : MonoBehaviour
 	public enum EMapLevelsStatus
 	{
 		NORMAL_LOCKED,
-		NORMAL_UNLOCKED,
+		NORMAL_REACHED,
 		NORMAL_PASSED,
 		BOSS_LOCKED,
 		BOSS_UNLOCKED,
@@ -41,10 +41,10 @@ public class MapLevel : MonoBehaviour
 	public delegate void DOnClickNotification(MapLevel pressed);
 	public DOnClickNotification OnClickNotification;
 
-	void Start()
+	public void updateText()
 	{
-		lvlName = name.Substring (2).Remove (name.Substring (2).Length-1);
-		//lvlNameText.text = lvlName;
+		lvlName = lvlName.Replace ("0","");
+		lvlNameText.text = lvlName;
 	}
 
 	public void onClick()

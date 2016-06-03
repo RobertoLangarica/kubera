@@ -71,7 +71,7 @@ namespace LevelBuilder
 
 			//Mientras se procesa el diccionario por primera vez
 			showLoadingIndicator();
-			PersistentData.instance.onDictionaryFinished += hideLoadingIndicatorandRemoveCallback;
+			PersistentData.GetInstance().onDictionaryFinished += hideLoadingIndicatorandRemoveCallback;
 
 			StartCoroutine (initializeAfterGame());
 		}
@@ -154,7 +154,7 @@ namespace LevelBuilder
 		 **/ 
 		private void updateLevelSelectorOptions()
 		{
-			List<string> names = PersistentData.instance.levelsData.getAllLevelsNames();
+			List<string> names = PersistentData.GetInstance().levelsData.getAllLevelsNames();
 			names.Sort();
 
 			List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
@@ -198,10 +198,10 @@ namespace LevelBuilder
 
 		private void setAlfabetToABCSelectors()
 		{
-			abcSelector.setAlfabet(PersistentData.instance.abcDictionary.getAlfabet());
-			abcGoalSelector.setAlfabet(PersistentData.instance.abcDictionary.getAlfabet());
-			abcObstacleSelector.setAlfabet(PersistentData.instance.abcDictionary.getAlfabet());
-			abcTutorialSelector.setAlfabet(PersistentData.instance.abcDictionary.getAlfabet());
+			abcSelector.setAlfabet(PersistentData.GetInstance().abcDictionary.getAlfabet());
+			abcGoalSelector.setAlfabet(PersistentData.GetInstance().abcDictionary.getAlfabet());
+			abcObstacleSelector.setAlfabet(PersistentData.GetInstance().abcDictionary.getAlfabet());
+			abcTutorialSelector.setAlfabet(PersistentData.GetInstance().abcDictionary.getAlfabet());
 		}
 
 		private void setABCSelectorsDefaultData()
@@ -223,10 +223,10 @@ namespace LevelBuilder
 			bool add = false;
 
 			//Creamos un nuevo nivel o guardamos uno que ya existe
-			if(PersistentData.instance.levelsData.existLevel(currentEditingLevelName))
+			if(PersistentData.GetInstance().levelsData.existLevel(currentEditingLevelName))
 			{
 				//Ya existe el nivel asi que lo modificamos
-				lvlToSave = PersistentData.instance.levelsData.getLevelByName(currentEditingLevelName);
+				lvlToSave = PersistentData.GetInstance().levelsData.getLevelByName(currentEditingLevelName);
 			}
 			else
 			{
@@ -268,11 +268,11 @@ namespace LevelBuilder
 
 			if(add)
 			{
-				PersistentData.instance.levelsData.addLevel(lvlToSave);
+				PersistentData.GetInstance().levelsData.addLevel(lvlToSave);
 			}
 
 			//Guardamos el archivo
-			PersistentData.instance.levelsData.Save(Application.dataPath+"/Resources/levels_"+languageSelector.options[languageSelector.value].text+".xml");
+			PersistentData.GetInstance().levelsData.Save(Application.dataPath+"/Resources/levels_"+languageSelector.options[languageSelector.value].text+".xml");
 
 			#if UNITY_EDITOR
 			AssetDatabase.Refresh();
@@ -288,7 +288,7 @@ namespace LevelBuilder
 			currentEditingLevelName = levelName;
 			updateShowedName();
 
-			Level level = PersistentData.instance.levelsData.getLevelByName(levelName);
+			Level level = PersistentData.GetInstance().levelsData.getLevelByName(levelName);
 
 			abcSelector.sincronizeDataWithCSV(level.lettersPool);
 			abcObstacleSelector.sincronizeDataWithCSV(level.obstacleLettersPool);
@@ -327,13 +327,13 @@ namespace LevelBuilder
 
 			//Procesamos niveles y diccionario en el lenguaje indicado
 			showLoadingIndicator();
-			PersistentData.instance.onDictionaryFinished += onDiccionaryFinished;
-			PersistentData.instance.configureGameForLanguage(languageSelector.options[languageSelector.value].text);
+			PersistentData.GetInstance().onDictionaryFinished += onDiccionaryFinished;
+			PersistentData.GetInstance().configureGameForLanguage(languageSelector.options[languageSelector.value].text);
 		}
 
 		private void onDiccionaryFinished()
 		{
-			PersistentData.instance.onDictionaryFinished -= onDiccionaryFinished;
+			PersistentData.GetInstance().onDictionaryFinished -= onDiccionaryFinished;
 			resetEditorToDefaultState(languageSelector.options[languageSelector.value].text);
 			Invoke("hideLoadingIndicator",0.5f);
 		}
@@ -371,7 +371,7 @@ namespace LevelBuilder
 
 				//Warning si existe el nivel 
 				int n = int.Parse(saveAsInput.text);
-				saveAsWarning.gameObject.SetActive(PersistentData.instance.levelsData.existLevel(n));
+				saveAsWarning.gameObject.SetActive(PersistentData.GetInstance().levelsData.existLevel(n));
 			}
 			else
 			{
@@ -553,7 +553,7 @@ namespace LevelBuilder
 		{
 			word = word.ToUpperInvariant();
 			word = word.Replace('Á','A').Replace('É','E').Replace('Í','I').Replace('Ó','Ó').Replace('Ú','U').Replace('Ü','U');
-			return PersistentData.instance.abcDictionary.isValidWord(word);
+			return PersistentData.GetInstance().abcDictionary.isValidWord(word);
 		}
 
 		public bool wordExistInPreviousLevels(string word)
@@ -561,7 +561,7 @@ namespace LevelBuilder
 			word = word.ToUpperInvariant();
 			word = word.Replace('Á','A').Replace('É','E').Replace('Í','I').Replace('Ó','Ó').Replace('Ú','U').Replace('Ü','U');
 
-			foreach(Level lvl in PersistentData.instance.levelsData.levels)
+			foreach(Level lvl in PersistentData.GetInstance().levelsData.levels)
 			{
 				if(lvl.goal != null && lvl.goal.Length != 0)
 				{
@@ -589,9 +589,9 @@ namespace LevelBuilder
 		{
 			word = word.ToUpperInvariant();
 			word = word.Replace('Á','A').Replace('É','E').Replace('Í','I').Replace('Ó','Ó').Replace('Ú','U').Replace('Ü','U');
-			PersistentData.instance.addWordToDictionary(word,languageSelector.options[languageSelector.value].text);
-			PersistentData.instance.abcDictionary.registerNewWord(word);
-			PersistentData.instance.serializeAndSaveDictionary(languageSelector.options[languageSelector.value].text);
+			PersistentData.GetInstance().addWordToDictionary(word,languageSelector.options[languageSelector.value].text);
+			PersistentData.GetInstance().abcDictionary.registerNewWord(word);
+			PersistentData.GetInstance().serializeAndSaveDictionary(languageSelector.options[languageSelector.value].text);
 		}
 
 		public void OnReset()
@@ -613,7 +613,7 @@ namespace LevelBuilder
 		{
 			writeLevelToXML();
 
-			PersistentData.instance.setLevelNumber(int.Parse(currentEditingLevelName),true);
+			PersistentData.GetInstance().setLevelNumber(int.Parse(currentEditingLevelName),true);
 
 			ScreenManager.instance.GoToScene("Game");
 		}
@@ -626,17 +626,17 @@ namespace LevelBuilder
 		private void hideLoadingIndicatorandRemoveCallback()
 		{
 			//hideLoadingIndicator();
-			PersistentData.instance.onDictionaryFinished += hideLoadingIndicatorandRemoveCallback;
+			PersistentData.GetInstance().onDictionaryFinished += hideLoadingIndicatorandRemoveCallback;
 		}
 
 		IEnumerator initializeAfterGame()
 		{
 			yield return new WaitForSeconds (.5f);
-			if(PersistentData.instance.fromGameToEdit)
+			if(PersistentData.GetInstance().fromGameToEdit)
 			{
-				PersistentData.instance.fromGameToEdit = false;
+				PersistentData.GetInstance().fromGameToEdit = false;
 
-				configureHUDFromLevel (PersistentData.instance.currentLevel.name);
+				configureHUDFromLevel (PersistentData.GetInstance().currentLevel.name);
 
 			}
 		}
