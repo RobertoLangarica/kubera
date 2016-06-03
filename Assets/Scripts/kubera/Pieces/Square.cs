@@ -56,6 +56,9 @@ public class Square : MonoBehaviour
 		flipAnimation.enabled = true;
 		flipAnimation.autoUpdate = true;
 
+		//TODO: HardCodding pedirle a lilo que sean del mismo tamaño
+		yield return new WaitUntil (()=>flipAnimation.sequences[0].currentFrame >= 1);
+		this.transform.localScale = new Vector3 (0.45f, 0.45f, 0.45f);
 		yield return new WaitUntil (()=>flipAnimation.sequences[0].currentFrame >= 14);
 		cellParent.content.GetComponent<SpriteRenderer> ().color = Color.white;
 
