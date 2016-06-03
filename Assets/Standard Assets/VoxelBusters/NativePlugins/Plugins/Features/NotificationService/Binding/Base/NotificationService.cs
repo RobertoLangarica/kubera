@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 #if USES_NOTIFICATION_SERVICE 
-using System.Collections.Generic;
 
 namespace VoxelBusters.NativePlugins
 {
@@ -54,13 +54,17 @@ namespace VoxelBusters.NativePlugins
 		protected virtual void InitialiseOneSignalService()
 		{
 			// Initialise One Signal service
-			OneSignalServiceSettings	_oneSignalSettings	= NPSettings.AddonServicesSettings.OneSignalService;
-			
-			OneSignal.Init(_oneSignalSettings.AppID, 
-			               _oneSignalSettings.GoogleProjectNumber, 
-			               DidReceiveOneSignalNotification,
-			               false);
 
+			OneSignalServiceSettings	_oneSignalSettings	= NPSettings.AddonServicesSettings.OneSignalService;
+			OneSignal.Init("16ec9a5a-f7ec-4e6b-9411-6ef397c6cca5", "28159365108", HandleNotification);
+
+			/*OneSignal.Init(_oneSignalSettings.AppID, 
+			               _oneSignalSettings.GoogleProjectNumber 
+			               DidReceiveOneSignalNotification,
+			               false);*/
+		}
+
+		private static void HandleNotification(string message, Dictionary<string, object> additionalData, bool isActive) {
 		}
 #endif
 

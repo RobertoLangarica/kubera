@@ -826,7 +826,7 @@ public class GameManager : MonoBehaviour
 		//Checa si tiene dinero para usar el poder
 		//transaction manager
 		print (powerupManager.getPowerupByType(type).isFree);
-		if(powerupManager.getPowerupByType(type).isFree || TransactionManager.instance.tryToUseGems(TransactionManager.instance.powerUpPrices(type)))
+		if(powerupManager.getPowerupByType(type).isFree || TransactionManager.GetInstance().tryToUseGems(TransactionManager.GetInstance().powerUpPrices(type)))
 		{			
 			return true;
 		}

@@ -49,7 +49,7 @@ public class NoLifesPopUp : PopUpBase
 
 	public void rechargeLifes()
 	{
-		if(TransactionManager.instance.tryToUseGems(price))
+		if(TransactionManager.GetInstance().tryToUseGems(price))
 		{
 			UserDataManager.instance.giveLifeToPlayer (UserDataManager.instance.maximumLifes);
 
