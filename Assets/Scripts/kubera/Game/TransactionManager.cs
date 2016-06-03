@@ -1,16 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TransactionManager : MonoBehaviour 
+public class TransactionManager : Manager<TransactionManager> 
 {
-	public static TransactionManager instance = null;
-
 	protected bool isTest = true;
-
-	void Awake()
-	{
-		instance = this;
-	}
 
 	//TODO: quien se traiga datos del usuario setearlos a local aqui
 	public void setCurrentGemsToUserData(int gems)
@@ -39,7 +32,7 @@ public class TransactionManager : MonoBehaviour
 			return true;
 		}
 	
-		if (TransactionManager.instance.checkIfExistEnoughGems (gems)) 
+		if (TransactionManager.GetInstance().checkIfExistEnoughGems (gems)) 
 		{
 			UserDataManager.instance.giveGemsToPlayer (-gems);
 			return true;
