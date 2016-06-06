@@ -9,5 +9,6 @@ public class ParseManager : MonoBehaviour
 		ParseObject testObject = new ParseObject("TestObject");
 		testObject["foo"] = "REMOTE TEst";
 		testObject.SaveAsync();
+
 	}
 }
