@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
 public class TutorialLvl1 : TutorialBase
 {
+	public GoalPopUp goalPopUp;
+
 	protected List<Cell> cells;
 
 	protected override void Start()
@@ -26,11 +29,14 @@ public class TutorialLvl1 : TutorialBase
 			allowDragPieces = false;
 			allowPowerUps = false;
 
-			instructions [0].text = MultiLanguageTextManager.instance.multipleReplace(
+			instructions [0].text = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE1),
-				new string[3]{"'","{{b}}","{{/b}}"},new string[3]{"\"","<b>","</b>"});
+				new string[3]{ "'", "{{b}}", "{{/b}}" }, new string[3]{ "\"", "<b>", "</b>" });
 
 			phase = 1;
+
+			goalPopUp.OnPopUpCompleted += phase0Animation;
+
 			return true;
 		case(1):
 			phasesPanels [0].SetActive (false);
@@ -129,5 +135,24 @@ public class TutorialLvl1 : TutorialBase
 		}
 		
 		return base.phaseObjectiveAchived ();
+	}
+
+	private void phase0Animation(PopUpBase thisPopUp, string action)
+	{
+		showHandAt (handPositions [0].transform.position);
+		Invoke ("phase1Animation",2);
+	}
+
+	private void phase1Animation()
+	{
+		playPressAnimation ();
+		moveHandFromGameObjects (handPositions[0],handPositions[1]);
+		OnMovementComplete += hideHand;
+	}
+
+	private void phase2Animation()
+	{
+		showHandAt (handPositions [2].transform.position);
+		OnMovementComplete -= hideHand;
 	}
 }

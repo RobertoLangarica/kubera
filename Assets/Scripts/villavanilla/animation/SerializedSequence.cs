@@ -237,9 +237,8 @@ public class SerializedSequence
 	
 	public void updateImage(TransformInfo transformInfo)
 	{
-		imageReference.sprite = completeFrames[currentFrame].sprite;
-		currentSprite = completeFrames[currentFrame];
-		
+		updateImage ();
+
 		Vector3 pos = (currentSprite.pivot+currentSprite.offset);
 		pos.x *= transformInfo.scale.x + transformInfo.offset.x;
 		pos.y *= transformInfo.scale.y + transformInfo.offset.y;
@@ -247,6 +246,12 @@ public class SerializedSequence
 		
 		//imageReference.gameObject.transform.localPosition = pos;
 		//imageReference.gameObject.transform.localScale = transformInfo.scale;
+	}
+
+	public void updateImage()
+	{
+		imageReference.sprite = completeFrames[currentFrame].sprite;
+		currentSprite = completeFrames[currentFrame];
 	}
 
 	public void reset()

@@ -5,10 +5,12 @@ using System.Collections.Generic;
 public class BombAnimation : MonoBehaviour 
 {
 	public delegate void DAnimationNotification();
+	public delegate void DOnAnimationFinish(Cell cell,Letter letter);
 	
 	public AnimatedSprite Animation;
 
 	public DAnimationNotification OnAllAnimationsCompleted;
+	public DOnAnimationFinish OnCellFlipped;
 
 	protected CellsManager cellsManager;
 	protected WordManager wordManager;
@@ -138,6 +140,11 @@ public class BombAnimation : MonoBehaviour
 		if (occupiedAnimation.Count == 0 && OnAllAnimationsCompleted != null) 
 		{
 			OnAllAnimationsCompleted ();
+		}
+
+		if (OnCellFlipped != null) 
+		{
+			OnCellFlipped (cell,letter);
 		}
 	}
 }

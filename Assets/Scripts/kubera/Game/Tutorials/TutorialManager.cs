@@ -59,6 +59,7 @@ public class TutorialManager : MonoBehaviour
 			if (PersistentData.GetInstance().currentLevel.name == allTutorials [i].levelName) 
 			{
 				currentTutorial = allTutorials [i];
+				currentTutorial.gameObject.SetActive (true);
 			}
 		}
 	
