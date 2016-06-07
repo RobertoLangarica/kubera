@@ -220,6 +220,7 @@ public class GameManager : MonoBehaviour
 				Piece content = pieceManager.getSingleSquarePiece(cellType>>6);
 				content.squares [0].GetComponent<Collider2D> ().enabled = true;
 				cellManager.occupyAndConfigureCell(i,content.gameObject.transform.GetChild (0).gameObject,content.currentType,content.currentColor,true);
+				content.gameObject.transform.SetParent (hudManager.showingPiecesContainer);
 			}
 			else if((cellType & 0x8) == 0x8)
 			{	

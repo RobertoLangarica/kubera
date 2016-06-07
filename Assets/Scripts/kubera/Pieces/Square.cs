@@ -12,6 +12,10 @@ public class Square : MonoBehaviour
 
 	protected Cell cellParent;
 	protected Letter letter;
+
+	//TODO: hardcoding
+	public bool oneSquare;
+
 	void Start () 
 	{
 		flipAnimation.enabled = false;
@@ -58,7 +62,14 @@ public class Square : MonoBehaviour
 
 		//TODO: HardCodding pedirle a lilo que sean del mismo tamaño
 		yield return new WaitUntil (()=>flipAnimation.sequences[0].currentFrame >= 1);
-		this.transform.localScale = new Vector3 (0.45f, 0.45f, 0.45f);
+		if(!oneSquare)
+		{
+			this.transform.localScale = new Vector3 (0.45f, 0.45f, 0.45f);
+		}
+		else
+		{
+			this.transform.localScale = new Vector3 (0.115f, 0.115f, 0.115f);
+		}
 		yield return new WaitUntil (()=>flipAnimation.sequences[0].currentFrame >= 14);
 		cellParent.content.GetComponent<SpriteRenderer> ().color = Color.white;
 
