@@ -11,7 +11,7 @@ public class FacebookManager : MonoBehaviour
 	protected FBGraph fbGraph;
 	protected FacebookNews facebookNews;
 	protected PlayerInfo playerInfo;
-	protected FBLog fbLog;
+	protected FBLoggin fbLog;
 	protected MapManager mapManager;
 	public FBFriendsRequestPanel fbRequestPanel;
 
@@ -41,7 +41,7 @@ public class FacebookManager : MonoBehaviour
 	void Awake()
 	{
 		fbGraph = FindObjectOfType<FBGraph> ();
-		fbLog = FindObjectOfType<FBLog> ();
+		fbLog = FBLoggin.GetInstance();
 		facebookNews = FindObjectOfType<FacebookNews> ();
 		playerInfo = FindObjectOfType<PlayerInfo> ();
 		mapManager = FindObjectOfType<MapManager> ();

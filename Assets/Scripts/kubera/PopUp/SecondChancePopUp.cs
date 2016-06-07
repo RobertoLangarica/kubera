@@ -58,7 +58,7 @@ public class SecondChancePopUp : PopUpBase
 	protected void checkDiscount()
 	{
 		//Debug.Log (UserDataManager.instance.playerGems);
-		if (!TransactionManager.instance.checkIfExistEnoughGems (price)) 
+		if (!TransactionManager.GetInstance().checkIfExistEnoughGems (price)) 
 		{
 			price = (int)(price * 0.5f);
 			discountDisplay.SetActive (true);
@@ -68,7 +68,7 @@ public class SecondChancePopUp : PopUpBase
 
 	public void buyASecondChance()
 	{
-		if(TransactionManager.instance.tryToUseGems(price))
+		if(TransactionManager.GetInstance().tryToUseGems(price))
 		{
 			secondChanceTimes++;
 

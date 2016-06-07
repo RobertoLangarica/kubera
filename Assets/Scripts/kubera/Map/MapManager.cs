@@ -131,21 +131,22 @@ public class MapManager : MonoBehaviour
 			} 
 			else 
 			{
-				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelLocked (level.lvlName)) 
+				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.lvlName)) 
 				{
-					level.status = MapLevel.EMapLevelsStatus.BOSS_LOCKED;
-				}
-				else 
-				{
-					if ((LevelsDataManager.GetInstance () as LevelsDataManager).isLevelReached (level.lvlName)) 
-					{
-						level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
-					} 
-					else 
+					level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
+					Debug.Log ("boss reached");
+					Debug.Log (!(LevelsDataManager.GetInstance () as LevelsDataManager).isLevelLocked (level.lvlName));
+
+					if (!(LevelsDataManager.GetInstance () as LevelsDataManager).isLevelLocked (level.lvlName)) 
 					{
 						level.status = MapLevel.EMapLevelsStatus.BOSS_UNLOCKED;
-					}
+					} 
+
 				}
+				else
+				{
+					level.status = MapLevel.EMapLevelsStatus.BOSS_LOCKED;
+				} 
 			}
 		} 
 		else 
@@ -270,6 +271,16 @@ public class MapManager : MonoBehaviour
 	public void unlockBoss(string lvlName)
 	{
 		(LevelsDataManager.GetInstance () as LevelsDataManager).unlockLevel (lvlName);
+
+		for (int i = 0; i < mapLevels.Count; i++) 
+		{
+			if (mapLevels [i].lvlName == lvlName) 
+			{
+				mapLevels [i].status = MapLevel.EMapLevelsStatus.BOSS_UNLOCKED;
+				mapLevels [i].OnClickNotification -= OnBossReachedPressed;
+				mapLevels [i].OnClickNotification += OnLevelUnlockedPressed;
+			}
+		}
 	}
 
 	protected void OnBossReachedPressed(MapLevel pressed)
@@ -281,11 +292,10 @@ public class MapManager : MonoBehaviour
 		else 
 		{
 			bossLockedPopUp.lvlName = pressed.lvlName;
-			bossLockedPopUp.starsNeeded = pressed.starsNeeded;
-			bossLockedPopUp.stars = (LevelsDataManager.GetInstance () as LevelsDataManager).getAllEarnedStars ();
-			bossLockedPopUp.gemsNeeded = pressed.gemsNeeded;
 
-			popUpManager.activatePopUp ("bossLocked");
+			bossLockedPopUp.initializeValues (pressed.friendsNeeded,pressed.gemsNeeded,pressed.starsNeeded);
+
+			openPopUp ("bossLocked");
 		}
 	}
 

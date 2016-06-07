@@ -43,8 +43,7 @@ public class MapLevel : MonoBehaviour
 
 	public void updateText()
 	{
-		lvlName = lvlName.Replace ("0","");
-		lvlNameText.text = lvlName;
+		lvlNameText.text = lvlName.Replace ("0","");
 	}
 
 	public void onClick()

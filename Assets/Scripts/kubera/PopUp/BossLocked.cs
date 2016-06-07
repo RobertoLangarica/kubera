@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Data;
 
 public class BossLocked : PopUpBase {
 
@@ -12,8 +13,6 @@ public class BossLocked : PopUpBase {
 	public Text gemsNumber;
 	public Text gemsText;
 
-	[HideInInspector]public int starsNeeded;
-	[HideInInspector]public int stars;
 	[HideInInspector]public int gemsNeeded;
 	[HideInInspector]public string lvlName;
 
@@ -27,11 +26,13 @@ public class BossLocked : PopUpBase {
 		popUp.SetActive (true);
 	}
 
-	public void initializeValues(int friendsNeeded,int gemsNeeded,int starsNeeded)
+	public void initializeValues(int friendsNeeded,int gems,int starsNeeded)
 	{
 		//TODO: estrellas
-		starsNumber.text = starsNeeded.ToString() + " / " + "200";
-		gemsNumber.text = gemsNeeded.ToString ();
+		starsNumber.text = (LevelsDataManager.GetInstance () as LevelsDataManager).getAllEarnedStars ().ToString() + " / " + starsNeeded.ToString();
+		gemsNumber.text = gems.ToString ();
+		friendsText.text = friendsNeeded.ToString ();
+		gemsNeeded = gems;
 	}
 
 	public void facebookHelp()
@@ -42,9 +43,10 @@ public class BossLocked : PopUpBase {
 	public void gemsCharge()
 	{
 		//TODO: abrir popUp de enviar a shopika
-		if (TransactionManager.instance.tryToUseGems (gemsNeeded)) 
+		if (TransactionManager.GetInstance().tryToUseGems (gemsNeeded)) 
 		{
 			FindObjectOfType<MapManager> ().unlockBoss (lvlName);
+			closePressed ();
 		}
 	}
 
