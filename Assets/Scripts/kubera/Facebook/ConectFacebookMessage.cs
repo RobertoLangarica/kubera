@@ -3,11 +3,11 @@ using System.Collections;
 
 public class ConectFacebookMessage : MonoBehaviour {
 
-	protected FBLog fbLog;
+	protected FBLoggin fbLog;
 
 	public void Awake()
 	{
-		fbLog = FindObjectOfType<FBLog> ();
+		fbLog = FindObjectOfType<FBLoggin> ();
 	}
 
 	public void conectFacebook()

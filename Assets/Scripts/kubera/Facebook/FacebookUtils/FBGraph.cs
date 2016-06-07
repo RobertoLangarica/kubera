@@ -322,6 +322,5 @@ public class FBGraph : MonoBehaviour
 			print("onFinishGettingInfo");
 			onFinishGettingInfo ();
 		}
-
 	}   
 }        

@@ -228,6 +228,8 @@ namespace LevelBuilder
 			selectableWord.interactable			= false;
 
 			abcSelector.sincronizeDataWithCSV("");
+			wordPopup.actualizeInputValues();
+			wordPopup.resetWords ();
 			wordPopup.reset();
 			inputPoints.text = "00";
 			inputWords.text = "00";

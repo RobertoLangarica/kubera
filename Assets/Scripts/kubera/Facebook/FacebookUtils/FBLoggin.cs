@@ -2,13 +2,15 @@
 using System.Collections;
 using Facebook.Unity;
 
-public class FBLog : MonoBehaviour {
+public class FBLoggin : Manager<FBLoggin>
+{
 
 	public delegate void DOnLoginComplete(bool complete);
 
 	public DOnLoginComplete onLoginComplete;
 
-	public bool isLoggedIn;
+	[HideInInspector]public bool isLoggedIn;
+
 	void Start()
 	{
 		// Initialize FB SDK

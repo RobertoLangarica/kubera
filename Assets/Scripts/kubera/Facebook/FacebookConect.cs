@@ -7,15 +7,15 @@ public class FacebookConect : MonoBehaviour {
 	public GameObject conect;
 	public GameObject logOut;
 
-	protected FBLog fbLog;
+	protected FBLoggin fbLog;
 
 	public void Awake()
 	{
-		fbLog = FindObjectOfType<FBLog> ();
+		fbLog = FBLoggin.GetInstance();
 
 		if(fbLog == null)
 		{
-			fbLog =  gameObject.AddComponent<FBLog> ();
+			fbLog =  gameObject.AddComponent<FBLoggin> ();
 		}
 
 		changeButton (fbLog.isLoggedIn);
