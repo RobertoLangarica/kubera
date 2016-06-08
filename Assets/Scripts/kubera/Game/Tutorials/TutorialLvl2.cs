@@ -30,6 +30,7 @@ public class TutorialLvl2 : TutorialBase
 
 			phase = 1;
 			phaseObj = "H";
+			goalPopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
 			phasesPanels [0].SetActive (false);
@@ -45,11 +46,12 @@ public class TutorialLvl2 : TutorialBase
 
 			instructions [1].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE2A);
 
-			instructions [2].text = MultiLanguageTextManager.instance.multipleReplace(
+			instructions [2].text = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE2B),
-				new string[3]{"'","{{b}}","{{/b}}"},new string[3]{"\"","<b>","</b>"});
+				new string[3]{ "'", "{{b}}", "{{/b}}" }, new string[3]{ "\"", "<b>", "</b>" });
 
 			phase = 2;
+			phase2Animation ();
 			return true;
 		case(2):
 			phasesPanels [1].SetActive (false);
@@ -63,6 +65,8 @@ public class TutorialLvl2 : TutorialBase
 			allowPowerUps = true;
 
 			instructions [3].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE3);
+			phase = 3;
+			hideHand ();
 			return true;
 		}
 
@@ -85,4 +89,31 @@ public class TutorialLvl2 : TutorialBase
 
 		return base.phaseObjectiveAchived ();
 	}	
+
+	private void startTutorialAnimation(PopUpBase thisPopUp, string action)
+	{
+		phase1Animation ();
+	}
+
+	private void phase1Animation()
+	{
+		if (phase == 1) 
+		{
+			playTapAnimation ();
+			showHandAt (handPositions [0].transform.position, Vector3.zero, false);
+
+			Invoke ("phase1Animation", 1);
+		}
+	}
+
+	private void phase2Animation()
+	{
+		if (phase == 2) 
+		{
+			playTapAnimation ();
+			showHandAt (handPositions [1].transform.position, Vector3.zero, false);
+
+			Invoke ("phase2Animation", 1);
+		}
+	}
 }
