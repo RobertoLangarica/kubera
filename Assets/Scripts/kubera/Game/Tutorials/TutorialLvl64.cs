@@ -231,7 +231,9 @@ public class TutorialLvl64 : TutorialBase
 		{
 			if (temp [i].abcChar.character == phaseObj) 
 			{
-				handPositions [1].transform.position = temp [i].transform.position;
+				RectTransform rectT = temp [i].GetComponent<RectTransform> ();
+				handPositions [1].transform.position = new Vector3(rectT.anchoredPosition.x,rectT.anchoredPosition.y,0) + new Vector3 (
+					-temp [i].gameObject.GetComponent<Image> ().sprite.bounds.extents.x,-temp [i].gameObject.GetComponent<Image> ().sprite.bounds.size.y,0);
 				Debug.Log (temp [i].transform.position);
 				Debug.Log (temp[i].transform.localPosition);
 				break;
