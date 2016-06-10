@@ -44,6 +44,11 @@ public class InputBlockPowerUp : MonoBehaviour
 		this.canUse = canUse;
 	}
 
+	public GameObject getCurrentSelected()
+	{
+		return currentSelected;
+	}
+
 	void OnDrag(DragGesture gesture) 
 	{
 		//Solo se ejecuta una vez por frame (multifinger puede llamarlo mas de una vez)

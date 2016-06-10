@@ -4,8 +4,6 @@ using DG.Tweening;
 
 public class BombPowerUp : PowerupBase 
 {
-	public GameObject powerUpBlock;
-
 	protected CellsManager cellsManager;
 	protected InputBombAndDestroy bombInput;
 	protected BombAnimation bombAnimation;
@@ -34,6 +32,8 @@ public class BombPowerUp : PowerupBase
 		bombInput.setCurrentSelected(bombGO);
 		bombInput.OnDrop += powerUpPositioned;
 		this.canUse = canUse;
+
+		updateDragableObjectImage (bombGO);
 	}
 
 	public void powerUpPositioned()

@@ -733,6 +733,7 @@ public class WordManager : MonoBehaviour
 		abc.pointsOrMultiple = pointsOrMultiple;
 
 		letter.type = Letter.EType.WILD_CARD;
+		letter.updateColor ();
 		letter.abcChar = abc;
 
 		letter.updateTexts();
