@@ -124,7 +124,7 @@ public class TutorialLvl52 : TutorialBase
 		{
 			playPressAnimation ();
 			showObjectAtHand (offset);
-			moveHandFromGameObjects (handPositions[0],handPositions[1],offset);
+			moveHandFromGameObjects (handPositions[0],handPositions[1],offset,1.5f);
 			OnMovementComplete += hideHand;
 
 			Invoke ("phase0Animation", 2);

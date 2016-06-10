@@ -41,8 +41,10 @@ public class TutorialLvl4 : TutorialBase
 			allowErraseWord = true;
 			allowDragPieces = true;
 			allowPowerUps = true;
-
-			instructions [2].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV4_PHASE2);		
+	
+			instructions [2].text = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV4_PHASE2),
+				new string[1]{ "{{score}}"}, new string[1]{hudManager.goalText.text.Split('/')[1]});	
 			phase = 2;
 			hideHand ();
 			return true;

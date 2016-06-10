@@ -61,12 +61,14 @@ public class TutorialBase : MonoBehaviour
 	protected WordManager wordManager;
 	protected GameManager gameManager;
 	protected CellsManager cellManager;
+	protected HUDManager hudManager;
 
 	protected virtual void Start()
 	{
 		gameManager = FindObjectOfType<GameManager> ();
 		wordManager = FindObjectOfType<WordManager> ();
 		cellManager = FindObjectOfType<CellsManager> ();
+		hudManager = FindObjectOfType<HUDManager> ();
 
 		scaleHand ();
 	}
@@ -77,14 +79,12 @@ public class TutorialBase : MonoBehaviour
 		{
 			if (!alphaLowered) 
 			{
-				Debug.Log ("1");
 				changeAlpha (0.3f, 0.3f);
 			}
 		}
 		else if(alphaLowered)
 		{
-			Debug.Log ("2");
-			changeAlpha (1,0.5f);
+			changeAlpha (1,0.8f);
 			alphaLowered = false;
 		}
 		/*if (Input.GetKeyDown (KeyCode.Q)) 
@@ -207,6 +207,7 @@ public class TutorialBase : MonoBehaviour
 
 	protected void playPressAnimation()
 	{
+		tutorialHand.gameObject.SetActive (true);
 		tutorialHand.autoUpdate = false;
 		tutorialHand.sequences [0].currentFrame = 1;
 		tutorialHand.sequences [0].updateImage();
@@ -214,6 +215,7 @@ public class TutorialBase : MonoBehaviour
 
 	protected void playReleaseAnimation()
 	{
+		tutorialHand.gameObject.SetActive (true);
 		tutorialHand.autoUpdate = false;
 		tutorialHand.sequences [0].currentFrame = 0;
 		tutorialHand.sequences [0].updateImage();
@@ -221,6 +223,7 @@ public class TutorialBase : MonoBehaviour
 
 	protected void playTapAnimation()
 	{
+		tutorialHand.gameObject.SetActive (true);
 		tutorialHand.sequences [0].currentFrame = 0;
 		tutorialHand.sequences [0].updateImage();
 		tutorialHand.autoUpdate = true;

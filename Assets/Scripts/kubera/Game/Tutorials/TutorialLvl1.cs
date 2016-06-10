@@ -14,7 +14,7 @@ public class TutorialLvl1 : TutorialBase
 	{
 		base.Start ();
 
-		offset = new Vector3(0,handObject.gameObject.GetComponent<Image> ().sprite.bounds.extents.y,0);
+		offset = new Vector3(0,handObject.gameObject.GetComponent<Image> ().sprite.bounds.size.y,0);
 	}
 
 	public override bool canMoveToNextPhase ()
@@ -79,6 +79,7 @@ public class TutorialLvl1 : TutorialBase
 				cells [i].cellType = Cell.EType.OBSTACLE_LETTER;
 				cells [i].contentType = Piece.EType.LETTER_OBSTACLE;
 			}
+			Debug.Log (cells.Count);
 			for (int i = 4; i < 8; i++) {
 				cells [i].occupied = true;
 				cells [i].cellType = Cell.EType.OBSTACLE_LETTER;
@@ -89,6 +90,7 @@ public class TutorialLvl1 : TutorialBase
 
 			phase = 3;
 			handObject = secondObject;
+			offset *= 0.5f;
 			phase3Animation ();
 			return true;
 		case(3):
@@ -113,7 +115,9 @@ public class TutorialLvl1 : TutorialBase
 				cells [i].contentType = Piece.EType.NONE;
 			}
 
-			instructions [4].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE4);
+			instructions [4].text = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE4),
+				new string[1]{ "{{score}}"}, new string[1]{hudManager.goalText.text.Split('/')[1]});
 			phase = 4;
 
 			finishMovements ();
@@ -210,3 +214,11 @@ public class TutorialLvl1 : TutorialBase
 		}
 	}
 }
+
+
+/*
+Tutorial 1
+-Bajar la mano en la M
+Subir la M
+*-Pner el puntaje del nivel
+*/
