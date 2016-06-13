@@ -8,7 +8,6 @@ public class ParalaxManager : MonoBehaviour {
 	public DOnMove OnMove;
 
 	public RectTransform rectTransform;
-	public RectTransform worldsLayer;
 
 	protected Vector2 oldPos;
 	public ScrollRect scrollRect;
@@ -16,8 +15,8 @@ public class ParalaxManager : MonoBehaviour {
 	{
 		oldPos = rectTransform.anchoredPosition;
 		OnMove (rectTransform.anchoredPosition);
-		print (rectTransform.rect.size+"   "+ name);
-		scrollRect.verticalNormalizedPosition = 0.5f;
+		//scrollRect.verticalNormalizedPosition = 0.5f;
+		print (Screen.height);
 	}
 
 	void Update()

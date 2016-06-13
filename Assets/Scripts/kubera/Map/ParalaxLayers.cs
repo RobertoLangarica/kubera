@@ -8,15 +8,15 @@ public class ParalaxLayers : MonoBehaviour {
 	protected ParalaxManager content;
 	public RectTransform rectTransform;
 
-	void Start()
+	void Awake()
 	{
 		content = FindObjectOfType<ParalaxManager> ();
 		content.OnMove += OnMove;
-		print (rectTransform.rect.size+"   "+ name);
 	}
 
 	protected void OnMove(Vector2 pos)
 	{
-		rectTransform.anchoredPosition = pos*value;
+		print (pos);
+		rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x,pos.y*value);
 	}
 }
