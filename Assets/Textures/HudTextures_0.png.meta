@@ -194,6 +194,14 @@ TextureImporter:
     21300374: LVL1_-notas musicales-15
     21300376: LVL1_-notas musicales-16
     21300378: LVL1_-notas musicales-17
+    21300380: LVL1_-fondo-Mapa-background-1
+    21300382: LVL1_-fondo-Mapa-background-2
+    21300384: LVL1_-fondo-Mapa-background-3
+    21300386: LVL1_-fondo-Mapa-background-4
+    21300388: LVL1_-fondo-Mapa-background-5
+    21300390: LVL1_-fondo-Mapa-background-6
+    21300392: LVL1_-fondo-Mapa-background-bola
+    21300394: LVL1_-fondo-Mapa-background-mancha
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -248,8 +256,8 @@ TextureImporter:
     - name: boss-crown
       rect:
         serializedVersion: 2
-        x: 1210
-        y: 1778
+        x: 442
+        y: 1225
         width: 89
         height: 95
       alignment: 0
@@ -268,8 +276,8 @@ TextureImporter:
     - name: boss-crownBlocked
       rect:
         serializedVersion: 2
-        x: 1113
-        y: 1635
+        x: 442
+        y: 1126
         width: 89
         height: 95
       alignment: 0
@@ -286,8 +294,8 @@ TextureImporter:
     - name: Camino-c1
       rect:
         serializedVersion: 2
-        x: 6
-        y: 328
+        x: 0
+        y: 1098
         width: 438
         height: 462
       alignment: 9
@@ -351,8 +359,8 @@ TextureImporter:
     - name: Camino-f1
       rect:
         serializedVersion: 2
-        x: 965
-        y: 1404
+        x: 934
+        y: 1052
         width: 147
         height: 176
       alignment: 9
@@ -386,8 +394,8 @@ TextureImporter:
     - name: Camino-L1
       rect:
         serializedVersion: 2
-        x: 1159
-        y: 46
+        x: 1580
+        y: 1758
         width: 450
         height: 290
       alignment: 9
@@ -430,8 +438,8 @@ TextureImporter:
     - name: Camino-L2
       rect:
         serializedVersion: 2
-        x: 769
-        y: 44
+        x: 847
+        y: 1232
         width: 389
         height: 291
       alignment: 9
@@ -521,8 +529,8 @@ TextureImporter:
     - name: door-Background
       rect:
         serializedVersion: 2
-        x: 445
-        y: 418
+        x: 0
+        y: 1676
         width: 857
         height: 372
       alignment: 9
@@ -619,8 +627,8 @@ TextureImporter:
     - name: door-Left
       rect:
         serializedVersion: 2
-        x: 6
-        y: 13
+        x: 711
+        y: 1358
         width: 132
         height: 314
       alignment: 0
@@ -642,8 +650,8 @@ TextureImporter:
     - name: door-LeftBloked
       rect:
         serializedVersion: 2
-        x: 139
-        y: 13
+        x: 708
+        y: 1040
         width: 132
         height: 314
       alignment: 0
@@ -665,8 +673,8 @@ TextureImporter:
     - name: door-Right
       rect:
         serializedVersion: 2
-        x: 272
-        y: 14
+        x: 1911
+        y: 296
         width: 131
         height: 313
       alignment: 9
@@ -684,8 +692,8 @@ TextureImporter:
     - name: door-RightBloqued
       rect:
         serializedVersion: 2
-        x: 404
-        y: 14
+        x: 520
+        y: 459
         width: 131
         height: 313
       alignment: 9
@@ -700,26 +708,11 @@ TextureImporter:
         - {x: -65.5, y: 156}
         - {x: -65.5, y: -157}
         - {x: 65.5, y: -157}
-    - name: game-Background
-      rect:
-        serializedVersion: 2
-        x: 6
-        y: 791
-        width: 704
-        height: 1251
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -352, y: 625.5}
-        - {x: -352, y: -625.5}
-        - {x: 352, y: -625.5}
-        - {x: 352, y: 625.5}
     - name: game-BoardTile-Line
       rect:
         serializedVersion: 2
-        x: 1644
-        y: 1027
+        x: 1725
+        y: 348
         width: 76
         height: 76
       alignment: 1
@@ -733,8 +726,8 @@ TextureImporter:
     - name: game-BoardTile-noLine
       rect:
         serializedVersion: 2
-        x: 1644
-        y: 951
+        x: 1805
+        y: 319
         width: 75
         height: 75
       alignment: 1
@@ -748,8 +741,8 @@ TextureImporter:
     - name: game-cubeBlack-selected
       rect:
         serializedVersion: 2
-        x: 1145
-        y: 337
+        x: 1209
+        y: 205
         width: 80
         height: 80
       alignment: 0
@@ -767,8 +760,8 @@ TextureImporter:
     - name: game-cubeBlackDot
       rect:
         serializedVersion: 2
-        x: 1226
-        y: 337
+        x: 1283
+        y: 121
         width: 80
         height: 80
       alignment: 0
@@ -786,8 +779,8 @@ TextureImporter:
     - name: game-cubeDot
       rect:
         serializedVersion: 2
-        x: 1113
-        y: 1317
+        x: 1293
+        y: 205
         width: 80
         height: 80
       alignment: 0
@@ -805,8 +798,8 @@ TextureImporter:
     - name: game-cubeNoDot
       rect:
         serializedVersion: 2
-        x: 1113
-        y: 1236
+        x: 1283
+        y: 37
         width: 80
         height: 80
       alignment: 0
@@ -822,8 +815,8 @@ TextureImporter:
     - name: game-HUDBackgroundDown
       rect:
         serializedVersion: 2
-        x: 1303
-        y: 1588
+        x: 0
+        y: 1591
         width: 707
         height: 81
       alignment: 9
@@ -851,8 +844,8 @@ TextureImporter:
     - name: game-HUDBackgroundUp
       rect:
         serializedVersion: 2
-        x: 1303
-        y: 1863
+        x: 861
+        y: 1869
         width: 715
         height: 179
       alignment: 9
@@ -905,8 +898,8 @@ TextureImporter:
     - name: game-HUDbombDrag
       rect:
         serializedVersion: 2
-        x: 1101
-        y: 800
+        x: 891
+        y: 476
         width: 67
         height: 63
       alignment: 0
@@ -931,8 +924,8 @@ TextureImporter:
     - name: game-HUDcubeDrag
       rect:
         serializedVersion: 2
-        x: 978
-        y: 798
+        x: 1478
+        y: 751
         width: 63
         height: 65
       alignment: 0
@@ -949,8 +942,8 @@ TextureImporter:
     - name: game-HUDMove
       rect:
         serializedVersion: 2
-        x: 1972
-        y: 762
+        x: 1932
+        y: 1535
         width: 48
         height: 44
       alignment: 0
@@ -969,8 +962,8 @@ TextureImporter:
     - name: game-HUDMusicOff
       rect:
         serializedVersion: 2
-        x: 1699
-        y: 491
+        x: 601
+        y: 298
         width: 123
         height: 126
       alignment: 9
@@ -989,8 +982,8 @@ TextureImporter:
     - name: game-HUDMusicOn
       rect:
         serializedVersion: 2
-        x: 1536
-        y: 518
+        x: 728
+        y: 298
         width: 123
         height: 126
       alignment: 9
@@ -1009,8 +1002,8 @@ TextureImporter:
     - name: game-HUDQuit
       rect:
         serializedVersion: 2
-        x: 1610
-        y: 120
+        x: 1932
+        y: 1406
         width: 116
         height: 120
       alignment: 9
@@ -1031,8 +1024,8 @@ TextureImporter:
     - name: game-HUDrotateDrag
       rect:
         serializedVersion: 2
-        x: 866
-        y: 1607
+        x: 1478
+        y: 686
         width: 59
         height: 61
       alignment: 0
@@ -1050,8 +1043,8 @@ TextureImporter:
     - name: game-HUDsettings
       rect:
         serializedVersion: 2
-        x: 1616
-        y: 722
+        x: 1725
+        y: 268
         width: 74
         height: 76
       alignment: 9
@@ -1070,8 +1063,8 @@ TextureImporter:
     - name: game-HUDSoundOff
       rect:
         serializedVersion: 2
-        x: 1823
-        y: 486
+        x: 1064
+        y: 709
         width: 123
         height: 126
       alignment: 9
@@ -1090,8 +1083,8 @@ TextureImporter:
     - name: game-HUDSoundOn
       rect:
         serializedVersion: 2
-        x: 1699
-        y: 364
+        x: 1051
+        y: 579
         width: 123
         height: 126
       alignment: 9
@@ -1110,8 +1103,8 @@ TextureImporter:
     - name: game-HUDSquareLeft
       rect:
         serializedVersion: 2
-        x: 445
-        y: 329
+        x: 442
+        y: 1034
         width: 88
         height: 88
       alignment: 0
@@ -1125,8 +1118,8 @@ TextureImporter:
     - name: game-HUDtunderDrag
       rect:
         serializedVersion: 2
-        x: 1972
-        y: 686
+        x: 891
+        y: 397
         width: 47
         height: 75
       alignment: 0
@@ -1143,8 +1136,8 @@ TextureImporter:
     - name: game-HUDx3Drag
       rect:
         serializedVersion: 2
-        x: 1113
-        y: 1064
+        x: 1099
+        y: 519
         width: 54
         height: 56
       alignment: 9
@@ -1160,8 +1153,8 @@ TextureImporter:
     - name: game-powers3x
       rect:
         serializedVersion: 2
-        x: 1194
-        y: 1130
+        x: 1367
+        y: 121
         width: 77
         height: 80
       alignment: 9
@@ -1178,8 +1171,8 @@ TextureImporter:
     - name: game-powersBomb
       rect:
         serializedVersion: 2
-        x: 788
-        y: 336
+        x: 796
+        y: 12
         width: 80
         height: 81
       alignment: 9
@@ -1199,8 +1192,8 @@ TextureImporter:
     - name: game-powersCuadro
       rect:
         serializedVersion: 2
-        x: 534
-        y: 335
+        x: 962
+        y: 513
         width: 80
         height: 82
       alignment: 9
@@ -1219,8 +1212,8 @@ TextureImporter:
     - name: game-powersRotate
       rect:
         serializedVersion: 2
-        x: 869
-        y: 336
+        x: 880
+        y: 12
         width: 79
         height: 81
       alignment: 9
@@ -1238,8 +1231,8 @@ TextureImporter:
     - name: game-powersTunder
       rect:
         serializedVersion: 2
-        x: 615
-        y: 335
+        x: 855
+        y: 311
         width: 80
         height: 82
       alignment: 9
@@ -1257,8 +1250,8 @@ TextureImporter:
     - name: game-rotateSign
       rect:
         serializedVersion: 2
-        x: 868
-        y: 1669
+        x: 378
+        y: 1033
         width: 60
         height: 61
       alignment: 0
@@ -1276,8 +1269,8 @@ TextureImporter:
     - name: Game-starsBar
       rect:
         serializedVersion: 2
-        x: 1414
-        y: 807
+        x: 378
+        y: 985
         width: 151
         height: 44
       alignment: 9
@@ -1295,8 +1288,8 @@ TextureImporter:
     - name: Game-starsBarBackground
       rect:
         serializedVersion: 2
-        x: 1888
-        y: 870
+        x: 378
+        y: 937
         width: 151
         height: 44
       alignment: 9
@@ -1314,8 +1307,8 @@ TextureImporter:
     - name: Game-starsBarContour
       rect:
         serializedVersion: 2
-        x: 711
-        y: 1846
+        x: 314
+        y: 2
         width: 157
         height: 51
       alignment: 9
@@ -1337,8 +1330,8 @@ TextureImporter:
     - name: Game-starsBarLine
       rect:
         serializedVersion: 2
-        x: 2019
-        y: 1826
+        x: 2034
+        y: 2001
         width: 5
         height: 47
       alignment: 0
@@ -1348,8 +1341,8 @@ TextureImporter:
     - name: game-wordRight
       rect:
         serializedVersion: 2
-        x: 711
-        y: 1317
+        x: 1088
+        y: 168
         width: 117
         height: 121
       alignment: 9
@@ -1367,8 +1360,8 @@ TextureImporter:
     - name: game-wordsShadow
       rect:
         serializedVersion: 2
-        x: 536
-        y: 7
+        x: 0
+        y: 1564
         width: 539
         height: 23
       alignment: 0
@@ -1378,8 +1371,8 @@ TextureImporter:
     - name: game-wordWrong
       rect:
         serializedVersion: 2
-        x: 829
-        y: 1317
+        x: 1162
+        y: 43
         width: 117
         height: 121
       alignment: 9
@@ -1397,8 +1390,8 @@ TextureImporter:
     - name: gem
       rect:
         serializedVersion: 2
-        x: 1494
-        y: 1022
+        x: 1367
+        y: 40
         width: 77
         height: 77
       alignment: 9
@@ -1416,8 +1409,8 @@ TextureImporter:
     - name: heart
       rect:
         serializedVersion: 2
-        x: 1572
-        y: 1022
+        x: 1399
+        y: 418
         width: 71
         height: 77
       alignment: 9
@@ -1436,8 +1429,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0001
       rect:
         serializedVersion: 2
-        x: 1825
-        y: 613
+        x: 1069
+        y: 839
         width: 124
         height: 125
       alignment: 9
@@ -1452,8 +1445,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0002
       rect:
         serializedVersion: 2
-        x: 1825
-        y: 613
+        x: 1069
+        y: 839
         width: 124
         height: 125
       alignment: 9
@@ -1468,8 +1461,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0003
       rect:
         serializedVersion: 2
-        x: 1843
-        y: 739
+        x: 133
+        y: 296
         width: 128
         height: 130
       alignment: 9
@@ -1485,8 +1478,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0004
       rect:
         serializedVersion: 2
-        x: 1113
-        y: 864
+        x: 1922
+        y: 873
         width: 126
         height: 127
       alignment: 9
@@ -1501,8 +1494,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0005
       rect:
         serializedVersion: 2
-        x: 1714
-        y: 744
+        x: 1085
+        y: 1097
         width: 128
         height: 131
       alignment: 9
@@ -1518,8 +1511,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0006
       rect:
         serializedVersion: 2
-        x: 929
-        y: 1100
+        x: 669
+        y: 785
         width: 131
         height: 135
       alignment: 9
@@ -1536,8 +1529,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0007
       rect:
         serializedVersion: 2
-        x: 1903
-        y: 915
+        x: 1920
+        y: 731
         width: 128
         height: 138
       alignment: 9
@@ -1554,8 +1547,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0008
       rect:
         serializedVersion: 2
-        x: 711
-        y: 1440
+        x: 541
+        y: 777
         width: 124
         height: 143
       alignment: 9
@@ -1573,8 +1566,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0009
       rect:
         serializedVersion: 2
-        x: 1618
-        y: 799
+        x: 442
+        y: 1409
         width: 95
         height: 151
       alignment: 9
@@ -1592,8 +1585,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0010
       rect:
         serializedVersion: 2
-        x: 1003
-        y: 1240
+        x: 1407
+        y: 499
         width: 64
         height: 163
       alignment: 9
@@ -1610,8 +1603,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0011
       rect:
         serializedVersion: 2
-        x: 866
-        y: 1439
+        x: 1475
+        y: 447
         width: 53
         height: 167
       alignment: 9
@@ -1629,8 +1622,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0012
       rect:
         serializedVersion: 2
-        x: 2014
-        y: 1659
+        x: 1881
+        y: 520
         width: 26
         height: 166
       alignment: 9
@@ -1640,8 +1633,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0013
       rect:
         serializedVersion: 2
-        x: 2011
-        y: 1423
+        x: 2023
+        y: 1586
         width: 25
         height: 168
       alignment: 9
@@ -1651,8 +1644,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0014
       rect:
         serializedVersion: 2
-        x: 965
-        y: 1237
+        x: 1885
+        y: 1031
         width: 37
         height: 166
       alignment: 9
@@ -1669,8 +1662,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0015
       rect:
         serializedVersion: 2
-        x: 1234
-        y: 1874
+        x: 891
+        y: 614
         width: 67
         height: 168
       alignment: 9
@@ -1687,8 +1680,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0016
       rect:
         serializedVersion: 2
-        x: 1113
-        y: 1455
+        x: 844
+        y: 1049
         width: 86
         height: 179
       alignment: 9
@@ -1706,8 +1699,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0017
       rect:
         serializedVersion: 2
-        x: 1204
-        y: 1603
+        x: 962
+        y: 748
         width: 98
         height: 174
       alignment: 9
@@ -1723,8 +1716,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0018
       rect:
         serializedVersion: 2
-        x: 1194
-        y: 1211
+        x: 973
+        y: 122
         width: 111
         height: 167
       alignment: 9
@@ -1743,8 +1736,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0019
       rect:
         serializedVersion: 2
-        x: 1612
-        y: 1104
+        x: 1927
+        y: 1256
         width: 120
         height: 146
       alignment: 9
@@ -1761,8 +1754,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0020
       rect:
         serializedVersion: 2
-        x: 1169
-        y: 992
+        x: 0
+        y: 296
         width: 129
         height: 128
       alignment: 9
@@ -1779,8 +1772,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0021
       rect:
         serializedVersion: 2
-        x: 1903
-        y: 1054
+        x: 936
+        y: 926
         width: 129
         height: 122
       alignment: 9
@@ -1798,8 +1791,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0022
       rect:
         serializedVersion: 2
-        x: 1699
-        y: 618
+        x: 1085
+        y: 968
         width: 125
         height: 125
       alignment: 9
@@ -1813,8 +1806,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0023
       rect:
         serializedVersion: 2
-        x: 711
-        y: 1101
+        x: 1178
+        y: 370
         width: 217
         height: 215
       alignment: 9
@@ -1878,8 +1871,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0024
       rect:
         serializedVersion: 2
-        x: 873
-        y: 864
+        x: 259
+        y: 57
         width: 239
         height: 235
       alignment: 9
@@ -1958,8 +1951,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0025
       rect:
         serializedVersion: 2
-        x: 1307
-        y: 1100
+        x: 0
+        y: 39
         width: 255
         height: 253
       alignment: 9
@@ -2035,8 +2028,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0026
       rect:
         serializedVersion: 2
-        x: 1699
-        y: 618
+        x: 1085
+        y: 968
         width: 125
         height: 125
       alignment: 9
@@ -2050,8 +2043,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0001
       rect:
         serializedVersion: 2
-        x: 1959
-        y: 1177
+        x: 1169
+        y: 293
         width: 78
         height: 73
       alignment: 9
@@ -2068,8 +2061,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0002
       rect:
         serializedVersion: 2
-        x: 696
-        y: 336
+        x: 442
+        y: 1324
         width: 91
         height: 81
       alignment: 9
@@ -2087,8 +2080,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0003
       rect:
         serializedVersion: 2
-        x: 1200
-        y: 1486
+        x: 826
+        y: 935
         width: 106
         height: 101
       alignment: 9
@@ -2109,8 +2102,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0004
       rect:
         serializedVersion: 2
-        x: 1061
-        y: 1121
+        x: 1914
+        y: 613
         width: 132
         height: 114
       alignment: 9
@@ -2129,8 +2122,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0005
       rect:
         serializedVersion: 2
-        x: 711
-        y: 1719
+        x: 441
+        y: 298
         width: 156
         height: 126
       alignment: 9
@@ -2166,8 +2159,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0006
       rect:
         serializedVersion: 2
-        x: 711
-        y: 1584
+        x: 804
+        y: 786
         width: 154
         height: 134
       alignment: 9
@@ -2215,8 +2208,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0007
       rect:
         serializedVersion: 2
-        x: 711
-        y: 1898
+        x: 378
+        y: 776
         width: 159
         height: 144
       alignment: 9
@@ -2294,8 +2287,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0008
       rect:
         serializedVersion: 2
-        x: 1720
-        y: 876
+        x: 535
+        y: 990
         width: 167
         height: 145
       alignment: 9
@@ -2370,8 +2363,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0009
       rect:
         serializedVersion: 2
-        x: 929
-        y: 1581
+        x: 265
+        y: 296
         width: 172
         height: 149
       alignment: 9
@@ -2440,8 +2433,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0010
       rect:
         serializedVersion: 2
-        x: 1733
-        y: 1022
+        x: 535
+        y: 1139
         width: 169
         height: 154
       alignment: 9
@@ -2505,8 +2498,8 @@ TextureImporter:
     - name: LVL-blocked
       rect:
         serializedVersion: 2
-        x: 1823
-        y: 363
+        x: 1927
+        y: 1130
         width: 118
         height: 122
       alignment: 9
@@ -2524,8 +2517,8 @@ TextureImporter:
     - name: LVL
       rect:
         serializedVersion: 2
-        x: 1610
-        y: 241
+        x: 1926
+        y: 1004
         width: 118
         height: 122
       alignment: 9
@@ -2542,11 +2535,412 @@ TextureImporter:
         - {x: 55, y: -37.5}
         - {x: 55, y: 44.5}
         - {x: 34, y: 59.5}
+    - name: LVL1_-fondo-Mapa-background-1
+      rect:
+        serializedVersion: 2
+        x: 1240
+        y: 924
+        width: 301
+        height: 377
+      alignment: 9
+      pivot: {x: 0.5232558, y: 0.5198939}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 46.5, y: -124}
+        - {x: 67.5, y: -116}
+        - {x: 103.5, y: -103}
+        - {x: 122.5, y: -92}
+        - {x: 131.5, y: -85}
+        - {x: 143.5, y: -74}
+        - {x: 143.5, y: -48}
+        - {x: 136.5, y: -42}
+        - {x: 114.5, y: -32}
+        - {x: 124.5, y: 2}
+        - {x: 131.5, y: 27}
+        - {x: 120.5, y: 50}
+        - {x: 104.5, y: 65}
+        - {x: 96.5, y: 72}
+        - {x: 72.5, y: 87}
+        - {x: 53.5, y: 94}
+        - {x: 14.5, y: 108}
+        - {x: -12.5, y: 114}
+        - {x: -87.5, y: 132}
+        - {x: -107.5, y: 142}
+        - {x: -133.5, y: 161}
+        - {x: -154.5, y: 181}
+        - {x: -157.5, y: 181}
+        - {x: -157.5, y: -196}
+        - {x: -149.5, y: -196}
+        - {x: -114.5, y: -184}
+        - {x: -61.5, y: -161}
+        - {x: -18.5, y: -144}
+    - name: LVL1_-fondo-Mapa-background-2
+      rect:
+        serializedVersion: 2
+        x: 1568
+        y: 1201
+        width: 355
+        height: 271
+      alignment: 9
+      pivot: {x: 0.515493, y: 0.5867159}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 95, y: -59}
+        - {x: 135, y: -46}
+        - {x: 170, y: -29}
+        - {x: 172, y: -24}
+        - {x: 172, y: -11}
+        - {x: 167, y: -9}
+        - {x: 134, y: 4}
+        - {x: 145, y: 15}
+        - {x: 147, y: 26}
+        - {x: 145, y: 32}
+        - {x: 132, y: 40}
+        - {x: -63, y: 91}
+        - {x: -100, y: 100}
+        - {x: -121, y: 105}
+        - {x: -137, y: 107}
+        - {x: -168, y: 112}
+        - {x: -183, y: 112}
+        - {x: -183, y: -159}
+        - {x: -177, y: -159}
+        - {x: -119, y: -125}
+        - {x: -80, y: -108}
+        - {x: -1, y: -82}
+    - name: LVL1_-fondo-Mapa-background-3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 776
+        width: 374
+        height: 318
+      alignment: 9
+      pivot: {x: 0.52272725, y: 0.5251572}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 69.500015, y: -137}
+        - {x: 68.500015, y: -104}
+        - {x: 66.500015, y: -68}
+        - {x: 104.500015, y: 21}
+        - {x: 115.500015, y: 38}
+        - {x: 173.50002, y: 115}
+        - {x: 178.50002, y: 127}
+        - {x: 178.50002, y: 149}
+        - {x: 175.50002, y: 151}
+        - {x: 134.50002, y: 151}
+        - {x: 97.500015, y: 145}
+        - {x: 34.500015, y: 127}
+        - {x: 0.50001526, y: 117}
+        - {x: -55.499985, y: 93}
+        - {x: -83.499985, y: 77}
+        - {x: -124.499985, y: 46}
+        - {x: -138.49998, y: 34}
+        - {x: -168.49998, y: -2}
+        - {x: -195.49998, y: -25}
+        - {x: -195.49998, y: -124}
+        - {x: -153.49998, y: -138}
+        - {x: -92.499985, y: -161}
+        - {x: -64.499985, y: -167}
+        - {x: 36.500015, y: -167}
+        - {x: 42.500015, y: -166}
+        - {x: 59.500015, y: -160}
+        - {x: 69.500015, y: -144}
+    - name: LVL1_-fondo-Mapa-background-4
+      rect:
+        serializedVersion: 2
+        x: 1243
+        y: 1305
+        width: 321
+        height: 361
+      alignment: 9
+      pivot: {x: 0.4657321, y: 0.52770084}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 171.5, y: 170.5}
+        - {x: 166.5, y: 170.5}
+        - {x: 145.5, y: 148.5}
+        - {x: 119.5, y: 128.5}
+        - {x: 67.5, y: 99.5}
+        - {x: 27.5, y: 82.5}
+        - {x: -24.5, y: 63.5}
+        - {x: -54.5, y: 55.5}
+        - {x: -122.5, y: 33.5}
+        - {x: -147.5, y: 14.5}
+        - {x: -149.5, y: 6.5}
+        - {x: -149.5, y: -27.5}
+        - {x: -141.5, y: -42.5}
+        - {x: -116.5, y: -63.5}
+        - {x: -91.5, y: -73.5}
+        - {x: -45.5, y: -84.5}
+        - {x: -9.5, y: -106.5}
+        - {x: 16.5, y: -137.5}
+        - {x: 44.5, y: -164.5}
+        - {x: 64.5, y: -178.5}
+        - {x: 83.5, y: -187.5}
+        - {x: 92.5, y: -190.5}
+        - {x: 131.5, y: -190.5}
+        - {x: 148.5, y: -183.5}
+        - {x: 165.5, y: -162.5}
+        - {x: 171.5, y: -147.5}
+    - name: LVL1_-fondo-Mapa-background-5
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 449
+        width: 280
+        height: 323
+      alignment: 9
+      pivot: {x: 0.48392856, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 144.5, y: 161.5}
+        - {x: 140.5, y: 161.5}
+        - {x: 135.5, y: 152.5}
+        - {x: 105.5, y: 132.5}
+        - {x: 67.5, y: 131.5}
+        - {x: 31.5, y: 134.5}
+        - {x: 19.5, y: 121.5}
+        - {x: 15.5, y: 111.5}
+        - {x: 12.5, y: 84.5}
+        - {x: -1.5, y: 46.5}
+        - {x: -11.5, y: 30.5}
+        - {x: -44.5, y: 4.5}
+        - {x: -80.5, y: -16.5}
+        - {x: -123.5, y: -59.5}
+        - {x: -135.5, y: -85.5}
+        - {x: -135.5, y: -134.5}
+        - {x: -110.5, y: -159.5}
+        - {x: -102.5, y: -161.5}
+        - {x: -16.5, y: -161.5}
+        - {x: 53.5, y: -148.5}
+        - {x: 132.5, y: -147.5}
+        - {x: 144.5, y: -147.5}
+    - name: LVL1_-fondo-Mapa-background-6
+      rect:
+        serializedVersion: 2
+        x: 1191
+        y: 666
+        width: 283
+        height: 150
+      alignment: 9
+      pivot: {x: 0.48939928, y: 0.51}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -33.5, y: 73.5}
+        - {x: -138.5, y: 73.5}
+        - {x: -138.5, y: 40.5}
+        - {x: 2.5, y: -76.5}
+        - {x: 65.5, y: -76.5}
+        - {x: 144.5, y: -41.5}
+        - {x: 144.5, y: 60.5}
+        - {x: 142.5, y: 61.5}
+    - name: LVL1_-fondo-Mapa-background-bola
+      rect:
+        serializedVersion: 2
+        x: 962
+        y: 659
+        width: 85
+        height: 85
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 28.5, y: 42.5}
+        - {x: -36.5, y: 42.5}
+        - {x: -42.5, y: 25.5}
+        - {x: -42.5, y: -29.5}
+        - {x: -30.5, y: -41.5}
+        - {x: -21.5, y: -42.5}
+        - {x: 21.5, y: -42.5}
+        - {x: 40.5, y: -30.5}
+        - {x: 42.5, y: -26.5}
+        - {x: 42.5, y: 33.5}
+    - name: LVL1_-fondo-Mapa-background-mancha
+      rect:
+        serializedVersion: 2
+        x: 1545
+        y: 428
+        width: 332
+        height: 659
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5007587}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 161, y: -327}
+        - {x: 161, y: -329}
+        - {x: 162, y: -330}
+        - {x: 166, y: -330}
+        - {x: 166, y: -325}
+        - {x: 163, y: -325}
+      - - {x: 162, y: -243}
+        - {x: 159, y: -238}
+        - {x: 156, y: -234}
+        - {x: 153, y: -235}
+        - {x: 153, y: -243}
+        - {x: 152, y: -232}
+        - {x: 164, y: -235}
+        - {x: 164, y: -96}
+        - {x: 131, y: 104}
+        - {x: 65, y: 156}
+        - {x: 34, y: 201}
+        - {x: 36, y: 198}
+        - {x: 47, y: 183}
+        - {x: 51, y: 182}
+        - {x: 64, y: 188}
+        - {x: -69, y: 323}
+        - {x: -96, y: 329}
+        - {x: -166, y: 329}
+        - {x: -166, y: 231}
+        - {x: 103, y: -316}
+        - {x: 118, y: -249}
+        - {x: 117, y: -236}
+        - {x: 115, y: -206}
+        - {x: 113, y: -188}
+        - {x: 111, y: -172}
+        - {x: 113, y: -186}
+        - {x: 119, y: -213}
+        - {x: 129, y: -247}
+        - {x: 132, y: -249}
+        - {x: 135, y: -248}
+        - {x: 135, y: -237}
+        - {x: 132, y: -201}
+        - {x: 130, y: -179}
+        - {x: 150, y: -323}
+        - {x: 153, y: -325}
+        - {x: 160, y: -325}
+        - {x: 162, y: -324}
+        - {x: 164, y: -302}
+        - {x: 164, y: -247}
+      - - {x: 161, y: -297}
+        - {x: 161, y: -316}
+        - {x: 165, y: -319}
+        - {x: 166, y: -319}
+        - {x: 166, y: -297}
+        - {x: 165, y: -296}
+      - - {x: 132, y: -272}
+        - {x: 132, y: -295}
+        - {x: 133, y: -302}
+        - {x: 138, y: -302}
+        - {x: 139, y: -301}
+        - {x: 139, y: -273}
+        - {x: 137, y: -272}
+      - - {x: 117, y: -277}
+        - {x: 120, y: -280}
+        - {x: 123, y: -279}
+        - {x: 123, y: -276}
+        - {x: 122, y: -274}
+        - {x: 119, y: -274}
+        - {x: 117, y: -275}
+      - - {x: 134, y: -259}
+        - {x: 132, y: -261}
+        - {x: 132, y: -264}
+        - {x: 134, y: -266}
+        - {x: 136, y: -266}
+        - {x: 138, y: -264}
+        - {x: 138, y: -261}
+        - {x: 136, y: -259}
+      - - {x: 132, y: -249}
+        - {x: 130, y: -251}
+        - {x: 130, y: -255}
+        - {x: 132, y: -257}
+        - {x: 134, y: -257}
+        - {x: 136, y: -255}
+        - {x: 136, y: -251}
+        - {x: 134, y: -249}
+      - - {x: 130, y: -184}
+        - {x: 131, y: -186}
+        - {x: 134, y: -186}
+        - {x: 136, y: -185}
+        - {x: 136, y: -181}
+        - {x: 133, y: -178}
+        - {x: 130, y: -179}
+      - - {x: 77, y: -116}
+        - {x: 75, y: -120}
+        - {x: 75, y: -125}
+        - {x: 78, y: -127}
+        - {x: 80, y: -127}
+        - {x: 82, y: -125}
+        - {x: 82, y: -118}
+        - {x: 80, y: -116}
+      - - {x: 159, y: -105}
+        - {x: 156, y: -106}
+        - {x: 156, y: -110}
+        - {x: 158, y: -115}
+        - {x: 161, y: -115}
+        - {x: 163, y: -113}
+        - {x: 162, y: -107}
+        - {x: 161, y: -105}
+      - - {x: 71, y: -93}
+        - {x: 68, y: -96}
+        - {x: 68, y: -99}
+        - {x: 70, y: -101}
+        - {x: 72, y: -101}
+        - {x: 75, y: -98}
+        - {x: 75, y: -95}
+        - {x: 73, y: -93}
+      - - {x: 64, y: -74}
+        - {x: 62, y: -76}
+        - {x: 62, y: -79}
+        - {x: 64, y: -84}
+        - {x: 67, y: -84}
+        - {x: 69, y: -82}
+        - {x: 69, y: -79}
+        - {x: 67, y: -74}
+      - - {x: 71, y: -71}
+        - {x: 70, y: -73}
+        - {x: 70, y: -79}
+        - {x: 75, y: -79}
+        - {x: 77, y: -76}
+        - {x: 77, y: -73}
+        - {x: 74, y: -70}
+      - - {x: 75, y: -61}
+        - {x: 75, y: -67}
+        - {x: 77, y: -68}
+        - {x: 78, y: -68}
+        - {x: 81, y: -67}
+        - {x: 81, y: -63}
+        - {x: 80, y: -61}
+      - - {x: 67, y: -52}
+        - {x: 65, y: -53}
+        - {x: 65, y: -57}
+        - {x: 67, y: -63}
+        - {x: 71, y: -63}
+        - {x: 73, y: -62}
+        - {x: 73, y: -58}
+        - {x: 71, y: -52}
+      - - {x: -133, y: 226}
+        - {x: -133, y: 212}
+        - {x: 54, y: -42}
+        - {x: 71, y: -42}
+        - {x: 71, y: -16}
+        - {x: -10, y: 148}
+        - {x: -108, y: 226}
+      - - {x: 50, y: -32}
+        - {x: 50, y: -36}
+        - {x: 52, y: -40}
+        - {x: 55, y: -40}
+        - {x: 57, y: -38}
+        - {x: 57, y: -35}
+        - {x: 56, y: -32}
+      - - {x: 46, y: -23}
+        - {x: 46, y: -25}
+        - {x: 49, y: -28}
+        - {x: 52, y: -27}
+        - {x: 52, y: -23}
+        - {x: 50, y: -21}
+        - {x: 48, y: -21}
+      - - {x: 60, y: 168}
+        - {x: 60, y: 164}
+        - {x: 63, y: 157}
+        - {x: 68, y: 157}
+        - {x: 69, y: 159}
+        - {x: 69, y: 165}
+        - {x: 66, y: 168}
     - name: LVL1_-instrumentos-bateria2
       rect:
         serializedVersion: 2
-        x: 1307
-        y: 1354
+        x: 502
+        y: 59
         width: 290
         height: 233
       alignment: 9
@@ -2595,8 +2989,8 @@ TextureImporter:
     - name: LVL1_-instrumentos-guitarra2
       rect:
         serializedVersion: 2
-        x: 1598
-        y: 1251
+        x: 1575
+        y: 1583
         width: 444
         height: 171
       alignment: 9
@@ -2622,8 +3016,8 @@ TextureImporter:
     - name: LVL1_-instrumentos-harpa
       rect:
         serializedVersion: 2
-        x: 711
-        y: 809
+        x: 543
+        y: 1297
         width: 161
         height: 290
       alignment: 9
@@ -2644,8 +3038,8 @@ TextureImporter:
     - name: LVL1_-instrumentos-keyboard
       rect:
         serializedVersion: 2
-        x: 873
-        y: 1939
+        x: 1568
+        y: 1476
         width: 360
         height: 103
       alignment: 9
@@ -2667,8 +3061,8 @@ TextureImporter:
     - name: LVL1_-instrumentos-mic2
       rect:
         serializedVersion: 2
-        x: 1733
-        y: 1177
+        x: 1178
+        y: 589
         width: 225
         height: 73
       alignment: 9
@@ -2687,8 +3081,8 @@ TextureImporter:
     - name: LVL1_-instrumentos-piano2
       rect:
         serializedVersion: 2
-        x: 1414
-        y: 852
+        x: 962
+        y: 342
         width: 203
         height: 167
       alignment: 9
@@ -2710,8 +3104,8 @@ TextureImporter:
     - name: LVL1_-instrumentos-triangulo
       rect:
         serializedVersion: 2
-        x: 1240
-        y: 799
+        x: 796
+        y: 97
         width: 173
         height: 192
       alignment: 9
@@ -2728,8 +3122,8 @@ TextureImporter:
     - name: LVL1_-instrumentos-trombon2
       rect:
         serializedVersion: 2
-        x: 873
-        y: 1731
+        x: 1197
+        y: 820
         width: 330
         height: 100
       alignment: 9
@@ -2759,8 +3153,8 @@ TextureImporter:
     - name: LVL1_-instrumentos-trompeta2
       rect:
         serializedVersion: 2
-        x: 873
-        y: 1832
+        x: 1545
+        y: 1091
         width: 336
         height: 106
       alignment: 9
@@ -2787,8 +3181,8 @@ TextureImporter:
     - name: LVL1_-instrumentos-violin2
       rect:
         serializedVersion: 2
-        x: 1610
-        y: 1448
+        x: 847
+        y: 1527
         width: 392
         height: 139
       alignment: 9
@@ -2813,8 +3207,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-1
       rect:
         serializedVersion: 2
-        x: 1076
-        y: 8
+        x: 1984
+        y: 1544
         width: 34
         height: 35
       alignment: 9
@@ -2831,8 +3225,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-2
       rect:
         serializedVersion: 2
-        x: 920
-        y: 1540
+        x: 1881
+        y: 987
         width: 37
         height: 40
       alignment: 9
@@ -2850,8 +3244,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-3
       rect:
         serializedVersion: 2
-        x: 1042
-        y: 799
+        x: 1478
+        y: 618
         width: 58
         height: 64
       alignment: 9
@@ -2871,8 +3265,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-4
       rect:
         serializedVersion: 2
-        x: 873
-        y: 796
+        x: 891
+        y: 543
         width: 67
         height: 67
       alignment: 9
@@ -2903,8 +3297,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-5
       rect:
         serializedVersion: 2
-        x: 1566
-        y: 792
+        x: 1046
+        y: 516
         width: 49
         height: 59
       alignment: 9
@@ -2936,8 +3330,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-6
       rect:
         serializedVersion: 2
-        x: 1169
-        y: 802
+        x: 649
+        y: 925
         width: 67
         height: 61
       alignment: 9
@@ -2952,8 +3346,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-7
       rect:
         serializedVersion: 2
-        x: 2019
-        y: 1874
+        x: 1881
+        y: 398
         width: 20
         height: 50
       alignment: 9
@@ -2963,8 +3357,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-8
       rect:
         serializedVersion: 2
-        x: 2019
-        y: 1925
+        x: 1881
+        y: 452
         width: 21
         height: 64
       alignment: 9
@@ -2974,8 +3368,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-9
       rect:
         serializedVersion: 2
-        x: 2011
-        y: 1592
+        x: 1881
+        y: 690
         width: 29
         height: 66
       alignment: 9
@@ -2985,8 +3379,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-10
       rect:
         serializedVersion: 2
-        x: 929
-        y: 1238
+        x: 1881
+        y: 834
         width: 35
         height: 78
       alignment: 9
@@ -3010,8 +3404,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-11
       rect:
         serializedVersion: 2
-        x: 1113
-        y: 1398
+        x: 962
+        y: 599
         width: 81
         height: 56
       alignment: 9
@@ -3029,8 +3423,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-12
       rect:
         serializedVersion: 2
-        x: 941
-        y: 796
+        x: 1881
+        y: 916
         width: 36
         height: 67
       alignment: 9
@@ -3048,8 +3442,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-13
       rect:
         serializedVersion: 2
-        x: 1536
-        y: 652
+        x: 600
+        y: 924
         width: 45
         height: 62
       alignment: 9
@@ -3066,8 +3460,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-14
       rect:
         serializedVersion: 2
-        x: 1113
-        y: 1010
+        x: 259
+        y: 0
         width: 51
         height: 53
       alignment: 9
@@ -3098,8 +3492,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-15
       rect:
         serializedVersion: 2
-        x: 1972
-        y: 807
+        x: 533
+        y: 924
         width: 63
         height: 62
       alignment: 9
@@ -3116,8 +3510,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-16
       rect:
         serializedVersion: 2
-        x: 2019
-        y: 1990
+        x: 2023
+        y: 1530
         width: 23
         height: 52
       alignment: 0
@@ -3127,8 +3521,8 @@ TextureImporter:
     - name: LVL1_-notas musicales-17
       rect:
         serializedVersion: 2
-        x: 1563
-        y: 1100
+        x: 1474
+        y: 293
         width: 48
         height: 150
       alignment: 0
@@ -3145,70 +3539,70 @@ TextureImporter:
     - name: mano1
       rect:
         serializedVersion: 2
-        x: 1303
-        y: 456
+        x: 0
+        y: 430
         width: 232
         height: 342
       alignment: 9
-      pivot: {x: 0.24645884, y: 0.75672513}
+      pivot: {x: 0.24645847, y: 0.75672513}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 171.82153, y: -81.79999}
-        - {x: 117.82153, y: -6.799988}
-        - {x: 76.82153, y: 18.200012}
-        - {x: 35.821533, y: 17.200012}
-        - {x: 24.821533, y: 63.200012}
-        - {x: 7.821533, y: 83.20001}
-        - {x: -23.178467, y: 83.20001}
-        - {x: -33.178467, y: 64.20001}
-        - {x: -25.178467, y: -38.799988}
-        - {x: -41.178467, y: -39.799988}
-        - {x: -52.178467, y: -49.799988}
-        - {x: -57.178467, y: -81.79999}
-        - {x: -57.178467, y: -117.79999}
-        - {x: -43.178467, y: -169.79999}
-        - {x: -29.178467, y: -192.79999}
-        - {x: 13.821533, y: -244.79999}
-        - {x: 33.821533, y: -258.8}
-        - {x: 131.82153, y: -258.8}
-        - {x: 162.82153, y: -230.79999}
-        - {x: 174.82153, y: -160.79999}
-        - {x: 174.82153, y: -98.79999}
+      - - {x: 171.82164, y: -81.79999}
+        - {x: 117.82164, y: -6.799988}
+        - {x: 76.82164, y: 18.200012}
+        - {x: 35.821636, y: 17.200012}
+        - {x: 24.821636, y: 63.200012}
+        - {x: 7.821636, y: 83.20001}
+        - {x: -23.178364, y: 83.20001}
+        - {x: -33.178364, y: 64.20001}
+        - {x: -25.178364, y: -38.799988}
+        - {x: -41.178364, y: -39.799988}
+        - {x: -52.178364, y: -49.799988}
+        - {x: -57.178364, y: -81.79999}
+        - {x: -57.178364, y: -117.79999}
+        - {x: -43.178364, y: -169.79999}
+        - {x: -29.178364, y: -192.79999}
+        - {x: 13.821636, y: -244.79999}
+        - {x: 33.821636, y: -258.8}
+        - {x: 131.82164, y: -258.8}
+        - {x: 162.82164, y: -230.79999}
+        - {x: 174.82164, y: -160.79999}
+        - {x: 174.82164, y: -98.79999}
     - name: mano2
       rect:
         serializedVersion: 2
-        x: 536
-        y: 31
+        x: 655
+        y: 470
         width: 232
         height: 303
       alignment: 9
-      pivot: {x: 0.28956228, y: 0.8676804}
+      pivot: {x: 0.28956193, y: 0.8676798}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 164.82153, y: -173.90717}
-        - {x: 164.82153, y: -88.907166}
-        - {x: 124.82153, y: -44.907166}
-        - {x: 94.82153, y: 1.0928345}
-        - {x: 67.82153, y: 17.092834}
-        - {x: 26.821533, y: 40.092834}
-        - {x: -20.178467, y: 40.092834}
-        - {x: -38.178467, y: 14.092834}
-        - {x: -51.178467, y: -38.907166}
-        - {x: -64.17847, y: -53.907166}
-        - {x: -67.17847, y: -67.907166}
-        - {x: -67.17847, y: -122.907166}
-        - {x: -57.178467, y: -169.90717}
-        - {x: -35.178467, y: -203.90717}
-        - {x: 0.8215332, y: -245.90717}
-        - {x: 28.821533, y: -262.90717}
-        - {x: 106.82153, y: -262.90717}
-        - {x: 127.82153, y: -254.90717}
-        - {x: 146.82153, y: -234.90717}
-        - {x: 157.82153, y: -200.90717}
+      - - {x: 164.82166, y: -173.90698}
+        - {x: 164.82166, y: -88.90698}
+        - {x: 124.821655, y: -44.906982}
+        - {x: 94.821655, y: 1.0930176}
+        - {x: 67.821655, y: 17.093018}
+        - {x: 26.821655, y: 40.093018}
+        - {x: -20.178345, y: 40.093018}
+        - {x: -38.178345, y: 14.093018}
+        - {x: -51.178345, y: -38.906982}
+        - {x: -64.178345, y: -53.906982}
+        - {x: -67.178345, y: -67.90698}
+        - {x: -67.178345, y: -122.90698}
+        - {x: -57.178345, y: -169.90698}
+        - {x: -35.178345, y: -203.90698}
+        - {x: 0.8216553, y: -245.90698}
+        - {x: 28.821655, y: -262.90698}
+        - {x: 106.821655, y: -262.90698}
+        - {x: 127.821655, y: -254.90698}
+        - {x: 146.82166, y: -234.90698}
+        - {x: 157.82166, y: -200.90698}
     - name: map-HUDBackgroundDown
       rect:
         serializedVersion: 2
-        x: 1303
+        x: 861
         y: 1670
         width: 710
         height: 94
@@ -3240,8 +3634,8 @@ TextureImporter:
     - name: map-HUDBackgroundUp
       rect:
         serializedVersion: 2
-        x: 1303
-        y: 1765
+        x: 861
+        y: 1768
         width: 710
         height: 97
       alignment: 9
@@ -3275,8 +3669,8 @@ TextureImporter:
     - name: map-HUDFBInteractions
       rect:
         serializedVersion: 2
-        x: 1536
-        y: 715
+        x: 1803
+        y: 239
         width: 74
         height: 76
       alignment: 9
@@ -3294,8 +3688,8 @@ TextureImporter:
     - name: map-HUDgemesPlus
       rect:
         serializedVersion: 2
-        x: 1299
-        y: 1020
+        x: 1377
+        y: 206
         width: 194
         height: 79
       alignment: 9
@@ -3313,8 +3707,8 @@ TextureImporter:
     - name: map-HUDgems
       rect:
         serializedVersion: 2
-        x: 1307
-        y: 378
+        x: 1251
+        y: 289
         width: 195
         height: 77
       alignment: 9
@@ -3328,8 +3722,8 @@ TextureImporter:
     - name: map-HUDhearts
       rect:
         serializedVersion: 2
-        x: 1503
-        y: 378
+        x: 1526
+        y: 317
         width: 195
         height: 77
       alignment: 9
@@ -3345,8 +3739,8 @@ TextureImporter:
     - name: map-HUDheartsPlus
       rect:
         serializedVersion: 2
-        x: 949
-        y: 337
+        x: 963
+        y: 13
         width: 195
         height: 80
       alignment: 0
@@ -3370,8 +3764,8 @@ TextureImporter:
     - name: map-HUDLevels
       rect:
         serializedVersion: 2
-        x: 1611
-        y: 645
+        x: 1575
+        y: 237
         width: 74
         height: 76
       alignment: 9
@@ -3389,8 +3783,8 @@ TextureImporter:
     - name: map-HUDnumbers
       rect:
         serializedVersion: 2
-        x: 1111
-        y: 10
+        x: 1881
+        y: 797
         width: 33
         height: 33
       alignment: 0
@@ -3407,8 +3801,8 @@ TextureImporter:
     - name: map-HUDplus
       rect:
         serializedVersion: 2
-        x: 1145
-        y: 10
+        x: 1881
+        y: 760
         width: 33
         height: 33
       alignment: 0
@@ -3425,8 +3819,8 @@ TextureImporter:
     - name: star
       rect:
         serializedVersion: 2
-        x: 1200
-        y: 1379
+        x: 720
+        y: 930
         width: 102
         height: 106
       alignment: 9

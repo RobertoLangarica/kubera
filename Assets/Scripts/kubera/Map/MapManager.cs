@@ -31,6 +31,7 @@ public class MapManager : MonoBehaviour
 
 	protected LifesManager lifesHUDManager;
 	protected PopUpManager popUpManager;
+	protected ParalaxManager paralaxManager;
 
 	protected List<MapLevel> mapLevels;
 
@@ -40,6 +41,7 @@ public class MapManager : MonoBehaviour
 	{
 		popUpManager = FindObjectOfType<PopUpManager> ();
 		lifesHUDManager = FindObjectOfType<LifesManager> ();
+		paralaxManager = FindObjectOfType<ParalaxManager> ();
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 
@@ -97,7 +99,9 @@ public class MapManager : MonoBehaviour
 	{
 		Debug.Log ((LevelsDataManager.GetInstance() as LevelsDataManager));
 		List<Level> worldsLevels = new List<Level> ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevesOfWorld(currentWorld));
-		
+
+		MapLevel currentLevel = null;
+
 		for (int i = 0; i < mapLevels.Count; i++) 
 		{
 			settingMapLevelInfo (mapLevels[i],worldsLevels[i]);
@@ -109,7 +113,14 @@ public class MapManager : MonoBehaviour
 			updateLevelIcon (mapLevels [i]);
 			updateLevelStars (mapLevels[i]);
 			mapLevels [i].updateText ();
+
+			if(mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_REACHED || mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_UNLOCKED ||  mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED )
+			{
+				currentLevel = mapLevels [i];
+			}
 		}
+
+		paralaxManager.setPosByCurrentLevel (currentLevel);
 	}
 
 	protected void settingMapLevelInfo(MapLevel level,Level data)
