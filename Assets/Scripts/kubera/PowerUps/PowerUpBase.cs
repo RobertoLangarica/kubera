@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PowerupBase : MonoBehaviour 
@@ -16,6 +17,8 @@ public class PowerupBase : MonoBehaviour
 	public DPowerUpNotification OnPowerupCompletedNoGems;
 
 	public Transform powerUpButton;
+	public GameObject powerUpBlock;
+	public Sprite powerUpImage;
 
 	public bool isFree;
 
@@ -50,5 +53,27 @@ public class PowerupBase : MonoBehaviour
 		{
 			OnPowerupCompletedNoGems();
 		}	
+	}
+
+	protected void updateDragableObjectImage(GameObject powerUpObject)
+	{
+		Image temp = powerUpObject.GetComponentInChildren<Image> ();
+		SpriteRenderer tempS = powerUpObject.GetComponentInChildren<SpriteRenderer> ();
+
+		if (powerUpImage != null) 
+		{
+			powerUpObject.GetComponent<Piece> ().currentColor = Piece.EColor.NONE;
+			
+			if (temp != null) 
+			{
+				temp.sprite = Sprite.Create (powerUpImage.texture, powerUpImage.textureRect, new Vector2 (0.5f, 0.5f));
+				temp.color = Color.white;
+			} 
+			else if (tempS != null) 
+			{
+				tempS.sprite = Sprite.Create (powerUpImage.texture, powerUpImage.textureRect, new Vector2 (0.5f, 0.5f));
+				tempS.color = Color.white;
+			}
+		}
 	}
 }

@@ -71,6 +71,7 @@ public class TutorialLvl64 : TutorialBase
 				new string[3]{ "'", "{{b}}", "{{/b}}" }, new string[3]{ "\"", "<b>", "</b>" });
 
 			phase = 2;
+			hideObject ();
 			finishMovements ();
 			StopCoroutine ("playPressAndContinueWithMethod");
 			getKeyboarLetterPosition ();
@@ -231,11 +232,8 @@ public class TutorialLvl64 : TutorialBase
 		{
 			if (temp [i].abcChar.character == phaseObj) 
 			{
-				RectTransform rectT = temp [i].GetComponent<RectTransform> ();
-				handPositions [1].transform.position = new Vector3(rectT.anchoredPosition.x,rectT.anchoredPosition.y,0) + new Vector3 (
-					-temp [i].gameObject.GetComponent<Image> ().sprite.bounds.extents.x,-temp [i].gameObject.GetComponent<Image> ().sprite.bounds.size.y,0);
-				Debug.Log (temp [i].transform.position);
-				Debug.Log (temp[i].transform.localPosition);
+				handPositions [1].transform.position = temp[i].transform.position + 
+					new Vector3(0,-temp[i].GetComponent<Image>().sprite.bounds.extents.y,0);
 				break;
 			}
 		}

@@ -65,7 +65,9 @@ public class TutorialLvl3 : TutorialBase
 			allowDragPieces = true;
 			allowPowerUps = true;
 
-			instructions [3].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE3);
+			instructions [3].text = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE3),
+				new string[1]{ "{{score}}"}, new string[1]{hudManager.goalText.text.Split('/')[1]});
 			phase = 3;
 			hideHand ();
 			return true;

@@ -59,9 +59,9 @@ public class TutorialLvl8 : TutorialBase
 			freeDestroy = false;
 			freeWildCard = false;
 
-			instructions [2].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE2A);
+			instructions [2].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE2A,"english");
 
-			instructions [3].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE2B);			
+			instructions [3].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE2B,"english");			
 			phase = 2;
 			finishMovements ();
 			StopCoroutine ("playPressAndContinueWithMethod");

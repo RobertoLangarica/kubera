@@ -4,7 +4,6 @@ using DG.Tweening;
 
 public class RotatePowerUp : PowerupBase
 {
-	public GameObject powerUpBlock;
 	public RectTransform piecesPanel;
 
 	protected InputPowerUpRotate inputPowerUpRotate;
@@ -41,6 +40,8 @@ public class RotatePowerUp : PowerupBase
 
 		inputWords.allowInput = true;
 		this.canUse = canUse;
+
+		updateDragableObjectImage (powerUpGO);
 	}
 
 	public void powerUpPositioned()

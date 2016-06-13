@@ -119,13 +119,19 @@ public class TutorialLvl37 : TutorialBase
 		case(1):
 			return true;
 		case(2):
-			return true;
+			Invoke ("callForTutorialManager",0.7f);
+			return false;
 		case(3):
 			return true;
 		}
 
 		return base.phaseObjectiveAchived ();
 	}	
+
+	protected void callForTutorialManager ()
+	{
+		FindObjectOfType<TutorialManager> ().moveTutorialToNextPhase ();
+	}
 
 	private void startTutorialAnimation(PopUpBase thisPopUp, string action)
 	{

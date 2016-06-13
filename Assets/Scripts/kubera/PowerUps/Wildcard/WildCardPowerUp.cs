@@ -6,7 +6,6 @@ using DG.Tweening;
 public class WildCardPowerUp : PowerupBase
 {
 	public string powerUpScore = "x3";
-	public GameObject powerUpWildCard;
 	public RectTransform wordsContainer;
 
 	public KeyBoardManager keyBoard;
@@ -33,7 +32,7 @@ public class WildCardPowerUp : PowerupBase
 		{
 			DestroyImmediate (powerUpGO);
 		}
-		powerUpGO = Instantiate (powerUpWildCard,powerUpButton.position,Quaternion.identity) as GameObject;
+		powerUpGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
 		powerUpGO.name = "WildPowerUp";
 		powerUpGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
 
@@ -41,6 +40,8 @@ public class WildCardPowerUp : PowerupBase
 		inputPowerUp.setCurrentSelected(powerUpGO);
 		inputPowerUp.OnDrop += powerUpPositioned;
 		this.canUse = canUse;
+
+		updateDragableObjectImage (powerUpGO);
 	}
 
 	public void powerUpPositioned()
