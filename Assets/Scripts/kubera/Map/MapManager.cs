@@ -15,17 +15,6 @@ public class MapManager : MonoBehaviour
 	public GameObject modal;
 	public BossLocked bossLockedPopUp;
 
-	public Sprite normalLocked;
-	public Sprite normalUnlocked;
-	public Sprite bossLocked;
-	public Sprite bossUnlocked;
-	public Sprite bossReached;
-
-	public Sprite noStar;
-	public Sprite oneStar;
-	public Sprite twoStars;
-	public Sprite threeStars;
-
 	public int currentWorld;
 	public List<GameObject> worlds;
 
@@ -110,8 +99,8 @@ public class MapManager : MonoBehaviour
 
 			setOnClickDelegates (mapLevels[i]);
 
-			updateLevelIcon (mapLevels [i]);
-			updateLevelStars (mapLevels[i]);
+			mapLevels [i].updateStatus();
+			mapLevels[i].updateStars();
 			mapLevels [i].updateText ();
 
 			if(mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_REACHED || mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_UNLOCKED ||  mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED )
@@ -194,49 +183,6 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
-	protected void updateLevelIcon(MapLevel level)
-	{
-		switch (level.status) 
-		{
-		case(MapLevel.EMapLevelsStatus.BOSS_LOCKED):
-			changeSprite (level.levelIcon,bossLocked);
-			break;
-		case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
-			changeSprite (level.levelIcon,bossUnlocked);
-			break;
-		case(MapLevel.EMapLevelsStatus.BOSS_PASSED):
-		case(MapLevel.EMapLevelsStatus.BOSS_UNLOCKED):
-			changeSprite (level.levelIcon,bossUnlocked);
-			break;
-		case(MapLevel.EMapLevelsStatus.NORMAL_LOCKED):
-			changeSprite (level.levelIcon,normalLocked);
-			break;
-		case(MapLevel.EMapLevelsStatus.NORMAL_REACHED):
-		case(MapLevel.EMapLevelsStatus.NORMAL_PASSED):
-			changeSprite (level.levelIcon,normalUnlocked);
-			break;
-		}
-	}
-
-	protected void updateLevelStars(MapLevel level)
-	{
-		switch(level.stars)
-		{
-		case(MapLevel.EMapLevelStars.NONE):
-			changeSprite (level.levelStars,noStar);
-			break;
-		case(MapLevel.EMapLevelStars.ONE):
-			changeSprite (level.levelStars,oneStar);
-			break;
-		case(MapLevel.EMapLevelStars.TWO):
-			changeSprite (level.levelStars,twoStars);
-			break;
-		case(MapLevel.EMapLevelStars.THREE):
-			changeSprite (level.levelStars,threeStars);
-			break;
-		}
-	}
-
 	protected void setOnClickDelegates(MapLevel level)
 	{
 		switch (level.status) 
@@ -255,11 +201,6 @@ public class MapManager : MonoBehaviour
 			level.OnClickNotification += OnBossReachedPressed;
 			break;
 		}
-	}
-
-	protected void changeSprite(Image img,Sprite sprite)
-	{
-		img.sprite = Sprite.Create (sprite.texture, sprite.textureRect, new Vector2 (0.5f, 0.5f));
 	}
 
 	public void OnLifesPressed()
