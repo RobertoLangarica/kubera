@@ -35,8 +35,8 @@ public class WordManager : MonoBehaviour
 	public Sprite deleteWordState;
 
 	public KeyBoardManager keyBoard;
-
-	private InputWords inputWords;
+	public GoalPopUp goalPopUp;
+	public InputWords inputWords;
 
 	[HideInInspector]public ABCDictionary wordsValidator;
 
@@ -83,9 +83,6 @@ public class WordManager : MonoBehaviour
 		{
 			wordsValidator = FindObjectOfType<ABCDictionary> ();
 		}
-
-		inputWords = FindObjectOfType<InputWords> ();
-
 		if(inputWords)
 		{
 			inputWords.onTap		+= OnGridLetterTapped;

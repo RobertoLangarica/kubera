@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 
 	public List<int> linesCreatedPoints = new List<int> ();
 
+	public GoalPopUp goalPopUp;
 	public InputPowerUpRotate inputRotate;
 
 	protected int sizeGridX = 8;
@@ -78,6 +79,8 @@ public class GameManager : MonoBehaviour
 		secondChance.gameObject.SetActive (false);
 
 		linesAnimation.OnCellFlipped += OnCellFlipped; 
+
+		goalPopUp.OnPopUpCompleted += OnObjectivePopUpComplete;
 
 		wordManager.setMaxAllowedLetters(PersistentData.GetInstance().maxWordLength);
 		wordManager.gridLettersParent = gridLettersContainer;
@@ -166,16 +169,19 @@ public class GameManager : MonoBehaviour
 		lettersizeDelta.y = Mathf.Abs(lettersizeDelta.y);
 		wordManager.gridLettersSizeDelta = new Vector2(lettersizeDelta.x , lettersizeDelta.y);
 
-		populateGridFromLevel(level);
-
 		initHudValues();
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
+	}
+
+	protected void OnObjectivePopUpComplete(PopUpBase thisPopUp, string action)
+	{
+		populateGridFromLevel(currentLevel);
+
 		refreshCurrentWordScoreOnHUD (wordManager.wordPoints);
 	}
 
 	protected void initLettersFromLevel(Level level)
 	{
-		Debug.Log (level);
 		wordManager.initializePoolFromCSV(level.lettersPool,WordManager.EPoolType.NORMAL);
 
 		if(level.obstacleLettersPool.Length > 0)

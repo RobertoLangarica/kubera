@@ -199,6 +199,10 @@ public class TutorialLvl1 : TutorialBase
 
 			StartCoroutine (playPressAndContinueWithMethod ("phase3_2Animation", 0.5f));
 		}
+		else 
+		{
+			hideHand ();
+		}
 	}
 
 	private void phase3_2Animation()
@@ -207,10 +211,14 @@ public class TutorialLvl1 : TutorialBase
 		{
 			playPressAnimation ();
 			showObjectAtHand (offset);
-			moveHandFromGameObjects (handPositions[3],handPositions[4],offset);
+			moveHandFromGameObjects (handPositions [3], handPositions [4], offset);
 			OnMovementComplete += hideHand;
 
 			Invoke ("phase3Animation", 2);
+		} 
+		else 
+		{
+			hideHand ();
 		}
 	}
 }
