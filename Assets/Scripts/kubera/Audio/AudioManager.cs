@@ -15,6 +15,8 @@ public class AudioManager : MonoBehaviour
 		LOSE
 	}
 
+	public const string gameScene = "Game";
+
 	public AudioClip lineCreatedEffect;
 	public AudioClip piecePositionedEffect;
 	public AudioClip buttonEffect;
@@ -71,7 +73,7 @@ public class AudioManager : MonoBehaviour
 		PauseCurrentMusic();
 		switch(SceneManager.GetActiveScene().name)
 		{
-		case("Game"):
+		case(gameScene):
 			currentMainThemeIndex = 0;
 			break;
 		}
