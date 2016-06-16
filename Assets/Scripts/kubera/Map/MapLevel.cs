@@ -92,9 +92,11 @@ public class MapLevel : MonoBehaviour
 		switch (status) 
 		{
 		case(EMapLevelsStatus.BOSS_LOCKED):
+			levelBossIcon.gameObject.SetActive (true);
+			levelBossIcon.color = levelIcon.color = lockedColor;
+			break;
 		case(EMapLevelsStatus.NORMAL_LOCKED):
 			levelBossIcon.color = levelIcon.color = lockedColor;
-			levelBossIcon.gameObject.SetActive (true);
 			break;
 		case(EMapLevelsStatus.BOSS_PASSED):
 			levelBossIcon.color = levelIcon.color = bossPassedColor;
