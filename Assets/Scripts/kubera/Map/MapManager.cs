@@ -81,7 +81,15 @@ public class MapManager : MonoBehaviour
 	{
 		currentWorld = world;
 	
+		setWorldOnScene (currentWorld);
+
 		mapLevels = new List<MapLevel>(worlds[currentWorld].GetComponentsInChildren<MapLevel> ());
+		paralaxManager.setRectTransform (worlds [currentWorld].GetComponent<RectTransform> ());
+	}
+
+	protected void setWorldOnScene(int world)
+	{
+		worlds [world].SetActive (true);
 	}
 
 	protected void initializeLevels()
@@ -108,7 +116,11 @@ public class MapManager : MonoBehaviour
 				currentLevel = mapLevels [i];
 			}
 		}
-
+		if(currentLevel == null)
+		{
+			currentLevel = mapLevels [0];
+		}
+		print (currentLevel);
 		paralaxManager.setPosByCurrentLevel (currentLevel);
 	}
 

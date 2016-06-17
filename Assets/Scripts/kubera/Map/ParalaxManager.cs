@@ -13,6 +13,7 @@ public class ParalaxManager : MonoBehaviour {
 	public ScrollRect scrollRect;
 	void Start()
 	{
+		rectTransform = GetComponent<RectTransform> ();
 		oldPos = rectTransform.anchoredPosition;
 		OnMove (rectTransform.anchoredPosition);
 		//scrollRect.verticalNormalizedPosition = 0.5f;
@@ -25,6 +26,11 @@ public class ParalaxManager : MonoBehaviour {
 		{
 			OnMove( rectTransform.anchoredPosition);
 		}
+	}
+
+	public void setRectTransform(RectTransform rectTransform)
+	{
+		this.rectTransform.sizeDelta = rectTransform.sizeDelta;
 	}
 
 	public void setPosByCurrentLevel(MapLevel mapLevel)

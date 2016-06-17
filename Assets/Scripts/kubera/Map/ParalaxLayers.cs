@@ -16,7 +16,6 @@ public class ParalaxLayers : MonoBehaviour {
 
 	protected void OnMove(Vector2 pos)
 	{
-		print (pos);
 		rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x,pos.y*value);
 	}
 }
