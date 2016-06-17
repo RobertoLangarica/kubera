@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
 
 	protected void startGame()
 	{
-		configureLevel(PersistentData.GetInstance().currentLevel);		
+		configureLevel(PersistentData.GetInstance().getRandomLevel());		
 	}
 
 	void Update()

@@ -31,8 +31,7 @@ public class WordManager : MonoBehaviour
 	public GameObject wordCompleteButton;
 	public GameObject wordDeleteButton;
 	public Image deleteButtonImage;
-	public Sprite deleteCharacterState;
-	public Sprite deleteWordState;
+
 
 	public KeyBoardManager keyBoard;
 	public GoalPopUp goalPopUp;
@@ -648,7 +647,7 @@ public class WordManager : MonoBehaviour
 		switch (state) 
 		{
 		case EDeleteState.WORD:
-			deleteButtonImage.sprite = deleteWordState;
+			//deleteButtonImage.sprite = deleteWordState;
 			break;
 		case EDeleteState.CHARACTER:
 			//deleteButtonImage.sprite = deleteCharacterState;

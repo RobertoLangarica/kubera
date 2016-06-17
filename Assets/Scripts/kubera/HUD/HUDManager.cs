@@ -340,6 +340,7 @@ public class HUDManager : MonoBehaviour
 		string textToReplace = string.Empty;
 		string replacement = string.Empty;
 		List<string> word = new List<string> ();
+		List<string> letter = new List<string> ();
 
 		switch(goalCondition)
 		{
@@ -350,13 +351,10 @@ public class HUDManager : MonoBehaviour
 			replacement = "";
 			IEnumerable letters = parameters as IEnumerable;
 
-			foreach (object letter in letters) 
+			foreach (object oLetter in letters) 
 			{
-				replacement += letter.ToString ();
-				replacement += ", ";
+				letter.Add (oLetter.ToString ());
 			}
-			replacement = replacement.Remove(replacement.LastIndexOf (","));
-			replacement += ".";
 
 			break;
 		case GoalManager.OBSTACLES:
@@ -394,7 +392,7 @@ public class HUDManager : MonoBehaviour
 			break;
 		}
 
-		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement));
+		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement),letter);
 
 		//goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
 		//activatePopUp("goalPopUp");

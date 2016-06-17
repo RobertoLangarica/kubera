@@ -36,21 +36,21 @@ public class TutorialManager : MonoBehaviour
 
 		linesAnimation = FindObjectOfType<LinesCreatedAnimation> ();
 
-		selectTutorial ();
+		//selectTutorial ();
 	}
 
-	void Update()
+	/*void Update()
 	{
 		if (currentTutorial == null) 
 		{
-			selectTutorial ();
+			//selectTutorial ();
 		}
 
 		if (currentTutorial.phaseEvent == TutorialBase.ENextPhaseEvent.TAP && (Input.touchCount >= 1 || Input.GetMouseButtonDown(0))) 
 		{
 			canCompletePhase ();
 		}
-	}
+	}*/
 
 	protected void selectTutorial()
 	{
