@@ -40,7 +40,6 @@ namespace VoxelBusters.NativePlugins
 			Plugin.Call(NativeInfo.Methods.SET_NOTIFICATION_TYPES, (int)_notificationTypes);
 
 #if USES_ONE_SIGNAL
-			
 			OneSignal.EnableSound(((int)_notificationTypes & (int)NotificationType.Sound) == 1);
 #endif
 		}
