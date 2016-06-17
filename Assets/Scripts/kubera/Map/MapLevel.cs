@@ -29,8 +29,9 @@ public class MapLevel : MonoBehaviour
 	public Text lvlNameText;
 
 	public Color lockedColor;
-	public Color normalReachedColor;
+	public Color normalColor;
 	public Color bossPassedColor;
+	public Color bossReachedColor;
 	public Color starsColor;
 
 	public Image levelIcon;
@@ -50,7 +51,20 @@ public class MapLevel : MonoBehaviour
 
 	public void updateText()
 	{
-		lvlNameText.text = lvlName.Replace ("0","");
+		for (int i = 0; i < lvlName.Length; i++) 
+		{
+			if (lvlName [i] == '0') 
+			{
+				lvlName = lvlName.Remove(i,1);
+				i--;
+			} 
+			else 
+			{
+				break;
+			}
+		}
+
+		lvlNameText.text = lvlName;
 	}
 
 	public void updateStars()
@@ -104,9 +118,12 @@ public class MapLevel : MonoBehaviour
 			break;
 		case(EMapLevelsStatus.BOSS_REACHED):
 		case(EMapLevelsStatus.BOSS_UNLOCKED):
+			levelBossIcon.gameObject.SetActive (true);
+			levelBossIcon.color = levelIcon.color = bossReachedColor;
+			break;
 		case(EMapLevelsStatus.NORMAL_PASSED):
 		case(EMapLevelsStatus.NORMAL_REACHED):
-			levelIcon.color = normalReachedColor;
+			levelIcon.color = normalColor;
 			break;
 		}
 	}
