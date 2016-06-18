@@ -111,7 +111,8 @@ public class GameManager : MonoBehaviour
 		{
 			startGame ();
 		}
-
+		//TODO: hardcoding
+		bonificationPiecePrefab.SetActive (true);
 		//TODO: Control de flujo de juego con un init
 	}
 

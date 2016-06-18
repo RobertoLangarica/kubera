@@ -6,8 +6,8 @@ using ABC;
 public class CellsManager : MonoBehaviour 
 {
 	public GameObject cellPrefab;
-	public GameObject obstacleLetterPrefab;
-	public GameObject singleSquarePiece;
+	//public GameObject obstacleLetterPrefab;
+	//public GameObject singleSquarePiece;
 	public GameObject uiLetter;
 
 	public Transform topOfScreen;
