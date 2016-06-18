@@ -74,7 +74,7 @@ public class KeyBoardManager : MonoBehaviour
 			addButton (clone);
 		}
 
-		StartCoroutine("removeGridContainerAndMoveAnchors",0.5f);
+		StartCoroutine("removeGridContainerAndMoveAnchors",0);
 	}
 
 	protected void addLetterToContainer(Letter letter)
@@ -105,12 +105,12 @@ public class KeyBoardManager : MonoBehaviour
 
 	protected IEnumerator removeGridContainerAndMoveAnchors()
 	{
+		gameObject.SetActive (false);
 		yield return new WaitForSeconds (0.1f);
 		container.enabled = false;
 
 		yield return new WaitForSeconds (0.1f);
 		keys.Adjust ();
-		gameObject.SetActive (false);
 	}
 
 	public void hideKeyBoard()

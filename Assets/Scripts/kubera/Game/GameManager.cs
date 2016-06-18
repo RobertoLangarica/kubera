@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
 
 	protected void startGame()
 	{
-		configureLevel(PersistentData.GetInstance().getRandomLevel());		
+		configureLevel(PersistentData.GetInstance().currentLevel);		
 	}
 
 	void Update()
@@ -832,7 +832,7 @@ public class GameManager : MonoBehaviour
 	{
 		//Checa si tiene dinero para usar el poder
 		//transaction manager
-		print (powerupManager.getPowerupByType(type).isFree);
+		//print (powerupManager.getPowerupByType(type).isFree);
 		if(powerupManager.getPowerupByType(type).isFree || TransactionManager.GetInstance().tryToUseGems(TransactionManager.GetInstance().powerUpPrices(type)))
 		{			
 			return true;
