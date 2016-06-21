@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
 
-public class DoorsInput : MonoBehaviour {
+public class DoorsManager : MonoBehaviour {
 
 	public ScrollRect scrollRect;
 	public bool canMove;
@@ -26,11 +26,6 @@ public class DoorsInput : MonoBehaviour {
 	void Start()
 	{
 		StartCoroutine (setBoxColliderSize());
-
-		if(canMove)
-		{
-			DestroyDoors ();
-		}
 	}
 
 	IEnumerator setBoxColliderSize()
@@ -81,5 +76,11 @@ public class DoorsInput : MonoBehaviour {
 	{
 		Destroy (leftDoor);
 		Destroy (rightDoor);
+	}
+
+	public void DoorsCanOpen()
+	{
+		canMove = true;
+		DestroyDoors ();
 	}
 }

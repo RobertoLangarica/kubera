@@ -16,11 +16,14 @@ public class MapManager : MonoBehaviour
 	public BossLocked bossLockedPopUp;
 
 	public int currentWorld;
+	public Transform worldParent;
 	public List<GameObject> worlds;
+	protected GameObject WorldPrefab;
 
 	protected LifesManager lifesHUDManager;
 	protected PopUpManager popUpManager;
 	protected ParalaxManager paralaxManager;
+	protected DoorsManager doorsManager;
 
 	protected List<MapLevel> mapLevels;
 
@@ -31,6 +34,7 @@ public class MapManager : MonoBehaviour
 		popUpManager = FindObjectOfType<PopUpManager> ();
 		lifesHUDManager = FindObjectOfType<LifesManager> ();
 		paralaxManager = FindObjectOfType<ParalaxManager> ();
+		doorsManager = FindObjectOfType<DoorsManager> ();
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 
@@ -81,15 +85,19 @@ public class MapManager : MonoBehaviour
 	{
 		currentWorld = world;
 	
-		setWorldOnScene (currentWorld);
+		setWorldOnScene (currentWorld-1);
 
-		mapLevels = new List<MapLevel>(worlds[currentWorld].GetComponentsInChildren<MapLevel> ());
-		paralaxManager.setRectTransform (worlds [currentWorld].GetComponent<RectTransform> ());
+		mapLevels = new List<MapLevel>(worlds[currentWorld-1].GetComponentsInChildren<MapLevel> ());
+		paralaxManager.setRectTransform (worlds [currentWorld-1].GetComponent<RectTransform> ());
 	}
 
 	protected void setWorldOnScene(int world)
 	{
 		worlds [world].SetActive (true);
+		WorldPrefab = Instantiate (worlds [world]);
+		WorldPrefab.transform.SetParent (worldParent,false);
+
+		doorsManager = FindObjectOfType<DoorsManager> ();
 	}
 
 	protected void initializeLevels()
@@ -98,7 +106,7 @@ public class MapManager : MonoBehaviour
 		List<Level> worldsLevels = new List<Level> ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevesOfWorld(currentWorld));
 
 		MapLevel currentLevel = null;
-
+		print (worldsLevels.Count);
 		for (int i = 0; i < mapLevels.Count; i++) 
 		{
 			settingMapLevelInfo (mapLevels[i],worldsLevels[i]);
@@ -111,9 +119,18 @@ public class MapManager : MonoBehaviour
 			mapLevels[i].updateStars();
 			mapLevels [i].updateText ();
 
-			if(mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_REACHED || mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_UNLOCKED ||  mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED )
+			if(mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_REACHED
+				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_PASSED
+				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_UNLOCKED 
+				||  mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED 
+				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED)
 			{
 				currentLevel = mapLevels [i];
+
+				if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
+				{
+					doorsManager.DoorsCanOpen ();
+				}
 			}
 		}
 		if(currentLevel == null)
@@ -208,6 +225,7 @@ public class MapManager : MonoBehaviour
 		case(MapLevel.EMapLevelsStatus.BOSS_UNLOCKED):
 		case(MapLevel.EMapLevelsStatus.NORMAL_REACHED):
 			level.OnClickNotification += OnLevelUnlockedPressed;
+			print ( level);
 			break;
 		case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
 			level.OnClickNotification += OnBossReachedPressed;

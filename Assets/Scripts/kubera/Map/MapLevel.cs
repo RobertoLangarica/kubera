@@ -35,7 +35,9 @@ public class MapLevel : MonoBehaviour
 	public Color starsColor;
 
 	public Image levelIcon;
+	public Sprite levelLockedSprite;
 	public Image levelBossIcon;
+	public Sprite levelLockedBossSprite;
 	public List<Image> levelStars;
 
 	public string lvlName;
@@ -107,10 +109,12 @@ public class MapLevel : MonoBehaviour
 		{
 		case(EMapLevelsStatus.BOSS_LOCKED):
 			levelBossIcon.gameObject.SetActive (true);
-			levelBossIcon.color = levelIcon.color = lockedColor;
+			levelIcon.sprite = levelLockedSprite;
+			levelBossIcon.sprite = levelLockedBossSprite;
 			break;
 		case(EMapLevelsStatus.NORMAL_LOCKED):
-			levelBossIcon.color = levelIcon.color = lockedColor;
+			levelIcon.color = lockedColor;
+			levelIcon.sprite = levelLockedSprite;
 			break;
 		case(EMapLevelsStatus.BOSS_PASSED):
 			levelBossIcon.color = levelIcon.color = bossPassedColor;
@@ -119,7 +123,7 @@ public class MapLevel : MonoBehaviour
 		case(EMapLevelsStatus.BOSS_REACHED):
 		case(EMapLevelsStatus.BOSS_UNLOCKED):
 			levelBossIcon.gameObject.SetActive (true);
-			levelBossIcon.color = levelIcon.color = bossReachedColor;
+			//levelBossIcon.color = levelIcon.color = bossReachedColor;
 			break;
 		case(EMapLevelsStatus.NORMAL_PASSED):
 		case(EMapLevelsStatus.NORMAL_REACHED):

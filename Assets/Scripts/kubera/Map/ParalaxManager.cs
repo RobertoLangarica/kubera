@@ -15,7 +15,7 @@ public class ParalaxManager : MonoBehaviour {
 	{
 		rectTransform = GetComponent<RectTransform> ();
 		oldPos = rectTransform.anchoredPosition;
-		OnMove (rectTransform.anchoredPosition);
+		//OnMove (rectTransform.anchoredPosition);
 		//scrollRect.verticalNormalizedPosition = 0.5f;
 		print (Screen.height);
 	}
@@ -37,9 +37,10 @@ public class ParalaxManager : MonoBehaviour {
 	{
 		print (mapLevel.GetComponent<RectTransform> ().anchorMax.y);
 		print ( mapLevel.GetComponent<RectTransform> ().anchorMin.y);
-		float percentage = (mapLevel.GetComponent<RectTransform> ().anchorMax.y + mapLevel.GetComponent<RectTransform> ().anchorMin.y )*0.5f;
-		print (percentage);
-		scrollRect.verticalNormalizedPosition = percentage;
+		float sizeOfLevelIcon = mapLevel.GetComponent<RectTransform> ().anchorMax.y - mapLevel.GetComponent<RectTransform> ().anchorMin.y;
+		float positionCalculated = mapLevel.GetComponent<RectTransform> ().anchorMin.y - sizeOfLevelIcon;
+		print (positionCalculated);
+		scrollRect.verticalNormalizedPosition = positionCalculated;
 
 	}
 }
