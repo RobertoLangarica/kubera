@@ -7,6 +7,9 @@ public class ParalaxManager : MonoBehaviour {
 	public delegate void DOnMove(Vector2 newPos);
 	public DOnMove OnMove;
 
+	public delegate void DOnUnsubscribe();
+	public DOnUnsubscribe OnUnsubscribe;
+
 	public RectTransform rectTransform;
 
 	protected Vector2 oldPos;
@@ -24,7 +27,10 @@ public class ParalaxManager : MonoBehaviour {
 	{
 		if(oldPos != rectTransform.anchoredPosition)
 		{
-			OnMove( rectTransform.anchoredPosition);
+			if(OnMove != null)
+			{
+				OnMove( rectTransform.anchoredPosition);
+			}
 		}
 	}
 
@@ -38,9 +44,13 @@ public class ParalaxManager : MonoBehaviour {
 		print (mapLevel.GetComponent<RectTransform> ().anchorMax.y);
 		print ( mapLevel.GetComponent<RectTransform> ().anchorMin.y);
 		float sizeOfLevelIcon = mapLevel.GetComponent<RectTransform> ().anchorMax.y - mapLevel.GetComponent<RectTransform> ().anchorMin.y;
-		float positionCalculated = mapLevel.GetComponent<RectTransform> ().anchorMin.y - sizeOfLevelIcon;
+		float positionCalculated = mapLevel.GetComponent<RectTransform> ().anchorMin.y/* - sizeOfLevelIcon*/;
 		print (positionCalculated);
 		scrollRect.verticalNormalizedPosition = positionCalculated;
+	}
 
+	public void Unsubscribe()
+	{
+		OnUnsubscribe ();
 	}
 }

@@ -25,6 +25,7 @@ public class DoorsManager : MonoBehaviour {
 
 	void Start()
 	{
+		scrollRect = FindObjectOfType<ScrollRect> ();
 		StartCoroutine (setBoxColliderSize());
 	}
 

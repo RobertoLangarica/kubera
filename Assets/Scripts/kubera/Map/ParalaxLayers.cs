@@ -12,10 +12,17 @@ public class ParalaxLayers : MonoBehaviour {
 	{
 		content = FindObjectOfType<ParalaxManager> ();
 		content.OnMove += OnMove;
+		content.OnUnsubscribe += OnUnsubscribe;
 	}
 
 	protected void OnMove(Vector2 pos)
 	{
 		rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x,pos.y*value);
+	}
+
+	protected void OnUnsubscribe()
+	{
+		content.OnMove -= OnMove;
+		content.OnUnsubscribe -= OnUnsubscribe;
 	}
 }

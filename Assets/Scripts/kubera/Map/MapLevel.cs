@@ -109,6 +109,7 @@ public class MapLevel : MonoBehaviour
 		{
 		case(EMapLevelsStatus.BOSS_LOCKED):
 			levelBossIcon.gameObject.SetActive (true);
+			levelIcon.color = lockedColor;
 			levelIcon.sprite = levelLockedSprite;
 			levelBossIcon.sprite = levelLockedBossSprite;
 			break;

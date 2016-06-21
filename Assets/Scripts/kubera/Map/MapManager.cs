@@ -47,9 +47,7 @@ public class MapManager : MonoBehaviour
 	{
 		if (Input.GetKeyDown (KeyCode.A)) 
 		{
-			selectLevel (currentWorld);
-
-			initializeLevels ();
+			changeWorld ();
 		}
 	}
 
@@ -87,14 +85,14 @@ public class MapManager : MonoBehaviour
 	
 		setWorldOnScene (currentWorld-1);
 
-		mapLevels = new List<MapLevel>(worlds[currentWorld-1].GetComponentsInChildren<MapLevel> ());
-		paralaxManager.setRectTransform (worlds [currentWorld-1].GetComponent<RectTransform> ());
+		mapLevels = new List<MapLevel>(WorldPrefab.GetComponentsInChildren<MapLevel> ());
+		paralaxManager.setRectTransform (WorldPrefab.GetComponent<RectTransform> ());
 	}
 
 	protected void setWorldOnScene(int world)
 	{
 		worlds [world].SetActive (true);
-		WorldPrefab = Instantiate (worlds [world]);
+		WorldPrefab = (GameObject)Instantiate (worlds [world]);
 		WorldPrefab.transform.SetParent (worldParent,false);
 
 		doorsManager = FindObjectOfType<DoorsManager> ();
@@ -290,5 +288,27 @@ public class MapManager : MonoBehaviour
 	protected void OnLevelLockedPressed(MapLevel pressed)
 	{
 		Debug.LogWarning ("NIVEL BLOQUEADO");
+	}
+
+	protected void changeWorld()
+	{
+		paralaxManager.enabled = false;
+		if(WorldPrefab != null)
+		{
+			paralaxManager.Unsubscribe ();
+			Destroy (WorldPrefab);
+		}
+
+		selectLevel (currentWorld);
+
+		initializeLevels ();
+		paralaxManager.enabled = true;
+	}
+
+	public void changeCurrentWorld(int world)
+	{
+		currentWorld = world;
+
+		changeWorld ();
 	}
 }
