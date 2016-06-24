@@ -48,7 +48,7 @@ public class HUDMetterAndStars : MonoBehaviour
 	public void setStarsPosition()
 	{
 		float pointMetterwidth = pointsMeter.rectTransform.rect.width;
-
+		print (pointMetterwidth);
 		Lines[0].rectTransform.anchoredPosition = new Vector3(scoreToReachStar[0] / scoreToReachStar [2] * pointMetterwidth, 0);
 		Lines[1].rectTransform.anchoredPosition = new Vector3(scoreToReachStar[1] / scoreToReachStar [2] * pointMetterwidth, 0);
 		Stars [2].rectTransform.anchoredPosition =  new Vector2(pointMetterwidth,0);

@@ -14,7 +14,8 @@ public class ParalaxManager : MonoBehaviour {
 
 	protected Vector2 oldPos;
 	public ScrollRect scrollRect;
-	void Start()
+
+	void Awake()
 	{
 		rectTransform = GetComponent<RectTransform> ();
 		oldPos = rectTransform.anchoredPosition;

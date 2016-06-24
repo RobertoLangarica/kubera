@@ -12,6 +12,7 @@ namespace Data
 		{
 			base.Start ();
 			levelsList = PersistentData.GetInstance().levelsData;	
+			//print((LevelsDataManager.GetInstance () as LevelsDataManager).getCurrentData ().levels [((LevelsDataManager.GetInstance () as LevelsDataManager).getCurrentData ().levels.Count - 1)]);
 		}
 
 		public void savePassedLevel(string levelName, int stars, int points)
@@ -59,7 +60,7 @@ namespace Data
 
 			if(index == 0)
 			{
-				if(world[0].world == 0)
+				if(world[0].world == 1)
 				{
 					//No hay nadie antes
 					reached = true;

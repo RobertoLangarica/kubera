@@ -137,6 +137,10 @@ public class GameManager : MonoBehaviour
 			PersistentData.GetInstance().startLevel -= 2;
 			SceneManager.LoadScene ("Game");
 		}
+		if (Input.GetKeyUp (KeyCode.Z)) 
+		{
+			onUsersAction (5, 0);
+		}
 	}
 
 	protected void rotationActivated(GameObject go)
@@ -537,7 +541,7 @@ public class GameManager : MonoBehaviour
 		hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
 		hudManager.setWinCondition (goalManager.currentCondition, goalManager.getGoalConditionParameters());
 
-		hudManager.setGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters());
+		hudManager.setGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters(),currentLevel.name);
 		activatePopUp ("goalPopUp");
 	}
 
@@ -918,7 +922,10 @@ public class GameManager : MonoBehaviour
 			Invoke ("winBonification", piecePositionedDelay * 2);
 			break;
 		case "loose":
-			activatePopUp ("SecondChance");
+			//HACK campus
+			SceneManager.LoadScene ("Levels");
+
+			//activatePopUp ("SecondChance");
 			break;
 		default:		
 				Invoke ("allowInputFromInvoke", 0.5f);
@@ -940,7 +947,7 @@ public class GameManager : MonoBehaviour
 	public void quitGame()
 	{
 		PersistentData.GetInstance().startLevel -= 1;
-		SceneManager.LoadScene ("Game");
+		SceneManager.LoadScene ("Levels");
 		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		activatePopUp ("exitGame");*/
 	}

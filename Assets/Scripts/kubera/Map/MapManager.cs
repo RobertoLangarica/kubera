@@ -37,10 +37,18 @@ public class MapManager : MonoBehaviour
 		doorsManager = FindObjectOfType<DoorsManager> ();
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
-
+		if(PersistentData.GetInstance().currentWorld == -1)
+		{
+			if(LevelsDataManager.GetInstance().getCurrentData ().levels.Count != 0)
+			{				
+				currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetInstance().getCurrentData ().levels.Count-1].world);
+			}
+		}
 		//selectLevel (currentWorld);
 
 		//initializeLevels ();
+		//print (currentWorld);
+		changeWorld ();
 	}
 
 	void Update()
@@ -104,7 +112,7 @@ public class MapManager : MonoBehaviour
 		List<Level> worldsLevels = new List<Level> ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevesOfWorld(currentWorld));
 
 		MapLevel currentLevel = null;
-		print (worldsLevels.Count);
+		//print (worldsLevels.Count);
 		for (int i = 0; i < mapLevels.Count; i++) 
 		{
 			settingMapLevelInfo (mapLevels[i],worldsLevels[i]);
@@ -223,7 +231,6 @@ public class MapManager : MonoBehaviour
 		case(MapLevel.EMapLevelsStatus.BOSS_UNLOCKED):
 		case(MapLevel.EMapLevelsStatus.NORMAL_REACHED):
 			level.OnClickNotification += OnLevelUnlockedPressed;
-			print ( level);
 			break;
 		case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
 			level.OnClickNotification += OnBossReachedPressed;
@@ -310,5 +317,10 @@ public class MapManager : MonoBehaviour
 		currentWorld = world;
 
 		changeWorld ();
+	}
+
+	public void goToScene(string scene)
+	{
+		ScreenManager.instance.GoToScene (scene);
 	}
 }

@@ -8,6 +8,7 @@ public class DoorsManager : MonoBehaviour {
 	public ScrollRect scrollRect;
 	public bool canMove;
 	public bool moved;
+	public bool toClick;
 	public RectTransform finalPositionLeftDoor;
 	public RectTransform finalPositionRightDoor;
 	public BoxCollider2D boxCollider2DLeftDoor;
@@ -23,8 +24,13 @@ public class DoorsManager : MonoBehaviour {
 
 	public float oppenDoorSpeed = 1f;
 
+	public int toWorld;
+
+	protected MapManager mapManager;
+
 	void Start()
 	{
+		mapManager = FindObjectOfType<MapManager> ();
 		scrollRect = FindObjectOfType<ScrollRect> ();
 		StartCoroutine (setBoxColliderSize());
 	}
@@ -53,12 +59,18 @@ public class DoorsManager : MonoBehaviour {
 	{
 		if(canMove && gesture.Raycast.Hits2D != null)
 		{
-			scrollRect.enabled = false;
+			toClick = true;
+			//scrollRect.enabled = false;
 		}
 	}
 
 	void OnFingerUp()
 	{
+		if(toClick)
+		{
+			MoveDoor (rectTransformLeft, finalPositionLeftDoor.localPosition, oppenDoorSpeed, finalLeftDoor,leftDoor);
+			MoveDoor (rectTransformRight, finalPositionRightDoor.localPosition, oppenDoorSpeed, finalRightDoor,rightDoor);
+		}
 		scrollRect.enabled = true;
 	}
 
@@ -70,7 +82,11 @@ public class DoorsManager : MonoBehaviour {
 
 	protected void openDoor(Image finalDoor,float speed = 0.5f)
 	{
-		//finalDoor.DOFade(1,speed);
+		if(canMove)
+		{
+			OnChangeWorld ();
+			canMove = false;
+		}
 	}
 
 	protected void DestroyDoors()
@@ -83,5 +99,10 @@ public class DoorsManager : MonoBehaviour {
 	{
 		canMove = true;
 		DestroyDoors ();
+	}
+
+	public void OnChangeWorld()
+	{
+		mapManager.changeCurrentWorld (toWorld);
 	}
 }

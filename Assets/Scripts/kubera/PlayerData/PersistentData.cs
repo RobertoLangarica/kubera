@@ -5,6 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using ABC;
 using ABC.Tree;
 using ABCSerializer;
+using Data;
 
 /**
  * clase que ponemos en un prefab que va existir 
@@ -28,6 +29,8 @@ public class PersistentData : Manager<PersistentData>
 	private string currentLanguage;
 	private bool destroyed = false;//Indica si el objeto ya se destruyo
 
+	[HideInInspector]public int currentWorld  =-1;
+
 	[HideInInspector]
 	public bool fromLevelBuilder;
 	[HideInInspector]
@@ -50,7 +53,10 @@ public class PersistentData : Manager<PersistentData>
 
 		abcDictionary = FindObjectOfType<ABCDictionary>();
 		onDictionaryFinished += foo;
-		configureGameForLanguage();
+		configureGameForLanguage("spanish");
+
+		/*currentWorld = */
+		//print((LevelsDataManager.GetInstance () as LevelsDataManager).getCurrentData ().levels [((LevelsDataManager.GetInstance () as LevelsDataManager).getCurrentData ().levels.Count - 1)]);
 	}
 
 	private void foo(){}
@@ -66,7 +72,6 @@ public class PersistentData : Manager<PersistentData>
 			onDictionaryFinished();
 			return;
 		}
-
 		if(language == "")
 		{
 			language = UserDataManager.instance.language;
@@ -197,7 +202,8 @@ public class PersistentData : Manager<PersistentData>
 	{
 		int le = 15;
 		//return levelsData.levels[0];
-		return levelsData.levels[Random.Range(le,le+1)];
+		//return levelsData.levels[Random.Range(le,le+1)];
+		return levelsData.levels[Random.Range(0,levelsData.levels.Length-1)];
 	}
 
 	public Level getNextLevel()

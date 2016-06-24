@@ -225,6 +225,7 @@ TextureImporter:
     21300436: popups-flechasgrandes
     21300438: popups-leaderboard
     21300440: popups-oferta
+    21300442: pop-comodin
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -279,8 +280,8 @@ TextureImporter:
     - name: Copia de game-HUDMusicOff
       rect:
         serializedVersion: 2
-        x: 851
-        y: 1079
+        x: 1613
+        y: 666
         width: 132
         height: 135
       alignment: 9
@@ -298,8 +299,8 @@ TextureImporter:
     - name: Copia de game-HUDMusicOn
       rect:
         serializedVersion: 2
-        x: 987
-        y: 1079
+        x: 1476
+        y: 655
         width: 132
         height: 135
       alignment: 9
@@ -317,8 +318,8 @@ TextureImporter:
     - name: Copia de game-HUDQuit
       rect:
         serializedVersion: 2
-        x: 1291
-        y: 1068
+        x: 1885
+        y: 477
         width: 125
         height: 129
       alignment: 9
@@ -336,8 +337,8 @@ TextureImporter:
     - name: Copia de game-HUDsettings
       rect:
         serializedVersion: 2
-        x: 1176
-        y: 994
+        x: 714
+        y: 1719
         width: 79
         height: 81
       alignment: 9
@@ -356,8 +357,8 @@ TextureImporter:
     - name: Copia de game-HUDSoundOff
       rect:
         serializedVersion: 2
-        x: 1123
-        y: 1079
+        x: 1253
+        y: 593
         width: 132
         height: 135
       alignment: 9
@@ -375,8 +376,8 @@ TextureImporter:
     - name: Copia de game-HUDSoundOn
       rect:
         serializedVersion: 2
-        x: 1043
-        y: 1224
+        x: 1384
+        y: 454
         width: 132
         height: 135
       alignment: 9
@@ -394,8 +395,8 @@ TextureImporter:
     - name: Copia de game-wordRight
       rect:
         serializedVersion: 2
-        x: 1306
-        y: 1365
+        x: 1885
+        y: 610
         width: 126
         height: 124
       alignment: 9
@@ -416,8 +417,8 @@ TextureImporter:
     - name: Copia de game-wordWrong
       rect:
         serializedVersion: 2
-        x: 1175
-        y: 1364
+        x: 1612
+        y: 537
         width: 127
         height: 125
       alignment: 9
@@ -435,8 +436,8 @@ TextureImporter:
     - name: Copia de gem
       rect:
         serializedVersion: 2
-        x: 1579
-        y: 951
+        x: 889
+        y: 5
         width: 83
         height: 83
       alignment: 9
@@ -459,8 +460,8 @@ TextureImporter:
     - name: Copia de map-HUDplus
       rect:
         serializedVersion: 2
-        x: 2001
-        y: 1723
+        x: 2000
+        y: 1468
         width: 36
         height: 36
       alignment: 0
@@ -478,8 +479,8 @@ TextureImporter:
     - name: Copia de star
       rect:
         serializedVersion: 2
-        x: 1055
-        y: 1522
+        x: 1778
+        y: 1089
         width: 110
         height: 115
       alignment: 0
@@ -522,8 +523,8 @@ TextureImporter:
     - name: game-BoardTile-Line
       rect:
         serializedVersion: 2
-        x: 1428
-        y: 855
+        x: 1391
+        y: 26
         width: 81
         height: 81
       alignment: 1
@@ -537,8 +538,8 @@ TextureImporter:
     - name: game-BoardTile-noLine
       rect:
         serializedVersion: 2
-        x: 1752
-        y: 940
+        x: 797
+        y: 1720
         width: 80
         height: 80
       alignment: 1
@@ -552,170 +553,146 @@ TextureImporter:
     - name: game-cubeBlack-selected
       rect:
         serializedVersion: 2
-        x: 1428
-        y: 940
-        width: 85
-        height: 85
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 540
+        y: 4
+        width: 83
+        height: 84
+      alignment: 9
+      pivot: {x: 0.4759036, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -42.5, y: 42.5}
-        - {x: -42.5, y: -40.5}
-        - {x: -41.5, y: -42.5}
-        - {x: 40.5, y: -42.5}
-        - {x: 42.5, y: -39.5}
-        - {x: 42.5, y: 42.5}
+      - - {x: -37.5, y: 42}
+        - {x: -39.5, y: 39}
+        - {x: -39.5, y: -38}
+        - {x: -35.5, y: -42}
+        - {x: 43.5, y: -42}
+        - {x: 43.5, y: 42}
     - name: game-cubeBlackDot
       rect:
         serializedVersion: 2
-        x: 1690
-        y: 1129
-        width: 85
-        height: 85
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 801
+        y: 5
+        width: 84
+        height: 83
+      alignment: 9
+      pivot: {x: 0.48214287, y: 0.4939759}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -42.5, y: 42.5}
-        - {x: -42.5, y: -40.5}
-        - {x: -41.5, y: -42.5}
-        - {x: 40.5, y: -42.5}
-        - {x: 42.5, y: -39.5}
-        - {x: 42.5, y: 42.5}
+      - - {x: -40.5, y: 42}
+        - {x: -40.5, y: -35}
+        - {x: -37.5, y: -41}
+        - {x: 43.5, y: -41}
+        - {x: 43.5, y: 42}
     - name: game-cubeDot
       rect:
         serializedVersion: 2
-        x: 1809
-        y: 1024
-        width: 85
-        height: 85
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 627
+        y: 4
+        width: 83
+        height: 84
+      alignment: 9
+      pivot: {x: 0.48795182, y: 0.50595236}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -42.5, y: 42.5}
-        - {x: -42.5, y: -40.5}
-        - {x: -41.5, y: -42.5}
-        - {x: 40.5, y: -42.5}
+      - - {x: -37.5, y: 41.5}
+        - {x: -40.5, y: 37.5}
+        - {x: -40.5, y: -39.5}
+        - {x: -34.5, y: -42.5}
+        - {x: 38.5, y: -42.5}
         - {x: 42.5, y: -39.5}
-        - {x: 42.5, y: 42.5}
+        - {x: 42.5, y: 38.5}
+        - {x: 39.5, y: 41.5}
     - name: game-cubeNoDot
       rect:
         serializedVersion: 2
-        x: 1898
-        y: 1024
-        width: 85
-        height: 85
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -42.5, y: 42.5}
-        - {x: -42.5, y: -42.5}
-        - {x: 42.5, y: -42.5}
-        - {x: 42.5, y: 42.5}
-    - name: game-HUDBackgroundDown
-      rect:
-        serializedVersion: 2
-        x: 1176
-        y: 1767
-        width: 753
-        height: 86
+        x: 714
+        y: 4
+        width: 83
+        height: 84
       alignment: 9
-      pivot: {x: 0.5, y: 0.5116279}
+      pivot: {x: 0.48795182, y: 0.50595236}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 364.5, y: 30}
-        - {x: 358.5, y: 37}
-        - {x: 346.5, y: 39}
-        - {x: 334.5, y: 39}
-        - {x: 317.5, y: 40}
-        - {x: 293.5, y: 41}
-        - {x: 261.5, y: 42}
-        - {x: -259.5, y: 42}
-        - {x: -290.5, y: 41}
-        - {x: -314.5, y: 40}
-        - {x: -332.5, y: 39}
-        - {x: -359.5, y: 37}
-        - {x: -366.5, y: 31}
-        - {x: -374.5, y: 14}
-        - {x: -376.5, y: 3}
-        - {x: -376.5, y: -44}
-        - {x: 376.5, y: -44}
-        - {x: 376.5, y: 6}
-        - {x: 374.5, y: 15}
+      - - {x: -37.5, y: 41.5}
+        - {x: -40.5, y: 37.5}
+        - {x: -40.5, y: -39.5}
+        - {x: -34.5, y: -42.5}
+        - {x: 38.5, y: -42.5}
+        - {x: 42.5, y: -39.5}
+        - {x: 42.5, y: 38.5}
+        - {x: 39.5, y: 41.5}
     - name: game-HUDBackgroundUp
       rect:
         serializedVersion: 2
-        x: 1176
-        y: 1857
-        width: 763
-        height: 191
+        x: 1253
+        y: 1510
+        width: 751
+        height: 192
       alignment: 9
-      pivot: {x: 0.4993447, y: 0.4895288}
+      pivot: {x: 0.5, y: 0.48177084}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 218, y: -90.5}
-        - {x: 219, y: -89.5}
-        - {x: 243, y: -89.5}
-        - {x: 263, y: -88.5}
-        - {x: 282, y: -87.5}
-        - {x: 296, y: -86.5}
-        - {x: 308, y: -85.5}
-        - {x: 327, y: -83.5}
-        - {x: 342, y: -81.5}
-        - {x: 347, y: -80.5}
-        - {x: 355, y: -78.5}
-        - {x: 362, y: -75.5}
-        - {x: 367, y: -70.5}
-        - {x: 370, y: -63.5}
-        - {x: 373, y: -54.5}
-        - {x: 377, y: -32.5}
-        - {x: 378, y: -24.5}
-        - {x: 379, y: -14.5}
-        - {x: 380, y: -1.5}
-        - {x: 381, y: 19.5}
-        - {x: 381, y: 95.5}
-        - {x: 380, y: 97.5}
-        - {x: -380, y: 97.5}
-        - {x: -381, y: 92.5}
-        - {x: -381, y: 80.5}
-        - {x: -380, y: 79.5}
-        - {x: -380, y: 32.5}
-        - {x: -379, y: 12.5}
-        - {x: -378, y: -3.5}
-        - {x: -377, y: -15.5}
-        - {x: -375, y: -32.5}
-        - {x: -373, y: -45.5}
-        - {x: -369, y: -62.5}
-        - {x: -367, y: -70.5}
-        - {x: -358, y: -79.5}
-        - {x: -345, y: -81.5}
-        - {x: -327, y: -83.5}
-        - {x: -315, y: -84.5}
-        - {x: -300, y: -85.5}
-        - {x: -283, y: -86.5}
-        - {x: -264, y: -87.5}
-        - {x: -240, y: -87.5}
-        - {x: -239, y: -88.5}
-        - {x: -214, y: -88.5}
-        - {x: -213, y: -89.5}
-        - {x: -182, y: -89.5}
-        - {x: -181, y: -90.5}
-        - {x: -137, y: -90.5}
-        - {x: -136, y: -91.5}
-        - {x: -79, y: -91.5}
-        - {x: -78, y: -92.5}
-        - {x: 133, y: -92.5}
-        - {x: 134, y: -91.5}
-        - {x: 182, y: -91.5}
-        - {x: 183, y: -90.5}
+      - - {x: 202.5, y: -90.5}
+        - {x: 203.5, y: -89.5}
+        - {x: 233.5, y: -89.5}
+        - {x: 234.5, y: -88.5}
+        - {x: 255.5, y: -88.5}
+        - {x: 256.5, y: -87.5}
+        - {x: 274.5, y: -87.5}
+        - {x: 275.5, y: -86.5}
+        - {x: 290.5, y: -86.5}
+        - {x: 291.5, y: -85.5}
+        - {x: 315.5, y: -84.5}
+        - {x: 325.5, y: -83.5}
+        - {x: 340.5, y: -81.5}
+        - {x: 351.5, y: -79.5}
+        - {x: 358.5, y: -77.5}
+        - {x: 363.5, y: -75.5}
+        - {x: 369.5, y: -69.5}
+        - {x: 372.5, y: -62.5}
+        - {x: 374.5, y: -55.5}
+        - {x: 375.5, y: -52.5}
+        - {x: 375.5, y: 99.5}
+        - {x: -375.5, y: 99.5}
+        - {x: -375.5, y: -5.5}
+        - {x: -374.5, y: -16.5}
+        - {x: -373.5, y: -17.5}
+        - {x: -372.5, y: -34.5}
+        - {x: -369.5, y: -51.5}
+        - {x: -368.5, y: -55.5}
+        - {x: -366.5, y: -62.5}
+        - {x: -363.5, y: -69.5}
+        - {x: -356.5, y: -77.5}
+        - {x: -353.5, y: -78.5}
+        - {x: -345.5, y: -80.5}
+        - {x: -338.5, y: -81.5}
+        - {x: -329.5, y: -82.5}
+        - {x: -318.5, y: -83.5}
+        - {x: -304.5, y: -84.5}
+        - {x: -289.5, y: -85.5}
+        - {x: -272.5, y: -85.5}
+        - {x: -271.5, y: -86.5}
+        - {x: -250.5, y: -86.5}
+        - {x: -249.5, y: -87.5}
+        - {x: -225.5, y: -87.5}
+        - {x: -224.5, y: -88.5}
+        - {x: -196.5, y: -88.5}
+        - {x: -195.5, y: -89.5}
+        - {x: -157.5, y: -89.5}
+        - {x: -156.5, y: -90.5}
+        - {x: -108.5, y: -90.5}
+        - {x: -107.5, y: -91.5}
+        - {x: -32.5, y: -91.5}
+        - {x: -31.5, y: -92.5}
+        - {x: 94.5, y: -92.5}
+        - {x: 95.5, y: -91.5}
+        - {x: 162.5, y: -91.5}
+        - {x: 163.5, y: -90.5}
     - name: game-HUDbombDrag
       rect:
         serializedVersion: 2
-        x: 855
-        y: 1223
+        x: 781
+        y: 769
         width: 60
         height: 62
       alignment: 9
@@ -734,8 +711,8 @@ TextureImporter:
     - name: game-HUDcubeDrag (2)
       rect:
         serializedVersion: 2
-        x: 1598
-        y: 1218
+        x: 967
+        y: 1384
         width: 257
         height: 272
       alignment: 9
@@ -774,8 +751,8 @@ TextureImporter:
     - name: game-HUDMove
       rect:
         serializedVersion: 2
-        x: 919
-        y: 1240
+        x: 906
+        y: 786
         width: 50
         height: 45
       alignment: 9
@@ -794,8 +771,8 @@ TextureImporter:
     - name: game-HUDrotateDrag
       rect:
         serializedVersion: 2
-        x: 714
-        y: 807
+        x: 910
+        y: 98
         width: 250
         height: 263
       alignment: 9
@@ -824,8 +801,8 @@ TextureImporter:
     - name: game-HUDSquareLeft
       rect:
         serializedVersion: 2
-        x: 1420
-        y: 1120
+        x: 976
+        y: 0
         width: 94
         height: 94
       alignment: 0
@@ -839,8 +816,8 @@ TextureImporter:
     - name: game-HUDtunderDrag
       rect:
         serializedVersion: 2
-        x: 598
-        y: 33
+        x: 714
+        y: 835
         width: 201
         height: 328
       alignment: 9
@@ -864,8 +841,8 @@ TextureImporter:
     - name: game-HUDx3Drag
       rect:
         serializedVersion: 2
-        x: 1940
-        y: 1700
+        x: 845
+        y: 772
         width: 57
         height: 59
       alignment: 9
@@ -880,8 +857,8 @@ TextureImporter:
     - name: game-powers3x
       rect:
         serializedVersion: 2
-        x: 1666
-        y: 948
+        x: 354
+        y: 2
         width: 82
         height: 86
       alignment: 9
@@ -901,8 +878,8 @@ TextureImporter:
     - name: game-powersBomb
       rect:
         serializedVersion: 2
-        x: 1579
-        y: 1038
+        x: 178
+        y: 1
         width: 84
         height: 87
       alignment: 0
@@ -920,8 +897,8 @@ TextureImporter:
     - name: game-powersCuadro
       rect:
         serializedVersion: 2
-        x: 1667
-        y: 1038
+        x: 266
+        y: 1
         width: 84
         height: 87
       alignment: 0
@@ -939,8 +916,8 @@ TextureImporter:
     - name: game-powersRotate
       rect:
         serializedVersion: 2
-        x: 1168
-        y: 903
+        x: 0
+        y: 1
         width: 85
         height: 87
       alignment: 9
@@ -958,8 +935,8 @@ TextureImporter:
     - name: game-powersTunder
       rect:
         serializedVersion: 2
-        x: 1428
-        y: 1029
+        x: 89
+        y: 1
         width: 85
         height: 87
       alignment: 9
@@ -977,8 +954,8 @@ TextureImporter:
     - name: game-rotateSign
       rect:
         serializedVersion: 2
-        x: 1873
-        y: 1699
+        x: 714
+        y: 767
         width: 63
         height: 64
       alignment: 9
@@ -994,8 +971,8 @@ TextureImporter:
     - name: Game-starsBar
       rect:
         serializedVersion: 2
-        x: 1859
-        y: 1306
+        x: 1253
+        y: 1855
         width: 162
         height: 47
       alignment: 9
@@ -1011,8 +988,8 @@ TextureImporter:
     - name: Game-starsBarBackground
       rect:
         serializedVersion: 2
-        x: 1859
-        y: 1255
+        x: 1253
+        y: 1804
         width: 162
         height: 47
       alignment: 9
@@ -1030,8 +1007,8 @@ TextureImporter:
     - name: Game-starsBarContour
       rect:
         serializedVersion: 2
-        x: 1873
-        y: 1641
+        x: 1243
+        y: 1746
         width: 168
         height: 54
       alignment: 9
@@ -1054,8 +1031,8 @@ TextureImporter:
     - name: Game-starsBarLine
       rect:
         serializedVersion: 2
-        x: 1933
-        y: 1802
+        x: 2040
+        y: 1453
         width: 5
         height: 51
       alignment: 9
@@ -1065,8 +1042,8 @@ TextureImporter:
     - name: game-wordsShadow
       rect:
         serializedVersion: 2
-        x: 598
-        y: 5
+        x: 1422
+        y: 1482
         width: 574
         height: 24
       alignment: 9
@@ -1076,8 +1053,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0001
       rect:
         serializedVersion: 2
-        x: 1436
-        y: 1356
+        x: 1749
+        y: 601
         width: 132
         height: 133
       alignment: 9
@@ -1092,8 +1069,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0002
       rect:
         serializedVersion: 2
-        x: 1436
-        y: 1356
+        x: 1749
+        y: 601
         width: 132
         height: 133
       alignment: 9
@@ -1108,8 +1085,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0003
       rect:
         serializedVersion: 2
-        x: 714
-        y: 1354
+        x: 1257
+        y: 1244
         width: 137
         height: 137
       alignment: 9
@@ -1125,8 +1102,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0004
       rect:
         serializedVersion: 2
-        x: 714
-        y: 1079
+        x: 1476
+        y: 794
         width: 133
         height: 135
       alignment: 9
@@ -1143,8 +1120,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0005
       rect:
         serializedVersion: 2
-        x: 1859
-        y: 1113
+        x: 1790
+        y: 894
         width: 136
         height: 138
       alignment: 9
@@ -1161,8 +1138,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0006
       rect:
         serializedVersion: 2
-        x: 714
-        y: 1780
+        x: 1898
+        y: 1181
         width: 139
         height: 143
       alignment: 9
@@ -1178,8 +1155,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0007
       rect:
         serializedVersion: 2
-        x: 1006
-        y: 402
+        x: 1649
+        y: 805
         width: 135
         height: 147
       alignment: 9
@@ -1196,8 +1173,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0008
       rect:
         serializedVersion: 2
-        x: 870
-        y: 397
+        x: 1788
+        y: 738
         width: 132
         height: 152
       alignment: 9
@@ -1213,8 +1190,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0009
       rect:
         serializedVersion: 2
-        x: 1316
-        y: 1201
+        x: 1148
+        y: 1888
         width: 100
         height: 160
       alignment: 9
@@ -1232,8 +1209,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0010
       rect:
         serializedVersion: 2
-        x: 1518
-        y: 1179
+        x: 1398
+        y: 1305
         width: 68
         height: 173
       alignment: 9
@@ -1249,8 +1226,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0011
       rect:
         serializedVersion: 2
-        x: 1518
-        y: 997
+        x: 1074
+        y: 1202
         width: 57
         height: 178
       alignment: 9
@@ -1265,8 +1242,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0012
       rect:
         serializedVersion: 2
-        x: 1259
-        y: 1046
+        x: 2020
+        y: 1871
         width: 28
         height: 177
       alignment: 9
@@ -1276,8 +1253,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0013
       rect:
         serializedVersion: 2
-        x: 1779
-        y: 1036
+        x: 2020
+        y: 1689
         width: 26
         height: 178
       alignment: 9
@@ -1287,8 +1264,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0014
       rect:
         serializedVersion: 2
-        x: 1999
-        y: 1074
+        x: 2008
+        y: 1508
         width: 40
         height: 177
       alignment: 9
@@ -1305,8 +1282,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0015
       rect:
         serializedVersion: 2
-        x: 1354
-        y: 885
+        x: 714
+        y: 1536
         width: 70
         height: 179
       alignment: 9
@@ -1323,8 +1300,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0016
       rect:
         serializedVersion: 2
-        x: 1259
-        y: 851
+        x: 1148
+        y: 1693
         width: 91
         height: 191
       alignment: 9
@@ -1342,8 +1319,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0017
       rect:
         serializedVersion: 2
-        x: 1943
-        y: 1863
+        x: 966
+        y: 1195
         width: 104
         height: 185
       alignment: 9
@@ -1360,8 +1337,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0018
       rect:
         serializedVersion: 2
-        x: 1053
-        y: 1641
+        x: 1135
+        y: 1203
         width: 118
         height: 177
       alignment: 9
@@ -1378,8 +1355,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0019
       rect:
         serializedVersion: 2
-        x: 1044
-        y: 1363
+        x: 1253
+        y: 434
         width: 127
         height: 155
       alignment: 9
@@ -1395,8 +1372,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0020
       rect:
         serializedVersion: 2
-        x: 714
-        y: 1495
+        x: 1898
+        y: 1328
         width: 138
         height: 136
       alignment: 9
@@ -1413,8 +1390,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0021
       rect:
         serializedVersion: 2
-        x: 714
-        y: 1221
+        x: 1649
+        y: 956
         width: 137
         height: 129
       alignment: 9
@@ -1431,8 +1408,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0022
       rect:
         serializedVersion: 2
-        x: 1179
-        y: 1227
+        x: 1253
+        y: 732
         width: 133
         height: 133
       alignment: 9
@@ -1448,8 +1425,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0023
       rect:
         serializedVersion: 2
-        x: 1128
-        y: 602
+        x: 914
+        y: 1819
         width: 230
         height: 229
       alignment: 9
@@ -1505,8 +1482,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0024
       rect:
         serializedVersion: 2
-        x: 870
-        y: 553
+        x: 1164
+        y: 111
         width: 254
         height: 250
       alignment: 9
@@ -1582,8 +1559,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0025
       rect:
         serializedVersion: 2
-        x: 1598
-        y: 1494
+        x: 635
+        y: 92
         width: 271
         height: 269
       alignment: 9
@@ -1656,8 +1633,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets0026
       rect:
         serializedVersion: 2
-        x: 1179
-        y: 1227
+        x: 1253
+        y: 732
         width: 133
         height: 133
       alignment: 9
@@ -1673,8 +1650,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0001
       rect:
         serializedVersion: 2
-        x: 1517
-        y: 870
+        x: 881
+        y: 1723
         width: 82
         height: 77
       alignment: 9
@@ -1692,8 +1669,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0002
       rect:
         serializedVersion: 2
-        x: 1590
-        y: 1129
+        x: 440
+        y: 3
         width: 96
         height: 85
       alignment: 9
@@ -1710,27 +1687,27 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0003
       rect:
         serializedVersion: 2
-        x: 1055
-        y: 1822
+        x: 1170
+        y: 0
         width: 112
         height: 107
       alignment: 9
       pivot: {x: 0.5, y: 0.50934577}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 43, y: 52.5}
-        - {x: -28, y: 52.5}
-        - {x: -56, y: 24.5}
-        - {x: -56, y: -44.5}
-        - {x: -32, y: -54.5}
-        - {x: 51, y: -54.5}
-        - {x: 56, y: -39.5}
-        - {x: 56, y: 34.5}
+      - - {x: 43, y: 52.500004}
+        - {x: -28, y: 52.500004}
+        - {x: -56, y: 24.500004}
+        - {x: -56, y: -44.499996}
+        - {x: -32, y: -54.499996}
+        - {x: 51, y: -54.499996}
+        - {x: 56, y: -39.499996}
+        - {x: 56, y: 34.500004}
     - name: Kub_06_Bomba_assets0004
       rect:
         serializedVersion: 2
-        x: 714
-        y: 1927
+        x: 1253
+        y: 1385
         width: 141
         height: 121
       alignment: 9
@@ -1754,8 +1731,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0005
       rect:
         serializedVersion: 2
-        x: 1873
-        y: 1503
+        x: 797
+        y: 1582
         width: 166
         height: 134
       alignment: 9
@@ -1793,8 +1770,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0006
       rect:
         serializedVersion: 2
-        x: 1873
-        y: 1357
+        x: 1253
+        y: 1906
         width: 164
         height: 142
       alignment: 9
@@ -1845,8 +1822,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0007
       rect:
         serializedVersion: 2
-        x: 870
-        y: 1289
+        x: 1476
+        y: 933
         width: 169
         height: 152
       alignment: 9
@@ -1924,8 +1901,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0008
       rect:
         serializedVersion: 2
-        x: 870
-        y: 1607
+        x: 967
+        y: 1660
         width: 177
         height: 155
       alignment: 9
@@ -2003,8 +1980,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0009
       rect:
         serializedVersion: 2
-        x: 856
-        y: 1445
+        x: 1257
+        y: 1082
         width: 184
         height: 158
       alignment: 9
@@ -2070,8 +2047,8 @@ TextureImporter:
     - name: Kub_06_Bomba_assets0010
       rect:
         serializedVersion: 2
-        x: 870
-        y: 1766
+        x: 1171
+        y: 869
         width: 179
         height: 163
       alignment: 9
@@ -2131,77 +2108,229 @@ TextureImporter:
     - name: mano1
       rect:
         serializedVersion: 2
-        x: 618
-        y: 391
+        x: 714
+        y: 1167
         width: 248
         height: 365
       alignment: 9
-      pivot: {x: 0.2923387, y: 0.7520548}
+      pivot: {x: 0.2923389, y: 0.7520553}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 173.5, y: -151.5}
-        - {x: 173.5, y: -108.5}
-        - {x: 167.5, y: -87.5}
-        - {x: 133.5, y: -51.5}
-        - {x: 101.5, y: -0.5}
-        - {x: 91.5, y: 13.5}
-        - {x: 45.5, y: 9.5}
-        - {x: 38.5, y: -8.5}
-        - {x: 8.5, y: 86.5}
-        - {x: 0.5, y: 88.5}
-        - {x: -37.5, y: 88.5}
-        - {x: -42.5, y: 69.5}
-        - {x: -29.5, y: -39.5}
-        - {x: -64.5, y: -50.5}
-        - {x: -70.5, y: -88.5}
-        - {x: -70.5, y: -125.5}
-        - {x: -47.5, y: -197.5}
-        - {x: 5.5, y: -255.5}
-        - {x: 31.5, y: -269.5}
-        - {x: 46.5, y: -272.5}
-        - {x: 101.5, y: -272.5}
-        - {x: 122.5, y: -269.5}
-        - {x: 141.5, y: -257.5}
-        - {x: 161.5, y: -225.5}
-        - {x: 172.5, y: -166.5}
+      - - {x: 173.49994, y: -151.50024}
+        - {x: 173.49994, y: -108.500244}
+        - {x: 167.49994, y: -87.500244}
+        - {x: 133.49994, y: -51.500244}
+        - {x: 101.49994, y: -0.50024414}
+        - {x: 91.49994, y: 13.499756}
+        - {x: 45.49994, y: 9.499756}
+        - {x: 38.49994, y: -8.500244}
+        - {x: 8.499939, y: 86.499756}
+        - {x: 0.49993896, y: 88.499756}
+        - {x: -37.50006, y: 88.499756}
+        - {x: -42.50006, y: 69.499756}
+        - {x: -29.500061, y: -39.500244}
+        - {x: -64.50006, y: -50.500244}
+        - {x: -70.50006, y: -88.500244}
+        - {x: -70.50006, y: -125.500244}
+        - {x: -47.50006, y: -197.50024}
+        - {x: 5.499939, y: -255.50024}
+        - {x: 31.499939, y: -269.50024}
+        - {x: 46.49994, y: -272.50024}
+        - {x: 101.49994, y: -272.50024}
+        - {x: 122.49994, y: -269.50024}
+        - {x: 141.49994, y: -257.50024}
+        - {x: 161.49994, y: -225.50024}
+        - {x: 172.49994, y: -166.50024}
     - name: mano2
       rect:
         serializedVersion: 2
-        x: 803
-        y: 63
+        x: 919
+        y: 839
         width: 248
         height: 324
       alignment: 9
-      pivot: {x: 0.31048387, y: 0.83179015}
+      pivot: {x: 0.3104835, y: 0.8317902}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 171, y: -99.5}
-        - {x: 164, y: -79.5}
-        - {x: 108, y: -5.5}
-        - {x: 92, y: 13.5}
-        - {x: 53, y: 17.5}
-        - {x: 25, y: 6.5}
-        - {x: 12, y: 54.5}
-        - {x: -11, y: 54.5}
-        - {x: -32, y: 47.5}
-        - {x: -36, y: 21.5}
-        - {x: -25, y: -56.5}
-        - {x: -44, y: -37.5}
-        - {x: -72, y: -45.5}
-        - {x: -75, y: -83.5}
-        - {x: -75, y: -121.5}
-        - {x: -64, y: -168.5}
-        - {x: -9, y: -249.5}
-        - {x: 31, y: -267.5}
-        - {x: 103, y: -267.5}
-        - {x: 129, y: -257.5}
-        - {x: 155, y: -231.5}
-        - {x: 171, y: -170.5}
+      - - {x: 171.00012, y: -99.5}
+        - {x: 164.00012, y: -79.5}
+        - {x: 108.00012, y: -5.5}
+        - {x: 92.00012, y: 13.5}
+        - {x: 53.000122, y: 17.5}
+        - {x: 25.000122, y: 6.5}
+        - {x: 12.000122, y: 54.5}
+        - {x: -10.999878, y: 54.5}
+        - {x: -31.999878, y: 47.5}
+        - {x: -35.999878, y: 21.5}
+        - {x: -24.999878, y: -56.5}
+        - {x: -43.999878, y: -37.5}
+        - {x: -71.99988, y: -45.5}
+        - {x: -74.99988, y: -83.5}
+        - {x: -74.99988, y: -121.5}
+        - {x: -63.999878, y: -168.5}
+        - {x: -8.999878, y: -249.5}
+        - {x: 31.000122, y: -267.5}
+        - {x: 103.00012, y: -267.5}
+        - {x: 129.00012, y: -257.5}
+        - {x: 155.00012, y: -231.5}
+        - {x: 171.00012, y: -170.5}
+    - name: pop-comodin
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 92
+        width: 631
+        height: 664
+      alignment: 9
+      pivot: {x: 0.50158477, y: 0.50301206}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 162.5, y: -334}
+        - {x: 183.5, y: -333}
+        - {x: 199.5, y: -332}
+        - {x: 212.5, y: -331}
+        - {x: 233.5, y: -329}
+        - {x: 249.5, y: -327}
+        - {x: 261.5, y: -325}
+        - {x: 276.5, y: -322}
+        - {x: 284.5, y: -320}
+        - {x: 299.5, y: -314}
+        - {x: 307.5, y: -307}
+        - {x: 309.5, y: -301}
+        - {x: 309.5, y: -229}
+        - {x: 310.5, y: -228}
+        - {x: 310.5, y: -167}
+        - {x: 309.5, y: -166}
+        - {x: 309.5, y: -129}
+        - {x: 308.5, y: -128}
+        - {x: 308.5, y: -104}
+        - {x: 307.5, y: -103}
+        - {x: 307.5, y: -75}
+        - {x: 306.5, y: -74}
+        - {x: 306.5, y: -34}
+        - {x: 307.5, y: -33}
+        - {x: 308.5, y: -14}
+        - {x: 310.5, y: 7}
+        - {x: 311.5, y: 20}
+        - {x: 311.5, y: 72}
+        - {x: 310.5, y: 73}
+        - {x: 310.5, y: 121}
+        - {x: 311.5, y: 122}
+        - {x: 312.5, y: 138}
+        - {x: 313.5, y: 150}
+        - {x: 314.5, y: 160}
+        - {x: 314.5, y: 210}
+        - {x: 313.5, y: 214}
+        - {x: 310.5, y: 224}
+        - {x: 304.5, y: 237}
+        - {x: 297.5, y: 243}
+        - {x: 292.5, y: 246}
+        - {x: 280.5, y: 251}
+        - {x: 263.5, y: 258}
+        - {x: 257.5, y: 266}
+        - {x: 258.5, y: 282}
+        - {x: 258.5, y: 297}
+        - {x: 257.5, y: 305}
+        - {x: 248.5, y: 312}
+        - {x: 240.5, y: 311}
+        - {x: 237.5, y: 315}
+        - {x: 230.5, y: 318}
+        - {x: 224.5, y: 319}
+        - {x: 217.5, y: 323}
+        - {x: 212.5, y: 323}
+        - {x: 210.5, y: 320}
+        - {x: 185.5, y: 320}
+        - {x: 184.5, y: 321}
+        - {x: 172.5, y: 323}
+        - {x: 168.5, y: 323}
+        - {x: 154.5, y: 322}
+        - {x: 154.5, y: 324}
+        - {x: 143.5, y: 325}
+        - {x: 134.5, y: 324}
+        - {x: 120.5, y: 326}
+        - {x: 108.5, y: 325}
+        - {x: 106.5, y: 323}
+        - {x: 97.5, y: 324}
+        - {x: 91.5, y: 326}
+        - {x: 77.5, y: 326}
+        - {x: 64.5, y: 327}
+        - {x: 59.5, y: 326}
+        - {x: 40.5, y: 328}
+        - {x: 37.5, y: 325}
+        - {x: 22.5, y: 327}
+        - {x: 19.5, y: 328}
+        - {x: 13.5, y: 329}
+        - {x: -3.5, y: 330}
+        - {x: -75.5, y: 330}
+        - {x: -88.5, y: 327}
+        - {x: -100.5, y: 327}
+        - {x: -104.5, y: 324}
+        - {x: -116.5, y: 323}
+        - {x: -118.5, y: 326}
+        - {x: -121.5, y: 326}
+        - {x: -136.5, y: 323}
+        - {x: -140.5, y: 326}
+        - {x: -153.5, y: 326}
+        - {x: -158.5, y: 327}
+        - {x: -164.5, y: 327}
+        - {x: -170.5, y: 326}
+        - {x: -199.5, y: 325}
+        - {x: -206.5, y: 324}
+        - {x: -210.5, y: 323}
+        - {x: -216.5, y: 320}
+        - {x: -225.5, y: 318}
+        - {x: -236.5, y: 314}
+        - {x: -243.5, y: 311}
+        - {x: -247.5, y: 308}
+        - {x: -248.5, y: 293}
+        - {x: -248.5, y: 235}
+        - {x: -269.5, y: 235}
+        - {x: -279.5, y: 234}
+        - {x: -285.5, y: 233}
+        - {x: -299.5, y: 232}
+        - {x: -300.5, y: 233}
+        - {x: -309.5, y: 233}
+        - {x: -313.5, y: 229}
+        - {x: -316.5, y: 225}
+        - {x: -316.5, y: 104}
+        - {x: -314.5, y: 97}
+        - {x: -316.5, y: 95}
+        - {x: -316.5, y: 89}
+        - {x: -315.5, y: 67}
+        - {x: -314.5, y: 47}
+        - {x: -314.5, y: 23}
+        - {x: -313.5, y: 22}
+        - {x: -313.5, y: -23}
+        - {x: -314.5, y: -25}
+        - {x: -313.5, y: -122}
+        - {x: -314.5, y: -123}
+        - {x: -314.5, y: -140}
+        - {x: -313.5, y: -160}
+        - {x: -312.5, y: -168}
+        - {x: -311.5, y: -181}
+        - {x: -308.5, y: -185}
+        - {x: -310.5, y: -197}
+        - {x: -310.5, y: -200}
+        - {x: -311.5, y: -209}
+        - {x: -310.5, y: -228}
+        - {x: -308.5, y: -234}
+        - {x: -307.5, y: -235}
+        - {x: -307.5, y: -282}
+        - {x: -305.5, y: -292}
+        - {x: -303.5, y: -297}
+        - {x: -294.5, y: -303}
+        - {x: -289.5, y: -309}
+        - {x: -287.5, y: -315}
+        - {x: -285.5, y: -316}
+        - {x: -273.5, y: -317}
+        - {x: -268.5, y: -323}
+        - {x: -252.5, y: -331}
+        - {x: -243.5, y: -334}
     - name: popups-bombagrande
       rect:
         serializedVersion: 2
-        x: 714
-        y: 1635
+        x: 1892
+        y: 1036
         width: 139
         height: 141
       alignment: 9
@@ -2245,8 +2374,8 @@ TextureImporter:
     - name: popups-btn
       rect:
         serializedVersion: 2
-        x: 870
-        y: 1933
+        x: 1476
+        y: 1089
         width: 298
         height: 115
       alignment: 9
@@ -2270,8 +2399,8 @@ TextureImporter:
     - name: popups-flechasgrandes
       rect:
         serializedVersion: 2
-        x: 1420
-        y: 1270
+        x: 1074
+        y: 12
         width: 92
         height: 82
       alignment: 9
@@ -2298,8 +2427,8 @@ TextureImporter:
     - name: popups-leaderboard
       rect:
         serializedVersion: 2
-        x: 1943
-        y: 1763
+        x: 1286
+        y: 11
         width: 101
         height: 96
       alignment: 9
@@ -2318,8 +2447,8 @@ TextureImporter:
     - name: popups-oferta
       rect:
         serializedVersion: 2
-        x: 968
-        y: 835
+        x: 714
+        y: 1813
         width: 196
         height: 235
       alignment: 9
@@ -2346,83 +2475,85 @@ TextureImporter:
       pivot: {x: 0.5007042, y: 0.5042702}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -185.5, y: -611.5}
-        - {x: -184.5, y: -610.5}
-        - {x: -183.5, y: -597.5}
-        - {x: -180.5, y: -579.5}
-        - {x: -177.5, y: -574.5}
-        - {x: -166.5, y: -567.5}
-        - {x: -161.5, y: -567.5}
+      - - {x: -188.5, y: -616.5}
+        - {x: -186.5, y: -602.5}
+        - {x: -185.5, y: -594.5}
+        - {x: -183.5, y: -576.5}
+        - {x: -182.5, y: -568.5}
+        - {x: -178.5, y: -554.5}
+        - {x: -172.5, y: -548.5}
+        - {x: -164.5, y: -547.5}
+        - {x: -152.5, y: -544.5}
         - {x: -152.5, y: -566.5}
-        - {x: -152.5, y: -588.5}
-        - {x: -154.5, y: -588.5}
-        - {x: -154.5, y: -597.5}
-        - {x: -152.5, y: -608.5}
-        - {x: -151.5, y: -622.5}
-        - {x: -149.5, y: -629.5}
-        - {x: -147.5, y: -635.5}
-        - {x: -145.5, y: -640.5}
-        - {x: -138.5, y: -644.5}
-        - {x: -127.5, y: -646.5}
-        - {x: -114.5, y: -646.5}
-        - {x: -98.5, y: -645.5}
-        - {x: -96.5, y: -646.5}
-        - {x: -88.5, y: -645.5}
-        - {x: -85.5, y: -645.5}
-        - {x: -82.5, y: -643.5}
-        - {x: -64.5, y: -643.5}
-        - {x: -54.5, y: -644.5}
-        - {x: -49.5, y: -645.5}
-        - {x: 87.5, y: -645.5}
-        - {x: 88.5, y: -646.5}
-        - {x: 116.5, y: -646.5}
-        - {x: 120.5, y: -645.5}
-        - {x: 123.5, y: -644.5}
-        - {x: 128.5, y: -642.5}
-        - {x: 133.5, y: -637.5}
-        - {x: 137.5, y: -630.5}
-        - {x: 137.5, y: -608.5}
-        - {x: 136.5, y: -607.5}
-        - {x: 136.5, y: -574.5}
-        - {x: 137.5, y: -564.5}
-        - {x: 146.5, y: -571.5}
-        - {x: 149.5, y: -577.5}
-        - {x: 150.5, y: -585.5}
-        - {x: 152.5, y: -593.5}
-        - {x: 153.5, y: -607.5}
-        - {x: 154.5, y: -615.5}
-        - {x: 156.5, y: -624.5}
-        - {x: 158.5, y: -631.5}
-        - {x: 161.5, y: -640.5}
-        - {x: 163.5, y: -645.5}
-        - {x: 166.5, y: -649.5}
-        - {x: 268.5, y: -649.5}
-        - {x: 269.5, y: -648.5}
-        - {x: 269.5, y: -642.5}
-        - {x: 268.5, y: -631.5}
-        - {x: 266.5, y: -619.5}
-        - {x: 265.5, y: -612.5}
-        - {x: 264.5, y: -599.5}
-        - {x: 265.5, y: -598.5}
-        - {x: 267.5, y: -590.5}
-        - {x: 270.5, y: -587.5}
-        - {x: 277.5, y: -585.5}
-        - {x: 279.5, y: -584.5}
-        - {x: 282.5, y: -582.5}
-        - {x: 294.5, y: -571.5}
-        - {x: 296.5, y: -566.5}
-        - {x: 299.5, y: -554.5}
-        - {x: 306.5, y: -549.5}
-        - {x: 307.5, y: -546.5}
-        - {x: 307.5, y: -537.5}
-        - {x: 304.5, y: -530.5}
-        - {x: 302.5, y: -521.5}
-        - {x: 304.5, y: -511.5}
-        - {x: 308.5, y: -492.5}
-        - {x: 310.5, y: -478.5}
-        - {x: 313.5, y: -474.5}
-        - {x: 314.5, y: -471.5}
-        - {x: 314.5, y: -466.5}
+        - {x: -153.5, y: -567.5}
+        - {x: -153.5, y: -578.5}
+        - {x: -152.5, y: -586.5}
+        - {x: -151.5, y: -601.5}
+        - {x: -150.5, y: -604.5}
+        - {x: -149.5, y: -608.5}
+        - {x: -147.5, y: -614.5}
+        - {x: -142.5, y: -619.5}
+        - {x: -135.5, y: -622.5}
+        - {x: -125.5, y: -625.5}
+        - {x: -114.5, y: -625.5}
+        - {x: -108.5, y: -624.5}
+        - {x: -98.5, y: -623.5}
+        - {x: -97.5, y: -624.5}
+        - {x: -90.5, y: -624.5}
+        - {x: -85.5, y: -625.5}
+        - {x: -84.5, y: -622.5}
+        - {x: -76.5, y: -622.5}
+        - {x: -61.5, y: -621.5}
+        - {x: -60.5, y: -622.5}
+        - {x: -54.5, y: -623.5}
+        - {x: 81.5, y: -623.5}
+        - {x: 82.5, y: -624.5}
+        - {x: 95.5, y: -625.5}
+        - {x: 113.5, y: -625.5}
+        - {x: 119.5, y: -624.5}
+        - {x: 122.5, y: -623.5}
+        - {x: 127.5, y: -621.5}
+        - {x: 133.5, y: -615.5}
+        - {x: 136.5, y: -608.5}
+        - {x: 137.5, y: -603.5}
+        - {x: 137.5, y: -587.5}
+        - {x: 136.5, y: -586.5}
+        - {x: 136.5, y: -552.5}
+        - {x: 135.5, y: -543.5}
+        - {x: 141.5, y: -545.5}
+        - {x: 147.5, y: -551.5}
+        - {x: 150.5, y: -558.5}
+        - {x: 151.5, y: -563.5}
+        - {x: 152.5, y: -571.5}
+        - {x: 153.5, y: -585.5}
+        - {x: 154.5, y: -593.5}
+        - {x: 155.5, y: -599.5}
+        - {x: 160.5, y: -613.5}
+        - {x: 163.5, y: -620.5}
+        - {x: 176.5, y: -647.5}
+        - {x: 178.5, y: -649.5}
+        - {x: 259.5, y: -649.5}
+        - {x: 263.5, y: -645.5}
+        - {x: 268.5, y: -638.5}
+        - {x: 269.5, y: -620.5}
+        - {x: 268.5, y: -610.5}
+        - {x: 267.5, y: -603.5}
+        - {x: 265.5, y: -590.5}
+        - {x: 264.5, y: -589.5}
+        - {x: 265.5, y: -576.5}
+        - {x: 269.5, y: -566.5}
+        - {x: 281.5, y: -562.5}
+        - {x: 284.5, y: -559.5}
+        - {x: 293.5, y: -551.5}
+        - {x: 296.5, y: -544.5}
+        - {x: 301.5, y: -532.5}
+        - {x: 308.5, y: -524.5}
+        - {x: 307.5, y: -516.5}
+        - {x: 302.5, y: -506.5}
+        - {x: 310.5, y: -480.5}
+        - {x: 311.5, y: -472.5}
+        - {x: 314.5, y: -468.5}
+        - {x: 314.5, y: -465.5}
         - {x: 315.5, y: -446.5}
         - {x: 316.5, y: -445.5}
         - {x: 317.5, y: -435.5}
@@ -2463,7 +2594,6 @@ TextureImporter:
         - {x: 313.5, y: 268.5}
         - {x: 315.5, y: 273.5}
         - {x: 319.5, y: 281.5}
-        - {x: 326.5, y: 289.5}
         - {x: 327.5, y: 289.5}
         - {x: 341.5, y: 298.5}
         - {x: 350.5, y: 308.5}
@@ -2504,11 +2634,9 @@ TextureImporter:
         - {x: 169.5, y: 557.5}
         - {x: 168.5, y: 561.5}
         - {x: 167.5, y: 566.5}
-        - {x: 164.5, y: 575.5}
-        - {x: 162.5, y: 580.5}
-        - {x: 158.5, y: 589.5}
+        - {x: 163.5, y: 581.5}
         - {x: 155.5, y: 594.5}
-        - {x: 151.5, y: 600.5}
+        - {x: 148.5, y: 603.5}
         - {x: 134.5, y: 617.5}
         - {x: 130.5, y: 620.5}
         - {x: 125.5, y: 624.5}
@@ -2523,7 +2651,6 @@ TextureImporter:
         - {x: -39.5, y: 634.5}
         - {x: -52.5, y: 632.5}
         - {x: -62.5, y: 630.5}
-        - {x: -66.5, y: 629.5}
         - {x: -73.5, y: 627.5}
         - {x: -81.5, y: 624.5}
         - {x: -97.5, y: 617.5}
@@ -2563,9 +2690,7 @@ TextureImporter:
         - {x: -345.5, y: 345.5}
         - {x: -333.5, y: 345.5}
         - {x: -325.5, y: 344.5}
-        - {x: -327.5, y: 340.5}
-        - {x: -329.5, y: 333.5}
-        - {x: -330.5, y: 329.5}
+        - {x: -330.5, y: 333.5}
         - {x: -331.5, y: 323.5}
         - {x: -332.5, y: 315.5}
         - {x: -332.5, y: 304.5}
@@ -2574,10 +2699,10 @@ TextureImporter:
         - {x: -332.5, y: 287.5}
         - {x: -332.5, y: 286.5}
         - {x: -323.5, y: 277.5}
-        - {x: -323.5, y: 269.5}
-        - {x: -322.5, y: 268.5}
-        - {x: -322.5, y: 223.5}
-        - {x: -321.5, y: 222.5}
+        - {x: -323.5, y: 270.5}
+        - {x: -322.5, y: 269.5}
+        - {x: -322.5, y: 225.5}
+        - {x: -321.5, y: 224.5}
         - {x: -321.5, y: 182.5}
         - {x: -327.5, y: 179.5}
         - {x: -332.5, y: 173.5}
@@ -2587,10 +2712,10 @@ TextureImporter:
         - {x: -331.5, y: 152.5}
         - {x: -325.5, y: 146.5}
         - {x: -320.5, y: 144.5}
-        - {x: -320.5, y: 123.5}
-        - {x: -319.5, y: 122.5}
-        - {x: -319.5, y: 69.5}
-        - {x: -318.5, y: 68.5}
+        - {x: -320.5, y: 127.5}
+        - {x: -319.5, y: 126.5}
+        - {x: -319.5, y: 75.5}
+        - {x: -318.5, y: 74.5}
         - {x: -318.5, y: 29.5}
         - {x: -319.5, y: 28.5}
         - {x: -320.5, y: 24.5}
@@ -2598,10 +2723,10 @@ TextureImporter:
         - {x: -321.5, y: 11.5}
         - {x: -319.5, y: 3.5}
         - {x: -317.5, y: 0.5}
-        - {x: -317.5, y: -38.5}
-        - {x: -316.5, y: -39.5}
-        - {x: -316.5, y: -92.5}
-        - {x: -315.5, y: -93.5}
+        - {x: -317.5, y: -29.5}
+        - {x: -316.5, y: -30.5}
+        - {x: -316.5, y: -81.5}
+        - {x: -315.5, y: -82.5}
         - {x: -315.5, y: -116.5}
         - {x: -320.5, y: -123.5}
         - {x: -321.5, y: -131.5}
@@ -2609,39 +2734,42 @@ TextureImporter:
         - {x: -320.5, y: -158.5}
         - {x: -317.5, y: -173.5}
         - {x: -315.5, y: -182.5}
-        - {x: -314.5, y: -196.5}
-        - {x: -313.5, y: -197.5}
-        - {x: -313.5, y: -245.5}
-        - {x: -312.5, y: -246.5}
-        - {x: -312.5, y: -292.5}
-        - {x: -311.5, y: -293.5}
-        - {x: -311.5, y: -336.5}
-        - {x: -310.5, y: -337.5}
-        - {x: -310.5, y: -377.5}
-        - {x: -309.5, y: -378.5}
-        - {x: -309.5, y: -414.5}
-        - {x: -308.5, y: -415.5}
-        - {x: -308.5, y: -449.5}
-        - {x: -307.5, y: -450.5}
-        - {x: -307.5, y: -480.5}
-        - {x: -306.5, y: -481.5}
-        - {x: -306.5, y: -508.5}
-        - {x: -305.5, y: -509.5}
-        - {x: -305.5, y: -535.5}
-        - {x: -303.5, y: -537.5}
-        - {x: -279.5, y: -537.5}
-        - {x: -279.5, y: -553.5}
-        - {x: -280.5, y: -554.5}
-        - {x: -280.5, y: -637.5}
+        - {x: -314.5, y: -186.5}
+        - {x: -313.5, y: -187.5}
+        - {x: -313.5, y: -230.5}
+        - {x: -312.5, y: -231.5}
+        - {x: -312.5, y: -275.5}
+        - {x: -311.5, y: -276.5}
+        - {x: -311.5, y: -318.5}
+        - {x: -310.5, y: -319.5}
+        - {x: -310.5, y: -358.5}
+        - {x: -309.5, y: -359.5}
+        - {x: -309.5, y: -394.5}
+        - {x: -308.5, y: -395.5}
+        - {x: -308.5, y: -428.5}
+        - {x: -307.5, y: -429.5}
+        - {x: -307.5, y: -458.5}
+        - {x: -306.5, y: -459.5}
+        - {x: -306.5, y: -486.5}
+        - {x: -305.5, y: -487.5}
+        - {x: -305.5, y: -513.5}
+        - {x: -303.5, y: -515.5}
+        - {x: -297.5, y: -516.5}
+        - {x: -279.5, y: -533.5}
+        - {x: -280.5, y: -534.5}
+        - {x: -280.5, y: -622.5}
+        - {x: -279.5, y: -635.5}
+        - {x: -280.5, y: -636.5}
+        - {x: -280.5, y: -646.5}
         - {x: -279.5, y: -649.5}
-        - {x: -189.5, y: -649.5}
-        - {x: -187.5, y: -647.5}
-        - {x: -186.5, y: -637.5}
-        - {x: -185.5, y: -628.5}
+        - {x: -195.5, y: -649.5}
+        - {x: -193.5, y: -642.5}
+        - {x: -192.5, y: -638.5}
+        - {x: -191.5, y: -633.5}
     - name: "popups-Popuppque\xF1o"
       rect:
         serializedVersion: 2
-        x: 0
+        x: 635
         y: 365
         width: 614
         height: 391
@@ -2737,90 +2865,90 @@ TextureImporter:
     - name: "popups-Popuppque\xF1o2"
       rect:
         serializedVersion: 2
-        x: 0
-        y: 19
+        x: 1422
+        y: 1706
         width: 594
         height: 342
       alignment: 9
       pivot: {x: 0.51430976, y: 0.5701754}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 273.5, y: -171.99998}
-        - {x: 279.5, y: -158.99998}
-        - {x: 281.5, y: -146.99998}
-        - {x: 282.5, y: -123.999985}
-        - {x: 284.5, y: -99.999985}
-        - {x: 285.5, y: -83.999985}
-        - {x: 285.5, y: -43.999985}
-        - {x: 288.5, y: -27.999985}
-        - {x: 288.5, y: 94.000015}
-        - {x: 287.5, y: 101.000015}
-        - {x: 281.5, y: 120.000015}
-        - {x: 267.5, y: 130.00002}
-        - {x: 234.5, y: 134.00002}
-        - {x: 221.5, y: 137.00002}
-        - {x: 204.5, y: 139.00002}
-        - {x: 120.5, y: 139.00002}
-        - {x: 106.5, y: 141.00002}
-        - {x: 71.5, y: 138.00002}
-        - {x: 67.5, y: 141.00002}
-        - {x: 37.5, y: 142.00002}
-        - {x: 23.5, y: 141.00002}
-        - {x: 4.5, y: 145.00002}
-        - {x: -41.5, y: 142.00002}
-        - {x: -46.5, y: 145.00002}
-        - {x: -62.5, y: 145.00002}
-        - {x: -83.5, y: 147.00002}
-        - {x: -153.5, y: 147.00002}
-        - {x: -171.5, y: 136.00002}
-        - {x: -219.5, y: 138.00002}
-        - {x: -238.5, y: 135.00002}
-        - {x: -245.5, y: 129.00002}
-        - {x: -250.5, y: 118.000015}
-        - {x: -263.5, y: 115.000015}
-        - {x: -272.5, y: 106.000015}
-        - {x: -275.5, y: 99.000015}
-        - {x: -276.5, y: 90.000015}
-        - {x: -291.5, y: 89.000015}
-        - {x: -297.5, y: 83.000015}
-        - {x: -296.5, y: 70.000015}
-        - {x: -305.5, y: 46.000015}
-        - {x: -305.5, y: 4.0000153}
-        - {x: -301.5, y: -6.9999847}
-        - {x: -304.5, y: -36.999985}
-        - {x: -303.5, y: -55.999985}
-        - {x: -301.5, y: -75.999985}
-        - {x: -299.5, y: -88.999985}
-        - {x: -295.5, y: -115.999985}
-        - {x: -290.5, y: -134.99998}
-        - {x: -283.5, y: -142.99998}
-        - {x: -261.5, y: -151.99998}
-        - {x: -263.5, y: -155.99998}
-        - {x: -264.5, y: -163.99998}
-        - {x: -258.5, y: -172.99998}
-        - {x: -228.5, y: -183.99998}
-        - {x: -180.5, y: -189.99998}
-        - {x: -166.5, y: -191.99998}
-        - {x: -142.5, y: -186.99998}
-        - {x: -102.5, y: -186.99998}
-        - {x: -98.5, y: -188.99998}
-        - {x: -66.5, y: -189.99998}
-        - {x: -30.5, y: -188.99998}
-        - {x: -15.5, y: -187.99998}
-        - {x: 7.5, y: -186.99998}
-        - {x: 69.5, y: -182.99998}
-        - {x: 95.5, y: -187.99998}
-        - {x: 130.5, y: -193.99998}
-        - {x: 133.5, y: -194.99998}
-        - {x: 207.5, y: -194.99998}
-        - {x: 227.5, y: -192.99998}
-        - {x: 247.5, y: -189.99998}
-        - {x: 266.5, y: -180.99998}
+      - - {x: 273.5, y: -172}
+        - {x: 279.5, y: -159}
+        - {x: 281.5, y: -147}
+        - {x: 282.5, y: -124}
+        - {x: 284.5, y: -100}
+        - {x: 285.5, y: -84}
+        - {x: 285.5, y: -44}
+        - {x: 288.5, y: -28}
+        - {x: 288.5, y: 94}
+        - {x: 287.5, y: 101}
+        - {x: 281.5, y: 120}
+        - {x: 267.5, y: 130}
+        - {x: 234.5, y: 134}
+        - {x: 221.5, y: 137}
+        - {x: 204.5, y: 139}
+        - {x: 120.5, y: 139}
+        - {x: 106.5, y: 141}
+        - {x: 71.5, y: 138}
+        - {x: 67.5, y: 141}
+        - {x: 37.5, y: 142}
+        - {x: 23.5, y: 141}
+        - {x: 4.5, y: 145}
+        - {x: -41.5, y: 142}
+        - {x: -46.5, y: 145}
+        - {x: -62.5, y: 145}
+        - {x: -83.5, y: 147}
+        - {x: -153.5, y: 147}
+        - {x: -171.5, y: 136}
+        - {x: -219.5, y: 138}
+        - {x: -238.5, y: 135}
+        - {x: -245.5, y: 129}
+        - {x: -250.5, y: 118}
+        - {x: -263.5, y: 115}
+        - {x: -272.5, y: 106}
+        - {x: -275.5, y: 99}
+        - {x: -276.5, y: 90}
+        - {x: -291.5, y: 89}
+        - {x: -297.5, y: 83}
+        - {x: -296.5, y: 70}
+        - {x: -305.5, y: 46}
+        - {x: -305.5, y: 4}
+        - {x: -301.5, y: -7}
+        - {x: -304.5, y: -37}
+        - {x: -303.5, y: -56}
+        - {x: -301.5, y: -76}
+        - {x: -299.5, y: -89}
+        - {x: -295.5, y: -116}
+        - {x: -290.5, y: -135}
+        - {x: -283.5, y: -143}
+        - {x: -261.5, y: -152}
+        - {x: -263.5, y: -156}
+        - {x: -264.5, y: -164}
+        - {x: -258.5, y: -173}
+        - {x: -228.5, y: -184}
+        - {x: -180.5, y: -190}
+        - {x: -166.5, y: -192}
+        - {x: -142.5, y: -187}
+        - {x: -102.5, y: -187}
+        - {x: -98.5, y: -189}
+        - {x: -66.5, y: -190}
+        - {x: -30.5, y: -189}
+        - {x: -15.5, y: -188}
+        - {x: 7.5, y: -187}
+        - {x: 69.5, y: -183}
+        - {x: 95.5, y: -188}
+        - {x: 130.5, y: -194}
+        - {x: 133.5, y: -195}
+        - {x: 207.5, y: -195}
+        - {x: 227.5, y: -193}
+        - {x: 247.5, y: -190}
+        - {x: 266.5, y: -181}
     - name: popups-score
       rect:
         serializedVersion: 2
-        x: 1176
-        y: 1493
+        x: 1476
+        y: 1208
         width: 418
         height: 270
       alignment: 9

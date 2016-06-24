@@ -7,6 +7,7 @@ public class GoalPopUp : PopUpBase {
 
 	public Text goalText;
 	public Text goalLettersText;
+	public Text LevelName;
 	public Transform goalLettersContainer;
 
 	public GameObject lettersObjective;
@@ -32,9 +33,10 @@ public class GoalPopUp : PopUpBase {
 		popUp.SetActive (true);
 	}
 
-	public void setGoalPopUpInfo(string text, List<string> letters = null)
+	public void setGoalPopUpInfo(string text, List<string> letters = null,string levelName = "")
 	{
-		if(letters != null)
+		this.LevelName.text = levelName;
+		if(letters.Count != 0)
 		{
 			goalText.enabled = false;
 			lettersObjective.SetActive (true);
