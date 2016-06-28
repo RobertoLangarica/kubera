@@ -197,6 +197,7 @@
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Mapa/Camino/lvl2/L4.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Mapa/Camino/lvl2/L5.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Mapa/Camino/lvl2/c2.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Mapa/Copia de game-HUDBackgroundUp.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Mapa/LVL-blocked.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Mapa/LVL.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Mapa/LVL1_/fondo/Mapa-background-1.png</key>
@@ -251,7 +252,6 @@
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Mapa/game-wordWrong.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Mapa/gem.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Mapa/heart.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Mapa/map-HUDBackgroundDown.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Mapa/map-HUDBackgroundUp.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Mapa/map-HUDFBInteractions.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Mapa/map-HUDLevels.png</key>

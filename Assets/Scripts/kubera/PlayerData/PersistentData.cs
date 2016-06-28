@@ -38,6 +38,10 @@ public class PersistentData : Manager<PersistentData>
 
 	public int startLevel = 1;
 
+	//HACK CampusParty
+	public int lifes = 2;
+	public bool opened;
+
 	protected override void Awake() 
 	{
 		base.Awake ();

@@ -76,6 +76,7 @@ public class HomeManager : MonoBehaviour {
 	public void ereaseData()
 	{
 		Data.LevelsDataManager.GetInstance ().deleteData ();
+		PersistentData.GetInstance ().lifes = 2;
 		//Data.LevelsDataManager.GetInstance ().getCurrentData ().levels = new List<Data.LevelData> ();
 	}
 }

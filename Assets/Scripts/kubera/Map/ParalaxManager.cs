@@ -15,6 +15,8 @@ public class ParalaxManager : MonoBehaviour {
 	protected Vector2 oldPos;
 	public ScrollRect scrollRect;
 
+	public bool tweening;
+
 	void Awake()
 	{
 		rectTransform = GetComponent<RectTransform> ();
@@ -33,6 +35,14 @@ public class ParalaxManager : MonoBehaviour {
 				OnMove( rectTransform.anchoredPosition);
 			}
 		}
+		if(tweening)
+		{
+			scrollRect.verticalNormalizedPosition = scrollRect.verticalNormalizedPosition + 0.01f;
+			if(scrollRect.verticalNormalizedPosition >= 1)
+			{
+				tweening = false;
+			}
+		}
 	}
 
 	public void setRectTransform(RectTransform rectTransform)
@@ -42,12 +52,21 @@ public class ParalaxManager : MonoBehaviour {
 
 	public void setPosByCurrentLevel(MapLevel mapLevel)
 	{
-		print (mapLevel.GetComponent<RectTransform> ().anchorMax.y);
-		print ( mapLevel.GetComponent<RectTransform> ().anchorMin.y);
+		//print (mapLevel.GetComponent<RectTransform> ().anchorMax.y);
+		//print ( mapLevel.GetComponent<RectTransform> ().anchorMin.y);
 		float sizeOfLevelIcon = mapLevel.GetComponent<RectTransform> ().anchorMax.y - mapLevel.GetComponent<RectTransform> ().anchorMin.y;
 		float positionCalculated = mapLevel.GetComponent<RectTransform> ().anchorMin.y/* - sizeOfLevelIcon*/;
-		print (positionCalculated);
+		//print (positionCalculated);
 		scrollRect.verticalNormalizedPosition = positionCalculated;
+	}
+
+	public void setPosToDoor()
+	{
+		if(!PersistentData.GetInstance().opened)
+		{
+			PersistentData.GetInstance ().opened = true;
+			tweening = true;
+		}
 	}
 
 	public void Unsubscribe()

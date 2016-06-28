@@ -29,6 +29,10 @@ public class MapManager : MonoBehaviour
 
 	public FBFriendsRequestPanel fbFriendsRequestPanel;
 
+	//HACK CampusParty
+	public GameObject[] lifes;
+	public GameObject popUpNoLifes;
+
 	void Start()
 	{
 		popUpManager = FindObjectOfType<PopUpManager> ();
@@ -42,13 +46,28 @@ public class MapManager : MonoBehaviour
 			if(LevelsDataManager.GetInstance().getCurrentData ().levels.Count != 0)
 			{				
 				currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetInstance().getCurrentData ().levels.Count-1].world);
+				print (currentWorld);
 			}
+		}
+		else
+		{
+			currentWorld = PersistentData.GetInstance ().currentWorld;
 		}
 		//selectLevel (currentWorld);
 
 		//initializeLevels ();
 		//print (currentWorld);
 		changeWorld ();
+
+		//HACK CampusParty
+		for(int i=0; i<	PersistentData.GetInstance().lifes; i++)
+		{
+			lifes [i].SetActive (true);
+		}
+		if(	PersistentData.GetInstance().lifes == 0)
+		{
+			popUpNoLifes.SetActive (true);
+		}
 	}
 
 	void Update()
@@ -136,6 +155,7 @@ public class MapManager : MonoBehaviour
 				if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
 				{
 					doorsManager.DoorsCanOpen ();
+					paralaxManager.setPosToDoor ();
 				}
 			}
 		}
@@ -229,12 +249,13 @@ public class MapManager : MonoBehaviour
 		case(MapLevel.EMapLevelsStatus.BOSS_PASSED):
 		case(MapLevel.EMapLevelsStatus.NORMAL_PASSED):
 		case(MapLevel.EMapLevelsStatus.BOSS_UNLOCKED):
+		case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
 		case(MapLevel.EMapLevelsStatus.NORMAL_REACHED):
 			level.OnClickNotification += OnLevelUnlockedPressed;
 			break;
-		case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
+		/*case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
 			level.OnClickNotification += OnBossReachedPressed;
-			break;
+			break;*/
 		}
 	}
 

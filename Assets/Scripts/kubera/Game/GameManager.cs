@@ -114,6 +114,9 @@ public class GameManager : MonoBehaviour
 		//TODO: hardcoding
 		bonificationPiecePrefab.SetActive (true);
 		//TODO: Control de flujo de juego con un init
+
+		//HACK CampusParty
+		PersistentData.GetInstance ().lifes--;
 	}
 
 	protected void startGame()
@@ -651,6 +654,7 @@ public class GameManager : MonoBehaviour
 			gameOver = true;
 			unlockPowerUp ();
 			activatePopUp ("winGamePopUp");
+			PersistentData.GetInstance ().lifes++;
 		}
 	}
 
