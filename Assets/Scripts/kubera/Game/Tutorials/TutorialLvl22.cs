@@ -18,6 +18,7 @@ public class TutorialLvl22 : TutorialBase
 		switch (phase) 
 		{
 		case(0):
+			hideHand ();
 			phasesPanels [0].SetActive (true);
 			phaseEvent = ENextPhaseEvent.BLOCK_USED;
 
@@ -42,6 +43,7 @@ public class TutorialLvl22 : TutorialBase
 			goalPopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
+			hideHand ();
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent = ENextPhaseEvent.TAP;
@@ -68,6 +70,7 @@ public class TutorialLvl22 : TutorialBase
 			hideHand ();
 			return true;
 		case(2):
+			hideHand ();
 			phasesPanels [1].SetActive (false);
 
 			allowGridTap = true;
