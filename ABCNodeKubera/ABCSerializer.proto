@@ -1,0 +1,5 @@
+message ABCNode
+{
+	required sfixed32 composedValue = 1;
+	repeated ABCNode children = 2;
+}

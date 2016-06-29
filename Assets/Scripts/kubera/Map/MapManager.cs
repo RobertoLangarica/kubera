@@ -96,7 +96,7 @@ public class MapManager : MonoBehaviour
 	protected void initializeLevels()
 	{
 		Debug.Log ((LevelsDataManager.GetInstance() as LevelsDataManager));
-		List<Level> worldsLevels = new List<Level> ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevesOfWorld(currentWorld));
+		List<Level> worldsLevels = new List<Level> ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelsOfWorld(currentWorld));
 		
 		for (int i = 0; i < mapLevels.Count; i++) 
 		{
