@@ -14,7 +14,7 @@ namespace Data
 			levelsList = PersistentData.GetInstance().levelsData;
 
 			//El usuario anonimo esta vacio
-			currentData.getUserById(ANONYMOUS_USER).clear();
+			//currentData.getUserById(ANONYMOUS_USER).clear();
 		}
 
 
