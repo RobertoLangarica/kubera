@@ -207,7 +207,7 @@ namespace Data
 		{
 			get
 			{
-				currentData.getUserById(currentUserId);
+				return currentData.getUserById(currentUserId);
 			}
 		}
 

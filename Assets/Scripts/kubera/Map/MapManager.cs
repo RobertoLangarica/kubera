@@ -43,9 +43,9 @@ public class MapManager : MonoBehaviour
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 		if(PersistentData.GetInstance().currentWorld == -1)
 		{
-			if(LevelsDataManager.GetInstance().getCurrentData ().levels.Count != 0)
+			if(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUserLevels.levels.Count != 0)
 			{
-				currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetInstance().getCurrentData ().levels.Count-1].world);
+				currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUserLevels.levels.Count-1].world);
 				print (currentWorld);
 			}
 		}

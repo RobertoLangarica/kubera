@@ -8,7 +8,7 @@ namespace Data
 	public class LocalDataManager<T> : Manager<LocalDataManager<T>> where T:BasicData
 	{
 		public string ANONYMOUS_USER = "anon_user";
-		public string currentUserId = ANONYMOUS_USER;
+		public string currentUserId = "anon_user";
 
 		public string mainDirectoryName = "Data";
 
