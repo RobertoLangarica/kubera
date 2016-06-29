@@ -6,7 +6,6 @@ using DG.Tweening;
 public class DestroyPowerUp : PowerupBase 
 {
 	public AnimatedSprite Animation;
-	public GameObject powerUpBlock;
 
 	protected CellsManager cellsManager;
 	protected InputBombAndDestroy bombInput;
@@ -47,11 +46,13 @@ public class DestroyPowerUp : PowerupBase
 		destroyGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
 		destroyGO.name = "DestroyPowerUp";
 		destroyGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
-
+		destroyGO.transform.localScale = new Vector3 (1, 1, 1);
 		bombInput.enabled = true;
 		bombInput.setCurrentSelected(destroyGO);
 		bombInput.OnDrop += powerUpPositioned;
 		this.canUse = canUse;
+
+		updateDragableObjectImage (destroyGO);
 	}
 
 	public void powerUpPositioned()

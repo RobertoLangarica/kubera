@@ -4,7 +4,6 @@ using DG.Tweening;
 
 public class RotatePowerUp : PowerupBase
 {
-	public GameObject powerUpBlock;
 	public RectTransform piecesPanel;
 
 	protected InputPowerUpRotate inputPowerUpRotate;
@@ -34,13 +33,15 @@ public class RotatePowerUp : PowerupBase
 		powerUpGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
 		powerUpGO.name = "RotatePowerUp";
 		powerUpGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
-
+		powerUpGO.transform.localScale = new Vector3 (1, 1, 1);
 		inputPowerUp.enabled = true;
 		inputPowerUp.setCurrentSelected(powerUpGO);
 		inputPowerUp.OnDrop += powerUpPositioned;
 
 		inputWords.allowInput = true;
 		this.canUse = canUse;
+
+		updateDragableObjectImage (powerUpGO);
 	}
 
 	public void powerUpPositioned()

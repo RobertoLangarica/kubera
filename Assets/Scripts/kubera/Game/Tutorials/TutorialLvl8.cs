@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class TutorialLvl8 : TutorialBase 
 {
+	protected Vector3 offset;
+
 	protected override void Start()
 	{
 		base.Start ();
 
+		offset = new Vector3(0,handObject.gameObject.GetComponent<Image> ().sprite.bounds.extents.y,0);
 	}
 
 	public override bool canMoveToNextPhase ()
@@ -35,6 +39,7 @@ public class TutorialLvl8 : TutorialBase
 			instructions [1].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE1B);
 
 			phase = 1;
+			goalPopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
 			phasesPanels [0].SetActive (false);
@@ -54,10 +59,13 @@ public class TutorialLvl8 : TutorialBase
 			freeDestroy = false;
 			freeWildCard = false;
 
-			instructions [2].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE2A);
+			instructions [2].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE2A,"english");
 
-			instructions [3].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE2B);			
+			instructions [3].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE2B,"english");			
 			phase = 2;
+			finishMovements ();
+			StopCoroutine ("playPressAndContinueWithMethod");
+			hideHand ();
 			return true;
 		case(2):
 			phasesPanels [1].SetActive (false);
@@ -92,4 +100,34 @@ public class TutorialLvl8 : TutorialBase
 
 		return base.phaseObjectiveAchived ();
 	}	
+
+	private void startTutorialAnimation(PopUpBase thisPopUp, string action)
+	{
+		Invoke ("phase0Animation",0.5f);
+		showHandAt (handPositions [0].transform.position,Vector3.zero,false);
+	}
+
+	private void phase0Animation()
+	{
+		if (phase == 1) 
+		{
+			showHandAt (handPositions [0].transform.position,Vector3.zero,false);
+			playReleaseAnimation ();
+
+			StartCoroutine (playPressAndContinueWithMethod ("phase1Animation", 0.5f));
+		}
+	}
+
+	private void phase1Animation()
+	{
+		if (phase == 1) 
+		{
+			playPressAnimation ();
+			showObjectAtHand (offset);
+			moveHandFromGameObjects (handPositions[0],handPositions[1],offset);
+			OnMovementComplete += hideHand;
+
+			Invoke ("phase0Animation", 2);
+		}
+	}
 }

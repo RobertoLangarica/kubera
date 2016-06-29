@@ -37,4 +37,5 @@ public class PiecesControllAnimation : MonoBehaviour {
 		this.transform.DORotate (new Vector3 (0, 0, this.transform.localRotation.eulerAngles.z + 720),speed,RotateMode.FastBeyond360);
 		this.transform.DOMove (ultimatePosition, speed);
 	}
+
 }

@@ -12,6 +12,7 @@ public class Letter : MonoBehaviour
 
 	public Image myImage;
 	public Color selectedColor = new Color(1,1,1,0.2f);
+	public Color wildCardColor = new Color(1,1,1,1);
 	public Text txtLetter;
 	public Text txtPoints;
 	[HideInInspector] public Letter letterReference;
@@ -53,7 +54,7 @@ public class Letter : MonoBehaviour
 		case EType.NORMAL:
 			return Color.white;
 		case EType.WILD_CARD:
-			return Color.cyan;
+			return wildCardColor;
 		}
 		return Color.white;
 	}

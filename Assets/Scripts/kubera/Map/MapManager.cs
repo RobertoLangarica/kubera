@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Data;
 
-public class MapManager : MonoBehaviour 
+public class MapManager : MonoBehaviour
 {
 	public const string fullLifes_PopUp 	= "FullLifes";
 	public const string missingLifes_PopUp 	= "MissingLifes";
@@ -15,46 +15,66 @@ public class MapManager : MonoBehaviour
 	public GameObject modal;
 	public BossLocked bossLockedPopUp;
 
-	public Sprite normalLocked;
-	public Sprite normalUnlocked;
-	public Sprite bossLocked;
-	public Sprite bossUnlocked;
-	public Sprite bossReached;
-
-	public Sprite noStar;
-	public Sprite oneStar;
-	public Sprite twoStars;
-	public Sprite threeStars;
-
 	public int currentWorld;
+	public Transform worldParent;
 	public List<GameObject> worlds;
+	protected GameObject WorldPrefab;
 
 	protected LifesManager lifesHUDManager;
 	protected PopUpManager popUpManager;
+	protected ParalaxManager paralaxManager;
+	protected DoorsManager doorsManager;
 
 	protected List<MapLevel> mapLevels;
 
 	public FBFriendsRequestPanel fbFriendsRequestPanel;
 
+	//HACK CampusParty
+	public GameObject[] lifes;
+	public GameObject popUpNoLifes;
+
 	void Start()
 	{
 		popUpManager = FindObjectOfType<PopUpManager> ();
 		lifesHUDManager = FindObjectOfType<LifesManager> ();
+		paralaxManager = FindObjectOfType<ParalaxManager> ();
+		doorsManager = FindObjectOfType<DoorsManager> ();
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
-
+		if(PersistentData.GetInstance().currentWorld == -1)
+		{
+			if(LevelsDataManager.GetInstance().getCurrentData ().levels.Count != 0)
+			{
+				currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetInstance().getCurrentData ().levels.Count-1].world);
+				print (currentWorld);
+			}
+		}
+		else
+		{
+			currentWorld = PersistentData.GetInstance ().currentWorld;
+		}
 		//selectLevel (currentWorld);
 
 		//initializeLevels ();
+		//print (currentWorld);
+		changeWorld ();
+
+		//HACK CampusParty
+		for(int i=0; i<	PersistentData.GetInstance().lifes; i++)
+		{
+			lifes [i].SetActive (true);
+		}
+		if(	PersistentData.GetInstance().lifes == 0)
+		{
+			popUpNoLifes.SetActive (true);
+		}
 	}
 
 	void Update()
 	{
-		if (Input.GetKeyDown (KeyCode.A)) 
+		if (Input.GetKeyDown (KeyCode.A))
 		{
-			selectLevel (currentWorld);
-
-			initializeLevels ();
+			changeWorld ();
 		}
 	}
 
@@ -89,16 +109,31 @@ public class MapManager : MonoBehaviour
 	protected void selectLevel(int world)
 	{
 		currentWorld = world;
-	
-		mapLevels = new List<MapLevel>(worlds[currentWorld].GetComponentsInChildren<MapLevel> ());
+
+		setWorldOnScene (currentWorld-1);
+
+		mapLevels = new List<MapLevel>(WorldPrefab.GetComponentsInChildren<MapLevel> ());
+		paralaxManager.setRectTransform (WorldPrefab.GetComponent<RectTransform> ());
+	}
+
+	protected void setWorldOnScene(int world)
+	{
+		worlds [world].SetActive (true);
+		WorldPrefab = (GameObject)Instantiate (worlds [world]);
+		WorldPrefab.transform.SetParent (worldParent,false);
+
+		doorsManager = FindObjectOfType<DoorsManager> ();
 	}
 
 	protected void initializeLevels()
 	{
 		Debug.Log ((LevelsDataManager.GetInstance() as LevelsDataManager));
 		List<Level> worldsLevels = new List<Level> ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelsOfWorld(currentWorld));
+
+
+		MapLevel currentLevel = null;
 		
-		for (int i = 0; i < mapLevels.Count; i++) 
+		for (int i = 0; i < mapLevels.Count; i++)
 		{
 			settingMapLevelInfo (mapLevels[i],worldsLevels[i]);
 
@@ -106,10 +141,31 @@ public class MapManager : MonoBehaviour
 
 			setOnClickDelegates (mapLevels[i]);
 
-			updateLevelIcon (mapLevels [i]);
-			updateLevelStars (mapLevels[i]);
+			mapLevels [i].updateStatus();
+			mapLevels[i].updateStars();
 			mapLevels [i].updateText ();
+
+			if(mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_REACHED
+				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_PASSED
+				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_UNLOCKED
+				||  mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED
+				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED)
+			{
+				currentLevel = mapLevels [i];
+
+				if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
+				{
+					doorsManager.DoorsCanOpen ();
+					paralaxManager.setPosToDoor ();
+				}
+			}
 		}
+		if(currentLevel == null)
+		{
+			currentLevel = mapLevels [0];
+		}
+		print (currentLevel);
+		paralaxManager.setPosByCurrentLevel (currentLevel);
 	}
 
 	protected void settingMapLevelInfo(MapLevel level,Level data)
@@ -123,35 +179,35 @@ public class MapManager : MonoBehaviour
 
 	protected void settingMapLevelStatus(MapLevel level)
 	{
-		if (level.isBoss) 
+		if (level.isBoss)
 		{
-			if ((LevelsDataManager.GetInstance () as LevelsDataManager).isLevelPassed (level.lvlName)) 
+			if ((LevelsDataManager.GetInstance () as LevelsDataManager).isLevelPassed (level.lvlName))
 			{
 				level.status = MapLevel.EMapLevelsStatus.BOSS_PASSED;
-			} 
-			else 
+			}
+			else
 			{
-				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.lvlName)) 
+				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.lvlName))
 				{
 					level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
 					Debug.Log ("boss reached");
 					Debug.Log (!(LevelsDataManager.GetInstance () as LevelsDataManager).isLevelLocked (level.lvlName));
 
-					if (!(LevelsDataManager.GetInstance () as LevelsDataManager).isLevelLocked (level.lvlName)) 
+					if (!(LevelsDataManager.GetInstance () as LevelsDataManager).isLevelLocked (level.lvlName))
 					{
 						level.status = MapLevel.EMapLevelsStatus.BOSS_UNLOCKED;
-					} 
+					}
 
 				}
 				else
 				{
 					level.status = MapLevel.EMapLevelsStatus.BOSS_LOCKED;
-				} 
+				}
 			}
-		} 
-		else 
+		}
+		else
 		{
-			if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelPassed (level.lvlName)) 
+			if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelPassed (level.lvlName))
 			{
 				level.status = MapLevel.EMapLevelsStatus.NORMAL_PASSED;
 			}
@@ -169,7 +225,7 @@ public class MapManager : MonoBehaviour
 		}
 
 		level.stars = MapLevel.EMapLevelStars.NONE;
-		switch ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelStars (level.lvlName)) 
+		switch ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelStars (level.lvlName))
 		{
 		case(1):
 			level.stars = MapLevel.EMapLevelStars.ONE;
@@ -183,52 +239,9 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
-	protected void updateLevelIcon(MapLevel level)
-	{
-		switch (level.status) 
-		{
-		case(MapLevel.EMapLevelsStatus.BOSS_LOCKED):
-			changeSprite (level.levelIcon,bossLocked);
-			break;
-		case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
-			changeSprite (level.levelIcon,bossUnlocked);
-			break;
-		case(MapLevel.EMapLevelsStatus.BOSS_PASSED):
-		case(MapLevel.EMapLevelsStatus.BOSS_UNLOCKED):
-			changeSprite (level.levelIcon,bossUnlocked);
-			break;
-		case(MapLevel.EMapLevelsStatus.NORMAL_LOCKED):
-			changeSprite (level.levelIcon,normalLocked);
-			break;
-		case(MapLevel.EMapLevelsStatus.NORMAL_REACHED):
-		case(MapLevel.EMapLevelsStatus.NORMAL_PASSED):
-			changeSprite (level.levelIcon,normalUnlocked);
-			break;
-		}
-	}
-
-	protected void updateLevelStars(MapLevel level)
-	{
-		switch(level.stars)
-		{
-		case(MapLevel.EMapLevelStars.NONE):
-			changeSprite (level.levelStars,noStar);
-			break;
-		case(MapLevel.EMapLevelStars.ONE):
-			changeSprite (level.levelStars,oneStar);
-			break;
-		case(MapLevel.EMapLevelStars.TWO):
-			changeSprite (level.levelStars,twoStars);
-			break;
-		case(MapLevel.EMapLevelStars.THREE):
-			changeSprite (level.levelStars,threeStars);
-			break;
-		}
-	}
-
 	protected void setOnClickDelegates(MapLevel level)
 	{
-		switch (level.status) 
+		switch (level.status)
 		{
 		case(MapLevel.EMapLevelsStatus.BOSS_LOCKED):
 		case(MapLevel.EMapLevelsStatus.NORMAL_LOCKED):
@@ -237,31 +250,27 @@ public class MapManager : MonoBehaviour
 		case(MapLevel.EMapLevelsStatus.BOSS_PASSED):
 		case(MapLevel.EMapLevelsStatus.NORMAL_PASSED):
 		case(MapLevel.EMapLevelsStatus.BOSS_UNLOCKED):
+		case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
 		case(MapLevel.EMapLevelsStatus.NORMAL_REACHED):
 			level.OnClickNotification += OnLevelUnlockedPressed;
 			break;
-		case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
+		/*case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
 			level.OnClickNotification += OnBossReachedPressed;
-			break;
+			break;*/
 		}
-	}
-
-	protected void changeSprite(Image img,Sprite sprite)
-	{
-		img.sprite = Sprite.Create (sprite.texture, sprite.textureRect, new Vector2 (0.5f, 0.5f));
 	}
 
 	public void OnLifesPressed()
 	{
-		if (UserDataManager.instance.playerLifes == UserDataManager.instance.maximumLifes) 
+		if (UserDataManager.instance.playerLifes == UserDataManager.instance.maximumLifes)
 		{
 			openPopUp (fullLifes_PopUp);
-		} 
-		else if (UserDataManager.instance.playerLifes == 0) 
+		}
+		else if (UserDataManager.instance.playerLifes == 0)
 		{
 			openPopUp (noLifes_PopUp);
-		} 
-		else 
+		}
+		else
 		{
 			openPopUp (missingLifes_PopUp);
 		}
@@ -272,9 +281,9 @@ public class MapManager : MonoBehaviour
 	{
 		(LevelsDataManager.GetInstance () as LevelsDataManager).unlockLevel (lvlName);
 
-		for (int i = 0; i < mapLevels.Count; i++) 
+		for (int i = 0; i < mapLevels.Count; i++)
 		{
-			if (mapLevels [i].lvlName == lvlName) 
+			if (mapLevels [i].lvlName == lvlName)
 			{
 				mapLevels [i].status = MapLevel.EMapLevelsStatus.BOSS_UNLOCKED;
 				mapLevels [i].OnClickNotification -= OnBossReachedPressed;
@@ -285,11 +294,11 @@ public class MapManager : MonoBehaviour
 
 	protected void OnBossReachedPressed(MapLevel pressed)
 	{
-		if ((LevelsDataManager.GetInstance () as LevelsDataManager).getAllEarnedStars() >= pressed.starsNeeded) 
+		if ((LevelsDataManager.GetInstance () as LevelsDataManager).getAllEarnedStars() >= pressed.starsNeeded)
 		{
 			unlockBoss (pressed.lvlName);
-		} 
-		else 
+		}
+		else
 		{
 			bossLockedPopUp.lvlName = pressed.lvlName;
 
@@ -308,5 +317,32 @@ public class MapManager : MonoBehaviour
 	protected void OnLevelLockedPressed(MapLevel pressed)
 	{
 		Debug.LogWarning ("NIVEL BLOQUEADO");
+	}
+
+	protected void changeWorld()
+	{
+		paralaxManager.enabled = false;
+		if(WorldPrefab != null)
+		{
+			paralaxManager.Unsubscribe ();
+			Destroy (WorldPrefab);
+		}
+
+		selectLevel (currentWorld);
+
+		initializeLevels ();
+		paralaxManager.enabled = true;
+	}
+
+	public void changeCurrentWorld(int world)
+	{
+		currentWorld = world;
+
+		changeWorld ();
+	}
+
+	public void goToScene(string scene)
+	{
+		ScreenManager.instance.GoToScene (scene);
 	}
 }

@@ -266,8 +266,8 @@ public class HUDManager : MonoBehaviour
 	{
 		if (points.IsActive () && activate) 
 		{
-			points.enabled = false;
-			scoreText.enabled = false;
+			/*points.enabled = false;
+			scoreText.enabled = false;*/
 			//Activar los otros botones
 			Music.gameObject.SetActive(true);
 			Exit.gameObject.SetActive(true);
@@ -276,8 +276,8 @@ public class HUDManager : MonoBehaviour
 		}
 		else 
 		{
-			scoreText.enabled = true;
-			points.enabled = true;
+			/*scoreText.enabled = true;
+			points.enabled = true;*/
 			//Desactivar los otros botones
 			Music.gameObject.SetActive(false);
 			Exit.gameObject.SetActive (false);
@@ -333,13 +333,27 @@ public class HUDManager : MonoBehaviour
 		}
 	}
 
-	public void setGoalPopUp(string goalCondition, System.Object parameters)
+	public void setGoalPopUp(string goalCondition, System.Object parameters,string levelName)
 	{
 		//Text goalText = goalPopUp.transform.FindChild("Objective").GetComponent<Text>();
 		string textId = string.Empty;
 		string textToReplace = string.Empty;
 		string replacement = string.Empty;
 		List<string> word = new List<string> ();
+		List<string> letter = new List<string> ();
+
+		for (int i = 0; i < levelName.Length; i++) 
+		{
+			if (levelName [i] == '0') 
+			{
+				levelName = levelName.Remove(i,1);
+				i--;
+			} 
+			else 
+			{
+				break;
+			}
+		}
 
 		switch(goalCondition)
 		{
@@ -350,13 +364,10 @@ public class HUDManager : MonoBehaviour
 			replacement = "";
 			IEnumerable letters = parameters as IEnumerable;
 
-			foreach (object letter in letters) 
+			foreach (object oLetter in letters) 
 			{
-				replacement += letter.ToString ();
-				replacement += ", ";
+				letter.Add (oLetter.ToString ());
 			}
-			replacement = replacement.Remove(replacement.LastIndexOf (","));
-			replacement += ".";
 
 			break;
 		case GoalManager.OBSTACLES:
@@ -394,7 +405,7 @@ public class HUDManager : MonoBehaviour
 			break;
 		}
 
-		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement));
+		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement),letter,levelName);
 
 		//goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
 		//activatePopUp("goalPopUp");

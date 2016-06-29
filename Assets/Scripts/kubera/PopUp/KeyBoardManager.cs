@@ -17,6 +17,7 @@ public class KeyBoardManager : MonoBehaviour
 	protected Letter wildCardSelected;
 	protected WordManager wordManager;
 	protected GameManager gameManager;
+	protected List<RectTransform> keys = new List<RectTransform>();
 
 	void Start()
 	{
@@ -37,8 +38,6 @@ public class KeyBoardManager : MonoBehaviour
 		{
 			dictionaryReadyToread ();
 		}
-
-		gameObject.SetActive (false);
 	}
 
 	protected void calculateCellSize()
@@ -60,6 +59,7 @@ public class KeyBoardManager : MonoBehaviour
 		for (int i = 0; i < alphabet.Count; i++) 
 		{
 			Letter clone = Instantiate(letterPrefab).GetComponent<Letter>();
+			keys.Add (clone.GetComponent<RectTransform>());
 
 			ABCChar abcChar = new ABCChar ();
 
@@ -73,6 +73,9 @@ public class KeyBoardManager : MonoBehaviour
 
 			addButton (clone);
 		}
+
+		switchAllImages (false);
+		StartCoroutine("removeGridContainerAndMoveAnchors",0);
 	}
 
 	protected void addLetterToContainer(Letter letter)
@@ -99,6 +102,17 @@ public class KeyBoardManager : MonoBehaviour
 				OnLetterSelected (letter.abcChar.character);
 			}
 		});
+	}
+
+	protected IEnumerator removeGridContainerAndMoveAnchors()
+	{
+		yield return new WaitForEndOfFrame();
+		container.enabled = false;
+
+		yield return new WaitForEndOfFrame();
+		keys.Adjust ();
+		switchAllImages (true);
+		gameObject.SetActive (false);
 	}
 
 	public void hideKeyBoard()
@@ -128,5 +142,15 @@ public class KeyBoardManager : MonoBehaviour
 		wordManager.setValuesToWildCard (wildCardSelected, character);
 
 		hideKeyBoard ();
+	}
+
+	protected void switchAllImages(bool val)
+	{
+		Image[] temp = transform.parent.GetComponentsInChildren<Image> ();
+
+		for(int i = 0;i < temp.Length;i++)
+		{
+			temp [i].enabled = val;
+		}
 	}
 }

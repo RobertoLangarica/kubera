@@ -48,6 +48,16 @@ namespace Data
 			return getMainFolderPath() + "/data.json";
 		}
 
+		//HACK: delete
+		public void deleteData()
+		{
+			File.Delete (getLocalDataPath());
+
+			saveLocalData (true);
+
+			readLocalData();
+		}
+
 		public bool existLocalData()
 		{
 			return File.Exists (getLocalDataPath ());

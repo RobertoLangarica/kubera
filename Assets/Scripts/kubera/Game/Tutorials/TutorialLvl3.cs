@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class TutorialLvl3 : TutorialBase
@@ -24,12 +25,13 @@ public class TutorialLvl3 : TutorialBase
 			allowDragPieces = false;
 			allowPowerUps = false;
 
-			instructions [0].text = MultiLanguageTextManager.instance.multipleReplace(
+			instructions [0].text = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE1),
-				new string[3]{"'","{{b}}","{{/b}}"},new string[3]{"\"","<b>","</b>"});
+				new string[3]{ "'", "{{b}}", "{{/b}}" }, new string[3]{ "\"", "<b>", "</b>" });
 
 			phase = 1;
 			phaseObj = "Z";
+			goalPopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
 			phasesPanels [0].SetActive (false);
@@ -45,11 +47,12 @@ public class TutorialLvl3 : TutorialBase
 
 			instructions [1].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE2A);
 
-			instructions [2].text = MultiLanguageTextManager.instance.multipleReplace(
+			instructions [2].text = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE2B),
-				new string[3]{"'","{{b}}","{{/b}}"},new string[3]{"\"","<b>","</b>"});
+				new string[3]{ "'", "{{b}}", "{{/b}}" }, new string[3]{ "\"", "<b>", "</b>" });
 
 			phase = 2;
+			phase2Animation ();
 			return true;
 		case(2):
 			phasesPanels [1].SetActive (false);
@@ -62,7 +65,11 @@ public class TutorialLvl3 : TutorialBase
 			allowDragPieces = true;
 			allowPowerUps = true;
 
-			instructions [3].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE3);
+			instructions [3].text = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE3),
+				new string[1]{ "{{score}}"}, new string[1]{hudManager.goalText.text.Split('/')[1]});
+			phase = 3;
+			hideHand ();
 			return true;
 		}
 
@@ -84,5 +91,44 @@ public class TutorialLvl3 : TutorialBase
 		}
 
 		return base.phaseObjectiveAchived ();
-	}	
+	}
+
+	private void startTutorialAnimation(PopUpBase thisPopUp, string action)
+	{
+		Letter[] temp = gameManager.gridLettersContainer.GetComponentsInChildren<Letter> ();
+
+		for (int i = 0; i < temp.Length; i++) 
+		{
+			if (temp [i].abcChar.character == phaseObj) 
+			{
+				handPositions [0].transform.position = temp [i].transform.position + new Vector3 (
+					0,-temp [i].gameObject.GetComponent<Image> ().sprite.bounds.extents.y,0);
+				break;
+			}
+		}
+
+		phase1Animation ();
+	}
+
+	private void phase1Animation()
+	{
+		if (phase == 1) 
+		{
+			playTapAnimation ();
+			showHandAt (handPositions [0].transform.position, Vector3.zero, false);
+
+			Invoke ("phase1Animation", 1);
+		}
+	}
+
+	private void phase2Animation()
+	{
+		if (phase == 2) 
+		{
+			playTapAnimation ();
+			showHandAt (handPositions [1].transform.position, Vector3.zero, false);
+
+			Invoke ("phase2Animation", 1);
+		}
+	}
 }

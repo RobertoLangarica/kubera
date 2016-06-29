@@ -29,6 +29,7 @@ public class TutorialLvl4 : TutorialBase
 			instructions [1].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV4_PHASE1B);
 
 			phase = 1;
+			goalPopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
 			phasesPanels [0].SetActive (false);
@@ -40,8 +41,12 @@ public class TutorialLvl4 : TutorialBase
 			allowErraseWord = true;
 			allowDragPieces = true;
 			allowPowerUps = true;
-
-			instructions [2].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV4_PHASE2);			
+	
+			instructions [2].text = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV4_PHASE2),
+				new string[1]{ "{{score}}"}, new string[1]{hudManager.goalText.text.Split('/')[1]});	
+			phase = 2;
+			hideHand ();
 			return true;
 		}
 
@@ -58,4 +63,20 @@ public class TutorialLvl4 : TutorialBase
 
 		return base.phaseObjectiveAchived ();
 	}	
+
+	private void startTutorialAnimation(PopUpBase thisPopUp, string action)
+	{
+		phase1Animation ();
+	}
+
+	private void phase1Animation()
+	{
+		if (phase == 1) 
+		{
+			playTapAnimation ();
+			showHandAt (handPositions [0].transform.position, Vector3.zero, false);
+
+			Invoke ("phase1Animation", 1);
+		}
+	}
 }

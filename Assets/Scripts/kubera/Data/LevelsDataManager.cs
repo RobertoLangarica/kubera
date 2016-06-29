@@ -11,7 +11,7 @@ namespace Data
 		protected override void Start ()
 		{
 			base.Start ();
-			levelsList = PersistentData.GetInstance().levelsData;	
+			levelsList = PersistentData.GetInstance().levelsData;
 
 			//El usuario anonimo esta vacio
 			currentData.getUserById(ANONYMOUS_USER).clear();
@@ -46,7 +46,7 @@ namespace Data
 			}
 
 			//Cuidamos de no sobreescribir al gun valor previo
-			currentData.isDirty = currentData.isDirty || level.isDirty; 
+			currentData.isDirty = currentData.isDirty || level.isDirty;
 
 			//TODO: guardar en server
 			saveLocalData(false);
@@ -72,7 +72,7 @@ namespace Data
 
 			if(index == 0)
 			{
-				if(world[0].world == 0)
+				if(world[0].world == 1)
 				{
 					//No hay nadie antes
 					reached = true;
@@ -128,12 +128,12 @@ namespace Data
 			}
 
 			//Cuidamos de no sobreescribir algun valor previo
-			currentData.isDirty = currentData.isDirty || level.isDirty; 
+			currentData.isDirty = currentData.isDirty || level.isDirty;
 
 			//TODO: Guardar al servidor
 			saveLocalData(false);
 		}
-			
+
 
 		public int getLevelWorldIndex(string levelName, List<Level> world)
 		{
@@ -145,7 +145,7 @@ namespace Data
 
 				if(level.name.Equals(levelName))
 				{
-					return i;	
+					return i;
 				}
 			}
 
@@ -156,9 +156,9 @@ namespace Data
 		{
 			List<Level> sameWorldLevels = new List<Level> ();
 
-			for (int i = 0; i < levelsList.levels.Length; i++) 
+			for (int i = 0; i < levelsList.levels.Length; i++)
 			{
-				if (levelsList.levels [i].world == worldIndex) 
+				if (levelsList.levels [i].world == worldIndex)
 				{
 					sameWorldLevels.Add (levelsList.levels[i]);
 				}
@@ -182,8 +182,8 @@ namespace Data
 		public int getAllEarnedStars()
 		{
 			int result = 0;
-			
-			for (int i = 0; i < levelsList.levels.Length; i++) 
+
+			for (int i = 0; i < levelsList.levels.Length; i++)
 			{
 				result += getLevelStars (levelsList.levels[i].name);
 			}

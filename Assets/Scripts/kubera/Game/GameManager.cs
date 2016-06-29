@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 
 	public List<int> linesCreatedPoints = new List<int> ();
 
+	public GoalPopUp goalPopUp;
 	public InputPowerUpRotate inputRotate;
 
 	protected int sizeGridX = 8;
@@ -79,6 +80,8 @@ public class GameManager : MonoBehaviour
 
 		linesAnimation.OnCellFlipped += OnCellFlipped; 
 
+		goalPopUp.OnPopUpCompleted += OnObjectivePopUpComplete;
+
 		wordManager.setMaxAllowedLetters(PersistentData.GetInstance().maxWordLength);
 		wordManager.gridLettersParent = gridLettersContainer;
 
@@ -108,8 +111,12 @@ public class GameManager : MonoBehaviour
 		{
 			startGame ();
 		}
-
+		//TODO: hardcoding
+		bonificationPiecePrefab.SetActive (true);
 		//TODO: Control de flujo de juego con un init
+
+		//HACK CampusParty
+		PersistentData.GetInstance ().lifes--;
 	}
 
 	protected void startGame()
@@ -132,6 +139,10 @@ public class GameManager : MonoBehaviour
 		{
 			PersistentData.GetInstance().startLevel -= 2;
 			SceneManager.LoadScene ("Game");
+		}
+		if (Input.GetKeyUp (KeyCode.Z)) 
+		{
+			onUsersAction (5, 0);
 		}
 	}
 
@@ -166,16 +177,19 @@ public class GameManager : MonoBehaviour
 		lettersizeDelta.y = Mathf.Abs(lettersizeDelta.y);
 		wordManager.gridLettersSizeDelta = new Vector2(lettersizeDelta.x , lettersizeDelta.y);
 
-		populateGridFromLevel(level);
-
 		initHudValues();
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
+	}
+
+	protected void OnObjectivePopUpComplete(PopUpBase thisPopUp, string action)
+	{
+		populateGridFromLevel(currentLevel);
+
 		refreshCurrentWordScoreOnHUD (wordManager.wordPoints);
 	}
 
 	protected void initLettersFromLevel(Level level)
 	{
-		Debug.Log (level);
 		wordManager.initializePoolFromCSV(level.lettersPool,WordManager.EPoolType.NORMAL);
 
 		if(level.obstacleLettersPool.Length > 0)
@@ -220,6 +234,7 @@ public class GameManager : MonoBehaviour
 				Piece content = pieceManager.getSingleSquarePiece(cellType>>6);
 				content.squares [0].GetComponent<Collider2D> ().enabled = true;
 				cellManager.occupyAndConfigureCell(i,content.gameObject.transform.GetChild (0).gameObject,content.currentType,content.currentColor,true);
+				content.gameObject.transform.SetParent (hudManager.showingPiecesContainer);
 			}
 			else if((cellType & 0x8) == 0x8)
 			{	
@@ -529,7 +544,7 @@ public class GameManager : MonoBehaviour
 		hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
 		hudManager.setWinCondition (goalManager.currentCondition, goalManager.getGoalConditionParameters());
 
-		hudManager.setGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters());
+		hudManager.setGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters(),currentLevel.name);
 		activatePopUp ("goalPopUp");
 	}
 
@@ -639,6 +654,7 @@ public class GameManager : MonoBehaviour
 			gameOver = true;
 			unlockPowerUp ();
 			activatePopUp ("winGamePopUp");
+			PersistentData.GetInstance ().lifes++;
 		}
 	}
 
@@ -825,7 +841,7 @@ public class GameManager : MonoBehaviour
 	{
 		//Checa si tiene dinero para usar el poder
 		//transaction manager
-		print (powerupManager.getPowerupByType(type).isFree);
+		//print (powerupManager.getPowerupByType(type).isFree);
 		if(powerupManager.getPowerupByType(type).isFree || TransactionManager.GetInstance().tryToUseGems(TransactionManager.GetInstance().powerUpPrices(type)))
 		{			
 			return true;
@@ -910,7 +926,10 @@ public class GameManager : MonoBehaviour
 			Invoke ("winBonification", piecePositionedDelay * 2);
 			break;
 		case "loose":
-			activatePopUp ("SecondChance");
+			//HACK campus
+			SceneManager.LoadScene ("Levels");
+
+			//activatePopUp ("SecondChance");
 			break;
 		default:		
 				Invoke ("allowInputFromInvoke", 0.5f);
@@ -932,7 +951,7 @@ public class GameManager : MonoBehaviour
 	public void quitGame()
 	{
 		PersistentData.GetInstance().startLevel -= 1;
-		SceneManager.LoadScene ("Game");
+		SceneManager.LoadScene ("Levels");
 		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		activatePopUp ("exitGame");*/
 	}

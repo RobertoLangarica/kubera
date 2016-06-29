@@ -117,10 +117,10 @@ namespace VoxelBusters.NativePlugins.Demo
 		{
 			GUILayout.Label("Schedule Notifications", kSubTitleStyle);
 			
-			if (GUILayout.Button("Schedule Local Notification (After 10 seconds, Repeat: Disabled)"))
+			if (GUILayout.Button("Schedule Local Notification (After 1min, Repeat: Disabled)"))
 			{
 				// Schedules a local notification after 1 min
-				string _nID = ScheduleLocalNotification(CreateNotification(10, eNotificationRepeatInterval.NONE));
+				string _nID = ScheduleLocalNotification(CreateNotification(60, eNotificationRepeatInterval.NONE));
 				
 				// Add notification id to list
 				m_scheduledNotificationIDList.Add(_nID);

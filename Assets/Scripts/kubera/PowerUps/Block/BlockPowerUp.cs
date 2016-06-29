@@ -6,9 +6,6 @@ public class BlockPowerUp : PowerupBase
 {
 	protected InputBlockPowerUp inputBlockPowerUp;
 
-	public GameObject powerUpBlock;
-	public Transform buttonPowerUpBlock;
-
 	void Start()
 	{
 		inputBlockPowerUp = FindObjectOfType<InputBlockPowerUp> ();
@@ -23,7 +20,9 @@ public class BlockPowerUp : PowerupBase
 	{
 		inputBlockPowerUp.enabled = true;
 
-		inputBlockPowerUp.createBlock (powerUpBlock,buttonPowerUpBlock.position,canUse);
+		inputBlockPowerUp.createBlock (powerUpBlock,powerUpButton.position,canUse);
+
+		updateDragableObjectImage (inputBlockPowerUp.getCurrentSelected());
 	}
 
 	protected void completePowerUp()

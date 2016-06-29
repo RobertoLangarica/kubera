@@ -81,6 +81,7 @@ public class UserDataManager
 
 			if(isLanguageSupported(value))
 			{
+				Debug.Log (value);
 				PlayerPrefs.SetString("language",value);
 			}
 			else

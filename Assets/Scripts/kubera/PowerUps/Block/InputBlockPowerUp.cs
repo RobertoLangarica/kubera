@@ -21,6 +21,7 @@ public class InputBlockPowerUp : MonoBehaviour
 	public DPowerUpBlockNotification OnPowerupCompleted;
 	public DPowerUpBlockNotification OnPowerupCompletedNoGems;
 	protected bool canUse;
+	public Transform parent;
 
 	void Start()
 	{
@@ -41,7 +42,14 @@ public class InputBlockPowerUp : MonoBehaviour
 		blockGO.transform.localScale = initialScale;
 		moveTo(currentSelected,butonPowerUpBlockPosition,pieceSpeed);
 		blockGO.name = "Block";
+		blockGO.transform.SetParent (parent, false);
+		blockGO.GetComponentInChildren<Square> ().oneSquare = false;
 		this.canUse = canUse;
+	}
+
+	public GameObject getCurrentSelected()
+	{
+		return currentSelected;
 	}
 
 	void OnDrag(DragGesture gesture) 

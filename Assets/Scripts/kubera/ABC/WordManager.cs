@@ -31,12 +31,11 @@ public class WordManager : MonoBehaviour
 	public GameObject wordCompleteButton;
 	public GameObject wordDeleteButton;
 	public Image deleteButtonImage;
-	public Sprite deleteCharacterState;
-	public Sprite deleteWordState;
+
 
 	public KeyBoardManager keyBoard;
-
-	private InputWords inputWords;
+	public GoalPopUp goalPopUp;
+	public InputWords inputWords;
 
 	[HideInInspector]public ABCDictionary wordsValidator;
 
@@ -83,9 +82,6 @@ public class WordManager : MonoBehaviour
 		{
 			wordsValidator = FindObjectOfType<ABCDictionary> ();
 		}
-
-		inputWords = FindObjectOfType<InputWords> ();
-
 		if(inputWords)
 		{
 			inputWords.onTap		+= OnGridLetterTapped;
@@ -651,7 +647,7 @@ public class WordManager : MonoBehaviour
 		switch (state) 
 		{
 		case EDeleteState.WORD:
-			deleteButtonImage.sprite = deleteWordState;
+			//deleteButtonImage.sprite = deleteWordState;
 			break;
 		case EDeleteState.CHARACTER:
 			//deleteButtonImage.sprite = deleteCharacterState;
@@ -733,6 +729,7 @@ public class WordManager : MonoBehaviour
 		abc.pointsOrMultiple = pointsOrMultiple;
 
 		letter.type = Letter.EType.WILD_CARD;
+		letter.updateColor ();
 		letter.abcChar = abc;
 
 		letter.updateTexts();
