@@ -14,6 +14,7 @@ public class TutorialLvl4 : TutorialBase
 		switch (phase) 
 		{
 		case(0):
+			hideHand ();
 			phasesPanels [0].SetActive (true);
 			phaseEvent = ENextPhaseEvent.DELETE_WORD;
 
@@ -32,6 +33,7 @@ public class TutorialLvl4 : TutorialBase
 			goalPopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
+			hideHand ();
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 

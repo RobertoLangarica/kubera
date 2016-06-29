@@ -264,7 +264,9 @@ public class HUDManager : MonoBehaviour
 
 	public void activateSettings(bool activate)
 	{
-		if (points.IsActive () && activate) 
+		/*print (activate);
+		print (Sounds.gameObject.activeSelf);*/
+		if (!Sounds.gameObject.activeSelf) 
 		{
 			/*points.enabled = false;
 			scoreText.enabled = false;*/

@@ -41,11 +41,12 @@ public class MapManager : MonoBehaviour
 		doorsManager = FindObjectOfType<DoorsManager> ();
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
+		print (PersistentData.GetInstance().currentWorld);
 		if(PersistentData.GetInstance().currentWorld == -1)
 		{
 			if(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUserLevels.levels.Count != 0)
 			{
-				currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUserLevels.levels.Count-1].world);
+				currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUserLevels.levels.Count].world);
 				print (currentWorld);
 			}
 		}
