@@ -151,9 +151,9 @@ public class InputWords : MonoBehaviour
 			tempV3.y = offset;//offset;
 			tempV3.z = letter.transform.position.z;
 
-			letter.transform.position = tempV3;
+			//letter.transform.position = tempV3;
 
-			//moveTo(letter,tempV3,letterSpeed);
+			moveTo(letter,tempV3,letterSpeed);
 			canDeleteLetter = false;
 			onDragStart(letter);
 

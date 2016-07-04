@@ -144,6 +144,11 @@ public class GameManager : MonoBehaviour
 		{
 			onUsersAction (5, 0);
 		}
+
+		if (Input.GetKeyUp (KeyCode.Q)) 
+		{
+			Debug.Break ();
+		}
 	}
 
 	protected void rotationActivated(GameObject go)
@@ -692,13 +697,13 @@ public class GameManager : MonoBehaviour
 				{
 					cellToLetter.AddRange (cellManager.getCellsOfSameType (Piece.EType.PIECE));
 				}
-				StartCoroutine (addWinLetterAfterActions ());
+				Invoke ("addWinLetterAfterActions", 0);
 				updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
 				return;
 			}
 		}
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
-		StartCoroutine (continueExpendingMovements ());
+		Invoke ("expendMovement", 0.1f);
 	}
 
 	protected void addMovementPoint()
@@ -724,16 +729,9 @@ public class GameManager : MonoBehaviour
 		showFloatingPointsAt (cell.transform.position, 1);
 		substractMoves (1);
 		addPoints(1);
-
 	}
 
-	IEnumerator continueExpendingMovements()
-	{
-		yield return new WaitForSeconds (.2f);
-		expendMovement ();
-	}
-
-	IEnumerator addWinLetterAfterActions()
+	protected void addWinLetterAfterActions()
 	{
 		int random = Random.Range (0, cellToLetter.Count);
 
@@ -742,8 +740,7 @@ public class GameManager : MonoBehaviour
 			StartCoroutine (bombAnimation.startSinglePieceAnimation (cellToLetter [random]));
 			cellToLetter.RemoveAt (random);
 
-			yield return new WaitForSeconds (.2f);
-			StartCoroutine (addWinLetterAfterActions ());
+			Invoke ("addWinLetterAfterActions", 0.2f);
 		}
 	}
 
@@ -752,32 +749,39 @@ public class GameManager : MonoBehaviour
 		cellToLetter = new List<Cell>();
 		cellToLetter.AddRange (cellManager.getCellsOfSameType (Piece.EType.LETTER));
 		cellToLetter.AddRange (cellManager.getCellsOfSameType (Piece.EType.LETTER_OBSTACLE));
-		StartCoroutine (destroyLetter ());
+		Invoke ("destroyLetter", 0);
 	}
 
-	IEnumerator destroyLetter()
+	protected void destroyLetter()
 	{
 		int random = Random.Range (0, cellToLetter.Count);
 		showDestroyedLetterScore(cellToLetter[random]);
 		cellToLetter [random].destroyCell ();
 		cellToLetter.RemoveAt (random);
 
-		yield return new WaitForSeconds (.2f);
 		if (cellToLetter.Count > 0) 
-		{			
-			StartCoroutine (destroyLetter ());
+		{
+			Invoke ("destroyLetter", 0.2f);
 		} 
 		else 
 		{
-			//Se guarda en sus datos que ha pasado el nivel
-			(LevelsDataManager.GetInstance() as LevelsDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
-				hudManager.getEarnedStars(),pointsCount);
+			if(!LevelsDataManager.GetInstance())
+			{
+				print ("S");
 
-			SceneManager.LoadScene ("Levels");
+			}
+			else
+			{
+				//Se guarda en sus datos que ha pasado el nivel
+				(LevelsDataManager.GetInstance() as LevelsDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
+					hudManager.getEarnedStars(),pointsCount);
 
-			//Gano y a se termino win bonification
-			/*PersistentData.GetInstance().fromLevelBuilder = true;
-			SceneManager.LoadScene ("Game");*/
+				SceneManager.LoadScene ("Levels");
+
+				//Gano y a se termino win bonification
+				/*PersistentData.GetInstance().fromLevelBuilder = true;
+				SceneManager.LoadScene ("Game");*/
+			}
 		}
 	}
 

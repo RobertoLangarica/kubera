@@ -180,6 +180,9 @@ public class MapManager : MonoBehaviour
 
 	protected void settingMapLevelStatus(MapLevel level)
 	{
+		level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
+
+		return;
 		if (level.isBoss)
 		{
 			if ((LevelsDataManager.GetInstance () as LevelsDataManager).isLevelPassed (level.lvlName))

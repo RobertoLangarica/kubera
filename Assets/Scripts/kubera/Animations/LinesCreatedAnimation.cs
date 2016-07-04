@@ -9,7 +9,7 @@ public class LinesCreatedAnimation : MonoBehaviour
 	public DOnAnimationFinish OnCellFlipped;
 	public bool isOnAnimation;
 
-	public float betweenFlashTime = 0.1f;
+	public float betweenFlashTime = 0.05f;
 	public float cellsDelayTime = 0.5f;
 
 	protected List<Cell> cellsToAnimate;
@@ -32,9 +32,9 @@ public class LinesCreatedAnimation : MonoBehaviour
 		square.flash.enabled = true;
 
 		yield return new WaitForSeconds (betweenFlashTime);
-		square.flash.startFlash (square.spriteRenderer,0.1f);
+		square.flash.startFlash (square.spriteRenderer,1f);
 		yield return new WaitForSeconds (betweenFlashTime * 2);
-		square.flash.startFlash (square.spriteRenderer,0.1f);
+		square.flash.startFlash (square.spriteRenderer,0.01f);
 		yield return new WaitForSeconds (betweenFlashTime);
 
 
