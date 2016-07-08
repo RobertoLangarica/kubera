@@ -30,10 +30,10 @@ public class InputWords : MonoBehaviour
 	public float animationTime = 0.5f;
 	protected bool allowPushDownAnimation = true;
 	protected bool allowAnimation = true;
-
 	protected Vector3 firstPosition;
 
 	protected Vector2 objectSize;
+	public float limitWidth;
 
 	void Start()
 	{
@@ -95,9 +95,17 @@ public class InputWords : MonoBehaviour
 
 				tempV3.y = offset;
 				tempV3.z = letter.transform.position.z;
-				moveTo(letter,tempV3,letterSpeed);
 
+				//HARDCODING
+				if(gesture.Position.x > limitWidth || gesture.Position.x < 33)
+				{
+					//tempV3.x = letter.transform.position.x-0.01f;
+					return;
+				}
+
+				moveTo(letter,tempV3,letterSpeed);
 				onDragUpdate (letter);	
+				//print (letter.GetComponent<RectTransform>().anchoredPosition.x);
 			}
 			break;
 
@@ -233,6 +241,7 @@ public class InputWords : MonoBehaviour
 	public void moveTo(GameObject target, Vector3 to, float delay = 0.1f)
 	{
 		DOTween.Kill("InputW_Dragging",false);
+
 		target.transform.DOMove (to, delay).SetId("InputW_Dragging");
 	}
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Data;
@@ -24,14 +25,11 @@ public class MapManager : MonoBehaviour
 	protected PopUpManager popUpManager;
 	protected ParalaxManager paralaxManager;
 	protected DoorsManager doorsManager;
+	private GoalManager		goalManager;
 
 	protected List<MapLevel> mapLevels;
 
 	public FBFriendsRequestPanel fbFriendsRequestPanel;
-
-	//HACK CampusParty
-	public GameObject[] lifes;
-	public GameObject popUpNoLifes;
 
 	void Start()
 	{
@@ -39,6 +37,7 @@ public class MapManager : MonoBehaviour
 		lifesHUDManager = FindObjectOfType<LifesManager> ();
 		paralaxManager = FindObjectOfType<ParalaxManager> ();
 		doorsManager = FindObjectOfType<DoorsManager> ();
+		goalManager = FindObjectOfType<GoalManager> ();
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 		print (PersistentData.GetInstance().currentWorld);
@@ -59,16 +58,6 @@ public class MapManager : MonoBehaviour
 		//initializeLevels ();
 		//print (currentWorld);
 		changeWorld ();
-
-		//HACK CampusParty
-		for(int i=0; i<	PersistentData.GetInstance().lifes; i++)
-		{
-			lifes [i].SetActive (true);
-		}
-		if(	PersistentData.GetInstance().lifes == 0)
-		{
-			popUpNoLifes.SetActive (true);
-		}
 	}
 
 	void Update()
@@ -101,6 +90,11 @@ public class MapManager : MonoBehaviour
 		case "needKeys":
 			popUpManager.activatePopUp ("fbFriendsRequestPanel");
 			fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_KEYS);
+			break;
+		case "closeObjective":
+			break;
+		case "playeGame":
+			SceneManager.LoadScene ("Game");
 			break;
 		default:
 			break;
@@ -315,7 +309,11 @@ public class MapManager : MonoBehaviour
 	protected void OnLevelUnlockedPressed(MapLevel pressed)
 	{
 		PersistentData.GetInstance ().setLevelNumber (int.Parse (pressed.lvlName));
-		SceneManager.LoadScene ("Game");
+
+		goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);	
+		setGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters(),PersistentData.GetInstance().currentLevel.name);
+
+		//SceneManager.LoadScene ("Game");
 	}
 
 	protected void OnLevelLockedPressed(MapLevel pressed)
@@ -336,6 +334,8 @@ public class MapManager : MonoBehaviour
 
 		initializeLevels ();
 		paralaxManager.enabled = true;
+
+		PersistentData.GetInstance ().currentWorld = currentWorld;
 	}
 
 	public void changeCurrentWorld(int world)
@@ -348,5 +348,87 @@ public class MapManager : MonoBehaviour
 	public void goToScene(string scene)
 	{
 		ScreenManager.instance.GoToScene (scene);
+	}
+
+	public void setGoalPopUp(string goalCondition, System.Object parameters,string levelName)
+	{
+		//Text goalText = goalPopUp.transform.FindChild("Objective").GetComponent<Text>();
+		string textId = string.Empty;
+		string textToReplace = string.Empty;
+		string replacement = string.Empty;
+		List<string> word = new List<string> ();
+		List<string> letter = new List<string> ();
+
+		for (int i = 0; i < levelName.Length; i++) 
+		{
+			if (levelName [i] == '0') 
+			{
+				levelName = levelName.Remove(i,1);
+				i--;
+			} 
+			else 
+			{
+				break;
+			}
+		}
+
+		switch(goalCondition)
+		{
+		case GoalManager.LETTERS:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_LETTERS_ID;
+			textToReplace = "{{goalLetters}}";
+
+			replacement = "";
+			IEnumerable letters = parameters as IEnumerable;
+
+			foreach (object oLetter in letters) 
+			{
+				letter.Add (oLetter.ToString ());
+			}
+
+			break;
+		case GoalManager.OBSTACLES:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_OBSTACLES_ID;
+			textToReplace = "{{goalObstacleLetters}}";
+			replacement = (Convert.ToInt32(parameters)).ToString();
+			break;
+		case GoalManager.POINTS:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_POINTS_ID;
+			textToReplace = "{{goalPoints}}";
+			replacement = (Convert.ToInt32(parameters)).ToString();
+			break;
+		case GoalManager.WORDS_COUNT:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_WORDS_ID;
+			textToReplace = "{{goalWords}}";
+			replacement = (Convert.ToInt32(parameters)).ToString();
+			break;
+		case GoalManager.SYNONYMOUS:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID;
+			textToReplace = "{{goalSin}}";
+			word= (List<string>)parameters;
+			replacement = word[0];
+			break;
+		case GoalManager.WORD:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_1_WORD_ID;
+			textToReplace = "{{goalWord}}";
+			word= (List<string>)parameters;
+			replacement = word[0];
+			break;		
+		case GoalManager.ANTONYMS:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_ANTONYM_ID;
+			textToReplace = "{{goalAnt}}";
+			word= (List<string>)parameters;
+			replacement = word[0];
+			break;
+		}
+			
+		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement),letter,levelName);
+		popUpManager.activatePopUp ("goalPopUp");
+
+		stopInput (true);
+
+		//goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
+		//activatePopUp("goalPopUp");
+		//goalPopUp.SetActive(true);
 	}
 }

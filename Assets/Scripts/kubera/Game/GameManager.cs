@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
 
 	public List<int> linesCreatedPoints = new List<int> ();
 
-	public GoalPopUp goalPopUp;
 	public InputPowerUpRotate inputRotate;
 
 	protected int sizeGridX = 8;
@@ -80,7 +79,6 @@ public class GameManager : MonoBehaviour
 
 		linesAnimation.OnCellFlipped += OnCellFlipped; 
 
-		goalPopUp.OnPopUpCompleted += OnObjectivePopUpComplete;
 
 		wordManager.setMaxAllowedLetters(PersistentData.GetInstance().maxWordLength);
 		wordManager.gridLettersParent = gridLettersContainer;
@@ -121,7 +119,12 @@ public class GameManager : MonoBehaviour
 
 	protected void startGame()
 	{
-		configureLevel(PersistentData.GetInstance().currentLevel);		
+		configureLevel(PersistentData.GetInstance().currentLevel);
+
+
+		populateGridFromLevel(currentLevel);
+
+		refreshCurrentWordScoreOnHUD (wordManager.wordPoints);
 	}
 
 	void Update()
@@ -185,14 +188,7 @@ public class GameManager : MonoBehaviour
 		initHudValues();
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
 	}
-
-	protected void OnObjectivePopUpComplete(PopUpBase thisPopUp, string action)
-	{
-		populateGridFromLevel(currentLevel);
-
-		refreshCurrentWordScoreOnHUD (wordManager.wordPoints);
-	}
-
+		
 	protected void initLettersFromLevel(Level level)
 	{
 		wordManager.initializePoolFromCSV(level.lettersPool,WordManager.EPoolType.NORMAL);
@@ -379,6 +375,10 @@ public class GameManager : MonoBehaviour
 		{
 			//Puntos por las lineas creadas
 			linesCreated (cells.Count);
+
+			int a = Mathf.RoundToInt(cells.Count *0.5f);
+			showFloatingPointsAt (cells[a][0].transform.position, cells.Count);
+
 			convertLinesToLetters (cells);
 		}
 		else if(!piecesWhereCreated)
@@ -484,6 +484,8 @@ public class GameManager : MonoBehaviour
 		//Contamos obstaculos y si la meta es usar letras entonces vemos si se usan
 		goalManager.submitWord(wordManager.letters);
 
+		showFloatingPointsAt (wordManager.letterContainer.transform.position, wordManager.wordPoints);
+
 		//Los puntos se leen antes de limpiar porque sin letras no hay puntos
 		onUsersAction (wordManager.wordPoints);
 		removeLettersFromGrid(wordManager.letters, true);
@@ -549,8 +551,7 @@ public class GameManager : MonoBehaviour
 		hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
 		hudManager.setWinCondition (goalManager.currentCondition, goalManager.getGoalConditionParameters());
 
-		hudManager.setGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters(),currentLevel.name);
-		activatePopUp ("goalPopUp");
+		activatePopUp ("startGamePopUp");
 	}
 
 	protected void checkIfLose()
@@ -924,6 +925,9 @@ public class GameManager : MonoBehaviour
 	public void popUpCompleted (string action ="")
 	{
 		switch (action) {
+		case "startGame":
+			allowGameInput ();
+			break;
 		case "endGame":
 			break;
 		case "winPopUpEnd":

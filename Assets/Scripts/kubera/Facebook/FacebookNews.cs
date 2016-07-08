@@ -5,21 +5,35 @@ using UnityEngine.UI;
 public class FacebookNews : MonoBehaviour {
 
 	public Button newsButton;
-	public Text MessageCount;
-	public GameObject panelMessages;
-	public GridLayoutGroup panellMessageGrid;
+	public Text messageCount;
+	public Image messageCountImage;
+	public GameObject messagesNewsBackground;
+	public GridLayoutGroup panelMessageGridLayout;
+	public RectTransform panelMessageGridRectTransform;
+
 	void Start()
 	{
-		panellMessageGrid.cellSize = new Vector2 (Screen.width * .4f, Screen.height / 8);
+		panelMessageGridLayout.cellSize = new Vector2 (panelMessageGridRectTransform.rect.width, Screen.height / 8);
+		actualizeMessageNumber ("0");
 	}
 
 	public void actualizeMessageNumber(string messageCount)
 	{
-		MessageCount.text = messageCount.ToString();
+		print ("NADA");
+		if(messageCount == "0")
+		{
+			messageCountImage.gameObject.SetActive(false);
+		}
+		else
+		{			
+			messageCountImage.gameObject.SetActive (true);
+			this.messageCount.text = messageCount;
+		}
 	}
 
 	public void openMessages()
 	{
-		panelMessages.SetActive (!panelMessages.activeSelf);
+		messagesNewsBackground.SetActive (!messagesNewsBackground.activeSelf);
+		actualizeMessageNumber ("0");
 	}
 }

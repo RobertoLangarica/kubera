@@ -55,16 +55,14 @@ public class GoalPopUp : PopUpBase {
 		}
 	}
 
-	protected void popUpCompleted()
+	public void playGame()
 	{
-		popUp.SetActive (false);
-
-		OnComplete ();
+		OnComplete ("playeGame");
 	}
 
 	public void exit ()
 	{
-		popUpCompleted ();
+		OnComplete ("closeObjective");
 	}
 		
 }

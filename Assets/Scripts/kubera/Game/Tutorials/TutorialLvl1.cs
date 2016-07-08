@@ -39,7 +39,7 @@ public class TutorialLvl1 : TutorialBase
 
 			phase = 1;
 
-			goalPopUp.OnPopUpCompleted += startTutorialAnimation;
+			startGamePopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
 			hideHand ();

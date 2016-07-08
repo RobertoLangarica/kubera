@@ -428,6 +428,13 @@
 				<language id="default" text="¡Objetivo completado!"/>
 			</languages>
 		</text>
+		<text id="StartTextPopUpID">
+			<languages>
+				<language id="english" text="Start game!"/>
+				<language id="spanish" text="¡Empieza a jugar!"/>
+				<language id="default" text="¡Empieza a jugar!"/>
+			</languages>
+		</text>
 		<text id="noMovementsPopUpID">
 			<languages>
 				<language id="english" text="You ran out of movements!"/>

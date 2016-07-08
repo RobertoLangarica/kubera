@@ -40,7 +40,7 @@ public class TutorialLvl8 : TutorialBase
 			instructions [1].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE1B);
 
 			phase = 1;
-			goalPopUp.OnPopUpCompleted += startTutorialAnimation;
+			startGamePopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
 			hideHand ();

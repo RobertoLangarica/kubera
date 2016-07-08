@@ -46,7 +46,7 @@ public class TutorialBase : MonoBehaviour
 
 	public List<GameObject> handPositions;
 
-	public GoalPopUp goalPopUp;
+	public startGamePopUp startGamePopUp;
 	public AnimatedSprite tutorialHand;
 	public GameObject handObject;
 
