@@ -7,7 +7,7 @@ public class InputWords : MonoBehaviour
 {
 	protected int lastTimeDraggedFrame;
 	protected GameObject letter;
-	protected GameObject target;
+	public GameObject target;
 
 	//Para notificar estados del drag a otros objetos
 	public delegate void DInputWordNotification(GameObject letter);
@@ -31,6 +31,8 @@ public class InputWords : MonoBehaviour
 	protected bool allowPushDownAnimation = true;
 	protected bool allowAnimation = true;
 	protected Vector3 firstPosition;
+	protected Vector3 pushedScale = new Vector3(0.8f,0.8f,0.8f);
+	protected Vector3 normalScale = new Vector3(1.0f,1.0f,1.0f);
 
 	protected Vector2 objectSize;
 	public float limitWidth;
@@ -70,7 +72,7 @@ public class InputWords : MonoBehaviour
 				{
 					if(!allowAnimation)
 					{		
-						animationFingerUp ();
+						animationFingerUp (gesture.Raycast.Hit2D.transform.gameObject);
 					}
 					return;
 				}
@@ -187,9 +189,10 @@ public class InputWords : MonoBehaviour
 		if (allowInput && gesture.Raycast.Hit2D && allowPushDownAnimation) 
 		{
 			target = gesture.Raycast.Hit2D.transform.gameObject;
-			Vector3 finalScale = target.transform.localScale;
-			target.transform.localScale = finalScale * scalePercent;
-			allowPushDownAnimation = false;
+
+			target.transform.localScale = pushedScale;
+
+			allowPushDownAnimation = true;
 			allowAnimation = false;
 		}
 	}
@@ -200,32 +203,30 @@ public class InputWords : MonoBehaviour
 		{
 			if(!allowAnimation)
 			{		
-				animationFingerUp ();
+				animationFingerUp (target);
 			}
 		}
 	}
 
-	void animationFingerUp()
+	void animationFingerUp(GameObject go)
 	{
-		Vector3 finalScale = target.transform.localScale / scalePercent;
-
 		allowAnimation = true;
 
-		DOTween.Kill ("InputW_Grid_Scale_Selection");
-		target.transform.DOScale (finalScale, animationTime).OnComplete(()=>
-			{
-				allowPushDownAnimation = true;
-				target = null;
-			});
+		allowPushDownAnimation = true;
+		target.transform.localScale = normalScale;
+
+		//DOTween.Kill ("InputW_Grid_Scale_Selection");
+		//go.transform.DOScale (normalScale, animationTime).SetId ("InputW_Grid_Scale_Selection");
 	}
 
 	void OnLetterGridTap(TapGesture gesture)
 	{
-		if(allowInput && target&& allowAnimation)
+		if(allowInput && target && allowAnimation)
 		{		
 			if (target.layer == LayerMask.NameToLayer ("LetterOnGrid")) 
 			{
 				onTap(target);
+				target = null;
 			}	
 		}
 	}

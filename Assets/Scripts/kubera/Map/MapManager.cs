@@ -174,7 +174,7 @@ public class MapManager : MonoBehaviour
 
 	protected void settingMapLevelStatus(MapLevel level)
 	{
-		level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
+		//level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
 
 		return;
 		if (level.isBoss)

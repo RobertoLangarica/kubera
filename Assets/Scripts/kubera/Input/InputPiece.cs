@@ -17,7 +17,7 @@ public class InputPiece : MonoBehaviour
 
 	protected bool somethingDragged = false;
 	protected int lastTimeDraggedFrame;
-	protected GameObject currentSelected = null;
+	public GameObject currentSelected = null;
 	protected Vector3 selectedInitialScale;
 	protected Vector3 selectedInitialPosition;
 
@@ -102,10 +102,10 @@ public class InputPiece : MonoBehaviour
 
 	void OnFingerDown(FingerDownEvent  gesture)
 	{
-		if(allowInput && gesture.Raycast.Hits2D != null)
+		if(currentSelected == false && allowInput && gesture.Raycast.Hits2D != null)
 		{
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
-			offsetPositionOverFinger.y = Mathf.Round (gesture.Raycast.Hit2D.collider.bounds.size.y * 10) * .10f;
+			offsetPositionOverFinger.y = Mathf.Round (gesture.Raycast.Hit2D.collider.bounds.size.y * 20) * .10f;
 
 			/*selectedInitialPosition = currentSelected.transform.position;
 			selectedInitialScale = currentSelected.transform.localScale;*/
