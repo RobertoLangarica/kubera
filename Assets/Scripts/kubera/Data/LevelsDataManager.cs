@@ -4,19 +4,31 @@ using System.Collections.Generic;
 
 namespace Data
 {
-	public class LevelsDataManager : LocalDataManager<UserLevels>
+	public class LevelsDataManager : LocalDataManager<MultipleUsers>
 	{
 		protected Levels levelsList;
 
 		protected override void Start ()
 		{
 			base.Start ();
-			levelsList = PersistentData.GetInstance().levelsData;	
+			levelsList = PersistentData.GetInstance().levelsData;
+
+			//El usuario anonimo esta vacio
+			//currentData.getUserById(ANONYMOUS_USER).clear();
+		}
+
+
+		protected override void fillDefaultData ()
+		{
+			base.fillDefaultData ();
+
+			//Usuario anonimo
+			currentData.users.Add(new UserLevels(ANONYMOUS_USER));
 		}
 
 		public void savePassedLevel(string levelName, int stars, int points)
 		{
-			LevelData level = currentData.getLevelById(levelName);
+			LevelData level = currentUserLevels.getLevelById(levelName);
 
 			if(level != null)
 			{
@@ -30,18 +42,19 @@ namespace Data
 				level.stars		= stars;
 				level.passed	= true;
 				level.isDirty	= true;
-				currentData.addLevel(level);
+				currentUserLevels.addLevel(level);
 			}
 
 			//Cuidamos de no sobreescribir al gun valor previo
-			currentData.isDirty = currentData.isDirty || level.isDirty; 
+			currentData.isDirty = currentData.isDirty || level.isDirty;
 
+			//TODO: guardar en server
 			saveLocalData(false);
 		}
 
 		public bool isLevelPassed(string levelName)
 		{
-			LevelData level = currentData.getLevelById(levelName);
+			LevelData level = currentUserLevels.getLevelById(levelName);
 
 			if(level != null)
 			{
@@ -59,7 +72,7 @@ namespace Data
 
 			if(index == 0)
 			{
-				if(world[0].world == 0)
+				if(world[0].world == 1)
 				{
 					//No hay nadie antes
 					reached = true;
@@ -88,7 +101,7 @@ namespace Data
 
 		public bool isLevelLocked(string levelName)
 		{
-			LevelData level =  currentData.getLevelById(levelName);
+			LevelData level =  currentUserLevels.getLevelById(levelName);
 
 			if(level != null)
 			{
@@ -100,7 +113,7 @@ namespace Data
 
 		public void unlockLevel(string levelName)
 		{
-			LevelData level =  currentData.getLevelById(levelName);
+			LevelData level =  currentUserLevels.getLevelById(levelName);
 
 			if(level != null)
 			{
@@ -111,15 +124,16 @@ namespace Data
 				level = new LevelData(levelName);
 				level.locked = false;
 				level.isDirty = true;
-				currentData.addLevel(level);
+				currentUserLevels.addLevel(level);
 			}
 
-			//Cuidamos de no sobreescribir al gun valor previo
-			currentData.isDirty = currentData.isDirty || level.isDirty; 
+			//Cuidamos de no sobreescribir algun valor previo
+			currentData.isDirty = currentData.isDirty || level.isDirty;
 
+			//TODO: Guardar al servidor
 			saveLocalData(false);
 		}
-			
+
 
 		public int getLevelWorldIndex(string levelName, List<Level> world)
 		{
@@ -131,20 +145,20 @@ namespace Data
 
 				if(level.name.Equals(levelName))
 				{
-					return i;	
+					return i;
 				}
 			}
 
 			return -1;
 		}
 
-		public Level[] getLevesOfWorld(int worldIndex)
+		public Level[] getLevelsOfWorld(int worldIndex)
 		{
 			List<Level> sameWorldLevels = new List<Level> ();
 
-			for (int i = 0; i < levelsList.levels.Length; i++) 
+			for (int i = 0; i < levelsList.levels.Length; i++)
 			{
-				if (levelsList.levels [i].world == worldIndex) 
+				if (levelsList.levels [i].world == worldIndex)
 				{
 					sameWorldLevels.Add (levelsList.levels[i]);
 				}
@@ -155,7 +169,7 @@ namespace Data
 
 		public int getLevelStars(string levelName)
 		{
-			LevelData level = currentData.getLevelById(levelName);
+			LevelData level = currentUserLevels.getLevelById(levelName);
 
 			if(level == null)
 			{
@@ -168,8 +182,8 @@ namespace Data
 		public int getAllEarnedStars()
 		{
 			int result = 0;
-			
-			for (int i = 0; i < levelsList.levels.Length; i++) 
+
+			for (int i = 0; i < levelsList.levels.Length; i++)
 			{
 				result += getLevelStars (levelsList.levels[i].name);
 			}
@@ -179,7 +193,7 @@ namespace Data
 
 		public int getLevelPoints(string levelName)
 		{
-			LevelData level = currentData.getLevelById(levelName);
+			LevelData level = currentUserLevels.getLevelById(levelName);
 
 			if(level == null)
 			{
@@ -187,6 +201,39 @@ namespace Data
 			}
 
 			return level.points;
+		}
+
+		public UserLevels currentUserLevels
+		{
+			get
+			{
+				return currentData.getUserById(currentUserId);
+			}
+		}
+
+		public override void changeCurrentuser (string newUserId)
+		{
+			//Si es anoanimo hay que ver si los avances se guardan
+			if(currentUserId == ANONYMOUS_USER)
+			{
+				//El nuevo usuario existe?
+				if(currentData.getUserById(newUserId) == null)
+				{
+					//Este usuario toma los datos anonimos
+					currentData.getUserById(ANONYMOUS_USER).id = newUserId;
+
+					//Agregamos un nuevo usuario anonimo
+					currentData.users.Add(new UserLevels(ANONYMOUS_USER));
+					saveLocalData(false);
+				}
+			}
+
+			//TODO: Detenemos las request del usuario anterior
+			base.changeCurrentuser (newUserId);
+
+			currentData.isDirty = currentUserLevels.isDirty;
+
+			//TODO: Bajamos los datos y despues de bajar subimos lo necesario
 		}
 	}
 }

@@ -6,7 +6,7 @@ public class InputBlockPowerUp : MonoBehaviour
 {
 	Vector3 butonPowerUpBlockPosition;
 
-	public Vector3 offsetPositionOverFinger = new Vector3(0,1.5f,0);
+	public Vector3 offsetPositionOverFinger = new Vector3(0,0,0);
 	public Vector3 initialScale = new Vector3(4,4,4);
 	public float pieceSpeed = 0.3f;
 
@@ -21,10 +21,12 @@ public class InputBlockPowerUp : MonoBehaviour
 	public DPowerUpBlockNotification OnPowerupCompleted;
 	public DPowerUpBlockNotification OnPowerupCompletedNoGems;
 	protected bool canUse;
+	public Transform parent;
 
 	void Start()
 	{
 		gameManager = FindObjectOfType<GameManager> ();
+		pieceSpeed = FindObjectOfType<InputPiece> ().pieceSpeed;
 
 	}
 
@@ -35,12 +37,15 @@ public class InputBlockPowerUp : MonoBehaviour
 		{
 			DestroyImmediate (currentSelected);
 		}
+
 		butonPowerUpBlockPosition = bottonPosition;
 		butonPowerUpBlockPosition.z = 0;
 		currentSelected = blockGO;
 		blockGO.transform.localScale = initialScale;
 		moveTo(currentSelected,butonPowerUpBlockPosition,pieceSpeed);
 		blockGO.name = "Block";
+		blockGO.transform.SetParent (parent, false);
+		blockGO.GetComponentInChildren<Square> ().oneSquare = false;
 		this.canUse = canUse;
 	}
 
@@ -68,6 +73,7 @@ public class InputBlockPowerUp : MonoBehaviour
 					somethingDragged = true;
 					Vector3 posOverFinger = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 					posOverFinger.z = currentSelected.transform.position.z;
+
 					posOverFinger += offsetPositionOverFinger;
 					moveTo(currentSelected,posOverFinger,pieceSpeed);
 					//currentSelected.transform.DOScale(selectedScale,.1f).SetId("InputBlock_SelectedScale");
@@ -81,6 +87,7 @@ public class InputBlockPowerUp : MonoBehaviour
 				{
 					Vector3 posOverFinger = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 					posOverFinger.z = currentSelected.transform.position.z;
+
 					posOverFinger += offsetPositionOverFinger;
 					moveTo(currentSelected,posOverFinger,pieceSpeed);
 				}

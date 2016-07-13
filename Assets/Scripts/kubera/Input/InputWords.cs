@@ -7,7 +7,7 @@ public class InputWords : MonoBehaviour
 {
 	protected int lastTimeDraggedFrame;
 	protected GameObject letter;
-	protected GameObject target;
+	public GameObject target;
 
 	//Para notificar estados del drag a otros objetos
 	public delegate void DInputWordNotification(GameObject letter);
@@ -30,10 +30,12 @@ public class InputWords : MonoBehaviour
 	public float animationTime = 0.5f;
 	protected bool allowPushDownAnimation = true;
 	protected bool allowAnimation = true;
-
 	protected Vector3 firstPosition;
+	protected Vector3 pushedScale = new Vector3(0.8f,0.8f,0.8f);
+	protected Vector3 normalScale = new Vector3(1.0f,1.0f,1.0f);
 
 	protected Vector2 objectSize;
+	public float limitWidth;
 
 	void Start()
 	{
@@ -70,7 +72,7 @@ public class InputWords : MonoBehaviour
 				{
 					if(!allowAnimation)
 					{		
-						animationFingerUp ();
+						animationFingerUp (gesture.Raycast.Hit2D.transform.gameObject);
 					}
 					return;
 				}
@@ -95,9 +97,17 @@ public class InputWords : MonoBehaviour
 
 				tempV3.y = offset;
 				tempV3.z = letter.transform.position.z;
-				moveTo(letter,tempV3,letterSpeed);
 
+				//HARDCODING
+				if(gesture.Position.x > limitWidth || gesture.Position.x < 33)
+				{
+					//tempV3.x = letter.transform.position.x-0.01f;
+					return;
+				}
+
+				moveTo(letter,tempV3,letterSpeed);
 				onDragUpdate (letter);	
+				//print (letter.GetComponent<RectTransform>().anchoredPosition.x);
 			}
 			break;
 
@@ -151,9 +161,9 @@ public class InputWords : MonoBehaviour
 			tempV3.y = offset;//offset;
 			tempV3.z = letter.transform.position.z;
 
-			letter.transform.position = tempV3;
+			//letter.transform.position = tempV3;
 
-			//moveTo(letter,tempV3,letterSpeed);
+			moveTo(letter,tempV3,letterSpeed);
 			canDeleteLetter = false;
 			onDragStart(letter);
 
@@ -179,9 +189,10 @@ public class InputWords : MonoBehaviour
 		if (allowInput && gesture.Raycast.Hit2D && allowPushDownAnimation) 
 		{
 			target = gesture.Raycast.Hit2D.transform.gameObject;
-			Vector3 finalScale = target.transform.localScale;
-			target.transform.localScale = finalScale * scalePercent;
-			allowPushDownAnimation = false;
+
+			target.transform.localScale = pushedScale;
+
+			allowPushDownAnimation = true;
 			allowAnimation = false;
 		}
 	}
@@ -192,32 +203,30 @@ public class InputWords : MonoBehaviour
 		{
 			if(!allowAnimation)
 			{		
-				animationFingerUp ();
+				animationFingerUp (target);
 			}
 		}
 	}
 
-	void animationFingerUp()
+	void animationFingerUp(GameObject go)
 	{
-		Vector3 finalScale = target.transform.localScale / scalePercent;
-
 		allowAnimation = true;
 
-		DOTween.Kill ("InputW_Grid_Scale_Selection");
-		target.transform.DOScale (finalScale, animationTime).OnComplete(()=>
-			{
-				allowPushDownAnimation = true;
-				target = null;
-			});
+		allowPushDownAnimation = true;
+		target.transform.localScale = normalScale;
+
+		//DOTween.Kill ("InputW_Grid_Scale_Selection");
+		//go.transform.DOScale (normalScale, animationTime).SetId ("InputW_Grid_Scale_Selection");
 	}
 
 	void OnLetterGridTap(TapGesture gesture)
 	{
-		if(allowInput && target&& allowAnimation)
+		if(allowInput && target && allowAnimation)
 		{		
 			if (target.layer == LayerMask.NameToLayer ("LetterOnGrid")) 
 			{
 				onTap(target);
+				target = null;
 			}	
 		}
 	}
@@ -233,6 +242,7 @@ public class InputWords : MonoBehaviour
 	public void moveTo(GameObject target, Vector3 to, float delay = 0.1f)
 	{
 		DOTween.Kill("InputW_Dragging",false);
+
 		target.transform.DOMove (to, delay).SetId("InputW_Dragging");
 	}
 

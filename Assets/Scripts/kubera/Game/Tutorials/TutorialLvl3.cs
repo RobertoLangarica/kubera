@@ -15,6 +15,7 @@ public class TutorialLvl3 : TutorialBase
 		switch (phase) 
 		{
 		case(0):
+			hideHand ();
 			phasesPanels [0].SetActive (true);
 			phaseEvent = ENextPhaseEvent.GRID_SPECIFIC_LETTER_TAPPED;
 
@@ -31,9 +32,10 @@ public class TutorialLvl3 : TutorialBase
 
 			phase = 1;
 			phaseObj = "Z";
-			goalPopUp.OnPopUpCompleted += startTutorialAnimation;
+			startGamePopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
+			hideHand ();
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent = ENextPhaseEvent.SUBMIT_WORD;
@@ -55,6 +57,7 @@ public class TutorialLvl3 : TutorialBase
 			phase2Animation ();
 			return true;
 		case(2):
+			hideHand ();
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
 

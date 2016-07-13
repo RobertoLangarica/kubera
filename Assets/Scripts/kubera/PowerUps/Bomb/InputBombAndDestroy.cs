@@ -4,7 +4,7 @@ using DG.Tweening;
 
 public class InputBombAndDestroy : MonoBehaviour 
 {
-	public Vector3 offsetPositionOverFinger = new Vector3(0,1.5f,0);
+	public Vector3 offsetPositionOverFinger = new Vector3(0,0.3f,0);
 	public bool allowInput = true;
 
 	public delegate void DOnDragNotification();
@@ -19,6 +19,7 @@ public class InputBombAndDestroy : MonoBehaviour
 	void Start()
 	{
 		enabled = false;
+		pieceSpeed = FindObjectOfType<InputPiece> ().pieceSpeed;
 	}
 
 	void OnDrag(DragGesture gesture) 

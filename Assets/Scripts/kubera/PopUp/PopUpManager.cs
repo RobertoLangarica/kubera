@@ -13,6 +13,13 @@ public class PopUpManager : MonoBehaviour {
 
 	void Start()
 	{
+		/*print (FindObjectsOfType<PopUpBase> ().Length);
+		if(FindObjectsOfType<PopUpBase> ().Length != popups.Count)
+		{
+			print ("FALTA AGREGAR ALGUN POPUP O BORRARLO");
+			print ("popUpsFound " + FindObjectsOfType<PopUpBase> ().Length);
+			print ("popUpsRegistered " + popups.Count);
+		}*/
 		foreach(PopUpBase popup in popups)
 		{
 			if (popup != null) {

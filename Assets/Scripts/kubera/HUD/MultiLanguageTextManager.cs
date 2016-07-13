@@ -23,7 +23,8 @@ public class MultiLanguageTextManager
 	public const string GOAL_CONDITION_BY_ANTONYM_ID 		= "goalByAntonymCondition";
 	public const string EXIT_POPUP_ID 						= "exitText";
 	public const string WIN_TEXT_POPUP_ID					= "WinTextPopUpID";
-	public const string NO_MOVEMENTS_POPUP_ID					= "noMovementsPopUpID";
+	public const string STARTGAME_TEXT_POPUP_ID				= "StartTextPopUpID";
+	public const string NO_MOVEMENTS_POPUP_ID				= "noMovementsPopUpID";
 	public const string NO_PIECES_POPUP_ID					= "noPiecesPopUpID";
 
 	public const string TUTORIAL_LV1_PHASE1					= "Tutorial_lvl1_phase1";

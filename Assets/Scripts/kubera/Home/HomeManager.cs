@@ -66,4 +66,16 @@ public class HomeManager : MonoBehaviour {
 		yield return new WaitForSeconds (speed);
 		block.SetActive (false);
 	}
+
+	public void goToScene(string scene)
+	{
+		ScreenManager.instance.GoToScene (scene);
+	}
+
+	//HACK
+	public void ereaseData()
+	{
+		Data.LevelsDataManager.GetInstance ().deleteData ();
+		//Data.LevelsDataManager.GetInstance ().getCurrentData ().levels = new List<Data.LevelData> ();
+	}
 }

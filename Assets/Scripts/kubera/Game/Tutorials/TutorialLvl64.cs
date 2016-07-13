@@ -20,6 +20,7 @@ public class TutorialLvl64 : TutorialBase
 		switch (phase) 
 		{
 		case(0):
+			hideHand ();
 			phasesPanels [0].SetActive (true);
 			phaseEvent = ENextPhaseEvent.WILDCARD_USED;
 
@@ -41,9 +42,10 @@ public class TutorialLvl64 : TutorialBase
 			instructions [1].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE1B);
 
 			phase = 1;
-			goalPopUp.OnPopUpCompleted += startTutorialAnimation;
+			startGamePopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
+			hideHand ();
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent = ENextPhaseEvent.KEYBOARD_SPECIFIC_LETER_SELECTED;
@@ -78,6 +80,7 @@ public class TutorialLvl64 : TutorialBase
 			phase2Animation ();
 			return true;
 		case(2):
+			hideHand ();
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
 			phaseEvent = ENextPhaseEvent.SUBMIT_WORD;
@@ -106,6 +109,7 @@ public class TutorialLvl64 : TutorialBase
 			phase3Animation ();
 			return true;
 		case(3):
+			hideHand ();
 			phasesPanels [2].SetActive (false);
 			phasesPanels [3].SetActive (true);
 			phaseEvent = ENextPhaseEvent.TAP;
@@ -130,6 +134,7 @@ public class TutorialLvl64 : TutorialBase
 			hideHand ();
 			return true;
 		case(4):
+			hideHand ();
 			phasesPanels [3].SetActive (false);
 
 			allowGridTap = true;

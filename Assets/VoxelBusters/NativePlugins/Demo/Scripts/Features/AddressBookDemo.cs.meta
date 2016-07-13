@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f707401dc26804077934b5e6bec99f3f
+guid: df81d764055336c41b9dab18db32fc0d
 labels:
 - Addressbook
 MonoImporter:
@@ -8,3 +8,5 @@ MonoImporter:
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 

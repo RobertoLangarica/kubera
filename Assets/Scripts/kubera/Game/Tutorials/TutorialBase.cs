@@ -46,7 +46,7 @@ public class TutorialBase : MonoBehaviour
 
 	public List<GameObject> handPositions;
 
-	public GoalPopUp goalPopUp;
+	public startGamePopUp startGamePopUp;
 	public AnimatedSprite tutorialHand;
 	public GameObject handObject;
 
@@ -105,7 +105,7 @@ public class TutorialBase : MonoBehaviour
 	{
 		float nScale = 0;
 
-		nScale = (Screen.height * 0.01f) * 0.3f;
+		nScale = (Screen.height * 0.01f) * 0.1f;
 		nScale = ((nScale * 100) / (tutorialHand.gameObject.GetComponent<SpriteRenderer> ().bounds.size.y)) * 0.01f;
 
 		tutorialHand.transform.localScale = new Vector3 (nScale,nScale,nScale);

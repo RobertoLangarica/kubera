@@ -264,10 +264,12 @@ public class HUDManager : MonoBehaviour
 
 	public void activateSettings(bool activate)
 	{
-		if (points.IsActive () && activate) 
+		/*print (activate);
+		print (Sounds.gameObject.activeSelf);*/
+		if (!Sounds.gameObject.activeSelf) 
 		{
-			points.enabled = false;
-			scoreText.enabled = false;
+			/*points.enabled = false;
+			scoreText.enabled = false;*/
 			//Activar los otros botones
 			Music.gameObject.SetActive(true);
 			Exit.gameObject.SetActive(true);
@@ -276,8 +278,8 @@ public class HUDManager : MonoBehaviour
 		}
 		else 
 		{
-			scoreText.enabled = true;
-			points.enabled = true;
+			/*scoreText.enabled = true;
+			points.enabled = true;*/
 			//Desactivar los otros botones
 			Music.gameObject.SetActive(false);
 			Exit.gameObject.SetActive (false);
@@ -331,72 +333,6 @@ public class HUDManager : MonoBehaviour
 			}
 			pieces[i].transform.SetParent (showingPiecesContainer,false);
 		}
-	}
-
-	public void setGoalPopUp(string goalCondition, System.Object parameters)
-	{
-		//Text goalText = goalPopUp.transform.FindChild("Objective").GetComponent<Text>();
-		string textId = string.Empty;
-		string textToReplace = string.Empty;
-		string replacement = string.Empty;
-		List<string> word = new List<string> ();
-		List<string> letter = new List<string> ();
-
-		switch(goalCondition)
-		{
-		case GoalManager.LETTERS:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_LETTERS_ID;
-			textToReplace = "{{goalLetters}}";
-
-			replacement = "";
-			IEnumerable letters = parameters as IEnumerable;
-
-			foreach (object oLetter in letters) 
-			{
-				letter.Add (oLetter.ToString ());
-			}
-
-			break;
-		case GoalManager.OBSTACLES:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_OBSTACLES_ID;
-			textToReplace = "{{goalObstacleLetters}}";
-			replacement = (Convert.ToInt32(parameters)).ToString();
-			break;
-		case GoalManager.POINTS:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_POINTS_ID;
-			textToReplace = "{{goalPoints}}";
-			replacement = (Convert.ToInt32(parameters)).ToString();
-			break;
-		case GoalManager.WORDS_COUNT:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_WORDS_ID;
-			textToReplace = "{{goalWords}}";
-			replacement = (Convert.ToInt32(parameters)).ToString();
-			break;
-		case GoalManager.SYNONYMOUS:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID;
-			textToReplace = "{{goalSin}}";
-			word= (List<string>)parameters;
-			replacement = word[0];
-			break;
-		case GoalManager.WORD:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_1_WORD_ID;
-			textToReplace = "{{goalWord}}";
-			word= (List<string>)parameters;
-			replacement = word[0];
-			break;		
-		case GoalManager.ANTONYMS:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_ANTONYM_ID;
-			textToReplace = "{{goalAnt}}";
-			word= (List<string>)parameters;
-			replacement = word[0];
-			break;
-		}
-
-		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement),letter);
-
-		//goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
-		//activatePopUp("goalPopUp");
-		//goalPopUp.SetActive(true);
 	}
 
 	public void setStateMusic(bool activate)
