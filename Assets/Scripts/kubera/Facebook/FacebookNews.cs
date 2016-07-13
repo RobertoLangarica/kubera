@@ -19,7 +19,6 @@ public class FacebookNews : MonoBehaviour {
 
 	public void actualizeMessageNumber(string messageCount)
 	{
-		print ("NADA");
 		if(messageCount == "0")
 		{
 			messageCountImage.gameObject.SetActive(false);

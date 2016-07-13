@@ -15,7 +15,10 @@ public class ParalaxManager : MonoBehaviour {
 	protected Vector2 oldPos;
 	public ScrollRect scrollRect;
 
-	public bool tweening;
+	public bool toDoor;
+	public bool toNextLevel;
+
+	protected float posNextLevel;
 
 	void Awake()
 	{
@@ -35,12 +38,20 @@ public class ParalaxManager : MonoBehaviour {
 				OnMove( rectTransform.anchoredPosition);
 			}
 		}
-		if(tweening)
+		if(toDoor)
 		{
 			scrollRect.verticalNormalizedPosition = scrollRect.verticalNormalizedPosition + 0.01f;
 			if(scrollRect.verticalNormalizedPosition >= 1)
 			{
-				tweening = false;
+				toDoor = false;
+			}
+		}
+		if(toNextLevel)
+		{
+			scrollRect.verticalNormalizedPosition = scrollRect.verticalNormalizedPosition + 0.001f;
+			if(scrollRect.verticalNormalizedPosition >= posNextLevel)
+			{
+				toNextLevel = false;
 			}
 		}
 	}
@@ -50,24 +61,44 @@ public class ParalaxManager : MonoBehaviour {
 		this.rectTransform.sizeDelta = rectTransform.sizeDelta;
 	}
 
-	public void setPosByCurrentLevel(MapLevel mapLevel)
+	public void setPosByCurrentLevel(float levelPosition)
+	{
+		print (levelPosition);
+		scrollRect.verticalNormalizedPosition = levelPosition;
+	}
+
+	public float getPosByLevel(MapLevel mapLevel)
 	{
 		//print (mapLevel.GetComponent<RectTransform> ().anchorMax.y);
 		//print ( mapLevel.GetComponent<RectTransform> ().anchorMin.y);
 		float sizeOfLevelIcon = mapLevel.GetComponent<RectTransform> ().anchorMax.y - mapLevel.GetComponent<RectTransform> ().anchorMin.y;
-		float positionCalculated = mapLevel.GetComponent<RectTransform> ().anchorMin.y/* - sizeOfLevelIcon*/;
-		//print (positionCalculated);
-		scrollRect.verticalNormalizedPosition = positionCalculated;
+		float levelPosition = mapLevel.GetComponent<RectTransform> ().anchorMin.y/* - sizeOfLevelIcon*/;
+		//print (levelPosition);
+
+		return levelPosition;
 	}
 
 	public void setPosToDoor()
 	{
-		if(!PersistentData.GetInstance().opened)
+		toDoor = true;
+	}
+
+	public void setPosToNextLevel(MapLevel mapLevel)
+	{
+
+		posNextLevel = getPosByLevel (mapLevel);
+		toNextLevel = true;
+	}
+
+	public void cancelAutomaticMovements()
+	{
+		if(toDoor || toNextLevel)
 		{
-			PersistentData.GetInstance ().opened = true;
-			tweening = true;
+			toDoor = false;
+			toNextLevel = false;
 		}
 	}
+
 
 	public void Unsubscribe()
 	{

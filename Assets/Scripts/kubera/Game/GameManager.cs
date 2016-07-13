@@ -112,14 +112,12 @@ public class GameManager : MonoBehaviour
 		//TODO: hardcoding
 		bonificationPiecePrefab.SetActive (true);
 		//TODO: Control de flujo de juego con un init
-
-		//HACK CampusParty
-		PersistentData.GetInstance ().lifes--;
+	
 	}
 
 	protected void startGame()
 	{
-		configureLevel(PersistentData.GetInstance().getRandomLevel());
+		configureLevel(PersistentData.GetInstance().currentLevel);
 
 
 		populateGridFromLevel(currentLevel);
@@ -351,6 +349,7 @@ public class GameManager : MonoBehaviour
 		yield return new WaitForSeconds (piecePositionedDelay+0.25f);
 
 		bool piecesWhereCreated = false;
+		int pointsMade = 0;
 
 		if(pieceManager.isAShowedPiece(piece))
 		{
@@ -365,7 +364,8 @@ public class GameManager : MonoBehaviour
 
 			//Damos puntos por cada cuadro en la pieza
 			onUsersAction(piece.squares.Length);
-			showFloatingPointsAt (piece.transform.position, piece.squares.Length);
+
+			pointsMade += piece.squares.Length;
 		}
 
 
@@ -377,7 +377,7 @@ public class GameManager : MonoBehaviour
 			linesCreated (cells.Count);
 
 			int a = Mathf.RoundToInt(cells.Count *0.5f);
-			showFloatingPointsAt (cells[a][0].transform.position, cells.Count);
+			pointsMade += linesCreatedPoints[cells.Count];
 
 			convertLinesToLetters (cells);
 		}
@@ -390,6 +390,8 @@ public class GameManager : MonoBehaviour
 		{
 			allowGameInput (true);
 		}
+
+		showFloatingPointsAt (piece.transform.position, pointsMade);
 
 		Destroy(piece.gameObject);
 
@@ -660,7 +662,6 @@ public class GameManager : MonoBehaviour
 			gameOver = true;
 			unlockPowerUp ();
 			activatePopUp ("winGamePopUp");
-			PersistentData.GetInstance ().lifes++;
 		}
 	}
 
@@ -756,13 +757,14 @@ public class GameManager : MonoBehaviour
 	protected void destroyLetter()
 	{
 		int random = Random.Range (0, cellToLetter.Count);
+
 		showDestroyedLetterScore(cellToLetter[random]);
 		cellToLetter [random].destroyCell ();
 		cellToLetter.RemoveAt (random);
 
 		if (cellToLetter.Count > 0) 
 		{
-			Invoke ("destroyLetter", 0.2f);
+			Invoke ("destroyLetter", 0.4f);
 		} 
 		else 
 		{
@@ -778,7 +780,7 @@ public class GameManager : MonoBehaviour
 					hudManager.getEarnedStars(),pointsCount);
 
 				SceneManager.LoadScene ("Levels");
-
+				PersistentData.GetInstance ().fromGameToLevels = true;
 				//Gano y a se termino win bonification
 				/*PersistentData.GetInstance().fromLevelBuilder = true;
 				SceneManager.LoadScene ("Game");*/
@@ -936,7 +938,7 @@ public class GameManager : MonoBehaviour
 		case "loose":
 			//HACK campus
 			SceneManager.LoadScene ("Levels");
-
+			PersistentData.GetInstance ().fromGameToLevels = true;
 			//activatePopUp ("SecondChance");
 			break;
 		default:		
@@ -960,6 +962,7 @@ public class GameManager : MonoBehaviour
 	{
 		PersistentData.GetInstance().startLevel -= 1;
 		SceneManager.LoadScene ("Levels");
+		PersistentData.GetInstance ().fromGameToLevels = true;
 		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		activatePopUp ("exitGame");*/
 	}
