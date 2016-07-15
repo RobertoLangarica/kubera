@@ -360,7 +360,7 @@ public class WordManager : MonoBehaviour
 		return letters.Count < maxLetters;
 	}
 
-	public void addLetter(Letter letter,bool withAnimation = true)
+	public void addLetter(Letter letter,bool withAnimation = true,bool wildCard = false)
 	{
 		if (letter.wildCard) 
 		{
@@ -374,7 +374,11 @@ public class WordManager : MonoBehaviour
 		{
 			selectLetterAnimation (letter);
 			onLettersChange();
-		} 
+		}
+		else if(wildCard)
+		{
+			letter.transform.SetParent(letterContainerTransform,false);
+		}
 		else 
 		{
 			letter.transform.SetParent(preLetterContainerTransform,false);
@@ -856,7 +860,6 @@ public class WordManager : MonoBehaviour
 
 	public void setValuesToWildCard(Letter wildCard,string character)
 	{
-
 		ABCChar abc = new ABCChar ();
 
 		abc.wildcard = false;
