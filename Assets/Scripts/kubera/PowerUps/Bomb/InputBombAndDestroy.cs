@@ -8,17 +8,24 @@ public class InputBombAndDestroy : MonoBehaviour
 	public bool allowInput = true;
 
 	public delegate void DOnDragNotification();
+	public delegate void DOnCellNotification(Cell nCell);
 	public DOnDragNotification OnDrop;
+	public DOnCellNotification OnCellSelected;
 
 	protected bool somethingDragged = false;
 	protected int lastTimeDraggedFrame;
 	protected GameObject currentSelected = null;
+
+	protected CellsManager cellsManager;
+	protected Piece.EColor selectedCellColor;
 
 	public float pieceSpeed = 0.3f;
 
 	void Start()
 	{
 		enabled = false;
+
+		cellsManager = FindObjectOfType<CellsManager> ();
 	}
 
 	void OnDrag(DragGesture gesture) 
@@ -55,6 +62,42 @@ public class InputBombAndDestroy : MonoBehaviour
 					posOverFinger.z = currentSelected.transform.position.z;
 					posOverFinger += offsetPositionOverFinger;
 					moveTo(currentSelected,posOverFinger,pieceSpeed);
+
+					Cell cellSelected = cellsManager.getCellUnderPoint(currentSelected.transform.position);
+
+					if (cellSelected != null) 
+					{
+						if (cellSelected.contentColor != Piece.EColor.LETTER_OBSTACLE &&
+						    cellSelected.contentColor != Piece.EColor.NONE) 
+						{
+							if (selectedCellColor != null) 
+							{
+								if (selectedCellColor != cellSelected.contentColor) 
+								{
+									if (OnCellSelected != null) 
+									{
+										OnCellSelected (cellSelected);	
+									}
+								}
+							} 
+							else 
+							{
+								selectedCellColor = cellSelected.contentColor;
+
+								if (OnCellSelected != null) 
+								{
+									OnCellSelected (cellSelected);	
+								}
+							}
+						} 
+						else 
+						{
+							if (OnCellSelected != null) 
+							{
+								OnCellSelected (null);	
+							}
+						}
+					}
 				}
 			}
 			break;

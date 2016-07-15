@@ -36,10 +36,10 @@ public class TutorialManager : MonoBehaviour
 
 		linesAnimation = FindObjectOfType<LinesCreatedAnimation> ();
 
-		selectTutorial ();
+		//selectTutorial ();
 	}
 
-	void Update()
+	/*void Update()
 	{
 		if (currentTutorial == null) 
 		{
@@ -50,7 +50,7 @@ public class TutorialManager : MonoBehaviour
 		{
 			canCompletePhase ();
 		}
-	}
+	}*/
 
 	protected void selectTutorial()
 	{

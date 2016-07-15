@@ -42,6 +42,8 @@ public class RotatePowerUp : PowerupBase
 		this.canUse = canUse;
 
 		updateDragableObjectImage (powerUpGO);
+
+		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHIghLightType.ROTATE_POWERUP);
 	}
 
 	public void powerUpPositioned()
@@ -68,6 +70,7 @@ public class RotatePowerUp : PowerupBase
 			powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId ("RotatePowerUP_Scale").OnComplete (() => {
 
 				DestroyImmediate (powerUpGO);
+				HighLightManager.GetInstance ().turnOffHighLights ();
 				cancel ();
 			});
 		}
@@ -82,6 +85,7 @@ public class RotatePowerUp : PowerupBase
 
 				DestroyImmediate (powerUpGO);
 				powerUpActivateRotate (canUse);
+				HighLightManager.GetInstance ().turnOffHighLights ();
 			});
 
 		}
