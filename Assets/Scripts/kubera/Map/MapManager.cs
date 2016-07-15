@@ -29,6 +29,7 @@ public class MapManager : MonoBehaviour
 
 	protected List<MapLevel> mapLevels;
 	protected bool fromGame;
+	protected bool toDoor;
 
 	protected MapLevel currentLevel = null;
 	protected MapLevel lastLevelPlayed = null;
@@ -110,6 +111,9 @@ public class MapManager : MonoBehaviour
 		case "playGame":
 			SceneManager.LoadScene ("Game");
 			break;
+		case "continue":
+			paralaxManager.setPosToNextLevel (nextLevel);
+			break;
 		default:
 			break;
 		}
@@ -139,10 +143,6 @@ public class MapManager : MonoBehaviour
 		Debug.Log ((LevelsDataManager.GetInstance() as LevelsDataManager));
 		List<Level> worldsLevels = new List<Level> ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelsOfWorld(currentWorld));
 
-
-
-		bool toDoor = false;
-
 		for (int i = 0; i < mapLevels.Count; i++)
 		{
 			settingMapLevelInfo (mapLevels[i],worldsLevels[i]);
@@ -162,7 +162,7 @@ public class MapManager : MonoBehaviour
 				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED)
 			{				
 				currentLevel = mapLevels [i];
-				print (PersistentData.GetInstance ().currentLevel.name +"   "+ mapLevels [i].fullLvlName);
+				
 				if(fromGame && PersistentData.GetInstance().currentLevel.name == mapLevels[i].fullLvlName) 
 				{
 					lastLevelPlayed = mapLevels [i];
@@ -178,25 +178,6 @@ public class MapManager : MonoBehaviour
 					doorsManager.DoorsCanOpen ();
 				}
 			}
-		}
-		if(currentLevel == null)
-		{
-			currentLevel = mapLevels [0];
-		}
-
-		print (currentLevel);
-		if(toDoor)
-		{
-			paralaxManager.setPosToDoor ();
-		}
-		else if(fromGame)
-		{			
-			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(lastLevelPlayed));
-			paralaxManager.setPosToNextLevel (nextLevel);
-		}
-		else
-		{
-			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(currentLevel));
 		}
 	}
 
@@ -375,9 +356,38 @@ public class MapManager : MonoBehaviour
 		selectLevel (currentWorld);
 
 		initializeLevels ();
+		setParalaxManager ();
 		paralaxManager.enabled = true;
 
 		PersistentData.GetInstance ().currentWorld = currentWorld;
+	}
+
+	protected void setParalaxManager()
+	{
+		if(currentLevel == null)
+		{
+			currentLevel = mapLevels [0];
+		}
+
+		if(toDoor)
+		{
+			paralaxManager.setPosToDoor ();
+		}
+		else if(fromGame)
+		{			
+			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(lastLevelPlayed));
+			goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
+			int starsReached = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
+			int pointsMade = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
+
+			popUpManager.getPopupByName ("goalAfterGame").GetComponent<GoalAfterGame>().setGoalPopUpInfo (starsReached, PersistentData.GetInstance ().currentLevel.name, pointsMade.ToString());
+			popUpManager.activatePopUp ("goalAfterGame");
+			stopInput (true);
+		}
+		else
+		{
+			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(currentLevel));
+		}
 	}
 
 	public void changeCurrentWorld(int world)
@@ -464,7 +474,7 @@ public class MapManager : MonoBehaviour
 			break;
 		}
 			
-		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement),starsReached, letter,levelName);
+		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement),starsReached, letter, levelName);
 		popUpManager.activatePopUp ("goalPopUp");
 
 		stopInput (true);

@@ -758,12 +758,12 @@ public class GameManager : MonoBehaviour
 	{
 		int random = Random.Range (0, cellToLetter.Count);
 
-		showDestroyedLetterScore(cellToLetter[random]);
-		cellToLetter [random].destroyCell ();
-		cellToLetter.RemoveAt (random);
-
 		if (cellToLetter.Count > 0) 
 		{
+			showDestroyedLetterScore(cellToLetter[random]);
+			cellToLetter [random].destroyCell ();
+			cellToLetter.RemoveAt (random);
+
 			Invoke ("destroyLetter", 0.4f);
 		} 
 		else 
@@ -779,13 +779,19 @@ public class GameManager : MonoBehaviour
 				(LevelsDataManager.GetInstance() as LevelsDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
 					hudManager.getEarnedStars(),pointsCount);
 
-				SceneManager.LoadScene ("Levels");
 				PersistentData.GetInstance ().fromGameToLevels = true;
-				//Gano y a se termino win bonification
+
+				Invoke ("toLevels", 0.5f);
+				//Gano y ya se termino win bonification
 				/*PersistentData.GetInstance().fromLevelBuilder = true;
 				SceneManager.LoadScene ("Game");*/
 			}
 		}
+	}
+
+	protected void toLevels()
+	{
+		SceneManager.LoadScene ("Levels");
 	}
 
 	protected void showDestroyedLetterScore(Cell cell)

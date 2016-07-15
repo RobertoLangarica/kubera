@@ -26,7 +26,6 @@ public class ParalaxManager : MonoBehaviour {
 		oldPos = rectTransform.anchoredPosition;
 		//OnMove (rectTransform.anchoredPosition);
 		//scrollRect.verticalNormalizedPosition = 0.5f;
-		print (Screen.height);
 	}
 
 	void Update()
@@ -63,7 +62,6 @@ public class ParalaxManager : MonoBehaviour {
 
 	public void setPosByCurrentLevel(float levelPosition)
 	{
-		print (levelPosition);
 		scrollRect.verticalNormalizedPosition = levelPosition;
 	}
 

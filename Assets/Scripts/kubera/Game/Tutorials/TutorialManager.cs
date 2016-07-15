@@ -257,20 +257,20 @@ public class TutorialManager : MonoBehaviour
 		}
 	}
 
-	public void canCompletePhase(GameObject go)
+	public void canCompletePhase(GameObject go,bool byDrag = false)
 	{
 		if (currentTutorial.phaseEvent == TutorialBase.ENextPhaseEvent.WORD_SPECIFIC_LETTER_TAPPED) 
 		{
 			if (go.GetComponent<Letter> ().abcChar.character == currentTutorial.phaseObj) 
 			{
-				wordManager.onLetterTap (go);
+				wordManager.onLetterTap (go,byDrag);
 			}
 		}
 		if (currentTutorial.phaseEvent == TutorialBase.ENextPhaseEvent.GRID_SPECIFIC_LETTER_TAPPED) 
 		{
 			if (go.GetComponent<Letter> ().abcChar.character == currentTutorial.phaseObj) 
 			{
-				wordManager.OnGridLetterTapped (go);
+				wordManager.OnGridLetterTapped (go,byDrag);
 			}
 		}
 		canCompletePhase ();
