@@ -41,6 +41,7 @@ public class MapLevel : MonoBehaviour
 	public List<Image> levelStars;
 
 	public string lvlName;
+	public string fullLvlName;
 
 	public bool isBoss;
 

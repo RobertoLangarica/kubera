@@ -14,7 +14,7 @@ namespace Data
 			levelsList = PersistentData.GetInstance().levelsData;
 
 			//El usuario anonimo esta vacio
-			currentData.getUserById(ANONYMOUS_USER).clear();
+			//currentData.getUserById(ANONYMOUS_USER).clear();
 		}
 
 
@@ -32,8 +32,8 @@ namespace Data
 
 			if(level != null)
 			{
-				level.isDirty = level.isDirty || level.updateOnlyIncrementalValues(stars, points);
-				level.isDirty = level.isDirty || level.updatePassed(true);
+				level.isDirty = level.updateOnlyIncrementalValues(stars, points) || level.isDirty;
+				level.isDirty = level.updatePassed(true) || level.isDirty ;
 			}
 			else
 			{
@@ -50,6 +50,8 @@ namespace Data
 
 			//TODO: guardar en server
 			saveLocalData(false);
+
+			level = currentUserLevels.getLevelById(levelName);
 		}
 
 		public bool isLevelPassed(string levelName)

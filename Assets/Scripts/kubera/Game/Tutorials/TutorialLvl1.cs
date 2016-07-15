@@ -22,6 +22,7 @@ public class TutorialLvl1 : TutorialBase
 		switch (phase) 
 		{
 		case(0):
+			hideHand ();
 			phasesPanels [0].SetActive (true);
 			phaseEvent = ENextPhaseEvent.CREATE_WORD;
 
@@ -38,9 +39,10 @@ public class TutorialLvl1 : TutorialBase
 
 			phase = 1;
 
-			goalPopUp.OnPopUpCompleted += startTutorialAnimation;
+			startGamePopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
+			hideHand ();
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent = ENextPhaseEvent.SUBMIT_WORD;
@@ -62,6 +64,7 @@ public class TutorialLvl1 : TutorialBase
 			phase2Animation ();
 			return true;
 		case(2):
+			hideHand ();
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
 			phaseEvent = ENextPhaseEvent.CREATE_A_LINE;
@@ -94,6 +97,7 @@ public class TutorialLvl1 : TutorialBase
 			phase3Animation ();
 			return true;
 		case(3):
+			hideHand ();
 			phasesPanels [2].SetActive (false);
 			phasesPanels [3].SetActive (true);
 

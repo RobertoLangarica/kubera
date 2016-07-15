@@ -35,12 +35,13 @@ public class PersistentData : Manager<PersistentData>
 	public bool fromLevelBuilder;
 	[HideInInspector]
 	public bool fromGameToEdit;
+	[HideInInspector]
+	public bool fromGameToLevels;
 
+	[HideInInspector]
 	public int startLevel = 1;
 
-	//HACK CampusParty
-	public int lifes = 2;
-	public bool opened;
+	public string lastLevelPlayedName = "";
 
 	protected override void Awake() 
 	{
@@ -206,7 +207,7 @@ public class PersistentData : Manager<PersistentData>
 	{
 		int le = 15;
 		//return levelsData.levels[0];
-		//return levelsData.levels[Random.Range(le,le+1)];
+		return levelsData.levels[Random.Range(le,le+1)];
 		return levelsData.levels[Random.Range(0,levelsData.levels.Length-1)];
 	}
 

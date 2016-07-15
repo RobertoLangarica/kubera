@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Data;
@@ -24,14 +25,17 @@ public class MapManager : MonoBehaviour
 	protected PopUpManager popUpManager;
 	protected ParalaxManager paralaxManager;
 	protected DoorsManager doorsManager;
+	private GoalManager		goalManager;
 
 	protected List<MapLevel> mapLevels;
+	protected bool fromGame;
+	protected bool toDoor;
+
+	protected MapLevel currentLevel = null;
+	protected MapLevel lastLevelPlayed = null;
+	protected MapLevel nextLevel = null;
 
 	public FBFriendsRequestPanel fbFriendsRequestPanel;
-
-	//HACK CampusParty
-	public GameObject[] lifes;
-	public GameObject popUpNoLifes;
 
 	void Start()
 	{
@@ -39,13 +43,15 @@ public class MapManager : MonoBehaviour
 		lifesHUDManager = FindObjectOfType<LifesManager> ();
 		paralaxManager = FindObjectOfType<ParalaxManager> ();
 		doorsManager = FindObjectOfType<DoorsManager> ();
+		goalManager = FindObjectOfType<GoalManager> ();
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 		if(PersistentData.GetInstance().currentWorld == -1)
 		{
+			print (PersistentData.GetInstance ().currentLevel.name);
 			if(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUserLevels.levels.Count != 0)
 			{
-				currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUserLevels.levels.Count-1].world);
+				currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUserLevels.levels.Count].world);
 				print (currentWorld);
 			}
 		}
@@ -53,21 +59,20 @@ public class MapManager : MonoBehaviour
 		{
 			currentWorld = PersistentData.GetInstance ().currentWorld;
 		}
+
+		if(PersistentData.GetInstance ().fromGameToLevels)
+		{
+			fromGame = true;
+			PersistentData.GetInstance ().fromGameToLevels = false;
+		}
+
 		//selectLevel (currentWorld);
 
 		//initializeLevels ();
 		//print (currentWorld);
 		changeWorld ();
 
-		//HACK CampusParty
-		for(int i=0; i<	PersistentData.GetInstance().lifes; i++)
-		{
-			lifes [i].SetActive (true);
-		}
-		if(	PersistentData.GetInstance().lifes == 0)
-		{
-			popUpNoLifes.SetActive (true);
-		}
+
 	}
 
 	void Update()
@@ -101,6 +106,14 @@ public class MapManager : MonoBehaviour
 			popUpManager.activatePopUp ("fbFriendsRequestPanel");
 			fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_KEYS);
 			break;
+		case "closeObjective":
+			break;
+		case "playGame":
+			SceneManager.LoadScene ("Game");
+			break;
+		case "continue":
+			paralaxManager.setPosToNextLevel (nextLevel);
+			break;
 		default:
 			break;
 		}
@@ -130,9 +143,6 @@ public class MapManager : MonoBehaviour
 		Debug.Log ((LevelsDataManager.GetInstance() as LevelsDataManager));
 		List<Level> worldsLevels = new List<Level> ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelsOfWorld(currentWorld));
 
-
-		MapLevel currentLevel = null;
-		
 		for (int i = 0; i < mapLevels.Count; i++)
 		{
 			settingMapLevelInfo (mapLevels[i],worldsLevels[i]);
@@ -150,27 +160,31 @@ public class MapManager : MonoBehaviour
 				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_UNLOCKED
 				||  mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED
 				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED)
-			{
+			{				
 				currentLevel = mapLevels [i];
+				
+				if(fromGame && PersistentData.GetInstance().currentLevel.name == mapLevels[i].fullLvlName) 
+				{
+					lastLevelPlayed = mapLevels [i];
+					if(i+1 <mapLevels.Count)
+					{
+						nextLevel = mapLevels [i+1];
+					}
+				}
 
 				if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
 				{
+					toDoor = true;
 					doorsManager.DoorsCanOpen ();
-					paralaxManager.setPosToDoor ();
 				}
 			}
 		}
-		if(currentLevel == null)
-		{
-			currentLevel = mapLevels [0];
-		}
-		print (currentLevel);
-		paralaxManager.setPosByCurrentLevel (currentLevel);
 	}
 
 	protected void settingMapLevelInfo(MapLevel level,Level data)
 	{
 		level.lvlName = data.name;
+		level.fullLvlName = data.name;
 		level.isBoss = data.isBoss;
 		level.starsNeeded = data.starsNeeded;
 		level.friendsNeeded = data.friendsNeeded;
@@ -179,6 +193,9 @@ public class MapManager : MonoBehaviour
 
 	protected void settingMapLevelStatus(MapLevel level)
 	{
+		//level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
+		//return;
+
 		if (level.isBoss)
 		{
 			if ((LevelsDataManager.GetInstance () as LevelsDataManager).isLevelPassed (level.lvlName))
@@ -241,6 +258,7 @@ public class MapManager : MonoBehaviour
 
 	protected void setOnClickDelegates(MapLevel level)
 	{
+
 		switch (level.status)
 		{
 		case(MapLevel.EMapLevelsStatus.BOSS_LOCKED):
@@ -311,7 +329,14 @@ public class MapManager : MonoBehaviour
 	protected void OnLevelUnlockedPressed(MapLevel pressed)
 	{
 		PersistentData.GetInstance ().setLevelNumber (int.Parse (pressed.lvlName));
-		SceneManager.LoadScene ("Game");
+		PersistentData.GetInstance ().lastLevelPlayedName = pressed.lvlName;
+
+		goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
+		int starsReached = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
+		
+		setGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters(),PersistentData.GetInstance().currentLevel.name,starsReached);
+
+		//SceneManager.LoadScene ("Game");
 	}
 
 	protected void OnLevelLockedPressed(MapLevel pressed)
@@ -331,7 +356,38 @@ public class MapManager : MonoBehaviour
 		selectLevel (currentWorld);
 
 		initializeLevels ();
+		setParalaxManager ();
 		paralaxManager.enabled = true;
+
+		PersistentData.GetInstance ().currentWorld = currentWorld;
+	}
+
+	protected void setParalaxManager()
+	{
+		if(currentLevel == null)
+		{
+			currentLevel = mapLevels [0];
+		}
+
+		if(toDoor)
+		{
+			paralaxManager.setPosToDoor ();
+		}
+		else if(fromGame)
+		{			
+			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(lastLevelPlayed));
+			goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
+			int starsReached = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
+			int pointsMade = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
+
+			popUpManager.getPopupByName ("goalAfterGame").GetComponent<GoalAfterGame>().setGoalPopUpInfo (starsReached, PersistentData.GetInstance ().currentLevel.name, pointsMade.ToString());
+			popUpManager.activatePopUp ("goalAfterGame");
+			stopInput (true);
+		}
+		else
+		{
+			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(currentLevel));
+		}
 	}
 
 	public void changeCurrentWorld(int world)
@@ -344,5 +400,87 @@ public class MapManager : MonoBehaviour
 	public void goToScene(string scene)
 	{
 		ScreenManager.instance.GoToScene (scene);
+	}
+
+	public void setGoalPopUp(string goalCondition, System.Object parameters,string levelName,int starsReached)
+	{
+		//Text goalText = goalPopUp.transform.FindChild("Objective").GetComponent<Text>();
+		string textId = string.Empty;
+		string textToReplace = string.Empty;
+		string replacement = string.Empty;
+		List<string> word = new List<string> ();
+		List<string> letter = new List<string> ();
+
+		for (int i = 0; i < levelName.Length; i++) 
+		{
+			if (levelName [i] == '0') 
+			{
+				levelName = levelName.Remove(i,1);
+				i--;
+			} 
+			else 
+			{
+				break;
+			}
+		}
+
+		switch(goalCondition)
+		{
+		case GoalManager.LETTERS:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_LETTERS_ID;
+			textToReplace = "{{goalLetters}}";
+
+			replacement = "";
+			IEnumerable letters = parameters as IEnumerable;
+
+			foreach (object oLetter in letters) 
+			{
+				letter.Add (oLetter.ToString ());
+			}
+
+			break;
+		case GoalManager.OBSTACLES:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_OBSTACLES_ID;
+			textToReplace = "{{goalObstacleLetters}}";
+			replacement = (Convert.ToInt32(parameters)).ToString();
+			break;
+		case GoalManager.POINTS:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_POINTS_ID;
+			textToReplace = "{{goalPoints}}";
+			replacement = (Convert.ToInt32(parameters)).ToString();
+			break;
+		case GoalManager.WORDS_COUNT:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_WORDS_ID;
+			textToReplace = "{{goalWords}}";
+			replacement = (Convert.ToInt32(parameters)).ToString();
+			break;
+		case GoalManager.SYNONYMOUS:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID;
+			textToReplace = "{{goalSin}}";
+			word= (List<string>)parameters;
+			replacement = word[0];
+			break;
+		case GoalManager.WORD:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_1_WORD_ID;
+			textToReplace = "{{goalWord}}";
+			word= (List<string>)parameters;
+			replacement = word[0];
+			break;		
+		case GoalManager.ANTONYMS:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_ANTONYM_ID;
+			textToReplace = "{{goalAnt}}";
+			word= (List<string>)parameters;
+			replacement = word[0];
+			break;
+		}
+			
+		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement),starsReached, letter, levelName);
+		popUpManager.activatePopUp ("goalPopUp");
+
+		stopInput (true);
+
+		//goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
+		//activatePopUp("goalPopUp");
+		//goalPopUp.SetActive(true);
 	}
 }

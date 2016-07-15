@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class FacebookConnectButton : MonoBehaviour {
 
-	public GameObject conect;
-	public GameObject logOut;
+	public Text fbText;
+	public bool logged;
 
 	protected FBLoggin fbLog;
 
@@ -18,9 +18,9 @@ public class FacebookConnectButton : MonoBehaviour {
 			fbLog =  gameObject.AddComponent<FBLoggin> ();
 		}
 
-		changeButton (fbLog.isLoggedIn);
+		changeText (fbLog.isLoggedIn);
 
-		fbLog.onLoginComplete += changeButton;
+		fbLog.onLoginComplete += changeText;
 	}
 
 	public void conectFacebook()
@@ -28,17 +28,18 @@ public class FacebookConnectButton : MonoBehaviour {
 		fbLog.OnLoginClick ();
 	}
 
-	public void changeButton(bool loggedIn)
+	public void changeText(bool loggedIn)
 	{
+		//TODO tomar el string
 		if(loggedIn)
 		{
-			conect.SetActive (false);
-			logOut.SetActive (true);
+			fbText.text = "Desconectate";
+			logged = false;
 		}
 		else
 		{
-			conect.SetActive (true);
-			logOut.SetActive (false);
+			fbText.text = "Conectate";
+			logged = true;
 		}
 	}
 

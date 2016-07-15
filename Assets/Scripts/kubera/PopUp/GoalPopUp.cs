@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ public class GoalPopUp : PopUpBase {
 	public GameObject lettersObjective;
 	public GameObject uiLetter;
 	public GridLayoutGroup gridLayoutGroup;
+
+	public GameObject[] stars;
 
 	void Start()
 	{
@@ -33,7 +36,7 @@ public class GoalPopUp : PopUpBase {
 		popUp.SetActive (true);
 	}
 
-	public void setGoalPopUpInfo(string text, List<string> letters = null,string levelName = "")
+	public void setGoalPopUpInfo(string text, int starsReached, List<string> letters = null, string levelName = "")
 	{
 		this.LevelName.text = levelName;
 		if(letters.Count != 0)
@@ -53,18 +56,27 @@ public class GoalPopUp : PopUpBase {
 		{
 			goalText.text = text;
 		}
+		
+		showStars (starsReached);
 	}
 
-	protected void popUpCompleted()
-	{
-		popUp.SetActive (false);
+	protected void showStars(int starsReached)
+	{		
+		for(int i=0; i<starsReached; i++)
+		{
+			stars [i].SetActive (true);
+		}
+	}
 
-		OnComplete ();
+
+	public void playGame()
+	{
+		OnComplete ("playGame");
 	}
 
 	public void exit ()
 	{
-		popUpCompleted ();
+		OnComplete ();
 	}
 		
 }

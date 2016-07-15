@@ -44,7 +44,7 @@ public class InputPowerUpRotate : MonoBehaviour
 		pieceManager = FindObjectOfType<PieceManager> ();
 		gameManager = FindObjectOfType<GameManager> ();
 		hudManager = FindObjectOfType<HUDManager> ();
-
+		pieceSpeed = FindObjectOfType<InputPiece> ().pieceSpeed;
 		if(pieceStock == null)
 		{
 			print("Falta asignarlo en el editor");
@@ -137,11 +137,11 @@ public class InputPowerUpRotate : MonoBehaviour
 
 	void OnFingerDown(FingerDownEvent  gesture)
 	{
-		if (allowInput && gesture.Raycast.Hits2D != null) 
+		if (!currentSelected && allowInput && gesture.Raycast.Hits2D != null) 
 		{
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
-
-			//currentSelected.transform.DOMove(overFingerPosition,.1f).SetId("Input_SelectedPosition");
+			offsetPositionOverFinger.y = Mathf.Round (gesture.Raycast.Hit2D.collider.bounds.size.y * 20) * .10f;
+		//currentSelected.transform.DOMove(overFingerPosition,.1f).SetId("Input_SelectedPosition");
 
 		}
 		else if(!allowInput)
