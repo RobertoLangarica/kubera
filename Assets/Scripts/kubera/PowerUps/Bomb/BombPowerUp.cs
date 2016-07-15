@@ -36,7 +36,7 @@ public class BombPowerUp : PowerupBase
 
 		updateDragableObjectImage (bombGO);
 
-		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHIghLightType.BOMB_POWERUP);
+		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.BOMB_POWERUP);
 	}
 
 	public void powerUpPositioned()
@@ -113,12 +113,12 @@ public class BombPowerUp : PowerupBase
 
 		if (cellSelected != null) 
 		{
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHIghLightType.BOMB_SPECIFIC_COLOR
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.BOMB_SPECIFIC_COLOR
 			, cellSelected);
 		} 
 		else 
 		{
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHIghLightType.BOMB_POWERUP);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.BOMB_POWERUP);
 		}
 	}
 }

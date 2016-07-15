@@ -55,7 +55,7 @@ public class DestroyPowerUp : PowerupBase
 
 		updateDragableObjectImage (destroyGO);
 
-		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHIghLightType.DESTROY_POWERUP);
+		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.DESTROY_POWERUP);
 	}
 
 	public void powerUpPositioned()
@@ -223,12 +223,12 @@ public class DestroyPowerUp : PowerupBase
 
 		if (cellSelected != null) 
 		{
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHIghLightType.DESTROY_SPECIFIC_COLOR
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR
 				, cellSelected);
 		} 
 		else 
 		{
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHIghLightType.DESTROY_POWERUP);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.DESTROY_POWERUP);
 		}
 	}
 }

@@ -43,7 +43,7 @@ public class RotatePowerUp : PowerupBase
 
 		updateDragableObjectImage (powerUpGO);
 
-		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHIghLightType.ROTATE_POWERUP);
+		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.ROTATE_POWERUP);
 	}
 
 	public void powerUpPositioned()

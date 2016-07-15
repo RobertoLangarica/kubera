@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
 public class HighLightManager : Manager<HighLightManager>
 {
-	public enum EHIghLightType
+	public enum EHighLightType
 	{
 		BOMB_POWERUP,
 		DESTROY_POWERUP,
@@ -15,7 +16,16 @@ public class HighLightManager : Manager<HighLightManager>
 		DESTROY_SPECIFIC_COLOR
 	}
 
+	public enum EHighLightStatus
+	{
+		NORMAL,
+		WRONG
+	}
+
 	public const string HIGHLIGHT_TAG = "HighLight";
+
+	public Color normalHighLight;
+	public Color wrongHighLight;
 
 	protected List<GameObject> activeHighLight = new List<GameObject>();
 	protected CellsManager _cellManager;
@@ -47,14 +57,14 @@ public class HighLightManager : Manager<HighLightManager>
 		}
 	}
 
-	public void setHighLightOfType(EHIghLightType type,Object obj = null)
+	public void setHighLightOfType(EHighLightType type,Object obj = null)
 	{
 		Cell[] tempCell = null;
 
 		switch (type) 
 		{
-		case(EHIghLightType.BOMB_POWERUP):
-		case(EHIghLightType.DESTROY_POWERUP):
+		case(EHighLightType.BOMB_POWERUP):
+		case(EHighLightType.DESTROY_POWERUP):
 			tempCell = cellManager.getCellsOfSameType (Piece.EType.PIECE);
 
 			for (int i = 0; i < tempCell.Length; i++) 
@@ -62,7 +72,7 @@ public class HighLightManager : Manager<HighLightManager>
 				turnOnHighLights (tempCell[i].transform);
 			}
 			break;
-		case(EHIghLightType.BOMB_SPECIFIC_COLOR):
+		case(EHighLightType.BOMB_SPECIFIC_COLOR):
 			tempCell = cellManager.getCellNeighborsOfSameColor (obj as Cell);
 
 			for (int i = 0; i < tempCell.Length; i++) 
@@ -70,7 +80,7 @@ public class HighLightManager : Manager<HighLightManager>
 				turnOnHighLights (tempCell[i].transform);
 			}
 			break;
-		case(EHIghLightType.DESTROY_SPECIFIC_COLOR):
+		case(EHighLightType.DESTROY_SPECIFIC_COLOR):
 			tempCell = cellManager.getCellsOfSameColor (obj as Cell);
 
 			for (int i = 0; i < tempCell.Length; i++) 
@@ -78,7 +88,7 @@ public class HighLightManager : Manager<HighLightManager>
 				turnOnHighLights (tempCell[i].transform);
 			}
 			break;
-		case(EHIghLightType.ROTATE_POWERUP):
+		case(EHighLightType.ROTATE_POWERUP):
 			turnOnHighLights (hudManager.showingPiecesContainer);
 			break;
 		}
@@ -92,6 +102,40 @@ public class HighLightManager : Manager<HighLightManager>
 			{
 				objectToSearch.GetChild (i).gameObject.SetActive(true);
 				activeHighLight.Add (objectToSearch.GetChild (i).gameObject);
+			}
+		}
+	}
+
+	protected void setHighLightStatus(EHighLightStatus status)
+	{
+		Color temp = Color.white;
+		Image tempImg = null;
+		SpriteRenderer tempSpt = null;
+
+		switch (status) 
+		{
+		case(EHighLightStatus.NORMAL):
+			temp = normalHighLight;
+			break;
+		case(EHighLightStatus.WRONG):
+			temp = wrongHighLight;
+			break;
+		}
+
+		for (int i = 0; i < activeHighLight.Count; i++) 
+		{
+			tempImg = activeHighLight[i].GetComponent<Image>();
+			if (tempImg != null) 
+			{
+				tempImg.color = temp;
+			} 
+			else 
+			{
+				tempSpt = activeHighLight [i].GetComponent<SpriteRenderer> ();
+				if (tempSpt != null) 
+				{
+					tempSpt.color = temp;
+				}
 			}
 		}
 	}
