@@ -44,7 +44,7 @@ public class PersistentData : Manager<PersistentData>
 	[HideInInspector]
 	public string lastLevelPlayedName = "";
 	[HideInInspector]
-	public bool loose;
+	public bool fromLoose;
 
 	protected override void Awake() 
 	{

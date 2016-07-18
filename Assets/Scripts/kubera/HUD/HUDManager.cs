@@ -51,7 +51,7 @@ public class HUDManager : MonoBehaviour
 	public delegate void DNotifyEvent ();
 	public DNotifyEvent OnPiecesScaled;
 
-	void Start () 
+		void Start () 
 	{
 		hudStars = FindObjectOfType<HUDMetterAndStars> ();
 		scorePool = FindObjectOfType<FloatingTextPool>();
@@ -59,6 +59,7 @@ public class HUDManager : MonoBehaviour
 
 		popUpManager.OnPopUpCompleted += popUpCompleted;
 
+		
 	}
 
 	public int getEarnedStars()

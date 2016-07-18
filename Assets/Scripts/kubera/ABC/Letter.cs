@@ -10,6 +10,11 @@ public class Letter : MonoBehaviour
 		OBSTACLE, NORMAL,WILD_CARD	
 	}
 
+	public enum EState
+	{
+		WRONG,NORMAL	
+	}
+
 	public Image myImage;
 	public Color selectedColor = new Color(1,1,1,0.2f);
 	public Color wildCardColor = new Color(1,1,1,1);
@@ -134,6 +139,21 @@ public class Letter : MonoBehaviour
 		if(abcChar.character == ".")
 		{
 			abcChar.wildcard = true;
+		}
+	}
+
+	public void updateState(EState state,Color stateColor)
+	{
+		switch(state)
+		{
+		case EState.NORMAL:
+			txtLetter.color = stateColor;
+			//txtPoints.color = stateColor;
+			break;
+		case EState.WRONG:
+			txtLetter.color = stateColor;
+			//txtPoints.color = stateColor;
+			break;
 		}
 	}
 }

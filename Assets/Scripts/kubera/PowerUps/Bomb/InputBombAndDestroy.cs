@@ -20,6 +20,7 @@ public class InputBombAndDestroy : MonoBehaviour
 	protected Piece.EColor selectedCellColor;
 
 	public float pieceSpeed = 0.3f;
+	public bool rotatePower;
 
 	void Start()
 	{
@@ -65,7 +66,10 @@ public class InputBombAndDestroy : MonoBehaviour
 					moveTo(currentSelected,posOverFinger,pieceSpeed);
 
 					Cell cellSelected = cellsManager.getCellUnderPoint(currentSelected.transform.position);
-
+					if(rotatePower)
+					{
+						break;
+					}
 					if (cellSelected != null) 
 					{
 						if (cellSelected.contentColor != Piece.EColor.LETTER_OBSTACLE &&

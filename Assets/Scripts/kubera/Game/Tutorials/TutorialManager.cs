@@ -36,12 +36,12 @@ public class TutorialManager : MonoBehaviour
 
 		linesAnimation = FindObjectOfType<LinesCreatedAnimation> ();
 
-		selectTutorial ();
+		//selectTutorial ();
 	}
 
 	void Update()
 	{
-		if (currentTutorial == null) 
+		/*if (currentTutorial == null) 
 		{
 			selectTutorial ();
 		}
@@ -49,7 +49,7 @@ public class TutorialManager : MonoBehaviour
 		if (currentTutorial.phaseEvent == TutorialBase.ENextPhaseEvent.TAP && (Input.touchCount >= 1 || Input.GetMouseButtonDown(0))) 
 		{
 			canCompletePhase ();
-		}
+		}*/
 	}
 
 	protected void selectTutorial()

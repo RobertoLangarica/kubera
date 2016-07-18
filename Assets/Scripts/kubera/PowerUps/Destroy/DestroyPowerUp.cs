@@ -47,6 +47,8 @@ public class DestroyPowerUp : PowerupBase
 		destroyGO.name = "DestroyPowerUp";
 		destroyGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
 		destroyGO.transform.localScale = new Vector3 (1, 1, 1);
+
+		bombInput.rotatePower = false;
 		bombInput.enabled = true;
 		bombInput.setCurrentSelected(destroyGO);
 		bombInput.OnDrop += powerUpPositioned;

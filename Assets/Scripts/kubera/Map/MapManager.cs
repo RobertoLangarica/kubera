@@ -52,7 +52,7 @@ public class MapManager : MonoBehaviour
 			if(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUserLevels.levels.Count != 0)
 			{
 				currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUserLevels.levels.Count].world);
-				print (currentWorld);
+				//print (currentWorld);
 			}
 		}
 		else
@@ -375,14 +375,22 @@ public class MapManager : MonoBehaviour
 		}
 		else if(fromGame)
 		{			
-			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(lastLevelPlayed));
-			goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
-			int starsReached = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
-			int pointsMade = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
+			if(PersistentData.GetInstance().fromLoose)
+			{
+				popUpManager.activatePopUp ("retryPopUp");
+				stopInput (true);
+			}
+			else
+			{
+				paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(lastLevelPlayed));
+				goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
+				int starsReached = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
+				int pointsMade = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
 
-			popUpManager.getPopupByName ("goalAfterGame").GetComponent<GoalAfterGame>().setGoalPopUpInfo (starsReached, PersistentData.GetInstance ().currentLevel.name, pointsMade.ToString());
-			popUpManager.activatePopUp ("goalAfterGame");
-			stopInput (true);
+				popUpManager.getPopupByName ("goalAfterGame").GetComponent<GoalAfterGame>().setGoalPopUpInfo (starsReached, PersistentData.GetInstance ().currentLevel.name, pointsMade.ToString());
+				popUpManager.activatePopUp ("goalAfterGame");
+				stopInput (true);
+			}
 		}
 		else
 		{

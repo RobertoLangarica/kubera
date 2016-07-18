@@ -556,6 +556,7 @@ public class GameManager : MonoBehaviour
 		hudManager.setWinCondition (goalManager.currentCondition, goalManager.getGoalConditionParameters());
 
 		activatePopUp ("startGamePopUp");
+
 	}
 
 	protected void checkIfLose()
@@ -568,9 +569,51 @@ public class GameManager : MonoBehaviour
 			return;
 		}
 
+		canFit = checkIfIsPosiblePutPieces ();
+
+		if(!canFit || remainingMoves == 0 && !gameOver)
+		{
+			print("no puede poner piezas");
+			if(remainingMoves == 0)
+			{
+				allowGameInput(false);
+			}
+
+			StartCoroutine(checkIfReallyLost());
+		}
+		updatePiecesLightAndUpdateLetterState ();
+	}
+
+	IEnumerator checkIfReallyLost()
+	{
+		yield return new WaitForEndOfFrame();
+
+		if(!gameOver && (remainingMoves <= 0 || !wordManager.checkIfAWordIsPossible(gridCharacters)))
+		{
+			allowGameInput (false);
+			Debug.Log ("Perdio de verdad");
+			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);
+
+			if(remainingMoves <=0)
+			{
+				activatePopUp ("noMovementsPopUp");
+			}
+			else
+			{
+				activatePopUp ("noOptionsPopUp");
+			}
+
+		}
+	}
+
+	protected bool checkIfIsPosiblePutPieces()
+	{
+		bool canFit;
+
 		if (!rotationActive) 
 		{
 			canFit = cellManager.checkIfOnePieceCanFit (pieceManager.getShowingPieces ());
+			print (canFit);
 		} 
 		else 
 		{
@@ -594,49 +637,38 @@ public class GameManager : MonoBehaviour
 			}
 			canFit = cellManager.checkIfOnePieceCanFit (tempList);
 		}
+			
+		return canFit;
+	}
 
-		if(!canFit || remainingMoves == 0 && !gameOver)
+	protected void updatePiecesLightAndUpdateLetterState()
+	{
+		updatePiecesLight (checkIfIsPosiblePutPieces ());
+		updateLettersState ();
+	}
+
+	protected void updatePiecesLight(bool canFit)
+	{
+		HighLightManager.GetInstance ().turnOffHighLights ();
+
+		if(!canFit)
 		{
-			if(remainingMoves == 0)
-			{
-				allowGameInput(false);
-			}
-
-			Debug.Log ("No puede poner piezas");
-
-			for(int i = gridCharacters.Count-1; i >= 0; i--)
-			{
-				if(!gridCharacters[i])
-				{
-					gridCharacters.RemoveAt(i);
-				}
-			}
-
-			StartCoroutine(checkIfReallyLost());
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.NO_SPACE_FOR_PIECES);
 		}
 	}
 
-	IEnumerator checkIfReallyLost()
+	/**
+	 *Checar el si puede hacer palabras
+	 **/
+	protected void updateLettersState()
 	{
-		yield return new WaitForEndOfFrame();
-
-		if(!gameOver && (remainingMoves <= 0 || !wordManager.checkIfAWordIsPossible(gridCharacters)))
+		if(gridCharacters.Count != 0 && wordManager.checkIfAWordIsPossible(gridCharacters))
 		{
-			allowGameInput (false);
-			Debug.Log ("Perdio de verdad");
-			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);
-
-			if(remainingMoves <=0)
-			{
-				activatePopUp ("noMovementsPopUp");
-
-			}
-			else
-			{
-				activatePopUp ("noOptionsPopUp");
-
-			}
-
+			wordManager.updateGridLettersState (gridCharacters, true);
+		}
+		else
+		{				
+			wordManager.updateGridLettersState (gridCharacters, false);
 		}
 	}
 
@@ -786,7 +818,7 @@ public class GameManager : MonoBehaviour
 					hudManager.getEarnedStars(),pointsCount);
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
-				PersistentData.GetInstance ().loose = false;
+				PersistentData.GetInstance ().fromLoose = false;
 
 				Invoke ("toLevels", 0.5f);
 				//Gano y ya se termino win bonification
@@ -888,7 +920,7 @@ public class GameManager : MonoBehaviour
 			//TODO: consumimos gemas
 
 		}
-		
+		updatePiecesLightAndUpdateLetterState ();
 
 		allowGameInput(true);
 	}
@@ -942,6 +974,7 @@ public class GameManager : MonoBehaviour
 		switch (action) {
 		case "startGame":
 			allowGameInput ();
+			updatePiecesLightAndUpdateLetterState ();
 			break;
 		case "endGame":
 			break;
@@ -952,7 +985,7 @@ public class GameManager : MonoBehaviour
 			activatePopUp ("SecondChance");
 			break;
 		case "loose":
-			PersistentData.GetInstance ().loose = false;
+			PersistentData.GetInstance ().fromLoose = true;
 			PersistentData.GetInstance ().fromGameToLevels = true;
 			SceneManager.LoadScene ("Levels");
 			break;
@@ -976,7 +1009,7 @@ public class GameManager : MonoBehaviour
 	public void quitGame()
 	{
 		PersistentData.GetInstance().startLevel -= 1;
-		PersistentData.GetInstance ().loose = false;
+		PersistentData.GetInstance ().fromLoose = true;
 		PersistentData.GetInstance ().fromGameToLevels = true;
 		SceneManager.LoadScene ("Levels");
 		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);

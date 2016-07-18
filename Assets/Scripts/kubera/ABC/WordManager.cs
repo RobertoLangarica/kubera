@@ -14,6 +14,11 @@ public class WordManager : MonoBehaviour
 		WORD,CHARACTER
 	}
 
+	public enum EWordPosibleState
+	{
+		NOT,YES
+	}
+
 	public enum EPoolType
 	{
 		OBSTACLE,NORMAL,TUTORIAL	
@@ -65,10 +70,20 @@ public class WordManager : MonoBehaviour
 
 	public List<GameObject> freeChildren = new List<GameObject>();
 	public List<GameObject> occupiedChildren = new List<GameObject>();
-	public GameObject goByDrag;
+	[HideInInspector]public GameObject goByDrag;
+
+	public GameObject noWordPosible;
+	public Text noWordPosibleText;
+
+	public Color wrong = new Color (1, 0, 0);
+	public Color normal = new Color (0, 0, 0);
+
+	protected EWordPosibleState currentWordPosibleState;
+
 	void Awake()
 	{
 		letters = new List<Letter>(maxLetters);
+		currentWordPosibleState = EWordPosibleState.NOT;
 
 		deleteBtnPosition = deleteButtonImage.transform.localPosition;
 
@@ -96,6 +111,8 @@ public class WordManager : MonoBehaviour
 
 		activateWordDeleteBtn(false);
 		activateWordCompleteBtn(false);
+
+		noWordPosible.transform.position = letterContainer.transform.position;
 	}
 
 	void Start()
@@ -880,5 +897,33 @@ public class WordManager : MonoBehaviour
 		saveAndValidateLetter(wildCard);
 		resetValidationToSiblingOrder ();
 		afterWordValidation ();
+	}
+
+	public void updateGridLettersState(List<Letter> gridLetter, bool canMakeWord)
+	{
+		if(canMakeWord)
+		{
+			if(currentWordPosibleState == EWordPosibleState.NOT)
+			{
+				currentWordPosibleState = EWordPosibleState.YES;
+				for(int i=0; i<gridLetter.Count; i++)
+				{
+					gridLetter [i].updateState (Letter.EState.NORMAL, normal);
+				}
+				noWordPosible.SetActive (false);
+			}
+		}
+		else
+		{
+			if(currentWordPosibleState == EWordPosibleState.YES)
+			{
+				currentWordPosibleState = EWordPosibleState.NOT;
+				for(int i=0; i<gridLetter.Count; i++)
+				{
+					gridLetter [i].updateState (Letter.EState.NORMAL, wrong);
+				}
+			}
+			noWordPosible.SetActive (true);
+		}
 	}
 }

@@ -35,6 +35,7 @@ public class RotatePowerUp : PowerupBase
 		powerUpGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
 		powerUpGO.transform.localScale = new Vector3 (1, 1, 1);
 		powerUpGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
+		inputPowerUp.rotatePower = true;
 		inputPowerUp.enabled = true;
 		inputPowerUp.setCurrentSelected(powerUpGO);
 		inputPowerUp.OnDrop += powerUpPositioned;
@@ -71,7 +72,6 @@ public class RotatePowerUp : PowerupBase
 			powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId ("RotatePowerUP_Scale").OnComplete (() => {
 
 				DestroyImmediate (powerUpGO);
-				HighLightManager.GetInstance ().turnOffHighLights ();
 				cancel ();
 			});
 		}
@@ -86,12 +86,11 @@ public class RotatePowerUp : PowerupBase
 
 				DestroyImmediate (powerUpGO);
 				powerUpActivateRotate (canUse);
-				HighLightManager.GetInstance ().turnOffHighLights ();
 			});
 
 		}
 		inputPowerUp.OnDrop -= powerUpPositioned;
-
+		HighLightManager.GetInstance ().turnOffHighLights ();
 	}
 
 	public void powerUpActivateRotate(bool canUse)
@@ -99,6 +98,11 @@ public class RotatePowerUp : PowerupBase
 		inputPowerUp.OnDrop -= powerUpPositioned;
 		if(canUse)
 		{
+			if(inputPowerUpRotate.gameObject.activeSelf)
+			{
+				cancel ();
+				return;
+			}
 			inputPowerUpRotate.gameObject.SetActive (true);
 			inputPowerUpRotate.enabled = true;
 			inputPowerUpRotate.startRotate ();
@@ -122,6 +126,13 @@ public class RotatePowerUp : PowerupBase
 	{
 		//print ("cancelPowerUp");
 		OnCancel ();
+		inputPowerUp.enabled = false;
+
+
+		if(inputPowerUpRotate.gameObject.activeSelf)
+		{
+			return;
+		}
 		inputPowerUpRotate.enabled = false;
 		this.gameObject.SetActive( false);
 	}

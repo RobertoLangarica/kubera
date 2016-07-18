@@ -8,7 +8,7 @@ public class InputWords : MonoBehaviour
 {
 	protected int lastTimeDraggedFrame;
 	public GameObject letter;
-	public GameObject target;
+	public GameObject gridLetter;
 
 	public RectTransform wordsContainer;
 
@@ -78,20 +78,20 @@ public class InputWords : MonoBehaviour
 		{
 		case (ContinuousGesturePhase.Started):
 			{	
-				if(target != null)
+				if(gridLetter != null)
 				{
-					onTap(target,true);
+					onTap(gridLetter,true);
 				}
 				if(letter == null)
 				{
 					return;
 				}
 
-				if (!gesture.Raycast.Hit2D && target) 
+				if (!gesture.Raycast.Hit2D && gridLetter) 
 				{
 					if(!allowAnimation)
 					{		
-						animationFingerUp (target);
+						animationFingerUp (gridLetter);
 					}
 				}
 
@@ -103,8 +103,8 @@ public class InputWords : MonoBehaviour
 
 				drag = true;
 
-				onChangePutLetterOverContainer (letter, !target);
-				isOnLettersContainer = !target;
+				onChangePutLetterOverContainer (letter, !gridLetter);
+				isOnLettersContainer = !gridLetter;
 
 				if(objectSize.x == 0 && letter.GetComponent<BoxCollider2D>())
 				{				
@@ -228,16 +228,16 @@ public class InputWords : MonoBehaviour
 
 			if(!isOnLettersContainer)
 			{
-				if(target)
+				if(gridLetter)
 				{					
-					onTap(target);
+					onTap(gridLetter);
 				}
 				else
 				{
 					onTapToDelete (letter);
 				}
 			}
-			target = null;
+			gridLetter = null;
 			letter = null;
 		}
 		canDeleteLetter = true;
@@ -279,9 +279,9 @@ public class InputWords : MonoBehaviour
 	{
 		if (allowInput && gesture.Raycast.Hit2D && allowPushDownAnimation) 
 		{
-			target = gesture.Raycast.Hit2D.transform.gameObject;
+			gridLetter = gesture.Raycast.Hit2D.transform.gameObject;
 
-			target.transform.localScale = pushedScale;
+			gridLetter.transform.localScale = pushedScale;
 
 			allowPushDownAnimation = true;
 			allowAnimation = false;
@@ -290,11 +290,11 @@ public class InputWords : MonoBehaviour
 
 	void OnLetterGridFingerUp(FingerUpEvent gesture)
 	{
-		if (allowInput && target != null) 
+		if (allowInput && gridLetter != null) 
 		{
 			if(!allowAnimation)
 			{		
-				animationFingerUp (target);
+				animationFingerUp (gridLetter);
 			}
 		}
 	}
@@ -304,7 +304,7 @@ public class InputWords : MonoBehaviour
 		allowAnimation = true;
 
 		allowPushDownAnimation = true;
-		target.transform.localScale = normalScale;
+		gridLetter.transform.localScale = normalScale;
 
 		//DOTween.Kill ("InputW_Grid_Scale_Selection");
 		//go.transform.DOScale (normalScale, animationTime).SetId ("InputW_Grid_Scale_Selection");
@@ -312,12 +312,12 @@ public class InputWords : MonoBehaviour
 
 	void OnLetterGridTap(TapGesture gesture)
 	{
-		if(allowInput && target && allowAnimation)
+		if(allowInput && gridLetter && allowAnimation)
 		{		
-			if (target.layer == LayerMask.NameToLayer ("LetterOnGrid")) 
+			if (gridLetter.layer == LayerMask.NameToLayer ("LetterOnGrid")) 
 			{
-				onTap(target);
-				target = null;
+				onTap(gridLetter);
+				gridLetter = null;
 			}	
 		}
 	}
