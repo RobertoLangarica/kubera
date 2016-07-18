@@ -240,6 +240,7 @@ public class WordManager : MonoBehaviour
 			go.transform.SetParent(preLetterContainerTransform,false);
 			goByDrag = getFreeChild ();
 			goByDrag.transform.SetParent (letterContainerTransform);
+			goByDrag.transform.SetSiblingIndex (siblingIndexAfterDrag);
 			fillLettersPositions ();
 			activateGridLayout (true);
 		}
@@ -376,8 +377,8 @@ public class WordManager : MonoBehaviour
 			onLettersChange();
 		}
 		else if(wildCard)
-		{
-			letter.transform.SetParent(letterContainerTransform,false);
+		{			
+			addLetterToContainer(letter);
 		}
 		else 
 		{

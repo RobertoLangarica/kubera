@@ -35,6 +35,7 @@ public class WildCardPowerUp : PowerupBase
 		powerUpGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
 		powerUpGO.name = "WildPowerUp";
 		powerUpGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
+		powerUpGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
 
 		inputPowerUp.enabled = true;
 		inputPowerUp.setCurrentSelected(powerUpGO);
