@@ -5,16 +5,11 @@ using System.Collections.Generic;
 
 public class TutorialLvl1 : TutorialBase
 {
-	public GameObject secondObject;
-
 	protected List<Cell> cells;
-	protected Vector3 offset;
 
 	protected override void Start()
 	{
 		base.Start ();
-
-		offset = new Vector3(0,handObject.gameObject.GetComponent<Image> ().sprite.bounds.size.y,0);
 	}
 
 	public override bool canMoveToNextPhase ()
@@ -22,7 +17,6 @@ public class TutorialLvl1 : TutorialBase
 		switch (phase) 
 		{
 		case(0):
-			hideHand ();
 			phasesPanels [0].SetActive (true);
 			phaseEvent = ENextPhaseEvent.CREATE_WORD;
 
@@ -38,11 +32,8 @@ public class TutorialLvl1 : TutorialBase
 				new string[3]{ "'", "{{b}}", "{{/b}}" }, new string[3]{ "\"", "<b>", "</b>" });
 
 			phase = 1;
-
-			startGamePopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
-			hideHand ();
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent = ENextPhaseEvent.SUBMIT_WORD;
@@ -59,12 +50,8 @@ public class TutorialLvl1 : TutorialBase
 			instructions [2].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE2B);
 
 			phase = 2;
-			finishMovements ();
-			StopCoroutine ("playPressAndContinueWithMethod");
-			phase2Animation ();
 			return true;
 		case(2):
-			hideHand ();
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
 			phaseEvent = ENextPhaseEvent.CREATE_A_LINE;
@@ -92,12 +79,8 @@ public class TutorialLvl1 : TutorialBase
 			instructions [3].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE3);
 
 			phase = 3;
-			handObject = secondObject;
-			offset *= 0.5f;
-			phase3Animation ();
 			return true;
 		case(3):
-			hideHand ();
 			phasesPanels [2].SetActive (false);
 			phasesPanels [3].SetActive (true);
 
@@ -123,9 +106,6 @@ public class TutorialLvl1 : TutorialBase
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE4),
 				new string[1]{ "{{score}}"}, new string[1]{hudManager.goalText.text.Split('/')[1]});
 			phase = 4;
-
-			finishMovements ();
-			hideHand ();
 			return true;
 		}
 
@@ -150,87 +130,4 @@ public class TutorialLvl1 : TutorialBase
 		
 		return base.phaseObjectiveAchived ();
 	}
-
-	private void startTutorialAnimation(PopUpBase thisPopUp, string action)
-	{
-		Invoke ("phase0Animation",0.5f);
-		showHandAt (handPositions [0].transform.position,Vector3.zero,false);
-	}
-
-	private void phase0Animation()
-	{
-		if (phase == 1) 
-		{
-			showHandAt (handPositions [0].transform.position,Vector3.zero,false);
-			playReleaseAnimation ();
-
-			StartCoroutine (playPressAndContinueWithMethod ("phase1Animation", 0.5f));
-		}
-	}
-
-	private void phase1Animation()
-	{
-		if (phase == 1) 
-		{
-			playPressAnimation ();
-			showObjectAtHand (offset);
-			moveHandFromGameObjects (handPositions[0],handPositions[1],offset);
-			OnMovementComplete += hideHand;
-
-			Invoke ("phase0Animation", 2);
-		}
-	}
-
-	private void phase2Animation()
-	{
-		if (phase == 2) 
-		{
-			hideObject ();
-			playTapAnimation ();
-			showHandAt (handPositions [2].transform.position, Vector3.zero, false);
-			OnMovementComplete -= hideHand;
-
-			Invoke ("phase2Animation", 1);
-		}
-	}
-
-	private void phase3Animation()
-	{
-		if (phase == 3) 
-		{
-			showHandAt (handPositions [3].transform.position,Vector3.zero,false);
-			playReleaseAnimation ();
-
-			StartCoroutine (playPressAndContinueWithMethod ("phase3_2Animation", 0.5f));
-		}
-		else 
-		{
-			hideHand ();
-		}
-	}
-
-	private void phase3_2Animation()
-	{
-		if (phase == 3) 
-		{
-			playPressAnimation ();
-			showObjectAtHand (offset);
-			moveHandFromGameObjects (handPositions [3], handPositions [4], offset);
-			OnMovementComplete += hideHand;
-
-			Invoke ("phase3Animation", 2);
-		} 
-		else 
-		{
-			hideHand ();
-		}
-	}
 }
-
-
-/*
-Tutorial 1
--Bajar la mano en la M
-Subir la M
-*-Pner el puntaje del nivel
-*/

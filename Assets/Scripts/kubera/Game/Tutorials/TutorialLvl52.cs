@@ -4,13 +4,9 @@ using System.Collections;
 
 public class TutorialLvl52 : TutorialBase
 {
-	protected Vector3 offset;
-
 	protected override void Start()
 	{
 		base.Start ();
-
-		offset = new Vector3(0,handObject.gameObject.GetComponent<Image> ().sprite.bounds.extents.y,0);
 	}
 
 	public override bool canMoveToNextPhase ()
@@ -18,7 +14,6 @@ public class TutorialLvl52 : TutorialBase
 		switch (phase) 
 		{
 		case(0):
-			hideHand ();
 			phasesPanels [0].SetActive (true);
 			phaseEvent = ENextPhaseEvent.DESTROY_USED;
 
@@ -40,10 +35,8 @@ public class TutorialLvl52 : TutorialBase
 			instructions [1].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV52_PHASE1B);
 
 			phase = 1;
-			startGamePopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
-			hideHand ();
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent = ENextPhaseEvent.TAP;
@@ -65,12 +58,8 @@ public class TutorialLvl52 : TutorialBase
 
 			instructions [3].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV52_PHASE2B);			
 			phase = 2;
-			finishMovements ();
-			StopCoroutine ("playPressAndContinueWithMethod");
-			hideHand ();
 			return true;
 		case(2):
-			hideHand ();
 			phasesPanels [1].SetActive (false);
 
 			allowGridTap = true;
@@ -102,35 +91,5 @@ public class TutorialLvl52 : TutorialBase
 		}
 
 		return base.phaseObjectiveAchived ();
-	}	
-
-	private void startTutorialAnimation(PopUpBase thisPopUp, string action)
-	{
-		Invoke ("phase0Animation",0.5f);
-		showHandAt (handPositions [0].transform.position,Vector3.zero,false);
-	}
-
-	private void phase0Animation()
-	{
-		if (phase == 1) 
-		{
-			showHandAt (handPositions [0].transform.position,Vector3.zero,false);
-			playReleaseAnimation ();
-
-			StartCoroutine (playPressAndContinueWithMethod ("phase1Animation", 0.5f));
-		}
-	}
-
-	private void phase1Animation()
-	{
-		if (phase == 1) 
-		{
-			playPressAnimation ();
-			showObjectAtHand (offset);
-			moveHandFromGameObjects (handPositions[0],handPositions[1],offset,1.5f);
-			OnMovementComplete += hideHand;
-
-			Invoke ("phase0Animation", 2);
-		}
 	}
 }

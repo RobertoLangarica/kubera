@@ -24,6 +24,14 @@ public class CellsManager : MonoBehaviour
 	//Todas las celdas del grid
 	protected List<Cell> cells;
 
+	void Update()
+	{
+		if (Input.GetKeyDown (KeyCode.K)) 
+		{
+			getAvailableVerticalAndHorizontalLines ();
+		}
+	}
+
 	/*
 	 * Se crea la grid y se asigna cada celda como hijo de este gameObject.
 	 * Las celdas tienen un espacio de 3% de su tamaño de espacio en tre ellas
@@ -302,6 +310,148 @@ public class CellsManager : MonoBehaviour
 		result.AddRange(getCompletedHorizontalLines());
 		result.AddRange(getCompletedVerticalLines());
 
+		return result;
+	}
+
+	public List<List<Cell>> getAvailableHorizontalLines()
+	{
+		List<List<Cell>> result = new List<List<Cell>>(rows);
+		Cell cell;
+		bool keepAdding = false;
+		bool nothingFound = true;	
+		bool addRow = false;
+
+		for(int y = 0; y < rows; y++)
+		{
+			result.Add(new List<Cell>(columns));
+			keepAdding = true;
+			nothingFound = true;
+			addRow = true;
+
+			for(int x = 0; x < columns; x++)
+			{
+				cell = getCellAt(x,y);
+				if(!cell.occupied && cell.available)
+				{
+					Debug.Log ("por evaluar celda");
+					Debug.Log (cell.content);
+					if(cell.content == null && keepAdding)
+					{
+						Debug.Log ("añado linea celda");
+						result [result.Count - 1].Add (cell);
+						addRow = false;
+						nothingFound = false;
+					}
+					if(cell.contentType != Piece.EType.NONE)
+					{
+						//cell.name = "null";
+						if(!addRow)
+						{
+							Debug.Log ("añado linea H");
+							result.Add(new List<Cell>(columns));
+						}
+						keepAdding = true;
+						addRow = true;
+						nothingFound = true;
+					}
+				}
+				else
+				{
+					if(keepAdding)
+					{
+						if(cell.available)
+						{
+							keepAdding = false;
+							result.RemoveAt(result.Count-1);
+
+							nothingFound = false;
+							addRow = false;
+						}
+					}
+				}
+			}
+			if(nothingFound)
+			{
+				result.RemoveAt(result.Count-1);
+
+			}
+		}
+
+		return result;
+	}
+
+	public List<List<Cell>> getAvailableVerticalLines()
+	{
+		List<List<Cell>> result = new List<List<Cell>>(columns);
+		Cell cell;
+		bool keepAdding = false;
+		bool nothingFound = true;	
+		bool addRow = false;
+
+		for(int x = 0; x < columns; x++)
+		{
+			result.Add(new List<Cell>(rows));
+
+			keepAdding = true;
+			nothingFound = true;
+			addRow = true;
+
+			for(int y = 0; y < rows; y++)
+			{
+				cell = getCellAt(x,y);
+				if(!cell.occupied && cell.available)
+				{
+					if(cell.content != null && keepAdding)
+					{
+						result [result.Count - 1].Add (cell);
+						addRow = false;
+						nothingFound = false;
+					}
+					if(cell.contentType != Piece.EType.NONE)
+					{
+						//cell.name = "null";
+						if(!addRow)
+						{
+							result.Add(new List<Cell>(columns));
+						}
+						keepAdding = true;
+						addRow = true;
+						nothingFound = true;
+					}
+				}
+				else
+				{
+					if(keepAdding)
+					{
+						if(cell.available)
+						{
+							keepAdding = false;
+							result.RemoveAt(result.Count-1);
+
+							nothingFound = false;
+							addRow = false;
+						}
+					}
+				}
+			}
+			if(nothingFound)
+			{
+				result.RemoveAt(result.Count-1);
+			}
+		}
+
+		return result;
+	}
+
+	public List<List<Cell>> getAvailableVerticalAndHorizontalLines()
+	{
+		List<List<Cell>> result = new List<List<Cell>>();
+
+		result.AddRange(getAvailableHorizontalLines());
+		Debug.Log (result.Count + "H---------------------");
+		result.AddRange(getAvailableVerticalLines());
+
+		Debug.Log (result.Count + "---------------------");
 		return result;
 	}
 

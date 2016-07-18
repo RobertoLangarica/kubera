@@ -30,6 +30,7 @@ public class HighLightManager : Manager<HighLightManager>
 	protected List<GameObject> activeHighLight = new List<GameObject>();
 	protected CellsManager _cellManager;
 	protected HUDManager _hudManager;
+	protected WordManager _wordManager;
 
 	protected CellsManager cellManager
 	{
@@ -57,6 +58,19 @@ public class HighLightManager : Manager<HighLightManager>
 		}
 	}
 
+	protected WordManager wordManager
+	{
+		get
+		{
+			if (_wordManager == null) 
+			{
+				_wordManager = FindObjectOfType<WordManager> ();
+			}
+
+			return _wordManager;
+		}
+	}
+
 	public void setHighLightOfType(EHighLightType type,Object obj = null)
 	{
 		Cell[] tempCell = null;
@@ -69,8 +83,9 @@ public class HighLightManager : Manager<HighLightManager>
 
 			for (int i = 0; i < tempCell.Length; i++) 
 			{
-				turnOnHighLights (tempCell[i].transform);
+				turnOnHighLights (tempCell [i].transform);
 			}
+			setHighLightStatus (EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.BOMB_SPECIFIC_COLOR):
 			tempCell = cellManager.getCellNeighborsOfSameColor (obj as Cell);
@@ -79,6 +94,7 @@ public class HighLightManager : Manager<HighLightManager>
 			{
 				turnOnHighLights (tempCell[i].transform);
 			}
+			setHighLightStatus (EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.DESTROY_SPECIFIC_COLOR):
 			tempCell = cellManager.getCellsOfSameColor (obj as Cell);
@@ -87,9 +103,24 @@ public class HighLightManager : Manager<HighLightManager>
 			{
 				turnOnHighLights (tempCell[i].transform);
 			}
+			setHighLightStatus (EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.ROTATE_POWERUP):
-			turnOnHighLights (hudManager.showingPiecesContainer);
+			turnOnHighLights (hudManager.rotationImagePositions[0].parent.parent);
+			setHighLightStatus (EHighLightStatus.NORMAL);
+			break;
+		case(EHighLightType.SQUARE_POWERUP):
+			tempCell = cellManager.getAllEmptyCells ();
+
+			for (int i = 0; i < tempCell.Length; i++) 
+			{
+				turnOnHighLights (tempCell[i].transform);
+			}
+			setHighLightStatus (EHighLightStatus.NORMAL);
+			break;
+		case(EHighLightType.WILDCARD_POWERUP):
+			turnOnHighLights (wordManager.letterContainer.transform.parent);
+			setHighLightStatus (EHighLightStatus.NORMAL);
 			break;
 		}
 	}

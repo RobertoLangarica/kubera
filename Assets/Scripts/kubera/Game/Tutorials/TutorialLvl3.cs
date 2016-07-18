@@ -15,7 +15,6 @@ public class TutorialLvl3 : TutorialBase
 		switch (phase) 
 		{
 		case(0):
-			hideHand ();
 			phasesPanels [0].SetActive (true);
 			phaseEvent = ENextPhaseEvent.GRID_SPECIFIC_LETTER_TAPPED;
 
@@ -32,10 +31,8 @@ public class TutorialLvl3 : TutorialBase
 
 			phase = 1;
 			phaseObj = "Z";
-			startGamePopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
-			hideHand ();
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent = ENextPhaseEvent.SUBMIT_WORD;
@@ -54,10 +51,8 @@ public class TutorialLvl3 : TutorialBase
 				new string[3]{ "'", "{{b}}", "{{/b}}" }, new string[3]{ "\"", "<b>", "</b>" });
 
 			phase = 2;
-			phase2Animation ();
 			return true;
 		case(2):
-			hideHand ();
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
 
@@ -72,7 +67,6 @@ public class TutorialLvl3 : TutorialBase
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE3),
 				new string[1]{ "{{score}}"}, new string[1]{hudManager.goalText.text.Split('/')[1]});
 			phase = 3;
-			hideHand ();
 			return true;
 		}
 
@@ -94,44 +88,5 @@ public class TutorialLvl3 : TutorialBase
 		}
 
 		return base.phaseObjectiveAchived ();
-	}
-
-	private void startTutorialAnimation(PopUpBase thisPopUp, string action)
-	{
-		Letter[] temp = gameManager.gridLettersContainer.GetComponentsInChildren<Letter> ();
-
-		for (int i = 0; i < temp.Length; i++) 
-		{
-			if (temp [i].abcChar.character == phaseObj) 
-			{
-				handPositions [0].transform.position = temp [i].transform.position + new Vector3 (
-					0,-temp [i].gameObject.GetComponent<Image> ().sprite.bounds.extents.y,0);
-				break;
-			}
-		}
-
-		phase1Animation ();
-	}
-
-	private void phase1Animation()
-	{
-		if (phase == 1) 
-		{
-			playTapAnimation ();
-			showHandAt (handPositions [0].transform.position, Vector3.zero, false);
-
-			Invoke ("phase1Animation", 1);
-		}
-	}
-
-	private void phase2Animation()
-	{
-		if (phase == 2) 
-		{
-			playTapAnimation ();
-			showHandAt (handPositions [1].transform.position, Vector3.zero, false);
-
-			Invoke ("phase2Animation", 1);
-		}
 	}
 }
