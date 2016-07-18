@@ -143,7 +143,9 @@ public class GameManager : MonoBehaviour
 		}
 		if (Input.GetKeyUp (KeyCode.Z)) 
 		{
-			onUsersAction (5, 0);
+			//onUsersAction (5, 0);
+			//activatePopUp ("noOptionsPopUp");
+			onUsersAction (0);
 		}
 
 		if (Input.GetKeyUp (KeyCode.Q)) 
@@ -683,7 +685,7 @@ public class GameManager : MonoBehaviour
 
 	protected void expendMovement()
 	{
-		if(cellManager.getAllEmptyCells().Length > 0 &&remainingMoves > 0 )
+		if(cellManager.getAllEmptyCells().Length > 0 && remainingMoves > 0 )
 		{
 			add1x1Block ();
 		}
@@ -744,6 +746,10 @@ public class GameManager : MonoBehaviour
 
 			Invoke ("addWinLetterAfterActions", 0.2f);
 		}
+		else
+		{
+			destroyAndCountAllLetters ();
+		}
 	}
 
 	protected void destroyAndCountAllLetters()
@@ -764,7 +770,7 @@ public class GameManager : MonoBehaviour
 			cellToLetter [random].destroyCell ();
 			cellToLetter.RemoveAt (random);
 
-			Invoke ("destroyLetter", 0.4f);
+			Invoke ("destroyLetter", 0.2f);
 		} 
 		else 
 		{
@@ -780,6 +786,7 @@ public class GameManager : MonoBehaviour
 					hudManager.getEarnedStars(),pointsCount);
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
+				PersistentData.GetInstance ().loose = false;
 
 				Invoke ("toLevels", 0.5f);
 				//Gano y ya se termino win bonification
@@ -941,11 +948,13 @@ public class GameManager : MonoBehaviour
 		case "winPopUpEnd":
 			Invoke ("winBonification", piecePositionedDelay * 2);
 			break;
+		case "looseNoMovements":
+			activatePopUp ("SecondChance");
+			break;
 		case "loose":
-			//HACK campus
-			SceneManager.LoadScene ("Levels");
+			PersistentData.GetInstance ().loose = false;
 			PersistentData.GetInstance ().fromGameToLevels = true;
-			//activatePopUp ("SecondChance");
+			SceneManager.LoadScene ("Levels");
 			break;
 		default:		
 				Invoke ("allowInputFromInvoke", 0.5f);
@@ -967,8 +976,9 @@ public class GameManager : MonoBehaviour
 	public void quitGame()
 	{
 		PersistentData.GetInstance().startLevel -= 1;
-		SceneManager.LoadScene ("Levels");
+		PersistentData.GetInstance ().loose = false;
 		PersistentData.GetInstance ().fromGameToLevels = true;
+		SceneManager.LoadScene ("Levels");
 		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		activatePopUp ("exitGame");*/
 	}

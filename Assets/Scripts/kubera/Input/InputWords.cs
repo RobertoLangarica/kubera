@@ -95,11 +95,9 @@ public class InputWords : MonoBehaviour
 					}
 				}
 
-				offset = letter.transform.position.y;
-
 				canDeleteLetter = false;
 				//letter = gesture.Raycast.Hit2D.transform.gameObject;
-				offset += objectSize.y;
+				offset += objectSize.y*0.5f;
 
 				onDragStart(letter);
 
@@ -107,6 +105,13 @@ public class InputWords : MonoBehaviour
 
 				onChangePutLetterOverContainer (letter, !target);
 				isOnLettersContainer = !target;
+
+				if(objectSize.x == 0 && letter.GetComponent<BoxCollider2D>())
+				{				
+					letter.GetComponent<BoxCollider2D> ().enabled = true;
+
+					objectSize = letter.GetComponent<BoxCollider2D> ().bounds.size;
+				}
 			}	
 			break;
 
@@ -114,9 +119,11 @@ public class InputWords : MonoBehaviour
 			{
 				if (!letter) 
 				{return;}
-					
 				Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 
+
+
+				tempV3.y += objectSize.y*0.5f;
 				tempV3.z = letter.transform.position.z;
 
 				//limite de zona de letras
@@ -183,7 +190,6 @@ public class InputWords : MonoBehaviour
 			if(objectSize.x == 0 && gesture.Raycast.GameObject.GetComponent<BoxCollider2D>())
 			{				
 				objectSize = gesture.Raycast.GameObject.GetComponent<BoxCollider2D> ().bounds.size;
-				print (objectSize);
 			}
 		}
 	}
@@ -220,7 +226,6 @@ public class InputWords : MonoBehaviour
 			letter.transform.position = new Vector3(letter.transform.position.x,firstPosition.y,0);
 			DOTween.Kill ("InputW_Dragging");
 
-			print (isOnLettersContainer);
 			if(!isOnLettersContainer)
 			{
 				if(target)

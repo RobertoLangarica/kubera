@@ -53,6 +53,7 @@ public class DestroyPowerUp : PowerupBase
 		bombInput.OnCellSelected += onOverCellChanged;
 		this.canUse = canUse;
 
+		destroyGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
 		updateDragableObjectImage (destroyGO);
 
 		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.DESTROY_POWERUP);

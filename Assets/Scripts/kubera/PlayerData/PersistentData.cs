@@ -41,7 +41,10 @@ public class PersistentData : Manager<PersistentData>
 	[HideInInspector]
 	public int startLevel = 1;
 
+	[HideInInspector]
 	public string lastLevelPlayedName = "";
+	[HideInInspector]
+	public bool loose;
 
 	protected override void Awake() 
 	{

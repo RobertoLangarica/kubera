@@ -5,18 +5,34 @@ using System.Collections;
 
 public class noOptionsPopUp : PopUpBase {
 
-	public Text text;
+	public GameObject initial;
+	public GameObject toChose;
+
+	public Text FirstText;
+	public Text toChoseText;
+	public Text buttonContinue;
+	public Text buttonExit;
+
 	public RectTransform winContent;
 	public float speed =1;
+	public RectTransform LetterContainer;
+	public Vector2 startPosition;
 
 	void Start()
 	{
-		text.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.NO_PIECES_POPUP_ID);
+		FirstText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.NO_PIECES_POPUP_ID);
+		startPosition = new Vector2(winContent.localPosition.x, Screen.height * 2);
+
+		winContent.localPosition = startPosition;
 	}
 
 	public override void activate()
 	{
 		popUp.SetActive (true);
+		initial.SetActive (true);
+		toChose.SetActive(false);
+		winContent.localPosition = startPosition;
+
 
 		Vector3 v3 = new Vector3 ();
 		v3 = winContent.anchoredPosition;
@@ -25,14 +41,27 @@ public class noOptionsPopUp : PopUpBase {
 			{
 				winContent.DOAnchorPos (new Vector3(winContent.anchoredPosition.x,0), speed).OnComplete(()=>
 					{
-						winContent.DOAnchorPos (-v3, speed).SetEase(Ease.InBack).OnComplete(()=>
+						winContent.DOLocalMoveY(LetterContainer.transform.localPosition.y,speed).SetEase(Ease.InBack).OnComplete(()=>
 							{
-								//TODO: salirnos del nivel
-								print("perdio");
-								popUpCompleted("loose");
+								initial.SetActive(false);
+								toChose.SetActive(true);
 							});
 					});
 			});
+	}
+
+	public void continuePlaying()
+	{
+		winContent.DOLocalMoveY(startPosition.y,speed).SetEase(Ease.InBack).OnComplete(()=>
+			{
+				popUpCompleted();
+			});
+		
+	}
+
+	public void exitPlaying()
+	{
+		popUpCompleted("loose");
 	}
 
 	protected void popUpCompleted(string action ="")
