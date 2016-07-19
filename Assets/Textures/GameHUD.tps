@@ -11,7 +11,7 @@
         <array>
             <struct type="AutoSDSettings">
                 <key>scale</key>
-                <double>0.5</double>
+                <double>0.25</double>
                 <key>extension</key>
                 <string></string>
                 <key>spriteFilter</key>
@@ -36,7 +36,7 @@
         <key>dataFormat</key>
         <string>unity-texture2d</string>
         <key>textureFileName</key>
-        <filename>HudTextures_0.png</filename>
+        <filename>GameTextures_0.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -141,7 +141,7 @@
             <key>datafile</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>HudTextures_0.tpsheet</filename>
+                <filename>GameTextures_0.tpsheet</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -149,7 +149,7 @@
         <key>forceIdenticalLayout</key>
         <false/>
         <key>outputFormat</key>
-        <enum type="SettingsBase::OutputFormat">RGBA4444</enum>
+        <enum type="SettingsBase::OutputFormat">RGBA8888</enum>
         <key>alphaHandling</key>
         <enum type="SettingsBase::AlphaHandling">ClearTransparentPixels</enum>
         <key>contentProtection</key>
@@ -188,146 +188,48 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0001.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0002.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0003.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0004.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0005.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0006.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0007.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0008.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0009.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0010.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0011.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0012.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0013.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0014.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0015.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0016.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0017.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0018.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0019.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0020.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0021.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0022.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0023.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0024.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0025.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0026.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0001.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0002.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0003.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0004.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0005.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0006.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0007.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0008.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0009.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0010.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/Copia de game-HUDMusicOff.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/Copia de game-HUDMusicOn.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/Copia de game-HUDQuit.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/Copia de game-HUDSoundOff.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/Copia de game-HUDSoundOn.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/Copia de game-HUDsettings.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/Copia de game-wordRight.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/Copia de game-wordWrong.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/Copia de gem.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/Copia de map-HUDplus.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/Copia de star.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/Game-starsBar.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/Game-starsBarBackground.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/Game-starsBarContour.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/Game-starsBarLine.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-HUDBackgroundUp.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-HUDMove.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-HUDSquareLeft.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-HUDbombDrag.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-HUDcubeDrag (2).png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-HUDrotateDrag.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-HUDtunderDrag.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-HUDx3Drag.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-cubeBlack-selected.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-cubeBlackDot.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-cubeDot.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-cubeNoDot.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-powers3x.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-powersBomb.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-powersCuadro.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-powersRotate.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-powersTunder.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-rotateSign.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-wordsShadow.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/pop-comodin.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/popups/Popuppqueño.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/popups/Popuppqueño2.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/popups/bombagrande.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/popups/btn.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/popups/flechasgrandes.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/popups/leaderboard.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/popups/oferta.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/popups/popupfondo.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/popups/score.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_BaseTiles.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_DobleArrow.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_EmptyCircle.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_EmptyStar.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_Enter.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_Erase.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_FullStar.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_Gems.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_HUDbase.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_PWRBlock.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_PWRBomb.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_PWRLetter.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_PWRRotate.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_PWRThunder.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_PWRTip.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_Stars1.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_Stars2.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_bar1.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_bar2.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_barlight.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_fullCircle.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_lvl.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_settings.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/letras/K-InGame_BlackTile.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/letras/K-InGame_BlueTile.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/letras/K-InGame_SpecialBlackTile.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/letras/K-InGame_SpecialTile.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/letras/K-InGame_WhiteTile.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/tetris/K-InGame_Tetrisblue.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/tetris/K-InGame_Tetrisgreen.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/tetris/K-InGame_Tetrisorange.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/tetris/K-InGame_Tetrispink.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/tetris/K-InGame_Tetrispurple.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/tetris/K-InGame_Tetrisyellow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
             </struct>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-BoardTile-Line.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/game-BoardTile-noLine.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-            </struct>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/mano1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.345118,0.303571</point_f>
-            </struct>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game/mano2.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.323232,0.272619</point_f>
-            </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0012.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0013.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0014.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0015.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0016.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0017.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0018.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0019.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0020.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0021.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0022.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0023.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0024.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0025.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0026.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0001.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0002.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0003.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0004.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0005.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0006.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0007.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0008.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0009.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0010.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_02_Voltear_assets/Kub_02_Voltear_assets0011.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0001.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0002.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0003.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0004.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0005.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0006.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0007.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0008.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0009.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/Anteriores/Animaciones/Kub_06_bomba_assets/Kub_06_Bomba_assets0010.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Moneylicious/Kubera/Propuestas de arte/UI/Game</filename>
+            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

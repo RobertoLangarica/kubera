@@ -78,7 +78,7 @@ public class Piece : MonoBehaviour
 
 	protected void updateColorBasedOnType()
 	{
-		if(currentType == EType.LETTER_OBSTACLE)
+		if(currentType == EType.LETTER_OBSTACLE || squares.Length != 1)
 		{
 			return;
 		}
@@ -89,6 +89,7 @@ public class Piece : MonoBehaviour
 		{
 			piece.color = color;
 		}
+
 		/*foreach(GameObject piece in squares)
 		{
 			piece.GetComponent<SpriteRenderer>().color = color;

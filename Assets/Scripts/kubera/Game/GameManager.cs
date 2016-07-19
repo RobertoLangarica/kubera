@@ -143,9 +143,9 @@ public class GameManager : MonoBehaviour
 		}
 		if (Input.GetKeyUp (KeyCode.Z)) 
 		{
-			//onUsersAction (5, 0);
+			onUsersAction (5, 0);
 			//activatePopUp ("noOptionsPopUp");
-			onUsersAction (0);
+			//onUsersAction (0);
 		}
 
 		if (Input.GetKeyUp (KeyCode.Q)) 
