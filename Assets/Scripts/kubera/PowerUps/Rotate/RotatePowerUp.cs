@@ -35,7 +35,6 @@ public class RotatePowerUp : PowerupBase
 		powerUpGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
 		powerUpGO.transform.localScale = new Vector3 (1, 1, 1);
 		powerUpGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
-		inputPowerUp.rotatePower = true;
 		inputPowerUp.enabled = true;
 		inputPowerUp.setCurrentSelected(powerUpGO);
 		inputPowerUp.OnDrop += powerUpPositioned;

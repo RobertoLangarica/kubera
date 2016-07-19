@@ -337,7 +337,7 @@ public class CellsManager : MonoBehaviour
 					Debug.Log (cell.content);
 					if(cell.content == null && keepAdding)
 					{
-						Debug.Log ("añado linea celda");
+						Debug.Log ("añado celda");
 						result [result.Count - 1].Add (cell);
 						addRow = false;
 						nothingFound = false;
@@ -359,7 +359,7 @@ public class CellsManager : MonoBehaviour
 				{
 					if(keepAdding)
 					{
-						if(cell.available)
+						if(cell.contentType == Piece.EType.LETTER || cell.contentType == Piece.EType.LETTER_OBSTACLE || cell.contentType == Piece.EType.PIECE)
 						{
 							keepAdding = false;
 							result.RemoveAt(result.Count-1);
@@ -401,7 +401,7 @@ public class CellsManager : MonoBehaviour
 				cell = getCellAt(x,y);
 				if(!cell.occupied && cell.available)
 				{
-					if(cell.content != null && keepAdding)
+					if(cell.content == null && keepAdding)
 					{
 						result [result.Count - 1].Add (cell);
 						addRow = false;
@@ -423,7 +423,7 @@ public class CellsManager : MonoBehaviour
 				{
 					if(keepAdding)
 					{
-						if(cell.available)
+						if(cell.contentType == Piece.EType.LETTER || cell.contentType == Piece.EType.LETTER_OBSTACLE || cell.contentType == Piece.EType.PIECE)
 						{
 							keepAdding = false;
 							result.RemoveAt(result.Count-1);

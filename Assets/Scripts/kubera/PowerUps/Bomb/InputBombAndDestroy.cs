@@ -20,7 +20,6 @@ public class InputBombAndDestroy : MonoBehaviour
 	protected Piece.EColor selectedCellColor;
 
 	public float pieceSpeed = 0.3f;
-	public bool rotatePower;
 
 	void Start()
 	{
@@ -65,39 +64,28 @@ public class InputBombAndDestroy : MonoBehaviour
 					posOverFinger += offsetPositionOverFinger;
 					moveTo(currentSelected,posOverFinger,pieceSpeed);
 
-					Cell cellSelected = cellsManager.getCellUnderPoint(currentSelected.transform.position);
-					if(rotatePower)
+					if (OnCellSelected != null) 
 					{
-						break;
-					}
-					if (cellSelected != null) 
-					{
-						if (cellSelected.contentColor != Piece.EColor.LETTER_OBSTACLE &&
-						    cellSelected.contentColor != Piece.EColor.NONE) 
+						Cell cellSelected = cellsManager.getCellUnderPoint (currentSelected.transform.position);
+						if (cellSelected != null) 
 						{
-							if (selectedCellColor != null) 
+							if (cellSelected.contentColor != Piece.EColor.LETTER_OBSTACLE &&
+							   cellSelected.contentColor != Piece.EColor.NONE) 
 							{
-								if (selectedCellColor != cellSelected.contentColor) 
+								if (selectedCellColor != null) 
 								{
-									if (OnCellSelected != null) 
+									if (selectedCellColor != cellSelected.contentColor) 
 									{
-										OnCellSelected (cellSelected);	
+										OnCellSelected (cellSelected);
 									}
+								} 
+								else 
+								{
+									selectedCellColor = cellSelected.contentColor;
+									OnCellSelected (cellSelected);	
 								}
 							} 
 							else 
-							{
-								selectedCellColor = cellSelected.contentColor;
-
-								if (OnCellSelected != null) 
-								{
-									OnCellSelected (cellSelected);	
-								}
-							}
-						} 
-						else 
-						{
-							if (OnCellSelected != null) 
 							{
 								OnCellSelected (null);	
 							}

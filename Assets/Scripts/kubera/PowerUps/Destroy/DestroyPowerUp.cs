@@ -48,7 +48,6 @@ public class DestroyPowerUp : PowerupBase
 		destroyGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
 		destroyGO.transform.localScale = new Vector3 (1, 1, 1);
 
-		bombInput.rotatePower = false;
 		bombInput.enabled = true;
 		bombInput.setCurrentSelected(destroyGO);
 		bombInput.OnDrop += powerUpPositioned;
@@ -63,6 +62,7 @@ public class DestroyPowerUp : PowerupBase
 
 	public void powerUpPositioned()
 	{
+		bombInput.OnCellSelected -= onOverCellChanged;
 		Cell cellSelected = cellsManager.getCellUnderPoint(destroyGO.transform.position);
 
 		if(cellSelected != null)

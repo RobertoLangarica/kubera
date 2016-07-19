@@ -14,7 +14,8 @@ public class HighLightManager : Manager<HighLightManager>
 		WILDCARD_POWERUP,
 		BOMB_SPECIFIC_COLOR,
 		DESTROY_SPECIFIC_COLOR,
-		NO_SPACE_FOR_PIECES
+		NO_SPACE_FOR_PIECES,
+
 	}
 
 	public enum EHighLightStatus

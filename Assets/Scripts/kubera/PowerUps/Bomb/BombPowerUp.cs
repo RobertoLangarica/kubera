@@ -29,7 +29,6 @@ public class BombPowerUp : PowerupBase
 		bombGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
 		bombGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
 
-		bombInput.rotatePower = false;
 		bombInput.enabled = true;
 		bombInput.setCurrentSelected(bombGO);
 		bombInput.OnDrop += powerUpPositioned;
@@ -43,6 +42,7 @@ public class BombPowerUp : PowerupBase
 
 	public void powerUpPositioned()
 	{
+		bombInput.OnCellSelected -= onOverCellChanged;
 		Cell cellSelected = cellsManager.getCellUnderPoint(bombGO.transform.position);
 
 		if(cellSelected != null)
