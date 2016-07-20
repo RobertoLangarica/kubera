@@ -12,12 +12,21 @@ public class Letter : MonoBehaviour
 
 	public enum EState
 	{
-		WRONG,NORMAL	
+		WRONG,NORMAL,HINTED	
 	}
 
 	public Image myImage;
+	public Sprite normalSprite;
+	public Sprite normalSelectedSprite;
+	public Sprite blacSprite;
+	public Sprite blacSelectedSprite;
+	public Sprite wildCardSprite;
+
 	public Color selectedColor = new Color(1,1,1,0.2f);
 	public Color wildCardColor = new Color(1,1,1,1);
+	public Color wrong = new Color (1, 0, 0);
+	public Color hintedWords = new Color (0, 1, 0);
+
 	public Text txtLetter;
 	public Text txtPoints;
 	[HideInInspector] public Letter letterReference;
@@ -64,6 +73,59 @@ public class Letter : MonoBehaviour
 		return Color.white;
 	}
 
+	/*public Sprite getSpriteBasedOnType(EType type)
+	{
+		switch(type)
+		{
+		case EType.OBSTACLE:
+			txtLetter.color = Color.white;
+			txtPoints.color = Color.white;
+			return Color.black;
+		case EType.NORMAL:
+			return Color.white;
+		case EType.WILD_CARD:
+			return wildCardColor;
+		}
+		return Color.white;
+	}*/
+
+	public void updateState(EState state)
+	{
+		switch(state)
+		{
+		case EState.NORMAL:
+			txtLetter.color = Color.black;
+			//txtPoints.color = stateColor;
+			break;
+		case EState.WRONG:
+			txtLetter.color = wrong;
+			//txtPoints.color = stateColor;
+			break;
+		case EState.HINTED:
+			txtLetter.color = hintedWords;
+			//txtPoints.color = stateColor;
+			break;
+		}
+	}
+
+	protected void updateColorToSelectedBasedOnType()
+	{
+		if(myImage == null){return;}
+
+
+		switch(type)
+		{
+		case EType.OBSTACLE:
+			txtLetter.color = selectedColor;
+			txtPoints.color = selectedColor;
+			myImage.color = Color.black;
+			break;
+		case EType.NORMAL:
+			myImage.color = selectedColor;
+			break;
+		}
+	}
+
 	public bool isPreviouslySelected()
 	{
 		return selected;
@@ -104,23 +166,7 @@ public class Letter : MonoBehaviour
 		letterReference = null;
 	}
 
-	protected void updateColorToSelectedBasedOnType()
-	{
-		if(myImage == null){return;}
 
-
-		switch(type)
-		{
-		case EType.OBSTACLE:
-			txtLetter.color = selectedColor;
-			txtPoints.color = selectedColor;
-			myImage.color = Color.black;
-			break;
-		case EType.NORMAL:
-			myImage.color = selectedColor;
-			break;
-		}
-	}
 
 	public void updateTexts()
 	{
@@ -142,18 +188,5 @@ public class Letter : MonoBehaviour
 		}
 	}
 
-	public void updateState(EState state,Color stateColor)
-	{
-		switch(state)
-		{
-		case EState.NORMAL:
-			txtLetter.color = stateColor;
-			//txtPoints.color = stateColor;
-			break;
-		case EState.WRONG:
-			txtLetter.color = stateColor;
-			//txtPoints.color = stateColor;
-			break;
-		}
-	}
+
 }

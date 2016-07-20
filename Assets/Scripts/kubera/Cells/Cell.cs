@@ -124,34 +124,22 @@ public class Cell : MonoBehaviour
 		switch(color)
 		{
 		case(1):
-			contentColor = Piece.EColor.YELLOW;
-			break;
-		case(2):
-			contentColor = Piece.EColor.MAGENTA;
-			break;
-		case(3):
-			contentColor = Piece.EColor.CYAN;
-			break;
-		case(4):
-			contentColor = Piece.EColor.GREEN;
-			break;
-		case(5):
-			contentColor = Piece.EColor.RED;
-			break;
-		case(6):
-			contentColor = Piece.EColor.PURPLE;
-			break;
-		case(7):
 			contentColor = Piece.EColor.BLUE;
 			break;
-		case(8):
+		case(2):
+			contentColor = Piece.EColor.GREEN;
+			break;
+		case(3):
 			contentColor = Piece.EColor.ORANGE;
 			break;
-		case(9):
-			contentColor = Piece.EColor.VIOLET;
+		case(4):
+			contentColor = Piece.EColor.PINK;
 			break;
-		case(10):
-			contentColor = Piece.EColor.TURQUOISE;
+		case(5):
+			contentColor = Piece.EColor.PURPLE;
+			break;
+		case(6):
+			contentColor = Piece.EColor.YELLOW;
 			break;
 		}
 	}

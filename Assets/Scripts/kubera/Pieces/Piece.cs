@@ -8,16 +8,12 @@ public class Piece : MonoBehaviour
 	public enum EColor
 	{
 		NONE,
-		YELLOW,
-		MAGENTA,
-		CYAN,
-		GREEN,
-		RED,
-		PURPLE,
 		BLUE,
+		GREEN,
 		ORANGE,
-		VIOLET,
-		TURQUOISE,
+		PINK,
+		PURPLE,
+		YELLOW,
 		LETTER_OBSTACLE
 	}
 
@@ -29,18 +25,12 @@ public class Piece : MonoBehaviour
 		LETTER_OBSTACLE
 	}
 
-	public Color COLOR_YELLOW			= new Color(1, 1, 0); 
-	public Color COLOR_MAGENTA			= new Color(0.890f, 0.011f, 0.549f);
-	public Color COLOR_CYAN				= new Color(0, 0.623f, 1);
-	public Color COLOR_GREEN			= new Color(0, 0.788f, 0.278f);
-	public Color COLOR_RED				= new Color(1, 0, 0);
-	public Color COLOR_PURPLE			= new Color(0.501f, 0.113f, 0.498f);
-	public Color COLOR_BLUE				= new Color(0, 0.247f, 1);
-	public Color COLOR_ORANGE			= new Color(1, 0.380f, 0);
-	public Color COLOR_VIOLET			= new Color(0.282f, 0.156f, 0.670f);
-	public Color COLOR_TURQUOISE		= new Color(0, 0.776f, 0.560f);
-	public Color COLOR_LETTER_OBSTACLE	= new Color(0, 0, 0);
-	public Color COLOR_NONE				= new Color(1, 1, 1);
+	public Sprite SPRITE_BLUE;
+	public Sprite SPRITE_GREEN;
+	public Sprite SPRITE_ORANGE;
+	public Sprite SPRITE_PINK;
+	public Sprite SPRITE_PURPLE;
+	public Sprite SPRITE_YELLOW;
 
 	public GameObject[] squares;
 	public SpriteRenderer[] squaresSprite;
@@ -76,18 +66,18 @@ public class Piece : MonoBehaviour
 		currentType = starterType;
 	}
 
-	protected void updateColorBasedOnType()
+	protected void updateSpriteBasedOnType()
 	{
-		if(currentType == EType.LETTER_OBSTACLE || squares.Length != 1)
+		if(currentType == EType.LETTER_OBSTACLE)
 		{
 			return;
 		}
 
-		Color color = getColorOfType(currentColor);
+		Sprite sprite = getSpriteByCurrentColor(currentColor);
 
 		foreach(SpriteRenderer piece in squaresSprite)
 		{
-			piece.color = color;
+			piece.sprite = sprite;
 		}
 
 		/*foreach(GameObject piece in squares)
@@ -96,37 +86,23 @@ public class Piece : MonoBehaviour
 		}*/
 	}
 
-	public Color getColorOfType(EColor color)
+	public Sprite getSpriteByCurrentColor(EColor color)
 	{
 		//print (color);
 
-		switch(color)
-		{
+		switch (color) {
 		case EColor.YELLOW:
-			return COLOR_YELLOW;
-		case EColor.MAGENTA:
-			return COLOR_MAGENTA;		
-		case EColor.CYAN:
-			return COLOR_CYAN;
+			return SPRITE_YELLOW;
 		case EColor.GREEN:
-			return COLOR_GREEN;
-		case EColor.RED:
-			return COLOR_RED;
+			return SPRITE_GREEN;
 		case EColor.PURPLE:
-			return COLOR_PURPLE;
+			return SPRITE_PURPLE;
 		case EColor.BLUE:
-			return COLOR_BLUE;
+			return SPRITE_BLUE;
 		case EColor.ORANGE:
-			return COLOR_ORANGE;
-		case EColor.VIOLET:
-			return COLOR_VIOLET;
-		case EColor.TURQUOISE:
-			return COLOR_TURQUOISE;
-		case EColor.LETTER_OBSTACLE:
-			return COLOR_LETTER_OBSTACLE;
+			return SPRITE_ORANGE;
 		}
-		return COLOR_NONE;
-
+		return SPRITE_YELLOW;
 	}
 		
 	public EType currentType
@@ -138,7 +114,7 @@ public class Piece : MonoBehaviour
 			starterType = value;//Para evitar que el Start() modifique este llamado
 			_currentType = value;
 
-			updateColorBasedOnType();
+			updateSpriteBasedOnType();
 		}
 	}
 }

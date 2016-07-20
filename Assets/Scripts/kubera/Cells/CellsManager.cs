@@ -795,6 +795,23 @@ public class CellsManager : MonoBehaviour
 	}
 
 	/*
+	 * regresa todas las celdas
+	 */
+	public Cell[] getAllShowedCels()
+	{
+		List<Cell> selection = new List<Cell>();
+
+		for(int i = 0;i < cells.Count;i++)
+		{
+			if(cells[i].cellType != Cell.EType.EMPTY_VISIBLE_CELL && cells[i].cellType != Cell.EType.EMPTY)
+			{
+				selection.Add(cells[i]);
+			}
+		}
+		return selection.ToArray();
+	}
+
+	/*
 	 * Busca la celdas que sean del mismo color en toda la grid y los agrega a 'selected'
 	 * 
 	 * @params cell{Cell}: Celda de la que se tomara su color comop parametro para evaluar

@@ -497,6 +497,7 @@ public class GameManager : MonoBehaviour
 		wordManager.removeAllLetters(true);
 
 		checkIfLose ();
+		useHintWord (false);
 	}
 
 	/**
@@ -606,7 +607,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	protected bool checkIfIsPosiblePutPieces()
+	public bool checkIfIsPosiblePutPieces()
 	{
 		bool canFit;
 
@@ -658,18 +659,23 @@ public class GameManager : MonoBehaviour
 	}
 
 	/**
-	 *Checar el si puede hacer palabras
+	 *Checar si puede hacer palabras
 	 **/
 	protected void updateLettersState()
 	{
 		if(gridCharacters.Count != 0 && wordManager.checkIfAWordIsPossible(gridCharacters))
 		{
-			wordManager.updateGridLettersState (gridCharacters, true);
+			wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
 		}
 		else
 		{				
-			wordManager.updateGridLettersState (gridCharacters, false);
+			wordManager.updateGridLettersState (gridCharacters, WordManager.EWordState.NO_WORDS_AVAILABLE);
 		}
+	}
+
+	public List<Letter> getGridCharacters()
+	{
+		return gridCharacters;
 	}
 
 	protected void secondChanceBought()
@@ -953,6 +959,24 @@ public class GameManager : MonoBehaviour
 			return true;
 		}
 		return false;
+	}
+
+	public void useHintWord(bool use = false)
+	{
+		List<Letter> hintLetters = new List<Letter> ();
+		hintLetters =  wordManager.findLetters (gridCharacters);
+		if(use)
+		{
+			wordManager.cancelHint = false;
+			wordManager.updateGridLettersState (hintLetters, WordManager.EWordState.HINTED_WORDS);
+		}
+		else
+		{
+			if(!wordManager.cancelHint)
+			{				
+				wordManager.cancelHinting(hintLetters);
+			}
+		}
 	}
 
 	public void activateSettings(bool activate)
