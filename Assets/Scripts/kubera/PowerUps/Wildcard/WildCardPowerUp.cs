@@ -99,7 +99,7 @@ public class WildCardPowerUp : PowerupBase
 
 	protected void completePowerUp()
 	{
-		HighLightManager.GetInstance ().turnOffHighLights ();
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 		OnComplete ();
 		this.gameObject.SetActive( false);
 	}
@@ -107,14 +107,14 @@ public class WildCardPowerUp : PowerupBase
 	protected void completePowerUpNoGems()
 	{
 		powerUpGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("WildCardPowerUP_Move");
-		HighLightManager.GetInstance ().turnOffHighLights ();
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 		OnCompletedNoGems ();
 		this.gameObject.SetActive( false);
 	}
 
 	public override void cancel ()
 	{
-		HighLightManager.GetInstance ().turnOffHighLights ();
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 		OnCancel ();
 		this.gameObject.SetActive( false);
 	}

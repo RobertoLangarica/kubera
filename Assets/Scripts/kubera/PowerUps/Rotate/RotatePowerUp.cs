@@ -89,7 +89,7 @@ public class RotatePowerUp : PowerupBase
 
 		}
 		inputPowerUp.OnDrop -= powerUpPositioned;
-		HighLightManager.GetInstance ().turnOffHighLights ();
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.ROTATE_POWERUP);
 	}
 
 	public void powerUpActivateRotate(bool canUse)

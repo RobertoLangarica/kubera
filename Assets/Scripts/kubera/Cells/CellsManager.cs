@@ -333,11 +333,8 @@ public class CellsManager : MonoBehaviour
 				cell = getCellAt(x,y);
 				if(!cell.occupied && cell.available)
 				{
-					Debug.Log ("por evaluar celda");
-					Debug.Log (cell.content);
 					if(cell.content == null && keepAdding)
 					{
-						Debug.Log ("añado celda");
 						result [result.Count - 1].Add (cell);
 						addRow = false;
 						nothingFound = false;
@@ -347,7 +344,6 @@ public class CellsManager : MonoBehaviour
 						//cell.name = "null";
 						if(!addRow)
 						{
-							Debug.Log ("añado linea H");
 							result.Add(new List<Cell>(columns));
 						}
 						keepAdding = true;
@@ -448,10 +444,8 @@ public class CellsManager : MonoBehaviour
 		List<List<Cell>> result = new List<List<Cell>>();
 
 		result.AddRange(getAvailableHorizontalLines());
-		Debug.Log (result.Count + "H---------------------");
 		result.AddRange(getAvailableVerticalLines());
 
-		Debug.Log (result.Count + "---------------------");
 		return result;
 	}
 

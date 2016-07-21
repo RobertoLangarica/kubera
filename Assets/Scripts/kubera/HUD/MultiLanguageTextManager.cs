@@ -28,10 +28,14 @@ public class MultiLanguageTextManager
 	public const string NO_PIECES_POPUP_ID					= "noPiecesPopUpID";
 
 	public const string TUTORIAL_LV1_PHASE1					= "Tutorial_lvl1_phase1";
-	public const string TUTORIAL_LV1_PHASE2A				= "Tutorial_lvl1_phase2A";
-	public const string TUTORIAL_LV1_PHASE2B				= "Tutorial_lvl1_phase2B";
+	public const string TUTORIAL_LV1_PHASE2					= "Tutorial_lvl1_phase2";
 	public const string TUTORIAL_LV1_PHASE3					= "Tutorial_lvl1_phase3";
 	public const string TUTORIAL_LV1_PHASE4					= "Tutorial_lvl1_phase4";
+	public const string TUTORIAL_LV1_PHASE5					= "Tutorial_lvl1_phase5";
+	public const string TUTORIAL_LV1_PHASE6					= "Tutorial_lvl1_phase6";
+	public const string TUTORIAL_LV1_PHASE7					= "Tutorial_lvl1_phase7";
+	public const string TUTORIAL_LV1_PHASE8					= "Tutorial_lvl1_phase8";
+	public const string TUTORIAL_LV1_PHASE9					= "Tutorial_lvl1_phase9";
 
 	public const string TUTORIAL_LV2_PHASE1					= "Tutorial_lvl2_phase1";
 	public const string TUTORIAL_LV2_PHASE2A				= "Tutorial_lvl2_phase2A";
@@ -47,35 +51,21 @@ public class MultiLanguageTextManager
 	public const string TUTORIAL_LV4_PHASE1B				= "Tutorial_lvl4_phase1B";
 	public const string TUTORIAL_LV4_PHASE2					= "Tutorial_lvl4_phase2";
 
-	public const string TUTORIAL_LV8_PHASE1A				= "Tutorial_lvl8_phase1A";
-	public const string TUTORIAL_LV8_PHASE1B				= "Tutorial_lvl8_phase1B";
-	public const string TUTORIAL_LV8_PHASE2A				= "Tutorial_lvl8_phase2A";
-	public const string TUTORIAL_LV8_PHASE2B				= "Tutorial_lvl8_phase2B";
+	public const string TUTORIAL_LV8_PHASE1					= "Tutorial_lvl8_phase1";
+	public const string TUTORIAL_LV8_PHASE2					= "Tutorial_lvl8_phase2";
 
-	public const string TUTORIAL_LV22_PHASE1A				= "Tutorial_lvl22_phase1A";
-	public const string TUTORIAL_LV22_PHASE1B				= "Tutorial_lvl22_phase1B";
-	public const string TUTORIAL_LV22_PHASE2A				= "Tutorial_lvl22_phase2A";
-	public const string TUTORIAL_LV22_PHASE2B				= "Tutorial_lvl22_phase2B";
+	public const string TUTORIAL_LV22_PHASE1				= "Tutorial_lvl22_phase1";
+	public const string TUTORIAL_LV22_PHASE2				= "Tutorial_lvl22_phase2";
 
-	public const string TUTORIAL_LV37_PHASE1A				= "Tutorial_lvl37_phase1A";
-	public const string TUTORIAL_LV37_PHASE1B				= "Tutorial_lvl37_phase1B";
+	public const string TUTORIAL_LV37_PHASE1				= "Tutorial_lvl37_phase1";
 	public const string TUTORIAL_LV37_PHASE2				= "Tutorial_lvl37_phase2";
-	public const string TUTORIAL_LV37_PHASE3A				= "Tutorial_lvl37_phase3A";
-	public const string TUTORIAL_LV37_PHASE3B				= "Tutorial_lvl37_phase3B";
 
-	public const string TUTORIAL_LV52_PHASE1A				= "Tutorial_lvl52_phase1A";
-	public const string TUTORIAL_LV52_PHASE1B				= "Tutorial_lvl52_phase1B";
-	public const string TUTORIAL_LV52_PHASE2A				= "Tutorial_lvl52_phase2A";
-	public const string TUTORIAL_LV52_PHASE2B				= "Tutorial_lvl52_phase2B";
+	public const string TUTORIAL_LV52_PHASE1				= "Tutorial_lvl52_phase1";
+	public const string TUTORIAL_LV52_PHASE2				= "Tutorial_lvl52_phase2";
 
-	public const string TUTORIAL_LV64_PHASE1A				= "Tutorial_lvl64_phase1A";
-	public const string TUTORIAL_LV64_PHASE1B				= "Tutorial_lvl64_phase1B";
-	public const string TUTORIAL_LV64_PHASE2A				= "Tutorial_lvl64_phase2A";
-	public const string TUTORIAL_LV64_PHASE2B				= "Tutorial_lvl64_phase2B";
-	public const string TUTORIAL_LV64_PHASE3A				= "Tutorial_lvl64_phase3A";
-	public const string TUTORIAL_LV64_PHASE3B				= "Tutorial_lvl64_phase3B";
-	public const string TUTORIAL_LV64_PHASE4A				= "Tutorial_lvl64_phase4A";
-	public const string TUTORIAL_LV64_PHASE4B				= "Tutorial_lvl64_phase4B";
+	public const string TUTORIAL_LV64_PHASE1				= "Tutorial_lvl64_phase1";
+	public const string TUTORIAL_LV64_PHASE2				= "Tutorial_lvl64_phase2";
+	public const string TUTORIAL_LV64_PHASE3				= "Tutorial_lvl64_phase3";
 
 	public const string NO_GEMS_POPUP_TITLE					= "NoGemsPopUpTitle";
 	public const string NO_GEMS_POPUP_INFO					= "NoGemsPopUpInfo";

@@ -56,7 +56,8 @@ public class BombPowerUp : PowerupBase
 					bombInput.OnDrop -= powerUpPositioned;
 					bombInput.enabled = false;
 
-					HighLightManager.GetInstance ().turnOffHighLights ();
+					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_POWERUP);
+					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_SPECIFIC_COLOR);
 
 					OnComplete ();
 				}
@@ -87,7 +88,8 @@ public class BombPowerUp : PowerupBase
 		bombInput.OnDrop -= powerUpPositioned;
 		bombInput.enabled = false;
 
-		HighLightManager.GetInstance ().turnOffHighLights ();
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_POWERUP);
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_SPECIFIC_COLOR);
 
 		OnCancel();
 	}
@@ -103,7 +105,8 @@ public class BombPowerUp : PowerupBase
 		bombInput.OnDrop -= powerUpPositioned;
 		bombInput.enabled = false;
 
-		HighLightManager.GetInstance ().turnOffHighLights ();
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_POWERUP);
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_SPECIFIC_COLOR);
 
 		OnCompletedNoGems ();
 
@@ -111,12 +114,12 @@ public class BombPowerUp : PowerupBase
 
 	public void onOverCellChanged(Cell cellSelected)
 	{
-		HighLightManager.GetInstance ().turnOffHighLights ();
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_POWERUP);
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_SPECIFIC_COLOR);
 
 		if (cellSelected != null) 
 		{
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.BOMB_SPECIFIC_COLOR
-			, cellSelected);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.BOMB_SPECIFIC_COLOR,cellSelected);
 		} 
 		else 
 		{

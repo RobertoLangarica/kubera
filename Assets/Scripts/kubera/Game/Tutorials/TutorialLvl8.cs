@@ -17,22 +17,17 @@ public class TutorialLvl8 : TutorialBase
 			phasesPanels [0].SetActive (true);
 			phaseEvent = ENextPhaseEvent.BOMB_USED;
 
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = true;
-
 			freeBlocks = false;
 			freeBombs = true;
 			freeRotates = false;
 			freeDestroy = false;
 			freeWildCard = false;
 
-			instructions [0].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE1A);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.BOMB_BUTTON);
 
-			instructions [1].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE1B);
+			instructions [0].text = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE1),
+				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
 
 			phase = 1;
 			return true;
@@ -41,40 +36,20 @@ public class TutorialLvl8 : TutorialBase
 			phasesPanels [1].SetActive (true);
 			phaseEvent = ENextPhaseEvent.TAP;
 
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = false;
-
-			freeBlocks = false;
-			freeBombs = false;
-			freeRotates = false;
-			freeDestroy = false;
-			freeWildCard = false;
-
-			instructions [2].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE2A,"english");
-
-			instructions [3].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE2B,"english");			
-			phase = 2;
-			return true;
-		case(2):
-			phasesPanels [1].SetActive (false);
-
-			allowGridTap = true;
-			allowWordTap = true;
-			allowLetterDrag = true;
-			allowErraseWord = true;
-			allowDragPieces = true;
-			allowPowerUps = true;
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_BUTTON);
 
 			freeBlocks = false;
 			freeBombs = true;
 			freeRotates = false;
 			freeDestroy = false;
 			freeWildCard = false;
-			return true;			
+
+			instructions [1].text = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE2),
+				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+			
+			phase = 2;
+			return true;		
 		}
 
 		return base.canMoveToNextPhase ();
@@ -85,8 +60,6 @@ public class TutorialLvl8 : TutorialBase
 		switch (phase) 
 		{
 		case(1):
-			return true;
-		case(2):
 			return true;
 		}
 

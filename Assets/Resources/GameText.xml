@@ -115,37 +115,65 @@
 		</text>
 		<text id="Tutorial_lvl1_phase1">
 			<languages>
-				<language id="english" text="Drag the letter '{{b}}M{{/b}}' to make the word '{{b}}AMAR{{/b}}'."/>
-				<language id="spanish" text="Arrastra la letra '{{b}}M{{/b}}' y forma la palabra '{{b}}AMAR{{/b}}'."/>
-				<language id="default" text="Arrastra la letra '{{b}}M{{/b}}' y forma la palabra '{{b}}AMAR{{/b}}'."/>
+				<language id="english" text="Drag a piece to create a line."/>
+				<language id="spanish" text="Arrastra una pieza para hacer una línea."/>
+				<language id="default" text="Arrastra una pieza para hacer una línea."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl1_phase2A">
+		<text id="Tutorial_lvl1_phase2">
 			<languages>
-				<language id="english" text="Press the button"/>
-				<language id="spanish" text="Presiona el botón"/>
-				<language id="default" text="Presiona el botón"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl1_phase2B">
-			<languages>
-				<language id="english" text="to gain the points for making a word."/>
-				<language id="spanish" text="para obtener puntos por formar una palabra."/>
-				<language id="default" text="para obtener puntos por formar una palabra."/>
+				<language id="english" text="Toca las letras para formar una palabra correcta, por ejemplo: {{b}}MAR{{/b}}."/>
+				<language id="spanish" text="Toca las letras para formar una palabra correcta, por ejemplo: {{b}}MAR{{/b}}."/>
+				<language id="default" text="Toca las letras para formar una palabra correcta, por ejemplo: {{b}}MAR{{/b}}."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl1_phase3">
 			<languages>
-				<language id="english" text="Drag a piece to create a line."/>
-				<language id="spanish" text="Arrastra una pieza para formar una línea."/>
-				<language id="default" text="Arrastra una pieza para formar una línea."/>
+				<language id="english" text="Presiona el botón para mandar una palabra correcta."/>
+				<language id="spanish" text="Presiona el botón para mandar una palabra correcta."/>
+				<language id="default" text="Presiona el botón para mandar una palabra correcta."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl1_phase4">
 			<languages>
-				<language id="english" text="Get {{score}} points to complete the level."/>
-				<language id="spanish" text="Obtén {{score}} puntos para pasar el nivel."/>
-				<language id="default" text="Obtén {{score}} puntos para pasar el nivel."/>
+				<language id="english" text="Forma más palabras para hacer espacio a las piezas."/>
+				<language id="spanish" text="Forma más palabras para hacer espacio a las piezas."/>
+				<language id="default" text="Forma más palabras para hacer espacio a las piezas."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl1_phase5">
+			<languages>
+				<language id="english" text="Haz otra línea."/>
+				<language id="spanish" text="Haz otra línea."/>
+				<language id="default" text="Haz otra línea."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl1_phase6">
+			<languages>
+				<language id="english" text="Llevas {{points}} de{{neededPoints}} puntos, haz los puntos restantes para completar el nivel."/>
+				<language id="spanish" text="Llevas {{points}} de{{neededPoints}} puntos, haz los puntos restantes para completar el nivel."/>
+				<language id="default" text="Llevas {{points}} de{{neededPoints}} puntos, haz los puntos restantes para completar el nivel."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl1_phase7">
+			<languages>
+				<language id="english" text="¡Cuidado! /n Pierdes si te quedas sin movimientos."/>
+				<language id="spanish" text="¡Cuidado! /n Pierdes si te quedas sin movimientos."/>
+				<language id="default" text="¡Cuidado! /n Pierdes si te quedas sin movimientos."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl1_phase8">
+			<languages>
+				<language id="english" text="Poner una pieza o formar una palabra cuenta como un movimiento."/>
+				<language id="spanish" text="Poner una pieza o formar una palabra cuenta como un movimiento."/>
+				<language id="default" text="Poner una pieza o formar una palabra cuenta como un movimiento."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl1_phase9">
+			<languages>
+				<language id="english" text="{{b}}Recuerda:{{/b}} /n Obtienes puntos al colocar una pieza, hacer una línea o formar una palabra."/>
+				<language id="spanish" text="{{b}}Recuerda:{{/b}} /n Obtienes puntos al colocar una pieza, hacer una línea o formar una palabra."/>
+				<language id="default" text="{{b}}Recuerda:{{/b}} /n Obtienes puntos al colocar una pieza, hacer una línea o formar una palabra."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl2_phase1">
@@ -225,179 +253,81 @@
 				<language id="default" text="Obtén {{score}} puntos para pasar el nivel."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl8_phase1A">
+		<text id="Tutorial_lvl8_phase1">
 			<languages>
-				<language id="english" text="Drag"/>
-				<language id="spanish" text="Arrastra"/>
-				<language id="default" text="Arrastra"/>
+				<language id="english" text="Arrastra la {{b}}BOMBA{{/b}} a un bloque."/>
+				<language id="spanish" text="Arrastra la {{b}}BOMBA{{/b}} a un bloque."/>
+				<language id="default" text="Arrastra la {{b}}BOMBA{{/b}} a un bloque."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl8_phase1B">
+		<text id="Tutorial_lvl8_phase2">
 			<languages>
-				<language id="english" text="to flip all adjacent blocks of the same color."/>
-				<language id="spanish" text="para voltear todos los bloques conectados del mismo color."/>
-				<language id="default" text="para voltear todos los bloques conectados del mismo color."/>
+				<language id="english" text="Usa todas las {{b}}BOMBAS{{/b}} que necesites para pasar el nivel."/>
+				<language id="spanish" text="Usa todas las {{b}}BOMBAS{{/b}} que necesites para pasar el nivel."/>
+				<language id="default" text="Usa todas las {{b}}BOMBAS{{/b}} que necesites para pasar el nivel."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl8_phase2A">
+		<text id="Tutorial_lvl22_phase1">
 			<languages>
-				<language id="english" text="Use as many"/>
-				<language id="spanish" text="Usa"/>
-				<language id="default" text="Usa"/>
+				<language id="english" text="Arrastra el {{b}}BLOQUE{{/b}} a un espacio vacio."/>
+				<language id="spanish" text="Arrastra el {{b}}BLOQUE{{/b}} a un espacio vacio."/>
+				<language id="default" text="Arrastra el {{b}}BLOQUE{{/b}} a un espacio vacio."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl8_phase2B">
+		<text id="Tutorial_lvl22_phase2">
 			<languages>
-				<language id="english" text="times as you need to pass the level."/>
-				<language id="spanish" text="las veces que necesites para pasar el nivel."/>
-				<language id="default" text="las veces que necesites para pasar el nivel."/>
+				<language id="english" text="Usa todos los {{b}}BLOQUES{{/b}} que necesites para pasar el nivel."/>
+				<language id="spanish" text="Usa todos los {{b}}BLOQUES{{/b}} que necesites para pasar el nivel."/>
+				<language id="default" text="Usa todos los {{b}}BLOQUES{{/b}} que necesites para pasar el nivel."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl22_phase1A">
+		<text id="Tutorial_lvl37_phase1">
 			<languages>
-				<language id="english" text="Drag"/>
-				<language id="spanish" text="Arrastra"/>
-				<language id="default" text="Arrastra"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl22_phase1B">
-			<languages>
-				<language id="english" text="to put a new block on an empty cell."/>
-				<language id="spanish" text="para llenar un espacio."/>
-				<language id="default" text="para llenar un espacio."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl22_phase2A">
-			<languages>
-				<language id="english" text="Use as many"/>
-				<language id="spanish" text="Usa"/>
-				<language id="default" text="Usa"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl22_phase2B">
-			<languages>
-				<language id="english" text="as you need to pass the level."/>
-				<language id="spanish" text="las veces que necesites para pasar el nivel."/>
-				<language id="default" text="las veces que necesites para pasar el nivel."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl37_phase1A">
-			<languages>
-				<language id="english" text="Drag"/>
-				<language id="spanish" text="Arrastra"/>
-				<language id="default" text="Arrastra"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl37_phase1B">
-			<languages>
-				<language id="english" text="toward any piece."/>
-				<language id="spanish" text="a una de las piezas."/>
-				<language id="default" text="a una de las piezas."/>
+				<language id="english" text="Arrastra {{b}}ROTAR{{/b}} a una pieza."/>
+				<language id="spanish" text="Arrastra {{b}}ROTAR{{/b}} a una pieza."/>
+				<language id="default" text="Arrastra {{b}}ROTAR{{/b}} a una pieza."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl37_phase2">
 			<languages>
-				<language id="english" text="Tap in any piece to rotate it."/>
-				<language id="spanish" text="Da tap a las piezas para girarlas."/>
-				<language id="default" text="Da tap a las piezas para girarlas."/>
+				<language id="english" text="Usa {{b}}ROTAR{{/b}} las veces que necesites para pasar el nivel."/>
+				<language id="spanish" text="Usa {{b}}ROTAR{{/b}} las veces que necesites para pasar el nivel."/>
+				<language id="default" text="Usa {{b}}ROTAR{{/b}} las veces que necesites para pasar el nivel."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl37_phase3A">
+		<text id="Tutorial_lvl52_phase1">
 			<languages>
-				<language id="english" text="Use as many"/>
-				<language id="spanish" text="Usa"/>
-				<language id="default" text="Usa"/>
+				<language id="english" text="Arrastra el {{b}}RAYO{{/b}} a un bloque."/>
+				<language id="spanish" text="Arrastra el {{b}}RAYO{{/b}} a un bloque."/>
+				<language id="default" text="Arrastra el {{b}}RAYO{{/b}} a un bloque."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl37_phase3B">
+		<text id="Tutorial_lvl52_phase2">
 			<languages>
-				<language id="english" text="as you need to pass the level."/>
-				<language id="spanish" text="las veces que necesites para pasar el nivel."/>
-				<language id="default" text="las veces que necesites para pasar el nivel."/>
+				<language id="english" text="Usa el {{b}}RAYO{{/b}} las veces que necesites para pasar el nivel."/>
+				<language id="spanish" text="Usa el {{b}}RAYO{{/b}} las veces que necesites para pasar el nivel."/>
+				<language id="default" text="Usa el {{b}}RAYO{{/b}} las veces que necesites para pasar el nivel."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl52_phase1A">
+		<text id="Tutorial_lvl64_phase1">
 			<languages>
-				<language id="english" text="Drag"/>
-				<language id="spanish" text="Arrastra"/>
-				<language id="default" text="Arrastra"/>
+				<language id="english" text="Necesitas una {{b}}Z{{/b}} para formar {{b}}PEZ{{/b}}. /nArrastra el {{b}}COMODIN{{/b}} al área para formar palabras."/>
+				<language id="spanish" text="Necesitas una {{b}}Z{{/b}} para formar {{b}}PEZ{{/b}}. /nArrastra el {{b}}COMODIN{{/b}} al área para formar palabras."/>
+				<language id="default" text="Necesitas una {{b}}Z{{/b}} para formar {{b}}PEZ{{/b}}. /nArrastra el {{b}}COMODIN{{/b}} al área para formar palabras."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl52_phase1B">
+		<text id="Tutorial_lvl64_phase2">
 			<languages>
-				<language id="english" text="to flip all blocks of the same color."/>
-				<language id="spanish" text="para voltear todos los bloques del mismo color."/>
-				<language id="default" text="para voltear todos los bloques del mismo color."/>
+				<language id="english" text="Toca la letra {{b}}Z{{/b}} para que el comodín se convierta en una {{b}}Z{{/b}}."/>
+				<language id="spanish" text="Toca la letra {{b}}Z{{/b}} para que el comodín se convierta en una {{b}}Z{{/b}}."/>
+				<language id="default" text="Toca la letra {{b}}Z{{/b}} para que el comodín se convierta en una {{b}}Z{{/b}}."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl52_phase2A">
+		<text id="Tutorial_lvl64_phase3">
 			<languages>
-				<language id="english" text="Use as many"/>
-				<language id="spanish" text="Usa"/>
-				<language id="default" text="Usa"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl52_phase2B">
-			<languages>
-				<language id="english" text="as you need to pass the level."/>
-				<language id="spanish" text="las veces que necesites para pasar el nivel."/>
-				<language id="default" text="las veces que necesites para pasar el nivel."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase1A">
-			<languages>
-				<language id="english" text="Drag"/>
-				<language id="spanish" text="Arrastra"/>
-				<language id="default" text="Arrastra"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase1B">
-			<languages>
-				<language id="english" text="to the word creation area."/>
-				<language id="spanish" text="al área para formar palabras."/>
-				<language id="default" text="al área para formar palabras."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase2A">
-			<languages>
-				<language id="english" text="Tap letter '{{b}}Z{{/b}}' to convert"/>
-				<language id="spanish" text="Da tap en la '{{b}}Z{{/b}}' para que"/>
-				<language id="default" text="Da tap en la '{{b}}Z{{/b}}' para que"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase2B">
-			<languages>
-				<language id="english" text="into a '{{b}}Z{{/b}}'."/>
-				<language id="spanish" text="se convierta en una '{{b}}Z{{/b}}'."/>
-				<language id="default" text="se convierta en una '{{b}}Z{{/b}}'."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase3A">
-			<languages>
-				<language id="english" text="Press the button"/>
-				<language id="spanish" text="Presiona el botón"/>
-				<language id="default" text="Presiona el botón"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase3B">
-			<languages>
-				<language id="english" text="to get the points for the word '{{b}}FELIZ{{/b}}'."/>
-				<language id="spanish" text="para obtener puntos por la palabra '{{b}}FELIZ{{/b}}'."/>
-				<language id="default" text="para obtener puntos por la palabra '{{b}}FELIZ{{/b}}'."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase4A">
-			<languages>
-				<language id="english" text="Use as many"/>
-				<language id="spanish" text="Usa"/>
-				<language id="default" text="Usa"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase4B">
-			<languages>
-				<language id="english" text="as you need to pass the level."/>
-				<language id="spanish" text="las veces que necesites para pasar el nivel."/>
-				<language id="default" text="las veces que necesites para pasar el nivel."/>
+				<language id="english" text="Usa el {{b}}COMODIN{{/b}} las veces que necesites para pasar el nivel."/>
+				<language id="spanish" text="Usa el {{b}}COMODIN{{/b}} las veces que necesites para pasar el nivel."/>
+				<language id="default" text="Usa el {{b}}COMODIN{{/b}} las veces que necesites para pasar el nivel."/>
 			</languages>
 		</text>
 		<text id="NoGemsPopUpTitle">

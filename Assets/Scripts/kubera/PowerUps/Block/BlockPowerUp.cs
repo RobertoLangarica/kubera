@@ -30,21 +30,21 @@ public class BlockPowerUp : PowerupBase
 	protected void completePowerUp()
 	{
 		inputBlockPowerUp.enabled = false;
-		HighLightManager.GetInstance ().turnOffHighLights ();
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SQUARE_POWERUP);
 		OnComplete ();
 	}
 
 	protected void completePowerUpNoGems()
 	{
 		inputBlockPowerUp.enabled = false;
-		HighLightManager.GetInstance ().turnOffHighLights ();
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SQUARE_POWERUP);
 		OnCompletedNoGems ();
 	}
 
 	public override void cancel()
 	{
 		inputBlockPowerUp.enabled = false;
-		HighLightManager.GetInstance ().turnOffHighLights ();
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SQUARE_POWERUP);
 		OnCancel ();
 	}
 }
