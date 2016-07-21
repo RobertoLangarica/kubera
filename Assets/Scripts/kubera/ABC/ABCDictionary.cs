@@ -132,6 +132,11 @@ namespace ABC
 			return false;
 		}
 
+		public List<ABCChar> getPosibleWord(List<ABCChar> chars)
+		{
+			return tree.getPossibleWord(chars);
+		}
+
 		private string getStringFromCharList(List<ABCChar> chars)
 		{
 			string result = "";

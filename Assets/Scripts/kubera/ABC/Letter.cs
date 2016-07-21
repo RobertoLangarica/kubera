@@ -12,12 +12,19 @@ public class Letter : MonoBehaviour
 
 	public enum EState
 	{
-		WRONG,NORMAL	
+		WRONG,NORMAL,HINTED	
 	}
 
 	public Image myImage;
-	public Color selectedColor = new Color(1,1,1,0.2f);
-	public Color wildCardColor = new Color(1,1,1,1);
+	public Sprite normalSprite;
+	public Sprite normalSelectedSprite;
+	public Sprite obstacleSprite;
+	public Sprite obstacleSelectedSprite;
+	public Sprite wildCardSprite;
+
+	public Color wrong = new Color (1, 0, 0);
+	public Color hintedWords = new Color (0, 1, 0);
+
 	public Text txtLetter;
 	public Text txtPoints;
 	[HideInInspector] public Letter letterReference;
@@ -38,17 +45,17 @@ public class Letter : MonoBehaviour
 	public void changeImageTexture(Sprite newSprite)
 	{
 		GetComponent<Image> ().sprite = newSprite;
-		updateColor();
+		updateSprite();
 	}
 
-	public void updateColor()
+	public void updateSprite()
 	{
 		if(myImage == null){return;}
 
-		myImage.color = getColorBasedOnType(type);
+		myImage.sprite = getSpriteBasedOnType(type);
 	}
 
-	public Color getColorBasedOnType(EType type)
+	/*public Color getColorBasedOnType(EType type)
 	{
 		switch(type)
 		{
@@ -62,6 +69,73 @@ public class Letter : MonoBehaviour
 			return wildCardColor;
 		}
 		return Color.white;
+	}*/
+
+	public Sprite getSpriteBasedOnType(EType type)
+	{
+		switch(type)
+		{
+		case EType.OBSTACLE:
+			return obstacleSprite;
+		case EType.NORMAL:
+			return normalSprite;
+		case EType.WILD_CARD:
+			return wildCardSprite;
+		}
+		return normalSprite;
+	}
+
+	public void updateState(EState state)
+	{
+		switch(state)
+		{
+		case EState.NORMAL:
+			txtLetter.color = Color.black;
+			//txtPoints.color = stateColor;
+			break;
+		case EState.WRONG:
+			txtLetter.color = wrong;
+			//txtPoints.color = stateColor;
+			break;
+		case EState.HINTED:
+			txtLetter.color = hintedWords;
+			//txtPoints.color = stateColor;
+			break;
+		}
+	}
+
+	/*protected void updateColorToSelectedBasedOnType()
+	{
+		if(myImage == null){return;}
+
+
+		switch(type)
+		{
+		case EType.OBSTACLE:
+			txtLetter.color = selectedColor;
+			txtPoints.color = selectedColor;
+			myImage.color = Color.black;
+			break;
+		case EType.NORMAL:
+			myImage.color = selectedColor;
+			break;
+		}
+	}*/
+
+	protected void updateSpriteToSelectedBasedOnType()
+	{
+		if(myImage == null){return;}
+
+
+		switch(type)
+		{
+		case EType.OBSTACLE:
+			myImage.sprite = obstacleSelectedSprite;
+			break;
+		case EType.NORMAL:
+			myImage.sprite = normalSelectedSprite;
+			break;
+		}
 	}
 
 	public bool isPreviouslySelected()
@@ -72,13 +146,13 @@ public class Letter : MonoBehaviour
 	private void markAsSelected()
 	{
 		selected=true;
-		updateColorToSelectedBasedOnType ();
+		updateSpriteToSelectedBasedOnType ();
 	}
 
 	private void markAsUnselected()
 	{
 		selected=false;
-		updateColor();
+		updateSprite();
 	}
 
 	public void select()
@@ -104,23 +178,7 @@ public class Letter : MonoBehaviour
 		letterReference = null;
 	}
 
-	protected void updateColorToSelectedBasedOnType()
-	{
-		if(myImage == null){return;}
 
-
-		switch(type)
-		{
-		case EType.OBSTACLE:
-			txtLetter.color = selectedColor;
-			txtPoints.color = selectedColor;
-			myImage.color = Color.black;
-			break;
-		case EType.NORMAL:
-			myImage.color = selectedColor;
-			break;
-		}
-	}
 
 	public void updateTexts()
 	{
@@ -142,18 +200,5 @@ public class Letter : MonoBehaviour
 		}
 	}
 
-	public void updateState(EState state,Color stateColor)
-	{
-		switch(state)
-		{
-		case EState.NORMAL:
-			txtLetter.color = stateColor;
-			//txtPoints.color = stateColor;
-			break;
-		case EState.WRONG:
-			txtLetter.color = stateColor;
-			//txtPoints.color = stateColor;
-			break;
-		}
-	}
+
 }

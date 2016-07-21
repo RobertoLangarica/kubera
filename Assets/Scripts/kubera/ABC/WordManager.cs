@@ -8,15 +8,14 @@ using DG.Tweening;
 
 public class WordManager : MonoBehaviour 
 {
-
 	public enum EDeleteState
 	{
 		WORD,CHARACTER
 	}
 
-	public enum EWordPosibleState
+	public enum EWordState
 	{
-		NOT,YES
+		NO_WORDS_AVAILABLE,WORDS_AVAILABLE,HINTED_WORDS
 	}
 
 	public enum EPoolType
@@ -29,6 +28,7 @@ public class WordManager : MonoBehaviour
 	public GameObject letterContainer;
 	protected Transform letterContainerTransform;
 	public Transform preLetterContainerTransform;
+	public Transform LetterAnimatedContainerTransform;
 	[HideInInspector]public Transform gridLettersParent;
 	[HideInInspector]public Vector2 gridLettersSizeDelta;
 
@@ -46,6 +46,7 @@ public class WordManager : MonoBehaviour
 	private int maxLetters = 10;
 	/*[HideInInspector]*/
 	public List<Letter> letters;
+	protected List<Letter> lettersRemoval  = new List<Letter>();
 	public int siblingIndexAfterDrag;
 	public Vector2[] lettersPositions;
 
@@ -65,6 +66,8 @@ public class WordManager : MonoBehaviour
 
 	//Letter to take the position for the selectedAnim
 	protected Letter lastSelected;
+	[HideInInspector]public bool cancelHint = true;
+
 	public float selectAnimationTime = 1;
 	public GameObject gridInvisibleChild;
 
@@ -74,16 +77,16 @@ public class WordManager : MonoBehaviour
 
 	public GameObject noWordPosible;
 	public Text noWordPosibleText;
+	public GameObject points;
 
-	public Color wrong = new Color (1, 0, 0);
-	public Color normal = new Color (0, 0, 0);
+	public EWordState currentWordPosibleState;
 
-	protected EWordPosibleState currentWordPosibleState;
+	protected float centerVacuum;
 
 	void Awake()
 	{
 		letters = new List<Letter>(maxLetters);
-		currentWordPosibleState = EWordPosibleState.NOT;
+		currentWordPosibleState = EWordState.WORDS_AVAILABLE;
 
 		deleteBtnPosition = deleteButtonImage.transform.localPosition;
 
@@ -111,8 +114,10 @@ public class WordManager : MonoBehaviour
 
 		activateWordDeleteBtn(false);
 		activateWordCompleteBtn(false);
+		activatePointsGO(false);
+		activateNoWordPosibleText (false);
 
-		noWordPosible.transform.position = letterContainer.transform.position;
+		centerVacuum = Screen.width * 0.5f;
 	}
 
 	void Start()
@@ -120,6 +125,7 @@ public class WordManager : MonoBehaviour
 		//Tamaño de las celdas
 		wordContainerLayout = letterContainer.GetComponent<GridLayoutGroup>();
 		wordContainerRectTransform = letterContainer.GetComponent<RectTransform> ();
+		noWordPosible.transform.position = letterContainer.transform.position;
 
 		float cellSize = wordContainerRectTransform.rect.height * 0.9f;
 
@@ -448,7 +454,7 @@ public class WordManager : MonoBehaviour
 	public void removeLetter(Letter letter)
 	{
 		letter.deselect();
-		letters.Remove(letter);
+		//letters.Remove(letter);
 		if (DOTween.IsTweening (letter.GetInstanceID()))
 		{
 			DOTween.Complete (letter.GetInstanceID());
@@ -483,11 +489,14 @@ public class WordManager : MonoBehaviour
 		
 	private void addLetterToContainer(Letter letter)
 	{
-		//Agregamos la letra al ultimo
-		letter.transform.SetParent(letterContainerTransform,false);
+		if(letter.transform.parent != LetterAnimatedContainerTransform)
+		{
+			//Agregamos la letra al ultimo
+			letter.transform.SetParent(letterContainerTransform,false);
 
-		//Se actualiza el tamaño del collider al tamaño de la letra
-		updateLetterBoxCollider (letter.gameObject);
+			//Se actualiza el tamaño del collider al tamaño de la letra
+			updateLetterBoxCollider (letter.gameObject);
+		}
 	}
 
 	private void selectLetterAnimation(Letter letter)
@@ -599,6 +608,32 @@ public class WordManager : MonoBehaviour
 		return true;
 	}
 
+	public List<Letter> findLetters(List<Letter> pool)
+	{
+		List<ABCChar> charPool = new List<ABCChar>(pool.Count);
+		List<Letter> wordLettersFound = new List<Letter> ();
+
+		foreach(Letter l in pool)
+		{
+			charPool.Add(l.abcChar);
+		}
+		charPool = wordsValidator.getPosibleWord (charPool);
+
+		for(int j=0; j<charPool.Count; j++)
+		{
+			for(int i=0; i<pool.Count; i++)
+			{
+				if(pool[i].abcChar == charPool[j])
+				{
+					wordLettersFound.Add (pool [i]);
+					break;
+				}
+			}
+		}
+
+		return wordLettersFound;
+	}
+
 	private void activateGridLayout(bool activate)
 	{
 		wordContainerLayout.enabled = activate;
@@ -641,8 +676,8 @@ public class WordManager : MonoBehaviour
 	private void afterWordValidation()
 	{
 		bool completeWord = wordsValidator.isCompleteWord ();
-
 		activateWordCompleteBtn(completeWord);
+		activatePointsGO(completeWord);
 		activateWordDeleteBtn (!completeWord,isThereAnyLetterOnContainer());
 
 		if(completeWord)
@@ -656,11 +691,17 @@ public class WordManager : MonoBehaviour
 		wordCompleteButton.SetActive (active);
 	}
 
+	public void activatePointsGO(bool active)
+	{
+		points.SetActive (active);
+	}
+
 	public void activateWordDeleteBtn(bool activate,bool isThereAnyLetterOnContainer = true)
 	{
 		if(activate && isThereAnyLetterOnContainer)
 		{
 			wordDeleteButton.SetActive (true);
+			points.SetActive (true);
 		}
 		else
 		{
@@ -668,11 +709,17 @@ public class WordManager : MonoBehaviour
 		}
 	}
 
+	public void activateNoWordPosibleText(bool activate)
+	{
+		noWordPosible.SetActive (activate);
+	}
+
 	private void onLettersChange()
 	{
 		updateWordPoints();
-
+		activateWordCompleteBtn (isThereAnyLetterOnContainer ());
 		activateWordDeleteBtn(isThereAnyLetterOnContainer());
+
 		afterWordValidation();
 		changeDeleteState(EDeleteState.WORD);
 
@@ -822,7 +869,7 @@ public class WordManager : MonoBehaviour
 		abc.pointsOrMultiple = pointsOrMultiple;
 
 		letter.type = Letter.EType.WILD_CARD;
-		letter.updateColor ();
+		letter.updateSprite ();
 		letter.abcChar = abc;
 
 		letter.updateTexts();
@@ -857,7 +904,7 @@ public class WordManager : MonoBehaviour
 
 		letter.initializeFromABCChar(charInfo);
 		letter.updateTexts();
-		letter.updateColor();
+		letter.updateSprite();
 
 		return letter;
 	}
@@ -892,38 +939,109 @@ public class WordManager : MonoBehaviour
 		wildCard.type = Letter.EType.WILD_CARD;
 
 		wildCard.updateTexts();
-		wildCard.updateColor ();
+		wildCard.updateSprite ();
 
 		saveAndValidateLetter(wildCard);
 		resetValidationToSiblingOrder ();
 		afterWordValidation ();
 	}
 
-	public void updateGridLettersState(List<Letter> gridLetter, bool canMakeWord)
+	public void updateGridLettersState(List<Letter> gridLetter,EWordState wordState)
 	{
-		if(canMakeWord)
-		{
-			if(currentWordPosibleState == EWordPosibleState.NOT)
+		switch (wordState) {
+		case EWordState.NO_WORDS_AVAILABLE:
+			if(currentWordPosibleState != EWordState.NO_WORDS_AVAILABLE)
 			{
-				currentWordPosibleState = EWordPosibleState.YES;
+				currentWordPosibleState = EWordState.NO_WORDS_AVAILABLE;
 				for(int i=0; i<gridLetter.Count; i++)
 				{
-					gridLetter [i].updateState (Letter.EState.NORMAL, normal);
+					gridLetter [i].updateState (Letter.EState.WRONG);
 				}
-				noWordPosible.SetActive (false);
+				noWordPosible.SetActive (true);
+				activateNoWordPosibleText (true);
 			}
-		}
-		else
-		{
-			if(currentWordPosibleState == EWordPosibleState.YES)
+			break;
+		case EWordState.WORDS_AVAILABLE:
+			if(currentWordPosibleState != EWordState.WORDS_AVAILABLE)
 			{
-				currentWordPosibleState = EWordPosibleState.NOT;
+				currentWordPosibleState = EWordState.WORDS_AVAILABLE;
 				for(int i=0; i<gridLetter.Count; i++)
 				{
-					gridLetter [i].updateState (Letter.EState.NORMAL, wrong);
+					gridLetter [i].updateState (Letter.EState.NORMAL);
 				}
+				activateNoWordPosibleText (false);
 			}
-			noWordPosible.SetActive (true);
+			noWordPosible.SetActive (false);
+			break;
+		case EWordState.HINTED_WORDS:
+			if (currentWordPosibleState != EWordState.HINTED_WORDS && !cancelHint) 
+			{
+				currentWordPosibleState = EWordState.HINTED_WORDS;
+				StartCoroutine (updateLetterHintState (gridLetter));
+			}
+			break;
 		}
+
+	}
+
+	IEnumerator updateLetterHintState(List<Letter> gridLetter)
+	{
+		yield return new WaitForSeconds (0);
+		cancelHint = false;
+		for(int i=0; i<gridLetter.Count; i++)
+		{
+			yield return new WaitForSeconds (0.4f);
+			if(!cancelHint)
+			{
+				gridLetter [i].updateState (Letter.EState.HINTED);	
+				yield return new WaitForSeconds (0.4f);
+			}
+		}
+		currentWordPosibleState = EWordState.HINTED_WORDS;
+
+		updateGridLettersState (gridLetter, EWordState.WORDS_AVAILABLE);
+		if(!cancelHint)
+		{
+			updateGridLettersState (gridLetter, EWordState.HINTED_WORDS);	
+		}
+	}
+
+	public void cancelHinting(List<Letter> gridLetter)
+	{
+		cancelHint = true;
+		updateGridLettersState (gridLetter, EWordState.WORDS_AVAILABLE);
+	}
+
+	public void animateWordRetrieved(Letter letter)
+	{
+		Canvas canvas =  letter.GetComponent<Canvas>();
+		Transform letterTransform = letter.transform;
+
+		letterTransform.SetParent (LetterAnimatedContainerTransform,false);
+		letterTransform.DOLocalRotate(new Vector3(0,0,360),1.5f, RotateMode.FastBeyond360);
+
+		lettersRemoval.Add (letter);
+		//letters.Remove(letter);
+		StartCoroutine (lettersRemove(letter));
+		
+		letterTransform.DOLocalMoveY(25,0.5f);
+		letterTransform.DOLocalMoveX (40, 0.5f).OnComplete(()=>
+			{
+				canvas.sortingLayerName = "UI";
+				canvas.sortingOrder = -1;
+				letterTransform.DOLocalMoveY(100,1f);
+				letterTransform.DOScale(new Vector3(0,0,0),1f).OnComplete(()=>
+					{
+						activateGridLayout (true);
+						DestroyImmediate(letter.gameObject);
+						lettersRemoval.Remove (letter);
+					});
+			});
+	}
+
+	IEnumerator lettersRemove(Letter l)
+	{
+		yield return new WaitForEndOfFrame();
+		letters.Remove (l);
 	}
 }

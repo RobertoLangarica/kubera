@@ -8,7 +8,7 @@ public class PowerupBase : MonoBehaviour
 
 	public enum EType
 	{
-		BOMB,BLOCK,ROTATE,DESTROY,WILDCARD	
+		HINT_WORD,BOMB,BLOCK,ROTATE,WILDCARD,DESTROY
 	}
 
 	public delegate void DPowerUpNotification();

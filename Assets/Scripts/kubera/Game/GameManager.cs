@@ -149,9 +149,9 @@ public class GameManager : MonoBehaviour
 		}
 		if (Input.GetKeyUp (KeyCode.Z)) 
 		{
-			//onUsersAction (5, 0);
+			onUsersAction (5, 0);
 			//activatePopUp ("noOptionsPopUp");
-			onUsersAction (0);
+			//onUsersAction (0);
 		}
 
 		if (Input.GetKeyUp (KeyCode.Q)) 
@@ -515,9 +515,10 @@ public class GameManager : MonoBehaviour
 		onUsersAction (wordManager.wordPoints);
 		removeLettersFromGrid(wordManager.letters, true);
 
-		wordManager.removeAllLetters(true);
+		//wordManager.removeAllLetters(true);
 
 		checkIfLose ();
+		useHintWord (false);
 	}
 
 	/**
@@ -527,6 +528,13 @@ public class GameManager : MonoBehaviour
 	private void removeLettersFromGrid(List<Letter> letters, bool useReferenceInstead = false)
 	{
 		Letter letter;
+
+		if(useReferenceInstead)
+		{
+			wordManager.activateWordCompleteBtn (false);
+			wordManager.activatePointsGO (false);
+		}
+
 		for(int i = 0; i < letters.Count; i++)
 		{
 			if(useReferenceInstead)
@@ -542,6 +550,7 @@ public class GameManager : MonoBehaviour
 			{
 				cellManager.getCellUnderPoint(letter.transform.position).clearCell();
 				gridCharacters.Remove(letter);
+				wordManager.animateWordRetrieved (letter.letterReference);
 				GameObject.DestroyImmediate(letter.gameObject);
 			}
 		}
@@ -575,7 +584,6 @@ public class GameManager : MonoBehaviour
 		//Se muestra el objetivo al inicio del nivel
 		hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
 		hudManager.setWinCondition (goalManager.currentCondition, goalManager.getGoalConditionParameters());
-
 		activatePopUp ("startGamePopUp");
 
 	}
@@ -627,7 +635,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	protected bool checkIfIsPosiblePutPieces()
+	public bool checkIfIsPosiblePutPieces()
 	{
 		bool canFit;
 
@@ -663,6 +671,7 @@ public class GameManager : MonoBehaviour
 
 	protected void updatePiecesLightAndUpdateLetterState()
 	{
+		print ("checando si  perdio");
 		updatePiecesLight (checkIfIsPosiblePutPieces ());
 		updateLettersState ();
 	}
@@ -680,18 +689,25 @@ public class GameManager : MonoBehaviour
 	}
 
 	/**
-	 *Checar el si puede hacer palabras
+	 *Checar si puede hacer palabras
 	 **/
 	protected void updateLettersState()
 	{
-		if(gridCharacters.Count != 0 && wordManager.checkIfAWordIsPossible(gridCharacters))
+		print ("updateLetterStatre");  
+		if(wordManager.checkIfAWordIsPossible(gridCharacters))
 		{
-			wordManager.updateGridLettersState (gridCharacters, true);
+			wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
 		}
-		else
+		else if(gridCharacters.Count > 0)
 		{				
-			wordManager.updateGridLettersState (gridCharacters, false);
+			print ("asdasdasdasd");  
+			wordManager.updateGridLettersState (gridCharacters, WordManager.EWordState.NO_WORDS_AVAILABLE);
 		}
+	}
+
+	public List<Letter> getGridCharacters()
+	{
+		return gridCharacters;
 	}
 
 	protected void secondChanceBought()
@@ -977,6 +993,24 @@ public class GameManager : MonoBehaviour
 		return false;
 	}
 
+	public void useHintWord(bool use = false)
+	{
+		List<Letter> hintLetters = new List<Letter> ();
+		hintLetters =  wordManager.findLetters (gridCharacters);
+		if(use)
+		{
+			wordManager.cancelHint = false;
+			wordManager.updateGridLettersState (hintLetters, WordManager.EWordState.HINTED_WORDS);
+		}
+		else
+		{
+			if(!wordManager.cancelHint)
+			{				
+				wordManager.cancelHinting(hintLetters);
+			}
+		}
+	}
+
 	public void activateSettings(bool activate)
 	{
 		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
@@ -997,6 +1031,7 @@ public class GameManager : MonoBehaviour
 		case "startGame":
 			allowGameInput ();
 			updatePiecesLightAndUpdateLetterState ();
+			hudManager.animateLvlGo ();
 			break;
 		case "endGame":
 			break;
