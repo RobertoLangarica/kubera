@@ -18,12 +18,10 @@ public class Letter : MonoBehaviour
 	public Image myImage;
 	public Sprite normalSprite;
 	public Sprite normalSelectedSprite;
-	public Sprite blacSprite;
-	public Sprite blacSelectedSprite;
+	public Sprite obstacleSprite;
+	public Sprite obstacleSelectedSprite;
 	public Sprite wildCardSprite;
 
-	public Color selectedColor = new Color(1,1,1,0.2f);
-	public Color wildCardColor = new Color(1,1,1,1);
 	public Color wrong = new Color (1, 0, 0);
 	public Color hintedWords = new Color (0, 1, 0);
 
@@ -47,33 +45,17 @@ public class Letter : MonoBehaviour
 	public void changeImageTexture(Sprite newSprite)
 	{
 		GetComponent<Image> ().sprite = newSprite;
-		updateColor();
+		updateSprite();
 	}
 
-	public void updateColor()
+	public void updateSprite()
 	{
 		if(myImage == null){return;}
 
-		myImage.color = getColorBasedOnType(type);
+		myImage.sprite = getSpriteBasedOnType(type);
 	}
 
-	public Color getColorBasedOnType(EType type)
-	{
-		switch(type)
-		{
-		case EType.OBSTACLE:
-			txtLetter.color = Color.white;
-			txtPoints.color = Color.white;
-			return Color.black;
-		case EType.NORMAL:
-			return Color.white;
-		case EType.WILD_CARD:
-			return wildCardColor;
-		}
-		return Color.white;
-	}
-
-	/*public Sprite getSpriteBasedOnType(EType type)
+	/*public Color getColorBasedOnType(EType type)
 	{
 		switch(type)
 		{
@@ -88,6 +70,20 @@ public class Letter : MonoBehaviour
 		}
 		return Color.white;
 	}*/
+
+	public Sprite getSpriteBasedOnType(EType type)
+	{
+		switch(type)
+		{
+		case EType.OBSTACLE:
+			return obstacleSprite;
+		case EType.NORMAL:
+			return normalSprite;
+		case EType.WILD_CARD:
+			return wildCardSprite;
+		}
+		return normalSprite;
+	}
 
 	public void updateState(EState state)
 	{
@@ -108,7 +104,7 @@ public class Letter : MonoBehaviour
 		}
 	}
 
-	protected void updateColorToSelectedBasedOnType()
+	/*protected void updateColorToSelectedBasedOnType()
 	{
 		if(myImage == null){return;}
 
@@ -124,6 +120,22 @@ public class Letter : MonoBehaviour
 			myImage.color = selectedColor;
 			break;
 		}
+	}*/
+
+	protected void updateSpriteToSelectedBasedOnType()
+	{
+		if(myImage == null){return;}
+
+
+		switch(type)
+		{
+		case EType.OBSTACLE:
+			myImage.sprite = obstacleSelectedSprite;
+			break;
+		case EType.NORMAL:
+			myImage.sprite = normalSelectedSprite;
+			break;
+		}
 	}
 
 	public bool isPreviouslySelected()
@@ -134,13 +146,13 @@ public class Letter : MonoBehaviour
 	private void markAsSelected()
 	{
 		selected=true;
-		updateColorToSelectedBasedOnType ();
+		updateSpriteToSelectedBasedOnType ();
 	}
 
 	private void markAsUnselected()
 	{
 		selected=false;
-		updateColor();
+		updateSprite();
 	}
 
 	public void select()

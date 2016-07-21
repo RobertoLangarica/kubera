@@ -28,6 +28,7 @@ public class WordManager : MonoBehaviour
 	public GameObject letterContainer;
 	protected Transform letterContainerTransform;
 	public Transform preLetterContainerTransform;
+	public Transform LetterAnimatedContainerTransform;
 	[HideInInspector]public Transform gridLettersParent;
 	[HideInInspector]public Vector2 gridLettersSizeDelta;
 
@@ -45,6 +46,7 @@ public class WordManager : MonoBehaviour
 	private int maxLetters = 10;
 	/*[HideInInspector]*/
 	public List<Letter> letters;
+	protected List<Letter> lettersRemoval  = new List<Letter>();
 	public int siblingIndexAfterDrag;
 	public Vector2[] lettersPositions;
 
@@ -75,9 +77,11 @@ public class WordManager : MonoBehaviour
 
 	public GameObject noWordPosible;
 	public Text noWordPosibleText;
-
+	public GameObject points;
 
 	public EWordState currentWordPosibleState;
+
+	protected float centerVacuum;
 
 	void Awake()
 	{
@@ -110,7 +114,10 @@ public class WordManager : MonoBehaviour
 
 		activateWordDeleteBtn(false);
 		activateWordCompleteBtn(false);
+		activatePointsGO(false);
+		activateNoWordPosibleText (false);
 
+		centerVacuum = Screen.width * 0.5f;
 	}
 
 	void Start()
@@ -447,7 +454,7 @@ public class WordManager : MonoBehaviour
 	public void removeLetter(Letter letter)
 	{
 		letter.deselect();
-		letters.Remove(letter);
+		//letters.Remove(letter);
 		if (DOTween.IsTweening (letter.GetInstanceID()))
 		{
 			DOTween.Complete (letter.GetInstanceID());
@@ -482,11 +489,14 @@ public class WordManager : MonoBehaviour
 		
 	private void addLetterToContainer(Letter letter)
 	{
-		//Agregamos la letra al ultimo
-		letter.transform.SetParent(letterContainerTransform,false);
+		if(letter.transform.parent != LetterAnimatedContainerTransform)
+		{
+			//Agregamos la letra al ultimo
+			letter.transform.SetParent(letterContainerTransform,false);
 
-		//Se actualiza el tamaño del collider al tamaño de la letra
-		updateLetterBoxCollider (letter.gameObject);
+			//Se actualiza el tamaño del collider al tamaño de la letra
+			updateLetterBoxCollider (letter.gameObject);
+		}
 	}
 
 	private void selectLetterAnimation(Letter letter)
@@ -666,8 +676,8 @@ public class WordManager : MonoBehaviour
 	private void afterWordValidation()
 	{
 		bool completeWord = wordsValidator.isCompleteWord ();
-
 		activateWordCompleteBtn(completeWord);
+		activatePointsGO(completeWord);
 		activateWordDeleteBtn (!completeWord,isThereAnyLetterOnContainer());
 
 		if(completeWord)
@@ -681,29 +691,35 @@ public class WordManager : MonoBehaviour
 		wordCompleteButton.SetActive (active);
 	}
 
+	public void activatePointsGO(bool active)
+	{
+		points.SetActive (active);
+	}
+
 	public void activateWordDeleteBtn(bool activate,bool isThereAnyLetterOnContainer = true)
 	{
 		if(activate && isThereAnyLetterOnContainer)
 		{
 			wordDeleteButton.SetActive (true);
-			noWordPosible.SetActive (false);
+			points.SetActive (true);
 		}
 		else
 		{
 			wordDeleteButton.SetActive (false);
-			
-			if(currentWordPosibleState == EWordState.NO_WORDS_AVAILABLE)
-			{				
-				noWordPosible.SetActive (true);
-			}
 		}
+	}
+
+	public void activateNoWordPosibleText(bool activate)
+	{
+		noWordPosible.SetActive (activate);
 	}
 
 	private void onLettersChange()
 	{
 		updateWordPoints();
-
+		activateWordCompleteBtn (isThereAnyLetterOnContainer ());
 		activateWordDeleteBtn(isThereAnyLetterOnContainer());
+
 		afterWordValidation();
 		changeDeleteState(EDeleteState.WORD);
 
@@ -853,7 +869,7 @@ public class WordManager : MonoBehaviour
 		abc.pointsOrMultiple = pointsOrMultiple;
 
 		letter.type = Letter.EType.WILD_CARD;
-		letter.updateColor ();
+		letter.updateSprite ();
 		letter.abcChar = abc;
 
 		letter.updateTexts();
@@ -888,7 +904,7 @@ public class WordManager : MonoBehaviour
 
 		letter.initializeFromABCChar(charInfo);
 		letter.updateTexts();
-		letter.updateColor();
+		letter.updateSprite();
 
 		return letter;
 	}
@@ -923,7 +939,7 @@ public class WordManager : MonoBehaviour
 		wildCard.type = Letter.EType.WILD_CARD;
 
 		wildCard.updateTexts();
-		wildCard.updateColor ();
+		wildCard.updateSprite ();
 
 		saveAndValidateLetter(wildCard);
 		resetValidationToSiblingOrder ();
@@ -942,6 +958,7 @@ public class WordManager : MonoBehaviour
 					gridLetter [i].updateState (Letter.EState.WRONG);
 				}
 				noWordPosible.SetActive (true);
+				activateNoWordPosibleText (true);
 			}
 			break;
 		case EWordState.WORDS_AVAILABLE:
@@ -952,6 +969,7 @@ public class WordManager : MonoBehaviour
 				{
 					gridLetter [i].updateState (Letter.EState.NORMAL);
 				}
+				activateNoWordPosibleText (false);
 			}
 			noWordPosible.SetActive (false);
 			break;
@@ -959,7 +977,6 @@ public class WordManager : MonoBehaviour
 			if (currentWordPosibleState != EWordState.HINTED_WORDS && !cancelHint) 
 			{
 				currentWordPosibleState = EWordState.HINTED_WORDS;
-
 				StartCoroutine (updateLetterHintState (gridLetter));
 			}
 			break;
@@ -980,6 +997,7 @@ public class WordManager : MonoBehaviour
 				yield return new WaitForSeconds (0.4f);
 			}
 		}
+		currentWordPosibleState = EWordState.HINTED_WORDS;
 
 		updateGridLettersState (gridLetter, EWordState.WORDS_AVAILABLE);
 		if(!cancelHint)
@@ -992,5 +1010,38 @@ public class WordManager : MonoBehaviour
 	{
 		cancelHint = true;
 		updateGridLettersState (gridLetter, EWordState.WORDS_AVAILABLE);
+	}
+
+	public void animateWordRetrieved(Letter letter)
+	{
+		Canvas canvas =  letter.GetComponent<Canvas>();
+		Transform letterTransform = letter.transform;
+
+		letterTransform.SetParent (LetterAnimatedContainerTransform,false);
+		letterTransform.DOLocalRotate(new Vector3(0,0,360),1.5f, RotateMode.FastBeyond360);
+
+		lettersRemoval.Add (letter);
+		//letters.Remove(letter);
+		StartCoroutine (lettersRemove(letter));
+		
+		letterTransform.DOLocalMoveY(25,0.5f);
+		letterTransform.DOLocalMoveX (40, 0.5f).OnComplete(()=>
+			{
+				canvas.sortingLayerName = "UI";
+				canvas.sortingOrder = -1;
+				letterTransform.DOLocalMoveY(100,1f);
+				letterTransform.DOScale(new Vector3(0,0,0),1f).OnComplete(()=>
+					{
+						activateGridLayout (true);
+						DestroyImmediate(letter.gameObject);
+						lettersRemoval.Remove (letter);
+					});
+			});
+	}
+
+	IEnumerator lettersRemove(Letter l)
+	{
+		yield return new WaitForEndOfFrame();
+		letters.Remove (l);
 	}
 }

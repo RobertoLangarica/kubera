@@ -494,7 +494,7 @@ public class GameManager : MonoBehaviour
 		onUsersAction (wordManager.wordPoints);
 		removeLettersFromGrid(wordManager.letters, true);
 
-		wordManager.removeAllLetters(true);
+		//wordManager.removeAllLetters(true);
 
 		checkIfLose ();
 		useHintWord (false);
@@ -507,6 +507,13 @@ public class GameManager : MonoBehaviour
 	private void removeLettersFromGrid(List<Letter> letters, bool useReferenceInstead = false)
 	{
 		Letter letter;
+
+		if(useReferenceInstead)
+		{
+			wordManager.activateWordCompleteBtn (false);
+			wordManager.activatePointsGO (false);
+		}
+
 		for(int i = 0; i < letters.Count; i++)
 		{
 			if(useReferenceInstead)
@@ -522,6 +529,7 @@ public class GameManager : MonoBehaviour
 			{
 				cellManager.getCellUnderPoint(letter.transform.position).clearCell();
 				gridCharacters.Remove(letter);
+				wordManager.animateWordRetrieved (letter.letterReference);
 				GameObject.DestroyImmediate(letter.gameObject);
 			}
 		}
@@ -555,7 +563,6 @@ public class GameManager : MonoBehaviour
 		//Se muestra el objetivo al inicio del nivel
 		hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
 		hudManager.setWinCondition (goalManager.currentCondition, goalManager.getGoalConditionParameters());
-
 		activatePopUp ("startGamePopUp");
 
 	}
@@ -614,7 +621,6 @@ public class GameManager : MonoBehaviour
 		if (!rotationActive) 
 		{
 			canFit = cellManager.checkIfOnePieceCanFit (pieceManager.getShowingPieces ());
-			print (canFit);
 		} 
 		else 
 		{
@@ -644,6 +650,7 @@ public class GameManager : MonoBehaviour
 
 	protected void updatePiecesLightAndUpdateLetterState()
 	{
+		print ("checando si  perdio");
 		updatePiecesLight (checkIfIsPosiblePutPieces ());
 		updateLettersState ();
 	}
@@ -663,12 +670,14 @@ public class GameManager : MonoBehaviour
 	 **/
 	protected void updateLettersState()
 	{
-		if(gridCharacters.Count != 0 && wordManager.checkIfAWordIsPossible(gridCharacters))
+		print ("updateLetterStatre");  
+		if(wordManager.checkIfAWordIsPossible(gridCharacters))
 		{
 			wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
 		}
-		else
+		else if(gridCharacters.Count > 0)
 		{				
+			print ("asdasdasdasd");  
 			wordManager.updateGridLettersState (gridCharacters, WordManager.EWordState.NO_WORDS_AVAILABLE);
 		}
 	}
@@ -999,6 +1008,7 @@ public class GameManager : MonoBehaviour
 		case "startGame":
 			allowGameInput ();
 			updatePiecesLightAndUpdateLetterState ();
+			hudManager.animateLvlGo ();
 			break;
 		case "endGame":
 			break;

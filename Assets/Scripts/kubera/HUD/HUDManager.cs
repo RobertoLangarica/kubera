@@ -17,6 +17,8 @@ public class HUDManager : MonoBehaviour
 	public Text movementsText;
 	public Text gemsText;
 	public Text levelText;
+	public GameObject lvlGo;
+	protected Button lvlButton;
 
 	public Transform[] rotationImagePositions;
 	public Transform showingPiecesContainer;
@@ -58,8 +60,7 @@ public class HUDManager : MonoBehaviour
 		popUpManager = FindObjectOfType <PopUpManager> ();
 
 		popUpManager.OnPopUpCompleted += popUpCompleted;
-
-		
+		lvlButton = lvlGo.GetComponent<Button> ();		
 	}
 
 	public int getEarnedStars()
@@ -118,8 +119,49 @@ public class HUDManager : MonoBehaviour
 		
 	public void setLevelName(string name)
 	{
+		for (int i = 0; i < name.Length; i++) 
+		{
+			if (name [i] == '0') 
+			{
+				name = name.Remove(i,1);
+				i--;
+			} 
+			else 
+			{
+				break;
+			}
+		}
 		levelText.text = name;
-	}	
+	}
+
+	//TODO: Hardcoding por prueba
+	public void animateLvlGo(bool drop = true)
+	{
+		Transform lvlTransform = lvlGo.transform;
+		float minMin = -2;
+		float minMax = 6;
+		float maxMin = 20;
+		float maxMax = 34.7f;
+		float random = UnityEngine.Random.Range (maxMin, maxMax);
+		lvlButton.interactable = false;
+		if(drop)
+		{
+			lvlGo.GetComponent<RectTransform> ().DOAnchorPos (Vector2.zero, 0.5f);
+		}
+			
+		lvlTransform.DOLocalRotate (new Vector3 (0, 0, 74.95f), 0.5f).OnComplete (() => {
+			random = UnityEngine.Random.Range (minMin, minMax);
+			lvlTransform.DOLocalRotate (new Vector3 (0, 0, random), 1).OnComplete (() => {
+				random = UnityEngine.Random.Range (maxMin, maxMax);
+				lvlTransform.DOLocalRotate (new Vector3 (0, 0, random), 1).OnComplete (() => {
+					random = UnityEngine.Random.Range (minMin, minMax);
+					lvlTransform.DOLocalRotate (new Vector3 (0, 0, 0), 1).OnComplete (() => {
+						lvlButton.interactable = true;
+					});
+				});
+			});
+		});
+	}
 
 	public void showGoalAsLetters(bool isLetters)
 	{
