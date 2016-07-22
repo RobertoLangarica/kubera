@@ -21,8 +21,12 @@ public class CellsManager : MonoBehaviour
 
 	protected float percentOfTheCellForInnerRect = 0.05f;
 
+	public Color firstCellCollor = new Color (0.39f, 0.79f, 0.81f);
+	public Color secondCellCollor = new Color (0.42f, 0.83f, 0.87f);
+
 	//Todas las celdas del grid
 	protected List<Cell> cells;
+	public GameObject[] frames;
 
 	void Update()
 	{
@@ -65,10 +69,34 @@ public class CellsManager : MonoBehaviour
 					cellInstance = GameObject.Instantiate(cellPrefab,cellInitialPosition,Quaternion.identity) as GameObject;
 					cellInstance.GetComponent<SpriteRenderer> ().sortingOrder = -1;
 					cellInstance.transform.SetParent(transform);
+					cellInstance.name = cells.Count.ToString ();
 					cells.Add(cellInstance.GetComponent<Cell>());
 					cellInstance.transform.localScale = new Vector3 (cellScale,cellScale,cellScale);
 					
 					cellInitialPosition.x += cellSize + gap;
+
+					if(i % 2 == 0)
+					{
+						if(j % 2 == 0 )
+						{
+							cellInstance.GetComponent<SpriteRenderer> ().color = firstCellCollor;
+						}
+						else
+						{
+							cellInstance.GetComponent<SpriteRenderer> ().color = secondCellCollor;
+						}
+					}
+					else
+					{
+						if(j % 2 == 0 )
+						{
+							cellInstance.GetComponent<SpriteRenderer> ().color = secondCellCollor;
+						}
+						else
+						{
+							cellInstance.GetComponent<SpriteRenderer> ().color = firstCellCollor;
+						}
+					}
 				}
 				cellInitialPosition.y -= cellSize + gap;
 				cellInitialPosition.x = transform.position.x;
@@ -938,5 +966,62 @@ public class CellsManager : MonoBehaviour
 			}
 		}
 		return false;
+	}
+
+	public void createFrame()
+	{
+		print (cells.Count);
+		GameObject frameInstance = null;
+
+		for (int i = 0; i < rows; i++) 
+		{
+			for (int j = 0; j < columns; j++) 
+			{
+				if(cells[(i * rows) + j].cellType != Cell.EType.EMPTY)
+				{
+					//vecino de arriba
+					if( i== 0 || (i != 0 && cells[((i * rows) + j)-rows].cellType == Cell.EType.EMPTY))
+					{
+						frameInstance = GameObject.Instantiate(frames[0]) as GameObject;
+						frameInstance.GetComponent<SpriteRenderer> ().sortingLayerName = "Grid";
+						frameInstance.GetComponent<SpriteRenderer> ().sortingOrder = 0;
+						frameInstance.transform.SetParent(cells[(i * rows) + j].transform,false);
+						frameInstance.SetActive (true);
+						print ("marco arriba " + ((i * rows) + j));
+
+					}
+					//vecino izquierdo
+					if(j== 0 ||(j != 0 && cells[((i * rows) + j)-1].cellType == Cell.EType.EMPTY))
+					{
+						frameInstance = GameObject.Instantiate(frames[1]) as GameObject;
+						frameInstance.GetComponent<SpriteRenderer> ().sortingLayerName = "Grid";
+						frameInstance.GetComponent<SpriteRenderer> ().sortingOrder = 0;
+						frameInstance.transform.SetParent(cells[(i * rows) + j].transform,false);
+						frameInstance.SetActive (true);
+						print ("marco izquierdo " + ((i * rows) + j));
+					}
+					//vecino derecho
+					if(j== columns-1 || (j < columns+1 && cells[((i * rows) + j)+1].cellType == Cell.EType.EMPTY))
+					{
+						frameInstance = GameObject.Instantiate(frames[2]) as GameObject;
+						frameInstance.GetComponent<SpriteRenderer> ().sortingLayerName = "Grid";
+						frameInstance.GetComponent<SpriteRenderer> ().sortingOrder = 0;
+						frameInstance.transform.SetParent(cells[(i * rows) + j].transform,false);
+						frameInstance.SetActive (true);
+						print ("marco derecho " + ((i * rows) + j));
+					}
+					//vecino de abajo
+					if(i == rows-1 ||(i < rows +1  && cells[((i * rows) + j)+rows].cellType == Cell.EType.EMPTY))
+					{
+						frameInstance = GameObject.Instantiate(frames[3]) as GameObject;
+						frameInstance.GetComponent<SpriteRenderer> ().sortingLayerName = "Grid";
+						frameInstance.GetComponent<SpriteRenderer> ().sortingOrder = 0;
+						frameInstance.transform.SetParent(cells[(i * rows) + j].transform,false);
+						frameInstance.SetActive (true);
+						print ("marco abajo " + ((i * rows) + j));
+					}
+				}
+			}
+		}
 	}
 }
