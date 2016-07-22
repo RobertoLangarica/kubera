@@ -9,6 +9,12 @@ using Data;
 
 public class GameManager : MonoBehaviour 
 {
+	public delegate void DGameManagerNotification();
+
+	public DGameManagerNotification OnPiecePositionated;
+	public DGameManagerNotification OnPointsEarned;
+	public DGameManagerNotification OnMovementRemoved;
+
 	public Text scoreText;
 
 	public GameObject bonificationPiecePrefab;
@@ -117,7 +123,7 @@ public class GameManager : MonoBehaviour
 
 	protected void startGame()
 	{
-		configureLevel(PersistentData.GetInstance().currentLevel);
+		configureLevel(PersistentData.GetInstance().getRandomLevel());
 
 
 		populateGridFromLevel(currentLevel);
@@ -312,6 +318,11 @@ public class GameManager : MonoBehaviour
 			putPiecesOnGrid (piece, cellsUnderPiece);
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.PIECE_POSITIONATED);
 
+			if (OnPiecePositionated != null) 
+			{
+				OnPiecePositionated ();
+			}
+
 			//Tomamos en cuenta los tiempos de todos los twens de posicionamiento
 			StartCoroutine(afterPiecePositioned(piece));
 
@@ -458,11 +469,21 @@ public class GameManager : MonoBehaviour
 	{
 		pointsCount += amount;
 		goalManager.submitPoints (amount);
+
+		if (OnPointsEarned != null) 
+		{
+			OnPointsEarned ();
+		}
 	}
 
 	protected void substractMoves(int amount)
 	{
 		remainingMoves-=amount;
+
+		if (OnMovementRemoved != null) 
+		{
+			OnMovementRemoved ();
+		}
 	}
 
 	public void activeMoney(bool show,int howMany=0)
@@ -657,11 +678,13 @@ public class GameManager : MonoBehaviour
 
 	protected void updatePiecesLight(bool canFit)
 	{
-		HighLightManager.GetInstance ().turnOffHighLights ();
-
-		if(!canFit)
+		if (!canFit) 
 		{
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.NO_SPACE_FOR_PIECES);
+		} 
+		else 
+		{
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.NO_SPACE_FOR_PIECES);
 		}
 	}
 
@@ -821,7 +844,7 @@ public class GameManager : MonoBehaviour
 		{
 			if(!LevelsDataManager.GetInstance())
 			{
-				print ("S");
+				//print ("S");
 
 			}
 			else

@@ -16,6 +16,16 @@ public class HighLightManager : Manager<HighLightManager>
 		DESTROY_SPECIFIC_COLOR,
 		WORD_HINT,
 		NO_SPACE_FOR_PIECES,
+		PIECES_AREA,
+		EMPTY_CELLS,
+		SUBMIT_WORD,
+		OBJECTIVE,
+		MOVEMENTS,
+		BOMB_BUTTON,
+		DESTROY_BUTTON,
+		ROTATE_BUTTON,
+		SQUARE_BUTTON,
+		WILDCARD_BUTTON
 	}
 
 	public enum EHighLightStatus
@@ -29,11 +39,13 @@ public class HighLightManager : Manager<HighLightManager>
 	public Color normalHighLight;
 	public Color wrongHighLight;
 
-	protected List<GameObject> activeHighLight = new List<GameObject>();
-	protected List<GameObject> wasActiveHighLight = new List<GameObject>();
+	protected List<HighLight> activeHighLight = new List<HighLight>();
 	protected CellsManager _cellManager;
 	protected HUDManager _hudManager;
 	protected WordManager _wordManager;
+	protected PowerUpManager _powerUpManager;
+
+	protected EHighLightType currentType;
 
 	protected CellsManager cellManager
 	{
@@ -74,16 +86,27 @@ public class HighLightManager : Manager<HighLightManager>
 		}
 	}
 
+	protected PowerUpManager powerUpManager
+	{
+		get
+		{
+			if (_powerUpManager == null) 
+			{
+				_powerUpManager = FindObjectOfType<PowerUpManager> ();
+			}
+
+			return _powerUpManager;
+		}
+	}
+
+	/*
+	 * NOTA: El que prenda el highLight se tiene que encargar de apagar su propio HighLight
+	*/
 	public void setHighLightOfType(EHighLightType type,Object obj = null)
 	{
 		Cell[] tempCell = null;
 
-		for(int i=0; i<activeHighLight.Count; i++)
-		{
-			wasActiveHighLight.Add (activeHighLight [i]);
-			wasActiveHighLight [i].SetActive (false);
-			activeHighLight.RemoveAt(i);
-		}
+		currentType = type;
 
 		switch (type) 
 		{
@@ -93,147 +116,103 @@ public class HighLightManager : Manager<HighLightManager>
 
 			for (int i = 0; i < tempCell.Length; i++) 
 			{
-				turnOnHighLights (tempCell [i].transform);
+				turnOnHighLights (tempCell [i].transform,EHighLightStatus.NORMAL);
 			}
-			setHighLightStatus (EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.BOMB_SPECIFIC_COLOR):
 			tempCell = cellManager.getCellNeighborsOfSameColor (obj as Cell);
 
 			for (int i = 0; i < tempCell.Length; i++) 
 			{
-				turnOnHighLights (tempCell[i].transform);
+				turnOnHighLights (tempCell[i].transform,EHighLightStatus.NORMAL);
 			}
-			setHighLightStatus (EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.DESTROY_SPECIFIC_COLOR):
 			tempCell = cellManager.getCellsOfSameColor (obj as Cell);
 
 			for (int i = 0; i < tempCell.Length; i++) 
 			{
-				turnOnHighLights (tempCell[i].transform);
+				turnOnHighLights (tempCell[i].transform,EHighLightStatus.NORMAL);
 			}
-			setHighLightStatus (EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.ROTATE_POWERUP):
-			turnOnHighLights (hudManager.rotationImagePositions[0].parent.parent);
-			setHighLightStatus (EHighLightStatus.NORMAL);
+		case(EHighLightType.PIECES_AREA):
+			turnOnHighLights (hudManager.rotationImagePositions[0].parent.parent,EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.SQUARE_POWERUP):
+		case(EHighLightType.EMPTY_CELLS):
 			tempCell = cellManager.getAllEmptyCells ();
 
 			for (int i = 0; i < tempCell.Length; i++) 
 			{
-				turnOnHighLights (tempCell[i].transform);
+				turnOnHighLights (tempCell[i].transform,EHighLightStatus.NORMAL);
 			}
-			setHighLightStatus (EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.WILDCARD_POWERUP):
-			turnOnHighLights (wordManager.letterContainer.transform.parent);
-			setHighLightStatus (EHighLightStatus.NORMAL);
+			turnOnHighLights (wordManager.letterContainer.transform.parent,EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.WORD_HINT):
 			tempCell = cellManager.getAllShowedCels ();
 
 			for (int i = 0; i < tempCell.Length; i++) 
 			{
-				turnOnHighLights (tempCell[i].transform);
+				turnOnHighLights (tempCell[i].transform,EHighLightStatus.NORMAL);
 			}
-			setHighLightStatus (EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.NO_SPACE_FOR_PIECES):
-			turnOnHighLights (hudManager.rotationImagePositions[0].parent.parent);
-			setHighLightStatus (EHighLightStatus.WRONG);
+			turnOnHighLights (hudManager.rotationImagePositions[0].parent.parent,EHighLightStatus.WRONG);
+			break;
+		case(EHighLightType.SUBMIT_WORD):
+			turnOnHighLights (wordManager.wordCompleteButton.transform,EHighLightStatus.NORMAL);
+			break;
+		case(EHighLightType.OBJECTIVE):
+			turnOnHighLights (hudManager.goalText.transform.parent,EHighLightStatus.NORMAL);
+			break;
+		case(EHighLightType.MOVEMENTS):
+			turnOnHighLights (hudManager.movementsText.transform.parent,EHighLightStatus.NORMAL);
+			break;
+		case(EHighLightType.BOMB_BUTTON):
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.BOMB).powerUpButton,EHighLightStatus.NORMAL);
+			break;
+		case(EHighLightType.DESTROY_BUTTON):
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.DESTROY).powerUpButton,EHighLightStatus.NORMAL);
+			break;
+		case(EHighLightType.ROTATE_BUTTON):
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.ROTATE).powerUpButton,EHighLightStatus.NORMAL);
+			break;
+		case(EHighLightType.SQUARE_BUTTON):
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.BLOCK).powerUpButton,EHighLightStatus.NORMAL);
+			break;
+		case(EHighLightType.WILDCARD_BUTTON):
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.WILDCARD).powerUpButton,EHighLightStatus.NORMAL);
 			break;
 		}
 	}
 
-	protected void turnOnHighLights(Transform objectToSearch)
+	protected void turnOnHighLights(Transform objectToSearch,EHighLightStatus status)
 	{
+		HighLight tempHL = null;
+
 		for (int i = 0; i < objectToSearch.childCount; i++) 
 		{
 			if (objectToSearch.GetChild(i).tag == HIGHLIGHT_TAG) 
 			{
-				objectToSearch.GetChild (i).gameObject.SetActive(true);
-				activeHighLight.Add (objectToSearch.GetChild (i).gameObject);
-			}
-		}
-	}
-
-	protected void setHighLightStatus(EHighLightStatus status)
-	{
-		Color temp = Color.white;
-		Image tempImg = null;
-		SpriteRenderer tempSpt = null;
-
-		switch (status) 
-		{
-		case(EHighLightStatus.NORMAL):
-			temp = normalHighLight;
-			break;
-		case(EHighLightStatus.WRONG):
-			temp = wrongHighLight;
-			break;
-		}
-
-		for (int i = 0; i < activeHighLight.Count; i++) 
-		{
-			tempImg = activeHighLight[i].GetComponent<Image>();
-			if (tempImg != null) 
-			{
-				tempImg.color = temp;
-			} 
-			else 
-			{
-				tempSpt = activeHighLight [i].GetComponent<SpriteRenderer> ();
-				if (tempSpt != null) 
+				tempHL = objectToSearch.GetChild (i).gameObject.GetComponent<HighLight> ();
+				if (tempHL.activateHighLight (currentType, status)) 
 				{
-					tempSpt.color = temp;
+					activeHighLight.Add (tempHL);
 				}
 			}
 		}
 	}
 
-	public void turnOffHighLights()
-	{
-		for (int i = 0; i < activeHighLight.Count; i++) 
-		{
-			activeHighLight [i].SetActive (false);
-		}
-
-		activeHighLight.Clear ();
-		activeHighLight = new List<GameObject> ();
-
-		for (int i = 0; i < wasActiveHighLight.Count; i++) 
-		{
-			activeHighLight.Add (wasActiveHighLight [i]);
-			activeHighLight [i].SetActive (true);
-			wasActiveHighLight.RemoveAt(i);
-		}
-		setHighLightStatus (EHighLightStatus.WRONG);
-	}
-
-	/**
-	 * Apaga solo las luces del escogido
-	 **/
 	public void turnOffHighLights(EHighLightType type)
 	{
-		switch (type) 
+		for (int i = activeHighLight.Count -1; i > -1; i--) 
 		{
-		case EHighLightType.NO_SPACE_FOR_PIECES:
-			turnOffHighLights (hudManager.rotationImagePositions [0].parent.parent);
-			break;
-		}
-	}
-
-	protected void turnOffHighLights(Transform objectToSearch)
-	{
-		for (int i = 0; i < objectToSearch.childCount; i++) 
-		{
-			if (objectToSearch.GetChild(i).tag == HIGHLIGHT_TAG) 
+			if (activeHighLight [i].completlyDeactivateType (type)) 
 			{
-				objectToSearch.GetChild (i).gameObject.SetActive(false);
-				activeHighLight.Remove (objectToSearch.GetChild (i).gameObject);
+				activeHighLight.RemoveAt (i);
 			}
 		}
 	}

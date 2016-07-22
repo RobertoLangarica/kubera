@@ -20,6 +20,7 @@ public class TutorialManager : MonoBehaviour
 	private InputWords inputWords;
 
 	private WordManager wordManager;
+	private GameManager gameManager;
 	private PowerUpManager powerUpManager;
 	private LinesCreatedAnimation linesAnimation;
 
@@ -32,16 +33,18 @@ public class TutorialManager : MonoBehaviour
 
 		wordManager = FindObjectOfType<WordManager> ();
 
+		gameManager = FindObjectOfType<GameManager> ();
+
 		powerUpManager = FindObjectOfType<PowerUpManager> ();
 
 		linesAnimation = FindObjectOfType<LinesCreatedAnimation> ();
 
-		//selectTutorial ();
+		selectTutorial ();
 	}
 
 	void Update()
 	{
-		/*if (currentTutorial == null) 
+		if (currentTutorial == null) 
 		{
 			selectTutorial ();
 		}
@@ -49,14 +52,14 @@ public class TutorialManager : MonoBehaviour
 		if (currentTutorial.phaseEvent == TutorialBase.ENextPhaseEvent.TAP && (Input.touchCount >= 1 || Input.GetMouseButtonDown(0))) 
 		{
 			canCompletePhase ();
-		}*/
+		}
 	}
 
 	protected void selectTutorial()
 	{
 		for (int i = 0; i < allTutorials.Count; i++) 
 		{
-			if (PersistentData.GetInstance().currentLevel.name == allTutorials [i].levelName) 
+			if (PersistentData.GetInstance().getRandomLevel().name == allTutorials [i].levelName) 
 			{
 				currentTutorial = allTutorials [i];
 				currentTutorial.gameObject.SetActive (true);
@@ -71,66 +74,6 @@ public class TutorialManager : MonoBehaviour
 		{
 			this.enabled = false;
 		}
-	}
-
-	protected void updateInputStatus()
-	{
-		if (!currentTutorial.allowDragPieces) 
-		{
-			inputPiece.gameObject.GetComponent<DragRecognizer>().enabled = false;
-			inputPiece.gameObject.GetComponent<LongPressRecognizer>().enabled = false;
-		}
-		if (!currentTutorial.allowErraseWord) 
-		{
-			deleteBtn.enabled = false;
-		}
-		if (!currentTutorial.allowGridTap) 
-		{
-			inputWords.onTap -= wordManager.OnGridLetterTapped;
-		}
-		if (!currentTutorial.allowLetterDrag) 
-		{
-			inputWords.gameObject.GetComponent<DragRecognizer> ().enabled = false;
-		}
-		if (!currentTutorial.allowWordTap) 
-		{
-			inputWords.onTapToDelete -= wordManager.onLetterTap;
-		}
-		if (!currentTutorial.allowPowerUps) 
-		{
-			powerUpManager.allowPowerUps = false;
-		}
-	}
-
-	protected void resetInputsToDefault()
-	{
-		if (!currentTutorial.allowDragPieces) 
-		{
-			inputPiece.gameObject.GetComponent<DragRecognizer>().enabled = true;
-			inputPiece.gameObject.GetComponent<LongPressRecognizer>().enabled = true;
-		}
-		if (!currentTutorial.allowErraseWord) 
-		{
-			deleteBtn.enabled = true;
-		}
-		if (!currentTutorial.allowGridTap) 
-		{
-			inputWords.onTap -= wordManager.OnGridLetterTapped;
-			inputWords.onTap += wordManager.OnGridLetterTapped;
-		}
-		if (!currentTutorial.allowLetterDrag) 
-		{
-			inputWords.gameObject.GetComponent<DragRecognizer> ().enabled = true;
-		}
-		if (!currentTutorial.allowWordTap) 
-		{
-			inputWords.onTapToDelete -= wordManager.onLetterTap;
-			inputWords.onTapToDelete += wordManager.onLetterTap;
-		}
-		if (!currentTutorial.allowPowerUps) 
-		{
-			powerUpManager.allowPowerUps = true;
-		}	
 	}
 
 	public void makeAPowerUpFree(PowerupBase powerUp)
@@ -165,9 +108,11 @@ public class TutorialManager : MonoBehaviour
 		{
 		case(TutorialBase.ENextPhaseEvent.CREATE_WORD):
 			inputWords.onDragFinish += canCompletePhase;
+			inputWords.onTap += canCompletePhase;
 			break;
 		case(TutorialBase.ENextPhaseEvent.SUBMIT_WORD):
-			submitBtn.onClick.AddListener (() => canCompletePhase());
+		case(TutorialBase.ENextPhaseEvent.CLEAR_A_LINE):
+			submitBtn.onClick.AddListener (foo);
 			break;
 		case(TutorialBase.ENextPhaseEvent.CREATE_A_LINE):
 			linesAnimation.OnCellFlipped += canCompletePhase; 
@@ -185,7 +130,7 @@ public class TutorialManager : MonoBehaviour
 			keyBoard.OnLetterSelected -= keyBoard.setLetterToWildCard;
 			break;
 		case(TutorialBase.ENextPhaseEvent.DELETE_WORD):
-			deleteBtn.onClick.AddListener (() => canCompletePhase());
+			deleteBtn.onClick.AddListener (() => {canCompletePhase();});
 			break;
 		case(TutorialBase.ENextPhaseEvent.PIECE_ROTATED):
 			inputRotate.OnPieceRotated += canCompletePhase;
@@ -205,6 +150,15 @@ public class TutorialManager : MonoBehaviour
 		case(TutorialBase.ENextPhaseEvent.WILDCARD_USED):
 			powerUpManager.getPowerupByType (PowerupBase.EType.WILDCARD).OnPowerupCompleted += canCompletePhase;
 			break;
+		case(TutorialBase.ENextPhaseEvent.POSITIONATE_PIECE):
+			gameManager.OnPiecePositionated += canCompletePhase;
+			break;
+		case(TutorialBase.ENextPhaseEvent.EARNED_POINTS):
+			gameManager.OnPointsEarned += canCompletePhase;
+			break;
+		case(TutorialBase.ENextPhaseEvent.MOVEMENT_USED):
+			gameManager.OnMovementRemoved += canCompletePhase;
+			break;
 		}
 	}
 
@@ -214,9 +168,11 @@ public class TutorialManager : MonoBehaviour
 		{
 		case(TutorialBase.ENextPhaseEvent.CREATE_WORD):
 			inputWords.onDragFinish -= canCompletePhase;
+			inputWords.onTap -= canCompletePhase;
 			break;
 		case(TutorialBase.ENextPhaseEvent.SUBMIT_WORD):
-			submitBtn.onClick.RemoveListener (() => canCompletePhase());
+		case(TutorialBase.ENextPhaseEvent.CLEAR_A_LINE):
+			submitBtn.onClick.RemoveListener (foo);
 			break;
 		case(TutorialBase.ENextPhaseEvent.CREATE_A_LINE):
 			linesAnimation.OnCellFlipped -= canCompletePhase; 
@@ -254,7 +210,21 @@ public class TutorialManager : MonoBehaviour
 		case(TutorialBase.ENextPhaseEvent.WILDCARD_USED):
 			powerUpManager.getPowerupByType (PowerupBase.EType.WILDCARD).OnPowerupCompleted -= canCompletePhase;
 			break;
+		case(TutorialBase.ENextPhaseEvent.POSITIONATE_PIECE):
+			gameManager.OnPiecePositionated -= canCompletePhase;
+			break;
+		case(TutorialBase.ENextPhaseEvent.EARNED_POINTS):
+			gameManager.OnPointsEarned -= canCompletePhase;
+			break;
+		case(TutorialBase.ENextPhaseEvent.MOVEMENT_USED):
+			gameManager.OnMovementRemoved -= canCompletePhase;
+			break;
 		}
+	}
+
+	public void foo()
+	{
+		canCompletePhase ();
 	}
 
 	public void canCompletePhase(GameObject go,bool byDrag = false)
@@ -304,12 +274,10 @@ public class TutorialManager : MonoBehaviour
 
 	public void moveTutorialToNextPhase()
 	{
-		resetInputsToDefault ();
 		unregisterForNextPhase ();
 
 		currentTutorial.canMoveToNextPhase ();
 
-		updateInputStatus ();
 		registerForNextPhase ();
 
 		for (int i = 0; i < powerUpManager.powerups.Count; i++) 

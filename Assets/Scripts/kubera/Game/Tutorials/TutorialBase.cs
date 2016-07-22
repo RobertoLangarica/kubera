@@ -21,7 +21,11 @@ public class TutorialBase : MonoBehaviour
 		BLOCK_USED,
 		ROTATE_USED,
 		DESTROY_USED,
-		WILDCARD_USED
+		WILDCARD_USED,
+		POSITIONATE_PIECE,
+		CLEAR_A_LINE,
+		EARNED_POINTS,
+		MOVEMENT_USED
 	}
 
 	[HideInInspector]public bool allowGridTap;

@@ -15,14 +15,7 @@ public class TutorialLvl37 : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent = ENextPhaseEvent.ROTATE_USED;
-
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = true;
+			phaseEvent = ENextPhaseEvent.POSITIONATE_PIECE;
 
 			freeBlocks = false;
 			freeBombs = false;
@@ -30,72 +23,33 @@ public class TutorialLvl37 : TutorialBase
 			freeDestroy = false;
 			freeWildCard = false;
 
-			instructions [0].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE1A);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.ROTATE_BUTTON);
 
-			instructions [1].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE1B);
+			instructions [0].text = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE1),
+				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
 
 			phase = 1;
 			return true;
 		case(1):
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent = ENextPhaseEvent.PIECE_ROTATED;
-
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = false;
-
-			freeBlocks = false;
-			freeBombs = false;
-			freeRotates = false;
-			freeDestroy = false;
-			freeWildCard = false;
-
-			instructions [2].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE2);		
-			phase = 2;
-			return true;
-		case(2):
-			phasesPanels [1].SetActive (false);
-			phasesPanels [2].SetActive (true);
 			phaseEvent = ENextPhaseEvent.TAP;
-
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = false;
-
-			freeBlocks = false;
-			freeBombs = false;
-			freeRotates = false;
-			freeDestroy = false;
-			freeWildCard = false;
-
-			instructions [3].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE3A);
-		
-			instructions [4].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE3B);			
-			phase = 3;
-			return true;
-		case(3):
-			phasesPanels [2].SetActive (false);
-
-			allowGridTap = true;
-			allowWordTap = true;
-			allowLetterDrag = true;
-			allowErraseWord = true;
-			allowDragPieces = true;
-			allowPowerUps = true;
 
 			freeBlocks = false;
 			freeBombs = false;
 			freeRotates = true;
 			freeDestroy = false;
 			freeWildCard = false;
-			return true;			
+
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.ROTATE_BUTTON);
+
+			instructions [1].text = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE2),
+				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+
+			phase = 2;
+			return true;
 		}
 
 		return base.canMoveToNextPhase ();
@@ -107,18 +61,8 @@ public class TutorialLvl37 : TutorialBase
 		{
 		case(1):
 			return true;
-		case(2):
-			Invoke ("callForTutorialManager",0.7f);
-			return false;
-		case(3):
-			return true;
 		}
 
 		return base.phaseObjectiveAchived ();
-	}	
-
-	protected void callForTutorialManager ()
-	{
-		FindObjectOfType<TutorialManager> ().moveTutorialToNextPhase ();
 	}
 }

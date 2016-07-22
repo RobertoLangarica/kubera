@@ -69,22 +69,29 @@ public class InputBombAndDestroy : MonoBehaviour
 						Cell cellSelected = cellsManager.getCellUnderPoint (currentSelected.transform.position);
 						if (cellSelected != null) 
 						{
-							if (cellSelected.contentColor != Piece.EColor.LETTER_OBSTACLE &&
-							   cellSelected.contentColor != Piece.EColor.NONE) 
+							if (cellSelected.content != null) 
 							{
-								if (selectedCellColor != null) 
+								if (cellSelected.contentColor != Piece.EColor.LETTER_OBSTACLE &&
+								   cellSelected.contentColor != Piece.EColor.NONE) 
 								{
-									if (selectedCellColor != cellSelected.contentColor) 
+									if (selectedCellColor != null) 
 									{
-										OnCellSelected (cellSelected);
+										if (selectedCellColor != cellSelected.contentColor) 
+										{
+											OnCellSelected (cellSelected);
+										}
+									} 
+									else 
+									{
+										selectedCellColor = cellSelected.contentColor;
+										OnCellSelected (cellSelected);	
 									}
 								} 
 								else 
 								{
-									selectedCellColor = cellSelected.contentColor;
-									OnCellSelected (cellSelected);	
+									OnCellSelected (null);	
 								}
-							} 
+							}
 							else 
 							{
 								OnCellSelected (null);	

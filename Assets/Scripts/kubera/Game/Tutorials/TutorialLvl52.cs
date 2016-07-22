@@ -17,22 +17,17 @@ public class TutorialLvl52 : TutorialBase
 			phasesPanels [0].SetActive (true);
 			phaseEvent = ENextPhaseEvent.DESTROY_USED;
 
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = true;
-
 			freeBlocks = false;
 			freeBombs = false;
 			freeRotates = false;
 			freeDestroy = true;
 			freeWildCard = false;
 
-			instructions [0].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV52_PHASE1A);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.DESTROY_BUTTON);
 
-			instructions [1].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV52_PHASE1B);
+			instructions [0].text = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV52_PHASE1),
+				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
 
 			phase = 1;
 			return true;
@@ -41,40 +36,20 @@ public class TutorialLvl52 : TutorialBase
 			phasesPanels [1].SetActive (true);
 			phaseEvent = ENextPhaseEvent.TAP;
 
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = false;
-
 			freeBlocks = false;
 			freeBombs = false;
 			freeRotates = false;
 			freeDestroy = false;
 			freeWildCard = false;
 
-			instructions [2].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV52_PHASE2A);
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_BUTTON);
 
-			instructions [3].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV52_PHASE2B);			
+			instructions [1].text = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV52_PHASE2),
+				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+			
 			phase = 2;
-			return true;
-		case(2):
-			phasesPanels [1].SetActive (false);
-
-			allowGridTap = true;
-			allowWordTap = true;
-			allowLetterDrag = true;
-			allowErraseWord = true;
-			allowDragPieces = true;
-			allowPowerUps = true;
-
-			freeBlocks = false;
-			freeBombs = false;
-			freeRotates = false;
-			freeDestroy = true;
-			freeWildCard = false;
-			return true;			
+			return true;		
 		}
 
 		return base.canMoveToNextPhase ();
@@ -85,8 +60,6 @@ public class TutorialLvl52 : TutorialBase
 		switch (phase) 
 		{
 		case(1):
-			return true;
-		case(2):
 			return true;
 		}
 

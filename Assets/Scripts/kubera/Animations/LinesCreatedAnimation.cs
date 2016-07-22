@@ -54,7 +54,6 @@ public class LinesCreatedAnimation : MonoBehaviour
 		{
 			isOnAnimation = false;
 		}
-
 		OnCellFlipped (cellParent,letterContent);
 	}
 

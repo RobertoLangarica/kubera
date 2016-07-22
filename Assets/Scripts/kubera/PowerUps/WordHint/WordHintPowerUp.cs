@@ -39,7 +39,6 @@ public class WordHintPowerUp : PowerupBase {
 		updateDragableObjectImage (powerUpGO);
 		if(wordManager.checkIfAWordIsPossible(gameManager.getGridCharacters()))
 		{
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WORD_HINT);
 		}
 	}
 
@@ -58,7 +57,6 @@ public class WordHintPowerUp : PowerupBase {
 					DestroyImmediate (powerUpGO);
 					powerUpInput.OnDrop -= powerUpPositioned;
 					powerUpInput.enabled = false;
-					HighLightManager.GetInstance ().turnOffHighLights ();
 					OnComplete ();
 				} 
 				else 
@@ -88,7 +86,6 @@ public class WordHintPowerUp : PowerupBase {
 		powerUpInput.OnDrop -= powerUpPositioned;
 		powerUpInput.enabled = false;
 
-		HighLightManager.GetInstance ().turnOffHighLights ();
 
 		OnCancel();
 	}
@@ -104,7 +101,6 @@ public class WordHintPowerUp : PowerupBase {
 		powerUpInput.OnDrop -= powerUpPositioned;
 		powerUpInput.enabled = false;
 
-		HighLightManager.GetInstance ().turnOffHighLights ();
 
 		OnCompletedNoGems ();
 
