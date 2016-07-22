@@ -125,10 +125,10 @@ public class GameManager : MonoBehaviour
 	{
 		configureLevel(PersistentData.GetInstance().getRandomLevel());
 
-
 		populateGridFromLevel(currentLevel);
 
 		refreshCurrentWordScoreOnHUD (wordManager.wordPoints);
+		TutorialManager.GetInstance ().init ();
 	}
 
 	void Update()
@@ -193,7 +193,6 @@ public class GameManager : MonoBehaviour
 
 		initHudValues();
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
-		TutorialManager.GetInstance ().init ();
 	}
 		
 	protected void initLettersFromLevel(Level level)
