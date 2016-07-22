@@ -670,14 +670,12 @@ public class GameManager : MonoBehaviour
 	 **/
 	protected void updateLettersState()
 	{
-		print ("updateLetterStatre");  
 		if(wordManager.checkIfAWordIsPossible(gridCharacters))
 		{
 			wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
 		}
 		else if(gridCharacters.Count > 0)
 		{				
-			print ("asdasdasdasd");  
 			wordManager.updateGridLettersState (gridCharacters, WordManager.EWordState.NO_WORDS_AVAILABLE);
 		}
 	}
