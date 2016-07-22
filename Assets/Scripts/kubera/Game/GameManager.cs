@@ -193,6 +193,7 @@ public class GameManager : MonoBehaviour
 
 		initHudValues();
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
+		TutorialManager.GetInstance ().init ();
 	}
 		
 	protected void initLettersFromLevel(Level level)

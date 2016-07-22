@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class TutorialManager : MonoBehaviour
+public class TutorialManager : Manager<TutorialManager>
 {
 	public Button deleteBtn;
 	public Button submitBtn;
@@ -24,7 +24,7 @@ public class TutorialManager : MonoBehaviour
 	private PowerUpManager powerUpManager;
 	private LinesCreatedAnimation linesAnimation;
 
-	void Start()
+	public void init()
 	{
 		inputBlock = FindObjectOfType<InputBlockPowerUp> ();
 		inputPiece = FindObjectOfType<InputPiece> ();

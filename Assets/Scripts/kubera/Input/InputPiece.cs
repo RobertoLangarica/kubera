@@ -127,12 +127,13 @@ public class InputPiece : MonoBehaviour
 			posOverFinger.z = -1;
 			posOverFinger += offsetPositionOverFinger;
 
-			currentSelected.transform.DOScale (currentSelected.transform.localScale * 0.8f, 0.075f).SetId(currentSelected).OnComplete (()=>
+			moveTo(currentSelected,posOverFinger,pieceSpeed); 
+			OnSelected (currentSelected,true);
+			currentSelected.transform.DOScale(selectedScale,.075f).SetId("Input_SelectedScale").OnComplete(()=>{});
+			/*currentSelected.transform.DOScale (currentSelected.transform.localScale * 0.8f, 0.075f).SetId(currentSelected).OnComplete (()=>
 				{
-					moveTo(currentSelected,posOverFinger,pieceSpeed); 
 					currentSelected.transform.DOScale(selectedScale,.075f).SetId("Input_SelectedScale").OnComplete(()=>{});
-					OnSelected (currentSelected,true);
-				});
+				});*/
 
 
 			isLongPressed = true;
