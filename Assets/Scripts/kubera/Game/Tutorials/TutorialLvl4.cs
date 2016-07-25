@@ -11,11 +11,13 @@ public class TutorialLvl4 : TutorialBase
 
 	public override bool canMoveToNextPhase ()
 	{
+		phaseEvent.Clear ();
+
 		switch (phase) 
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent = ENextPhaseEvent.DELETE_WORD;
+			phaseEvent.Add(ENextPhaseEvent.DELETE_WORD);
 
 			allowGridTap = false;
 			allowWordTap = false;

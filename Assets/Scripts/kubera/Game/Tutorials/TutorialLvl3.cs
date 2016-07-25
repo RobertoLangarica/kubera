@@ -12,11 +12,13 @@ public class TutorialLvl3 : TutorialBase
 
 	public override bool canMoveToNextPhase ()
 	{
+		phaseEvent.Clear ();
+
 		switch (phase) 
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent = ENextPhaseEvent.GRID_SPECIFIC_LETTER_TAPPED;
+			phaseEvent.Add(ENextPhaseEvent.GRID_SPECIFIC_LETTER_TAPPED);
 
 			allowGridTap = true;
 			allowWordTap = false;
@@ -35,7 +37,7 @@ public class TutorialLvl3 : TutorialBase
 		case(1):
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent = ENextPhaseEvent.SUBMIT_WORD;
+			phaseEvent.Add(ENextPhaseEvent.SUBMIT_WORD);
 
 			allowGridTap = false;
 			allowWordTap = false;

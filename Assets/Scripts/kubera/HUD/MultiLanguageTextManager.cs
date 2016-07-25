@@ -38,9 +38,9 @@ public class MultiLanguageTextManager
 	public const string TUTORIAL_LV1_PHASE9					= "Tutorial_lvl1_phase9";
 
 	public const string TUTORIAL_LV2_PHASE1					= "Tutorial_lvl2_phase1";
-	public const string TUTORIAL_LV2_PHASE2A				= "Tutorial_lvl2_phase2A";
-	public const string TUTORIAL_LV2_PHASE2B				= "Tutorial_lvl2_phase2B";
+	public const string TUTORIAL_LV2_PHASE2					= "Tutorial_lvl2_phase2";
 	public const string TUTORIAL_LV2_PHASE3					= "Tutorial_lvl2_phase3";
+	public const string TUTORIAL_LV2_PHASE4					= "Tutorial_lvl2_phase4";
 
 	public const string TUTORIAL_LV3_PHASE1					= "Tutorial_lvl3_phase1";
 	public const string TUTORIAL_LV3_PHASE2A				= "Tutorial_lvl3_phase2A";

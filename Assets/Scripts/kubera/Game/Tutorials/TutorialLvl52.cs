@@ -11,11 +11,13 @@ public class TutorialLvl52 : TutorialBase
 
 	public override bool canMoveToNextPhase ()
 	{
+		phaseEvent.Clear ();
+
 		switch (phase) 
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent = ENextPhaseEvent.DESTROY_USED;
+			phaseEvent.Add(ENextPhaseEvent.DESTROY_USED);
 
 			freeBlocks = false;
 			freeBombs = false;
@@ -34,7 +36,7 @@ public class TutorialLvl52 : TutorialBase
 		case(1):
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent = ENextPhaseEvent.TAP;
+			phaseEvent.Add(ENextPhaseEvent.TAP);
 
 			freeBlocks = false;
 			freeBombs = false;

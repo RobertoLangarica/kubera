@@ -11,11 +11,13 @@ public class TutorialLvl64 : TutorialBase
 
 	public override bool canMoveToNextPhase ()
 	{
+		phaseEvent.Clear ();
+
 		switch (phase) 
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent = ENextPhaseEvent.WILDCARD_USED;
+			phaseEvent.Add(ENextPhaseEvent.WILDCARD_USED);
 
 			freeBlocks = false;
 			freeBombs = false;
@@ -34,7 +36,7 @@ public class TutorialLvl64 : TutorialBase
 		case(1):
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent = ENextPhaseEvent.KEYBOARD_SPECIFIC_LETER_SELECTED;
+			phaseEvent.Add(ENextPhaseEvent.KEYBOARD_SPECIFIC_LETER_SELECTED);
 			phaseObj = "Z";
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_BUTTON);
@@ -54,7 +56,7 @@ public class TutorialLvl64 : TutorialBase
 		case(2):
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
-			phaseEvent = ENextPhaseEvent.TAP;
+			phaseEvent.Add(ENextPhaseEvent.TAP);
 
 			freeBlocks = false;
 			freeBombs = false;

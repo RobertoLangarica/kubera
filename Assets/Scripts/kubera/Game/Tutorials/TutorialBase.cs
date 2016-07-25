@@ -25,7 +25,8 @@ public class TutorialBase : MonoBehaviour
 		POSITIONATE_PIECE,
 		CLEAR_A_LINE,
 		EARNED_POINTS,
-		MOVEMENT_USED
+		MOVEMENT_USED,
+		HINT_USED
 	}
 
 	[HideInInspector]public bool allowGridTap;
@@ -52,7 +53,7 @@ public class TutorialBase : MonoBehaviour
 
 	[HideInInspector]public int phase;
 	[HideInInspector]public string phaseObj;
-	[HideInInspector]public ENextPhaseEvent phaseEvent;
+	[HideInInspector]public List<ENextPhaseEvent> phaseEvent;
 
 	public delegate void DAnimationNotification ();
 

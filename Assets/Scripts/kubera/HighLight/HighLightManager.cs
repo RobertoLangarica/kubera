@@ -25,7 +25,8 @@ public class HighLightManager : Manager<HighLightManager>
 		DESTROY_BUTTON,
 		ROTATE_BUTTON,
 		SQUARE_BUTTON,
-		WILDCARD_BUTTON
+		WILDCARD_BUTTON,
+		WORD_HINT_BUTTON
 	}
 
 	public enum EHighLightStatus
@@ -185,6 +186,9 @@ public class HighLightManager : Manager<HighLightManager>
 			break;
 		case(EHighLightType.WILDCARD_BUTTON):
 			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.WILDCARD).powerUpButton,EHighLightStatus.NORMAL);
+			break;
+		case(EHighLightType.WORD_HINT_BUTTON):
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.HINT_WORD).powerUpButton,EHighLightStatus.NORMAL);
 			break;
 		}
 	}
