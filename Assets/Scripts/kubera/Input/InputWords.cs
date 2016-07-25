@@ -123,7 +123,7 @@ public class InputWords : MonoBehaviour
 
 
 
-				tempV3.y += objectSize.y*0.5f;
+				tempV3.y += objectSize.y*2f;
 				tempV3.z = letter.transform.position.z;
 
 				//limite de zona de letras

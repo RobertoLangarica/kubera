@@ -133,7 +133,7 @@ public class WordManager : MonoBehaviour
 
 		letterContainerTransform = letterContainer.transform;
 
-		for(int i=0; i<1; i++)
+		for(int i=0; i<5; i++)
 		{
 			addInvisibleChildrenToPool ();
 		}
@@ -160,6 +160,7 @@ public class WordManager : MonoBehaviour
 		{
 			//Se va eliminar
 			removeLetter(letter.letterReference);
+			arrangeSortingOrder ();
 			StartCoroutine( correctTweens ());
 		}
 		else
@@ -227,6 +228,7 @@ public class WordManager : MonoBehaviour
 		if (!letter.abcChar.wildcard && !letter.wildCard) 
 		{
 			removeLetter (letter);
+			arrangeSortingOrder ();
 		} 
 		else 
 		{
@@ -287,11 +289,10 @@ public class WordManager : MonoBehaviour
 			{
 				RectTransform childRect = letterContainerTransform.GetChild(i).GetComponent<RectTransform>();
 
-				if( 	childRect.anchoredPosition.x > (letterRect.anchoredPosition.x - (letterRect.rect.width*0.45f) ) 
-					&&	childRect.anchoredPosition.x < (letterRect.anchoredPosition.x + (letterRect.rect.width*0.45f) ) )
+				if( 	childRect.anchoredPosition.x > (letterRect.anchoredPosition.x - (letterRect.rect.width*0.3f) ) 
+					&&	childRect.anchoredPosition.x < (letterRect.anchoredPosition.x + (letterRect.rect.width*0.3f) ) )
 				{
 					siblingIndexAfterDrag = i;
-
 					setSiblingIndex (letter, siblingIndexAfterDrag);
 					setPositionToCurrentDraggingLetter (letter);
 					break;
@@ -302,12 +303,18 @@ public class WordManager : MonoBehaviour
 
 	protected void setPositionToCurrentDraggingLetter(GameObject letter)
 	{
+		Transform letterContainerChild;
 		for (int i = 0; i < letterContainerTransform.childCount; i++) 
 		{
-			if(letter.transform != letterContainerTransform.transform.GetChild(i))
+			letterContainerChild = letterContainerTransform.transform.GetChild (i);
+			if(letter.transform != letterContainerChild )
 			{
 				RectTransform childPosition = letterContainerTransform.GetChild (i).GetComponent<RectTransform> ();
-				childPosition.anchoredPosition = new Vector2(lettersPositions[i].x,childPosition.anchoredPosition.y);		
+				childPosition.anchoredPosition = new Vector2(lettersPositions[i].x,childPosition.anchoredPosition.y);
+				if(letterContainerChild.name != "stock")
+				{
+					letterContainerTransform.GetChild (i).GetComponent<Canvas> ().sortingOrder = i;
+				}
 			}
 		}
 	}
@@ -341,7 +348,7 @@ public class WordManager : MonoBehaviour
 		activateGridLayout (true);
 		resetValidationToSiblingOrder();
 		onLettersChange();
-		target.GetComponent<Canvas> ().sortingOrder = 0;
+		target.GetComponent<Canvas> ().sortingOrder = siblingIndexAfterDrag;
 
 		if(!releaseInContainer && goByDrag)
 		{
@@ -376,6 +383,7 @@ public class WordManager : MonoBehaviour
 		else
 		{
 			addLetter(clone);
+			clone.GetComponent<Canvas> ().sortingOrder = letters.Count - 1;
 		}
 	}
 
@@ -438,6 +446,7 @@ public class WordManager : MonoBehaviour
 				removeLetter (letters [count]);
 			}
 		}
+		arrangeSortingOrder ();
 
 		//Limpiamos la busqueda
 		wordsValidator.cleanCharByCharValidation();
@@ -464,6 +473,14 @@ public class WordManager : MonoBehaviour
 		resetValidationToSiblingOrder();
 
 		onLettersChange();
+	}
+
+	public void arrangeSortingOrder()
+	{
+		for(int i =0; i<letters.Count; i++)
+		{
+			letters [i].GetComponent<Canvas> ().sortingOrder = i;
+		}
 	}
 
 	private void lettersCountChange (int readjustingInvisibleChild=0)
@@ -676,9 +693,12 @@ public class WordManager : MonoBehaviour
 	private void afterWordValidation()
 	{
 		bool completeWord = wordsValidator.isCompleteWord ();
-		activateWordCompleteBtn(completeWord);
+		bool letterOnContainer = isThereAnyLetterOnContainer ();
+
+		activateWordCompleteBtn (completeWord,letterOnContainer);
 		activatePointsGO(completeWord);
-		activateWordDeleteBtn (!completeWord,isThereAnyLetterOnContainer());
+		activateWordDeleteBtn (!completeWord,letterOnContainer);
+		activateNoWordPosibleText (!letterOnContainer,letterOnContainer);
 
 		if(completeWord)
 		{
@@ -686,9 +706,17 @@ public class WordManager : MonoBehaviour
 		}
 	}
 
-	public void activateWordCompleteBtn(bool active)
+	public void activateWordCompleteBtn(bool activate,bool isThereAnyLetterOnContainer = true)
 	{
-		wordCompleteButton.SetActive (active);
+		if(activate && isThereAnyLetterOnContainer)
+		{
+			wordCompleteButton.SetActive (true);
+		}
+		else
+		{
+			wordCompleteButton.SetActive (false);
+
+		}
 	}
 
 	public void activatePointsGO(bool active)
@@ -709,16 +737,22 @@ public class WordManager : MonoBehaviour
 		}
 	}
 
-	public void activateNoWordPosibleText(bool activate)
+	public void activateNoWordPosibleText(bool activate,bool isThereAnyLetterOnContainer = true)
 	{
-		noWordPosible.SetActive (activate);
+		if(currentWordPosibleState == EWordState.NO_WORDS_AVAILABLE && !isThereAnyLetterOnContainer)
+		{
+			noWordPosible.SetActive (true);
+		}
+		else
+		{
+			noWordPosible.SetActive (false);
+		}
+		//noWordPosible.SetActive (activate);
 	}
 
 	private void onLettersChange()
 	{
 		updateWordPoints();
-		activateWordCompleteBtn (isThereAnyLetterOnContainer ());
-		activateWordDeleteBtn(isThereAnyLetterOnContainer());
 
 		afterWordValidation();
 		changeDeleteState(EDeleteState.WORD);
@@ -1043,5 +1077,11 @@ public class WordManager : MonoBehaviour
 	{
 		yield return new WaitForEndOfFrame();
 		letters.Remove (l);
+	}
+
+	public IEnumerator afterAllLettersRemoved()
+	{
+		yield return new WaitForSeconds (1.5f);
+		onLettersChange ();
 	}
 }

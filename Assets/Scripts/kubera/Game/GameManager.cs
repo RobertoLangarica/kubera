@@ -126,6 +126,7 @@ public class GameManager : MonoBehaviour
 		configureLevel(PersistentData.GetInstance().getRandomLevel());
 
 		populateGridFromLevel(currentLevel);
+		cellManager.createFrame ();
 
 		refreshCurrentWordScoreOnHUD (wordManager.wordPoints);
 		TutorialManager.GetInstance ().init ();
@@ -533,6 +534,7 @@ public class GameManager : MonoBehaviour
 		{
 			wordManager.activateWordCompleteBtn (false);
 			wordManager.activatePointsGO (false);
+			StartCoroutine(wordManager.afterAllLettersRemoved());
 		}
 
 		for(int i = 0; i < letters.Count; i++)
