@@ -11,22 +11,18 @@ public class TutorialLvl2 : TutorialBase
 
 	public override bool canMoveToNextPhase ()
 	{
+		phaseEvent.Clear ();
+
 		switch (phase) 
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent = ENextPhaseEvent.WORD_SPECIFIC_LETTER_TAPPED;
-
-			allowGridTap = false;
-			allowWordTap = true;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = false;
+			phaseEvent.Add(ENextPhaseEvent.HINT_USED);
+			phaseEvent.Add(ENextPhaseEvent.SUBMIT_WORD);
 
 			instructions [0].text = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE1),
-				new string[3]{ "'", "{{b}}", "{{/b}}" }, new string[3]{ "\"", "<b>", "</b>" });
+				new string[2]{"{{b}}","{{/b}}"}, new string[2]{"<b>","</b>"});
 
 			phase = 1;
 			phaseObj = "H";
@@ -34,7 +30,7 @@ public class TutorialLvl2 : TutorialBase
 		case(1):
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent = ENextPhaseEvent.SUBMIT_WORD;
+			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
 			allowGridTap = false;
 			allowWordTap = false;
@@ -43,11 +39,9 @@ public class TutorialLvl2 : TutorialBase
 			allowDragPieces = false;
 			allowPowerUps = false;
 
-			instructions [1].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE2A);
-
-			instructions [2].text = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE2B),
-				new string[3]{ "'", "{{b}}", "{{/b}}" }, new string[3]{ "\"", "<b>", "</b>" });
+			instructions [1].text = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE2),
+				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 
 			phase = 2;
 			return true;
@@ -62,6 +56,10 @@ public class TutorialLvl2 : TutorialBase
 			allowDragPieces = true;
 			allowPowerUps = true;
 
+			instructions [3].text = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE3),
+				new string[1]{ "{{score}}"}, new string[1]{hudManager.goalText.text.Split('/')[1]});
+			
 			instructions [3].text = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE3),
 				new string[1]{ "{{score}}"}, new string[1]{hudManager.goalText.text.Split('/')[1]});

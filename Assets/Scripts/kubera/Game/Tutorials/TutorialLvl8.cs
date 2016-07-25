@@ -11,11 +11,13 @@ public class TutorialLvl8 : TutorialBase
 
 	public override bool canMoveToNextPhase ()
 	{
+		phaseEvent.Clear ();
+
 		switch (phase) 
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent = ENextPhaseEvent.BOMB_USED;
+			phaseEvent.Add(ENextPhaseEvent.BOMB_USED);
 
 			freeBlocks = false;
 			freeBombs = true;
@@ -34,7 +36,7 @@ public class TutorialLvl8 : TutorialBase
 		case(1):
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent = ENextPhaseEvent.TAP;
+			phaseEvent.Add(ENextPhaseEvent.TAP);
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_BUTTON);
 

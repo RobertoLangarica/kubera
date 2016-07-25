@@ -178,30 +178,30 @@
 		</text>
 		<text id="Tutorial_lvl2_phase1">
 			<languages>
-				<language id="english" text="Tap letter'{{b}}H{{/b}}' to deselect it and make the word '{{b}}PAZ{{/b}}'."/>
-				<language id="spanish" text="Haz tap en la letra '{{b}}H{{/b}}' para deseleccionarla y formar la palabra '{{b}}PAZ{{/b}}'."/>
-				<language id="default" text="Haz tap en la letra '{{b}}H{{/b}}' para deseleccionarla y formar la palabra '{{b}}PAZ{{/b}}'."/>
+				<language id="english" text="Arrastra {{b}}AYUDA{{/b}} al tablero cuando no sepas que palabra puedes formarcon tus letras."/>
+				<language id="spanish" text="Arrastra {{b}}AYUDA{{/b}} al tablero cuando no sepas que palabra puedes formarcon tus letras."/>
+				<language id="default" text="Arrastra {{b}}AYUDA{{/b}} al tablero cuando no sepas que palabra puedes formarcon tus letras."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl2_phase2A">
+		<text id="Tutorial_lvl2_phase2">
 			<languages>
-				<language id="english" text="Press the button"/>
-				<language id="spanish" text="Presiona el botón"/>
-				<language id="default" text="Presiona el botón"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl2_phase2B">
-			<languages>
-				<language id="english" text="to get the points for the word '{{b}}PAZ{{/b}}'."/>
-				<language id="spanish" text="para obtener puntos por la palabra '{{b}}PAZ{{/b}}'."/>
-				<language id="default" text="para obtener puntos por la palabra '{{b}}PAZ{{/b}}'."/>
+				<language id="english" text="Forma la palabra {{b}}YEN{{/b}}."/>
+				<language id="spanish" text="Forma la palabra {{b}}YEN{{/b}}."/>
+				<language id="default" text="Forma la palabra {{b}}YEN{{/b}}."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl2_phase3">
 			<languages>
-				<language id="english" text="Get {{score}} points to complete the level."/>
-				<language id="spanish" text="Obtén {{score}} puntos para pasar el nivel."/>
-				<language id="default" text="Obtén {{score}} puntos para pasar el nivel."/>
+				<language id="english" text="Has los puntos que faltan para pasar el nivel."/>
+				<language id="spanish" text="Has los puntos que faltan para pasar el nivel."/>
+				<language id="default" text="Has los puntos que faltan para pasar el nivel."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl2_phase4">
+			<languages>
+				<language id="english" text="Recuerda: /nUsa {{b}}AYUDA{{/b}} cuando no sepas que palabra puedes formar con tus letras."/>
+				<language id="spanish" text="Recuerda: /nUsa {{b}}AYUDA{{/b}} cuando no sepas que palabra puedes formar con tus letras."/>
+				<language id="default" text="Recuerda: /nUsa {{b}}AYUDA{{/b}} cuando no sepas que palabra puedes formar con tus letras."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl3_phase1">

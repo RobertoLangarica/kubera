@@ -49,7 +49,7 @@ public class TutorialManager : Manager<TutorialManager>
 			selectTutorial ();
 		}
 
-		if (currentTutorial.phaseEvent == TutorialBase.ENextPhaseEvent.TAP && (Input.touchCount >= 1 || Input.GetMouseButtonDown(0))) 
+		if (currentTutorial.phaseEvent.Contains(TutorialBase.ENextPhaseEvent.TAP) && (Input.touchCount >= 1 || Input.GetMouseButtonDown(0))) 
 		{
 			canCompletePhase ();
 		}
@@ -102,9 +102,9 @@ public class TutorialManager : Manager<TutorialManager>
 		powerUp.isFree = flag;
 	}
 
-	public void  registerForNextPhase()
+	public void  registerForNextPhase(TutorialBase.ENextPhaseEvent nEvent)
 	{
-		switch (currentTutorial.phaseEvent) 
+		switch (nEvent) 
 		{
 		case(TutorialBase.ENextPhaseEvent.CREATE_WORD):
 			inputWords.onDragFinish += canCompletePhase;
@@ -162,9 +162,9 @@ public class TutorialManager : Manager<TutorialManager>
 		}
 	}
 
-	public void unregisterForNextPhase()
+	public void unregisterForNextPhase(TutorialBase.ENextPhaseEvent nEvent)
 	{
-		switch (currentTutorial.phaseEvent) 
+		switch (nEvent) 
 		{
 		case(TutorialBase.ENextPhaseEvent.CREATE_WORD):
 			inputWords.onDragFinish -= canCompletePhase;
@@ -229,14 +229,14 @@ public class TutorialManager : Manager<TutorialManager>
 
 	public void canCompletePhase(GameObject go,bool byDrag = false)
 	{
-		if (currentTutorial.phaseEvent == TutorialBase.ENextPhaseEvent.WORD_SPECIFIC_LETTER_TAPPED) 
+		if (currentTutorial.phaseEvent.Contains(TutorialBase.ENextPhaseEvent.WORD_SPECIFIC_LETTER_TAPPED)) 
 		{
 			if (go.GetComponent<Letter> ().abcChar.character == currentTutorial.phaseObj) 
 			{
 				wordManager.onLetterTap (go,byDrag);
 			}
 		}
-		if (currentTutorial.phaseEvent == TutorialBase.ENextPhaseEvent.GRID_SPECIFIC_LETTER_TAPPED) 
+		if (currentTutorial.phaseEvent.Contains(TutorialBase.ENextPhaseEvent.GRID_SPECIFIC_LETTER_TAPPED)) 
 		{
 			if (go.GetComponent<Letter> ().abcChar.character == currentTutorial.phaseObj) 
 			{
@@ -253,7 +253,7 @@ public class TutorialManager : Manager<TutorialManager>
 
 	public void canCompletePhase(string str)
 	{
-		if (currentTutorial.phaseEvent == TutorialBase.ENextPhaseEvent.KEYBOARD_SPECIFIC_LETER_SELECTED) 
+		if (currentTutorial.phaseEvent.Contains(TutorialBase.ENextPhaseEvent.KEYBOARD_SPECIFIC_LETER_SELECTED))
 		{
 			if (str == currentTutorial.phaseObj) 
 			{
@@ -274,11 +274,17 @@ public class TutorialManager : Manager<TutorialManager>
 
 	public void moveTutorialToNextPhase()
 	{
-		unregisterForNextPhase ();
+		for (int i = 0; i < currentTutorial.phaseEvent.Count; i++) 
+		{
+			unregisterForNextPhase (currentTutorial.phaseEvent[i]);
+		}
 
 		currentTutorial.canMoveToNextPhase ();
 
-		registerForNextPhase ();
+		for (int i = 0; i < currentTutorial.phaseEvent.Count; i++) 
+		{
+			registerForNextPhase (currentTutorial.phaseEvent[i]);
+		}
 
 		for (int i = 0; i < powerUpManager.powerups.Count; i++) 
 		{

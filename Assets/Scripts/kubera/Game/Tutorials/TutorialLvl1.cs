@@ -14,11 +14,13 @@ public class TutorialLvl1 : TutorialBase
 
 	public override bool canMoveToNextPhase ()
 	{
+		phaseEvent.Clear ();
+
 		switch (phase) 
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent = ENextPhaseEvent.POSITIONATE_PIECE;
+			phaseEvent.Add(ENextPhaseEvent.POSITIONATE_PIECE);
 
 			instructions [0].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE1);
 
@@ -30,7 +32,7 @@ public class TutorialLvl1 : TutorialBase
 		case(1):
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent = ENextPhaseEvent.CREATE_WORD;
+			phaseEvent.Add(ENextPhaseEvent.CREATE_WORD);
 
 			instructions [1].text = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE2),
@@ -44,7 +46,7 @@ public class TutorialLvl1 : TutorialBase
 		case(2):
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
-			phaseEvent = ENextPhaseEvent.SUBMIT_WORD;
+			phaseEvent.Add(ENextPhaseEvent.SUBMIT_WORD);
 
 			instructions [2].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE3);
 
@@ -55,7 +57,7 @@ public class TutorialLvl1 : TutorialBase
 		case(3):
 			phasesPanels [2].SetActive (false);
 			phasesPanels [3].SetActive (true);
-			phaseEvent = ENextPhaseEvent.CLEAR_A_LINE;
+			phaseEvent.Add(ENextPhaseEvent.CLEAR_A_LINE);
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SUBMIT_WORD);
 
@@ -65,7 +67,7 @@ public class TutorialLvl1 : TutorialBase
 		case(4):
 			phasesPanels [3].SetActive (false);
 			phasesPanels [4].SetActive (true);
-			phaseEvent = ENextPhaseEvent.CREATE_A_LINE;
+			phaseEvent.Add(ENextPhaseEvent.CREATE_A_LINE);
 
 			instructions [4].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE5);
 			phase = 5;
@@ -73,7 +75,7 @@ public class TutorialLvl1 : TutorialBase
 		case(5):
 			phasesPanels [4].SetActive (false);
 			phasesPanels [5].SetActive (true);
-			phaseEvent = ENextPhaseEvent.EARNED_POINTS;
+			phaseEvent.Add(ENextPhaseEvent.EARNED_POINTS);
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.OBJECTIVE);
 
@@ -86,7 +88,7 @@ public class TutorialLvl1 : TutorialBase
 		case(6):
 			phasesPanels [5].SetActive (false);
 			phasesPanels [6].SetActive (true);
-			phaseEvent = ENextPhaseEvent.MOVEMENT_USED;
+			phaseEvent.Add(ENextPhaseEvent.MOVEMENT_USED);
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.OBJECTIVE);
 
@@ -101,7 +103,7 @@ public class TutorialLvl1 : TutorialBase
 		case(7):
 			phasesPanels [6].SetActive (false);
 			phasesPanels [7].SetActive (true);
-			phaseEvent = ENextPhaseEvent.MOVEMENT_USED;
+			phaseEvent.Add(ENextPhaseEvent.MOVEMENT_USED);
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.MOVEMENTS);
 
