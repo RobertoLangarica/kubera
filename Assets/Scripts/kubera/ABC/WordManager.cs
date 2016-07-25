@@ -185,6 +185,7 @@ public class WordManager : MonoBehaviour
 	{
 		yield return new WaitForSeconds (delay);
 		List<Tween> tweens = new List<Tween> ();
+
 		int index = 0;
 		for(int i=0; i<letters.Count; i++)
 		{			
@@ -192,6 +193,7 @@ public class WordManager : MonoBehaviour
 
 			if(tweens != null)
 			{
+				print (tweens.Count);
 				//Transform a = (Transform)tweens [0].target;
 				//a.DOMove (occupiedChildren [index].transform.position, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letters [i]); releaseChild(occupiedChildren [index]); reacomodateChildrenSiblingOrder();}).SetId(letters[i].GetInstanceID());
 
@@ -265,7 +267,7 @@ public class WordManager : MonoBehaviour
 			go.transform.SetParent(preLetterContainerTransform,false);
 			goByDrag = getFreeChild ();
 			goByDrag.transform.SetParent (letterContainerTransform);
-			goByDrag.transform.SetSiblingIndex (siblingIndexAfterDrag);
+			goByDrag.transform.SetSiblingIndex (letters.Count);
 			fillLettersPositions ();
 			activateGridLayout (true);
 		}
@@ -402,10 +404,10 @@ public class WordManager : MonoBehaviour
 		letter.select();
 		saveAndValidateLetter(letter);
 
+		onLettersChange();
 		if (withAnimation) 
 		{
 			selectLetterAnimation (letter);
-			onLettersChange();
 		}
 		else if(wildCard)
 		{			

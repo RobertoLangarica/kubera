@@ -64,21 +64,14 @@ public class HUDMetterAndStars : MonoBehaviour
 	{
 		float size = 0;
 
-		if(!star1Reached)
+		if(star3Reached)
 		{
-			size = scoreToReachStar [0] / Star1;
+			size = scoreToReachStar [2] / Star3;
 
 			size = (float)points / size;
-
-			if(size >= Star1)
-			{
-				//Stars [0].sprite = StarFilled;
-				star1Reached = true;
-				star2Reached = true;
-			}
 		}
 
-		if(star2Reached)
+		if(star2Reached && !star3Reached)
 		{
 			size = scoreToReachStar [1] / Star2;
 
@@ -92,12 +85,21 @@ public class HUDMetterAndStars : MonoBehaviour
 			}
 		}
 
-		if(star3Reached)
+		if(!star1Reached && !star2Reached)
 		{
-			size = scoreToReachStar [2] / Star3;
+			size = scoreToReachStar [0] / Star1;
 
 			size = (float)points / size;
+
+			if(size >= Star1)
+			{
+				//Stars [0].sprite = StarFilled;
+				star1Reached = true;
+				star2Reached = true;
+			}
 		}
+
+
 		pointsMeter.fillAmount = size;
 	}
 
