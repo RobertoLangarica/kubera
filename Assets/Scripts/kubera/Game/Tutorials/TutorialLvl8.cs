@@ -19,11 +19,7 @@ public class TutorialLvl8 : TutorialBase
 			phasesPanels [0].SetActive (true);
 			phaseEvent.Add(ENextPhaseEvent.BOMB_USED);
 
-			freeBlocks = false;
 			freeBombs = true;
-			freeRotates = false;
-			freeDestroy = false;
-			freeWildCard = false;
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.BOMB_BUTTON);
 
@@ -40,11 +36,7 @@ public class TutorialLvl8 : TutorialBase
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_BUTTON);
 
-			freeBlocks = false;
 			freeBombs = true;
-			freeRotates = false;
-			freeDestroy = false;
-			freeWildCard = false;
 
 			instructions [1].text = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE2),

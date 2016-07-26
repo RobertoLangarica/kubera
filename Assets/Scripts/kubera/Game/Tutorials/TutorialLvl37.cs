@@ -18,11 +18,7 @@ public class TutorialLvl37 : TutorialBase
 			phasesPanels [0].SetActive (true);
 			phaseEvent.Add(ENextPhaseEvent.POSITIONATE_PIECE);
 
-			freeBlocks = false;
-			freeBombs = false;
 			freeRotates = true;
-			freeDestroy = false;
-			freeWildCard = false;
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.ROTATE_BUTTON);
 
@@ -37,11 +33,7 @@ public class TutorialLvl37 : TutorialBase
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add(ENextPhaseEvent.TAP);
 
-			freeBlocks = false;
-			freeBombs = false;
 			freeRotates = true;
-			freeDestroy = false;
-			freeWildCard = false;
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.ROTATE_BUTTON);
 

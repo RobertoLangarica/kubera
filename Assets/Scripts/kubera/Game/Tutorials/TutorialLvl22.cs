@@ -20,10 +20,6 @@ public class TutorialLvl22 : TutorialBase
 			phaseEvent.Add(ENextPhaseEvent.BLOCK_USED);
 
 			freeBlocks = true;
-			freeBombs = false;
-			freeRotates = false;
-			freeDestroy = false;
-			freeWildCard = false;
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SQUARE_BUTTON);
 
@@ -38,11 +34,7 @@ public class TutorialLvl22 : TutorialBase
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add(ENextPhaseEvent.TAP);
 
-			freeBlocks = false;
-			freeBombs = false;
-			freeRotates = false;
-			freeDestroy = false;
-			freeWildCard = false;
+			freeBlocks = true;
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SQUARE_BUTTON);
 

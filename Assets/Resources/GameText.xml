@@ -185,9 +185,9 @@
 		</text>
 		<text id="Tutorial_lvl2_phase2">
 			<languages>
-				<language id="english" text="Forma la palabra {{b}}YEN{{/b}}."/>
-				<language id="spanish" text="Forma la palabra {{b}}YEN{{/b}}."/>
-				<language id="default" text="Forma la palabra {{b}}YEN{{/b}}."/>
+				<language id="english" text="El poder {{b}}AYUDA{{/b}} te sugirió formar la palabra {{b}}YEN{{/b}}.Forma esa palabra."/>
+				<language id="spanish" text="El poder {{b}}AYUDA{{/b}} te sugirió formar la palabra {{b}}YEN{{/b}}.Forma esa palabra."/>
+				<language id="default" text="El poder {{b}}AYUDA{{/b}} te sugirió formar la palabra {{b}}YEN{{/b}}.Forma esa palabra."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl2_phase3">

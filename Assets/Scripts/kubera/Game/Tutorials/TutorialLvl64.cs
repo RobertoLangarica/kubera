@@ -19,10 +19,6 @@ public class TutorialLvl64 : TutorialBase
 			phasesPanels [0].SetActive (true);
 			phaseEvent.Add(ENextPhaseEvent.WILDCARD_USED);
 
-			freeBlocks = false;
-			freeBombs = false;
-			freeRotates = false;
-			freeDestroy = false;
 			freeWildCard = true;
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.BOMB_BUTTON);
@@ -41,11 +37,7 @@ public class TutorialLvl64 : TutorialBase
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_BUTTON);
 
-			freeBlocks = false;
-			freeBombs = false;
-			freeRotates = false;
-			freeDestroy = false;
-			freeWildCard = false;
+			freeWildCard = true;
 
 			instructions [1].text =	MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE2),
@@ -58,11 +50,7 @@ public class TutorialLvl64 : TutorialBase
 			phasesPanels [2].SetActive (true);
 			phaseEvent.Add(ENextPhaseEvent.TAP);
 
-			freeBlocks = false;
-			freeBombs = false;
-			freeRotates = false;
-			freeDestroy = false;
-			freeWildCard = false;
+			freeWildCard = true;
 
 			instructions [2].text =	MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE2),

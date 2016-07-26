@@ -97,6 +97,9 @@ public class TutorialManager : Manager<TutorialManager>
 		case(PowerupBase.EType.WILDCARD):
 			flag = currentTutorial.freeWildCard;
 			break;
+		case(PowerupBase.EType.HINT_WORD):
+			flag = currentTutorial.freeHint;
+			break;
 		}
 
 		powerUp.isFree = flag;

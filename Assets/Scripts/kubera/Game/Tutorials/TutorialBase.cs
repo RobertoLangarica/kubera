@@ -42,6 +42,7 @@ public class TutorialBase : MonoBehaviour
 	[HideInInspector]public bool freeRotates;
 	[HideInInspector]public bool freeDestroy;
 	[HideInInspector]public bool freeWildCard;
+	[HideInInspector]public bool freeHint;
 
 	public string levelName;
 
