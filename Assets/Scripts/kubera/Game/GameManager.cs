@@ -673,7 +673,6 @@ public class GameManager : MonoBehaviour
 
 	protected void updatePiecesLightAndUpdateLetterState()
 	{
-		print ("checando si  perdio");
 		updatePiecesLight (checkIfIsPosiblePutPieces ());
 		updateLettersState ();
 	}
@@ -915,6 +914,10 @@ public class GameManager : MonoBehaviour
 		if(currentLevel.unblockWildcard)
 		{
 			UserDataManager.instance.isWildCardPowerUpUnlocked = true;
+		}
+		if(currentLevel.unblockWordHint)
+		{
+			UserDataManager.instance.isWordHintPowerUpUnlocked = true;
 		}
 	}
 

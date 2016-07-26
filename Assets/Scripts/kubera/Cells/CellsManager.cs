@@ -23,10 +23,10 @@ public class CellsManager : MonoBehaviour
 
 	public Color firstCellCollor = new Color (0.39f, 0.79f, 0.81f);
 	public Color secondCellCollor = new Color (0.42f, 0.83f, 0.87f);
+	public Frame frame;
 
 	//Todas las celdas del grid
 	protected List<Cell> cells;
-	public GameObject[] frames;
 
 	void Update()
 	{
@@ -970,50 +970,91 @@ public class CellsManager : MonoBehaviour
 
 	public void createFrame()
 	{
+		bool left = false;
+		bool right = false;
+		bool top = false;
+		bool bottom = false;
 
 		for (int i = 0; i < rows; i++) 
 		{
 			for (int j = 0; j < columns; j++) 
 			{
+				left = false;
+             	right = false;
+             	top = false;
+				bottom = false;
+
 				if(cells[(i * rows) + j].cellType != Cell.EType.EMPTY)
 				{
 					//vecino de arriba
 					if( i== 0 || (i != 0 && cells[((i * rows) + j)-rows].cellType == Cell.EType.EMPTY))
 					{
-						instanceFrames (frames [0], cells [(i * rows) + j].transform);
+						frame.instanceFrames (frame.top, cells [(i * rows) + j].transform);
 						//print ("marco arriba " + ((i * rows) + j));
-
+						top = true;
 					}
 					//vecino izquierdo
 					if(j== 0 ||(j != 0 && cells[((i * rows) + j)-1].cellType == Cell.EType.EMPTY))
 					{
-						instanceFrames (frames [1], cells [(i * rows) + j].transform);
+						frame.instanceFrames (frame.left, cells [(i * rows) + j].transform);
 						//print ("marco izquierdo " + ((i * rows) + j));
+						left = true;
 					}
 					//vecino derecho
 					if(j== columns-1 || (j < columns+1 && cells[((i * rows) + j)+1].cellType == Cell.EType.EMPTY))
 					{
-						instanceFrames (frames [2], cells [(i * rows) + j].transform);
+						frame.instanceFrames (frame.right, cells [(i * rows) + j].transform);
+						if(top)
+						{
+							frame.instanceFrames (frame.rightTopShadow, cells [(i * rows) + j].transform,-1);
+						}
+						else
+						{
+							frame.instanceFrames (frame.rightShadow, cells [(i * rows) + j].transform,-1);
+						}
 						//print ("marco derecho " + ((i * rows) + j));
+						right = true;
 					}
 					//vecino de abajo
 					if(i == rows-1 ||(i < rows +1  && cells[((i * rows) + j)+rows].cellType == Cell.EType.EMPTY))
 					{
-						instanceFrames (frames [3], cells [(i * rows) + j].transform);
+						frame.instanceFrames (frame.bottom, cells [(i * rows) + j].transform);
+						if(left)
+						{
+							frame.instanceFrames (frame.bottonLeftShadow, cells [(i * rows) + j].transform,-1);
+						}
+						else
+						{							
+							frame.instanceFrames (frame.bottonShadow, cells [(i * rows) + j].transform,-1);
+						}
 						//print ("marco abajo " + ((i * rows) + j));
+						bottom = true;
+					}
+
+					if(left && top)
+					{
+						frame.instanceFrames (frame.leftTop, cells [(i * rows) + j].transform);
+					}
+
+					if(top && right)
+					{
+						frame.instanceFrames (frame.topRight, cells [(i * rows) + j].transform);
+					}
+
+					if(right && bottom)
+					{
+						frame.instanceFrames (frame.rightBottom, cells [(i * rows) + j].transform);
+						frame.instanceFrames (frame.bottonRightShadow, cells [(i * rows) + j].transform,-1);
+					}
+
+					if (bottom && left)
+					{
+						frame.instanceFrames (frame.bottomLeft, cells [(i * rows) + j].transform);
 					}
 				}
 			}
 		}
 	}
 
-	protected void instanceFrames(GameObject frame,Transform parent)
-	{
-		GameObject frameInstance = null;
-		frameInstance = GameObject.Instantiate(frame) as GameObject;
-		frameInstance.GetComponent<SpriteRenderer> ().sortingLayerName = "Grid";
-		frameInstance.GetComponent<SpriteRenderer> ().sortingOrder = 0;
-		frameInstance.transform.SetParent(parent,false);
-		frameInstance.SetActive (true);
-	}
+
 }

@@ -365,14 +365,17 @@ public class HUDManager : MonoBehaviour
 			pieces[i].transform.position= new Vector3(rotationImagePositions [i].position.x,rotationImagePositions [i].position.y,1);
 			pieces[i].positionOnScene = pieces[i].transform.position;
 			pieces[i].initialPieceScale = initialPieceScale;
-			pieces[i].transform.localScale = new Vector3 (0, 0, 0);
+			//pieces[i].transform.localScale = new Vector3 (0, 0, 0);
+			pieces [i].transform.position = new Vector2 (pieces [i].transform.position.x, pieces [i].transform.position.y+pieces [i].transform.position.y*0.5f);
 			if (i == (pieces.Count - 1)) 
 			{
-				pieces [i].transform.DOScale (initialPieceScale, 0.25f).OnComplete (()=>{OnPiecesScaled();});
+				pieces [i].transform.DOMove (pieces[i].positionOnScene, 0.5f).SetEase(Ease.OutBack).OnComplete (()=>{OnPiecesScaled();});
+				//pieces [i].transform.DOScale (initialPieceScale, 0.25f).OnComplete (()=>{OnPiecesScaled();});
 			} 
 			else 
 			{
-				pieces[i].transform.DOScale(initialPieceScale, 0.25f);
+				pieces [i].transform.DOMove (pieces[i].positionOnScene, 0.5f).SetEase(Ease.OutBack);
+				//pieces[i].transform.DOScale(initialPieceScale, 0.25f);
 			}
 			pieces[i].transform.SetParent (showingPiecesContainer,false);
 		}

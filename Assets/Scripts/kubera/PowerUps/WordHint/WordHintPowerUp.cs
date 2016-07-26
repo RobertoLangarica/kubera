@@ -10,6 +10,7 @@ public class WordHintPowerUp : PowerupBase {
 	protected WordManager wordManager;
 
 	protected bool canUse;
+	protected bool canActivate;
 	protected GameObject powerUpGO;
 
 	void Start () 
@@ -39,7 +40,12 @@ public class WordHintPowerUp : PowerupBase {
 		updateDragableObjectImage (powerUpGO);
 		if(wordManager.checkIfAWordIsPossible(gameManager.getGridCharacters()))
 		{
+			canActivate = true;
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WORD_HINT);
+		}
+		else
+		{
+			canActivate = false;
 		}
 	}
 
@@ -47,7 +53,7 @@ public class WordHintPowerUp : PowerupBase {
 	{
 		Cell cellSelected = cellsManager.getCellUnderPoint(powerUpGO.transform.position);
 
-		if(cellSelected != null)
+		if(cellSelected != null && canActivate)
 		{
 			if (cellSelected.cellType != Cell.EType.EMPTY_VISIBLE_CELL && cellSelected.cellType != Cell.EType.EMPTY) 
 			{

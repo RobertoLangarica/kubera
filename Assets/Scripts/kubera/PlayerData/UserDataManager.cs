@@ -175,6 +175,18 @@ public class UserDataManager
 		}
 	}
 
+	public bool isWordHintPowerUpUnlocked
+	{
+		get
+		{
+			return PlayerPrefs.GetInt("wildCardPowerUpUses") == 0 ? false : true;
+		}		
+		set
+		{
+			PlayerPrefs.SetInt("wildCardPowerUpUses",value == false ? 0 : 1);
+		}
+	}
+
 	public bool isDestroyPowerUpUnlocked
 	{
 		get

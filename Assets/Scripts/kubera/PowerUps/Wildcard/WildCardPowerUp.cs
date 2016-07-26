@@ -89,7 +89,7 @@ public class WildCardPowerUp : PowerupBase
 		if (wordManager.isAddLetterAllowed ()) 
 		{
 			wordManager.addLetter (wordManager.getWildcard (powerUpScore),false,true);
-			OnComplete ();
+			completePowerUp ();
 		}
 		else
 		{

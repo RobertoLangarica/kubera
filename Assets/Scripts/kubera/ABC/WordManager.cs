@@ -193,7 +193,6 @@ public class WordManager : MonoBehaviour
 
 			if(tweens != null)
 			{
-				print (tweens.Count);
 				//Transform a = (Transform)tweens [0].target;
 				//a.DOMove (occupiedChildren [index].transform.position, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letters [i]); releaseChild(occupiedChildren [index]); reacomodateChildrenSiblingOrder();}).SetId(letters[i].GetInstanceID());
 
@@ -698,11 +697,11 @@ public class WordManager : MonoBehaviour
 		bool letterOnContainer = isThereAnyLetterOnContainer ();
 
 		activateWordCompleteBtn (completeWord,letterOnContainer);
-		activatePointsGO(completeWord);
+		activatePointsGO(letterOnContainer);
 		activateWordDeleteBtn (!completeWord,letterOnContainer);
 		activateNoWordPosibleText (!letterOnContainer,letterOnContainer);
 
-		if(completeWord)
+		if(completeWord && letterOnContainer)
 		{
 			Debug.Log("Se completo: "+getCurrentWordOnList());
 		}
@@ -1010,6 +1009,7 @@ public class WordManager : MonoBehaviour
 			noWordPosible.SetActive (false);
 			break;
 		case EWordState.HINTED_WORDS:
+			print (currentWordPosibleState);
 			if (currentWordPosibleState != EWordState.HINTED_WORDS && !cancelHint) 
 			{
 				currentWordPosibleState = EWordState.HINTED_WORDS;
@@ -1033,11 +1033,11 @@ public class WordManager : MonoBehaviour
 				yield return new WaitForSeconds (0.4f);
 			}
 		}
-		currentWordPosibleState = EWordState.HINTED_WORDS;
 
-		updateGridLettersState (gridLetter, EWordState.WORDS_AVAILABLE);
 		if(!cancelHint)
 		{
+			currentWordPosibleState = EWordState.HINTED_WORDS;
+			updateGridLettersState (gridLetter, EWordState.WORDS_AVAILABLE);
 			updateGridLettersState (gridLetter, EWordState.HINTED_WORDS);	
 		}
 	}
@@ -1083,7 +1083,7 @@ public class WordManager : MonoBehaviour
 
 	public IEnumerator afterAllLettersRemoved()
 	{
-		yield return new WaitForSeconds (1.5f);
+		yield return new WaitForSeconds (1.51f);
 		onLettersChange ();
 	}
 }
