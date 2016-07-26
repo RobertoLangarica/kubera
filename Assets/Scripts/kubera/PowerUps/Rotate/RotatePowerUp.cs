@@ -12,6 +12,7 @@ public class RotatePowerUp : PowerupBase
 
 	protected GameObject powerUpGO;
 	protected bool canUse;
+	protected Transform[] imageToRotate;
 
 	void Start()
 	{
@@ -21,6 +22,8 @@ public class RotatePowerUp : PowerupBase
 
 		inputPowerUpRotate.gameObject.SetActive (false);
 		this.gameObject.SetActive( false);
+
+		imageToRotate = FindObjectOfType<HUDManager>().rotationImagePositions;
 	}
 
 	public override void activate (bool canUse)
@@ -106,6 +109,8 @@ public class RotatePowerUp : PowerupBase
 			inputPowerUpRotate.enabled = true;
 			inputPowerUpRotate.startRotate ();
 			inputPowerUpRotate.OnPowerupRotateCompleted += completePowerUp;
+			print ("activate");
+			Invoke ("rotateImage", 2);
 		}
 		else
 		{
@@ -134,6 +139,31 @@ public class RotatePowerUp : PowerupBase
 		}
 		inputPowerUpRotate.enabled = false;
 		this.gameObject.SetActive( false);
+	}
+
+	protected void rotateImage()
+	{
+		for(int i=0; i<imageToRotate.Length; i++)
+		{
+			imageToRotate [i].DOScale (new Vector2 (imageToRotate [i].localScale.x + 0.1f, imageToRotate [i].localScale.y + 0.1f), 0.5f).OnComplete(()=>
+				{
+					imageToRotate [i].DOScale (new Vector2 (imageToRotate [i].localScale.x - 0.1f, imageToRotate [i].localScale.y - 0.1f), 0.5f).OnComplete(()=>
+						{
+							print("Sssss");
+						});
+				});
+			imageToRotate [i].DOShakeRotation (1.0f);
+		}
+		Invoke ("scaleRotateImage", 0.5f);
+	}
+
+	protected void scaleRotateImage()
+	{
+		for(int i=0; i<imageToRotate.Length; i++)
+		{
+			imageToRotate [i].DOScale (new Vector2 (imageToRotate [i].localScale.x - 0.1f, imageToRotate [i].localScale.y - 0.1f), 0.5f);
+		}
+		Invoke ("rotateImage", Random.Range(2,5));
 	}
 }
 

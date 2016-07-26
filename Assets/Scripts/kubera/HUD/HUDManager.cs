@@ -27,6 +27,7 @@ public class HUDManager : MonoBehaviour
 	public GameObject uiLetter;
 
 	public Text goalText;
+	public Text goalTextUP;
 	public Text goalLettersText;
 	public GameObject goalLettersContainer;
 
@@ -188,6 +189,7 @@ public class HUDManager : MonoBehaviour
 	public void setWinCondition (string goalCondition, System.Object parameters)
 	{
 		string textId = string.Empty;
+		string textUpId = string.Empty;
 		string textToReplace = string.Empty;
 		string replacement = string.Empty;
 		List<string> word = new List<string>();
@@ -212,12 +214,17 @@ public class HUDManager : MonoBehaviour
 				letter.transform.SetParent (goalLettersContainer.transform,false);
 			}
 			setSizeOfContainer (lettersToFound.Count);
-
+			textUpId = MultiLanguageTextManager.GOAL_CONDITION_BY_LETTERS_ID;
 			break;
 		case GoalManager.OBSTACLES:
-			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_OBSTACLES_ID;
-			textToReplace = "{{goalObstacleLetters}}";
-			replacement = (Convert.ToInt32(parameters)).ToString();
+			textId = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.GOAL_CONDITION_BY_OBSTACLES_ID);
+			goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
+				new string[2]{ "{{lettersUsed}}", "{{lettersNeed}}" }, new string[2] {
+					"0",
+					(Convert.ToInt32 (parameters)).ToString ()
+				});
+			textUpId = MultiLanguageTextManager.GOAL_CONDITION_BY_OBSTACLES_UP_ID;
+			goalTextUP.text = MultiLanguageTextManager.instance.getTextByID (textUpId);
 			break;
 		case GoalManager.POINTS:
 			textId = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.GOAL_CONDITION_BY_POINT_ID);
@@ -226,6 +233,7 @@ public class HUDManager : MonoBehaviour
 				"0",
 				(Convert.ToInt32 (parameters)).ToString ()
 			});
+			goalTextUP.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.GOAL_CONDITION_BY_POINT_UP_ID);
 			break;
 		case GoalManager.WORDS_COUNT:
 			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_ID;
@@ -255,6 +263,7 @@ public class HUDManager : MonoBehaviour
 		if (goalText.text == "") 
 		{
 			goalText.text = MultiLanguageTextManager.instance.getTextByID (textId).Replace (textToReplace, replacement);
+			goalTextUP.text = MultiLanguageTextManager.instance.getTextByID (textUpId);
 		}
 	}
 
@@ -274,6 +283,15 @@ public class HUDManager : MonoBehaviour
 		textId = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_ID);
 		goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
 			new string[2]{ "{{wordsMade}}", "{{wordNeed}}" }, new string[2]{ wordsMade, wordsNeed });
+	}
+
+	public void actualizePointsOnObstacleLetters(string obstacleLettersMade, string obstacleLettersNeed)
+	{
+		string textId = string.Empty;
+
+		textId = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_OBSTACLES_ID);
+		goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
+			new string[2]{ "{{pointsMade}}", "{{pointsNeed}}" }, new string[2]{ obstacleLettersMade, obstacleLettersNeed });
 	}
 
 	protected void setSizeOfContainer(int maxSize = 5)
@@ -365,7 +383,7 @@ public class HUDManager : MonoBehaviour
 			pieces[i].transform.position= new Vector3(rotationImagePositions [i].position.x,rotationImagePositions [i].position.y,1);
 			pieces[i].positionOnScene = pieces[i].transform.position;
 			pieces[i].initialPieceScale = initialPieceScale;
-			//pieces[i].transform.localScale = new Vector3 (0, 0, 0);
+			pieces[i].transform.localScale = initialPieceScale;
 			pieces [i].transform.position = new Vector2 (pieces [i].transform.position.x, pieces [i].transform.position.y+pieces [i].transform.position.y*0.5f);
 			if (i == (pieces.Count - 1)) 
 			{

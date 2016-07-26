@@ -57,53 +57,74 @@
 				<language id="default" text="Antonimo de: {{goalAnt}} ."/>
 			</languages>
 		</text>
+		<text id="goalByPointsConditionUP">
+			<languages>
+				<language id="english" text="GOAL"/>
+				<language id="spanish" text="OBJETIVO"/>
+				<language id="default" text="OBJETIVO"/>
+			</languages>
+		</text>
 		<text id="goalByPointsCondition">
 			<languages>
-				<language id="english" text="Made: {{pointsMade}} points of  {{pointsNeed}} ."/>
-				<language id="spanish" text="{{pointsMade}} / {{pointsNeed}}"/>
-				<language id="default" text="Van: {{pointsMade}} puntos de {{pointsNeed}} ."/>
+				<language id="english" text="{{pointsMade}}/{{pointsNeed}} points"/>
+				<language id="spanish" text="{{pointsMade}}/{{pointsNeed}} puntos"/>
+				<language id="default" text="{{pointsMade}}/{{pointsNeed}} puntos"/>
+			</languages>
+		</text>
+		<text id="goalByWordsConditionUP">
+			<languages>
+				<language id="english" text="GOAL"/>
+				<language id="spanish" text="OBJETIVO"/>
+				<language id="default" text="OBJETIVO"/>
 			</languages>
 		</text>
 		<text id="goalByWordsCondition">
 			<languages>
-				<language id="english" text="Made: {{wordsMade}} words of  {{wordNeed}} ."/>
-				<language id="spanish" text="Van: {{wordsMade}} palabras de {{wordNeed}} ."/>
-				<language id="default" text="Van: {{wordsMade}} palabras de {{wordNeed}} ."/>
+				<language id="english" text="{{wordsMade}}/{{wordNeed}} words"/>
+				<language id="spanish" text="{{wordsMade}}/{{wordNeed}} palabras"/>
+				<language id="default" text="{{wordsMade}}/{{wordNeed}} palabras"/>
 			</languages>
 		</text>
 		<text id="goalByLettersCondition">
 			<languages>
-				<language id="english" text="Use:"/>
-				<language id="spanish" text="Usa:"/>
-				<language id="default" text="Usa:"/>
+				<language id="english" text="USE:"/>
+				<language id="spanish" text="USA:"/>
+				<language id="default" text="USA:"/>
+			</languages>
+		</text>
+		<text id="goalByObstaclesConditionUP">
+			<languages>
+				<language id="english" text="GOAL"/>
+				<language id="spanish" text="OBJETIVO"/>
+				<language id="default" text="OBJETIVO"/>
 			</languages>
 		</text>
 		<text id="goalByObstaclesCondition">
 			<languages>
-				<language id="english" text="Use: {{goalObstacleLetters}} black letters."/>
-				<language id="spanish" text="Usa: {{goalObstacleLetters}} letras negras."/>
-				<language id="default" text="Usa: {{goalObstacleLetters}} letras negras."/>
+				<language id="english" text="{{lettersUsed}}/{{lettersNeed}} black letters"/>
+				<language id="spanish" text="{{lettersUsed}}/{{lettersNeed}} letras negras"/>
+				<language id="default" text="{{lettersUsed}}/{{lettersNeed}} letras negras"/>
 			</languages>
 		</text>
 		<text id="goalBy1WordCondition">
 			<languages>
-				<language id="english" text="Create: {{goalWord}} ."/>
-				<language id="spanish" text="Forma: {{goalWord}} ."/>
-				<language id="default" text="Forma: {{goalWord}} ."/>
+				<language id="english" text="FORM"/>
+				<language id="spanish" text="FORMA"/>
+				<language id="default" text="FORMA"/>
 			</languages>
 		</text>
 		<text id="goalBySynonymousCondition">
 			<languages>
-				<language id="english" text="Synonymous of: {{goalSin}} ."/>
-				<language id="spanish" text="Sinonimo de: {{goalSin}} ."/>
-				<language id="default" text="Sinonimo de: {{goalSin}} ."/>
+				<language id="english" text="SYNONYM"/>
+				<language id="spanish" text="SINÓNIMO"/>
+				<language id="default" text="SINÓNIMO"/>
 			</languages>
 		</text>
 		<text id="goalByAntonymCondition">
 			<languages>
-				<language id="english" text="Antonym of: {{goalAnt}} ."/>
-				<language id="spanish" text="Antonimo de: {{goalAnt}} ."/>
-				<language id="default" text="Antonimo de: {{goalAnt}} ."/>
+				<language id="english" text="ANTONYM"/>
+				<language id="spanish" text="ANTÓNIMO"/>
+				<language id="default" text="ANTÓNIMO"/>
 			</languages>
 		</text>
 		<text id="exitText">

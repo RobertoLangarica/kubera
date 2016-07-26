@@ -49,6 +49,8 @@ TextureImporter:
     21300084: tetris-K-InGame_Tetrispink
     21300086: tetris-K-InGame_Tetrispurple
     21300088: tetris-K-InGame_Tetrisyellow
+    21300090: K-InGame_Rotatetetris
+    21300092: tetris-K-InGame_Tetrissoft
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -98,7 +100,7 @@ TextureImporter:
     - name: K-InGame_bar1
       rect:
         serializedVersion: 2
-        x: 1476
+        x: 1478
         y: 548
         width: 506
         height: 106
@@ -127,7 +129,7 @@ TextureImporter:
     - name: K-InGame_bar2
       rect:
         serializedVersion: 2
-        x: 1450
+        x: 1334
         y: 438
         width: 506
         height: 106
@@ -299,8 +301,8 @@ TextureImporter:
     - name: K-InGame_Enter
       rect:
         serializedVersion: 2
-        x: 1078
-        y: 47
+        x: 1128
+        y: 413
         width: 202
         height: 173
       alignment: 0
@@ -321,8 +323,8 @@ TextureImporter:
     - name: K-InGame_Erase
       rect:
         serializedVersion: 2
-        x: 873
-        y: 224
+        x: 1400
+        y: 93
         width: 221
         height: 155
       alignment: 0
@@ -540,8 +542,8 @@ TextureImporter:
     - name: K-InGame_PWRBlock
       rect:
         serializedVersion: 2
-        x: 1130
-        y: 429
+        x: 1318
+        y: 607
         width: 156
         height: 157
       alignment: 9
@@ -561,8 +563,8 @@ TextureImporter:
     - name: K-InGame_PWRBomb
       rect:
         serializedVersion: 2
-        x: 1098
-        y: 251
+        x: 1157
+        y: 607
         width: 157
         height: 157
       alignment: 0
@@ -581,8 +583,8 @@ TextureImporter:
     - name: K-InGame_PWRLetter
       rect:
         serializedVersion: 2
-        x: 1317
-        y: 607
+        x: 1322
+        y: 252
         width: 155
         height: 157
       alignment: 9
@@ -600,8 +602,8 @@ TextureImporter:
     - name: K-InGame_PWRRotate
       rect:
         serializedVersion: 2
-        x: 1157
-        y: 607
+        x: 1080
+        y: 73
         width: 156
         height: 157
       alignment: 9
@@ -621,8 +623,8 @@ TextureImporter:
     - name: K-InGame_PWRThunder
       rect:
         serializedVersion: 2
-        x: 1259
-        y: 268
+        x: 1162
+        y: 252
         width: 156
         height: 157
       alignment: 9
@@ -642,8 +644,8 @@ TextureImporter:
     - name: K-InGame_PWRTip
       rect:
         serializedVersion: 2
-        x: 1290
-        y: 446
+        x: 1240
+        y: 91
         width: 156
         height: 157
       alignment: 9
@@ -660,6 +662,34 @@ TextureImporter:
         - {x: 76.5, y: -46.5}
         - {x: 76.5, y: 28.5}
         - {x: 67.5, y: 58.5}
+    - name: K-InGame_Rotatetetris
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 214
+        width: 107
+        height: 116
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -17.5, y: -8}
+        - {x: -48.5, y: -12}
+        - {x: -53.5, y: -14}
+        - {x: -53.5, y: -33}
+        - {x: -51.5, y: -44}
+        - {x: -37.5, y: -58}
+        - {x: 15.5, y: -58}
+        - {x: 49.5, y: -37}
+        - {x: 49.5, y: -12}
+        - {x: 47.5, y: -8}
+      - - {x: -36.5, y: 58}
+        - {x: -40.5, y: 50}
+        - {x: -49.5, y: 30}
+        - {x: -49.5, y: 8}
+        - {x: 27.5, y: 8}
+        - {x: 53.5, y: 11}
+        - {x: 53.5, y: 58}
     - name: K-InGame_settings
       rect:
         serializedVersion: 2
@@ -682,7 +712,7 @@ TextureImporter:
     - name: K-InGame_Stars1
       rect:
         serializedVersion: 2
-        x: 363
+        x: 474
         y: 224
         width: 506
         height: 106
@@ -711,7 +741,7 @@ TextureImporter:
     - name: K-InGame_Stars2
       rect:
         serializedVersion: 2
-        x: 1476
+        x: 1478
         y: 658
         width: 506
         height: 106
@@ -846,8 +876,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrisblue
       rect:
         serializedVersion: 2
-        x: 592
-        y: 383
+        x: 900
+        y: 44
         width: 176
         height: 176
       alignment: 0
@@ -867,8 +897,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrisgreen
       rect:
         serializedVersion: 2
-        x: 801
-        y: 590
+        x: 772
+        y: 385
         width: 174
         height: 174
       alignment: 0
@@ -889,7 +919,7 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrisorange
       rect:
         serializedVersion: 2
-        x: 772
+        x: 592
         y: 383
         width: 176
         height: 176
@@ -910,8 +940,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrispink
       rect:
         serializedVersion: 2
-        x: 952
-        y: 412
+        x: 801
+        y: 590
         width: 174
         height: 174
       alignment: 0
@@ -929,6 +959,27 @@ TextureImporter:
         - {x: 87, y: -75}
         - {x: 87, y: 83}
     - name: tetris-K-InGame_Tetrispurple
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 412
+        width: 174
+        height: 174
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 81, y: 87}
+        - {x: -80, y: 87}
+        - {x: -87, y: 76}
+        - {x: -87, y: -78}
+        - {x: -77, y: -84}
+        - {x: -61, y: -87}
+        - {x: 73, y: -87}
+        - {x: 85, y: -82}
+        - {x: 87, y: -75}
+        - {x: 87, y: 83}
+    - name: tetris-K-InGame_Tetrissoft
       rect:
         serializedVersion: 2
         x: 979
@@ -952,8 +1003,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrisyellow
       rect:
         serializedVersion: 2
-        x: 900
-        y: 46
+        x: 984
+        y: 234
         width: 174
         height: 174
       alignment: 0

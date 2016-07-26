@@ -532,7 +532,7 @@ public class GameManager : MonoBehaviour
 
 		if(useReferenceInstead)
 		{
-			wordManager.activateWordCompleteBtn (false);
+			wordManager.activateWordBtn (false, false);
 			wordManager.activatePointsGO (false);
 			StartCoroutine(wordManager.afterAllLettersRemoved());
 		}

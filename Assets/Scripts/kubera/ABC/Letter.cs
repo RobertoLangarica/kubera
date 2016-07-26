@@ -76,6 +76,8 @@ public class Letter : MonoBehaviour
 		switch(type)
 		{
 		case EType.OBSTACLE:
+			txtLetter.color = Color.white;
+			txtPoints.color = Color.black;
 			return obstacleSprite;
 		case EType.NORMAL:
 			return normalSprite;
@@ -90,7 +92,14 @@ public class Letter : MonoBehaviour
 		switch(state)
 		{
 		case EState.NORMAL:
-			txtLetter.color = Color.black;
+			if(type == EType.NORMAL)
+			{
+				txtLetter.color = Color.black;
+			}
+			else
+			{
+				txtLetter.color = Color.white;
+			}
 			//txtPoints.color = stateColor;
 			break;
 		case EState.WRONG:
@@ -126,10 +135,11 @@ public class Letter : MonoBehaviour
 	{
 		if(myImage == null){return;}
 
-
 		switch(type)
 		{
 		case EType.OBSTACLE:
+			txtLetter.color = Color.white;
+			txtPoints.color = Color.white;
 			myImage.sprite = obstacleSelectedSprite;
 			break;
 		case EType.NORMAL:

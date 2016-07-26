@@ -14,9 +14,12 @@ public class MultiLanguageTextManager
 	public const string OBJECTIVE_POPUP_BY_1_WORD_ID 		= "goalBy1WordObjectivePopUp";
 	public const string OBJECTIVE_POPUP_BY_SYNONYMOUS_ID 	= "goalBySynonymousObjectivePopUp";
 	public const string OBJECTIVE_POPUP_BY_ANTONYM_ID 		= "goalByAntonymObjectivePopUp";
+	public const string GOAL_CONDITION_BY_POINT_UP_ID		= "goalByPointsConditionUP";
 	public const string GOAL_CONDITION_BY_POINT_ID 			= "goalByPointsCondition";
+	public const string GOAL_CONDITION_BY_WORDS_UP_ID 		= "goalByWordsConditionUP";
 	public const string GOAL_CONDITION_BY_WORDS_ID 			= "goalByWordsCondition";
 	public const string GOAL_CONDITION_BY_LETTERS_ID 		= "goalByLettersCondition";
+	public const string GOAL_CONDITION_BY_OBSTACLES_UP_ID 	= "goalByObstaclesConditionUP";
 	public const string GOAL_CONDITION_BY_OBSTACLES_ID 		= "goalByObstaclesCondition";
 	public const string GOAL_CONDITION_BY_1_WORD_ID 		= "goalBy1WordCondition";
 	public const string GOAL_CONDITION_BY_SYNONYMOUS_ID 	= "goalBySynonymousCondition";

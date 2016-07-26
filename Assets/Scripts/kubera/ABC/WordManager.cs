@@ -50,8 +50,6 @@ public class WordManager : MonoBehaviour
 	public int siblingIndexAfterDrag;
 	public Vector2[] lettersPositions;
 
-	[HideInInspector]public Vector3 deleteBtnPosition;
-
 	protected GridLayoutGroup wordContainerLayout;
 	protected RectTransform wordContainerRectTransform;
 
@@ -82,13 +80,12 @@ public class WordManager : MonoBehaviour
 	public EWordState currentWordPosibleState;
 
 	protected float centerVacuum;
-
+	protected RectTransform wordCompleteButtonRectTransform;
+	protected RectTransform wordDeleteButtonRectTransform;
 	void Awake()
 	{
 		letters = new List<Letter>(maxLetters);
 		currentWordPosibleState = EWordState.WORDS_AVAILABLE;
-
-		deleteBtnPosition = deleteButtonImage.transform.localPosition;
 
 		if (PersistentData.GetInstance ()) 
 		{
@@ -112,13 +109,20 @@ public class WordManager : MonoBehaviour
 			inputWords.onChangePutLetterOverContainer += onChangePutLetterOverContainer;
 		}
 
-		activateWordDeleteBtn(false);
-		activateWordCompleteBtn(false);
+		wordCompleteButtonRectTransform = wordCompleteButton.GetComponent<RectTransform>();
+		wordDeleteButtonRectTransform = wordDeleteButton.GetComponent<RectTransform>();
+
+		//wordCompleteButtonRectTransform.anchoredPosition = new Vector2 (Screen.width * 0.5f, wordCompleteButtonRectTransform.anchoredPosition.y);
+		//wordDeleteButtonRectTransform.anchoredPosition = new Vector2 (Screen.width * 0.5f, wordDeleteButtonRectTransform.anchoredPosition.y);
+
+
+		activateWordBtn(false,false);
 		activatePointsGO(false);
 		activateNoWordPosibleText (false);
 
 		centerVacuum = Screen.width * 0.5f;
-	}
+
+		}
 
 	void Start()
 	{
@@ -696,9 +700,8 @@ public class WordManager : MonoBehaviour
 		bool completeWord = wordsValidator.isCompleteWord ();
 		bool letterOnContainer = isThereAnyLetterOnContainer ();
 
-		activateWordCompleteBtn (completeWord,letterOnContainer);
+		activateWordBtn (completeWord,letterOnContainer);
 		activatePointsGO(letterOnContainer);
-		activateWordDeleteBtn (!completeWord,letterOnContainer);
 		activateNoWordPosibleText (!letterOnContainer,letterOnContainer);
 
 		if(completeWord && letterOnContainer)
@@ -707,35 +710,74 @@ public class WordManager : MonoBehaviour
 		}
 	}
 
-	public void activateWordCompleteBtn(bool activate,bool isThereAnyLetterOnContainer = true)
+	public void activateWordBtn(bool completeWord, bool isThereAnyLetterOnContainer)
 	{
-		if(activate && isThereAnyLetterOnContainer)
+		float speed = 0.25f;
+		DOTween.Kill (wordDeleteButton,true);
+		DOTween.Kill (wordCompleteButton,true);
+
+		//wordCompleteButtonRectTransform.anchoredPosition = new Vector2 (Screen.width * 0.5f, wordCompleteButtonRectTransform.anchoredPosition.y);
+		//wordDeleteButtonRectTransform.anchoredPosition = new Vector2 (Screen.width * 0.5f, wordDeleteButtonRectTransform.anchoredPosition.y);
+		if(completeWord && isThereAnyLetterOnContainer)
 		{
-			wordCompleteButton.SetActive (true);
+			if(wordDeleteButton.activeSelf)
+			{
+				wordCompleteButtonRectTransform.localScale = Vector2.zero;
+				wordDeleteButtonRectTransform.DOScale (Vector2.zero, speed).SetId(wordDeleteButton).OnComplete(()=>
+					{
+						wordDeleteButton.SetActive (false);
+						wordCompleteButton.SetActive (true);
+						wordCompleteButtonRectTransform.DOScale(new Vector2(1,1),speed).SetId(wordCompleteButton);
+					});
+			}
+			else if(wordCompleteButton.activeSelf)
+			{
+				
+			}				
+			else
+			{
+				wordDeleteButton.SetActive (false);
+				wordCompleteButton.SetActive (true);
+				wordCompleteButtonRectTransform.anchoredPosition = new Vector2 (Screen.width * speed, wordCompleteButtonRectTransform.anchoredPosition.y);
+				wordCompleteButtonRectTransform.localScale = new Vector2 (1, 1);
+				wordCompleteButtonRectTransform.DOAnchorPos (Vector2.zero, speed);
+			}
+		}
+		else if(isThereAnyLetterOnContainer)
+		{
+			if(wordCompleteButton.activeSelf)
+			{
+				wordDeleteButtonRectTransform.localScale = Vector2.zero;
+				wordCompleteButtonRectTransform.DOScale (Vector2.zero, speed).SetId(wordCompleteButton).OnComplete(()=>
+					{
+						wordDeleteButton.SetActive (true);
+						wordCompleteButton.SetActive (false);
+						wordDeleteButtonRectTransform.DOScale(new Vector2(1,1),speed).SetId(wordDeleteButton);
+					});
+			}
+			else if(wordDeleteButton.activeSelf)
+			{
+				
+			}
+			else
+			{
+				wordDeleteButton.SetActive (true);
+				wordCompleteButton.SetActive (false);
+				wordDeleteButtonRectTransform.anchoredPosition = new Vector2 (Screen.width * speed, wordDeleteButtonRectTransform.anchoredPosition.y);
+				wordDeleteButtonRectTransform.localScale = new Vector2 (1, 1);
+				wordDeleteButtonRectTransform.DOAnchorPos (Vector2.zero, speed);
+			}
 		}
 		else
 		{
 			wordCompleteButton.SetActive (false);
-
+			wordDeleteButton.SetActive (false);
 		}
 	}
 
 	public void activatePointsGO(bool active)
 	{
 		points.SetActive (active);
-	}
-
-	public void activateWordDeleteBtn(bool activate,bool isThereAnyLetterOnContainer = true)
-	{
-		if(activate && isThereAnyLetterOnContainer)
-		{
-			wordDeleteButton.SetActive (true);
-			points.SetActive (true);
-		}
-		else
-		{
-			wordDeleteButton.SetActive (false);
-		}
 	}
 
 	public void activateNoWordPosibleText(bool activate,bool isThereAnyLetterOnContainer = true)
@@ -1009,7 +1051,6 @@ public class WordManager : MonoBehaviour
 			noWordPosible.SetActive (false);
 			break;
 		case EWordState.HINTED_WORDS:
-			print (currentWordPosibleState);
 			if (currentWordPosibleState != EWordState.HINTED_WORDS && !cancelHint) 
 			{
 				currentWordPosibleState = EWordState.HINTED_WORDS;
