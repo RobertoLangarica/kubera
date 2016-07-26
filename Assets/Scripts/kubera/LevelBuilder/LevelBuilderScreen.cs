@@ -96,7 +96,8 @@ namespace LevelBuilder
 			gridEditor.Inititalize();
 
 			//HUD por default
-			resetEditorToDefaultState(UserDataManager.instance.language);
+			//resetEditorToDefaultState(UserDataManager.instance.language);
+			resetEditorToDefaultState("spanish");
 
 			//Nombre del siguiente nivel (el inmediato siguiente)
 			setcurrentEditingNameToTheLast();
@@ -484,7 +485,7 @@ namespace LevelBuilder
 
 		public void OnResetABCTutorialSelector()
 		{
-			abcTutorialSelector.sincronizeDataWithCSV(defaultObstacles);
+			abcTutorialSelector.sincronizeDataWithCSV(defaultLetters);
 		}
 
 		public void OnEreaseABCTutorialSelector()
