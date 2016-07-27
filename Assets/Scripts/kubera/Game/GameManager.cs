@@ -129,6 +129,7 @@ public class GameManager : MonoBehaviour
 		cellManager.createFrame ();
 
 		refreshCurrentWordScoreOnHUD (wordManager.wordPoints);
+
 		TutorialManager.GetInstance ().init ();
 	}
 

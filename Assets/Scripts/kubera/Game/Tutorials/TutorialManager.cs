@@ -44,14 +44,12 @@ public class TutorialManager : Manager<TutorialManager>
 
 	void Update()
 	{
-		if (currentTutorial == null) 
+		if (currentTutorial != null) 
 		{
-			selectTutorial ();
-		}
-
-		if (currentTutorial.phaseEvent.Contains(TutorialBase.ENextPhaseEvent.TAP) && (Input.touchCount >= 1 || Input.GetMouseButtonDown(0))) 
-		{
-			canCompletePhase ();
+			if (currentTutorial.phaseEvent.Contains(TutorialBase.ENextPhaseEvent.TAP) && (Input.touchCount >= 1 || Input.GetMouseButtonDown(0))) 
+			{
+				canCompletePhase ();
+			}
 		}
 	}
 
@@ -158,6 +156,7 @@ public class TutorialManager : Manager<TutorialManager>
 			powerUpManager.getPowerupByType (PowerupBase.EType.HINT_WORD).OnPowerupCompleted += canCompletePhase;
 			break;
 		case(TutorialBase.ENextPhaseEvent.POSITIONATE_PIECE):
+			Debug.Log (gameManager);
 			gameManager.OnPiecePositionated += canCompletePhase;
 			break;
 		case(TutorialBase.ENextPhaseEvent.EARNED_POINTS):
