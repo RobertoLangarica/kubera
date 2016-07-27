@@ -129,6 +129,7 @@ public class TutorialManager : Manager<TutorialManager>
 			inputWords.onTap += canCompletePhase; 
 			break;
 		case(TutorialBase.ENextPhaseEvent.KEYBOARD_SPECIFIC_LETER_SELECTED):
+		case(TutorialBase.ENextPhaseEvent.KEYBOARD_LETER_SELECTED):
 			keyBoard.OnLetterSelected += canCompletePhase;
 			keyBoard.OnLetterSelected -= keyBoard.setLetterToWildCard;
 			break;
@@ -152,6 +153,9 @@ public class TutorialManager : Manager<TutorialManager>
 			break;
 		case(TutorialBase.ENextPhaseEvent.WILDCARD_USED):
 			powerUpManager.getPowerupByType (PowerupBase.EType.WILDCARD).OnPowerupCompleted += canCompletePhase;
+			break;
+		case(TutorialBase.ENextPhaseEvent.HINT_USED):
+			powerUpManager.getPowerupByType (PowerupBase.EType.HINT_WORD).OnPowerupCompleted += canCompletePhase;
 			break;
 		case(TutorialBase.ENextPhaseEvent.POSITIONATE_PIECE):
 			gameManager.OnPiecePositionated += canCompletePhase;
@@ -189,6 +193,7 @@ public class TutorialManager : Manager<TutorialManager>
 			inputWords.onTap -= canCompletePhase; 
 			break;
 		case(TutorialBase.ENextPhaseEvent.KEYBOARD_SPECIFIC_LETER_SELECTED):
+		case(TutorialBase.ENextPhaseEvent.KEYBOARD_LETER_SELECTED):
 			keyBoard.OnLetterSelected -= canCompletePhase;
 			keyBoard.OnLetterSelected += keyBoard.setLetterToWildCard;
 			break;
@@ -212,6 +217,9 @@ public class TutorialManager : Manager<TutorialManager>
 			break;
 		case(TutorialBase.ENextPhaseEvent.WILDCARD_USED):
 			powerUpManager.getPowerupByType (PowerupBase.EType.WILDCARD).OnPowerupCompleted -= canCompletePhase;
+			break;
+		case(TutorialBase.ENextPhaseEvent.HINT_USED):
+			powerUpManager.getPowerupByType (PowerupBase.EType.HINT_WORD).OnPowerupCompleted -= canCompletePhase;
 			break;
 		case(TutorialBase.ENextPhaseEvent.POSITIONATE_PIECE):
 			gameManager.OnPiecePositionated -= canCompletePhase;
@@ -256,12 +264,16 @@ public class TutorialManager : Manager<TutorialManager>
 
 	public void canCompletePhase(string str)
 	{
-		if (currentTutorial.phaseEvent.Contains(TutorialBase.ENextPhaseEvent.KEYBOARD_SPECIFIC_LETER_SELECTED))
+		if (currentTutorial.phaseEvent.Contains (TutorialBase.ENextPhaseEvent.KEYBOARD_SPECIFIC_LETER_SELECTED)) 
 		{
 			if (str == currentTutorial.phaseObj) 
 			{
 				keyBoard.setLetterToWildCard (str);
 			}
+		} 
+		else if (currentTutorial.phaseEvent.Contains (TutorialBase.ENextPhaseEvent.KEYBOARD_LETER_SELECTED)) 
+		{
+			keyBoard.setLetterToWildCard (str);
 		}
 
 		canCompletePhase ();

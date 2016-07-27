@@ -4,6 +4,8 @@ using System.Collections;
 
 public class TutorialLvl64 : TutorialBase 
 {
+	public KeyBoardManager keyBoard;
+
 	protected override void Start()
 	{
 		base.Start ();
@@ -21,7 +23,7 @@ public class TutorialLvl64 : TutorialBase
 
 			freeWildCard = true;
 
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.BOMB_BUTTON);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WILDCARD_BUTTON);
 
 			instructions [0].text =	MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE1),
@@ -32,10 +34,9 @@ public class TutorialLvl64 : TutorialBase
 		case(1):
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.KEYBOARD_SPECIFIC_LETER_SELECTED);
-			phaseObj = "Z";
+			phaseEvent.Add(ENextPhaseEvent.KEYBOARD_LETER_SELECTED);
 
-			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_BUTTON);
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_BUTTON);
 
 			freeWildCard = true;
 
@@ -48,15 +49,29 @@ public class TutorialLvl64 : TutorialBase
 		case(2):
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.TAP);
+			phaseEvent.Add(ENextPhaseEvent.SUBMIT_WORD);
 
 			freeWildCard = true;
 
 			instructions [2].text =	MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE2),
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE3),
 				new string[2]{ "{{b}}","{{/b}}"}, new string[2]{ "<b>", "</b>"});
 
 			phase = 3;
+			return true;
+		case(3):
+			phasesPanels [1].SetActive (false);
+			phasesPanels [2].SetActive (false);
+			phasesPanels [3].SetActive (true);
+			phaseEvent.Add(ENextPhaseEvent.TAP);
+
+			freeWildCard = true;
+
+			instructions [3].text =	MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE4),
+				new string[2]{ "{{b}}","{{/b}}"}, new string[2]{ "<b>", "</b>"});
+
+			phase = 4;
 			return true;
 		}
 
@@ -68,6 +83,20 @@ public class TutorialLvl64 : TutorialBase
 		switch (phase) 
 		{
 		case(1):
+			return true;
+		case(2):
+			Debug.Log (keyBoard.getSelectedWildCard ().abcChar.character);
+			if (keyBoard.getSelectedWildCard ().abcChar.character == "Z") 
+			{
+				phase = 3;
+				return true;
+			} 
+			else 
+			{
+				return true;
+			}
+			return false;
+		case(3):
 			return true;
 		}
 

@@ -325,6 +325,13 @@
 		</text>
 		<text id="Tutorial_lvl64_phase3">
 			<languages>
+				<language id="english" text="Si necesitas cambiar la letra del {{b}}COMODIN{{/b}} basta con tocarlo."/>
+				<language id="spanish" text="Si necesitas cambiar la letra del {{b}}COMODIN{{/b}} basta con tocarlo."/>
+				<language id="default" text="Si necesitas cambiar la letra del {{b}}COMODIN{{/b}} basta con tocarlo."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl64_phase4">
+			<languages>
 				<language id="english" text="Usa el {{b}}COMODIN{{/b}} las veces que necesites para pasar el nivel."/>
 				<language id="spanish" text="Usa el {{b}}COMODIN{{/b}} las veces que necesites para pasar el nivel."/>
 				<language id="default" text="Usa el {{b}}COMODIN{{/b}} las veces que necesites para pasar el nivel."/>

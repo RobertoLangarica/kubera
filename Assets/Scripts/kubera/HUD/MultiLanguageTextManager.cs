@@ -66,6 +66,7 @@ public class MultiLanguageTextManager
 	public const string TUTORIAL_LV64_PHASE1				= "Tutorial_lvl64_phase1";
 	public const string TUTORIAL_LV64_PHASE2				= "Tutorial_lvl64_phase2";
 	public const string TUTORIAL_LV64_PHASE3				= "Tutorial_lvl64_phase3";
+	public const string TUTORIAL_LV64_PHASE4				= "Tutorial_lvl64_phase4";
 
 	public const string NO_GEMS_POPUP_TITLE					= "NoGemsPopUpTitle";
 	public const string NO_GEMS_POPUP_INFO					= "NoGemsPopUpInfo";

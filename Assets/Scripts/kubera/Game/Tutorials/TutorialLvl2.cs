@@ -29,7 +29,6 @@ public class TutorialLvl2 : TutorialBase
 				new string[2]{"{{b}}","{{/b}}"}, new string[2]{"<b>","</b>"});
 
 			phase = 1;
-			phaseObj = "H";
 			return true;
 		case(1):
 			phasesPanels [0].SetActive (false);
@@ -47,6 +46,7 @@ public class TutorialLvl2 : TutorialBase
 			phase = 2;
 			return true;
 		case(2):
+			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.CREATE_A_LINE);
@@ -81,6 +81,10 @@ public class TutorialLvl2 : TutorialBase
 		switch (phase) 
 		{
 		case(1):
+			if (wordManager.wordsValidator.isCompleteWord ()) 
+			{
+				phase = 2;
+			}
 			return true;
 		case(2):
 			return true;
