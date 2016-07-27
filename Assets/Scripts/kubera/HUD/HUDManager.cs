@@ -236,27 +236,38 @@ public class HUDManager : MonoBehaviour
 			goalTextUP.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.GOAL_CONDITION_BY_POINT_UP_ID);
 			break;
 		case GoalManager.WORDS_COUNT:
-			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_ID;
-			textToReplace = "{{goalWords}}";
-			replacement = "0 / "+(Convert.ToInt32(parameters)).ToString();
+			textId = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_ID);
+			goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
+				new string[2]{ "{{wordsMade}}", "{{wordsNeed}}" }, new string[2] {
+					"0",
+					(Convert.ToInt32 (parameters)).ToString ()
+				});
+			textUpId = MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_UP_ID;
+			goalTextUP.text = MultiLanguageTextManager.instance.getTextByID (textUpId);
 			break;
 		case GoalManager.SYNONYMOUS:
-			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_SYNONYMOUS_ID;
-			textToReplace = "{{goalSin}}";
-			word= (List<string>)parameters;
-			replacement = word[0];
+			textUpId = MultiLanguageTextManager.GOAL_CONDITION_BY_SYNONYMOUS_ID;
+			goalTextUP.text = MultiLanguageTextManager.instance.getTextByID (textUpId);
+
+			word = (List<string>)parameters;
+			replacement = word [0];
+			goalText.text = replacement;
 			break;
 		case GoalManager.WORD:
-			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_1_WORD_ID;
-			textToReplace = "{{goalWord}}";
-			word= (List<string>)parameters;
-			replacement = word[0];
+			textUpId = MultiLanguageTextManager.GOAL_CONDITION_BY_1_WORD_ID;
+			goalTextUP.text = MultiLanguageTextManager.instance.getTextByID (textUpId);
+
+			word = (List<string>)parameters;
+			replacement = word [0];
+			goalText.text = replacement;
 			break;
 		case GoalManager.ANTONYMS:
-			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_ANTONYM_ID;
-			textToReplace = "{{goalAnt}}";
-			word= (List<string>)parameters;
-			replacement = word[0];
+			textUpId = MultiLanguageTextManager.GOAL_CONDITION_BY_ANTONYM_ID;
+			goalTextUP.text = MultiLanguageTextManager.instance.getTextByID (textUpId);
+
+			word = (List<string>)parameters;
+			replacement = word [0];
+			goalText.text = replacement;
 			break;
 		}
 

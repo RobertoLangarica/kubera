@@ -3,9 +3,9 @@
 	<texts>
 		<text id="hudScore">
 			<languages>
-				<language id="english" text="Points:"/>
-				<language id="spanish" text="Puntos:"/>
-				<language id="default" text="Puntos:"/>
+				<language id="english" text="score"/>
+				<language id="spanish" text="puntación"/>
+				<language id="default" text="puntación"/>
 			</languages>
 		</text>
 		<text id="goalByPointsObjectivePopUp">

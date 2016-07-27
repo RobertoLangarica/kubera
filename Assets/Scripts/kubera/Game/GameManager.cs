@@ -526,7 +526,7 @@ public class GameManager : MonoBehaviour
 	 * @param letters : Listado de letras
 	 * @param useReferenceInstead : Elimina las letras que se tengan de referencia y no las de la lista 
 	 * */
-	private void removeLettersFromGrid(List<Letter> letters, bool useReferenceInstead = false)
+	private void removeLettersFromGrid(List<Letter> letters, bool useReferenceInstead)
 	{
 		Letter letter;
 
@@ -541,19 +541,35 @@ public class GameManager : MonoBehaviour
 		{
 			if(useReferenceInstead)
 			{
-				letter = letters[i].letterReference;
+				if(letters[i].wildCard)
+				{
+					letter = letters [i];
+				}
+				else
+				{
+					letter = letters[i].letterReference;
+				}
 			}
 			else
 			{
 				letter = letters[i];
 			}
-
+			
 			if(letter != null)
 			{
-				cellManager.getCellUnderPoint(letter.transform.position).clearCell();
-				gridCharacters.Remove(letter);
-				wordManager.animateWordRetrieved (letter.letterReference);
-				GameObject.DestroyImmediate(letter.gameObject);
+				if(letter.wildCard)
+				{
+					wordManager.animateWordRetrieved (letter);
+					gridCharacters.Remove(letter);
+				}
+				else
+				{
+					cellManager.getCellUnderPoint(letter.transform.position).clearCell();
+					gridCharacters.Remove(letter);
+
+					wordManager.animateWordRetrieved (letter.letterReference);
+					GameObject.DestroyImmediate(letter.gameObject);
+				}
 			}
 		}
 	}

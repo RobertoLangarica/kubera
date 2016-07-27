@@ -1092,6 +1092,7 @@ public class WordManager : MonoBehaviour
 	public void animateWordRetrieved(Letter letter)
 	{
 		Canvas canvas =  letter.GetComponent<Canvas>();
+		
 		Transform letterTransform = letter.transform;
 
 		letterTransform.SetParent (LetterAnimatedContainerTransform,false);
