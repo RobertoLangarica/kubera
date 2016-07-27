@@ -10,6 +10,7 @@ public class DestroyPowerUp : PowerupBase
 	protected CellsManager cellsManager;
 	protected InputBombAndDestroy bombInput;
 	protected WordManager wordManager;
+	protected GameManager gameManager;
 
 	protected GameObject destroyGO;
 
@@ -22,6 +23,7 @@ public class DestroyPowerUp : PowerupBase
 		cellsManager = FindObjectOfType<CellsManager>();
 		bombInput = FindObjectOfType<InputBombAndDestroy>();
 		wordManager = FindObjectOfType<WordManager> ();
+		gameManager = FindObjectOfType<GameManager> ();
 
 		for(int i=0; i<1; i++)
 		{
@@ -203,7 +205,8 @@ public class DestroyPowerUp : PowerupBase
 	{
 		square.OnCellFlipped -= callbackOnFliped;
 		letter.enabled = true;
-		cellsManager.occupyAndConfigureCell(cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
+		//cellsManager.occupyAndConfigureCell(cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
+		gameManager.OnCellFlipped (cell, letter);
 	}
 
 	public void onCompletedNoGems()

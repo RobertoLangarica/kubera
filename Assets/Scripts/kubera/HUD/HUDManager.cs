@@ -15,8 +15,11 @@ public class HUDManager : MonoBehaviour
 	public Button Sounds;
 
 	public Text movementsText;
+	public Text movementsText1;
+	public Text movementsText2;
 	public Text gemsText;
 	public Text levelText;
+	public Text levelNumber;
 	public GameObject lvlGo;
 	protected Button lvlButton;
 
@@ -42,6 +45,8 @@ public class HUDManager : MonoBehaviour
 	public Vector3 initialPieceScale = new Vector3(2.5f,2.5f,2.5f);
 
 	public GameObject modal;
+	public RectTransform vacum;
+	protected Vector2 vacumStartPos;
 
 	protected FloatingTextPool scorePool;
 	protected List<GameObject> lettersToFound = new List<GameObject>();
@@ -54,7 +59,8 @@ public class HUDManager : MonoBehaviour
 	public delegate void DNotifyEvent ();
 	public DNotifyEvent OnPiecesScaled;
 
-		void Start () 
+
+	void Start () 
 	{
 		hudStars = FindObjectOfType<HUDMetterAndStars> ();
 		scorePool = FindObjectOfType<FloatingTextPool>();
@@ -62,6 +68,15 @@ public class HUDManager : MonoBehaviour
 
 		popUpManager.OnPopUpCompleted += popUpCompleted;
 		lvlButton = lvlGo.GetComponent<Button> ();		
+
+		setText ();
+		vacumStartPos = vacum.transform.position;
+	}
+
+	protected void setText()
+	{
+		scoreText.text = lettersPointsTitle.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SCORE_HUD_TITLE_ID);
+		levelText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.LVL_HUD_TITLE_ID);
 	}
 
 	public int getEarnedStars()
@@ -74,12 +89,11 @@ public class HUDManager : MonoBehaviour
 		points.text = pointsCount.ToString();
 		hudStars.setMeterPoints (pointsCount);
 
-		scoreText.text = lettersPointsTitle.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SCORE_HUD_TITLE_ID);
 	}
 		
 	public void updateTextMovements(int movments)
 	{
-		movementsText.text = movments.ToString();
+		movementsText.text = movementsText1.text = movementsText2.text = movments.ToString();
 	}
 
 	public void updateTextGems (int gems)
@@ -132,7 +146,7 @@ public class HUDManager : MonoBehaviour
 				break;
 			}
 		}
-		levelText.text = name;
+		levelNumber.text = name;
 	}
 
 	//TODO: Hardcoding por prueba
@@ -408,6 +422,20 @@ public class HUDManager : MonoBehaviour
 			}
 			pieces[i].transform.SetParent (showingPiecesContainer,false);
 		}
+	}
+
+	public void showVacum(float closeTime)
+	{
+		DOTween.Kill (vacum);
+		vacum.DOAnchorPos (Vector2.zero,0.2f).SetEase (Ease.OutBack).SetId(vacum);
+
+		Invoke ("hideVacum", closeTime);
+	}
+
+	public void hideVacum()
+	{
+		DOTween.Kill (vacum);
+		vacum.DOAnchorPos (vacumStartPos,0.2f).SetEase (Ease.InBack).SetId(vacum);
 	}
 
 	public void setStateMusic(bool activate)
