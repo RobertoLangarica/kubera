@@ -64,17 +64,20 @@ public class HUDMetterAndStars : MonoBehaviour
 	{
 		float size = 0;
 
-		if(star3Reached)
+		if(star1Reached && !star2Reached)
 		{
 			size = (scoreToReachStar [2] - scoreToReachStar [1]) / (Star3 -Star2);
 
 			print (size);
 
 			size = (float)(points-scoreToReachStar [1]) / size;
-			print (size);
 
 			size = size + Star2;
-			print (size);
+			if (!star3Reached && size >= Star3) 
+			{
+				star3Reached = true;
+				Stars [2].transform.localScale *= 1.1f;
+			}
 		}
 
 		if(star2Reached && !star3Reached)
@@ -85,10 +88,10 @@ public class HUDMetterAndStars : MonoBehaviour
 			size = (float)(points-scoreToReachStar [0]) / size;
 
 			size = size + Star1;
-			print (size);
 
 			if(size >= Star2)
 			{
+				Stars [1].transform.localScale *= 1.1f;
 				//Stars [1].sprite = StarFilled;
 				star2Reached = false;
 				star3Reached = true;
@@ -103,7 +106,7 @@ public class HUDMetterAndStars : MonoBehaviour
 
 			if(size >= Star1)
 			{
-				//Stars [0].sprite = StarFilled;
+				Stars [0].transform.localScale *= 1.1f;
 				star1Reached = true;
 				star2Reached = true;
 			}

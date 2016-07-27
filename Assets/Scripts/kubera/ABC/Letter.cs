@@ -22,14 +22,15 @@ public class Letter : MonoBehaviour
 	public Sprite obstacleSelectedSprite;
 	public Sprite wildCardSprite;
 
-	public Color wrong = new Color (1, 0, 0);
-	public Color hintedWords = new Color (0, 1, 0);
+	public Color wrongColor = new Color (1, 0, 0);
+	public Color hintedWordsColor = new Color (0, 1, 0);
 
 	public Text txtLetter;
 	public Text txtPoints;
 	[HideInInspector] public Letter letterReference;
 	[HideInInspector] public bool isFromGrid;
 	[HideInInspector] public EType type;
+	[HideInInspector] public EState state;
 	[HideInInspector] public bool selected;
 	[HideInInspector]public int index;//Indice del caracter en WordManager
 	[HideInInspector]public bool wildCard;
@@ -53,6 +54,7 @@ public class Letter : MonoBehaviour
 		if(myImage == null){return;}
 
 		myImage.sprite = getSpriteBasedOnType(type);
+		setColorsBasedOnType (type);
 	}
 
 	/*public Color getColorBasedOnType(EType type)
@@ -71,6 +73,29 @@ public class Letter : MonoBehaviour
 		return Color.white;
 	}*/
 
+	public void setColorsBasedOnType(EType type)
+	{
+		switch(type)
+		{
+		case EType.OBSTACLE:
+			if(state == EState.NORMAL)
+			{
+				txtLetter.color = Color.white;
+				txtPoints.color = Color.black;
+			}
+			else
+			{
+				txtLetter.color = wrongColor;
+				txtPoints.color = Color.black;
+			}
+			break;
+		case EType.NORMAL:
+			break;
+		case EType.WILD_CARD:
+			break;
+		}
+	}
+
 	public Sprite getSpriteBasedOnType(EType type)
 	{
 		switch(type)
@@ -87,18 +112,26 @@ public class Letter : MonoBehaviour
 
 	public void updateState(EState state)
 	{
+		this.state = state;
 		switch(state)
 		{
 		case EState.NORMAL:
-			txtLetter.color = Color.black;
+			if(type == EType.NORMAL)
+			{
+				txtLetter.color = Color.black;
+			}
+			else if(type == EType.OBSTACLE)
+			{
+				txtLetter.color = Color.white;
+			}
 			//txtPoints.color = stateColor;
 			break;
 		case EState.WRONG:
-			txtLetter.color = wrong;
+			txtLetter.color = wrongColor;
 			//txtPoints.color = stateColor;
 			break;
 		case EState.HINTED:
-			txtLetter.color = hintedWords;
+			txtLetter.color = hintedWordsColor;
 			//txtPoints.color = stateColor;
 			break;
 		}
@@ -125,7 +158,6 @@ public class Letter : MonoBehaviour
 	protected void updateSpriteToSelectedBasedOnType()
 	{
 		if(myImage == null){return;}
-
 
 		switch(type)
 		{
@@ -161,6 +193,7 @@ public class Letter : MonoBehaviour
 
 		if(letterReference != null)
 		{
+			setColorsBasedOnType (type);
 			letterReference.markAsSelected();
 		}
 	}
