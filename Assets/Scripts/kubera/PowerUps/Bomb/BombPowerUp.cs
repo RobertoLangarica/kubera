@@ -7,6 +7,7 @@ public class BombPowerUp : PowerupBase
 	protected CellsManager cellsManager;
 	protected InputBombAndDestroy bombInput;
 	protected BombAnimation bombAnimation;
+	protected GameManager gameManager ;
 
 	protected bool canUse;
 	protected GameObject bombGO;
@@ -16,6 +17,8 @@ public class BombPowerUp : PowerupBase
 		cellsManager = FindObjectOfType<CellsManager>();
 		bombInput = FindObjectOfType<InputBombAndDestroy>();
 		bombAnimation = FindObjectOfType<BombAnimation> ();
+		gameManager = FindObjectOfType<GameManager> ();
+		bombAnimation.OnCellFlipped += gameManager.OnCellFlipped;
 	}
 
 	public override void activate(bool canUse)

@@ -539,7 +539,13 @@ public class WordManager : MonoBehaviour
 	{
 		yield return new WaitForSeconds (0);
 
-		letter.transform.DOMove ( finalPosObj.transform.position, selectAnimationTime).OnComplete(()=>{addLetterToContainer(letter); releaseChild(finalPosObj); reacomodateChildrenSiblingOrder();}).SetId(letter.GetInstanceID());
+		letter.transform.DOMove ( finalPosObj.transform.position, selectAnimationTime).OnComplete(()=>
+			{
+				addLetterToContainer(letter); 
+				releaseChild(finalPosObj); 
+				reacomodateChildrenSiblingOrder();
+				
+			}).SetId(letter.GetInstanceID()).SetEase(Ease.InOutQuad).SetEase(Ease.OutBack);
 	}
 
 	protected void reacomodateChildrenSiblingOrder()
@@ -723,11 +729,11 @@ public class WordManager : MonoBehaviour
 			if(wordDeleteButton.activeSelf)
 			{
 				wordCompleteButtonRectTransform.localScale = Vector2.zero;
-				wordDeleteButtonRectTransform.DOScale (Vector2.zero, speed).SetId(wordDeleteButton).OnComplete(()=>
+				wordDeleteButtonRectTransform.DOScale (Vector2.zero, speed).SetEase(Ease.InOutQuad).SetId(wordDeleteButton).OnComplete(()=>
 					{
 						wordDeleteButton.SetActive (false);
 						wordCompleteButton.SetActive (true);
-						wordCompleteButtonRectTransform.DOScale(new Vector2(1,1),speed).SetId(wordCompleteButton);
+						wordCompleteButtonRectTransform.DOScale(new Vector2(1,1),speed).SetEase(Ease.OutBack).SetId(wordCompleteButton);
 					});
 			}
 			else if(wordCompleteButton.activeSelf)
@@ -740,7 +746,7 @@ public class WordManager : MonoBehaviour
 				wordCompleteButton.SetActive (true);
 				wordCompleteButtonRectTransform.anchoredPosition = new Vector2 (Screen.width * speed, wordCompleteButtonRectTransform.anchoredPosition.y);
 				wordCompleteButtonRectTransform.localScale = new Vector2 (1, 1);
-				wordCompleteButtonRectTransform.DOAnchorPos (Vector2.zero, speed);
+				wordCompleteButtonRectTransform.DOAnchorPos (Vector2.zero, speed).SetId(wordCompleteButton);
 			}
 		}
 		else if(isThereAnyLetterOnContainer)
@@ -748,11 +754,11 @@ public class WordManager : MonoBehaviour
 			if(wordCompleteButton.activeSelf)
 			{
 				wordDeleteButtonRectTransform.localScale = Vector2.zero;
-				wordCompleteButtonRectTransform.DOScale (Vector2.zero, speed).SetId(wordCompleteButton).OnComplete(()=>
+				wordCompleteButtonRectTransform.DOScale (Vector2.zero, speed).SetEase(Ease.InOutQuad).SetId(wordCompleteButton).OnComplete(()=>
 					{
 						wordDeleteButton.SetActive (true);
 						wordCompleteButton.SetActive (false);
-						wordDeleteButtonRectTransform.DOScale(new Vector2(1,1),speed).SetId(wordDeleteButton);
+						wordDeleteButtonRectTransform.DOScale(new Vector2(1,1),speed).SetEase(Ease.OutBack).SetId(wordDeleteButton);
 					});
 			}
 			else if(wordDeleteButton.activeSelf)
@@ -765,7 +771,7 @@ public class WordManager : MonoBehaviour
 				wordCompleteButton.SetActive (false);
 				wordDeleteButtonRectTransform.anchoredPosition = new Vector2 (Screen.width * speed, wordDeleteButtonRectTransform.anchoredPosition.y);
 				wordDeleteButtonRectTransform.localScale = new Vector2 (1, 1);
-				wordDeleteButtonRectTransform.DOAnchorPos (Vector2.zero, speed);
+				wordDeleteButtonRectTransform.DOAnchorPos (Vector2.zero, speed).SetEase(Ease.OutBack).SetId(wordDeleteButton);
 			}
 		}
 		else
@@ -1025,6 +1031,7 @@ public class WordManager : MonoBehaviour
 
 	public void updateGridLettersState(List<Letter> gridLetter,EWordState wordState)
 	{
+		print (currentWordPosibleState);
 		switch (wordState) {
 		case EWordState.NO_WORDS_AVAILABLE:
 			if(currentWordPosibleState != EWordState.NO_WORDS_AVAILABLE)
@@ -1089,26 +1096,27 @@ public class WordManager : MonoBehaviour
 		updateGridLettersState (gridLetter, EWordState.WORDS_AVAILABLE);
 	}
 
-	public void animateWordRetrieved(Letter letter)
+	public IEnumerator animateWordRetrieved(Letter letter,float waitSpeed,float fullTime)
 	{
+		yield return new WaitForSeconds (waitSpeed);
 		Canvas canvas =  letter.GetComponent<Canvas>();
 		
 		Transform letterTransform = letter.transform;
 
 		letterTransform.SetParent (LetterAnimatedContainerTransform,false);
-		letterTransform.DOLocalRotate(new Vector3(0,0,360),1.5f, RotateMode.FastBeyond360);
+		letterTransform.DOLocalRotate(new Vector3(0,0,360),fullTime, RotateMode.FastBeyond360);
 
 		lettersRemoval.Add (letter);
 		//letters.Remove(letter);
 		StartCoroutine (lettersRemove(letter));
 		
-		letterTransform.DOLocalMoveY(25,0.5f);
-		letterTransform.DOLocalMoveX (40, 0.5f).OnComplete(()=>
+		letterTransform.DOLocalMoveY(25,fullTime-1);
+		letterTransform.DOLocalMoveX (40, fullTime-1).OnComplete(()=>
 			{
 				canvas.sortingLayerName = "UI";
-				canvas.sortingOrder = -1;
-				letterTransform.DOLocalMoveY(100,1f);
-				letterTransform.DOScale(new Vector3(0,0,0),1f).OnComplete(()=>
+				canvas.sortingOrder = -2;
+				letterTransform.DOLocalMoveY(100,fullTime-0.5f);
+				letterTransform.DOScale(new Vector3(0,0,0),fullTime-0.5f).OnComplete(()=>
 					{
 						activateGridLayout (true);
 						DestroyImmediate(letter.gameObject);
@@ -1123,9 +1131,9 @@ public class WordManager : MonoBehaviour
 		letters.Remove (l);
 	}
 
-	public IEnumerator afterAllLettersRemoved()
+	public IEnumerator afterAllLettersRemoved(float wait)
 	{
-		yield return new WaitForSeconds (1.51f);
+		yield return new WaitForSeconds (wait+0.1f);
 		onLettersChange ();
 	}
 }

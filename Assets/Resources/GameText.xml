@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <gameText>
 	<texts>
+		<text id="hudLevel">
+			<languages>
+				<language id="english" text="LVL"/>
+				<language id="spanish" text="NVL"/>
+				<language id="default" text="NVL"/>
+			</languages>
+		</text>
 		<text id="hudScore">
 			<languages>
 				<language id="english" text="score"/>
-				<language id="spanish" text="puntación"/>
-				<language id="default" text="puntación"/>
+				<language id="spanish" text="puntuación"/>
+				<language id="default" text="puntuación"/>
 			</languages>
 		</text>
 		<text id="goalByPointsObjectivePopUp">

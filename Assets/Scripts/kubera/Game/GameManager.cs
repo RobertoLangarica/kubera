@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
 
 	private LinesCreatedAnimation linesAnimation;
 	private BombAnimation bombAnimation;
-	private SecondChancePopUp secondChance;
+	public SecondChancePopUp secondChance;
 	private SecondChanceFreeBombs SecondChanceFreeBombs;
 
 	private Level currentLevel;
@@ -77,7 +77,6 @@ public class GameManager : MonoBehaviour
 		goalManager			= FindObjectOfType<GoalManager>();
 		linesAnimation 		= FindObjectOfType<LinesCreatedAnimation> ();
 		bombAnimation 		= FindObjectOfType<BombAnimation> ();
-		secondChance 		= FindObjectOfType<SecondChancePopUp> ();
 		SecondChanceFreeBombs 	= FindObjectOfType<SecondChanceFreeBombs> ();
 
 		secondChance.OnSecondChanceAquired += secondChanceBought;
@@ -438,8 +437,9 @@ public class GameManager : MonoBehaviour
 		linesAnimation.configurateAnimation(cellsToAnimate,letters);
 	}
 
-	protected void OnCellFlipped(Cell cell, Letter letter)
+	public void OnCellFlipped(Cell cell, Letter letter)
 	{
+		print ("s");
 		cellManager.occupyAndConfigureCell (cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE);
 		gridCharacters.Add(letter);
 
@@ -530,12 +530,17 @@ public class GameManager : MonoBehaviour
 	{
 		Letter letter;
 
+		float fulltime = 1.5f;
+		float wait = 0.25f;
+
 		if(useReferenceInstead)
 		{
 			wordManager.activateWordBtn (false, false);
 			wordManager.activatePointsGO (false);
-			StartCoroutine(wordManager.afterAllLettersRemoved());
+			StartCoroutine(wordManager.afterAllLettersRemoved(fulltime));
 		}
+
+		hudManager.showVacum (fulltime);
 
 		for(int i = 0; i < letters.Count; i++)
 		{
@@ -559,7 +564,7 @@ public class GameManager : MonoBehaviour
 			{
 				if(letter.wildCard)
 				{
-					wordManager.animateWordRetrieved (letter);
+					StartCoroutine(wordManager.animateWordRetrieved (letter,wait,fulltime));
 					gridCharacters.Remove(letter);
 				}
 				else
@@ -567,7 +572,7 @@ public class GameManager : MonoBehaviour
 					cellManager.getCellUnderPoint(letter.transform.position).clearCell();
 					gridCharacters.Remove(letter);
 
-					wordManager.animateWordRetrieved (letter.letterReference);
+					StartCoroutine(wordManager.animateWordRetrieved (letter.letterReference,wait,fulltime));
 					GameObject.DestroyImmediate(letter.gameObject);
 				}
 			}

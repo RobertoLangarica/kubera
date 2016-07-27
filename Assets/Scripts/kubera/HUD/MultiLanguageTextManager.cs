@@ -7,6 +7,7 @@ using System.Collections;
 public class MultiLanguageTextManager
 {
 	public const string SCORE_HUD_TITLE_ID 					= "hudScore";
+	public const string LVL_HUD_TITLE_ID 					= "hudLevel";
 	public const string OBJECTIVE_POPUP_BY_POINTS_ID 		= "goalByPointsObjectivePopUp";
 	public const string OBJECTIVE_POPUP_BY_WORDS_ID 		= "goalByWordsObjectivePopUp";
 	public const string OBJECTIVE_POPUP_BY_LETTERS_ID 		= "goalByLettersObjectivePopUp";

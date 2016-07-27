@@ -12,18 +12,17 @@ public class Letter : MonoBehaviour
 
 	public enum EState
 	{
-		WRONG,NORMAL,HINTED	
+		NORMAL,WRONG,HINTED	
 	}
 
 	public Image myImage;
 	public Sprite normalSprite;
 	public Sprite normalSelectedSprite;
+	public Sprite normalWrongSprite;
 	public Sprite obstacleSprite;
 	public Sprite obstacleSelectedSprite;
+	public Sprite obstacleWrongSprite;
 	public Sprite wildCardSprite;
-
-	public Color wrongColor = new Color (1, 0, 0);
-	public Color hintedWordsColor = new Color (0, 1, 0);
 
 	public Text txtLetter;
 	public Text txtPoints;
@@ -75,6 +74,9 @@ public class Letter : MonoBehaviour
 
 	public void setColorsBasedOnType(EType type)
 	{
+		print ("setColorsBasedOnType");
+		print (type);
+		print (state);
 		switch(type)
 		{
 		case EType.OBSTACLE:
@@ -83,13 +85,23 @@ public class Letter : MonoBehaviour
 				txtLetter.color = Color.white;
 				txtPoints.color = Color.black;
 			}
-			else
+			else if( state == EState.WRONG)
 			{
-				txtLetter.color = wrongColor;
-				txtPoints.color = Color.black;
+				txtLetter.color = Color.white;
+				txtPoints.color = new Color(0.62f,0.62f,0.62f);
 			}
 			break;
 		case EType.NORMAL:
+			if(state == EState.NORMAL)
+			{
+				txtLetter.color = Color.black;
+				txtPoints.color = Color.white;
+			}
+			else if( state == EState.WRONG)
+			{
+				txtLetter.color = new Color(0.62f,0.62f,0.62f);
+				txtPoints.color = Color.white;
+			}
 			break;
 		case EType.WILD_CARD:
 			break;
@@ -112,26 +124,28 @@ public class Letter : MonoBehaviour
 
 	public void updateState(EState state)
 	{
+		if(myImage == null){return;}
+
 		this.state = state;
+		setColorsBasedOnType (type);
 		switch(state)
 		{
 		case EState.NORMAL:
 			if(type == EType.NORMAL)
 			{
-				txtLetter.color = Color.black;
+				myImage.sprite = normalSprite;
 			}
-			else if(type == EType.OBSTACLE)
+			else
 			{
-				txtLetter.color = Color.white;
+				myImage.sprite = obstacleSprite;
 			}
-			//txtPoints.color = stateColor;
 			break;
 		case EState.WRONG:
-			txtLetter.color = wrongColor;
+			//txtLetter.color = wrongColor;
 			//txtPoints.color = stateColor;
 			break;
 		case EState.HINTED:
-			txtLetter.color = hintedWordsColor;
+			//txtLetter.color = hintedWordsColor;
 			//txtPoints.color = stateColor;
 			break;
 		}
