@@ -18,6 +18,8 @@ public class DestroyPowerUp : PowerupBase
 	protected List<AnimatedSprite> occupiedAnimation = new List<AnimatedSprite>();
 	protected bool canUse;
 
+	protected Cell highLightCell;
+
 	void Start () 
 	{
 		cellsManager = FindObjectOfType<CellsManager>();
@@ -228,15 +230,27 @@ public class DestroyPowerUp : PowerupBase
 
 	public void onOverCellChanged(Cell cellSelected)
 	{
-		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_POWERUP);
-		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR);
-
 		if (cellSelected != null) 
 		{
+			if (highLightCell == null) 
+			{
+				highLightCell = cellSelected;
+			}
+
+			if (cellSelected.contentColor != highLightCell.contentColor) 
+			{
+				HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR);
+			}
+
+
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_POWERUP);
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR,cellSelected);
+
+			highLightCell = cellSelected;
 		} 
 		else 
 		{
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR);
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.DESTROY_POWERUP);
 		}
 	}

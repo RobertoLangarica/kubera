@@ -5,9 +5,19 @@ using System.Collections.Generic;
 
 public class HighLight : MonoBehaviour 
 {
+	public enum EHIGHLIGHPARENTTYPE
+	{
+		NONE,
+		CELL,
+		RECTANGLE_BUTTON,
+		CIRCLE_BUTTON,
+		PIECES_AREA,
+		WORD_AREA
+	}
+
 	public GameObject borderStars;
 
-	public bool scaleToObject;
+	public EHIGHLIGHPARENTTYPE parentType;
 
 	protected bool isScaled;
 
@@ -28,9 +38,9 @@ public class HighLight : MonoBehaviour
 
 	public bool activateHighLight(HighLightManager.EHighLightType type,HighLightManager.EHighLightStatus status)
 	{
-		if (scaleToObject && !isScaled) 
+		if (!isScaled) 
 		{
-			Invoke ("scaleSpriteToFather",0.1f);
+			setScale ();
 		}
 
 		int index = suscribedTypes.IndexOf (type);
@@ -112,6 +122,16 @@ public class HighLight : MonoBehaviour
 			}
 		}
 		return false;
+	}
+
+	protected void setScale()
+	{
+		switch (parentType) 
+		{
+		case(EHIGHLIGHPARENTTYPE.CELL):
+			scaleSpriteToFather ();
+			break;
+		}
 	}
 
 	public void scaleSpriteToFather()
