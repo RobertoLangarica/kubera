@@ -65,6 +65,9 @@ public class HighLight : MonoBehaviour
 		case(HighLightManager.EHighLightStatus.WRONG):
 			temp = HighLightManager.GetInstance().wrongHighLight;
 			break;
+		case(HighLightManager.EHighLightStatus.HINT):
+			temp = HighLightManager.GetInstance().hintHighLight;
+			break;
 		}
 
 		tempImg = gameObject.GetComponent<Image>();

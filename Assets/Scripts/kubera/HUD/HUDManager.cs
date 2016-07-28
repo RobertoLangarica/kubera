@@ -152,7 +152,7 @@ public class HUDManager : MonoBehaviour
 	//TODO: Hardcoding por prueba
 	public void animateLvlGo(bool drop = true)
 	{
-		Transform lvlTransform = lvlGo.transform;
+		/*Transform lvlTransform = lvlGo.transform;
 		float minMin = -2;
 		float minMax = 6;
 		float maxMin = 20;
@@ -175,7 +175,7 @@ public class HUDManager : MonoBehaviour
 					});
 				});
 			});
-		});
+		});*/
 	}
 
 	public void showGoalAsLetters(bool isLetters)

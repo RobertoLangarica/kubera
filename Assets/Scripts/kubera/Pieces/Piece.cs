@@ -101,6 +101,8 @@ public class Piece : MonoBehaviour
 			return SPRITE_BLUE;
 		case EColor.ORANGE:
 			return SPRITE_ORANGE;
+		case EColor.PINK:
+			return SPRITE_PINK;
 		}
 		return SPRITE_YELLOW;
 	}

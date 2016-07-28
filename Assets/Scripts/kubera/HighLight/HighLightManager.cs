@@ -26,19 +26,22 @@ public class HighLightManager : Manager<HighLightManager>
 		ROTATE_BUTTON,
 		SQUARE_BUTTON,
 		WILDCARD_BUTTON,
-		WORD_HINT_BUTTON
+		WORD_HINT_BUTTON,
+		SPECIFIC_CELL
 	}
 
 	public enum EHighLightStatus
 	{
 		NORMAL,
-		WRONG
+		WRONG,
+		HINT
 	}
 
 	public const string HIGHLIGHT_TAG = "HighLight";
 
 	public Color normalHighLight;
 	public Color wrongHighLight;
+	public Color hintHighLight;
 
 	protected List<HighLight> activeHighLight = new List<HighLight>();
 	protected CellsManager _cellManager;
@@ -100,7 +103,7 @@ public class HighLightManager : Manager<HighLightManager>
 		}
 	}
 
-	/*
+	/**
 	 * NOTA: El que prenda el highLight se tiene que encargar de apagar su propio HighLight
 	*/
 	public void setHighLightOfType(EHighLightType type,Object obj = null)
@@ -108,7 +111,7 @@ public class HighLightManager : Manager<HighLightManager>
 		Cell[] tempCell = null;
 
 		currentType = type;
-
+		print (type);
 		switch (type) 
 		{
 		case(EHighLightType.BOMB_POWERUP):
@@ -189,6 +192,9 @@ public class HighLightManager : Manager<HighLightManager>
 			break;
 		case(EHighLightType.WORD_HINT_BUTTON):
 			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.HINT_WORD).powerUpButton,EHighLightStatus.NORMAL);
+			break;
+		case(EHighLightType.SPECIFIC_CELL):
+			turnOnHighLights ((Transform)obj,EHighLightStatus.HINT);
 			break;
 		}
 	}

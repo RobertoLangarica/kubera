@@ -62,7 +62,7 @@ public class PowerupBase : MonoBehaviour
 
 		if (powerUpImage != null) 
 		{
-			powerUpObject.GetComponent<Piece> ().currentColor = Piece.EColor.NONE;
+			powerUpObject.GetComponent<Piece> ().currentColor = Piece.EColor.PURPLE;
 			
 			if (temp != null) 
 			{

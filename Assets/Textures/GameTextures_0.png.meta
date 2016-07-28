@@ -277,34 +277,35 @@ TextureImporter:
     - name: K-InGame_boardCorner
       rect:
         serializedVersion: 2
-        x: 1973
-        y: 1855
-        width: 50
-        height: 51
+        x: 1974
+        y: 1856
+        width: 48
+        height: 48
       alignment: 9
       pivot: {x: 0.6, y: 0.6666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -30, y: 17}
-        - {x: -30, y: -34}
-        - {x: 20, y: -34}
-        - {x: 20, y: 3}
-        - {x: 14, y: 17}
+      - - {x: 10.199951, y: 16}
+        - {x: -28.800049, y: 16}
+        - {x: -28.800049, y: -32}
+        - {x: 19.199951, y: -32}
+        - {x: 19.199951, y: 7}
+        - {x: 18.199951, y: 9}
     - name: K-InGame_boardoutline
       rect:
         serializedVersion: 2
-        x: 1973
-        y: 1801
-        width: 50
-        height: 50
+        x: 1974
+        y: 1802
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -25, y: 25}
-        - {x: -25, y: -25}
-        - {x: 25, y: -25}
-        - {x: 25, y: 25}
+      - - {x: -24, y: 24}
+        - {x: -24, y: -24}
+        - {x: 24, y: -24}
+        - {x: 24, y: 24}
     - name: K-InGame_DobleArrow
       rect:
         serializedVersion: 2

@@ -50,6 +50,7 @@ public class BombAnimation : MonoBehaviour
 
 	public IEnumerator startSameColorSearchAnimation(Cell cellSelected)
 	{
+		print (cellSelected.contentColor);
 		Cell[] selection =  cellsManager.getCellNeighborsOfSameColor(cellSelected);
 		List<Cell> selectionList = new List<Cell>();
 		for(int i=0; i<selection.Length; i++)
