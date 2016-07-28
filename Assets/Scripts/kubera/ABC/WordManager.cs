@@ -143,7 +143,6 @@ public class WordManager : MonoBehaviour
 		}
 
 		inputWords.limitWidth = wordContainerRectTransform.rect.width;
-		print (wordContainerRectTransform.rect.width);
 
 	}
 
@@ -1031,19 +1030,16 @@ public class WordManager : MonoBehaviour
 
 	public void updateGridLettersState(List<Letter> gridLetter,EWordState wordState)
 	{
-		print (currentWordPosibleState);
 		switch (wordState) {
 		case EWordState.NO_WORDS_AVAILABLE:
-			if(currentWordPosibleState != EWordState.NO_WORDS_AVAILABLE)
+			currentWordPosibleState = EWordState.NO_WORDS_AVAILABLE;
+			for(int i=0; i<gridLetter.Count; i++)
 			{
-				currentWordPosibleState = EWordState.NO_WORDS_AVAILABLE;
-				for(int i=0; i<gridLetter.Count; i++)
-				{
-					gridLetter [i].updateState (Letter.EState.WRONG);
-				}
-				noWordPosible.SetActive (true);
-				activateNoWordPosibleText (true);
+				gridLetter [i].updateState (Letter.EState.WRONG);
 			}
+			noWordPosible.SetActive (true);
+			activateNoWordPosibleText (true);
+
 			break;
 		case EWordState.WORDS_AVAILABLE:
 			if(currentWordPosibleState != EWordState.WORDS_AVAILABLE)
@@ -1070,6 +1066,7 @@ public class WordManager : MonoBehaviour
 
 	IEnumerator updateLetterHintState(List<Letter> gridLetter)
 	{
+		CellsManager cellManager = FindObjectOfType<CellsManager> ();
 		yield return new WaitForSeconds (0);
 		cancelHint = false;
 		for(int i=0; i<gridLetter.Count; i++)
@@ -1077,13 +1074,18 @@ public class WordManager : MonoBehaviour
 			yield return new WaitForSeconds (0.4f);
 			if(!cancelHint)
 			{
-				gridLetter [i].updateState (Letter.EState.HINTED);	
+				HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SPECIFIC_CELL, cellManager.getCellUnderPoint (gridLetter [i].transform.position).transform);
+				//gridLetter [i].updateState (Letter.EState.HINTED);
+
 				yield return new WaitForSeconds (0.4f);
 			}
 		}
+		yield return new WaitForSeconds (0.4f);
+
 
 		if(!cancelHint)
 		{
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SPECIFIC_CELL);
 			currentWordPosibleState = EWordState.HINTED_WORDS;
 			updateGridLettersState (gridLetter, EWordState.WORDS_AVAILABLE);
 			updateGridLettersState (gridLetter, EWordState.HINTED_WORDS);	
@@ -1094,6 +1096,7 @@ public class WordManager : MonoBehaviour
 	{
 		cancelHint = true;
 		updateGridLettersState (gridLetter, EWordState.WORDS_AVAILABLE);
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SPECIFIC_CELL);
 	}
 
 	public IEnumerator animateWordRetrieved(Letter letter,float waitSpeed,float fullTime)

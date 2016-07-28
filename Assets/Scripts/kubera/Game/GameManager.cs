@@ -339,6 +339,7 @@ public class GameManager : MonoBehaviour
 
 		for(int i=0; i< cellsUnderPiece.Count; i++)
 		{ 
+			print (piece.currentColor);
 			cellManager.occupyAndConfigureCell (cellsUnderPiece [i], piece.squares [i], piece.currentType,piece.currentColor);
 
 			//Cada cuadro reeparentado para dejar de usar su contenedor actual
@@ -440,7 +441,7 @@ public class GameManager : MonoBehaviour
 
 	public void OnCellFlipped(Cell cell, Letter letter)
 	{
-		print ("s");
+		print ("SSS");
 		cellManager.occupyAndConfigureCell (cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE);
 		gridCharacters.Add(letter);
 
