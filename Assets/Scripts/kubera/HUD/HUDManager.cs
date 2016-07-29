@@ -149,33 +149,10 @@ public class HUDManager : MonoBehaviour
 		levelNumber.text = name;
 	}
 
-	//TODO: Hardcoding por prueba
 	public void animateLvlGo(bool drop = true)
 	{
-		/*Transform lvlTransform = lvlGo.transform;
-		float minMin = -2;
-		float minMax = 6;
-		float maxMin = 20;
-		float maxMax = 34.7f;
-		float random = UnityEngine.Random.Range (maxMin, maxMax);
-		lvlButton.interactable = false;
-		if(drop)
-		{
-			lvlGo.GetComponent<RectTransform> ().DOAnchorPos (Vector2.zero, 0.5f);
-		}
-			
-		lvlTransform.DOLocalRotate (new Vector3 (0, 0, 74.95f), 0.5f).OnComplete (() => {
-			random = UnityEngine.Random.Range (minMin, minMax);
-			lvlTransform.DOLocalRotate (new Vector3 (0, 0, random), 1).OnComplete (() => {
-				random = UnityEngine.Random.Range (maxMin, maxMax);
-				lvlTransform.DOLocalRotate (new Vector3 (0, 0, random), 1).OnComplete (() => {
-					random = UnityEngine.Random.Range (minMin, minMax);
-					lvlTransform.DOLocalRotate (new Vector3 (0, 0, 0), 1).OnComplete (() => {
-						lvlButton.interactable = true;
-					});
-				});
-			});
-		});*/
+		lvlGo.GetComponent<Rigidbody2D> ().isKinematic = false;
+		lvlGo.GetComponent<DistanceJoint2D> ().enabled = true;
 	}
 
 	public void showGoalAsLetters(bool isLetters)
