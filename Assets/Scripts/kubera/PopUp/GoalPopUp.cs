@@ -8,7 +8,8 @@ public class GoalPopUp : PopUpBase {
 
 	public Text goalText;
 	public Text goalLettersText;
-	public Text LevelName;
+	public Text LevelNumber;
+	public Text LevelText;
 	public Transform goalLettersContainer;
 
 	public GameObject lettersObjective;
@@ -38,7 +39,7 @@ public class GoalPopUp : PopUpBase {
 
 	public void setGoalPopUpInfo(string text, int starsReached, List<string> letters = null, string levelName = "")
 	{
-		this.LevelName.text = levelName;
+		this.LevelNumber.text = levelName;
 		if(letters.Count != 0)
 		{
 			goalText.enabled = false;

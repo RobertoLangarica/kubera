@@ -6,15 +6,7 @@ using System.Collections;
  */
 public class MultiLanguageTextManager
 {
-	public const string SCORE_HUD_TITLE_ID 					= "hudScore";
-	public const string LVL_HUD_TITLE_ID 					= "hudLevel";
-	public const string OBJECTIVE_POPUP_BY_POINTS_ID 		= "goalByPointsObjectivePopUp";
-	public const string OBJECTIVE_POPUP_BY_WORDS_ID 		= "goalByWordsObjectivePopUp";
-	public const string OBJECTIVE_POPUP_BY_LETTERS_ID 		= "goalByLettersObjectivePopUp";
-	public const string OBJECTIVE_POPUP_BY_OBSTACLES_ID 	= "goalByObstaclesObjectivePopUp";
-	public const string OBJECTIVE_POPUP_BY_1_WORD_ID 		= "goalBy1WordObjectivePopUp";
-	public const string OBJECTIVE_POPUP_BY_SYNONYMOUS_ID 	= "goalBySynonymousObjectivePopUp";
-	public const string OBJECTIVE_POPUP_BY_ANTONYM_ID 		= "goalByAntonymObjectivePopUp";
+	//GAME
 	public const string GOAL_CONDITION_BY_POINT_UP_ID		= "goalByPointsConditionUP";
 	public const string GOAL_CONDITION_BY_POINT_ID 			= "goalByPointsCondition";
 	public const string GOAL_CONDITION_BY_WORDS_UP_ID 		= "goalByWordsConditionUP";
@@ -25,6 +17,17 @@ public class MultiLanguageTextManager
 	public const string GOAL_CONDITION_BY_1_WORD_ID 		= "goalBy1WordCondition";
 	public const string GOAL_CONDITION_BY_SYNONYMOUS_ID 	= "goalBySynonymousCondition";
 	public const string GOAL_CONDITION_BY_ANTONYM_ID 		= "goalByAntonymCondition";
+
+	public const string SCORE_HUD_TITLE_ID 					= "hudScore";
+	public const string LVL_HUD_TITLE_ID 					= "hudLevel";
+	public const string OBJECTIVE_POPUP_BY_POINTS_ID 		= "goalByPointsObjectivePopUp";
+	public const string OBJECTIVE_POPUP_BY_WORDS_ID 		= "goalByWordsObjectivePopUp";
+	public const string OBJECTIVE_POPUP_BY_LETTERS_ID 		= "goalByLettersObjectivePopUp";
+	public const string OBJECTIVE_POPUP_BY_OBSTACLES_ID 	= "goalByObstaclesObjectivePopUp";
+	public const string OBJECTIVE_POPUP_BY_1_WORD_ID 		= "goalBy1WordObjectivePopUp";
+	public const string OBJECTIVE_POPUP_BY_SYNONYMOUS_ID 	= "goalBySynonymousObjectivePopUp";
+	public const string OBJECTIVE_POPUP_BY_ANTONYM_ID 		= "goalByAntonymObjectivePopUp";
+
 	public const string EXIT_POPUP_ID 						= "exitText";
 	public const string WIN_TEXT_POPUP_ID					= "WinTextPopUpID";
 	public const string STARTGAME_TEXT_POPUP_ID				= "StartTextPopUpID";
