@@ -15,55 +15,7 @@
 				<language id="default" text="puntuación"/>
 			</languages>
 		</text>
-		<text id="goalByPointsObjectivePopUp">
-			<languages>
-				<language id="english" text="Get: {{goalPoints}} points."/>
-				<language id="spanish" text="Obten: {{goalPoints}} puntos."/>
-				<language id="default" text="Obten: {{goalPoints}} puntos."/>
-			</languages>
-		</text>
-		<text id="goalByWordsObjectivePopUp">
-			<languages>
-				<language id="english" text="Create: {{goalWords}} words."/>
-				<language id="spanish" text="Forma: {{goalWords}} palabras."/>
-				<language id="default" text="Forma: {{goalWords}} puntos."/>
-			</languages>
-		</text>
-		<text id="goalByLettersObjectivePopUp">
-			<languages>
-				<language id="english" text="Use: {{goalLetters}}"/>
-				<language id="spanish" text="Usa: {{goalLetters}}"/>
-				<language id="default" text="Usa: {{goalLetters}}"/>
-			</languages>
-		</text>
-		<text id="goalByObstaclesObjectivePopUp">
-			<languages>
-				<language id="english" text="Use: {{goalObstacleLetters}} black letters."/>
-				<language id="spanish" text="Usa: {{goalObstacleLetters}} letras negras."/>
-				<language id="default" text="Usa: {{goalObstacleLetters}} letras negras."/>
-			</languages>
-		</text>
-		<text id="goalBy1WordObjectivePopUp">
-			<languages>
-				<language id="english" text="Create: {{goalWord}} ."/>
-				<language id="spanish" text="Forma: {{goalWord}} ."/>
-				<language id="default" text="Forma: {{goalWord}} ."/>
-			</languages>
-		</text>
-		<text id="goalBySynonymousObjectivePopUp">
-			<languages>
-				<language id="english" text="Synonymous of: {{goalSin}} ."/>
-				<language id="spanish" text="Sinonimo de: {{goalSin}} ."/>
-				<language id="default" text="Sinonimo de: {{goalSin}} ."/>
-			</languages>
-		</text>
-		<text id="goalByAntonymObjectivePopUp">
-			<languages>
-				<language id="english" text="Antonym of: {{goalAnt}} ."/>
-				<language id="spanish" text="Antonimo de: {{goalAnt}} ."/>
-				<language id="default" text="Antonimo de: {{goalAnt}} ."/>
-			</languages>
-		</text>
+
 		<text id="goalByPointsConditionUP">
 			<languages>
 				<language id="english" text="GOAL"/>
@@ -412,6 +364,88 @@
 				<language id="english" text="You ran out of options!"/>
 				<language id="spanish" text="¡Tablero saturado y sin opciones!"/>
 				<language id="default" text="¡Tablero saturado y sin opciones!"/>
+			</languages>
+		</text>
+		<!--
+		Map	
+		-->
+		<text id="lvlTextObjectivePopUp">
+			<languages>
+				<language id="english" text="LVL {{levelName}}"/>
+				<language id="spanish" text="NVL {{levelName}}"/>
+				<language id="default" text="NVL {{levelName}}"/>
+			</languages>
+		</text>
+		<text id="goalTextObjectivePopUp">
+			<languages>
+				<language id="english" text="GOAL"/>
+				<language id="spanish" text="OBJETIVO"/>
+				<language id="default" text="OBJETIVO"/>
+			</languages>
+		</text>
+		<text id="goalByPointsObjectivePopUpA">
+			<languages>
+				<language id="english" text="Get"/>
+				<language id="spanish" text="Haz"/>
+				<language id="default" text="Haz"/>
+			</languages>
+		</text>
+		<text id="goalByPointsObjectivePopUpB">
+			<languages>
+				<language id="english" text="{{goalPoints}} points"/>
+				<language id="spanish" text="{{goalPoints}} puntos"/>
+				<language id="default" text="{{goalPoints}} puntos"/>
+			</languages>
+		</text>
+		<text id="goalByLettersObjectivePopUp">
+			<languages>
+				<language id="english" text="Use these letters"/>
+				<language id="spanish" text="Usa estas letras"/>
+				<language id="default" text="Usa estas letras"/>
+			</languages>
+		</text>
+		<text id="goalByObstaclesObjectivePopUp">
+			<languages>
+				<language id="english" text="Use all the black letters"/>
+				<language id="spanish" text="Usa todas las letras negras"/>
+				<language id="default" text="Usa todas las letras negras"/>
+			</languages>
+		</text>
+
+		<text id="goalByWordsObjectivePopUpA">
+			<languages>
+				<language id="english" text="Form"/>
+				<language id="spanish" text="Forma"/>
+				<language id="default" text="Forma"/>
+			</languages>
+		</text>
+		<text id="goalByWordsObjectivePopUpB">
+			<languages>
+				<language id="english" text="{{goalWords}} words"/>
+				<language id="spanish" text="{{goalWords}} palabras"/>
+				<language id="default" text="{{goalWords}} palabras"/>
+			</languages>
+		</text>
+		<text id="goalBy1WordObjectivePopUp">
+			<languages>
+				<language id="english" text="Form this word"/>
+				<language id="spanish" text="Forma esta palabra"/>
+				<language id="default" text="Forma esta palabra"/>
+			</languages>
+		</text>
+
+		<text id="goalBySynonymousObjectivePopUp">
+			<languages>
+				<language id="english" text="Form a synonym of"/>
+				<language id="spanish" text="Forma un sinónimo de"/>
+				<language id="default" text="Forma un sinónimo de"/>
+			</languages>
+		</text>
+		<text id="goalByAntonymObjectivePopUp">
+			<languages>
+				<language id="english" text="Form a antonym of"/>
+				<language id="spanish" text="Forma un antónimo de"/>
+				<language id="default" text="Forma un antónimo de"/>
 			</languages>
 		</text>
 	</texts>

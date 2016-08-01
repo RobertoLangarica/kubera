@@ -419,6 +419,10 @@ public class MapManager : MonoBehaviour
 		List<string> word = new List<string> ();
 		List<string> letter = new List<string> ();
 
+		string textA = string.Empty;
+		string textB = string.Empty;
+		int aABLetterObjectives = 0;
+
 		for (int i = 0; i < levelName.Length; i++) 
 		{
 			if (levelName [i] == '0') 
@@ -436,6 +440,7 @@ public class MapManager : MonoBehaviour
 		{
 		case GoalManager.LETTERS:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_LETTERS_ID;
+			textA = MultiLanguageTextManager.instance.getTextByID (textId);
 			textToReplace = "{{goalLetters}}";
 
 			replacement = "";
@@ -446,43 +451,62 @@ public class MapManager : MonoBehaviour
 				letter.Add (oLetter.ToString ());
 			}
 
+			aABLetterObjectives = 2;
 			break;
 		case GoalManager.OBSTACLES:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_OBSTACLES_ID;
-			textToReplace = "{{goalObstacleLetters}}";
-			replacement = (Convert.ToInt32(parameters)).ToString();
+			textA = MultiLanguageTextManager.instance.getTextByID (textId);
+			/*textToReplace = "{{goalObstacleLetters}}";
+			replacement = (Convert.ToInt32(parameters)).ToString();*/
+			aABLetterObjectives = 1;
 			break;
 		case GoalManager.POINTS:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_POINTS_ID;
 			textToReplace = "{{goalPoints}}";
-			replacement = (Convert.ToInt32(parameters)).ToString();
+			replacement = (Convert.ToInt32 (parameters)).ToString ();
+
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_POINTS_ID_A;
+			textA = MultiLanguageTextManager.instance.getTextByID (textId);
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_POINTS_ID_B;
+			textB = MultiLanguageTextManager.instance.getTextByID (textId).Replace (textToReplace, replacement);
+			aABLetterObjectives = 0;
 			break;
 		case GoalManager.WORDS_COUNT:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_WORDS_ID;
 			textToReplace = "{{goalWords}}";
 			replacement = (Convert.ToInt32(parameters)).ToString();
+
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_WORDS_ID_A;
+			textA = MultiLanguageTextManager.instance.getTextByID (textId);
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_WORDS_ID_B;
+			textB = MultiLanguageTextManager.instance.getTextByID (textId).Replace(textToReplace,replacement);
+			aABLetterObjectives = 0;
 			break;
 		case GoalManager.SYNONYMOUS:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID;
-			textToReplace = "{{goalSin}}";
+			textA = MultiLanguageTextManager.instance.getTextByID (textId);
 			word= (List<string>)parameters;
 			replacement = word[0];
+			textB = replacement;
+			aABLetterObjectives = 0;
 			break;
 		case GoalManager.WORD:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_1_WORD_ID;
-			textToReplace = "{{goalWord}}";
+			textA = MultiLanguageTextManager.instance.getTextByID (textId);
 			word= (List<string>)parameters;
 			replacement = word[0];
+			textB = replacement;
+			aABLetterObjectives = 0;
 			break;		
 		case GoalManager.ANTONYMS:
 			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_ANTONYM_ID;
-			textToReplace = "{{goalAnt}}";
+			textA = MultiLanguageTextManager.instance.getTextByID (textId);
 			word= (List<string>)parameters;
 			replacement = word[0];
+			textB = replacement;
+			aABLetterObjectives = 0;
 			break;
 		}
 			
-		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement),starsReached, letter, levelName);
+		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (textA,textB,starsReached, letter, levelName,aABLetterObjectives);
 		popUpManager.activatePopUp ("goalPopUp");
 
 		stopInput (true);

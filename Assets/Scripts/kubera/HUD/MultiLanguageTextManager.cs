@@ -17,11 +17,16 @@ public class MultiLanguageTextManager
 	public const string GOAL_CONDITION_BY_1_WORD_ID 		= "goalBy1WordCondition";
 	public const string GOAL_CONDITION_BY_SYNONYMOUS_ID 	= "goalBySynonymousCondition";
 	public const string GOAL_CONDITION_BY_ANTONYM_ID 		= "goalByAntonymCondition";
-
 	public const string SCORE_HUD_TITLE_ID 					= "hudScore";
 	public const string LVL_HUD_TITLE_ID 					= "hudLevel";
-	public const string OBJECTIVE_POPUP_BY_POINTS_ID 		= "goalByPointsObjectivePopUp";
-	public const string OBJECTIVE_POPUP_BY_WORDS_ID 		= "goalByWordsObjectivePopUp";
+
+	//MAP
+	public const string OBJECTIVE_POPUP_LVL_TEXT_ID 		= "lvlTextObjectivePopUp";
+	public const string OBJECTIVE_POPUP_GOAL_TEXT_ID 		= "goalTextObjectivePopUp";
+	public const string OBJECTIVE_POPUP_BY_POINTS_ID_A 		= "goalByPointsObjectivePopUpA";
+	public const string OBJECTIVE_POPUP_BY_POINTS_ID_B 		= "goalByPointsObjectivePopUpB";
+	public const string OBJECTIVE_POPUP_BY_WORDS_ID_A 		= "goalByWordsObjectivePopUpA";
+	public const string OBJECTIVE_POPUP_BY_WORDS_ID_B 		= "goalByWordsObjectivePopUpB";
 	public const string OBJECTIVE_POPUP_BY_LETTERS_ID 		= "goalByLettersObjectivePopUp";
 	public const string OBJECTIVE_POPUP_BY_OBSTACLES_ID 	= "goalByObstaclesObjectivePopUp";
 	public const string OBJECTIVE_POPUP_BY_1_WORD_ID 		= "goalBy1WordObjectivePopUp";
