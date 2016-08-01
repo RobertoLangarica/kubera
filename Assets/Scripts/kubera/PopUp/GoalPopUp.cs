@@ -6,17 +6,24 @@ using System.Collections.Generic;
 
 public class GoalPopUp : PopUpBase {
 
-	public Text goalText;
-	public Text goalLettersText;
-	public Text LevelName;
+	public Text goalTextABA;
+	public Text goalTextABB;
+	public Text goalTextA;
+	public Text goalTextLetters;
+
+	public Text LevelNumber;
+	public Text LevelText;
 	public Transform goalLettersContainer;
 
 	public GameObject lettersObjective;
+	public GameObject ABObjective;
+	public GameObject AObjective;
 	public GameObject uiLetter;
 	public GridLayoutGroup gridLayoutGroup;
 
 	public GameObject[] stars;
 
+	protected int objective;
 	void Start()
 	{
 		int maxSize = 5;
@@ -36,14 +43,39 @@ public class GoalPopUp : PopUpBase {
 		popUp.SetActive (true);
 	}
 
-	public void setGoalPopUpInfo(string text, int starsReached, List<string> letters = null, string levelName = "")
+	public void setGoalPopUpInfo(string textA,string textB,int starsReached, List<string> letters = null, string levelName = "" , int aABLetterObjectives = 0)
 	{
-		this.LevelName.text = levelName;
+		this.LevelNumber.text = levelName;
+		ABObjective.SetActive (false);
+		AObjective.SetActive (false);
+		lettersObjective.SetActive (false);
+		resetStars ();
+
+
+		objective = aABLetterObjectives;
+		switch (objective) {
+		case 0:
+			goalTextABA.text = textA;
+			goalTextABB.text = textB;
+			ABObjective.SetActive (true);
+			break;
+		case 1:
+			goalTextA.text = textA;
+			AObjective.SetActive (true);
+			break;
+		case 2:
+			goalTextLetters.text = textA;
+			lettersObjective.SetActive (true);
+
+			break;
+		default:
+			break;
+		}
 		if(letters.Count != 0)
 		{
-			goalText.enabled = false;
+			//goalText.enabled = false;
 			lettersObjective.SetActive (true);
-			goalLettersText.text = text;
+			//goalLettersText.text = text;
 			foreach (object val in letters) 
 			{
 				GameObject letter =  Instantiate(uiLetter) as GameObject;
@@ -52,11 +84,7 @@ public class GoalPopUp : PopUpBase {
 				letter.transform.SetParent (goalLettersContainer.transform,false);
 			}
 		}
-		else
-		{
-			goalText.text = text;
-		}
-		
+
 		showStars (starsReached);
 	}
 
@@ -65,6 +93,14 @@ public class GoalPopUp : PopUpBase {
 		for(int i=0; i<starsReached; i++)
 		{
 			stars [i].SetActive (true);
+		}
+	}
+
+	protected void resetStars()
+	{		
+		for(int i=0; i<stars.Length; i++)
+		{
+			stars [i].SetActive (false);
 		}
 	}
 

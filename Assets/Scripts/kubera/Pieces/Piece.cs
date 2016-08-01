@@ -75,6 +75,11 @@ public class Piece : MonoBehaviour
 
 		Sprite sprite = getSpriteByCurrentColor(currentColor);
 
+		if(sprite == null)
+		{
+			return;
+		}
+
 		foreach(SpriteRenderer piece in squaresSprite)
 		{
 			piece.sprite = sprite;
@@ -104,7 +109,7 @@ public class Piece : MonoBehaviour
 		case EColor.PINK:
 			return SPRITE_PINK;
 		}
-		return SPRITE_YELLOW;
+		return null;
 	}
 		
 	public EType currentType

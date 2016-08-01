@@ -10,11 +10,12 @@ namespace LevelBuilder
 {
 	public class LevelBuilderScreen : MonoBehaviour {
 
-		public const int BOMB_POWERUP		= 0;
-		public const int BLOCK_POWERUP		= 1;
-		public const int ROTATE_POWERUP 	= 2;
-		public const int DESTROY_POWERUP 	= 3;
+		public const int WORD_HINT_POWERUP		= 0;
+		public const int BOMB_POWERUP		= 1;
+		public const int BLOCK_POWERUP		= 2;
+		public const int ROTATE_POWERUP 	= 3;
 		public const int WILDCARD_POWERUP 	= 4;
+		public const int DESTROY_POWERUP 	= 5;
 
 		public const string ABC_NORMAL_TYPE	 = "1";
 		public const string ABC_OBSTACLE_TYPE= "0";
@@ -245,6 +246,7 @@ namespace LevelBuilder
 			lvlToSave.pieces = piecesSelector.getCSVData();
 			lvlToSave.grid = gridEditor.getCSVData();
 			lvlToSave.goal = levelGoalSelector.getStringData();
+			lvlToSave.unblockWordHint = powerupToggles[WORD_HINT_POWERUP].isOn;
 			lvlToSave.unblockBomb = powerupToggles[BOMB_POWERUP].isOn;
 			lvlToSave.unblockBlock = powerupToggles[BLOCK_POWERUP].isOn;
 			lvlToSave.unblockRotate = powerupToggles[ROTATE_POWERUP].isOn;
@@ -297,6 +299,7 @@ namespace LevelBuilder
 			piecesSelector.sincronizeDataWithCSV(level.pieces);
 			gridEditor.sincronizeDataWithCSV(level.grid);
 
+			powerupToggles[WORD_HINT_POWERUP].isOn = level.unblockWordHint;
 			powerupToggles[BOMB_POWERUP].isOn = level.unblockBomb;
 			powerupToggles[BLOCK_POWERUP].isOn = level.unblockBlock;
 			powerupToggles[ROTATE_POWERUP].isOn = level.unblockRotate;

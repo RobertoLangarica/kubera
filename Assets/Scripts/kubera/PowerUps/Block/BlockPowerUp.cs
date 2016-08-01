@@ -23,6 +23,7 @@ public class BlockPowerUp : PowerupBase
 		inputBlockPowerUp.createBlock (powerUpBlock,powerUpButton.position,canUse);
 
 		updateDragableObjectImage (inputBlockPowerUp.getCurrentSelected());
+		inputBlockPowerUp.setPieceColor ();
 
 		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SQUARE_POWERUP);
 	}

@@ -59,10 +59,10 @@ public class PowerupBase : MonoBehaviour
 	{
 		Image temp = powerUpObject.GetComponentInChildren<Image> ();
 		SpriteRenderer tempS = powerUpObject.GetComponentInChildren<SpriteRenderer> ();
-
+	
 		if (powerUpImage != null) 
 		{
-			powerUpObject.GetComponent<Piece> ().currentColor = Piece.EColor.PURPLE;
+			powerUpObject.GetComponent<Piece> ().currentColor = Piece.EColor.NONE;
 			
 			if (temp != null) 
 			{
@@ -71,8 +71,12 @@ public class PowerupBase : MonoBehaviour
 			} 
 			else if (tempS != null) 
 			{
+				print ("SSSS");
+				print (tempS.sprite.name);
 				tempS.sprite = Sprite.Create (powerUpImage.texture, powerUpImage.textureRect, new Vector2 (0.5f, 0.5f));
 				tempS.color = Color.white;
+				powerUpImage = tempS.sprite;
+				print (powerUpImage);
 			}
 		}
 	}
