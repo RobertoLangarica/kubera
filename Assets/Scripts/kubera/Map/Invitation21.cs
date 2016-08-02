@@ -27,7 +27,7 @@ public class Invitation21 : MonoBehaviour {
 		answerText.text = "Juraría que eres tú";
 
 		option1Text.text = "En absoluto";
-		option1Text.text = "¡Para nada!";
+		option2Text.text = "¡Para nada!";
 	}
 
 	public void optionChoosed()
