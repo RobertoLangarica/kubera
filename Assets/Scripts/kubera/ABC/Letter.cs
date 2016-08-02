@@ -99,8 +99,16 @@ public class Letter : MonoBehaviour
 		case EType.NORMAL:
 			if(state == EState.NORMAL)
 			{
-				txtLetter.color = Color.black;
-				txtPoints.color = Color.white;
+				if (!selected) 
+				{
+					txtLetter.color = Color.black;
+					txtPoints.color = Color.white;
+				}
+				else
+				{
+					txtLetter.color = Color.black;
+					txtPoints.color = Color.black;
+				}
 			}
 			else if( state == EState.WRONG)
 			{

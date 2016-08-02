@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
 
 	protected void startGame()
 	{
-		configureLevel(PersistentData.GetInstance().getRandomLevel());
+		configureLevel(PersistentData.GetInstance().currentLevel);
 
 		populateGridFromLevel(currentLevel);
 		cellManager.createFrame ();
@@ -441,7 +441,6 @@ public class GameManager : MonoBehaviour
 
 	public void OnCellFlipped(Cell cell, Letter letter)
 	{
-		print ("SSS");
 		cellManager.occupyAndConfigureCell (cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE);
 		gridCharacters.Add(letter);
 
@@ -625,7 +624,7 @@ public class GameManager : MonoBehaviour
 
 		canFit = checkIfIsPosiblePutPieces ();
 
-		if(!canFit || remainingMoves == 0 && !gameOver)
+		if((!canFit || remainingMoves == 0) && !gameOver)
 		{
 			print("no puede poner piezas");
 			if(remainingMoves == 0)
@@ -635,7 +634,10 @@ public class GameManager : MonoBehaviour
 
 			StartCoroutine(checkIfReallyLost());
 		}
-		updatePiecesLightAndUpdateLetterState ();
+		else if(!gameOver)
+		{
+			updatePiecesLightAndUpdateLetterState ();
+		}
 	}
 
 	IEnumerator checkIfReallyLost()
@@ -840,7 +842,7 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			destroyAndCountAllLetters ();
+			Invoke ("destroyAndCountAllLetters", 1.2f);
 		}
 	}
 

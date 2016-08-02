@@ -111,7 +111,7 @@ public class HighLightManager : Manager<HighLightManager>
 		Cell[] tempCell = null;
 
 		currentType = type;
-		print (type);
+		
 		switch (type) 
 		{
 		case(EHighLightType.BOMB_POWERUP):

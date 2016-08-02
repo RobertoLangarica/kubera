@@ -54,7 +54,7 @@ public class GoalAfterGame : PopUpBase {
 						if (starsReached == 3) {
 							stars [2].SetActive (true);
 							stars [2].transform.DOScale (new Vector2(1,1),speedShowStars).OnComplete (() => {
-								print ("Termino de mostrar estrellas");
+								//print ("Termino de mostrar estrellas");
 							});
 						}
 					});
