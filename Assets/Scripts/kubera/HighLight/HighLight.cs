@@ -15,26 +15,42 @@ public class HighLight : MonoBehaviour
 		WORD_AREA
 	}
 
+	public float minAlpha = 0.45f;
+	public float animStep = 0.02f;
+
 	public GameObject borderStars;
 
 	public EHIGHLIGHPARENTTYPE parentType;
 
 	protected bool isScaled;
+	protected bool isDescending;
+	protected bool startAnim;
 
 	protected bool isActive;
 	protected List<HighLightManager.EHighLightType> suscribedTypes = new List<HighLightManager.EHighLightType> ();
 	protected List<HighLightManager.EHighLightStatus> suscribedStatus = new List<HighLightManager.EHighLightStatus> ();
 
-	/*void Update()
+	void Update()
 	{
-		if (Input.GetKeyDown (KeyCode.U)) 
+		if (startAnim) 
 		{
-			if (scaleToObject) 
+			if (isDescending) 
 			{
-				scaleSpriteToFather (transform.parent.GetComponent<SpriteRenderer>().bounds.size);
+				if (getModifiedAlpha(-animStep) <= minAlpha) 
+				{
+					isDescending = false;
+				}
+			} 
+			else 
+			{
+
+				if (getModifiedAlpha(animStep) >= 1) 
+				{
+					isDescending = true;
+				}
 			}
 		}
-	}*/
+	}
 
 	public bool activateHighLight(HighLightManager.EHighLightType type,HighLightManager.EHighLightStatus status)
 	{
@@ -56,6 +72,9 @@ public class HighLight : MonoBehaviour
 			suscribedStatus.Add (status);
 
 			updateColor ();
+
+			initAnim ();
+
 			return true;
 		}
 		return false;
@@ -100,6 +119,53 @@ public class HighLight : MonoBehaviour
 		}
 	}
 
+	protected void initAnim()
+	{
+		if (!startAnim)
+		{
+			isDescending = true;
+		}
+
+		startAnim = true;
+	}
+
+	protected void finishAnim()
+	{
+		startAnim = false;
+
+		getModifiedAlpha (0,true);
+	}
+
+	protected float getModifiedAlpha(float value,bool reset = false)
+	{
+		SpriteRenderer tempSpt = GetComponent<SpriteRenderer>();
+		Image tempImg = GetComponent<Image>();
+
+		Color tempCol = Color.white;
+
+		if (tempSpt != null) 
+		{
+			if (!reset) 
+			{
+				tempCol = new Color (tempSpt.color.r, tempSpt.color.g, tempSpt.color.b, tempSpt.color.a + value);
+			}
+
+			tempSpt.color = tempCol;
+		} 
+		else if (tempImg != null) 
+		{
+			if (!reset) 
+			{
+				tempCol = new Color (tempImg.color.r, tempImg.color.g, tempImg.color.b, tempImg.color.a + value);
+			} 
+
+			tempImg.color = tempCol;
+
+		}
+
+		return tempCol.a;
+	}
+
 	public bool completlyDeactivateType(HighLightManager.EHighLightType type)
 	{
 		int index = suscribedTypes.IndexOf (type);
@@ -116,6 +182,9 @@ public class HighLight : MonoBehaviour
 				{
 					borderStars.SetActive (false);
 				}
+
+				finishAnim ();
+
 				return true;
 			} 
 			else 
