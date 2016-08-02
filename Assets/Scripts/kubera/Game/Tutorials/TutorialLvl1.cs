@@ -81,33 +81,33 @@ public class TutorialLvl1 : TutorialBase
 
 			instructions [5].text = MultiLanguageTextManager.instance.multipleReplace (
 					MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE6),
-				new string[2]{"{{points}}","{{neededPoints}}"}, new string[2]{hudManager.points.text,hudManager.goalText.text.Split('/')[1]});
+				new string[2]{"{{points}}","{{neededPoints}}"}, new string[2]{hudManager.points.text,hudManager.goalText.text.Split('/')[1].Split(' ')[0]});
 			
 			phase = 6;
 			return true;
 		case(6):
 			phasesPanels [5].SetActive (false);
 			phasesPanels [6].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.MOVEMENT_USED);
+			phaseEvent.Add (ENextPhaseEvent.EARNED_POINTS);
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.OBJECTIVE);
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.MOVEMENTS);
 
-			instructions [6].text = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE7),
-				new string[1]{"/n"}, new string[1]{"\n"});
+			instructions [7].text =	MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE7);
 				
 			phase = 7;
 			return true;
 		case(7):
 			phasesPanels [6].SetActive (false);
 			phasesPanels [7].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.MOVEMENT_USED);
+			phaseEvent.Add(ENextPhaseEvent.EARNED_POINTS);
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.MOVEMENTS);
 
-			instructions [7].text =	MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE8);
+			instructions [6].text = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE8),
+				new string[1]{"/n"}, new string[1]{"\n"});
 
 			phase = 8;
 			return true;

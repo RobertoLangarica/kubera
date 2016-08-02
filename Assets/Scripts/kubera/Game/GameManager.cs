@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
 
 	protected void startGame()
 	{
-		configureLevel(PersistentData.GetInstance().currentLevel);
+		configureLevel(PersistentData.GetInstance().getRandomLevel());
 
 		populateGridFromLevel(currentLevel);
 		cellManager.createFrame ();
@@ -677,14 +677,15 @@ public class GameManager : MonoBehaviour
 
 			for (int i = 0; i < pieceManager.getShowingPieces ().Count; i++) 
 			{
-				if (pieceManager.getShowingPieces () [i].toRotateObject != null) 
+				if (tempList[i].toRotateObject != null) 
 				{
-					tempPiece = pieceManager.getShowingPieces () [i].toRotateObject.GetComponent<Piece> ();
+					tempPiece = tempList [i].toRotateObject.GetComponent<Piece> ();
 					for (int j = 0; j < 3; j++) 
 					{
 						if (tempPiece != null) 
 						{
 							tempList.Add (tempPiece);
+							tempPiece.transform.localScale = tempList [0].transform.localScale;
 							tempPiece = tempPiece.toRotateObject.GetComponent<Piece> ();
 						}
 					}

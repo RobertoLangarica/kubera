@@ -35,10 +35,10 @@ public class TextScale : MonoBehaviour
 		switch (textType) 
 		{
 		case(ETextGroups.TUTORIALS):
-			result = 16;
+			result = 15;
 			break;
 		case(ETextGroups.TUTORIALS_SMALL_LETTER):
-			result = 16;
+			result = 14;
 			break;
 		}
 		return result;

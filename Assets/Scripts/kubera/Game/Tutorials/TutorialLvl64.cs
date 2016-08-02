@@ -34,6 +34,9 @@ public class TutorialLvl64 : TutorialBase
 		case(1):
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
+
+			phasesPanels [1].transform.SetParent (keyBoard.transform);
+
 			phaseEvent.Add(ENextPhaseEvent.KEYBOARD_LETER_SELECTED);
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_BUTTON);
@@ -49,6 +52,9 @@ public class TutorialLvl64 : TutorialBase
 		case(2):
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
+
+			phasesPanels [1].transform.SetParent (phasesPanels [1].transform.parent);
+
 			phaseEvent.Add(ENextPhaseEvent.SUBMIT_WORD);
 
 			freeWildCard = true;
