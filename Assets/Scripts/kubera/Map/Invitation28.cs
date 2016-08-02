@@ -31,7 +31,7 @@ public class Invitation28 : MonoBehaviour {
 		answerOption2Text.text = "Tú secreto está a salvo conmigo. \nNos vemos en la librería. \n¡Muero por tu autógrafo!";
 
 		option1Text.text = "¡No, no soy!";
-		option1Text.text = "¡Ok, si soy yo!";
+		option2Text.text = "¡Ok, si soy yo!";
 	}
 
 	public void optionChoosed(int option)

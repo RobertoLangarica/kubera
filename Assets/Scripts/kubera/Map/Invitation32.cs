@@ -13,7 +13,7 @@ public class Invitation32 : MonoBehaviour {
 	void Start()
 	{
 		invitationManager = FindObjectOfType<InvitationToReview> ();
-		firstText.text = "¡Hola, qué bueno que llegaste, todos te están esperando! \nLa firma de autógrafos comenzará pront.";
+		firstText.text = "¡Hola, qué bueno que llegaste, todos te están esperando! \nLa firma de autógrafos comenzará pronto.";
 		option1Text.text = "¡Excelente!";
 	}
 

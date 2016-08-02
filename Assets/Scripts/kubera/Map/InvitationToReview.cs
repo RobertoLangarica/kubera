@@ -12,9 +12,12 @@ public class InvitationToReview : MonoBehaviour {
 
 	public bool isHappeningAReview(int currentLevelNumber)
 	{
+		return false;
+
+		print (currentLevelNumber);
 		switch (currentLevelNumber) 
 		{
-		case 11:
+		case 1:
 		case 21:
 		case 28:
 		case 32:
@@ -30,7 +33,7 @@ public class InvitationToReview : MonoBehaviour {
 	{
 		switch (currentLevelNumber) 
 		{
-		case 11:
+		case 1:
 			invitations [0].SetActive (true);
 			break;
 		case 21:
@@ -49,6 +52,7 @@ public class InvitationToReview : MonoBehaviour {
 			invitations [5].SetActive (true);
 			break;
 		}
+		modal.SetActive (true);
 	}
 
 	public void finish()
@@ -57,6 +61,7 @@ public class InvitationToReview : MonoBehaviour {
 		{
 			invitations [i].SetActive (false);
 		}
+		modal.SetActive (false);
 
 		OnFinish ();
 	}

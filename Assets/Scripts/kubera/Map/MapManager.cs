@@ -76,6 +76,7 @@ public class MapManager : MonoBehaviour
 		changeWorld ();
 
 		paralaxManager.OnFinish += showNextLevelGoalPopUp;
+		invitationToReview.OnFinish += afterInvitation;
 	}
 
 	void Update()
@@ -113,6 +114,7 @@ public class MapManager : MonoBehaviour
 			if(toNextLevel)
 			{
 				paralaxManager.setPosToNextLevel (nextLevel);
+				toNextLevel = false;
 			}
 			break;
 		case "playGame":
@@ -566,7 +568,33 @@ public class MapManager : MonoBehaviour
 		
 	protected void showNextLevelGoalPopUp ()
 	{
-		print ("asadas"+PersistentData.GetInstance().lastLevelReachedName);
-		OnLevelUnlockedPressed (nextLevel);
+		print (toNextLevel);
+		if (toNextLevel)
+		{
+			if(!invitationToReview.isHappeningAReview (int.Parse (PersistentData.GetInstance ().lastLevelReachedName)))
+			{
+				OnLevelUnlockedPressed (nextLevel);
+			}
+			else
+			{
+				invitationToReview.showInvitationProcessByLevelNumber(int.Parse (PersistentData.GetInstance().lastLevelReachedName));
+			}
+
+		}
+		else
+		{
+			if(invitationToReview.isHappeningAReview (int.Parse (PersistentData.GetInstance ().lastLevelReachedName)))
+			{
+				invitationToReview.showInvitationProcessByLevelNumber(int.Parse (PersistentData.GetInstance().lastLevelReachedName));
+			}
+		}
+	}
+
+	protected void afterInvitation()
+	{
+		if (toNextLevel) 
+		{
+			OnLevelUnlockedPressed (nextLevel);
+		}
 	}
 }
