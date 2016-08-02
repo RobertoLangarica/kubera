@@ -70,8 +70,8 @@ public class DoorsManager : MonoBehaviour {
 		{
 			MoveDoor (rectTransformLeft, finalPositionLeftDoor.localPosition, oppenDoorSpeed, finalLeftDoor,leftDoor);
 			MoveDoor (rectTransformRight, finalPositionRightDoor.localPosition, oppenDoorSpeed, finalRightDoor,rightDoor);
+			scrollRect.enabled = true;
 		}
-		scrollRect.enabled = true;
 	}
 
 	protected void MoveDoor(RectTransform rectTransform, Vector3 finalPosition,float speed,Image finalDoor,GameObject doorToDestroy)

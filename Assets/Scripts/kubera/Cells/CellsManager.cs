@@ -918,7 +918,7 @@ public class CellsManager : MonoBehaviour
 	public Piece.EColor colorRandom()
 	{
 		//HACK: Este rango existe por combinar tipos y colores
-		return (Piece.EColor)Random.Range (1, 9);
+		return (Piece.EColor)Random.Range (1, 6);
 	}
 
 	public Piece.EType getPredominantColor()

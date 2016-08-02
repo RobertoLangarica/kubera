@@ -22,6 +22,7 @@ public class PersistentData : Manager<PersistentData>
 	public int maxWordLength = 10;
 	[HideInInspector]public int levelNumber = -1;
 	[HideInInspector]public Level currentLevel;
+	[HideInInspector]public string lastLevelReachedName;
 	[HideInInspector]public Levels levelsData;
 	[HideInInspector]public ABCDictionary abcDictionary;
 

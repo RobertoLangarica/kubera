@@ -25,11 +25,13 @@ public class MapManager : MonoBehaviour
 	protected PopUpManager popUpManager;
 	protected ParalaxManager paralaxManager;
 	protected DoorsManager doorsManager;
+	protected InvitationToReview invitationToReview;
 	private GoalManager		goalManager;
 
 	protected List<MapLevel> mapLevels;
 	protected bool fromGame;
 	protected bool toDoor;
+	protected bool toNextLevel;
 
 	protected MapLevel currentLevel = null;
 	protected MapLevel lastLevelPlayed = null;
@@ -44,6 +46,7 @@ public class MapManager : MonoBehaviour
 		paralaxManager = FindObjectOfType<ParalaxManager> ();
 		doorsManager = FindObjectOfType<DoorsManager> ();
 		goalManager = FindObjectOfType<GoalManager> ();
+		invitationToReview = FindObjectOfType<InvitationToReview> ();
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 		if(PersistentData.GetInstance().currentWorld == -1)
@@ -72,7 +75,7 @@ public class MapManager : MonoBehaviour
 		//print (currentWorld);
 		changeWorld ();
 
-
+		paralaxManager.OnFinish += showNextLevelGoalPopUp;
 	}
 
 	void Update()
@@ -107,12 +110,23 @@ public class MapManager : MonoBehaviour
 			fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_KEYS);
 			break;
 		case "closeObjective":
+			if(toNextLevel)
+			{
+				paralaxManager.setPosToNextLevel (nextLevel);
+			}
 			break;
 		case "playGame":
 			SceneManager.LoadScene ("Game");
 			break;
 		case "continue":
-			paralaxManager.setPosToNextLevel (nextLevel);
+			if(toNextLevel)
+			{
+				paralaxManager.setPosToNextLevel (nextLevel);
+			}
+			else
+			{
+				showNextLevelGoalPopUp ();
+			}
 			break;
 		default:
 			break;
@@ -143,6 +157,11 @@ public class MapManager : MonoBehaviour
 		Debug.Log ((LevelsDataManager.GetInstance() as LevelsDataManager));
 		List<Level> worldsLevels = new List<Level> ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelsOfWorld(currentWorld));
 
+		if(PersistentData.GetInstance().lastLevelReachedName == "")
+		{
+			setLastLevelReached ();
+		}
+		 
 		for (int i = 0; i < mapLevels.Count; i++)
 		{
 			settingMapLevelInfo (mapLevels[i],worldsLevels[i]);
@@ -169,6 +188,17 @@ public class MapManager : MonoBehaviour
 					if(i+1 <mapLevels.Count)
 					{
 						nextLevel = mapLevels [i+1];
+						toNextLevel = true;
+					}
+				}
+				else if(nextLevel != null && nextLevel.fullLvlName == mapLevels[i].fullLvlName)
+				{
+					print (fromGame);
+					print (nextLevel.name);
+					print (PersistentData.GetInstance().lastLevelReachedName);
+					if(fromGame && nextLevel.fullLvlName == PersistentData.GetInstance().lastLevelReachedName)
+					{
+						toNextLevel = false;
 					}
 				}
 
@@ -356,10 +386,28 @@ public class MapManager : MonoBehaviour
 		selectLevel (currentWorld);
 
 		initializeLevels ();
+		setLastLevelReached ();
 		setParalaxManager ();
 		paralaxManager.enabled = true;
 
 		PersistentData.GetInstance ().currentWorld = currentWorld;
+	}
+
+	protected void setLastLevelReached()
+	{
+		for(int i=mapLevels.Count-1 ; i>=0; i--)
+		{
+			if(mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_REACHED
+				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_PASSED
+				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_UNLOCKED
+				||  mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED
+				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED)
+			{	
+				print (mapLevels [i].status);
+				PersistentData.GetInstance ().lastLevelReachedName = mapLevels [i].fullLvlName;
+				break;
+			}
+		}
 	}
 
 	protected void setParalaxManager()
@@ -514,5 +562,11 @@ public class MapManager : MonoBehaviour
 		//goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
 		//activatePopUp("goalPopUp");
 		//goalPopUp.SetActive(true);
+	}
+		
+	protected void showNextLevelGoalPopUp ()
+	{
+		print ("asadas"+PersistentData.GetInstance().lastLevelReachedName);
+		OnLevelUnlockedPressed (nextLevel);
 	}
 }

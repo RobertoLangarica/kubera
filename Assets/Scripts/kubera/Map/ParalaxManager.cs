@@ -7,6 +7,9 @@ public class ParalaxManager : MonoBehaviour {
 	public delegate void DOnMove(Vector2 newPos);
 	public DOnMove OnMove;
 
+	public delegate void DOnFinishToNextLevel();
+	public DOnFinishToNextLevel OnFinish;
+
 	public delegate void DOnUnsubscribe();
 	public DOnUnsubscribe OnUnsubscribe;
 
@@ -47,10 +50,16 @@ public class ParalaxManager : MonoBehaviour {
 		}
 		if(toNextLevel)
 		{
-			scrollRect.verticalNormalizedPosition = scrollRect.verticalNormalizedPosition + 0.001f;
+			scrollRect.enabled = false;
+			scrollRect.verticalNormalizedPosition = scrollRect.verticalNormalizedPosition + 0.005f;
 			if(scrollRect.verticalNormalizedPosition >= posNextLevel)
 			{
 				toNextLevel = false;
+				scrollRect.enabled = true;
+				if(OnFinish != null)
+				{
+					OnFinish();
+				}
 			}
 		}
 	}
@@ -83,7 +92,6 @@ public class ParalaxManager : MonoBehaviour {
 
 	public void setPosToNextLevel(MapLevel mapLevel)
 	{
-
 		posNextLevel = getPosByLevel (mapLevel);
 		toNextLevel = true;
 	}
@@ -92,8 +100,8 @@ public class ParalaxManager : MonoBehaviour {
 	{
 		if(toDoor || toNextLevel)
 		{
-			toDoor = false;
-			toNextLevel = false;
+			//toDoor = false;
+			//toNextLevel = false;
 		}
 	}
 
