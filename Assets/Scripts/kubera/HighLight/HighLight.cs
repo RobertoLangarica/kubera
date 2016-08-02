@@ -86,6 +86,11 @@ public class HighLight : MonoBehaviour
 		Image tempImg = null;
 		SpriteRenderer tempSpt = null;
 
+		if (borderStars != null) 
+		{
+			borderStars.SetActive (true);
+		}
+
 		switch (suscribedStatus[suscribedStatus.Count -1]) 
 		{
 		case(HighLightManager.EHighLightStatus.NORMAL):
@@ -93,6 +98,12 @@ public class HighLight : MonoBehaviour
 			break;
 		case(HighLightManager.EHighLightStatus.WRONG):
 			temp = HighLightManager.GetInstance().wrongHighLight;
+
+			if (borderStars != null) 
+			{
+				borderStars.SetActive (false);
+			}
+
 			break;
 		case(HighLightManager.EHighLightStatus.HINT):
 			temp = HighLightManager.GetInstance().hintHighLight;
@@ -111,11 +122,6 @@ public class HighLight : MonoBehaviour
 			{
 				tempSpt.color = temp;
 			}
-		}
-
-		if (borderStars != null) 
-		{
-			borderStars.SetActive (true);
 		}
 	}
 
@@ -166,7 +172,7 @@ public class HighLight : MonoBehaviour
 		return tempCol.a;
 	}
 
-	public bool completlyDeactivateType(HighLightManager.EHighLightType type)
+	public bool deactivateType(HighLightManager.EHighLightType type)
 	{
 		int index = suscribedTypes.IndexOf (type);
 
@@ -194,6 +200,20 @@ public class HighLight : MonoBehaviour
 			}
 		}
 		return false;
+	}
+
+	public void completlyDeactivate()
+	{
+		suscribedTypes.Clear ();
+		suscribedStatus.Clear ();
+
+		gameObject.SetActive (false);
+		if (borderStars != null) 
+		{
+			borderStars.SetActive (false);
+		}
+
+		finishAnim ();
 	}
 
 	protected void setScale()

@@ -228,10 +228,20 @@ public class HighLightManager : Manager<HighLightManager>
 	{
 		for (int i = activeHighLight.Count -1; i > -1; i--) 
 		{
-			if (activeHighLight [i].completlyDeactivateType (type)) 
+			if (activeHighLight [i].deactivateType (type)) 
 			{
 				activeHighLight.RemoveAt (i);
 			}
+		}
+	}
+
+	public void turnOffAllHighLights()
+	{
+		for (int i = activeHighLight.Count -1; i > -1; i--) 
+		{
+			activeHighLight [i].completlyDeactivate ();
+
+			activeHighLight.RemoveAt (i);
 		}
 	}
 }
