@@ -70,7 +70,6 @@ public class HUDManager : MonoBehaviour
 		lvlButton = lvlGo.GetComponent<Button> ();		
 
 		setText ();
-		vacumStartPos = vacum.transform.position;
 	}
 
 	protected void setText()
@@ -403,6 +402,8 @@ public class HUDManager : MonoBehaviour
 
 	public void showVacum(float closeTime)
 	{
+		vacumStartPos = vacum.transform.position;
+
 		DOTween.Kill (vacum);
 		vacum.DOAnchorPos (Vector2.zero,0.2f).SetEase (Ease.OutBack).SetId(vacum);
 
@@ -411,8 +412,9 @@ public class HUDManager : MonoBehaviour
 
 	public void hideVacum()
 	{
+		print ("S");
 		DOTween.Kill (vacum);
-		vacum.DOAnchorPos (vacumStartPos,0.2f).SetEase (Ease.InBack).SetId(vacum);
+		vacum.DOMove (vacumStartPos,0.2f).SetEase (Ease.InBack).SetId(vacum);
 	}
 
 	public void setStateMusic(bool activate)

@@ -1114,7 +1114,7 @@ public class WordManager : MonoBehaviour
 		StartCoroutine (lettersRemove(letter));
 		
 		letterTransform.DOLocalMoveY(25,fullTime-1);
-		letterTransform.DOLocalMoveX (40, fullTime-1).OnComplete(()=>
+		letterTransform.DOLocalMoveX (31, fullTime-1).OnComplete(()=>
 			{
 				canvas.sortingLayerName = "UI";
 				canvas.sortingOrder = -2;
