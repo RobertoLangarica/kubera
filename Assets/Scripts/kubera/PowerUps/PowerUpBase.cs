@@ -71,8 +71,6 @@ public class PowerupBase : MonoBehaviour
 			} 
 			else if (tempS != null) 
 			{
-				print ("SSSS");
-				print (tempS.sprite.name);
 				tempS.sprite = Sprite.Create (powerUpImage.texture, powerUpImage.textureRect, new Vector2 (0.5f, 0.5f));
 				tempS.color = Color.white;
 				powerUpImage = tempS.sprite;

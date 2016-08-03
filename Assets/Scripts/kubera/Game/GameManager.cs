@@ -339,7 +339,6 @@ public class GameManager : MonoBehaviour
 
 		for(int i=0; i< cellsUnderPiece.Count; i++)
 		{ 
-			print (piece.currentColor);
 			cellManager.occupyAndConfigureCell (cellsUnderPiece [i], piece.squares [i], piece.currentType,piece.currentColor);
 
 			//Cada cuadro reeparentado para dejar de usar su contenedor actual
@@ -627,6 +626,7 @@ public class GameManager : MonoBehaviour
 		if((!canFit || remainingMoves == 0) && !gameOver)
 		{
 			print("no puede poner piezas");
+			updatePiecesLightAndUpdateLetterState ();
 			if(remainingMoves == 0)
 			{
 				allowGameInput(false);
@@ -693,12 +693,12 @@ public class GameManager : MonoBehaviour
 			}
 			canFit = cellManager.checkIfOnePieceCanFit (tempList);
 		}
-			
 		return canFit;
 	}
 
 	protected void updatePiecesLightAndUpdateLetterState()
 	{
+		print ("SSSSS");
 		updatePiecesLight (checkIfIsPosiblePutPieces ());
 		updateLettersState ();
 	}

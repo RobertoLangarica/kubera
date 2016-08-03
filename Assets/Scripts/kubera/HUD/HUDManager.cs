@@ -412,7 +412,6 @@ public class HUDManager : MonoBehaviour
 
 	public void hideVacum()
 	{
-		print ("S");
 		DOTween.Kill (vacum);
 		vacum.DOMove (vacumStartPos,0.2f).SetEase (Ease.InBack).SetId(vacum);
 	}
