@@ -190,6 +190,7 @@
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_Aspiradora.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_BaseTiles.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_BaseTilesGray.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_DobleArrow.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_EmptyCircle.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_EmptyStar.png</key>
@@ -214,8 +215,6 @@
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_boardCorner.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_boardoutline.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_fullCircle.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_glow circulo.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_glow cuadrado.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_lvl.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/K-InGame_settings.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/Square.png</key>
@@ -228,22 +227,21 @@
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/letras/K-InGame_bloquedTile.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/powerupsMove/K-InGame_pwrblockmove.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/tetris/K-InGame_Tetrisblue.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/tetris/K-InGame_Tetrisgray.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/tetris/K-InGame_Tetrisgreen.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/tetris/K-InGame_Tetrisorange.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/tetris/K-InGame_Tetrispink.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/tetris/K-InGame_Tetrispurple.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/tetris/K-InGame_Tetrissoft.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/tetris/K-InGame_Tetrisyellow.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/K-Tutoriales_ArrowTetris.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/K-Tutoriales_Arrowup.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/K-Tutoriales_Arrowuppq.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/K-Tutoriales_Estrellita.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/círculo/glow0001.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/gemas/gemas0001.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/movimientos/movimientos0001.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/objetivo/objetivo0001.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/palabras/palabras0001.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/secuancia4/K-Tutoriales_Estrellita0001.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/K-Tutoriales_Estrellita0001.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/gemas0001.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/glow0001.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/glowcuadrado0001.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/k-ejemploAnim20000.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/movimientos0001.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/objetivo0001.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/palabras0001.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -252,16 +250,7 @@
         <key>fileList</key>
         <array>
             <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/nuevos</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/secuancia4/K-Tutoriales_Estrellita0001.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/palabras/palabras0001.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/objetivo/objetivo0001.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/movimientos/movimientos0001.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/gemas/gemas0001.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/círculo/glow0001.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/K-Tutoriales_Arrowup.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/K-Tutoriales_Arrowuppq.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/K-Tutoriales_Estrellita.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/K-Tutoriales_ArrowTetris.png</filename>
+            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
