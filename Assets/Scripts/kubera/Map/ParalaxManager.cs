@@ -22,6 +22,8 @@ public class ParalaxManager : MonoBehaviour {
 	public bool toNextLevel;
 
 	protected float posNextLevel;
+	protected float fixHeight;
+	protected float fixMin;
 
 	void Awake()
 	{
@@ -29,6 +31,7 @@ public class ParalaxManager : MonoBehaviour {
 		oldPos = rectTransform.anchoredPosition;
 		//OnMove (rectTransform.anchoredPosition);
 		//scrollRect.verticalNormalizedPosition = 0.5f;
+		Invoke ("setFixHeight",0.1f);
 	}
 
 	void Update()
@@ -64,6 +67,14 @@ public class ParalaxManager : MonoBehaviour {
 		}
 	}
 
+	public void setFixHeight()
+	{
+		float fullHeight = GetComponent<RectTransform> ().rect.height;
+		fixHeight = fullHeight * 0.5f;
+	
+		fixMin = fullHeight - transform.parent.GetComponent<RectTransform> ().rect.height *0.8f;
+	}
+
 	public void setRectTransform(RectTransform rectTransform)
 	{
 		this.rectTransform.sizeDelta = rectTransform.sizeDelta;
@@ -71,16 +82,22 @@ public class ParalaxManager : MonoBehaviour {
 
 	public void setPosByCurrentLevel(float levelPosition)
 	{
+		print (levelPosition);
 		scrollRect.verticalNormalizedPosition = levelPosition;
 	}
 
 	public float getPosByLevel(MapLevel mapLevel)
 	{
-		//print (mapLevel.GetComponent<RectTransform> ().anchorMax.y);
-		//print ( mapLevel.GetComponent<RectTransform> ().anchorMin.y);
+		float a = 0;
+
+		a = fixHeight + mapLevel.transform.localPosition.y;
+		print (a);
+		print (fixMin);
+		a = a / fixMin;
+		print (a);
+
 		float sizeOfLevelIcon = mapLevel.GetComponent<RectTransform> ().anchorMax.y - mapLevel.GetComponent<RectTransform> ().anchorMin.y;
-		float levelPosition = mapLevel.GetComponent<RectTransform> ().anchorMin.y/* - sizeOfLevelIcon*/;
-		//print (levelPosition);
+		float levelPosition = a;//mapLevel.GetComponent<RectTransform> ().anchorMin.y - sizeOfLevelIcon;
 
 		return levelPosition;
 	}
@@ -92,8 +109,10 @@ public class ParalaxManager : MonoBehaviour {
 
 	public void setPosToNextLevel(MapLevel mapLevel)
 	{
+		print (mapLevel.fullLvlName);
 		posNextLevel = getPosByLevel (mapLevel);
 		toNextLevel = true;
+		print (posNextLevel);
 	}
 
 	public void cancelAutomaticMovements()

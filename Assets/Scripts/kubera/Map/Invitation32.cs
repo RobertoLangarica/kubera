@@ -13,8 +13,8 @@ public class Invitation32 : MonoBehaviour {
 	void Start()
 	{
 		invitationManager = FindObjectOfType<InvitationToReview> ();
-		firstText.text = "¡Hola, qué bueno que llegaste, todos te están esperando! \nLa firma de autógrafos comenzará pronto.";
-		option1Text.text = "¡Excelente!";
+		firstText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_32_TEXT1);
+		option1Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_32_OPTION1);
 	}
 
 	public void close()

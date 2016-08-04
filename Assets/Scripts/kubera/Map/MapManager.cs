@@ -207,7 +207,10 @@ public class MapManager : MonoBehaviour
 				if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
 				{
 					toDoor = true;
-					doorsManager.DoorsCanOpen ();
+					if(doorsManager)
+					{						
+						doorsManager.DoorsCanOpen ();
+					}
 				}
 			}
 		}
@@ -228,7 +231,8 @@ public class MapManager : MonoBehaviour
 		//level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
 		//return;
 
-		if (level.isBoss)
+		//HACK UNITY USER GROUP
+		/*if (level.isBoss)
 		{
 			if ((LevelsDataManager.GetInstance () as LevelsDataManager).isLevelPassed (level.lvlName))
 			{
@@ -271,7 +275,7 @@ public class MapManager : MonoBehaviour
 					level.status = MapLevel.EMapLevelsStatus.NORMAL_LOCKED;
 				}
 			}
-		}
+		}*/
 
 		level.stars = MapLevel.EMapLevelStars.NONE;
 		switch ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelStars (level.lvlName))
@@ -389,7 +393,8 @@ public class MapManager : MonoBehaviour
 
 		initializeLevels ();
 		setLastLevelReached ();
-		setParalaxManager ();
+		Invoke ("setParalaxManager",0.1f);
+		//setParalaxManager ();
 		paralaxManager.enabled = true;
 
 		PersistentData.GetInstance ().currentWorld = currentWorld;
@@ -444,7 +449,8 @@ public class MapManager : MonoBehaviour
 		}
 		else
 		{
-			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(currentLevel));
+			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel( mapLevels [0]));
+			//paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(currentLevel));
 		}
 	}
 
@@ -568,7 +574,6 @@ public class MapManager : MonoBehaviour
 		
 	protected void showNextLevelGoalPopUp ()
 	{
-		print (toNextLevel);
 		if (toNextLevel)
 		{
 			if(!invitationToReview.isHappeningAReview (int.Parse (PersistentData.GetInstance ().lastLevelReachedName)))
