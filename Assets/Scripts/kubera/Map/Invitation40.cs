@@ -14,8 +14,8 @@ public class Invitation40 : MonoBehaviour {
 	void Start()
 	{
 		invitationManager = FindObjectOfType<InvitationToReview> ();
-		firstText.text = "La firma de autógrafos se levará a cabo en el nivel "+lvlFirm+". ¡Gracias por esperar!";
-		option1Text.text = "¡Perfecto!";
+		firstText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_40_TEXT1).Replace ("{{lvlSelected}}",lvlFirm.ToString());
+		option1Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_40_OPTION1);
 	}
 
 	public void close()

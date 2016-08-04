@@ -12,7 +12,7 @@ public class Invitation11 : MonoBehaviour {
 	void Start()
 	{
 		invitationManager = FindObjectOfType<InvitationToReview> ();
-		welcomeText.text = "¡A Todos los visitantes de Kubera, les informamos que habrá una firma de autógrafos en la librería!";
+		welcomeText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_11_TEXT1);
 	}
 
 	public void close()

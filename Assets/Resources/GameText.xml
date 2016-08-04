@@ -448,5 +448,140 @@
 				<language id="default" text="Forma un antónimo de"/>
 			</languages>
 		</text>
+
+		<!--
+		Invitation
+		-->
+		<text id="Invitation_11_text1">
+			<languages>
+				<language id="english" text="To all Kubera visitors, an autograph session will be held at the library. Don't miss it!"/>
+				<language id="spanish" text="¡A todos los visitantes de Kubera, les informamos que habrá una firma de autógrafos en la librería!"/>
+				<language id="default" text="¡A todos los visitantes de Kubera, les informamos que habrá una firma de autógrafos en la librería!"/>
+			</languages>
+		</text>
+
+		<text id="Invitation_21_text1">
+			<languages>
+				<language id="english" text="Do I know you \n Are you the person who'll have and autograph session at the library?"/>
+				<language id="spanish" text="¡Yo te conozco! \n¿Eres tú quien dará autógrafos en la librería?"/>
+				<language id="default" text="¡Yo te conozco! \n¿Eres tú quien dará autógrafos en la librería?"/>
+			</languages>
+		</text>
+		<text id="Invitation_21_Answer1">
+			<languages>
+				<language id="english" text="I'd swear it's you!"/>
+				<language id="spanish" text="Juraría que eres tú."/>
+				<language id="default" text="Juraría que eres tú."/>
+			</languages>
+		</text>
+		<text id="Invitation_21_option1">
+			<languages>
+				<language id="english" text="Nop"/>
+				<language id="spanish" text="En absoluto"/>
+				<language id="default" text="En absoluto"/>
+			</languages>
+		</text>
+		<text id="Invitation_21_option2">
+			<languages>
+				<language id="english" text="Not at all!"/>
+				<language id="spanish" text="¡Para nada!"/>
+				<language id="default" text="¡Para nada!"/>
+			</languages>
+		</text>
+
+		<text id="Invitation_28_text1">
+			<languages>
+				<language id="english" text="Naaaaaahhh yes you are!"/>
+				<language id="spanish" text="¡Naaaaaahhh sí eres tú!"/>
+				<language id="default" text="¡Naaaaaahhh sí eres tú!"/>
+			</languages>
+		</text>
+		<text id="Invitation_28_Answer1">
+			<languages>
+				<language id="english" text="It's not me!"/>
+				<language id="spanish" text="¡No, no soy!"/>
+				<language id="default" text="¡No, no soy!"/>
+			</languages>
+		</text>
+		<text id="Invitation_28_Answer2">
+			<languages>
+				<language id="english" text="Ok, it's me!"/>
+				<language id="spanish" text="¡Ok, sí soy yo!"/>
+				<language id="default" text="¡Ok, sí soy yo!"/>
+			</languages>
+		</text>
+		<text id="Invitation_28_option1">
+			<languages>
+				<language id="english" text="Sure, sure. \nYou are not that person. \nSee you in the library, \nwink, wink."/>
+				<language id="spanish" text="Claro, claro. \nNo eres tú. \nNos vemos en la librería, \nguiño, guiño"/>
+				<language id="default" text="Claro, claro. \nNo eres tú. \nNos vemos en la librería, \nguiño, guiño"/>
+			</languages>
+		</text>
+		<text id="Invitation_28_option2">
+			<languages>
+				<language id="english" text="Your secret is safe with me.\nSee you in the book store. \nI can't wait to get your autograph!"/>
+				<language id="spanish" text="Tú secreto está a salvo conmigo. \nNos vemos en la librería. \n¡Muero por tu autógrafo!"/>
+				<language id="default" text="Tú secreto está a salvo conmigo. \nNos vemos en la librería. \n¡Muero por tu autógrafo!"/>
+			</languages>
+		</text>
+
+		<text id="Invitation_32_text1">
+			<languages>
+				<language id="english" text="Welcome to the book store! \nEverybody is wating for you. \nThe autograph session will begin soon."/>
+				<language id="spanish" text="¡Bienvenido a la librería! \nTodos te están esperando! \nLa firma de autógrafos comenzará pronto."/>
+				<language id="default" text="¡Bienvenido a la librería! \nTodos te están esperando! \nLa firma de autógrafos comenzará pronto."/>
+			</languages>
+		</text>
+		<text id="Invitation_32_option1">
+			<languages>
+				<language id="english" text="Excellent!"/>
+				<language id="spanish" text="¡Excelente!"/>
+				<language id="default" text="¡Excelente!"/>
+			</languages>
+		</text>
+
+		<text id="Invitation_40_text1">
+			<languages>
+				<language id="english" text="The autograph session will be heald in level {{lvlSelected}}. Thanks for wating!"/>
+				<language id="spanish" text="La firma de autógrafos se levará a cabo en el nivel {{lvlSelected}}. ¡Gracias por esperar!"/>
+				<language id="default" text="La firma de autógrafos se levará a cabo en el nivel {{lvlSelected}}. ¡Gracias por esperar!"/>
+			</languages>
+		</text>
+		<text id="Invitation_40_option1">
+			<languages>
+				<language id="english" text="Perfect!"/>
+				<language id="spanish" text="¡Perfecto!"/>
+				<language id="default" text="¡Perfecto!"/>
+			</languages>
+		</text>
+
+		<text id="Invitation_44_text1">
+			<languages>
+				<language id="english" text="Hi! We're the creators of Kubera. \nWould you give us give us your autograph in the form of a review."/>
+				<language id="spanish" text="¡Hola! Somos los creadores de Kubera.\n¿Nos darías tu autógrafo a maera de reseña?"/>
+				<language id="default" text="¡Hola! Somos los creadores de Kubera.\n¿Nos darías tu autógrafo a maera de reseña?"/>
+			</languages>
+		</text>
+		<text id="Invitation_44_text2">
+			<languages>
+				<language id="english" text="We'd love to read what you have to tell us about Kubera."/>
+				<language id="spanish" text="Nos encantaría leer lo que tienes que decirnos sobre kubera"/>
+				<language id="default" text="Nos encantaría leer lo que tienes que decirnos sobre kubera"/>
+			</languages>
+		</text>
+		<text id="Invitation_44_option1">
+			<languages>
+				<language id="english" text="No, thank you."/>
+				<language id="spanish" text="Gracias, paso."/>
+				<language id="default" text="Gracias, paso."/>
+			</languages>
+		</text>
+		<text id="Invitation_44_option2">
+			<languages>
+				<language id="english" text="Sure!"/>
+				<language id="spanish" text="¡Claro qué sí!"/>
+				<language id="default" text="¡Claro qué sí!"/>
+			</languages>
+		</text>
 	</texts>
 </gameText>

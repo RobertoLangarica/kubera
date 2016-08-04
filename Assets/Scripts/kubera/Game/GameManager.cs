@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
 
 	protected void startGame()
 	{
-		configureLevel(PersistentData.GetInstance().getRandomLevel());
+		configureLevel(PersistentData.GetInstance().currentLevel);
 
 		populateGridFromLevel(currentLevel);
 		cellManager.createFrame ();
@@ -698,7 +698,6 @@ public class GameManager : MonoBehaviour
 
 	protected void updatePiecesLightAndUpdateLetterState()
 	{
-		print ("SSSSS");
 		updatePiecesLight (checkIfIsPosiblePutPieces ());
 		updateLettersState ();
 	}
@@ -759,6 +758,9 @@ public class GameManager : MonoBehaviour
 			gameOver = true;
 			unlockPowerUp ();
 			activatePopUp ("winGamePopUp");
+
+			HighLightManager.GetInstance ().turnOffAllHighLights ();
+			wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
 		}
 	}
 

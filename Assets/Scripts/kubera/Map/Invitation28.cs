@@ -26,12 +26,12 @@ public class Invitation28 : MonoBehaviour {
 		secondOption1.SetActive (false);
 		secondOption2.SetActive (false);
 
-		firstText.text = "¡Naaaaaaaahhh si eres tú!";
-		answerOption1Text.text = "Claro, claro. \nNo eres tú. \nNos vemos en la librería, guiño, guiño";
-		answerOption2Text.text = "Tú secreto está a salvo conmigo. \nNos vemos en la librería. \n¡Muero por tu autógrafo!";
+		firstText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_28_TEXT1);
+		answerOption1Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_28_ANSWER1);
+		answerOption2Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_28_ANSWER2);
 
-		option1Text.text = "¡No, no soy!";
-		option2Text.text = "¡Ok, si soy yo!";
+		option1Text.text =MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_28_OPTION1);
+		option2Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_28_OPTION2);
 	}
 
 	public void optionChoosed(int option)

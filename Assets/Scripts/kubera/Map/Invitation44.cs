@@ -16,10 +16,10 @@ public class Invitation44 : MonoBehaviour {
 	void Start()
 	{
 		invitationManager = FindObjectOfType<InvitationToReview> ();
-		firstText.text = "¡Hola! Somos los creadores de Kubera.\n¿Nos darías tu autógrafo a maera de reseña?";
-		secondText.text = "Nos encantaría leer lo que tienes que decirnos sobre kubera";
-		option1Text.text = "¡Gracias, paso!";
-		option2Text.text = "¡Claro que si!";
+		firstText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_44_TEXT1);
+		secondText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_44_TEXT2);
+		option1Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_44_OPTION1);
+		option2Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_44_OPTION2);
 	}
 
 	public void optionChoosed(int option)

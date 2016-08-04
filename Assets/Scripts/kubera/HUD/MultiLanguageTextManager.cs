@@ -84,7 +84,31 @@ public class MultiLanguageTextManager
 	public const string NO_GEMS_POPUP_INFO					= "NoGemsPopUpInfo";
 	public const string NO_GEMS_POPUP_BUTTON				= "NoGemsPopUpButton";
 
+	//Invitation to review
 
+	public const string INVITATION_11_TEXT1 				="Invitation_11_text1";
+
+	public const string INVITATION_21_TEXT1 				="Invitation_21_text1";
+	public const string INVITATION_21_ANSWER1 				="Invitation_21_Answer1";
+	public const string INVITATION_21_OPTION1 				="Invitation_21_option1";
+	public const string INVITATION_21_OPTION2 				="Invitation_21_option2";
+
+	public const string INVITATION_28_TEXT1 				="Invitation_28_text1";
+	public const string INVITATION_28_ANSWER1 				="Invitation_28_Answer1";
+	public const string INVITATION_28_ANSWER2 				="Invitation_28_Answer2";
+	public const string INVITATION_28_OPTION1 				="Invitation_28_option1";
+	public const string INVITATION_28_OPTION2 				="Invitation_28_option2";
+
+	public const string INVITATION_32_TEXT1 				="Invitation_32_text1";
+	public const string INVITATION_32_OPTION1 				="Invitation_32_option1";
+
+	public const string INVITATION_40_TEXT1 				="Invitation_40_text1";
+	public const string INVITATION_40_OPTION1 				="Invitation_40_option1";
+
+	public const string INVITATION_44_TEXT1 				="Invitation_44_text1";
+	public const string INVITATION_44_TEXT2 				="Invitation_44_text2";
+	public const string INVITATION_44_OPTION1 				="Invitation_44_option1";
+	public const string INVITATION_44_OPTION2 				="Invitation_44_option2";
 
 	protected static MultiLanguageTextManager _instance;
 

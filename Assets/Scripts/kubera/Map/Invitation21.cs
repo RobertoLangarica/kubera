@@ -23,11 +23,11 @@ public class Invitation21 : MonoBehaviour {
 		first.SetActive (true);
 		second.SetActive (false);
 
-		firstText.text = "¡Yo te conozco! \n ¿Eres tú quien dará auografos en la librería?";
-		answerText.text = "Juraría que eres tú";
+		firstText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_21_TEXT1);
+		answerText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_21_ANSWER1);
 
-		option1Text.text = "En absoluto";
-		option2Text.text = "¡Para nada!";
+		option1Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_21_OPTION1);
+		option2Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_21_OPTION2);
 	}
 
 	public void optionChoosed()
