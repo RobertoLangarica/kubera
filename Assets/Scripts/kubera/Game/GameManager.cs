@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
 
 	protected void startGame()
 	{
-		configureLevel(PersistentData.GetInstance().currentLevel);
+		configureLevel(PersistentData.GetInstance().getRandomLevel());
 
 		populateGridFromLevel(currentLevel);
 		cellManager.createFrame ();
@@ -704,13 +704,11 @@ public class GameManager : MonoBehaviour
 
 	protected void updatePiecesLight(bool canFit)
 	{
-		if (!canFit) 
+		List<Piece> temp = pieceManager.getShowingPieces ();
+
+		for (int i = 0; i < temp.Count; i++) 
 		{
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.NO_SPACE_FOR_PIECES);
-		} 
-		else 
-		{
-			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.NO_SPACE_FOR_PIECES);
+			temp [i].switchGreyPiece (!canFit);
 		}
 	}
 

@@ -14,6 +14,7 @@ public class Piece : MonoBehaviour
 		PINK,
 		PURPLE,
 		YELLOW,
+		GREY,
 		LETTER_OBSTACLE
 	}
 
@@ -31,6 +32,7 @@ public class Piece : MonoBehaviour
 	public Sprite SPRITE_PINK;
 	public Sprite SPRITE_PURPLE;
 	public Sprite SPRITE_YELLOW;
+	public Sprite SPRITE_GREY;
 
 	public GameObject[] squares;
 	public SpriteRenderer[] squaresSprite;
@@ -39,6 +41,8 @@ public class Piece : MonoBehaviour
 
 	protected EType _currentType;
 	protected Color rendererColor;
+
+	protected EColor previousColor;
 
 	public EColor currentColor;
 
@@ -108,6 +112,8 @@ public class Piece : MonoBehaviour
 			return SPRITE_ORANGE;
 		case EColor.PINK:
 			return SPRITE_PINK;
+		case EColor.GREY:
+			return SPRITE_GREY;
 		}
 		return null;
 	}
@@ -122,6 +128,35 @@ public class Piece : MonoBehaviour
 			_currentType = value;
 
 			updateSpriteBasedOnType();
+		}
+	}
+
+	public void switchGreyPiece(bool flag)
+	{
+		if (flag) 
+		{
+			previousColor = currentColor;
+
+			currentColor = EColor.GREY;
+		}
+		else
+		{
+			if (previousColor != EColor.NONE) 
+			{
+				currentColor = previousColor;
+			}
+		}
+
+		Sprite sprite = getSpriteByCurrentColor(currentColor);
+
+		if(sprite == null || currentColor == EColor.NONE)
+		{
+			return;
+		}
+
+		foreach(SpriteRenderer piece in squaresSprite)
+		{
+			piece.sprite = sprite;
 		}
 	}
 }
