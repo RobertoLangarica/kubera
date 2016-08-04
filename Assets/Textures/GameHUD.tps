@@ -235,6 +235,11 @@
             <key type="filename">../../../../../../Google Drive/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/tetris/K-InGame_Tetrissoft.png</key>
             <key type="filename">../../../../../../Google Drive/Shopika/Kubera/Kubera Arte/UI/Game/nuevos/tetris/K-InGame_Tetrisyellow.png</key>
             <key type="filename">../../../../../../Google Drive/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/K-Tutoriales_Estrellita0001.png</key>
+            <key type="filename">../../../../../../Google Drive/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/Lvl1-2.png</key>
+            <key type="filename">../../../../../../Google Drive/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/Lvl1-3.png</key>
+            <key type="filename">../../../../../../Google Drive/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/Lvl1-4.png</key>
+            <key type="filename">../../../../../../Google Drive/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/Lvl1.png</key>
+            <key type="filename">../../../../../../Google Drive/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/bolitaanimada.png</key>
             <key type="filename">../../../../../../Google Drive/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/gemas0001.png</key>
             <key type="filename">../../../../../../Google Drive/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/glow0001.png</key>
             <key type="filename">../../../../../../Google Drive/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/glowcuadrado0001.png</key>
@@ -243,6 +248,7 @@
             <key type="filename">../../../../../../Google Drive/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/objetivo0001.png</key>
             <key type="filename">../../../../../../Google Drive/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/palabras0001.png</key>
             <key type="filename">../../../../../../Google Drive/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/piezasglow.png</key>
+            <key type="filename">../../../../../../Google Drive/Shopika/Kubera/Kubera Arte/UI/Tutoriales/Glow/puntaflecha.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
