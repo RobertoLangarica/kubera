@@ -24,6 +24,7 @@ public class TutorialLvl64 : TutorialBase
 			freeWildCard = true;
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WILDCARD_BUTTON);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 
 			instructions [0].text =	MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE1),
@@ -40,6 +41,7 @@ public class TutorialLvl64 : TutorialBase
 			phaseEvent.Add(ENextPhaseEvent.KEYBOARD_LETER_SELECTED);
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_BUTTON);
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 
 			freeWildCard = true;
 

@@ -15,7 +15,7 @@ public class HighLight : MonoBehaviour
 		WORD_AREA
 	}
 
-	public float minAlpha = 0.45f;
+	public float minAlpha = 0.5f;
 	public float animStep = 0.02f;
 
 	public GameObject borderStars;
@@ -54,11 +54,6 @@ public class HighLight : MonoBehaviour
 
 	public bool activateHighLight(HighLightManager.EHighLightType type,HighLightManager.EHighLightStatus status)
 	{
-		if (!isScaled) 
-		{
-			setScale ();
-		}
-
 		int index = suscribedTypes.IndexOf (type);
 
 		if (index < 0) 
@@ -80,7 +75,7 @@ public class HighLight : MonoBehaviour
 		return false;
 	}
 
-	protected void updateColor()
+	protected virtual void updateColor()
 	{
 		Color temp = Color.white;
 		Image tempImg = null;
@@ -123,6 +118,12 @@ public class HighLight : MonoBehaviour
 				tempSpt.color = temp;
 			}
 		}
+
+		if (!isScaled) 
+		{
+			setScale ();
+		}
+
 	}
 
 	protected void initAnim()
@@ -228,18 +229,15 @@ public class HighLight : MonoBehaviour
 
 	public void scaleSpriteToFather()
 	{
-		if (!isScaled) 
-		{
-			float percent = (GetComponent<SpriteRenderer> ().bounds.size.x / FindObjectOfType<CellsManager>().cellSize) * 0.1f;
-			percent *= 1.18f;
+		float percent = (FindObjectOfType<CellsManager>().cellSize / GetComponent<SpriteRenderer> ().bounds.size.x);
+		percent *= 1.18f;
 
-			transform.localScale = new Vector3 (percent, percent, percent);
+		transform.localScale = new Vector3 (percent, percent, percent);
 
-			Cell tempC = transform.parent.GetComponent<Cell> ();
-			borderStars.transform.position = transform.position = tempC.transform.position + (new Vector3 (tempC.GetComponent<SpriteRenderer> ().bounds.extents.x,
-				-tempC.GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
+		Cell tempC = transform.parent.GetComponent<Cell> ();
+		borderStars.transform.position = transform.position = tempC.transform.position + (new Vector3 (tempC.GetComponent<SpriteRenderer> ().bounds.extents.x,
+			-tempC.GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
 
-			isScaled = true;
-		}
+		isScaled = true;
 	}
 }

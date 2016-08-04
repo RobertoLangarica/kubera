@@ -94,7 +94,7 @@ public class TutorialLvl1 : TutorialBase
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.MOVEMENTS);
 
-			instructions [7].text =	MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE7);
+			instructions [6].text =	MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE7);
 				
 			phase = 7;
 			return true;
@@ -105,7 +105,7 @@ public class TutorialLvl1 : TutorialBase
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.MOVEMENTS);
 
-			instructions [6].text = MultiLanguageTextManager.instance.multipleReplace (
+			instructions [7].text = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE8),
 				new string[1]{"/n"}, new string[1]{"\n"});
 
