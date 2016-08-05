@@ -218,7 +218,7 @@ public class InputWords : MonoBehaviour
 
 	void OnFingerUp(FingerUpEvent gesture)
 	{
-		if (allowInput && canDeleteLetter == false && letter) 
+		if (allowInput && letter) 
 		{
 			
 			onDragFinish(letter,isOnLettersContainer);
@@ -234,7 +234,14 @@ public class InputWords : MonoBehaviour
 				}
 				else
 				{
-					onTapToDelete (letter);
+					if(!canDeleteLetter)
+					{
+						print ("S");
+					}
+					else
+					{
+						onTapToDelete (letter);
+					}
 				}
 			}
 			gridLetter = null;

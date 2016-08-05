@@ -105,7 +105,7 @@ public class InputPiece : MonoBehaviour
 		if(currentSelected == false && allowInput && gesture.Raycast.Hits2D != null)
 		{
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
-			offsetPositionOverFinger.y = Mathf.Round (gesture.Raycast.Hit2D.collider.bounds.size.y * 20) * .10f;
+			offsetPositionOverFinger.y = Mathf.Round (gesture.Raycast.Hit2D.collider.bounds.size.y * 15) * .10f;
 
 			/*selectedInitialPosition = currentSelected.transform.position;
 			selectedInitialScale = currentSelected.transform.localScale;*/

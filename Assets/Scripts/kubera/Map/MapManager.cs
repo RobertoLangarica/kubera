@@ -42,6 +42,7 @@ public class MapManager : MonoBehaviour
 
 	void Start()
 	{
+		Debug.Break ();
 		popUpManager = FindObjectOfType<PopUpManager> ();
 		lifesHUDManager = FindObjectOfType<LifesManager> ();
 		paralaxManager = FindObjectOfType<ParalaxManager> ();
@@ -245,8 +246,7 @@ public class MapManager : MonoBehaviour
 		//level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
 		//return;
 
-		//HACK UNITY USER GROUP
-		/*if (level.isBoss)
+		if (level.isBoss)
 		{
 			if ((LevelsDataManager.GetInstance () as LevelsDataManager).isLevelPassed (level.lvlName))
 			{
@@ -289,7 +289,7 @@ public class MapManager : MonoBehaviour
 					level.status = MapLevel.EMapLevelsStatus.NORMAL_LOCKED;
 				}
 			}
-		}*/
+		}
 
 		level.stars = MapLevel.EMapLevelStars.NONE;
 		switch ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelStars (level.lvlName))
