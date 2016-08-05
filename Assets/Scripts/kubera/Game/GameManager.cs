@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
 
 	protected void startGame()
 	{
-		configureLevel(PersistentData.GetInstance().getRandomLevel());
+		configureLevel(PersistentData.GetInstance().currentLevel);
 
 		populateGridFromLevel(currentLevel);
 		cellManager.createFrame ();
