@@ -128,8 +128,8 @@ public class GameManager : MonoBehaviour
 		cellManager.createFrame ();
 
 		refreshCurrentWordScoreOnHUD (wordManager.wordPoints);
-
 		TutorialManager.GetInstance ().init ();
+
 	}
 
 	void Update()
@@ -618,9 +618,9 @@ public class GameManager : MonoBehaviour
 		//HACK: al inicio del nivel que sirve en los tutoriales
 		if (linesAnimation.isOnAnimation || remainingMoves == currentLevel.moves) 
 		{
+			updatePiecesLightAndUpdateLetterState ();
 			return;
 		}
-
 		canFit = checkIfIsPosiblePutPieces ();
 
 		if((!canFit || remainingMoves == 0) && !gameOver)
@@ -693,6 +693,7 @@ public class GameManager : MonoBehaviour
 			}
 			canFit = cellManager.checkIfOnePieceCanFit (tempList);
 		}
+
 		return canFit;
 	}
 
@@ -759,6 +760,7 @@ public class GameManager : MonoBehaviour
 
 			HighLightManager.GetInstance ().turnOffAllHighLights ();
 			wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
+			updatePiecesLight (true);
 		}
 	}
 
@@ -1063,6 +1065,8 @@ public class GameManager : MonoBehaviour
 			hudManager.animateLvlGo ();
 			break;
 		case "endGame":
+			//SceneManager.LoadScene ("Levels");
+			//ScreenManager.instance.GoToScene ("Levels");
 			break;
 		case "winPopUpEnd":
 			Invoke ("winBonification", piecePositionedDelay * 2);
@@ -1097,6 +1101,7 @@ public class GameManager : MonoBehaviour
 		PersistentData.GetInstance().startLevel -= 1;
 		PersistentData.GetInstance ().fromLoose = true;
 		PersistentData.GetInstance ().fromGameToLevels = true;
+		//activatePopUp ("exitGame");
 		SceneManager.LoadScene ("Levels");
 		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		activatePopUp ("exitGame");*/

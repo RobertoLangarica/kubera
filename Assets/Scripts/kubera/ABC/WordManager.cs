@@ -122,20 +122,21 @@ public class WordManager : MonoBehaviour
 
 		centerVacuum = Screen.width * 0.5f;
 
-		}
+		wordContainerLayout = letterContainer.GetComponent<GridLayoutGroup>();
+		wordContainerRectTransform = letterContainer.GetComponent<RectTransform> ();
+		noWordPosible.transform.position = letterContainer.transform.position;
+		letterContainerTransform = letterContainer.transform;
+
+	}
 
 	void Start()
 	{
 		//Tamaño de las celdas
-		wordContainerLayout = letterContainer.GetComponent<GridLayoutGroup>();
-		wordContainerRectTransform = letterContainer.GetComponent<RectTransform> ();
-		noWordPosible.transform.position = letterContainer.transform.position;
 
 		float cellSize = wordContainerRectTransform.rect.height * 0.9f;
 
 		wordContainerLayout.cellSize = new Vector2(cellSize,cellSize);
 
-		letterContainerTransform = letterContainer.transform;
 
 		for(int i=0; i<5; i++)
 		{
@@ -787,14 +788,14 @@ public class WordManager : MonoBehaviour
 
 	public void activateNoWordPosibleText(bool activate,bool isThereAnyLetterOnContainer = true)
 	{
-		if(currentWordPosibleState == EWordState.NO_WORDS_AVAILABLE && !isThereAnyLetterOnContainer)
+		/*if(currentWordPosibleState == EWordState.NO_WORDS_AVAILABLE && !isThereAnyLetterOnContainer)
 		{
 			noWordPosible.SetActive (true);
 		}
 		else
 		{
 			noWordPosible.SetActive (false);
-		}
+		}*/
 		//noWordPosible.SetActive (activate);
 	}
 
@@ -1037,7 +1038,7 @@ public class WordManager : MonoBehaviour
 			{
 				gridLetter [i].updateState (Letter.EState.WRONG);
 			}
-			noWordPosible.SetActive (true);
+			//noWordPosible.SetActive (true);
 			activateNoWordPosibleText (true);
 
 			break;
@@ -1051,7 +1052,7 @@ public class WordManager : MonoBehaviour
 				}
 				activateNoWordPosibleText (false);
 			}
-			noWordPosible.SetActive (false);
+			//noWordPosible.SetActive (false);
 			break;
 		case EWordState.HINTED_WORDS:
 			if (currentWordPosibleState != EWordState.HINTED_WORDS && !cancelHint) 
@@ -1118,7 +1119,7 @@ public class WordManager : MonoBehaviour
 			{
 				canvas.sortingLayerName = "UI";
 				canvas.sortingOrder = -2;
-				letterTransform.DOLocalMoveY(100,fullTime-0.5f);
+				letterTransform.DOLocalMoveY(125,fullTime-0.5f);
 				letterTransform.DOScale(new Vector3(0,0,0),fullTime-0.5f).OnComplete(()=>
 					{
 						activateGridLayout (true);

@@ -19,26 +19,21 @@ public class RetryPopUp : PopUpBase
 		lifesManager = FindObjectOfType<LifesManager> ();
 
 		PersistentData.GetInstance().startLevel--;
-		title.text = "Nivel" + PersistentData.GetInstance().startLevel;
+		title.text = "Nivel" + PersistentData.GetInstance().lastLevelPlayedName;
 
 		content.text = "Seguro lo lograras";
 	}
 
-	public void closeRetry()
+	public void close()
 	{
-		OnPopUpCompleted (this);
-		SceneManager.LoadScene ("Levels");
+		OnComplete ("closeRetry");
 	}
 
 	public void retryLevel()
 	{
 		if (UserDataManager.instance.playerLifes > 0) 
 		{
-			OnPopUpCompleted (this);
-
-			//lifesManager.takeALife ();
-
-			SceneManager.LoadScene ("Game");
+			OnComplete ("retry");
 		} 
 		else 
 		{

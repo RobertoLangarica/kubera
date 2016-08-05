@@ -58,7 +58,7 @@ public class HUDManager : MonoBehaviour
 
 	public delegate void DNotifyEvent ();
 	public DNotifyEvent OnPiecesScaled;
-
+	public GameObject wordsHighlight;
 
 	void Start () 
 	{

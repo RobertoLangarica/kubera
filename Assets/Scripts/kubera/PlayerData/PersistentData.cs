@@ -37,7 +37,7 @@ public class PersistentData : Manager<PersistentData>
 	[HideInInspector]
 	public bool fromGameToEdit;
 	[HideInInspector]
-	public bool fromGameToLevels;
+	public bool fromGameToLevels = false;
 
 	[HideInInspector]
 	public int startLevel = 1;
@@ -211,7 +211,7 @@ public class PersistentData : Manager<PersistentData>
 	{
 		int le = 15;
 		//return levelsData.levels[0];
-		return levelsData.levels[0];
+		return levelsData.levels[16];
 		return levelsData.levels[Random.Range(0,levelsData.levels.Length-1)];
 	}
 

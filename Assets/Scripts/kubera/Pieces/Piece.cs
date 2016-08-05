@@ -135,7 +135,10 @@ public class Piece : MonoBehaviour
 	{
 		if (flag) 
 		{
-			previousColor = currentColor;
+			if (previousColor == EColor.GREY || previousColor == EColor.NONE) 
+			{
+				previousColor = currentColor;
+			}
 
 			currentColor = EColor.GREY;
 		}
@@ -144,6 +147,7 @@ public class Piece : MonoBehaviour
 			if (previousColor != EColor.NONE) 
 			{
 				currentColor = previousColor;
+				previousColor = EColor.GREY;
 			}
 		}
 

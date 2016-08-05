@@ -80,7 +80,7 @@ public class TutorialLvl8 : TutorialBase
 		}
 
 		Vector3 posFrom = fromPosition.transform.position;
-		Vector3 posTo = cellManager.getAllEmptyCells()[6].transform.position;
+		Vector3 posTo = cellManager.getAllShowedCels()[11].transform.position;
 
 		powerUpDommy.transform.position = posFrom;
 

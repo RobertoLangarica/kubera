@@ -155,7 +155,7 @@ public class HighLightManager : Manager<HighLightManager>
 			}
 			break;
 		case(EHighLightType.WILDCARD_POWERUP):
-			turnOnHighLights (wordManager.letterContainer.transform.parent,EHighLightStatus.NORMAL);
+			turnOnHighLights (hudManager.wordsHighlight.transform.parent,EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.WORD_HINT):
 			tempCell = cellManager.getAllShowedCels ();

@@ -31,7 +31,7 @@ public class ParalaxManager : MonoBehaviour {
 		oldPos = rectTransform.anchoredPosition;
 		//OnMove (rectTransform.anchoredPosition);
 		//scrollRect.verticalNormalizedPosition = 0.5f;
-		Invoke ("setFixHeight",0.1f);
+		Invoke ("setFixHeight",0.05f);
 	}
 
 	void Update()

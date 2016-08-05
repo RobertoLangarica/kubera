@@ -73,6 +73,7 @@ public class GoalPopUp : PopUpBase {
 		}
 		if(letters.Count != 0)
 		{
+			destroyLetersOnContainer ();
 			//goalText.enabled = false;
 			lettersObjective.SetActive (true);
 			//goalLettersText.text = text;
@@ -86,6 +87,14 @@ public class GoalPopUp : PopUpBase {
 		}
 
 		showStars (starsReached);
+	}
+
+	protected void destroyLetersOnContainer()
+	{
+		for(int i=0; i<goalLettersContainer.transform.childCount;)
+		{
+			DestroyImmediate (goalLettersContainer.transform.GetChild (i).gameObject);
+		}
 	}
 
 	protected void showStars(int starsReached)
@@ -112,7 +121,7 @@ public class GoalPopUp : PopUpBase {
 
 	public void exit ()
 	{
-		OnComplete ();
+		OnComplete ("closeRetry");
 	}
 		
 }

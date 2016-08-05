@@ -1,9 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using DG.Tweening;
 
 public class TutorialLvl37 : TutorialBase 
 {
+	public Image powerUpDommy;
+	public GameObject fromPosition;
+
+	protected bool doAnimation;
+
 	protected override void Start()
 	{
 		base.Start ();
@@ -26,6 +32,9 @@ public class TutorialLvl37 : TutorialBase
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE1),
 				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
 
+			doAnimation = true;
+			Invoke ("powerUpAnim",1);
+
 			phase = 1;
 			return true;
 		case(1):
@@ -40,6 +49,8 @@ public class TutorialLvl37 : TutorialBase
 			instructions [1].text = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE2),
 				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+
+			doAnimation = false;
 
 			phase = 2;
 			return true;
@@ -57,5 +68,45 @@ public class TutorialLvl37 : TutorialBase
 		}
 
 		return base.phaseObjectiveAchived ();
+	}
+
+	protected void powerUpAnim()
+	{
+		if (!doAnimation) 
+		{
+			DOTween.Kill ("Tutorial2");
+			return;
+		}
+
+		Vector3 posFrom = fromPosition.transform.position;
+		Vector3 posTo = hudManager.rotationImagePositions[1].transform.position;
+
+		powerUpDommy.transform.position = posFrom;
+
+		//Los valores de las animaciones los paso Liloo
+		powerUpDommy.transform.DOScale (new Vector3 (1.4f, 1.4f, 1.4f), 0.5f).SetId("Tutorial2");
+		powerUpDommy.DOColor (new Color(1,1,1,0.5f),0.5f).OnComplete(
+			()=>{
+
+				//TODO: intentar que sea linea curva
+				powerUpDommy.transform.DOMove (posTo,1).OnComplete(
+					()=>{
+
+						powerUpDommy.transform.DOScale (new Vector3 (1, 1, 1), 1f).OnComplete(
+							()=>{
+
+								powerUpDommy.DOColor (new Color(1,1,1,0),0.5f).SetId("Tutorial2");
+							}
+
+						).SetId("Tutorial2");
+
+					}
+
+				).SetId("Tutorial2");
+
+			}
+		).SetId("Tutorial2");
+
+		Invoke ("powerUpAnim",3.5f);
 	}
 }

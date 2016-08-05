@@ -28,7 +28,6 @@ public class RotatePowerUp : PowerupBase
 
 		imageToRotate = FindObjectOfType<HUDManager>().rotationImagePositions;
 		initiaImageToRotateScale = imageToRotate [0].transform.localScale;
-		print (initiaImageToRotateScale);
 	}
 
 	public override void activate (bool canUse)
@@ -42,7 +41,7 @@ public class RotatePowerUp : PowerupBase
 		powerUpGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
 		powerUpGO.name = "RotatePowerUp";
 		powerUpGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
-		powerUpGO.transform.localScale = new Vector3 (1, 1, 1);
+		powerUpGO.transform.localScale = new Vector3 (4, 4, 4);
 		powerUpGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
 		inputPowerUp.enabled = true;
 		inputPowerUp.setCurrentSelected(powerUpGO);

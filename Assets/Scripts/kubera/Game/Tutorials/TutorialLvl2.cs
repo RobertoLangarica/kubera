@@ -70,6 +70,7 @@ public class TutorialLvl2 : TutorialBase
 			instructions [2].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE3);
 			
 			phase = 3;
+			doAnimation = false;
 			return true;
 		case(3):
 			phasesPanels [2].SetActive (false);
@@ -82,6 +83,7 @@ public class TutorialLvl2 : TutorialBase
 				new string[3]{ "{{b}}", "{{/b}}","/n"}, new string[3]{ "<b>", "</b>","\n"});
 			
 			phase = 4;
+			doAnimation = false;
 			return true;
 		}
 
