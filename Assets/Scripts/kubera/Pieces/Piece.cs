@@ -144,7 +144,7 @@ public class Piece : MonoBehaviour
 		}
 		else
 		{
-			if (previousColor != EColor.NONE) 
+			if (previousColor != EColor.NONE && previousColor != EColor.GREY) 
 			{
 				currentColor = previousColor;
 				previousColor = EColor.GREY;
