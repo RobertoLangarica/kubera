@@ -69,6 +69,8 @@ public class Piece : MonoBehaviour
 		}
 	
 		currentType = starterType;
+		BoxCollider2D boxCollider = GetComponent<BoxCollider2D> ();
+		boxCollider.size = new Vector2 (boxCollider.size.x + 0.1f, boxCollider.size.y + 0.1f);
 	}
 
 	protected void updateSpriteBasedOnType()

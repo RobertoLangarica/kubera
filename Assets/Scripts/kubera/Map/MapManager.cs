@@ -42,7 +42,6 @@ public class MapManager : MonoBehaviour
 
 	void Start()
 	{
-		Debug.Break ();
 		popUpManager = FindObjectOfType<PopUpManager> ();
 		lifesHUDManager = FindObjectOfType<LifesManager> ();
 		paralaxManager = FindObjectOfType<ParalaxManager> ();
@@ -71,6 +70,7 @@ public class MapManager : MonoBehaviour
 			fromLoose= PersistentData.GetInstance ().fromLoose;
 			PersistentData.GetInstance ().fromGameToLevels = false;
 		}
+		PersistentData.GetInstance ().fromLevelsToGame = true;
 
 		//selectLevel (currentWorld);
 
@@ -210,9 +210,6 @@ public class MapManager : MonoBehaviour
 				}
 				else if(nextLevel != null && nextLevel.fullLvlName == mapLevels[i].fullLvlName)
 				{
-					print (fromGame);
-					print (nextLevel.name);
-					print (PersistentData.GetInstance().lastLevelReachedName);
 					if(fromGame && nextLevel.fullLvlName == PersistentData.GetInstance().lastLevelReachedName)
 					{
 						toNextLevel = false;
@@ -429,7 +426,6 @@ public class MapManager : MonoBehaviour
 				||  mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED
 				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED)
 			{	
-				print (mapLevels [i].status);
 				PersistentData.GetInstance ().lastLevelReachedName = mapLevels [i].fullLvlName;
 				break;
 			}
