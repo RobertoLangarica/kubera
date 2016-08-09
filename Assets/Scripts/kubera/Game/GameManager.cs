@@ -128,7 +128,6 @@ public class GameManager : MonoBehaviour
 		cellManager.createFrame ();
 
 		refreshCurrentWordScoreOnHUD (wordManager.wordPoints);
-		TutorialManager.GetInstance ().init ();
 
 	}
 
@@ -1063,6 +1062,7 @@ public class GameManager : MonoBehaviour
 			allowGameInput ();
 			updatePiecesLightAndUpdateLetterState ();
 			hudManager.animateLvlGo ();
+			TutorialManager.GetInstance ().init ();
 			break;
 		case "endGame":
 			//SceneManager.LoadScene ("Levels");

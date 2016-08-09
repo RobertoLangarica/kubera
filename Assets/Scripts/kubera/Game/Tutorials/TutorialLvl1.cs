@@ -1,10 +1,16 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class TutorialLvl1 : TutorialBase
 {
+	public PieceManager pieceManager;
+	public InputPiece inputPiece;
+
+	protected bool doAnimation;
+	protected int dommyIndex = -1;
+	protected GameObject powerUpDommy;
 	protected List<Cell> cells;
 
 	protected override void Start()
@@ -20,12 +26,20 @@ public class TutorialLvl1 : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.POSITIONATE_PIECE);
+			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
-			instructions [0].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE1);
+			firstAnim ();
+
+			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE1);
+			instructionsText = instructions [0];
+			instructionsText.text = "";
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.PIECES_AREA);
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.EMPTY_CELLS);
+
+			doAnimation = true;
+			Invoke ("powerUpAnim",1);
+			Invoke ("writeLetterByLetter",initialAnim*2);
 
 			phase = 1;
 			return true;
@@ -40,6 +54,8 @@ public class TutorialLvl1 : TutorialBase
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.PIECES_AREA);
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.EMPTY_CELLS);
+
+			doAnimation = false;
 
 			phase = 2;
 			return true;
@@ -159,5 +175,64 @@ public class TutorialLvl1 : TutorialBase
 		}
 		
 		return base.phaseObjectiveAchived ();
+	}
+
+	protected void powerUpAnim()
+	{
+		if (!doAnimation) 
+		{
+			DOTween.Kill ("Tutorial1");
+			return;
+		}
+
+		Vector3 posFrom = pieceManager.getShowingPieces () [0].transform.position;
+		Vector3 posTo = cellManager.getAllEmptyCells()[8].transform.position;
+		posTo.x += cellManager.cellSize * 0.5f;
+
+		changeDommy ();
+
+		Vector3 originalScale = inputPiece.selectedScale;
+		SpriteRenderer tempSpt = powerUpDommy.GetComponent<SpriteRenderer> ();
+
+		powerUpDommy.transform.position = posFrom;
+
+		//Los valores de las animaciones los paso Liloo
+		powerUpDommy.transform.DOScale (new Vector3 (originalScale.x*1.2f,originalScale.y*1.2f,originalScale.z*1.2f), 0.5f).SetId("Tutorial1");
+		powerUpDommy.GetComponent<Piece>().moveAlphaByTween(0.5f,0.5f,"Tutorial1",
+			()=>{
+
+				//TODO: intentar que sea linea curva
+				powerUpDommy.transform.DOMove (posTo,1).OnComplete(
+					()=>{
+
+						powerUpDommy.transform.DOScale (new Vector3 (originalScale.x,originalScale.y,originalScale.z), 1f).OnComplete(
+							()=>{
+
+								powerUpDommy.GetComponent<Piece>().moveAlphaByTween(0,0.5f,"Tutorial1",()=>{DestroyImmediate(powerUpDommy);});
+							}
+
+						).SetId("Tutorial1");
+
+					}
+
+				).SetId("Tutorial1");
+
+			});
+
+		Invoke ("powerUpAnim",3.5f);
+	}
+
+	protected void changeDommy()
+	{
+		if (dommyIndex < 2) 
+		{
+			dommyIndex++;
+		} 
+		else 
+		{
+			dommyIndex = 0;
+		}
+		powerUpDommy = GameObject.Instantiate (pieceManager.getShowingPieces () [dommyIndex].gameObject) as GameObject;
+		powerUpDommy.transform.localScale = Vector3.zero;
 	}
 }
