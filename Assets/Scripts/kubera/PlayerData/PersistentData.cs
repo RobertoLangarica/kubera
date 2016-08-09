@@ -40,6 +40,9 @@ public class PersistentData : Manager<PersistentData>
 	public bool fromGameToLevels = false;
 
 	[HideInInspector]
+	public bool fromLevelsToGame = false;
+
+	[HideInInspector]
 	public int startLevel = 1;
 
 	[HideInInspector]
@@ -210,8 +213,7 @@ public class PersistentData : Manager<PersistentData>
 	public Level getRandomLevel()
 	{
 		int le = 15;
-		//return levelsData.levels[0];
-		return levelsData.levels[16];
+		return levelsData.levels[0];
 		return levelsData.levels[Random.Range(0,levelsData.levels.Length-1)];
 	}
 

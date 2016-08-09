@@ -122,7 +122,14 @@ public class GameManager : MonoBehaviour
 
 	protected void startGame()
 	{
-		configureLevel(PersistentData.GetInstance().currentLevel);
+		if(!PersistentData.GetInstance().fromLevelsToGame)
+		{
+			configureLevel(PersistentData.GetInstance().getRandomLevel());
+		}
+		else
+		{
+			configureLevel(PersistentData.GetInstance().currentLevel);
+		}
 
 		populateGridFromLevel(currentLevel);
 		cellManager.createFrame ();
@@ -758,14 +765,16 @@ public class GameManager : MonoBehaviour
 			unlockPowerUp ();
 			activatePopUp ("winGamePopUp");
 
-			HighLightManager.GetInstance ().turnOffAllHighLights ();
-			wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
-			updatePiecesLight (true);
+
 		}
 	}
 
 	protected void winBonification()
 	{
+		HighLightManager.GetInstance ().turnOffAllHighLights ();
+		wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
+		updatePiecesLight (true);
+
 		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.WON);
 
 		bombAnimation.OnAllAnimationsCompleted += destroyAndCountAllLetters;
@@ -885,7 +894,7 @@ public class GameManager : MonoBehaviour
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
 
-				Invoke ("toLevels", 0.5f);
+				Invoke ("toLevels", 0.75f);
 				//Gano y ya se termino win bonification
 				/*PersistentData.GetInstance().fromLevelBuilder = true;
 				SceneManager.LoadScene ("Game");*/

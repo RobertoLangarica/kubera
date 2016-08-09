@@ -1113,13 +1113,14 @@ public class WordManager : MonoBehaviour
 		lettersRemoval.Add (letter);
 		//letters.Remove(letter);
 		StartCoroutine (lettersRemove(letter));
-		
-		letterTransform.DOLocalMoveY(25,fullTime-1);
-		letterTransform.DOLocalMoveX (31, fullTime-1).OnComplete(()=>
+
+
+		letterTransform.DOMoveY(2.75f,fullTime-1);
+		letterTransform.DOMoveX (0, fullTime-1).OnComplete(()=>
 			{
 				canvas.sortingLayerName = "UI";
 				canvas.sortingOrder = -2;
-				letterTransform.DOLocalMoveY(125,fullTime-0.5f);
+				letterTransform.DOMoveY(4,fullTime-0.5f);
 				letterTransform.DOScale(new Vector3(0,0,0),fullTime-0.5f).OnComplete(()=>
 					{
 						activateGridLayout (true);

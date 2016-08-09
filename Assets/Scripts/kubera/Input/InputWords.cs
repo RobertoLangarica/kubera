@@ -123,7 +123,7 @@ public class InputWords : MonoBehaviour
 
 
 
-				tempV3.y += objectSize.y*2f;
+				tempV3.y += objectSize.y*1f;
 				tempV3.z = letter.transform.position.z;
 
 				//limite de zona de letras
@@ -234,11 +234,7 @@ public class InputWords : MonoBehaviour
 				}
 				else
 				{
-					if(!canDeleteLetter)
-					{
-						print ("S");
-					}
-					else
+					if(canDeleteLetter)
 					{
 						onTapToDelete (letter);
 					}
@@ -333,7 +329,7 @@ public class InputWords : MonoBehaviour
 	{
 		if (allowInput && canDeleteLetter && gesture.Raycast.Hit2D) 
 		{	
-			onTapToDelete(gesture.Raycast.Hit2D.transform.gameObject);
+			//onTapToDelete(gesture.Raycast.Hit2D.transform.gameObject);
 		}
 	}
 
