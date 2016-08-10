@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
 		secondChance.gameObject.SetActive (false);
 
 		linesAnimation.OnCellFlipped += OnCellFlipped; 
-
+		linesAnimation.OnAllCellsFlipped += OnAllCellsFlipped;
 
 		wordManager.setMaxAllowedLetters(PersistentData.GetInstance().maxWordLength);
 		wordManager.gridLettersParent = gridLettersContainer;
@@ -450,6 +450,12 @@ public class GameManager : MonoBehaviour
 		cellManager.occupyAndConfigureCell (cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE);
 		gridCharacters.Add(letter);
 
+		/*checkIfLose ();
+		allowGameInput (true);*/
+	}
+
+	public void OnAllCellsFlipped()
+	{
 		checkIfLose ();
 		allowGameInput (true);
 	}
