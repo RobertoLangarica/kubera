@@ -325,11 +325,6 @@ public class GameManager : MonoBehaviour
 			putPiecesOnGrid (piece, cellsUnderPiece);
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.PIECE_POSITIONATED);
 
-			if (OnPiecePositionated != null) 
-			{
-				OnPiecePositionated ();
-			}
-
 			//Tomamos en cuenta los tiempos de todos los twens de posicionamiento
 			StartCoroutine(afterPiecePositioned(piece));
 
@@ -416,6 +411,11 @@ public class GameManager : MonoBehaviour
 		Destroy(piece.gameObject);
 
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
+
+		if (OnPiecePositionated != null) 
+		{
+			OnPiecePositionated ();
+		}
 	}
 
 	private void convertLinesToLetters(List<List<Cell>> cells)
@@ -455,8 +455,8 @@ public class GameManager : MonoBehaviour
 
 	public void OnAllCellsFlipped()
 	{
-		checkIfLose ();
 		allowGameInput (true);
+		Invoke("checkIfLose",0.2f);
 	}
 
 	public void showShadowOnPiece (GameObject obj, bool showing = true)
@@ -482,11 +482,6 @@ public class GameManager : MonoBehaviour
 	{
 		pointsCount += amount;
 		goalManager.submitPoints (amount);
-
-		if (OnPointsEarned != null) 
-		{
-			OnPointsEarned ();
-		}
 	}
 
 	protected void substractMoves(int amount)
@@ -1154,5 +1149,12 @@ public class GameManager : MonoBehaviour
 	protected void showFloatingPointsAt(Vector3 pos,int amount)
 	{
 		hudManager.showScoreTextAt(pos,amount);
+
+		//Se movio el chequeo para aca ya que aqui se suman lineas y puntos
+		if (OnPointsEarned != null) 
+		{
+			Debug.Log ("Se añadieron puntos!!!!!!" + amount);
+			OnPointsEarned ();
+		}
 	}
 }

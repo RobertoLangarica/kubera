@@ -14,6 +14,8 @@ public class TutorialBase : MonoBehaviour
 
 	public float writingSpeed = 0.1f;
 
+	protected bool foundStringTag;
+	protected bool changeInstruction;
 
 	protected int instructionIndex;
 	protected string currentInstruction;
@@ -120,14 +122,49 @@ public class TutorialBase : MonoBehaviour
 
 	protected void shakeToErrase()
 	{
+		instructionsContainer = instructionsText.transform.parent;
 		instructionsContainer.DOShakePosition (shakeDuraion,shakeStrength);
 	}
 
 	protected void writeLetterByLetter()
 	{
-		instructionsText.text = ((string)instructionsText.text).Insert(instructionIndex,currentInstruction [instructionIndex].ToString());
+		if (changeInstruction) 
+		{
+			changeInstruction = false;
+			return;
+		}
 
-		instructionIndex++;
+		if (currentInstruction [instructionIndex].ToString () == "\\") 
+		{
+			instructionsText.text = ((string)instructionsText.text).Insert (instructionIndex, "\n");
+			instructionIndex += 2;			
+		} 
+		else if (currentInstruction [instructionIndex].ToString () == "<" && !foundStringTag) 
+		{
+			int ndx = currentInstruction.IndexOf ('>', instructionIndex);
+			string textTag = currentInstruction.Substring (instructionIndex, (ndx + 1) - instructionIndex);
+
+			foundStringTag = true;
+
+			instructionsText.text = ((string)instructionsText.text).Insert (instructionIndex, textTag);
+			instructionIndex += textTag.Length;
+
+			textTag = textTag.Insert (1, "/");
+			instructionsText.text = ((string)instructionsText.text).Insert (instructionIndex, textTag);
+		} 
+		else if (currentInstruction [instructionIndex].ToString () == "<" && foundStringTag) 
+		{
+			int ndx = currentInstruction.IndexOf ('>', instructionIndex);
+			string textTag = currentInstruction.Substring (instructionIndex, (ndx + 1) - instructionIndex);
+
+			instructionIndex += textTag.Length;
+			foundStringTag = false;
+		}
+		else 
+		{
+			instructionsText.text = ((string)instructionsText.text).Insert (instructionIndex, currentInstruction [instructionIndex].ToString ());
+			instructionIndex++;
+		}
 
 		if (instructionIndex < currentInstruction.Length) 
 		{

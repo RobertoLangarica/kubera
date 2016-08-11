@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 
 public class TutorialLvl2 : TutorialBase 
 {
-	public Image powerUpDommy;
-	public GameObject fromPosition;
+	public List<ArrowAnimation> arrows;
 
 	protected bool doAnimation;
 
@@ -24,65 +24,127 @@ public class TutorialLvl2 : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.HINT_USED);
-			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
+			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
 			freeHint = true;
 
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WORD_HINT_BUTTON);
+			firstAnim ();
 
-			instructions [0].text = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE1),
-				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.PIECES_AREA);
 
-			doAnimation = true;
-			Invoke ("powerUpAnim",1);
+			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE1);
+			instructionsText = instructions [0];
+			instructionsText.text = "";
+
+			Invoke ("writeLetterByLetter",initialAnim*2);
 
 			phase = 1;
 			return true;
 		case(1):
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
+			phaseEvent.Add (ENextPhaseEvent.EARNED_POINTS);
 
 			freeHint = true;
 
-			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WORD_HINT_BUTTON);
+			if (instructionIndex < currentInstruction.Length) 
+			{
+				changeInstruction = true;
+			}
 
-			instructions [1].text = MultiLanguageTextManager.instance.multipleReplace (
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.PIECES_AREA);
+
+			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE2),
-				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
+				new string[2]{ "{{points}}", "{{neededPoints}}" }, new string[2]{hudManager.points.text,hudManager.goalText.text.Split('/')[1].Split(' ')[0]});
+			instructionsText = instructions [1];
+			instructionsText.text = "";
+			instructionIndex = 0;
 
-			doAnimation = false;
+			shakeToErrase ();
+
+			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
 
 			phase = 2;
 			return true;
 		case(2):
-			phasesPanels [0].SetActive (false);
+			Debug.Log ("CAso2");
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.CREATE_A_LINE);
+			phaseEvent.Add (ENextPhaseEvent.EARNED_POINTS);
 
 			freeHint = true;
 
-			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WORD_HINT_BUTTON);
+			if (instructionIndex < currentInstruction.Length) 
+			{
+				changeInstruction = true;
+			}
 
-			instructions [2].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE3);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.MOVEMENTS);
+
+			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE3),
+				new string[1]{"/n"}, new string[1]{"\n"});
+			instructionsText = instructions [2];
+			instructionsText.text = "";
+			instructionIndex = 0;
+
+			shakeToErrase ();
+			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+
+			arrows[0].startAnimation ();
 			
 			phase = 3;
-			doAnimation = false;
 			return true;
 		case(3):
 			phasesPanels [2].SetActive (false);
 			phasesPanels [3].SetActive (true);
+			phaseEvent.Add (ENextPhaseEvent.EARNED_POINTS);
 
 			freeHint = true;
 
-			instructions [3].text = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE4),
-				new string[3]{ "{{b}}", "{{/b}}","/n"}, new string[3]{ "<b>", "</b>","\n"});
-			
+			if (instructionIndex < currentInstruction.Length) {
+				changeInstruction = true;
+			}
+
+			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE4);
+			instructionsText = instructions [3];
+			instructionsText.text = "";
+			instructionIndex = 0;
+
+			shakeToErrase ();
+			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+
+			arrows[0].stopAnimation();
+			arrows[1].startAnimation ();
+
 			phase = 4;
+			doAnimation = false;
+			return true;
+		case(4):
+			phasesPanels [3].SetActive (false);
+			phasesPanels [4].SetActive (true);
+
+			freeHint = true;
+
+			if (instructionIndex < currentInstruction.Length) {
+				changeInstruction = true;
+			}
+
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.MOVEMENTS);
+
+			currentInstruction =  MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE5),
+				new string[3]{"{{b}}","{{/b}}","/n"}, new string[3]{"<b>","</b>","\n"});
+			instructionsText = instructions [4];
+			instructionsText.text = "";
+			instructionIndex = 0;
+
+			shakeToErrase ();
+			arrows[1].stopAnimation();
+			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);      
+
+			phase = 5;
 			doAnimation = false;
 			return true;
 		}
@@ -95,57 +157,15 @@ public class TutorialLvl2 : TutorialBase
 		switch (phase) 
 		{
 		case(1):
-			if (wordManager.wordsValidator.isCompleteWord ()) 
-			{
-				phase = 2;
-			}
 			return true;
 		case(2):
 			return true;
 		case(3):
 			return true;
+		case(4):
+			return true;
 		}
 
 		return base.phaseObjectiveAchived ();
-	}
-
-	protected void powerUpAnim()
-	{
-		if (!doAnimation) 
-		{
-			DOTween.Kill ("Tutorial2");
-			return;
-		}
-
-		Vector3 posFrom = fromPosition.transform.position;
-		Vector3 posTo = cellManager.getAllEmptyCells()[6].transform.position;
-
-		powerUpDommy.transform.position = posFrom;
-
-		//Los valores de las animaciones los paso Liloo
-		powerUpDommy.transform.DOScale (new Vector3 (1.4f, 1.4f, 1.4f), 0.5f).SetId("Tutorial2");
-		powerUpDommy.DOColor (new Color(1,1,1,0.5f),0.5f).OnComplete(
-			()=>{
-
-				//TODO: intentar que sea linea curva
-				powerUpDommy.transform.DOMove (posTo,1).OnComplete(
-					()=>{
-
-						powerUpDommy.transform.DOScale (new Vector3 (1, 1, 1), 1f).OnComplete(
-							()=>{
-
-								powerUpDommy.DOColor (new Color(1,1,1,0),0.5f).SetId("Tutorial2");
-							}
-						
-						).SetId("Tutorial2");
-						
-					}
-
-				).SetId("Tutorial2");
-				
-			}
-		).SetId("Tutorial2");
-
-		Invoke ("powerUpAnim",3.5f);
 	}
 }
