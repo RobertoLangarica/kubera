@@ -102,9 +102,9 @@
 		</text>
 		<text id="Tutorial_lvl1_phase2">
 			<languages>
-				<language id="english" text="Tap letters to form a correct word like {{b}}MAR{{/b}}."/>
-				<language id="spanish" text="Toca las letras para formar una palabra correcta, por ejemplo: {{b}}MAR{{/b}}."/>
-				<language id="default" text="Toca las letras para formar una palabra correcta, por ejemplo: {{b}}MAR{{/b}}."/>
+				<language id="english" text="Tap letters to form a correct word like {{b}}FELIZ{{/b}}."/>
+				<language id="spanish" text="Toca las letras para formar una palabra correcta, por ejemplo: {{b}}FELIZ{{/b}}."/>
+				<language id="default" text="Toca las letras para formar una palabra correcta, por ejemplo: {{b}}FELIZ{{/b}}."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl1_phase3">
@@ -114,102 +114,67 @@
 				<language id="default" text="Presiona el botón para mandar una palabra correcta."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl1_phase4">
+		<text id="Tutorial_lvl2_phase1">
 			<languages>
-				<language id="english" text="Make room for more pieces by forming words."/>
-				<language id="spanish" text="Forma más palabras para hacer espacio a las piezas."/>
-				<language id="default" text="Forma más palabras para hacer espacio a las piezas."/>
+				<language id="english" text="Drag a piece to make a line."/>
+				<language id="spanish" text="Arrastra una pieza para hacer una línea."/>
+				<language id="default" text="Arrastra una pieza para hacer una línea."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl1_phase5">
-			<languages>
-				<language id="english" text="Make another line."/>
-				<language id="spanish" text="Haz otra línea."/>
-				<language id="default" text="Haz otra línea."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl1_phase6">
+		<text id="Tutorial_lvl2_phase2">
 			<languages>
 				<language id="english" text="You've got {{points}} out of {{neededPoints}} point, get the remaining points to pass the level."/>
 				<language id="spanish" text="Llevas {{points}} de {{neededPoints}} puntos, haz los puntos restantes para completar el nivel."/>
 				<language id="default" text="Llevas {{points}} de {{neededPoints}} puntos, haz los puntos restantes para completar el nivel."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl1_phase7">
-			<languages>
-				<language id="english" text="Placing a piece or forming a word counts as one movement."/>
-				<language id="spanish" text="Poner una pieza o formar una palabra cuenta como un movimiento."/>
-				<language id="default" text="Poner una pieza o formar una palabra cuenta como un movimiento."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl1_phase8">
+		<text id="Tutorial_lvl2_phase3">
 			<languages>
 				<language id="english" text="Careful! /n You lose if you run out of movements."/>
 				<language id="spanish" text="¡Cuidado! /n Pierdes si te quedas sin movimientos."/>
 				<language id="default" text="¡Cuidado! /n Pierdes si te quedas sin movimientos."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl1_phase9">
+		<text id="Tutorial_lvl2_phase4">
+			<languages>
+				<language id="english" text="Placing a piece or forming a word counts as one movement."/>
+				<language id="spanish" text="Poner una pieza o formar una palabra cuenta como un movimiento."/>
+				<language id="default" text="Poner una pieza o formar una palabra cuenta como un movimiento."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl2_phase5">
 			<languages>
 				<language id="english" text="{{b}}Remember:{{/b}} /n You get point by placing a piece, making a line and forming words."/>
 				<language id="spanish" text="{{b}}Recuerda:{{/b}} /n Obtienes puntos al colocar una pieza, hacer una línea o formar una palabra."/>
 				<language id="default" text="{{b}}Recuerda:{{/b}} /n Obtienes puntos al colocar una pieza, hacer una línea o formar una palabra."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl2_phase1">
-			<languages>
-				<language id="english" text="Drag {{b}}HELP{{/b}} to the board if you don't know what words you can form with your letters."/>
-				<language id="spanish" text="Arrastra {{b}}AYUDA{{/b}} al tablero cuando no sepas que palabra puedes formar con tus letras."/>
-				<language id="default" text="Arrastra {{b}}AYUDA{{/b}} al tablero cuando no sepas que palabra puedes formar con tus letras."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl2_phase2">
-			<languages>
-				<language id="english" text="The power up {{b}}HELP{{/b}} suggested you to form the word {{b}}YEN{{/b}}, form it."/>
-				<language id="spanish" text="El poder {{b}}AYUDA{{/b}} te sugirió formar la palabra {{b}}YEN{{/b}}. Forma esa palabra."/>
-				<language id="default" text="El poder {{b}}AYUDA{{/b}} te sugirió formar la palabra {{b}}YEN{{/b}}. Forma esa palabra."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl2_phase3">
-			<languages>
-				<language id="english" text="Get the remaining point to pass the level."/>
-				<language id="spanish" text="Haz los puntos que faltan para pasar el nivel."/>
-				<language id="default" text="Haz los puntos que faltan para pasar el nivel."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl2_phase4">
-			<languages>
-				<language id="english" text="Remember: /nUse {{b}}HELP{{/b}} if you don't know what word you can form with your letters."/>
-				<language id="spanish" text="Recuerda: /nUsa {{b}}AYUDA{{/b}} cuando no sepas que palabra puedes formar con tus letras."/>
-				<language id="default" text="Recuerda: /nUsa {{b}}AYUDA{{/b}} cuando no sepas que palabra puedes formar con tus letras."/>
-			</languages>
-		</text>
 		<text id="Tutorial_lvl3_phase1">
 			<languages>
-				<language id="english" text="Tap letter'{{b}}Z{{/b}}' to deselect it."/>
-				<language id="spanish" text="Haz tap en la '{{b}}Z{{/b}}' para deseleccionarla."/>
-				<language id="default" text="Haz tap en la '{{b}}Z{{/b}}' para deseleccionarla."/>
+				<language id="english" text="Drag {{b}}HELP{{/b}} to the board to find out what word you can form with your letters."/>
+				<language id="spanish" text="Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes formar con tus letras."/>
+				<language id="default" text="Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes formar con tus letras."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl3_phase2A">
+		<text id="Tutorial_lvl3_phase2">
 			<languages>
-				<language id="english" text="Press the button"/>
-				<language id="spanish" text="Presiona el botón"/>
-				<language id="default" text="Presiona el botón"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl3_phase2B">
-			<languages>
-				<language id="english" text="to get the points for the word '{{b}}AÑO{{/b}}'."/>
-				<language id="spanish" text="para obtener puntos por la palabra '{{b}}AÑO{{/b}}'."/>
-				<language id="default" text="para obtener puntos por la palabra '{{b}}AÑO{{/b}}'."/>
+				<language id="english" text="The power up {{b}}HELP{{b}} suggests you to form the word {{b}}YEN{{b}}, form it."/>
+				<language id="spanish" text="El poder {{b}}AYUDA{{/b}} te sugiere formar la palabra {{b}}YEN{{/b}}. Forma esa palabra."/>
+				<language id="default" text="El poder {{b}}AYUDA{{/b}} te sugiere formar la palabra {{b}}YEN{{/b}}. Forma esa palabra."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl3_phase3">
 			<languages>
-				<language id="english" text="Get {{score}} points to complete the level."/>
-				<language id="spanish" text="Obtén {{score}} puntos para pasar el nivel."/>
-				<language id="default" text="Obtén {{score}} puntos para pasar el nivel."/>
+				<language id="english" text="Get the remaining points to pass the level."/>
+				<language id="spanish" text="Haz los puntos que faltan para pasar el nivel."/>
+				<language id="default" text="Haz los puntos que faltan para pasar el nivel."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl3_phase4">
+			<languages>
+				<language id="english" text="Remember: /n Drag {{b}}HELP{{/b}} to the board to find out what word you can form with your current letters."/>
+				<language id="spanish" text="Recuerda: /n Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes hacer con tus letras."/>
+				<language id="default" text="Recuerda: /n Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes hacer con tus letras."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl4_phase1A">

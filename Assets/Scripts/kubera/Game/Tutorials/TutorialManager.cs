@@ -303,6 +303,7 @@ public class TutorialManager : Manager<TutorialManager>
 		{
 			unregisterForNextPhase (currentTutorial.phaseEvent[i]);
 		}
+		Debug.Log ("Desregistrado");
 
 		currentTutorial.canMoveToNextPhase ();
 
@@ -310,6 +311,7 @@ public class TutorialManager : Manager<TutorialManager>
 		{
 			registerForNextPhase (currentTutorial.phaseEvent[i]);
 		}
+		Debug.Log ("Registrado");
 
 		for (int i = 0; i < powerUpManager.powerups.Count; i++) 
 		{
