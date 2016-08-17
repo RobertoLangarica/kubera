@@ -10,7 +10,8 @@ public class FBLoggin : Manager<FBLoggin>
 
 	public DOnLoginComplete onLoginComplete;
 
-	[HideInInspector]public bool isLoggedIn;
+	/*[HideInInspector]*/
+public bool isLoggedIn;
 
 	void Start()
 	{
@@ -60,10 +61,12 @@ public class FBLoggin : Manager<FBLoggin>
 		if (!FB.IsLoggedIn)
 		{
 			onLoginComplete (false);
+			isLoggedIn = false;
 		}
 		else
 		{
 			onLoginComplete (true);
+			isLoggedIn = true;
 		}
 	}
 

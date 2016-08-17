@@ -21,6 +21,13 @@ public class RetryPopUp : PopUpBase
 	public RectTransform ContentRT;
 	public Text content;
 
+
+	public LeaderboardManager leaderboardManager;
+	public Transform slotParent;
+	public ScrollRect scrollRect;
+
+	public Transform goalPopUpSlotsParent;
+
 	void Start()
 	{
 		lifesManager = FindObjectOfType<LifesManager> ();
@@ -41,6 +48,7 @@ public class RetryPopUp : PopUpBase
 
 	public void close()
 	{
+		leaderboardManager.moveCurrentLeaderboardSlots (goalPopUpSlotsParent);
 		setStartingPlaces ();
 		OnComplete ("closeRetry");
 	}
@@ -100,6 +108,11 @@ public class RetryPopUp : PopUpBase
 											{
 												facebookFriends.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 													{
+														LevelLeaderboard leaderboard = leaderboardManager.getLeaderboard(this.LevelNumber.text,slotParent);
+														leaderboard.showSlots(true);
+
+														scrollRect.horizontalNormalizedPosition = 0;
+
 														facebookInvite.DOScale(new Vector2(1,1),tenth);
 													});
 											});

@@ -27,6 +27,12 @@ public class GoalAfterGame : PopUpBase {
 	public RectTransform facebookInvite;
 	public RectTransform icon;
 
+	public LeaderboardManager leaderboardManager;
+	public Transform slotParent;
+	public ScrollRect scrollRect;
+
+	public Transform goalPopUpSlotsParent;
+
 	void Start()
 	{
 		setStartingPlaces ();
@@ -81,12 +87,15 @@ public class GoalAfterGame : PopUpBase {
 	{
 		setStartingPlaces ();
 		OnComplete ("continue");
+		leaderboardManager.moveCurrentLeaderboardSlots (goalPopUpSlotsParent);
 	}
 
 	public void exit ()
 	{
 		setStartingPlaces ();
 		OnComplete ("closeObjective");
+
+		leaderboardManager.moveCurrentLeaderboardSlots (goalPopUpSlotsParent);
 	}
 
 	protected void setStartingPlaces()
@@ -131,6 +140,11 @@ public class GoalAfterGame : PopUpBase {
 											{
 												facebookFriends.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 													{
+														LevelLeaderboard leaderboard = leaderboardManager.getLeaderboard(this.LevelName.text,slotParent);
+														leaderboard.showSlots(true);
+
+														scrollRect.horizontalNormalizedPosition = 0;
+
 														facebookInvite.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 															{
 																icon.DOScale(new Vector2(1,1),tenth);

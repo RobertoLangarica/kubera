@@ -32,6 +32,7 @@ public class ParalaxManager : MonoBehaviour {
 		//OnMove (rectTransform.anchoredPosition);
 		//scrollRect.verticalNormalizedPosition = 0.5f;
 		Invoke ("setFixHeight",0.05f);
+		print (Screen.height);
 	}
 
 	void Update()
@@ -40,6 +41,12 @@ public class ParalaxManager : MonoBehaviour {
 		{
 			if(OnMove != null)
 			{
+				//Intento de 
+				/*//print (rectTransform.localPosition.y);
+				if (rectTransform.localPosition.y > Screen.height*0.2f || rectTransform.localPosition.y < -Screen.height*0.2f)
+				{
+					scrollRect.
+				}*/
 				OnMove( rectTransform.anchoredPosition);
 			}
 		}
@@ -83,6 +90,7 @@ public class ParalaxManager : MonoBehaviour {
 	public void setPosByCurrentLevel(float levelPosition)
 	{
 		scrollRect.verticalNormalizedPosition = levelPosition;
+		Canvas.ForceUpdateCanvases ();
 	}
 
 	public float getPosByLevel(MapLevel mapLevel)

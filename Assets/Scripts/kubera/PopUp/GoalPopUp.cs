@@ -13,6 +13,7 @@ public class GoalPopUp : PopUpBase {
 
 	public Text LevelNumber;
 	public Text LevelText;
+	public Text inviteFriendsText;
 	public Transform goalLettersContainer;
 
 	public GameObject lettersObjective;
@@ -37,8 +38,16 @@ public class GoalPopUp : PopUpBase {
 	public RectTransform facebookInvite;
 	public RectTransform icon;
 
+	public LeaderboardManager leaderboardManager;
+	public Transform slotParent;
+	public ScrollRect scrollRect;
+
 	void Start()
 	{
+		//TODO checar login a facebook
+		fbLogin ();
+		//FBLoggin.GetInstance().onLoginComplete += fbLogin;
+
 		setStartingPlaces ();
 
 		int maxSize = 5;
@@ -59,6 +68,19 @@ public class GoalPopUp : PopUpBase {
 		if (Input.GetKeyUp (KeyCode.V))
 		{
 			startAnimation ();
+		}
+	}
+
+	protected void fbLogin()
+	{
+		if(FBLoggin.GetInstance().isLoggedIn)
+		{
+			//TODO HARCODING
+			inviteFriendsText.text = "invita Amigos";
+		}
+		else
+		{
+			inviteFriendsText.text = "Conectate";
 		}
 	}
 
@@ -171,6 +193,8 @@ public class GoalPopUp : PopUpBase {
 		//starPanel.anchoredPosition = new Vector3 (0, starPanel.rect.height*2, 0);
 		//facebookInvite.anchoredPosition = new Vector3 (0, -facebookInvite.rect.height*2, 0);
 		this.transform.localScale = new Vector2(2,2);
+
+		leaderboardManager.showCurrentLeaderboard (false);
 	}
 
 	protected void startAnimation()
@@ -196,6 +220,11 @@ public class GoalPopUp : PopUpBase {
 											{
 												facebookFriends.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 													{
+														LevelLeaderboard leaderboard = leaderboardManager.getLeaderboard(this.LevelNumber.text,slotParent);
+														leaderboard.showSlots(true);
+
+														scrollRect.horizontalNormalizedPosition = 0;
+
 														facebookInvite.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 															{
 																icon.DOScale(new Vector2(1,1),tenth);
@@ -204,7 +233,6 @@ public class GoalPopUp : PopUpBase {
 											});
 									});
 							});
-
 					});
 			});
 	}

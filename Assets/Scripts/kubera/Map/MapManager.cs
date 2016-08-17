@@ -26,6 +26,7 @@ public class MapManager : MonoBehaviour
 	protected ParalaxManager paralaxManager;
 	protected DoorsManager doorsManager;
 	protected InvitationToReview invitationToReview;
+	protected FriendsOnWorldManager friendsOnWorldManager;
 	private GoalManager		goalManager;
 
 	protected List<MapLevel> mapLevels;
@@ -40,6 +41,8 @@ public class MapManager : MonoBehaviour
 
 	public FBFriendsRequestPanel fbFriendsRequestPanel;
 
+	public List<string> test;
+
 	void Start()
 	{
 		popUpManager = FindObjectOfType<PopUpManager> ();
@@ -48,6 +51,7 @@ public class MapManager : MonoBehaviour
 		doorsManager = FindObjectOfType<DoorsManager> ();
 		goalManager = FindObjectOfType<GoalManager> ();
 		invitationToReview = FindObjectOfType<InvitationToReview> ();
+		friendsOnWorldManager = FindObjectOfType<FriendsOnWorldManager> ();
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 		if(PersistentData.GetInstance().currentWorld == -1)
@@ -175,18 +179,28 @@ public class MapManager : MonoBehaviour
 		{
 			setLastLevelReached ();
 		}
-		 
+		bool isConectedToFacebook = FBLoggin.GetInstance ().isLoggedIn;
+		print (isConectedToFacebook + "isConectedToFacebook");
 		for (int i = 0; i < mapLevels.Count; i++)
 		{
 			settingMapLevelInfo (mapLevels[i],worldsLevels[i]);
-
 			settingMapLevelStatus (mapLevels[i]);
-
 			setOnClickDelegates (mapLevels[i]);
 
+			print (mapLevels[i].name);
 			mapLevels [i].updateStatus();
 			mapLevels[i].updateStars();
 			mapLevels [i].updateText ();
+
+			if(isConectedToFacebook)
+			{
+				FriendInfo friendInfo = isThereAnyFriendOnLevel (currentWorld, mapLevels [i].lvlName);
+
+				if(friendInfo != null)
+				{
+					mapLevels [i].updateFacebookFriendPicture (friendInfo);
+				}
+			}
 
 			if(mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_REACHED
 				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_PASSED
@@ -402,6 +416,8 @@ public class MapManager : MonoBehaviour
 
 		selectLevel (currentWorld);
 
+		getFriendsOnMap (currentWorld);
+
 		initializeLevels ();
 		setLastLevelReached ();
 		Invoke ("setParalaxManager",0.05f);
@@ -456,7 +472,22 @@ public class MapManager : MonoBehaviour
 				int pointsMade = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
 				goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
 
-				popUpManager.getPopupByName ("goalAfterGame").GetComponent<GoalAfterGame>().setGoalPopUpInfo (starsReached, PersistentData.GetInstance ().currentLevel.name, pointsMade.ToString());
+				string levelName = PersistentData.GetInstance ().currentLevel.name ;
+				for (int i = 0; i < levelName.Length; i++) 
+				{
+					if (levelName [i] == '0') 
+					{
+						levelName = levelName.Remove(i,1);
+						i--;
+					} 
+					else 
+					{
+						break;
+					}
+				}
+
+
+				popUpManager.getPopupByName ("goalAfterGame").GetComponent<GoalAfterGame>().setGoalPopUpInfo (starsReached,levelName , pointsMade.ToString());
 				popUpManager.activatePopUp ("goalAfterGame");
 				stopInput (true);
 			}
@@ -629,5 +660,30 @@ public class MapManager : MonoBehaviour
 	{
 		worlds [currentWorld-1].SetActive (false);
 		WorldPrefab.SetActive (false);
+	}
+
+	protected FriendInfo isThereAnyFriendOnLevel(int world, string level)
+	{
+		print ("isThereAnyFriendOnLevel "+level + " "+world);
+		return friendsOnWorldManager.getFriendOnLevel (world, level);
+	}
+
+	protected void getFriendsOnMap(int world)
+	{
+		if(FBLoggin.GetInstance().isLoggedIn)
+		{
+			FriendsOnWorld friendsOnWorld = friendsOnWorldManager.existFriendsOnWorld (world.ToString ());
+
+			if(friendsOnWorld == null)
+			{
+				//TODO info del server
+				string[] facebokId = new string[test.Count];
+				for(int i=0; i<test.Count; i++)
+				{
+					facebokId [i] = "10154899709081808";//UnityEngine.Random.Range (123, 1230123).ToString ();
+				}
+				friendsOnWorld = friendsOnWorldManager.getNewFriendsOnWorld (world.ToString(), test.ToArray (), facebokId);
+			}
+		}
 	}
 }
