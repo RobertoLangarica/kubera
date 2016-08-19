@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
 		secondChance.gameObject.SetActive (false);
 
 		linesAnimation.OnCellFlipped += OnCellFlipped; 
-
+		linesAnimation.OnAllCellsFlipped += OnAllCellsFlipped;
 
 		wordManager.setMaxAllowedLetters(PersistentData.GetInstance().maxWordLength);
 		wordManager.gridLettersParent = gridLettersContainer;
@@ -122,13 +122,19 @@ public class GameManager : MonoBehaviour
 
 	protected void startGame()
 	{
-		configureLevel(PersistentData.GetInstance().currentLevel);
+		if(!PersistentData.GetInstance().fromLevelsToGame)
+		{
+			configureLevel(PersistentData.GetInstance().getRandomLevel());
+		}
+		else
+		{
+			configureLevel(PersistentData.GetInstance().currentLevel);
+		}
 
 		populateGridFromLevel(currentLevel);
 		cellManager.createFrame ();
 
 		refreshCurrentWordScoreOnHUD (wordManager.wordPoints);
-		TutorialManager.GetInstance ().init ();
 
 	}
 
@@ -319,11 +325,6 @@ public class GameManager : MonoBehaviour
 			putPiecesOnGrid (piece, cellsUnderPiece);
 			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.PIECE_POSITIONATED);
 
-			if (OnPiecePositionated != null) 
-			{
-				OnPiecePositionated ();
-			}
-
 			//Tomamos en cuenta los tiempos de todos los twens de posicionamiento
 			StartCoroutine(afterPiecePositioned(piece));
 
@@ -410,6 +411,11 @@ public class GameManager : MonoBehaviour
 		Destroy(piece.gameObject);
 
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
+
+		if (OnPiecePositionated != null) 
+		{
+			OnPiecePositionated ();
+		}
 	}
 
 	private void convertLinesToLetters(List<List<Cell>> cells)
@@ -443,8 +449,14 @@ public class GameManager : MonoBehaviour
 		cellManager.occupyAndConfigureCell (cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE);
 		gridCharacters.Add(letter);
 
-		checkIfLose ();
+		/*checkIfLose ();
+		allowGameInput (true);*/
+	}
+
+	public void OnAllCellsFlipped()
+	{
 		allowGameInput (true);
+		Invoke("checkIfLose",0.2f);
 	}
 
 	public void showShadowOnPiece (GameObject obj, bool showing = true)
@@ -470,11 +482,6 @@ public class GameManager : MonoBehaviour
 	{
 		pointsCount += amount;
 		goalManager.submitPoints (amount);
-
-		if (OnPointsEarned != null) 
-		{
-			OnPointsEarned ();
-		}
 	}
 
 	protected void substractMoves(int amount)
@@ -758,14 +765,16 @@ public class GameManager : MonoBehaviour
 			unlockPowerUp ();
 			activatePopUp ("winGamePopUp");
 
-			HighLightManager.GetInstance ().turnOffAllHighLights ();
-			wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
-			updatePiecesLight (true);
+
 		}
 	}
 
 	protected void winBonification()
 	{
+		HighLightManager.GetInstance ().turnOffAllHighLights ();
+		wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
+		updatePiecesLight (true);
+
 		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.WON);
 
 		bombAnimation.OnAllAnimationsCompleted += destroyAndCountAllLetters;
@@ -885,7 +894,7 @@ public class GameManager : MonoBehaviour
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
 
-				Invoke ("toLevels", 0.5f);
+				Invoke ("toLevels", 0.75f);
 				//Gano y ya se termino win bonification
 				/*PersistentData.GetInstance().fromLevelBuilder = true;
 				SceneManager.LoadScene ("Game");*/
@@ -1063,6 +1072,7 @@ public class GameManager : MonoBehaviour
 			allowGameInput ();
 			updatePiecesLightAndUpdateLetterState ();
 			hudManager.animateLvlGo ();
+			TutorialManager.GetInstance ().init ();
 			break;
 		case "endGame":
 			//SceneManager.LoadScene ("Levels");
@@ -1139,5 +1149,12 @@ public class GameManager : MonoBehaviour
 	protected void showFloatingPointsAt(Vector3 pos,int amount)
 	{
 		hudManager.showScoreTextAt(pos,amount);
+
+		//Se movio el chequeo para aca ya que aqui se suman lineas y puntos
+		if (OnPointsEarned != null) 
+		{
+			Debug.Log ("Se añadieron puntos!!!!!!" + amount);
+			OnPointsEarned ();
+		}
 	}
 }

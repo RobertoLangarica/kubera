@@ -1,9 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using DG.Tweening;
 
 public class TutorialLvl3 : TutorialBase
 {
+	public Image powerUpDommy;
+	public GameObject fromPosition;
+
+	protected bool doAnimation;
+
 	protected override void Start()
 	{
 		base.Start ();
@@ -18,57 +24,105 @@ public class TutorialLvl3 : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.GRID_SPECIFIC_LETTER_TAPPED);
+			phaseEvent.Add (ENextPhaseEvent.HINT_USED);
+			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
-			allowGridTap = true;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = false;
+			freeHint = true;
 
-			instructions [0].text = MultiLanguageTextManager.instance.multipleReplace (
+			firstAnim ();
+
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WORD_HINT_BUTTON);
+
+			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE1),
-				new string[3]{ "'", "{{b}}", "{{/b}}" }, new string[3]{ "\"", "<b>", "</b>" });
+				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
+			instructionsText = instructions [0];
+			instructionsText.text = "";
+
+			doAnimation = true;
+			Invoke ("powerUpAnim",1);
+
+			Invoke ("writeLetterByLetter",initialAnim*2);
 
 			phase = 1;
-			phaseObj = "Z";
 			return true;
 		case(1):
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.SUBMIT_WORD);
+			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = false;
+			freeHint = true;
 
-			instructions [1].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE2A);
+			if (instructionIndex < currentInstruction.Length) {
+				changeInstruction = true;
+			}
 
-			instructions [2].text = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE2B),
-				new string[3]{ "'", "{{b}}", "{{/b}}" }, new string[3]{ "\"", "<b>", "</b>" });
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WORD_HINT_BUTTON);
+
+			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE2),
+				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
+			instructionsText = instructions [1];
+			instructionsText.text = "";
+			instructionIndex = 0;
+
+			shakeToErrase ();
+
+			doAnimation = false;
+
+			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
 
 			phase = 2;
 			return true;
 		case(2):
+			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
+			phaseEvent.Add (ENextPhaseEvent.CREATE_A_LINE);
 
-			allowGridTap = true;
-			allowWordTap = true;
-			allowLetterDrag = true;
-			allowErraseWord = true;
-			allowDragPieces = true;
-			allowPowerUps = true;
+			freeHint = true;
 
-			instructions [3].text = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE3),
-				new string[1]{ "{{score}}"}, new string[1]{hudManager.goalText.text.Split('/')[1]});
+			if (instructionIndex < currentInstruction.Length) {
+				changeInstruction = true;
+			}
+
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WORD_HINT_BUTTON);
+
+			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE3);
+			instructionsText = instructions [2];
+			instructionsText.text = "";
+			instructionIndex = 0;
+
+			shakeToErrase ();
+
+			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+
 			phase = 3;
+			doAnimation = false;
+			return true;
+		case(3):
+			phasesPanels [2].SetActive (false);
+			phasesPanels [3].SetActive (true);
+
+			freeHint = true;
+
+			if (instructionIndex < currentInstruction.Length) {
+				changeInstruction = true;
+			}
+
+			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE4),
+				new string[3]{ "{{b}}", "{{/b}}", "/n" }, new string[3]{ "<b>", "</b>", "\n" });
+			instructionsText = instructions [3];
+			instructionsText.text = "";
+			instructionIndex = 0;
+
+			shakeToErrase ();
+
+			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+
+			phase = 4;
+			doAnimation = false;
 			return true;
 		}
 
@@ -82,13 +136,55 @@ public class TutorialLvl3 : TutorialBase
 		case(1):
 			if (wordManager.wordsValidator.isCompleteWord ()) 
 			{
-				return true;
+				phase = 2;
 			}
-			break;
+			return true;
 		case(2):
+			return true;
+		case(3):
 			return true;
 		}
 
 		return base.phaseObjectiveAchived ();
+	}
+
+	protected void powerUpAnim()
+	{
+		if (!doAnimation) 
+		{
+			DOTween.Kill ("Tutorial2");
+			return;
+		}
+
+		Vector3 posFrom = fromPosition.transform.position;
+		Vector3 posTo = cellManager.getAllEmptyCells()[6].transform.position;
+
+		powerUpDommy.transform.position = posFrom;
+
+		//Los valores de las animaciones los paso Liloo
+		powerUpDommy.transform.DOScale (new Vector3 (1.4f, 1.4f, 1.4f), 0.5f).SetId("Tutorial2");
+		powerUpDommy.DOColor (new Color(1,1,1,0.5f),0.5f).OnComplete(
+			()=>{
+
+				//TODO: intentar que sea linea curva
+				powerUpDommy.transform.DOMove (posTo,1).OnComplete(
+					()=>{
+
+						powerUpDommy.transform.DOScale (new Vector3 (1, 1, 1), 1f).OnComplete(
+							()=>{
+
+								powerUpDommy.DOColor (new Color(1,1,1,0),0.5f).SetId("Tutorial2");
+							}
+
+						).SetId("Tutorial2");
+
+					}
+
+				).SetId("Tutorial2");
+
+			}
+		).SetId("Tutorial2");
+
+		Invoke ("powerUpAnim",3.5f);
 	}
 }

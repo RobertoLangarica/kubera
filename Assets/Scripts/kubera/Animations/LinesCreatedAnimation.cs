@@ -4,9 +4,12 @@ using System.Collections.Generic;
 
 public class LinesCreatedAnimation : MonoBehaviour 
 {
-	public delegate void DOnAnimationFinish(Cell cell,Letter letter);
+	public delegate void DOnAllAnimation();
+	public DOnAllAnimation OnAllCellsFlipped;
 
+	public delegate void DOnAnimationFinish(Cell cell,Letter letter);
 	public DOnAnimationFinish OnCellFlipped;
+
 	public bool isOnAnimation;
 
 	public float betweenFlashTime = 0.05f;
@@ -14,9 +17,12 @@ public class LinesCreatedAnimation : MonoBehaviour
 
 	protected List<Cell> cellsToAnimate;
 
+	protected int animationsFinished =0;
+
 	public void configurateAnimation(List<Cell> cells,List<Letter> letters)
 	{
 		cellsToAnimate = new List<Cell> (cells);
+		animationsFinished = 0;
 
 		for (int i = 0; i < cellsToAnimate.Count; i++) 
 		{
@@ -50,11 +56,13 @@ public class LinesCreatedAnimation : MonoBehaviour
 	{
 		square.OnCellFlipped -= flipCallBack;
 
-		if (cellsToAnimate.IndexOf (cellParent) == (cellsToAnimate.Count - 1)) 
+		OnCellFlipped (cellParent,letterContent);
+		animationsFinished++;
+		if (animationsFinished == (cellsToAnimate.Count - 1)) 
 		{
 			isOnAnimation = false;
+			OnAllCellsFlipped ();
 		}
-		OnCellFlipped (cellParent,letterContent);
 	}
 
 	/*IEnumerator startAnimationFlipPiece(GameObject obj, Cell cell,float delayTime)

@@ -36,6 +36,7 @@ public class MapLevel : MonoBehaviour
 
 	public Image levelIcon;
 	public Sprite levelLockedSprite;
+	public Sprite levelNormalSprite;
 	public Image levelBossIcon;
 	public Sprite levelLockedBossSprite;
 	public List<Image> levelStars;
@@ -106,6 +107,7 @@ public class MapLevel : MonoBehaviour
 
 	public void updateStatus()
 	{
+		//print (status + "  "+lvlName);
 		switch (status) 
 		{
 		case(EMapLevelsStatus.BOSS_LOCKED):
@@ -130,6 +132,7 @@ public class MapLevel : MonoBehaviour
 		case(EMapLevelsStatus.NORMAL_PASSED):
 		case(EMapLevelsStatus.NORMAL_REACHED):
 			levelIcon.color = normalColor;
+			levelIcon.sprite = levelNormalSprite;
 			break;
 		}
 	}

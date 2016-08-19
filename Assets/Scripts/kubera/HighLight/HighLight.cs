@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class HighLight : MonoBehaviour 
 {
@@ -9,14 +10,17 @@ public class HighLight : MonoBehaviour
 	{
 		NONE,
 		CELL,
-		RECTANGLE_BUTTON,
-		CIRCLE_BUTTON,
-		PIECES_AREA,
-		WORD_AREA
+		HUD
 	}
 
 	public float minAlpha = 0.5f;
 	public float animStep = 0.02f;
+
+	public bool hasBeat;
+	public float beatTime = 1;
+	public float beatStrength = 0.1f;
+	public int beatVibrato = 1;
+	public float beatRandom = 0;
 
 	public GameObject borderStars;
 
@@ -61,6 +65,11 @@ public class HighLight : MonoBehaviour
 			if (suscribedTypes.Count == 0) 
 			{
 				gameObject.SetActive (true);
+
+				if (hasBeat) 
+				{
+					Invoke ("highLightBeat", 2);
+				}
 			}
 
 			suscribedTypes.Add (type);
@@ -239,5 +248,18 @@ public class HighLight : MonoBehaviour
 			-tempC.GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
 
 		isScaled = true;
+	}
+
+	protected void highLightBeat()
+	{
+		transform.parent.DOShakeScale (beatTime,beatStrength,beatVibrato,beatRandom).OnComplete(
+			()=>
+			{
+				if (suscribedTypes.Count != 0) 
+				{
+					Invoke("highLightBeat",1);
+				}
+			}
+		).SetId ("HighLightBeat");
 	}
 }

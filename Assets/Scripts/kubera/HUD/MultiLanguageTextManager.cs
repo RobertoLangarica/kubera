@@ -42,22 +42,17 @@ public class MultiLanguageTextManager
 	public const string TUTORIAL_LV1_PHASE1					= "Tutorial_lvl1_phase1";
 	public const string TUTORIAL_LV1_PHASE2					= "Tutorial_lvl1_phase2";
 	public const string TUTORIAL_LV1_PHASE3					= "Tutorial_lvl1_phase3";
-	public const string TUTORIAL_LV1_PHASE4					= "Tutorial_lvl1_phase4";
-	public const string TUTORIAL_LV1_PHASE5					= "Tutorial_lvl1_phase5";
-	public const string TUTORIAL_LV1_PHASE6					= "Tutorial_lvl1_phase6";
-	public const string TUTORIAL_LV1_PHASE7					= "Tutorial_lvl1_phase7";
-	public const string TUTORIAL_LV1_PHASE8					= "Tutorial_lvl1_phase8";
-	public const string TUTORIAL_LV1_PHASE9					= "Tutorial_lvl1_phase9";
 
 	public const string TUTORIAL_LV2_PHASE1					= "Tutorial_lvl2_phase1";
 	public const string TUTORIAL_LV2_PHASE2					= "Tutorial_lvl2_phase2";
 	public const string TUTORIAL_LV2_PHASE3					= "Tutorial_lvl2_phase3";
 	public const string TUTORIAL_LV2_PHASE4					= "Tutorial_lvl2_phase4";
+	public const string TUTORIAL_LV2_PHASE5					= "Tutorial_lvl2_phase5";
 
 	public const string TUTORIAL_LV3_PHASE1					= "Tutorial_lvl3_phase1";
-	public const string TUTORIAL_LV3_PHASE2A				= "Tutorial_lvl3_phase2A";
-	public const string TUTORIAL_LV3_PHASE2B				= "Tutorial_lvl3_phase2B";
+	public const string TUTORIAL_LV3_PHASE2					= "Tutorial_lvl3_phase2";
 	public const string TUTORIAL_LV3_PHASE3					= "Tutorial_lvl3_phase3";
+	public const string TUTORIAL_LV3_PHASE4					= "Tutorial_lvl3_phase4";
 
 	public const string TUTORIAL_LV4_PHASE1A				= "Tutorial_lvl4_phase1A";
 	public const string TUTORIAL_LV4_PHASE1B				= "Tutorial_lvl4_phase1B";

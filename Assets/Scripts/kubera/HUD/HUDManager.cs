@@ -69,7 +69,18 @@ public class HUDManager : MonoBehaviour
 		popUpManager.OnPopUpCompleted += popUpCompleted;
 		lvlButton = lvlGo.GetComponent<Button> ();		
 
+		setLevelGoFinalPosition ();
 		setText ();
+
+		print ("_________________________");
+		print (Screen.height*.5f);
+		print (Screen.height);
+	}
+
+	protected void setLevelGoFinalPosition()
+	{
+		DistanceJoint2D lvlGoJoint2D = lvlGo.GetComponent<DistanceJoint2D> ();
+		lvlGoJoint2D.connectedAnchor = new Vector2 (Camera.main.aspect * -5 * .75f, lvlGoJoint2D.connectedAnchor.y);
 	}
 
 	protected void setText()

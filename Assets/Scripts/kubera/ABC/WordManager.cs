@@ -1068,6 +1068,8 @@ public class WordManager : MonoBehaviour
 	IEnumerator updateLetterHintState(List<Letter> gridLetter)
 	{
 		CellsManager cellManager = FindObjectOfType<CellsManager> ();
+		Cell cellSelected = null;
+
 		yield return new WaitForSeconds (0);
 		cancelHint = false;
 		for(int i=0; i<gridLetter.Count; i++)
@@ -1075,7 +1077,9 @@ public class WordManager : MonoBehaviour
 			yield return new WaitForSeconds (0.4f);
 			if(!cancelHint)
 			{
-				HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SPECIFIC_CELL, cellManager.getCellUnderPoint (gridLetter [i].transform.position).transform);
+				cellSelected = cellManager.getCellUnderPoint (gridLetter [i].transform.position);
+				HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SPECIFIC_CELL,cellSelected.transform);
+				cellSelected.content.transform.DOShakePosition (0.5f);
 				//gridLetter [i].updateState (Letter.EState.HINTED);
 
 				yield return new WaitForSeconds (0.4f);
@@ -1113,13 +1117,14 @@ public class WordManager : MonoBehaviour
 		lettersRemoval.Add (letter);
 		//letters.Remove(letter);
 		StartCoroutine (lettersRemove(letter));
-		
-		letterTransform.DOLocalMoveY(25,fullTime-1);
-		letterTransform.DOLocalMoveX (31, fullTime-1).OnComplete(()=>
+
+
+		letterTransform.DOMoveY(2.75f,fullTime-1);
+		letterTransform.DOMoveX (0, fullTime-1).OnComplete(()=>
 			{
 				canvas.sortingLayerName = "UI";
 				canvas.sortingOrder = -2;
-				letterTransform.DOLocalMoveY(125,fullTime-0.5f);
+				letterTransform.DOMoveY(4,fullTime-0.5f);
 				letterTransform.DOScale(new Vector3(0,0,0),fullTime-0.5f).OnComplete(()=>
 					{
 						activateGridLayout (true);

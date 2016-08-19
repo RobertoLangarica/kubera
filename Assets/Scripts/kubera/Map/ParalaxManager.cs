@@ -82,7 +82,6 @@ public class ParalaxManager : MonoBehaviour {
 
 	public void setPosByCurrentLevel(float levelPosition)
 	{
-		print (levelPosition);
 		scrollRect.verticalNormalizedPosition = levelPosition;
 	}
 
@@ -91,10 +90,8 @@ public class ParalaxManager : MonoBehaviour {
 		float a = 0;
 
 		a = fixHeight + mapLevel.transform.localPosition.y;
-		print (a);
-		print (fixMin);
+		
 		a = a / fixMin;
-		print (a);
 
 		float sizeOfLevelIcon = mapLevel.GetComponent<RectTransform> ().anchorMax.y - mapLevel.GetComponent<RectTransform> ().anchorMin.y;
 		float levelPosition = a;//mapLevel.GetComponent<RectTransform> ().anchorMin.y - sizeOfLevelIcon;

@@ -87,7 +87,8 @@ public class UserDataManager
 			else
 			{
 				//Lenguaje del sistema operativo
-				PlayerPrefs.SetString("language",getOSLanguage());
+				//PlayerPrefs.SetString("language",getOSLanguage());
+				PlayerPrefs.SetString("language","spanish");
 			}
 
 			//Que se configure el juego para el lenguaje (en este caso diccionarios)

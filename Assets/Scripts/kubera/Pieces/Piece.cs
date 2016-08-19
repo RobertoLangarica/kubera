@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using DG.Tweening;
 
 public class Piece : MonoBehaviour 
 {
@@ -68,6 +69,8 @@ public class Piece : MonoBehaviour
 		}
 	
 		currentType = starterType;
+		BoxCollider2D boxCollider = GetComponent<BoxCollider2D> ();
+		boxCollider.size = new Vector2 (boxCollider.size.x + 0.1f, boxCollider.size.y + 0.1f);
 	}
 
 	protected void updateSpriteBasedOnType()
@@ -161,6 +164,25 @@ public class Piece : MonoBehaviour
 		foreach(SpriteRenderer piece in squaresSprite)
 		{
 			piece.sprite = sprite;
+		}
+	}
+
+	public void moveAlphaByTween(float alphaPercent,float time,string tweenID,TweenCallback onLastSquareComplete)
+	{
+		for (int i = 0; i < squaresSprite.Length; i++) 
+		{
+			if (i == squaresSprite.Length - 1) 
+			{
+				squaresSprite [i].DOColor (
+					new Color (squaresSprite [i].color.r, squaresSprite [i].color.g, squaresSprite [i].color.b, alphaPercent),
+					time).SetId (tweenID).OnComplete (onLastSquareComplete);
+			} 
+			else 
+			{
+				squaresSprite [i].DOColor (
+					new Color (squaresSprite [i].color.r, squaresSprite [i].color.g, squaresSprite [i].color.b, alphaPercent)
+					,time).SetId (tweenID);
+			}
 		}
 	}
 }
