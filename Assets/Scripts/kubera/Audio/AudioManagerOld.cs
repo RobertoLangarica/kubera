@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource))]
-public class AudioManager : MonoBehaviour 
+public class AudioManagerOld : MonoBehaviour 
 {
 	public enum ESOUND_EFFECTS
 	{
@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour
 
 	public AudioSource audioSource;
 
-	public static AudioManager instance = null;
+	public static AudioManagerOld instance = null;
 
 	[HideInInspector]public bool soundEffectsActive;
 
