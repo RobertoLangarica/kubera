@@ -50,6 +50,7 @@ public class TutorialLvl2 : TutorialBase
 			if (instructionIndex < currentInstruction.Length) 
 			{
 				changeInstruction = true;
+				foundStringTag = false;
 			}
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.PIECES_AREA);
@@ -78,6 +79,7 @@ public class TutorialLvl2 : TutorialBase
 			if (instructionIndex < currentInstruction.Length) 
 			{
 				changeInstruction = true;
+				foundStringTag = false;
 			}
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.MOVEMENTS);
@@ -105,6 +107,7 @@ public class TutorialLvl2 : TutorialBase
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
+				foundStringTag = false;
 			}
 
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE4);
@@ -129,6 +132,7 @@ public class TutorialLvl2 : TutorialBase
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
+				foundStringTag = false;
 			}
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.MOVEMENTS);

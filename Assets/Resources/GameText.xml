@@ -158,7 +158,7 @@
 		</text>
 		<text id="Tutorial_lvl3_phase2">
 			<languages>
-				<language id="english" text="The power up {{b}}HELP{{b}} suggests you to form the word {{b}}YEN{{b}}, form it."/>
+				<language id="english" text="The power up {{b}}HELP{{/b}} suggests you to form the word {{b}}YEN{{/b}}, form it."/>
 				<language id="spanish" text="El poder {{b}}AYUDA{{/b}} te sugiere formar la palabra {{b}}YEN{{/b}}. Forma esa palabra."/>
 				<language id="default" text="El poder {{b}}AYUDA{{/b}} te sugiere formar la palabra {{b}}YEN{{/b}}. Forma esa palabra."/>
 			</languages>
