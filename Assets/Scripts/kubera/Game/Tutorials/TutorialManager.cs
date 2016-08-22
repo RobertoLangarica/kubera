@@ -57,9 +57,9 @@ public class TutorialManager : Manager<TutorialManager>
 	{
 		for (int i = 0; i < allTutorials.Count; i++) 
 		{
-			if(PersistentData.GetInstance().fromLevelsToGame)
+			if(!PersistentData.GetInstance().fromLevelsToGame && !PersistentData.GetInstance().fromLevelBuilder)
 			{
-				if (PersistentData.GetInstance().currentLevel.name == allTutorials [i].levelName) 
+				if (PersistentData.GetInstance().getRandomLevel().name == allTutorials [i].levelName) 
 				{
 					currentTutorial = allTutorials [i];
 					currentTutorial.gameObject.SetActive (true);
@@ -67,11 +67,13 @@ public class TutorialManager : Manager<TutorialManager>
 			}
 			else
 			{
-				if (PersistentData.GetInstance().getRandomLevel().name == allTutorials [i].levelName) 
+				if (PersistentData.GetInstance().currentLevel.name == allTutorials [i].levelName) 
 				{
 					currentTutorial = allTutorials [i];
 					currentTutorial.gameObject.SetActive (true);
 				}
+
+
 			}
 		}
 	

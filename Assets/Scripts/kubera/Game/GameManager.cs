@@ -122,12 +122,14 @@ public class GameManager : MonoBehaviour
 
 	protected void startGame()
 	{
-		if(!PersistentData.GetInstance().fromLevelsToGame)
+		if(!PersistentData.GetInstance().fromLevelsToGame && !PersistentData.GetInstance().fromLevelBuilder)
 		{
+			print ("Sasdas");
 			configureLevel(PersistentData.GetInstance().getRandomLevel());
 		}
 		else
 		{
+			print ("S");
 			configureLevel(PersistentData.GetInstance().currentLevel);
 		}
 
