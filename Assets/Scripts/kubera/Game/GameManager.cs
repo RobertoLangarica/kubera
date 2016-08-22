@@ -323,7 +323,7 @@ public class GameManager : MonoBehaviour
 			List<Cell> cellsUnderPiece = cellManager.getFreeCellsUnderPiece(piece);
 
 			putPiecesOnGrid (piece, cellsUnderPiece);
-			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.PIECE_POSITIONATED);
+			AudioManagerOld.instance.PlaySoundEffect(AudioManagerOld.ESOUND_EFFECTS.PIECE_POSITIONATED);
 
 			//Tomamos en cuenta los tiempos de todos los twens de posicionamiento
 			StartCoroutine(afterPiecePositioned(piece));
@@ -590,7 +590,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(totalLines > 0)
 		{
-			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LINE_CREATED);
+			AudioManagerOld.instance.PlaySoundEffect(AudioManagerOld.ESOUND_EFFECTS.LINE_CREATED);
 		}
 
 		addPoints(linesCreatedPoints[totalLines]);
@@ -655,7 +655,7 @@ public class GameManager : MonoBehaviour
 		{
 			allowGameInput (false);
 			Debug.Log ("Perdio de verdad");
-			AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.LOSE);
+			AudioManagerOld.instance.PlaySoundEffect(AudioManagerOld.ESOUND_EFFECTS.LOSE);
 
 			if(remainingMoves <=0)
 			{
@@ -775,7 +775,7 @@ public class GameManager : MonoBehaviour
 		wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
 		updatePiecesLight (true);
 
-		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.WON);
+		AudioManagerOld.instance.PlaySoundEffect(AudioManagerOld.ESOUND_EFFECTS.WON);
 
 		bombAnimation.OnAllAnimationsCompleted += destroyAndCountAllLetters;
 
@@ -1053,14 +1053,14 @@ public class GameManager : MonoBehaviour
 
 	public void activateSettings(bool activate)
 	{
-		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
+		AudioManagerOld.instance.PlaySoundEffect(AudioManagerOld.ESOUND_EFFECTS.BUTTON);
 
 		hudManager.activateSettings (activate);
 	}
 
 	public void closeObjectivePopUp()
 	{
-		AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
+		AudioManagerOld.instance.PlaySoundEffect(AudioManagerOld.ESOUND_EFFECTS.BUTTON);
 		//hudManager.hideGoalPopUp ();
 		allowGameInput ();
 	}
