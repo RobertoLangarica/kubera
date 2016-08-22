@@ -8,7 +8,7 @@ public class FBPermissions : MonoBehaviour {
 	// Constants for the list of permissions we are requesting when prompting for Facebook Login
 	// Read permissions and publish permissions should be requested seperatly and within context
 	// See more: https://developers.facebook.com/docs/facebook-login/permissions/overview
-	private static readonly List<string> readPermissions    = new List<string> {"public_profile","user_friends"};
+	private static readonly List<string> readPermissions    = new List<string> {"public_profile","user_friends","email"};
 	public static readonly List<string> publishPermissions = new List<string> {"publish_actions"};
 
 	// Prompt the player to authenticate Friend Smash! with Facebook Login

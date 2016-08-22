@@ -1,151 +1,101 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using DG.Tweening;
 
 public class TutorialLvl64 : TutorialBase 
 {
-	public KeyBoardManager keyboard;
+	public KeyBoardManager keyBoard;
 
-	protected Vector3 offset;
+	public Image powerUpDommy;
+	public GameObject fromPosition;
+
+	protected bool doAnimation;
 
 	protected override void Start()
 	{
 		base.Start ();
-
-		offset = new Vector3(0,handObject.gameObject.GetComponent<Image> ().sprite.bounds.extents.y,0);
 	}
 
 	public override bool canMoveToNextPhase ()
 	{
+		phaseEvent.Clear ();
+
 		switch (phase) 
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent = ENextPhaseEvent.WILDCARD_USED;
+			phaseEvent.Add(ENextPhaseEvent.WILDCARD_USED);
 
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = true;
-
-			freeBlocks = false;
-			freeBombs = false;
-			freeRotates = false;
-			freeDestroy = false;
 			freeWildCard = true;
 
-			instructions [0].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE1A);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WILDCARD_BUTTON);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 
-			instructions [1].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE1B);
+			instructions [0].text =	MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE1),
+				new string[3]{ "{{b}}","{{/b}}","/n"}, new string[3]{ "<b>", "</b>","\n"});
+
+			doAnimation = true;
+			Invoke ("powerUpAnim",1);
 
 			phase = 1;
-			goalPopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent = ENextPhaseEvent.KEYBOARD_SPECIFIC_LETER_SELECTED;
-			phaseObj = "Z";
 
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = false;
+			phasesPanels [1].transform.SetParent (keyBoard.transform);
 
-			freeBlocks = false;
-			freeBombs = false;
-			freeRotates = false;
-			freeDestroy = false;
-			freeWildCard = false;
+			phaseEvent.Add(ENextPhaseEvent.KEYBOARD_LETER_SELECTED);
 
-			instructions [2].text = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE2A),
-				new string[3]{ "'", "{{b}}", "{{/b}}" }, new string[3]{ "\"", "<b>", "</b>" });
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_BUTTON);
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 
-			instructions [3].text = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE2B),
-				new string[3]{ "'", "{{b}}", "{{/b}}" }, new string[3]{ "\"", "<b>", "</b>" });
+			freeWildCard = true;
+
+			instructions [1].text =	MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE2),
+				new string[2]{ "{{b}}","{{/b}}"}, new string[2]{ "<b>", "</b>"});
+
+			doAnimation = false;
 
 			phase = 2;
-			hideObject ();
-			finishMovements ();
-			StopCoroutine ("playPressAndContinueWithMethod");
-			getKeyboarLetterPosition ();
-			phase2Animation ();
 			return true;
 		case(2):
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
-			phaseEvent = ENextPhaseEvent.SUBMIT_WORD;
 
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = false;
+			phasesPanels [1].transform.SetParent (phasesPanels [1].transform.parent);
 
-			freeBlocks = false;
-			freeBombs = false;
-			freeRotates = false;
-			freeDestroy = false;
-			freeWildCard = false;
+			phaseEvent.Add(ENextPhaseEvent.SUBMIT_WORD);
 
-			instructions [4].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE3A);
+			freeWildCard = true;
 
-			instructions [5].text = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE3B),
-				new string[3]{ "'", "{{b}}", "{{/b}}" }, new string[3]{ "\"", "<b>", "</b>" });
+			instructions [2].text =	MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE3),
+				new string[2]{ "{{b}}","{{/b}}"}, new string[2]{ "<b>", "</b>"});
+
+			doAnimation = false;
 
 			phase = 3;
-			finishMovements ();
-			phase3Animation ();
 			return true;
 		case(3):
+			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (false);
 			phasesPanels [3].SetActive (true);
-			phaseEvent = ENextPhaseEvent.TAP;
+			phaseEvent.Add(ENextPhaseEvent.TAP);
 
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = false;
+			freeWildCard = true;
 
-			freeBlocks = false;
-			freeBombs = false;
-			freeRotates = false;
-			freeDestroy = false;
-			freeWildCard = false;
+			instructions [3].text =	MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE4),
+				new string[2]{ "{{b}}","{{/b}}"}, new string[2]{ "<b>", "</b>"});
 
-			instructions [6].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE4A);
+			doAnimation = false;
 
-			instructions [7].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE4B);			
 			phase = 4;
-			hideHand ();
 			return true;
-		case(4):
-			phasesPanels [3].SetActive (false);
-
-			allowGridTap = true;
-			allowWordTap = true;
-			allowLetterDrag = true;
-			allowErraseWord = true;
-			allowDragPieces = true;
-			allowPowerUps = true;
-
-			freeBlocks = false;
-			freeBombs = false;
-			freeRotates = false;
-			freeDestroy = true;
-			freeWildCard = false;
-
-			return true;			
 		}
 
 		return base.canMoveToNextPhase ();
@@ -158,85 +108,61 @@ public class TutorialLvl64 : TutorialBase
 		case(1):
 			return true;
 		case(2):
-			if (wordManager.wordsValidator.isCompleteWord ()) 
+			Debug.Log (keyBoard.getSelectedWildCard ().abcChar.character);
+			if (keyBoard.getSelectedWildCard ().abcChar.character == "Z") 
+			{
+				phase = 3;
+				return true;
+			} 
+			else 
 			{
 				return true;
 			}
-			break;
+			return false;
 		case(3):
-			return true;
-		case(4):
 			return true;
 		}
 
 		return base.phaseObjectiveAchived ();
-	}		
-
-	private void startTutorialAnimation(PopUpBase thisPopUp, string action)
-	{
-		Invoke ("phase0Animation",0.5f);
-		showHandAt (handPositions [0].transform.position,Vector3.zero,false);
 	}
 
-	private void phase0Animation()
+	protected void powerUpAnim()
 	{
-		if (phase == 1) 
+		if (!doAnimation) 
 		{
-			showHandAt (handPositions [0].transform.position,Vector3.zero,false);
-			playReleaseAnimation ();
-
-			StartCoroutine (playPressAndContinueWithMethod ("phase1Animation", 0.5f));
+			DOTween.Kill ("Tutorial2");
+			return;
 		}
-	}
 
-	private void phase1Animation()
-	{
-		if (phase == 1) 
-		{
-			playPressAnimation ();
-			showObjectAtHand (offset);
-			moveHandFromGameObjects (handPositions[0],handPositions[1],offset);
-			OnMovementComplete += hideHand;
+		Vector3 posFrom = fromPosition.transform.position;
+		Vector3 posTo = wordManager.letterContainer.transform.position;
 
-			Invoke ("phase0Animation", 2);
-		}
-	}
+		powerUpDommy.transform.position = posFrom;
 
-	private void phase2Animation()
-	{
-		if (phase == 2) 
-		{
-			playTapAnimation ();
-			showHandAt (handPositions [1].transform.position, Vector3.zero, false);
+		//Los valores de las animaciones los paso Liloo
+		powerUpDommy.transform.DOScale (new Vector3 (1.4f, 1.4f, 1.4f), 0.5f).SetId("Tutorial2");
+		powerUpDommy.DOColor (new Color(1,1,1,0.5f),0.5f).OnComplete(
+			()=>{
 
-			Invoke ("phase2Animation", 1);
-		}
-	}
+				//TODO: intentar que sea linea curva
+				powerUpDommy.transform.DOMove (posTo,1).OnComplete(
+					()=>{
 
-	private void phase3Animation()
-	{
-		if (phase == 3) 
-		{
-			playTapAnimation ();
-			showHandAt (handPositions [2].transform.position, Vector3.zero, false);
+						powerUpDommy.transform.DOScale (new Vector3 (1, 1, 1), 1f).OnComplete(
+							()=>{
 
-			Invoke ("phase3Animation", 1);
-		}
-	}
+								powerUpDommy.DOColor (new Color(1,1,1,0),0.5f).SetId("Tutorial2");
+							}
 
-	private void getKeyboarLetterPosition()
-	{
-		Letter[] temp = keyboard.container.GetComponentsInChildren<Letter> ();
+						).SetId("Tutorial2");
 
-		for (int i = 0; i < temp.Length; i++) 
-		{
-			if (temp [i].abcChar.character == phaseObj) 
-			{
-				handPositions [1].transform.position = temp[i].transform.position + 
-					new Vector3(0,-temp[i].GetComponent<Image>().sprite.bounds.extents.y,0);
-				break;
+					}
+
+				).SetId("Tutorial2");
+
 			}
-		}
-	}
+		).SetId("Tutorial2");
 
+		Invoke ("powerUpAnim",3.5f);
+	}
 }

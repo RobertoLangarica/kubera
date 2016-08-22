@@ -10,6 +10,7 @@ public class DestroyPowerUp : PowerupBase
 	protected CellsManager cellsManager;
 	protected InputBombAndDestroy bombInput;
 	protected WordManager wordManager;
+	protected GameManager gameManager;
 
 	protected GameObject destroyGO;
 
@@ -17,11 +18,14 @@ public class DestroyPowerUp : PowerupBase
 	protected List<AnimatedSprite> occupiedAnimation = new List<AnimatedSprite>();
 	protected bool canUse;
 
+	protected Cell highLightCell;
+
 	void Start () 
 	{
 		cellsManager = FindObjectOfType<CellsManager>();
 		bombInput = FindObjectOfType<InputBombAndDestroy>();
 		wordManager = FindObjectOfType<WordManager> ();
+		gameManager = FindObjectOfType<GameManager> ();
 
 		for(int i=0; i<1; i++)
 		{
@@ -46,17 +50,23 @@ public class DestroyPowerUp : PowerupBase
 		destroyGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
 		destroyGO.name = "DestroyPowerUp";
 		destroyGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
+		destroyGO.transform.localScale = new Vector3 (4, 4, 4);
 
 		bombInput.enabled = true;
 		bombInput.setCurrentSelected(destroyGO);
 		bombInput.OnDrop += powerUpPositioned;
+		bombInput.OnCellSelected += onOverCellChanged;
 		this.canUse = canUse;
 
+		destroyGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
 		updateDragableObjectImage (destroyGO);
+
+		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.DESTROY_POWERUP);
 	}
 
 	public void powerUpPositioned()
 	{
+		bombInput.OnCellSelected -= onOverCellChanged;
 		Cell cellSelected = cellsManager.getCellUnderPoint(destroyGO.transform.position);
 
 		if(cellSelected != null)
@@ -69,6 +79,9 @@ public class DestroyPowerUp : PowerupBase
 					DestroyImmediate(destroyGO);
 					bombInput.OnDrop -= powerUpPositioned;
 					bombInput.enabled = false;
+
+					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_POWERUP);
+					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR);
 
 					OnComplete ();
 				}
@@ -99,6 +112,9 @@ public class DestroyPowerUp : PowerupBase
 
 		bombInput.OnDrop -= powerUpPositioned;
 		bombInput.enabled = false;
+
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_POWERUP);
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR);
 
 		OnCancel();
 	}
@@ -191,7 +207,8 @@ public class DestroyPowerUp : PowerupBase
 	{
 		square.OnCellFlipped -= callbackOnFliped;
 		letter.enabled = true;
-		cellsManager.occupyAndConfigureCell(cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
+		//cellsManager.occupyAndConfigureCell(cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
+		gameManager.OnCellFlipped (cell, letter);
 	}
 
 	public void onCompletedNoGems()
@@ -205,6 +222,36 @@ public class DestroyPowerUp : PowerupBase
 		bombInput.OnDrop -= powerUpPositioned;
 		bombInput.enabled = false;
 
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_POWERUP);
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR);
+
 		OnCompletedNoGems ();
+	}
+
+	public void onOverCellChanged(Cell cellSelected)
+	{
+		if (cellSelected != null) 
+		{
+			if (highLightCell == null) 
+			{
+				highLightCell = cellSelected;
+			}
+
+			if (cellSelected.contentColor != highLightCell.contentColor) 
+			{
+				HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR);
+			}
+
+
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR,cellSelected);
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_POWERUP);
+
+			highLightCell = cellSelected;
+		} 
+		else 
+		{
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.DESTROY_POWERUP);
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR);
+		}
 	}
 }

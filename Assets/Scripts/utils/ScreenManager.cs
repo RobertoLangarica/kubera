@@ -2,8 +2,9 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
-public class ScreenManager : MonoBehaviour {
+public class ScreenManager : Manager<ScreenManager> {
 	public static ScreenManager instance;
 
 	public string firstScreenName;//Primer pantalla que se muestra en el juego
@@ -24,7 +25,6 @@ public class ScreenManager : MonoBehaviour {
 	protected float timeBeforeNextScreen;
 	protected AsyncOperation waitingScreen = null;
 	protected int framesBeforeSwitch;
-
 	void Awake()
 	{
 		GameObject[] go = GameObject.FindGameObjectsWithTag ("screenManager");
@@ -147,10 +147,16 @@ public class ScreenManager : MonoBehaviour {
 		{
 			backScreens.Add(newScene,SceneManager.GetActiveScene().name);
 		}
-
+		//StartCoroutine (loadScene (newScene));
 		SceneManager.LoadScene (newScene);
 	}
 
+
+	IEnumerator loadScene(string level)
+	{
+		AsyncOperation async = SceneManager.LoadSceneAsync(level);
+		yield return async;
+	}
 
 	public void GoToSceneAsync(string newScene,float waitTime = -1, int waitFrames = 10)
 	{	

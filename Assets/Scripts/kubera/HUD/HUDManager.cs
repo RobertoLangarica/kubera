@@ -15,8 +15,13 @@ public class HUDManager : MonoBehaviour
 	public Button Sounds;
 
 	public Text movementsText;
+	public Text movementsText1;
+	public Text movementsText2;
 	public Text gemsText;
 	public Text levelText;
+	public Text levelNumber;
+	public GameObject lvlGo;
+	protected Button lvlButton;
 
 	public Transform[] rotationImagePositions;
 	public Transform showingPiecesContainer;
@@ -25,6 +30,7 @@ public class HUDManager : MonoBehaviour
 	public GameObject uiLetter;
 
 	public Text goalText;
+	public Text goalTextUP;
 	public Text goalLettersText;
 	public GameObject goalLettersContainer;
 
@@ -39,6 +45,8 @@ public class HUDManager : MonoBehaviour
 	public Vector3 initialPieceScale = new Vector3(2.5f,2.5f,2.5f);
 
 	public GameObject modal;
+	public RectTransform vacum;
+	protected Vector2 vacumStartPos;
 
 	protected FloatingTextPool scorePool;
 	protected List<GameObject> lettersToFound = new List<GameObject>();
@@ -50,6 +58,7 @@ public class HUDManager : MonoBehaviour
 
 	public delegate void DNotifyEvent ();
 	public DNotifyEvent OnPiecesScaled;
+	public GameObject wordsHighlight;
 
 	void Start () 
 	{
@@ -58,7 +67,26 @@ public class HUDManager : MonoBehaviour
 		popUpManager = FindObjectOfType <PopUpManager> ();
 
 		popUpManager.OnPopUpCompleted += popUpCompleted;
+		lvlButton = lvlGo.GetComponent<Button> ();		
 
+		setLevelGoFinalPosition ();
+		setText ();
+
+		print ("_________________________");
+		print (Screen.height*.5f);
+		print (Screen.height);
+	}
+
+	protected void setLevelGoFinalPosition()
+	{
+		DistanceJoint2D lvlGoJoint2D = lvlGo.GetComponent<DistanceJoint2D> ();
+		lvlGoJoint2D.connectedAnchor = new Vector2 (Camera.main.aspect * -5 * .75f, lvlGoJoint2D.connectedAnchor.y);
+	}
+
+	protected void setText()
+	{
+		scoreText.text = lettersPointsTitle.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SCORE_HUD_TITLE_ID);
+		levelText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.LVL_HUD_TITLE_ID);
 	}
 
 	public int getEarnedStars()
@@ -71,12 +99,11 @@ public class HUDManager : MonoBehaviour
 		points.text = pointsCount.ToString();
 		hudStars.setMeterPoints (pointsCount);
 
-		scoreText.text = lettersPointsTitle.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SCORE_HUD_TITLE_ID);
 	}
 		
 	public void updateTextMovements(int movments)
 	{
-		movementsText.text = movments.ToString();
+		movementsText.text = movementsText1.text = movementsText2.text = movments.ToString();
 	}
 
 	public void updateTextGems (int gems)
@@ -117,8 +144,26 @@ public class HUDManager : MonoBehaviour
 		
 	public void setLevelName(string name)
 	{
-		levelText.text = name;
-	}	
+		for (int i = 0; i < name.Length; i++) 
+		{
+			if (name [i] == '0') 
+			{
+				name = name.Remove(i,1);
+				i--;
+			} 
+			else 
+			{
+				break;
+			}
+		}
+		levelNumber.text = name;
+	}
+
+	public void animateLvlGo(bool drop = true)
+	{
+		lvlGo.GetComponent<Rigidbody2D> ().isKinematic = false;
+		lvlGo.GetComponent<DistanceJoint2D> ().enabled = true;
+	}
 
 	public void showGoalAsLetters(bool isLetters)
 	{
@@ -145,6 +190,7 @@ public class HUDManager : MonoBehaviour
 	public void setWinCondition (string goalCondition, System.Object parameters)
 	{
 		string textId = string.Empty;
+		string textUpId = string.Empty;
 		string textToReplace = string.Empty;
 		string replacement = string.Empty;
 		List<string> word = new List<string>();
@@ -169,12 +215,17 @@ public class HUDManager : MonoBehaviour
 				letter.transform.SetParent (goalLettersContainer.transform,false);
 			}
 			setSizeOfContainer (lettersToFound.Count);
-
+			textUpId = MultiLanguageTextManager.GOAL_CONDITION_BY_LETTERS_ID;
 			break;
 		case GoalManager.OBSTACLES:
-			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_OBSTACLES_ID;
-			textToReplace = "{{goalObstacleLetters}}";
-			replacement = (Convert.ToInt32(parameters)).ToString();
+			textId = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.GOAL_CONDITION_BY_OBSTACLES_ID);
+			goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
+				new string[2]{ "{{lettersUsed}}", "{{lettersNeed}}" }, new string[2] {
+					"0",
+					(Convert.ToInt32 (parameters)).ToString ()
+				});
+			textUpId = MultiLanguageTextManager.GOAL_CONDITION_BY_OBSTACLES_UP_ID;
+			goalTextUP.text = MultiLanguageTextManager.instance.getTextByID (textUpId);
 			break;
 		case GoalManager.POINTS:
 			textId = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.GOAL_CONDITION_BY_POINT_ID);
@@ -183,35 +234,48 @@ public class HUDManager : MonoBehaviour
 				"0",
 				(Convert.ToInt32 (parameters)).ToString ()
 			});
+			goalTextUP.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.GOAL_CONDITION_BY_POINT_UP_ID);
 			break;
 		case GoalManager.WORDS_COUNT:
-			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_ID;
-			textToReplace = "{{goalWords}}";
-			replacement = "0 / "+(Convert.ToInt32(parameters)).ToString();
+			textId = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_ID);
+			goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
+				new string[2]{ "{{wordsMade}}", "{{wordsNeed}}" }, new string[2] {
+					"0",
+					(Convert.ToInt32 (parameters)).ToString ()
+				});
+			textUpId = MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_UP_ID;
+			goalTextUP.text = MultiLanguageTextManager.instance.getTextByID (textUpId);
 			break;
 		case GoalManager.SYNONYMOUS:
-			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_SYNONYMOUS_ID;
-			textToReplace = "{{goalSin}}";
-			word= (List<string>)parameters;
-			replacement = word[0];
+			textUpId = MultiLanguageTextManager.GOAL_CONDITION_BY_SYNONYMOUS_ID;
+			goalTextUP.text = MultiLanguageTextManager.instance.getTextByID (textUpId);
+
+			word = (List<string>)parameters;
+			replacement = word [0];
+			goalText.text = replacement;
 			break;
 		case GoalManager.WORD:
-			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_1_WORD_ID;
-			textToReplace = "{{goalWord}}";
-			word= (List<string>)parameters;
-			replacement = word[0];
+			textUpId = MultiLanguageTextManager.GOAL_CONDITION_BY_1_WORD_ID;
+			goalTextUP.text = MultiLanguageTextManager.instance.getTextByID (textUpId);
+
+			word = (List<string>)parameters;
+			replacement = word [0];
+			goalText.text = replacement;
 			break;
 		case GoalManager.ANTONYMS:
-			textId = MultiLanguageTextManager.GOAL_CONDITION_BY_ANTONYM_ID;
-			textToReplace = "{{goalAnt}}";
-			word= (List<string>)parameters;
-			replacement = word[0];
+			textUpId = MultiLanguageTextManager.GOAL_CONDITION_BY_ANTONYM_ID;
+			goalTextUP.text = MultiLanguageTextManager.instance.getTextByID (textUpId);
+
+			word = (List<string>)parameters;
+			replacement = word [0];
+			goalText.text = replacement;
 			break;
 		}
 
 		if (goalText.text == "") 
 		{
 			goalText.text = MultiLanguageTextManager.instance.getTextByID (textId).Replace (textToReplace, replacement);
+			goalTextUP.text = MultiLanguageTextManager.instance.getTextByID (textUpId);
 		}
 	}
 
@@ -231,6 +295,15 @@ public class HUDManager : MonoBehaviour
 		textId = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_WORDS_ID);
 		goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
 			new string[2]{ "{{wordsMade}}", "{{wordNeed}}" }, new string[2]{ wordsMade, wordsNeed });
+	}
+
+	public void actualizePointsOnObstacleLetters(string obstacleLettersMade, string obstacleLettersNeed)
+	{
+		string textId = string.Empty;
+
+		textId = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_OBSTACLES_ID);
+		goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
+			new string[2]{ "{{pointsMade}}", "{{pointsNeed}}" }, new string[2]{ obstacleLettersMade, obstacleLettersNeed });
 	}
 
 	protected void setSizeOfContainer(int maxSize = 5)
@@ -264,10 +337,12 @@ public class HUDManager : MonoBehaviour
 
 	public void activateSettings(bool activate)
 	{
-		if (points.IsActive () && activate) 
+		/*print (activate);
+		print (Sounds.gameObject.activeSelf);*/
+		if (!Sounds.gameObject.activeSelf) 
 		{
-			points.enabled = false;
-			scoreText.enabled = false;
+			/*points.enabled = false;
+			scoreText.enabled = false;*/
 			//Activar los otros botones
 			Music.gameObject.SetActive(true);
 			Exit.gameObject.SetActive(true);
@@ -276,8 +351,8 @@ public class HUDManager : MonoBehaviour
 		}
 		else 
 		{
-			scoreText.enabled = true;
-			points.enabled = true;
+			/*scoreText.enabled = true;
+			points.enabled = true;*/
 			//Desactivar los otros botones
 			Music.gameObject.SetActive(false);
 			Exit.gameObject.SetActive (false);
@@ -320,83 +395,36 @@ public class HUDManager : MonoBehaviour
 			pieces[i].transform.position= new Vector3(rotationImagePositions [i].position.x,rotationImagePositions [i].position.y,1);
 			pieces[i].positionOnScene = pieces[i].transform.position;
 			pieces[i].initialPieceScale = initialPieceScale;
-			pieces[i].transform.localScale = new Vector3 (0, 0, 0);
+			pieces[i].transform.localScale = initialPieceScale;
+			pieces [i].transform.position = new Vector2 (pieces [i].transform.position.x, pieces [i].transform.position.y+pieces [i].transform.position.y*0.5f);
 			if (i == (pieces.Count - 1)) 
 			{
-				pieces [i].transform.DOScale (initialPieceScale, 0.25f).OnComplete (()=>{OnPiecesScaled();});
+				pieces [i].transform.DOMove (pieces[i].positionOnScene, 0.5f).SetEase(Ease.OutBack).OnComplete (()=>{OnPiecesScaled();});
+				//pieces [i].transform.DOScale (initialPieceScale, 0.25f).OnComplete (()=>{OnPiecesScaled();});
 			} 
 			else 
 			{
-				pieces[i].transform.DOScale(initialPieceScale, 0.25f);
+				pieces [i].transform.DOMove (pieces[i].positionOnScene, 0.5f).SetEase(Ease.OutBack);
+				//pieces[i].transform.DOScale(initialPieceScale, 0.25f);
 			}
 			pieces[i].transform.SetParent (showingPiecesContainer,false);
 		}
 	}
 
-	public void setGoalPopUp(string goalCondition, System.Object parameters)
+	public void showVacum(float closeTime)
 	{
-		//Text goalText = goalPopUp.transform.FindChild("Objective").GetComponent<Text>();
-		string textId = string.Empty;
-		string textToReplace = string.Empty;
-		string replacement = string.Empty;
-		List<string> word = new List<string> ();
-		List<string> letter = new List<string> ();
+		vacumStartPos = vacum.transform.position;
 
-		switch(goalCondition)
-		{
-		case GoalManager.LETTERS:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_LETTERS_ID;
-			textToReplace = "{{goalLetters}}";
+		DOTween.Kill (vacum);
+		vacum.DOAnchorPos (Vector2.zero,0.2f).SetEase (Ease.OutBack).SetId(vacum);
 
-			replacement = "";
-			IEnumerable letters = parameters as IEnumerable;
+		Invoke ("hideVacum", closeTime);
+	}
 
-			foreach (object oLetter in letters) 
-			{
-				letter.Add (oLetter.ToString ());
-			}
-
-			break;
-		case GoalManager.OBSTACLES:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_OBSTACLES_ID;
-			textToReplace = "{{goalObstacleLetters}}";
-			replacement = (Convert.ToInt32(parameters)).ToString();
-			break;
-		case GoalManager.POINTS:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_POINTS_ID;
-			textToReplace = "{{goalPoints}}";
-			replacement = (Convert.ToInt32(parameters)).ToString();
-			break;
-		case GoalManager.WORDS_COUNT:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_WORDS_ID;
-			textToReplace = "{{goalWords}}";
-			replacement = (Convert.ToInt32(parameters)).ToString();
-			break;
-		case GoalManager.SYNONYMOUS:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID;
-			textToReplace = "{{goalSin}}";
-			word= (List<string>)parameters;
-			replacement = word[0];
-			break;
-		case GoalManager.WORD:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_1_WORD_ID;
-			textToReplace = "{{goalWord}}";
-			word= (List<string>)parameters;
-			replacement = word[0];
-			break;		
-		case GoalManager.ANTONYMS:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_ANTONYM_ID;
-			textToReplace = "{{goalAnt}}";
-			word= (List<string>)parameters;
-			replacement = word[0];
-			break;
-		}
-
-		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement),letter);
-
-		//goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
-		//activatePopUp("goalPopUp");
-		//goalPopUp.SetActive(true);
+	public void hideVacum()
+	{
+		DOTween.Kill (vacum);
+		vacum.DOMove (vacumStartPos,0.2f).SetEase (Ease.InBack).SetId(vacum);
 	}
 
 	public void setStateMusic(bool activate)

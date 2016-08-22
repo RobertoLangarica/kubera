@@ -17,6 +17,12 @@ namespace Data
 			levels = new List<LevelData>();
 		}
 
+		public UserLevels(string userId)
+		{
+			id = userId;
+			levels = new List<LevelData>();
+		}
+
 		public override void updateFrom (BasicData readOnlyRemote)
 		{
 			base.updateFrom (readOnlyRemote);
@@ -59,6 +65,12 @@ namespace Data
 		public void addLevel(LevelData level)
 		{
 			levels.Add(level);
+		}
+
+		public void clear()
+		{
+			levels.Clear();
+			isDirty = false;
 		}
 	}	
 }

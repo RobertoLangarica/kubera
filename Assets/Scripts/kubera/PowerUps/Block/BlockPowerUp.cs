@@ -23,23 +23,29 @@ public class BlockPowerUp : PowerupBase
 		inputBlockPowerUp.createBlock (powerUpBlock,powerUpButton.position,canUse);
 
 		updateDragableObjectImage (inputBlockPowerUp.getCurrentSelected());
+		inputBlockPowerUp.setPieceColor ();
+
+		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SQUARE_POWERUP);
 	}
 
 	protected void completePowerUp()
 	{
 		inputBlockPowerUp.enabled = false;
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SQUARE_POWERUP);
 		OnComplete ();
 	}
 
 	protected void completePowerUpNoGems()
 	{
 		inputBlockPowerUp.enabled = false;
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SQUARE_POWERUP);
 		OnCompletedNoGems ();
 	}
 
 	public override void cancel()
 	{
 		inputBlockPowerUp.enabled = false;
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SQUARE_POWERUP);
 		OnCancel ();
 	}
 }

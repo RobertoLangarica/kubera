@@ -7,6 +7,7 @@ public class WinGamePopUp : PopUpBase {
 
 	public Text winText;
 	public RectTransform winContent;
+	public float speed =1;
 
 	void Start()
 	{
@@ -20,11 +21,11 @@ public class WinGamePopUp : PopUpBase {
 		Vector3 v3 = new Vector3 ();
 		v3 = winContent.anchoredPosition;
 
-		winContent.DOAnchorPos (new Vector3(winContent.anchoredPosition.x,0), 1.5f).SetEase(Ease.OutBack).OnComplete(()=>
+		winContent.DOAnchorPos (new Vector3(winContent.anchoredPosition.x,0), speed).SetEase(Ease.OutBack).OnComplete(()=>
 			{
-				winContent.DOAnchorPos (new Vector3(winContent.anchoredPosition.x,0), 1.5f).OnComplete(()=>
+				winContent.DOAnchorPos (new Vector3(winContent.anchoredPosition.x,0), speed).OnComplete(()=>
 					{
-						winContent.DOAnchorPos (-v3, 1.0f).SetEase(Ease.InBack).OnComplete(()=>
+						winContent.DOAnchorPos (-v3, speed).SetEase(Ease.InBack).OnComplete(()=>
 							{
 								//TODO: salirnos del nivel
 								print("gano");

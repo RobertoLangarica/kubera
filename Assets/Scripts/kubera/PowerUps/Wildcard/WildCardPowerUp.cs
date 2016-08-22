@@ -35,6 +35,7 @@ public class WildCardPowerUp : PowerupBase
 		powerUpGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
 		powerUpGO.name = "WildPowerUp";
 		powerUpGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
+		powerUpGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
 
 		inputPowerUp.enabled = true;
 		inputPowerUp.setCurrentSelected(powerUpGO);
@@ -42,6 +43,8 @@ public class WildCardPowerUp : PowerupBase
 		this.canUse = canUse;
 
 		updateDragableObjectImage (powerUpGO);
+
+		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 	}
 
 	public void powerUpPositioned()
@@ -68,18 +71,12 @@ public class WildCardPowerUp : PowerupBase
 		if (!activated) 
 		{
 			powerUpGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("WildCardPowerUP_Move");
-			powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId("WildCardPowerUP_Scale").OnComplete (() => {
-
-				DestroyImmediate(powerUpGO);
-			});
 			cancel ();
-			return;
 		}
 		powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId ("WildCardPowerUP_Scale").OnComplete (() => {
 
 			DestroyImmediate(powerUpGO);
 		});
-
 	}
 
 	public void addWildcard()
@@ -91,8 +88,8 @@ public class WildCardPowerUp : PowerupBase
 		}
 		if (wordManager.isAddLetterAllowed ()) 
 		{
-			wordManager.addLetter (wordManager.getWildcard (powerUpScore),false);
-			OnComplete ();
+			wordManager.addLetter (wordManager.getWildcard (powerUpScore),false,true);
+			completePowerUp ();
 		}
 		else
 		{
@@ -102,6 +99,7 @@ public class WildCardPowerUp : PowerupBase
 
 	protected void completePowerUp()
 	{
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 		OnComplete ();
 		this.gameObject.SetActive( false);
 	}
@@ -109,12 +107,14 @@ public class WildCardPowerUp : PowerupBase
 	protected void completePowerUpNoGems()
 	{
 		powerUpGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("WildCardPowerUP_Move");
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 		OnCompletedNoGems ();
 		this.gameObject.SetActive( false);
 	}
 
 	public override void cancel ()
 	{
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 		OnCancel ();
 		this.gameObject.SetActive( false);
 	}

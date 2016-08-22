@@ -29,8 +29,8 @@ public class noMovementsPopUp : PopUpBase {
 						winContent.DOAnchorPos (-v3, speed).SetEase(Ease.InBack).OnComplete(()=>
 							{
 								//TODO: salirnos del nivel
-								print("gano");
-								popUpCompleted("loose");
+								print("perdio no movimientos");
+								popUpCompleted("looseNoMovements");
 							});
 					});
 			});

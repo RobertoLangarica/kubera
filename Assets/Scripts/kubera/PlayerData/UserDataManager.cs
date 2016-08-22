@@ -81,12 +81,14 @@ public class UserDataManager
 
 			if(isLanguageSupported(value))
 			{
+				Debug.Log (value);
 				PlayerPrefs.SetString("language",value);
 			}
 			else
 			{
 				//Lenguaje del sistema operativo
-				PlayerPrefs.SetString("language",getOSLanguage());
+				//PlayerPrefs.SetString("language",getOSLanguage());
+				PlayerPrefs.SetString("language","spanish");
 			}
 
 			//Que se configure el juego para el lenguaje (en este caso diccionarios)
@@ -163,6 +165,18 @@ public class UserDataManager
 	}
 
 	public bool isWildCardPowerUpUnlocked
+	{
+		get
+		{
+			return PlayerPrefs.GetInt("wildCardPowerUpUses") == 0 ? false : true;
+		}		
+		set
+		{
+			PlayerPrefs.SetInt("wildCardPowerUpUses",value == false ? 0 : 1);
+		}
+	}
+
+	public bool isWordHintPowerUpUnlocked
 	{
 		get
 		{

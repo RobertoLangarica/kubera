@@ -56,7 +56,7 @@ namespace Data
 		public bool updateOnlyIncrementalValues(int _stars, int _points)
 		{
 			bool updated = false;
-
+			
 			if(stars < _stars)
 			{
 				stars = _stars;

@@ -1,127 +1,103 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class TutorialLvl1 : TutorialBase
 {
-	public GameObject secondObject;
+	public PieceManager pieceManager;
+	public InputPiece inputPiece;
+	public ArrowAnimation arrow;
 
+	protected bool doAnimation;
+	protected int dommyIndex = -1;
+	protected GameObject powerUpDommy;
 	protected List<Cell> cells;
-	protected Vector3 offset;
 
 	protected override void Start()
 	{
 		base.Start ();
-
-		offset = new Vector3(0,handObject.gameObject.GetComponent<Image> ().sprite.bounds.size.y,0);
 	}
 
 	public override bool canMoveToNextPhase ()
 	{
+		phaseEvent.Clear ();
+
 		switch (phase) 
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent = ENextPhaseEvent.CREATE_WORD;
+			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = true;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = false;
+			firstAnim ();
 
-			instructions [0].text = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE1),
-				new string[3]{ "'", "{{b}}", "{{/b}}" }, new string[3]{ "\"", "<b>", "</b>" });
+			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE1);
+			instructionsText = instructions [0];
+			instructionsText.text = "";
+
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.PIECES_AREA);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.EMPTY_CELLS);
+
+			doAnimation = true;
+			Invoke ("powerUpAnim", 1);
+
+			Invoke ("writeLetterByLetter",initialAnim*2);
 
 			phase = 1;
-
-			goalPopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent = ENextPhaseEvent.SUBMIT_WORD;
+			phaseEvent.Add (ENextPhaseEvent.CREATE_WORD);
 
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = true;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = false;
+			if (instructionIndex < currentInstruction.Length) 
+			{
+				changeInstruction = true;
+			}
 
-			instructions [1].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE2A);
-			
-			instructions [2].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE2B);
+			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE2),
+				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
+			instructionsText = instructions [1];
+			instructionsText.text = "";
+			instructionIndex = 0;
+
+			shakeToErrase ();
+
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.PIECES_AREA);
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.EMPTY_CELLS);
+
+			doAnimation = false;
+			DOTween.Kill ("Tutorial1");
+			DestroyImmediate(powerUpDommy);
+
+			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
 
 			phase = 2;
-			finishMovements ();
-			StopCoroutine ("playPressAndContinueWithMethod");
-			phase2Animation ();
 			return true;
 		case(2):
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
-			phaseEvent = ENextPhaseEvent.CREATE_A_LINE;
+			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = true;
-			allowPowerUps = false;
-
-			cells = new List<Cell> (cellManager.getAllEmptyCells ());
-			for (int i = 0; i < 2; i++) {
-				cells [i].occupied = true;
-				cells [i].cellType = Cell.EType.OBSTACLE_LETTER;
-				cells [i].contentType = Piece.EType.LETTER_OBSTACLE;
-			}
-			Debug.Log (cells.Count);
-			for (int i = 4; i < 8; i++) {
-				cells [i].occupied = true;
-				cells [i].cellType = Cell.EType.OBSTACLE_LETTER;
-				cells [i].contentType = Piece.EType.LETTER_OBSTACLE;
+			if (instructionIndex < currentInstruction.Length) {
+				changeInstruction = true;
 			}
 
-			instructions [3].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE3);
+			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE3);
+			instructionsText = instructions [2];
+			instructionsText.text = "";
+			instructionIndex = 0;
+
+			shakeToErrase ();
+
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SUBMIT_WORD);
+
+			Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
+
+			arrow.startAnimation ();
 
 			phase = 3;
-			handObject = secondObject;
-			offset *= 0.5f;
-			phase3Animation ();
-			return true;
-		case(3):
-			phasesPanels [2].SetActive (false);
-			phasesPanels [3].SetActive (true);
-
-			allowGridTap = true;
-			allowWordTap = true;
-			allowLetterDrag = true;
-			allowErraseWord = true;
-			allowDragPieces = true;
-			allowPowerUps = true;
-
-			for (int i = 0; i < 2; i++) {
-				cells [i].occupied = false;
-				cells [i].cellType = Cell.EType.NORMAL;
-				cells [i].contentType = Piece.EType.NONE;
-			}
-			for (int i = 4; i < 8; i++) {
-				cells [i].occupied = false;
-				cells [i].cellType = Cell.EType.NORMAL;
-				cells [i].contentType = Piece.EType.NONE;
-			}
-
-			instructions [4].text = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE4),
-				new string[1]{ "{{score}}"}, new string[1]{hudManager.goalText.text.Split('/')[1]});
-			phase = 4;
-
-			finishMovements ();
-			hideHand ();
 			return true;
 		}
 
@@ -133,100 +109,76 @@ public class TutorialLvl1 : TutorialBase
 		switch (phase) 
 		{
 		case(1):
+			return true;
+		case(2):
 			if (wordManager.wordsValidator.isCompleteWord ()) 
 			{
 				return true;
 			}
-			break;
-		case(2):
-			return true;
-		case(3):
-			return true;
+			return false;
 		}
 		
 		return base.phaseObjectiveAchived ();
 	}
 
-	private void startTutorialAnimation(PopUpBase thisPopUp, string action)
+	protected void powerUpAnim()
 	{
-		Invoke ("phase0Animation",0.5f);
-		showHandAt (handPositions [0].transform.position,Vector3.zero,false);
+		if (!doAnimation) 
+		{
+			DOTween.Kill ("Tutorial1");
+			DestroyImmediate(powerUpDommy);
+			return;
+		}
+
+		Vector3 posFrom = pieceManager.getShowingPieces () [0].transform.position;
+		Vector3 posTo = cellManager.getAllEmptyCells()[8].transform.position;
+		posTo.x += cellManager.cellSize * 0.5f;
+
+		changeDommy ();
+
+		Vector3 originalScale = inputPiece.selectedScale;
+		SpriteRenderer tempSpt = powerUpDommy.GetComponent<SpriteRenderer> ();
+
+		powerUpDommy.transform.position = posFrom;
+
+		//Los valores de las animaciones los paso Liloo
+		powerUpDommy.transform.DOScale (new Vector3 (originalScale.x*1.2f,originalScale.y*1.2f,originalScale.z*1.2f), 0.5f).SetId("Tutorial1");
+		powerUpDommy.GetComponent<Piece>().moveAlphaByTween(0.5f,0.5f,"Tutorial1",
+			()=>{
+
+				//TODO: intentar que sea linea curva
+				powerUpDommy.transform.DOMove (posTo,1).OnComplete(
+					()=>{
+
+						powerUpDommy.transform.DOScale (new Vector3 (originalScale.x,originalScale.y,originalScale.z), 1f).OnComplete(
+							()=>{
+
+								powerUpDommy.GetComponent<Piece>().moveAlphaByTween(0,0.5f,"Tutorial1",()=>{DestroyImmediate(powerUpDommy);});
+							}
+
+						).SetId("Tutorial1");
+
+					}
+
+				).SetId("Tutorial1");
+
+			});
+
+		Invoke ("powerUpAnim",3.5f);
 	}
 
-	private void phase0Animation()
+	protected void changeDommy()
 	{
-		if (phase == 1) 
+		if (dommyIndex < 2) 
 		{
-			showHandAt (handPositions [0].transform.position,Vector3.zero,false);
-			playReleaseAnimation ();
-
-			StartCoroutine (playPressAndContinueWithMethod ("phase1Animation", 0.5f));
-		}
-	}
-
-	private void phase1Animation()
-	{
-		if (phase == 1) 
-		{
-			playPressAnimation ();
-			showObjectAtHand (offset);
-			moveHandFromGameObjects (handPositions[0],handPositions[1],offset);
-			OnMovementComplete += hideHand;
-
-			Invoke ("phase0Animation", 2);
-		}
-	}
-
-	private void phase2Animation()
-	{
-		if (phase == 2) 
-		{
-			hideObject ();
-			playTapAnimation ();
-			showHandAt (handPositions [2].transform.position, Vector3.zero, false);
-			OnMovementComplete -= hideHand;
-
-			Invoke ("phase2Animation", 1);
-		}
-	}
-
-	private void phase3Animation()
-	{
-		if (phase == 3) 
-		{
-			showHandAt (handPositions [3].transform.position,Vector3.zero,false);
-			playReleaseAnimation ();
-
-			StartCoroutine (playPressAndContinueWithMethod ("phase3_2Animation", 0.5f));
-		}
-		else 
-		{
-			hideHand ();
-		}
-	}
-
-	private void phase3_2Animation()
-	{
-		if (phase == 3) 
-		{
-			playPressAnimation ();
-			showObjectAtHand (offset);
-			moveHandFromGameObjects (handPositions [3], handPositions [4], offset);
-			OnMovementComplete += hideHand;
-
-			Invoke ("phase3Animation", 2);
+			dommyIndex++;
 		} 
 		else 
 		{
-			hideHand ();
+			dommyIndex = 0;
 		}
+		powerUpDommy = GameObject.Instantiate (pieceManager.getShowingPieces () [dommyIndex].gameObject) as GameObject;
+		powerUpDommy.transform.localScale = Vector3.zero;
+		powerUpDommy.GetComponent<Collider2D> ().enabled = false;
 	}
 }
-
-
-/*
-Tutorial 1
--Bajar la mano en la M
-Subir la M
-*-Pner el puntaje del nivel
-*/

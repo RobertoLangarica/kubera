@@ -74,6 +74,7 @@ public class KeyBoardManager : MonoBehaviour
 			addButton (clone);
 		}
 
+		switchAllImages (false);
 		StartCoroutine("removeGridContainerAndMoveAnchors",0);
 	}
 
@@ -105,12 +106,13 @@ public class KeyBoardManager : MonoBehaviour
 
 	protected IEnumerator removeGridContainerAndMoveAnchors()
 	{
-		gameObject.SetActive (false);
-		yield return new WaitForSeconds (0.1f);
+		yield return new WaitForEndOfFrame();
 		container.enabled = false;
 
-		yield return new WaitForSeconds (0.1f);
+		yield return new WaitForEndOfFrame();
 		keys.Adjust ();
+		switchAllImages (true);
+		gameObject.SetActive (false);
 	}
 
 	public void hideKeyBoard()
@@ -140,5 +142,15 @@ public class KeyBoardManager : MonoBehaviour
 		wordManager.setValuesToWildCard (wildCardSelected, character);
 
 		hideKeyBoard ();
+	}
+
+	protected void switchAllImages(bool val)
+	{
+		Image[] temp = transform.parent.GetComponentsInChildren<Image> ();
+
+		for(int i = 0;i < temp.Length;i++)
+		{
+			temp [i].enabled = val;
+		}
 	}
 }

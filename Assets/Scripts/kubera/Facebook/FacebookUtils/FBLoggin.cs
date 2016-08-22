@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Facebook.Unity;
+using Facebook.Unity.Mobile;
 
 public class FBLoggin : Manager<FBLoggin>
 {
@@ -46,7 +47,7 @@ public class FBLoggin : Manager<FBLoggin>
 		}
 		else
 		{
-			onLoginComplete (false);
+			onLoginComplete(false);
 		}
 	}
 
@@ -59,7 +60,6 @@ public class FBLoggin : Manager<FBLoggin>
 		if (!FB.IsLoggedIn)
 		{
 			onLoginComplete (false);
-			//facebookBtn.SetActive (true);
 		}
 		else
 		{

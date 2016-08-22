@@ -1,11 +1,28 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 
 public class TutorialBase : MonoBehaviour 
 {
+	public float initialAnim = 1;
+
+	public float shakeDuraion = 0.5f;
+	public float shakeStrength = 20;
+
+	public float writingSpeed = 0.1f;
+
+	protected bool foundStringTag;
+	protected bool changeInstruction;
+
+	protected int instructionIndex;
+	protected string currentInstruction;
+
+	protected Transform instructionsContainer;
+	protected Text instructionsText;
+	
 	public enum ENextPhaseEvent
 	{
 		CREATE_WORD,
@@ -15,13 +32,19 @@ public class TutorialBase : MonoBehaviour
 		WORD_SPECIFIC_LETTER_TAPPED,
 		GRID_SPECIFIC_LETTER_TAPPED,
 		KEYBOARD_SPECIFIC_LETER_SELECTED,
+		KEYBOARD_LETER_SELECTED,
 		PIECE_ROTATED,
 		TAP,
 		BOMB_USED,
 		BLOCK_USED,
 		ROTATE_USED,
 		DESTROY_USED,
-		WILDCARD_USED
+		WILDCARD_USED,
+		POSITIONATE_PIECE,
+		CLEAR_A_LINE,
+		EARNED_POINTS,
+		MOVEMENT_USED,
+		HINT_USED
 	}
 
 	[HideInInspector]public bool allowGridTap;
@@ -37,6 +60,7 @@ public class TutorialBase : MonoBehaviour
 	[HideInInspector]public bool freeRotates;
 	[HideInInspector]public bool freeDestroy;
 	[HideInInspector]public bool freeWildCard;
+	[HideInInspector]public bool freeHint;
 
 	public string levelName;
 
@@ -44,15 +68,11 @@ public class TutorialBase : MonoBehaviour
 
 	public List<GameObject> phasesPanels;
 
-	public List<GameObject> handPositions;
-
-	public GoalPopUp goalPopUp;
-	public AnimatedSprite tutorialHand;
-	public GameObject handObject;
+	public startGamePopUp startGamePopUp;
 
 	[HideInInspector]public int phase;
 	[HideInInspector]public string phaseObj;
-	[HideInInspector]public ENextPhaseEvent phaseEvent;
+	[HideInInspector]public List<ENextPhaseEvent> phaseEvent;
 
 	public delegate void DAnimationNotification ();
 
@@ -69,164 +89,14 @@ public class TutorialBase : MonoBehaviour
 		wordManager = FindObjectOfType<WordManager> ();
 		cellManager = FindObjectOfType<CellsManager> ();
 		hudManager = FindObjectOfType<HUDManager> ();
-
-		scaleHand ();
 	}
 
 	void Update()
 	{
-		if(Input.touchCount > 0 || Input.GetMouseButton(0))
+		if (Input.GetKeyDown (KeyCode.A)) 
 		{
-			if (!alphaLowered) 
-			{
-				changeAlpha (0.3f, 0.3f);
-			}
+			firstAnim ();
 		}
-		else if(alphaLowered)
-		{
-			changeAlpha (1,0.8f);
-			alphaLowered = false;
-		}
-		/*if (Input.GetKeyDown (KeyCode.Q)) 
-		{
-			playPressAnimation ();
-		}
-		if (Input.GetKeyDown (KeyCode.W)) 
-		{
-			playReleaseAnimation ();
-		}
-		if (Input.GetKeyDown (KeyCode.E)) 
-		{
-			playTapAnimation ();
-		}*/
-	}
-
-	protected void scaleHand()
-	{
-		float nScale = 0;
-
-		nScale = (Screen.height * 0.01f) * 0.3f;
-		nScale = ((nScale * 100) / (tutorialHand.gameObject.GetComponent<SpriteRenderer> ().bounds.size.y)) * 0.01f;
-
-		tutorialHand.transform.localScale = new Vector3 (nScale,nScale,nScale);
-	}
-
-	protected void hideObject()
-	{
-		handObject.SetActive (false);
-	}
-
-	protected void hideHand()
-	{
-		tutorialHand.gameObject.SetActive (false);
-
-		if (handObject != null) 
-		{
-			handObject.SetActive (false);
-		}
-	}
-
-	protected void showObjectAtHand(Vector3 objOffset)
-	{
-		handObject.SetActive (true);
-		handObject.transform.position = tutorialHand.transform.position + objOffset;
-	}
-
-	protected void showHandAt(Vector3 pos,Vector3 objOffset,bool showObjt = true)
-	{
-		tutorialHand.transform.position = pos;
-		tutorialHand.gameObject.SetActive (true);
-
-		if (handObject != null && showObjt) 
-		{
-			showObjectAtHand (objOffset);
-		}
-	}
-
-	protected void moveHandFromGameObjects(GameObject goFrom,GameObject goTo,Vector3 objOffset,float time = 1)
-	{
-		tutorialHand.transform.position = goFrom.transform.position;
-		
-		tutorialHand.transform.DOMove (goTo.transform.position, time).OnComplete(()=>{if(OnMovementComplete!=null){OnMovementComplete();}}).SetId("handMovement");
-
-		if (handObject != null) 
-		{
-			handObject.transform.DOMove (goTo.transform.position + objOffset, time).SetId ("objectMovement");
-		}
-	}
-
-	protected void finishMovements()
-	{
-		DOTween.Kill ("handMovement");
-		DOTween.Kill ("objectMovement");
-	}
-
-	protected void changeAlpha(float nHandValue,float nObjtValue)
-	{
-		alphaLowered = true;
-
-		tutorialHand.GetComponent<SpriteRenderer> ().color = changeColorAlpha(tutorialHand.GetComponent<SpriteRenderer> ().color, nHandValue);
-
-		if (handObject != null) 
-		{
-			if (handObject.GetComponent<Image> () != null) 
-			{
-				handObject.GetComponent<Image> ().color = changeColorAlpha (handObject.GetComponent<Image> ().color, nObjtValue);
-			} 
-			else if (handObject.GetComponent<SpriteRenderer> () != null) 
-			{
-				handObject.GetComponent<SpriteRenderer> ().color = changeColorAlpha (handObject.GetComponent<SpriteRenderer> ().color, nObjtValue);
-			} 
-			else 
-			{
-				SpriteRenderer[] temp = handObject.GetComponentsInChildren<SpriteRenderer> ();
-
-				for (int i = 0; i < temp.Length; i++) 
-				{
-					temp [i].color = changeColorAlpha (temp [i].color, nObjtValue);
-				}
-			}
-		}
-	}
-
-	private Color changeColorAlpha(Color col,float val)
-	{
-		Color temp = col;
-
-		temp.a = val;
-
-		return temp;
-	}
-
-	protected IEnumerator playPressAndContinueWithMethod(string methodName,float time)
-	{
-		yield return new WaitForSeconds(0.7f);
-		playPressAnimation ();
-		Invoke (methodName, time);
-	}
-
-	protected void playPressAnimation()
-	{
-		tutorialHand.gameObject.SetActive (true);
-		tutorialHand.autoUpdate = false;
-		tutorialHand.sequences [0].currentFrame = 1;
-		tutorialHand.sequences [0].updateImage();
-	}
-
-	protected void playReleaseAnimation()
-	{
-		tutorialHand.gameObject.SetActive (true);
-		tutorialHand.autoUpdate = false;
-		tutorialHand.sequences [0].currentFrame = 0;
-		tutorialHand.sequences [0].updateImage();
-	}
-
-	protected void playTapAnimation()
-	{
-		tutorialHand.gameObject.SetActive (true);
-		tutorialHand.sequences [0].currentFrame = 0;
-		tutorialHand.sequences [0].updateImage();
-		tutorialHand.autoUpdate = true;
 	}
 
 	public virtual bool canMoveToNextPhase()
@@ -237,5 +107,68 @@ public class TutorialBase : MonoBehaviour
 	public virtual bool phaseObjectiveAchived()
 	{
 		return false;
+	}
+
+	protected void firstAnim()
+	{
+		Image firstPhase = phasesPanels [0].GetComponentInChildren<Image> ();
+
+		float pos = firstPhase.rectTransform.parent.GetComponent<RectTransform> ().rect.height;
+		firstPhase.rectTransform.offsetMax = new Vector2 (0,pos); //top
+		firstPhase.rectTransform.offsetMin = new Vector2 (0,pos); //bottom
+
+		firstPhase.rectTransform.DOAnchorPos (Vector2.zero,initialAnim).SetEase (Ease.InOutBack);
+	}
+
+	protected void shakeToErrase()
+	{
+		instructionsContainer = instructionsText.transform.parent;
+		instructionsContainer.DOShakePosition (shakeDuraion,shakeStrength);
+	}
+
+	protected void writeLetterByLetter()
+	{
+		if (changeInstruction) 
+		{
+			changeInstruction = false;
+			return;
+		}
+
+		if (currentInstruction [instructionIndex].ToString () == "\\") 
+		{
+			instructionsText.text = ((string)instructionsText.text).Insert (instructionIndex, "\n");
+			instructionIndex += 2;			
+		} 
+		else if (currentInstruction [instructionIndex].ToString () == "<" && !foundStringTag) 
+		{
+			int ndx = currentInstruction.IndexOf ('>', instructionIndex);
+			string textTag = currentInstruction.Substring (instructionIndex, (ndx + 1) - instructionIndex);
+
+			foundStringTag = true;
+
+			instructionsText.text = ((string)instructionsText.text).Insert (instructionIndex, textTag);
+			instructionIndex += textTag.Length;
+
+			textTag = textTag.Insert (1, "/");
+			instructionsText.text = ((string)instructionsText.text).Insert (instructionIndex, textTag);
+		} 
+		else if (currentInstruction [instructionIndex].ToString () == "<" && foundStringTag) 
+		{
+			int ndx = currentInstruction.IndexOf ('>', instructionIndex);
+			string textTag = currentInstruction.Substring (instructionIndex, (ndx + 1) - instructionIndex);
+
+			instructionIndex += textTag.Length;
+			foundStringTag = false;
+		}
+		else 
+		{
+			instructionsText.text = ((string)instructionsText.text).Insert (instructionIndex, currentInstruction [instructionIndex].ToString ());
+			instructionIndex++;
+		}
+
+		if (instructionIndex < currentInstruction.Length) 
+		{
+			Invoke ("writeLetterByLetter",writingSpeed);
+		}
 	}
 }

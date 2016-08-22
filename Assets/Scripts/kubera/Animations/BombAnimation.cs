@@ -50,6 +50,7 @@ public class BombAnimation : MonoBehaviour
 
 	public IEnumerator startSameColorSearchAnimation(Cell cellSelected)
 	{
+		print (cellSelected.contentColor);
 		Cell[] selection =  cellsManager.getCellNeighborsOfSameColor(cellSelected);
 		List<Cell> selectionList = new List<Cell>();
 		for(int i=0; i<selection.Length; i++)
@@ -135,7 +136,7 @@ public class BombAnimation : MonoBehaviour
 	{
 		square.OnCellFlipped -= callbackOnFliped;
 		letter.enabled = true;
-		cellsManager.occupyAndConfigureCell(cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
+		//cellsManager.occupyAndConfigureCell(cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
 
 		if (occupiedAnimation.Count == 0 && OnAllAnimationsCompleted != null) 
 		{

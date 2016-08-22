@@ -5,6 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using ABC;
 using ABC.Tree;
 using ABCSerializer;
+using Data;
 
 /**
  * clase que ponemos en un prefab que va existir 
@@ -21,6 +22,7 @@ public class PersistentData : Manager<PersistentData>
 	public int maxWordLength = 10;
 	[HideInInspector]public int levelNumber = -1;
 	[HideInInspector]public Level currentLevel;
+	[HideInInspector]public string lastLevelReachedName;
 	[HideInInspector]public Levels levelsData;
 	[HideInInspector]public ABCDictionary abcDictionary;
 
@@ -28,12 +30,25 @@ public class PersistentData : Manager<PersistentData>
 	private string currentLanguage;
 	private bool destroyed = false;//Indica si el objeto ya se destruyo
 
+	[HideInInspector]public int currentWorld  =-1;
+
 	[HideInInspector]
 	public bool fromLevelBuilder;
 	[HideInInspector]
 	public bool fromGameToEdit;
+	[HideInInspector]
+	public bool fromGameToLevels = false;
 
+	[HideInInspector]
+	public bool fromLevelsToGame = false;
+
+	[HideInInspector]
 	public int startLevel = 1;
+
+	[HideInInspector]
+	public string lastLevelPlayedName = "";
+	[HideInInspector]
+	public bool fromLoose;
 
 	protected override void Awake() 
 	{
@@ -50,7 +65,10 @@ public class PersistentData : Manager<PersistentData>
 
 		abcDictionary = FindObjectOfType<ABCDictionary>();
 		onDictionaryFinished += foo;
-		configureGameForLanguage();
+		configureGameForLanguage("spanish");
+
+		/*currentWorld = */
+		//print((LevelsDataManager.GetInstance () as LevelsDataManager).getCurrentData ().levels [((LevelsDataManager.GetInstance () as LevelsDataManager).getCurrentData ().levels.Count - 1)]);
 	}
 
 	private void foo(){}
@@ -66,7 +84,6 @@ public class PersistentData : Manager<PersistentData>
 			onDictionaryFinished();
 			return;
 		}
-
 		if(language == "")
 		{
 			language = UserDataManager.instance.language;
@@ -196,8 +213,8 @@ public class PersistentData : Manager<PersistentData>
 	public Level getRandomLevel()
 	{
 		int le = 15;
-		//return levelsData.levels[0];
-		return levelsData.levels[Random.Range(le,le+1)];
+		return levelsData.levels[2];
+		return levelsData.levels[Random.Range(0,levelsData.levels.Length-1)];
 	}
 
 	public Level getNextLevel()
