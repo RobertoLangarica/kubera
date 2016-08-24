@@ -12,7 +12,7 @@ public class TutorialBase : MonoBehaviour
 	public float shakeDuraion = 0.5f;
 	public float shakeStrength = 20;
 
-	public float writingSpeed = 0.1f;
+	public float writingSpeed = 0.05f;
 
 	protected bool foundStringTag;
 	protected bool changeInstruction;

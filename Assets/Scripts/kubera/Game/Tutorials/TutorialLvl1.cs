@@ -53,6 +53,7 @@ public class TutorialLvl1 : TutorialBase
 			if (instructionIndex < currentInstruction.Length) 
 			{
 				changeInstruction = true;
+				foundStringTag = false;
 			}
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
@@ -82,6 +83,7 @@ public class TutorialLvl1 : TutorialBase
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
+				foundStringTag = false;
 			}
 
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE3);

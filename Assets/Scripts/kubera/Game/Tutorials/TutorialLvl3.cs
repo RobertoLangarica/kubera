@@ -55,6 +55,7 @@ public class TutorialLvl3 : TutorialBase
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
+				foundStringTag = false;
 			}
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WORD_HINT_BUTTON);
@@ -84,6 +85,7 @@ public class TutorialLvl3 : TutorialBase
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
+				foundStringTag = false;
 			}
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WORD_HINT_BUTTON);
@@ -108,6 +110,7 @@ public class TutorialLvl3 : TutorialBase
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
+				foundStringTag = false;
 			}
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
