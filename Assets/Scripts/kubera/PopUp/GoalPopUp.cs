@@ -14,6 +14,7 @@ public class GoalPopUp : PopUpBase {
 	public Text LevelNumber;
 	public Text LevelText;
 	public Text inviteFriendsText;
+
 	public Transform goalLettersContainer;
 
 	public GameObject lettersObjective;
@@ -165,12 +166,14 @@ public class GoalPopUp : PopUpBase {
 
 	public void playGame()
 	{
+		soundButton ();
 		setStartingPlaces ();
 		OnComplete ("playGame");
 	}
 
 	public void exit ()
 	{
+		soundButton ();
 		setStartingPlaces ();
 		OnComplete ("closeRetry");
 	}
@@ -235,5 +238,30 @@ public class GoalPopUp : PopUpBase {
 							});
 					});
 			});
+	}
+
+	protected void soundButton()
+	{
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("button");
+			AudioManager.GetInstance().Play("button");
+		}
+	}
+
+	public void fbAction()
+	{
+		soundButton ();
+		if(FBLoggin.GetInstance().isLoggedIn)
+		{
+			//TODO HARCODING
+			inviteFriendsText.text = "invita Amigos";
+			FacebookManager.GetInstance ().requestNewFriends ();
+		}
+		else
+		{
+			inviteFriendsText.text = "Conectate";
+			FBLoggin.GetInstance ().OnLoginClick ();
+		}
 	}
 }

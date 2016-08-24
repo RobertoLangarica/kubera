@@ -13,6 +13,7 @@ public class HUDManager : MonoBehaviour
 	public Button Music;
 	public Button Exit;
 	public Button Sounds;
+	public GameObject settingsBackground;
 
 	public Text movementsText;
 	public Text movementsText1;
@@ -36,8 +37,8 @@ public class HUDManager : MonoBehaviour
 
 	public GameObject PointerOnScene;
 
-	public Image[] musicImages;
-	public Image[] soundsImages;
+	public Sprite[] musicImages;
+	public Sprite[] soundsImages;
 
 	public Text lettersPoints;
 	public Text lettersPointsTitle;
@@ -339,11 +340,12 @@ public class HUDManager : MonoBehaviour
 	{
 		/*print (activate);
 		print (Sounds.gameObject.activeSelf);*/
-		if (!Sounds.gameObject.activeSelf) 
+		if (!settingsBackground.activeSelf) 
 		{
 			/*points.enabled = false;
 			scoreText.enabled = false;*/
 			//Activar los otros botones
+			settingsBackground.SetActive(true);
 			Music.gameObject.SetActive(true);
 			Exit.gameObject.SetActive(true);
 			Sounds.gameObject.SetActive(true);
@@ -354,6 +356,7 @@ public class HUDManager : MonoBehaviour
 			/*scoreText.enabled = true;
 			points.enabled = true;*/
 			//Desactivar los otros botones
+			settingsBackground.SetActive(false);
 			Music.gameObject.SetActive(false);
 			Exit.gameObject.SetActive (false);
 			Sounds.gameObject.SetActive(false);
@@ -431,11 +434,11 @@ public class HUDManager : MonoBehaviour
 	{
 		if (activate) 
 		{
-			Music.image = musicImages [0];
+			Music.image.sprite = musicImages [0];
 		}
 		else
 		{
-			Music.image = musicImages [1];
+			Music.image.sprite = musicImages [1];
 		}
 	}
 
@@ -443,11 +446,11 @@ public class HUDManager : MonoBehaviour
 	{
 		if (activate) 
 		{
-			Sounds.image = soundsImages [0];
+			Sounds.image.sprite = soundsImages [0];
 		}
 		else
 		{
-			Sounds.image = soundsImages [1];
+			Sounds.image.sprite = soundsImages [1];
 		}
 	}
 

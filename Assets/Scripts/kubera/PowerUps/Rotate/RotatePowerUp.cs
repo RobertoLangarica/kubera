@@ -116,6 +116,12 @@ public class RotatePowerUp : PowerupBase
 			inputPowerUpRotate.OnPowerupRotateCompleted += completePowerUp;
 			print ("activate");
 			Invoke ("rotateImage", 2);
+
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop("startRotate");
+				AudioManager.GetInstance().Play("startRotate");
+			}
 		}
 		else
 		{

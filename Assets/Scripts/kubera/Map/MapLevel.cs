@@ -164,8 +164,18 @@ public class MapLevel : MonoBehaviour
 		facebookFriend.sprite = picture;
 	}
 
+	public void noFriend()
+	{
+		facebookBackground.SetActive (false);
+	}
+
 	public void onClick()
 	{
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("button");
+			AudioManager.GetInstance().Play("button");
+		}
 		if (OnClickNotification != null) 
 		{
 			OnClickNotification (this);

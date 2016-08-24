@@ -200,6 +200,14 @@ public class MapManager : MonoBehaviour
 				{
 					mapLevels [i].updateFacebookFriendPicture (friendInfo);
 				}
+				else
+				{
+					mapLevels [i].noFriend ();
+				}
+			}
+			else
+			{
+				mapLevels [i].noFriend ();
 			}
 
 			if(mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_REACHED

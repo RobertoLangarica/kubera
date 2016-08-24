@@ -62,6 +62,12 @@ public class DestroyPowerUp : PowerupBase
 		updateDragableObjectImage (destroyGO);
 
 		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.DESTROY_POWERUP);
+
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("ray");
+			AudioManager.GetInstance().Play("ray");
+		}
 	}
 
 	public void powerUpPositioned()

@@ -43,6 +43,12 @@ public class BombPowerUp : PowerupBase
 		updateDragableObjectImage (bombGO);
 
 		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.BOMB_POWERUP);
+
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("bomb");
+			AudioManager.GetInstance().Play("bomb");
+		}
 	}
 
 	public void powerUpPositioned()

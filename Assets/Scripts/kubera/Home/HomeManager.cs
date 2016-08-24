@@ -69,12 +69,24 @@ public class HomeManager : MonoBehaviour {
 
 	public void goToScene(string scene)
 	{
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("button");
+			AudioManager.GetInstance().Play("button");
+		}
+
 		ScreenManager.instance.GoToScene (scene);
 	}
 
 	//HACK
 	public void ereaseData()
 	{
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("button");
+			AudioManager.GetInstance().Play("button");
+		}
+
 		Data.LevelsDataManager.GetInstance ().deleteData ();
 		//Data.LevelsDataManager.GetInstance ().getCurrentData ().levels = new List<Data.LevelData> ();
 	}

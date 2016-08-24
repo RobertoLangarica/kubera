@@ -7,6 +7,7 @@ using System.Collections;
 public class RetryPopUp : PopUpBase
 {
 	public Text LevelNumber;
+	public Text inviteFriendsText;
 
 	protected LifesManager lifesManager;
 
@@ -30,10 +31,27 @@ public class RetryPopUp : PopUpBase
 
 	void Start()
 	{
+		//TODO checar login a facebook
+		fbLogin ();
+		//FBLoggin.GetInstance().onLoginComplete += fbLogin;
+
 		lifesManager = FindObjectOfType<LifesManager> ();
 
 		setStartingPlaces ();
 		content.text = "Seguro lo lograras";
+	}
+
+	protected void fbLogin()
+	{
+		if(FBLoggin.GetInstance().isLoggedIn)
+		{
+			//TODO HARCODING
+			inviteFriendsText.text = "invita Amigos";
+		}
+		else
+		{
+			inviteFriendsText.text = "Conectate";
+		}
 	}
 
 	public override void activate()
@@ -48,6 +66,7 @@ public class RetryPopUp : PopUpBase
 
 	public void close()
 	{
+		soundButton ();
 		leaderboardManager.moveCurrentLeaderboardSlots (goalPopUpSlotsParent);
 		setStartingPlaces ();
 		OnComplete ("closeRetry");
@@ -55,6 +74,7 @@ public class RetryPopUp : PopUpBase
 
 	public void retryLevel()
 	{
+		soundButton ();
 		if (UserDataManager.instance.playerLifes > 0) 
 		{
 			setStartingPlaces ();
@@ -123,4 +143,28 @@ public class RetryPopUp : PopUpBase
 			});
 	}
 
+	protected void soundButton()
+	{
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("button");
+			AudioManager.GetInstance().Play("button");
+		}
+	}
+
+	public void fbAction()
+	{
+		soundButton ();
+		if(FBLoggin.GetInstance().isLoggedIn)
+		{
+			//TODO HARCODING
+			inviteFriendsText.text = "invita Amigos";
+			FacebookManager.GetInstance ().requestNewFriends ();
+		}
+		else
+		{
+			inviteFriendsText.text = "Conectate";
+			FBLoggin.GetInstance ().OnLoginClick ();
+		}
+	}
 }

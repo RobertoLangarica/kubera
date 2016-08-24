@@ -25,6 +25,12 @@ public class FacebookConnectButton : MonoBehaviour {
 
 	public void conectFacebook()
 	{
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("button");
+			AudioManager.GetInstance().Play("button");
+		}
+
 		fbLog.OnLoginClick ();
 	}
 
@@ -45,6 +51,12 @@ public class FacebookConnectButton : MonoBehaviour {
 
 	public void logOutFacebook()
 	{		
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("button");
+			AudioManager.GetInstance().Play("button");
+		}
+
 		fbLog.LogOut ();
 	}
 }

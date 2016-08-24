@@ -6,7 +6,7 @@ using Facebook.Unity;
 using UnityEngine.UI;
 using Facebook.MiniJSON;
 
-public class FacebookManager : MonoBehaviour
+public class FacebookManager : Manager<FacebookManager>
 {
 	protected FBGraph fbGraph;
 	protected FacebookNews facebookNews;

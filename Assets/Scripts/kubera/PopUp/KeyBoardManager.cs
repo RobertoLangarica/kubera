@@ -101,6 +101,12 @@ public class KeyBoardManager : MonoBehaviour
 			{
 				OnLetterSelected (letter.abcChar.character);
 			}
+
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop("letterChoosed");
+				AudioManager.GetInstance().Play("letterChoosed");
+			}
 		});
 	}
 
@@ -125,6 +131,12 @@ public class KeyBoardManager : MonoBehaviour
 	{
 		gameObject.SetActive (true);
 		gameManager.allowGameInput (false);
+
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("showKeyBoard");
+			AudioManager.GetInstance().Play("showKeyBoard");
+		}
 	}
 
 	public void setSelectedWildCard(Letter wildCard)

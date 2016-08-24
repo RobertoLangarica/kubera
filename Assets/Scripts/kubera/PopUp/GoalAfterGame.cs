@@ -10,6 +10,7 @@ public class GoalAfterGame : PopUpBase {
 
 	public Text PointsText;
 	public Text Points;
+	public Text inviteFriendsText;
 
 	public GameObject[] stars;
 	public GameObject[] starsGray;
@@ -35,7 +36,24 @@ public class GoalAfterGame : PopUpBase {
 
 	void Start()
 	{
+		//TODO checar login a facebook
+		fbLogin ();
+		//FBLoggin.GetInstance().onLoginComplete += fbLogin;
+
 		setStartingPlaces ();
+	}
+
+	protected void fbLogin()
+	{
+		if(FBLoggin.GetInstance().isLoggedIn)
+		{
+			//TODO HARCODING
+			inviteFriendsText.text = "invita Amigos";
+		}
+		else
+		{
+			inviteFriendsText.text = "Conectate";
+		}
 	}
 
 	public override void activate()
@@ -66,12 +84,15 @@ public class GoalAfterGame : PopUpBase {
 	{
 		if(starsReached >=1)
 		{
+			winStar ();
 			stars [0].SetActive (true);
 			stars [0].transform.DOScale (new Vector2(1,1),speedShowStars).OnComplete (() => {
 				if (starsReached >= 2) {
+					winStar ();
 					stars [1].SetActive (true);
 					stars [1].transform.DOScale (new Vector2(1,1),speedShowStars).OnComplete (() => {
 						if (starsReached == 3) {
+							winStar ();
 							stars [2].SetActive (true);
 							stars [2].transform.DOScale (new Vector2(1,1),speedShowStars).OnComplete (() => {
 								//print ("Termino de mostrar estrellas");
@@ -85,6 +106,8 @@ public class GoalAfterGame : PopUpBase {
 
 	public void playGame()
 	{
+		soundButton ();
+
 		setStartingPlaces ();
 		OnComplete ("continue");
 		leaderboardManager.moveCurrentLeaderboardSlots (goalPopUpSlotsParent);
@@ -92,6 +115,8 @@ public class GoalAfterGame : PopUpBase {
 
 	public void exit ()
 	{
+		soundButton ();
+
 		setStartingPlaces ();
 		OnComplete ("closeObjective");
 
@@ -156,5 +181,39 @@ public class GoalAfterGame : PopUpBase {
 
 					});
 			});
+	}
+
+	protected void soundButton()
+	{
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("button");
+			AudioManager.GetInstance().Play("button");
+		}
+	}
+
+	protected void winStar()
+	{
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("star");
+			AudioManager.GetInstance().Play("star");
+		}
+	}
+
+	public void fbAction()
+	{
+		soundButton ();
+		if(FBLoggin.GetInstance().isLoggedIn)
+		{
+			//TODO HARCODING
+			inviteFriendsText.text = "invita Amigos";
+			FacebookManager.GetInstance ().requestNewFriends ();
+		}
+		else
+		{
+			inviteFriendsText.text = "Conectate";
+			FBLoggin.GetInstance ().OnLoginClick ();
+		}
 	}
 }

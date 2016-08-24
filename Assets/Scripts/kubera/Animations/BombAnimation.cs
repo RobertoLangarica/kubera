@@ -71,6 +71,11 @@ public class BombAnimation : MonoBehaviour
 			StartCoroutine (startAnimation (square, selectionList [random], letter, 0.1f));
 			selectionList.Remove (selectionList [random]);
 
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop("bombBlock");
+				AudioManager.GetInstance().Play("bombBlock");
+			}
 		}
 
 	}

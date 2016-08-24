@@ -65,6 +65,11 @@ public class WordHintPowerUp : PowerupBase {
 					powerUpInput.OnDrop -= powerUpPositioned;
 					powerUpInput.enabled = false;
 					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WORD_HINT);
+					if(AudioManager.GetInstance())
+					{
+						AudioManager.GetInstance().Stop("helpPositonated");
+						AudioManager.GetInstance().Play("helpPositonated");
+					}
 					OnComplete ();
 				} 
 				else 
