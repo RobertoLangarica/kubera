@@ -118,9 +118,8 @@ public class GoalAfterGame : PopUpBase {
 		soundButton ();
 
 		setStartingPlaces ();
-		OnComplete ("closeObjective");
-
 		leaderboardManager.moveCurrentLeaderboardSlots (goalPopUpSlotsParent);
+		OnComplete ("closeObjective");
 	}
 
 	protected void setStartingPlaces()
@@ -187,8 +186,8 @@ public class GoalAfterGame : PopUpBase {
 	{
 		if(AudioManager.GetInstance())
 		{
-			AudioManager.GetInstance().Stop("button");
-			AudioManager.GetInstance().Play("button");
+			
+			AudioManager.GetInstance().Play("fxButton");
 		}
 	}
 

@@ -27,7 +27,8 @@ public class AudioManager : Manager<AudioManager>
     /*Dictionary to every Audio Category registrated in this Manager*/
 	private Dictionary<string, AudioCategory> cateogriesMap = new Dictionary<string, AudioCategory>();
 
-
+	protected bool _musicActive;
+	protected bool _fxActive;
     /*
     *  Function: Initialize the Manager properly
     *  Parameter: None
@@ -43,6 +44,10 @@ public class AudioManager : Manager<AudioManager>
 
 			CreateCategoriesDictionary();
 		}
+
+		activateMusic = UserDataManager.instance.isMusicActive;
+		activateSounds = UserDataManager.instance.isSoundEffectsActive;
+
 	}
 
     #region GENERAL
@@ -530,6 +535,49 @@ public class AudioManager : Manager<AudioManager>
     }
     #endregion
 
+	public bool activateMusic
+	{
+		get{
+			return _musicActive;
+		}
+
+		set{
+			_musicActive = value;
+
+			if(_musicActive == true)
+			{
+				GetCategory ("MAIN MUSIC").isEnabled = true;
+
+			}
+			else
+			{
+				GetCategory ("MAIN MUSIC").isEnabled = false;
+
+			}
+		}
+	}
+
+	public bool activateSounds
+	{
+		get{
+			return _fxActive;
+		}
+
+		set{
+			_fxActive = value;
+
+			if(_fxActive == true)
+			{
+				GetCategory ("LOOP FX").isEnabled = true;
+				GetCategory ("FX").isEnabled = true;
+			}
+			else
+			{
+				GetCategory ("LOOP FX").isEnabled = false;
+				GetCategory ("FX").isEnabled = false;
+			}
+		}
+	}
 }
 
 

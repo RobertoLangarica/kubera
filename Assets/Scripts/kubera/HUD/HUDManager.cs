@@ -37,8 +37,7 @@ public class HUDManager : MonoBehaviour
 
 	public GameObject PointerOnScene;
 
-	public Sprite[] musicImages;
-	public Sprite[] soundsImages;
+
 
 	public Text lettersPoints;
 	public Text lettersPointsTitle;
@@ -346,9 +345,6 @@ public class HUDManager : MonoBehaviour
 			scoreText.enabled = false;*/
 			//Activar los otros botones
 			settingsBackground.SetActive(true);
-			Music.gameObject.SetActive(true);
-			Exit.gameObject.SetActive(true);
-			Sounds.gameObject.SetActive(true);
 			PointerOnScene.SetActive(true);
 		}
 		else 
@@ -357,9 +353,6 @@ public class HUDManager : MonoBehaviour
 			points.enabled = true;*/
 			//Desactivar los otros botones
 			settingsBackground.SetActive(false);
-			Music.gameObject.SetActive(false);
-			Exit.gameObject.SetActive (false);
-			Sounds.gameObject.SetActive(false);
 			PointerOnScene.SetActive(false);
 		}
 	}
@@ -428,30 +421,6 @@ public class HUDManager : MonoBehaviour
 	{
 		DOTween.Kill (vacum);
 		vacum.DOMove (vacumStartPos,0.2f).SetEase (Ease.InBack).SetId(vacum);
-	}
-
-	public void setStateMusic(bool activate)
-	{
-		if (activate) 
-		{
-			Music.image.sprite = musicImages [0];
-		}
-		else
-		{
-			Music.image.sprite = musicImages [1];
-		}
-	}
-
-	public void setStateSounds(bool activate)
-	{
-		if (activate) 
-		{
-			Sounds.image.sprite = soundsImages [0];
-		}
-		else
-		{
-			Sounds.image.sprite = soundsImages [1];
-		}
 	}
 
 	public void setLettersPoints(int lettersPoints)

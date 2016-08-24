@@ -1038,8 +1038,8 @@ public class GameManager : MonoBehaviour
 
 		if(AudioManager.GetInstance())
 		{
-			AudioManager.GetInstance().Stop("button");
-			AudioManager.GetInstance().Play("button");
+			
+			AudioManager.GetInstance().Play("fxButton");
 		}
 	}
 
@@ -1137,8 +1137,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(AudioManager.GetInstance())
 		{
-			AudioManager.GetInstance().Stop("button");
-			AudioManager.GetInstance().Play("button");
+			AudioManager.GetInstance().Play("fxButton");
 		}
 		hudManager.activateSettings (activate);
 	}

@@ -132,6 +132,7 @@ public class MapManager : MonoBehaviour
 			ScreenManager.instance.GoToScene ("Game");
 			break;
 		case "continue":
+			print (toNextLevel);
 			if(toNextLevel)
 			{
 				showWorld();
@@ -172,7 +173,6 @@ public class MapManager : MonoBehaviour
 
 	protected void initializeLevels()
 	{
-		Debug.Log ((LevelsDataManager.GetInstance() as LevelsDataManager));
 		List<Level> worldsLevels = new List<Level> ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelsOfWorld(currentWorld));
 
 		if(PersistentData.GetInstance().lastLevelReachedName == "")
@@ -180,14 +180,15 @@ public class MapManager : MonoBehaviour
 			setLastLevelReached ();
 		}
 		bool isConectedToFacebook = FBLoggin.GetInstance ().isLoggedIn;
-		print (isConectedToFacebook + "isConectedToFacebook");
+		
 		for (int i = 0; i < mapLevels.Count; i++)
 		{
+			print(mapLevels [i].status);
 			settingMapLevelInfo (mapLevels[i],worldsLevels[i]);
 			settingMapLevelStatus (mapLevels[i]);
 			setOnClickDelegates (mapLevels[i]);
+			print(mapLevels [i].status);
 
-			print (mapLevels[i].name);
 			mapLevels [i].updateStatus();
 			mapLevels[i].updateStars();
 			mapLevels [i].updateText ();
@@ -217,23 +218,29 @@ public class MapManager : MonoBehaviour
 				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED)
 			{				
 				currentLevel = mapLevels [i];
-				
+				print ("SSS");
 				if(fromGame && PersistentData.GetInstance().currentLevel.name == mapLevels[i].fullLvlName) 
 				{
+					print ("entrando");
 					lastLevelPlayed = mapLevels [i];
-					if(i+1 <mapLevels.Count)
+					if(i+1 < mapLevels.Count)
 					{
+						print ("entrando 2 ");
 						nextLevel = mapLevels [i+1];
+						isToNextLevel (mapLevels [i + 1]);
 						if(mapLevels[i+1].status == MapLevel.EMapLevelsStatus.NORMAL_LOCKED ||mapLevels[i+1].status == MapLevel.EMapLevelsStatus.BOSS_LOCKED)
 						{							
+							print ("entrando 3 ");
 							toNextLevel = true;
 						}
 					}
 				}
 				else if(nextLevel != null && nextLevel.fullLvlName == mapLevels[i].fullLvlName)
 				{
+					print ("a ver");
 					if(fromGame && nextLevel.fullLvlName == PersistentData.GetInstance().lastLevelReachedName)
 					{
+						print ("no!!");
 						toNextLevel = false;
 					}
 				}
@@ -247,6 +254,15 @@ public class MapManager : MonoBehaviour
 					}
 				}*/
 			}
+		}
+	}
+
+	protected void isToNextLevel(MapLevel mapLvl)
+	{
+		print (mapLvl.status);
+		if(mapLvl.status == MapLevel.EMapLevelsStatus.NORMAL_LOCKED || mapLvl.status == MapLevel.EMapLevelsStatus.BOSS_LOCKED)
+		{							
+			print ("entrando 3 ");
 		}
 	}
 
@@ -504,8 +520,9 @@ public class MapManager : MonoBehaviour
 		}
 		else
 		{
-			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel( mapLevels [0]));
-			//paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(currentLevel));
+			print ("currentLevel " + currentLevel);
+			//paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel( mapLevels [0]));
+			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(currentLevel));
 		}
 	}
 

@@ -32,7 +32,7 @@ public class ParalaxManager : MonoBehaviour {
 		//OnMove (rectTransform.anchoredPosition);
 		//scrollRect.verticalNormalizedPosition = 0.5f;
 		Invoke ("setFixHeight",0.05f);
-		print (Screen.height);
+		//print (Screen.height);
 	}
 
 	void Update()
@@ -101,6 +101,7 @@ public class ParalaxManager : MonoBehaviour {
 		
 		a = a / fixMin;
 
+		print (a);
 		float sizeOfLevelIcon = mapLevel.GetComponent<RectTransform> ().anchorMax.y - mapLevel.GetComponent<RectTransform> ().anchorMin.y;
 		float levelPosition = a;//mapLevel.GetComponent<RectTransform> ().anchorMin.y - sizeOfLevelIcon;
 

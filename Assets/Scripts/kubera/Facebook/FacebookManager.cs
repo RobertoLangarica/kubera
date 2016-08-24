@@ -66,7 +66,7 @@ public class FacebookManager : Manager<FacebookManager>
 
 	protected void OnLoginComplete(bool complete)
 	{
-		Debug.Log("OnLoginComplete " + complete);
+		//Debug.Log("OnLoginComplete " + complete);
 
 		if (complete)
 		{
@@ -88,7 +88,7 @@ public class FacebookManager : Manager<FacebookManager>
 			if(!facebookConectMessageCreated)
 			{
 				//crear FacebookConectMessage
-				print ("creando mensaje para conectar");
+				//print ("creando mensaje para conectar");
 				conectFacebook = Instantiate (FacebookConectMessage);
 				conectFacebook.transform.SetParent (panelMessages,false);
 				facebookConectMessageCreated = true;

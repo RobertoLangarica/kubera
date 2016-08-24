@@ -244,8 +244,8 @@ public class GoalPopUp : PopUpBase {
 	{
 		if(AudioManager.GetInstance())
 		{
-			AudioManager.GetInstance().Stop("button");
-			AudioManager.GetInstance().Play("button");
+			
+			AudioManager.GetInstance().Play("fxButton");
 		}
 	}
 

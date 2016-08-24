@@ -33,8 +33,12 @@ public class ClickableObjects : MonoBehaviour {
 		{
 			inAction = true;
 			thisTransform.transform.DOShakeScale (timeAction).OnComplete(()=>{inAction= false;});
-			AudioManager.GetInstance().Stop(fxName);
-			AudioManager.GetInstance().Play(fxName);
+
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop(fxName);
+				AudioManager.GetInstance().Play(fxName);
+			}
 		}
 	}
 }

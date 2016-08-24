@@ -100,7 +100,6 @@ public class MapLevel : MonoBehaviour
 		{
 			if (i < until) 
 			{
-				print (levelStars[i].name);
 				levelStars [i].gameObject.SetActive (true);
 				levelStars [i].sprite = starsPassed;
 			}
@@ -173,8 +172,7 @@ public class MapLevel : MonoBehaviour
 	{
 		if(AudioManager.GetInstance())
 		{
-			AudioManager.GetInstance().Stop("button");
-			AudioManager.GetInstance().Play("button");
+			AudioManager.GetInstance().Play("fxButton");
 		}
 		if (OnClickNotification != null) 
 		{
