@@ -5,6 +5,7 @@ using System.Collections;
 using Facebook.Unity;
 using UnityEngine.UI;
 using Facebook.MiniJSON;
+using Kubera.Data;
 
 public class FacebookManager : Manager<FacebookManager>
 {
@@ -327,7 +328,7 @@ public class FacebookManager : Manager<FacebookManager>
 					bossReached = splitType [1];
 				}
 
-				if(askedKeys.Count == maxUsersPerMessage || idExistOnList (giftKeys,playerID )|| !(Data.LevelsDataManager.GetInstance () as Data.LevelsDataManager).isLevelLocked(bossReached))
+				if(askedKeys.Count == maxUsersPerMessage || idExistOnList (giftKeys,playerID )|| !(LevelsDataManager.GetInstance () as LevelsDataManager).isLevelLocked(bossReached))
 				{
 					deleteAppRequest (requestID);
 				}

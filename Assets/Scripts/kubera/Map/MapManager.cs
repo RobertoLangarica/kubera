@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Data;
+using Kubera.Data;
 
 public class MapManager : MonoBehaviour
 {
@@ -56,11 +56,11 @@ public class MapManager : MonoBehaviour
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 		if(PersistentData.GetInstance().currentWorld == -1)
 		{
-			print (PersistentData.GetInstance ().currentLevel.name);
-			if(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUserLevels.levels.Count != 0)
+			if(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.levels.Count != 0)
 			{
-				currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUserLevels.levels.Count].world);
-				//print (currentWorld);
+				currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.levels.Count].world);
+				print (currentWorld);
+				print (PersistentData.GetInstance ().currentLevel.name);
 			}
 		}
 		else

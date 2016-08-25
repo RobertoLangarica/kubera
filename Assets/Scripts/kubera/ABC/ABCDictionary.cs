@@ -227,7 +227,7 @@ namespace ABC
 			StartCoroutine("registerDictionaryWords",maxWordLength); 
 			return;
 
-
+			/*
 			int rejected = 0;
 			int l = dictionaryWords.Length;
 			//Registramos todas las palabras
@@ -243,12 +243,13 @@ namespace ABC
 				}
 			}
 
+			Debug.Log("Registered words: "+(l-rejected));
 			Debug.Log("Rejected words by size: "+rejected);
 			Debug.Log("Dictionary finished in: "+ (Time.realtimeSinceStartup-initTime).ToString("0000.000")+"s");
 			if(onDictionaryFinished != null)
 			{
 				onDictionaryFinished();
-			}
+			}*/
 		}
 
 		protected IEnumerator registerDictionaryWords(int maxWordLength = 30)
@@ -278,6 +279,7 @@ namespace ABC
 				}
 			}
 
+			Debug.Log("Registered words: "+(dictionaryWords.Length-rejected));
 			Debug.Log("Rejected words by size: "+rejected);
 			Debug.Log("Dictionary finished in: "+ (Time.realtimeSinceStartup-initTime).ToString("0000.000")+"s");
 			if(onDictionaryFinished != null)

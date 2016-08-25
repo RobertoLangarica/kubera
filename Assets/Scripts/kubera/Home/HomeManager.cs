@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Kubera.Data;
 
 public class HomeManager : MonoBehaviour {
 
@@ -83,13 +84,11 @@ public class HomeManager : MonoBehaviour {
 	//HACK
 	public void ereaseData()
 	{
+		LevelsDataManager.GetInstance ().deleteData ();
 		if(AudioManager.GetInstance())
 		{
 			
 			AudioManager.GetInstance().Play("fxButton");
 		}
-
-		Data.LevelsDataManager.GetInstance ().deleteData ();
-		//Data.LevelsDataManager.GetInstance ().getCurrentData ().levels = new List<Data.LevelData> ();
 	}
 }

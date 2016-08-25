@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Data;
+using Data.Remote;
 
 namespace Data.Sync
 {
@@ -7,17 +9,31 @@ namespace Data.Sync
 	{
 		public LoginProvider customProvider;
 		public LoginProvider facebookProvider;
+		public ServerProvider server;
 
 		protected GameUser currentUser;
+		 
 
 
-		void Awake()
+		protected override void Awake()
 		{
-			customProvider.OnLoginSuccessfull += OnCustomLogin;
-			facebookProvider.OnLoginSuccessfull += OnFacebookLogin;
+			base.Awake();
 
-			customProvider.OnLogoutSuccessfull += OnCustomLogout;
-			facebookProvider.OnLogoutSuccessfull += OnFacebookLogout;
+			if(customProvider != null)
+			{
+				customProvider.OnLoginSuccessfull	+= OnCustomLogin;
+				customProvider.OnLogoutSuccessfull	+= OnCustomLogout;
+			}
+
+			if(facebookProvider != null) 
+			{
+				facebookProvider.OnLoginSuccessfull += OnFacebookLogin;
+				facebookProvider.OnLogoutSuccessfull+= OnFacebookLogout;
+			}
+
+			server.OnUserReceived += OnUserReceived;
+			server.OnDataReceived += OnDataReceived;
+			server.OnDataUpdated += OnDataUpdated;
 		}
 
 		public void facebookLogin()
@@ -44,15 +60,23 @@ namespace Data.Sync
 		{
 			if(!existCurrentUser())
 			{
-				//TODO: Nos traemos el usuario si existe o uno nuevo si es necesario
-				//TODO: Si ya hizo login con facebook y no a llegado el usuario hay que usar este id tambien
+				//Cambio de usuario
+				server.stopAndRemoveCurrentRequests();
+				prepareLocalLogin(customUserId, facebookUserId);
+				server.getUniqueUser(customUserId, facebookUserId);
 			}
 			else
 			{
+				//Este id pertenece al current user??
 				if(!customIdBelongsToCurrentUser())
 				{
-					//Este id no pertenece al current user
-					//TODO: Ver si existe otro usuario con este id y si no ligar el qur tenemos, si ya existe y no tiene facebook id ligarlos
+					if(!facebookProvider.isLoggedIn)
+					{
+						//Cambio de usuario
+						server.stopAndRemoveCurrentRequests();
+						prepareLocalLogin(customUserId, facebookUserId);
+						server.getUniqueUser(customUserId, facebookUserId);
+					}
 				}
 			}
 		}
@@ -61,18 +85,31 @@ namespace Data.Sync
 		{
 			if(!existCurrentUser())
 			{
-				//TODO: Nos traemos el usuario si existe o uno nuevo si es necesario
-				//TODO: Si ya hizo login con custom y no a llegado el usuario hay que usar este id tambien
+				//Cambio de usuario
+				server.stopAndRemoveCurrentRequests();
+				prepareLocalLogin(customUserId, facebookUserId);
+				server.getUniqueUser(customUserId, facebookUserId);
 			}
 			else
 			{
+				//Este id pertenece al current user?
 				if(!facebookIdBelongsToCurrentUser())
 				{
-					//Este id no pertenece al current user
-
-					//TODO: Ver si existe otro usuario con este id y si no ligar el que tenemos, si ya existe y no tiene facebook id ligarlos
+					//TODO: Checar cuando se relaciona el usuario de facebook con el custom
+					//Cambio de usuario
+					server.stopAndRemoveCurrentRequests();
+					prepareLocalLogin(customUserId, facebookUserId);
+					server.getUniqueUser(customUserId, facebookUserId);
 				}
 			}
+		}
+
+		/**
+		 * Un login local que se hace antes de hacerlo al servicio remoto para permitir una experiencia fluida
+		 **/ 
+		protected virtual void prepareLocalLogin(string customUserId, string facebookUserId)
+		{
+			
 		}
 
 		public bool existCurrentUser()
@@ -90,17 +127,53 @@ namespace Data.Sync
 			return currentUser.facebookId == facebookProvider.userId;
 		}
 
+		public string customUserId
+		{
+			get{return customProvider != null ? customProvider.userId : "";}
+		}
+
+		public string facebookUserId
+		{
+			get{return facebookProvider != null ? facebookProvider.userId : "";}
+		}
+
 		protected void OnCustomLogout(string message)
 		{
-			if(!facebookProvider.isLoggedIn)
+			if(facebookProvider == null || !facebookProvider.isLoggedIn)
 			{
-				
+				//Ya no hay usuario
+				logout();
 			}
 		}
 
 		protected void OnFacebookLogout(string message)
 		{
+			if(customProvider == null || !customProvider.isLoggedIn)
+			{
+				//Ya no hay usuario
+				logout();
+			}
+		}
 
+		protected virtual void logout()
+		{
+			server.stopAndRemoveCurrentRequests();
+			currentUser = null;
+		}
+
+		protected virtual void OnUserReceived(GameUser user)
+		{
+			currentUser = user;
+		}
+
+		protected virtual void OnDataReceived(string fullData)
+		{
+			
+		}
+
+		protected virtual void OnDataUpdated(string updatedData)
+		{
+			
 		}
 	}
 }
