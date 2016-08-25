@@ -454,13 +454,13 @@ public class MapManager : MonoBehaviour
 
 		initializeLevels ();
 		setLastLevelReached ();
-		Invoke ("setParalaxManager",0.05f);
+		Invoke ("setParalaxManager",0.06f);
 
 		if(!fromGame)
 		{
 			//showWorld ();
-			Invoke ("showWorld", 0.05f);
 		}
+		Invoke ("showWorld", 0.05f);
 		//setParalaxManager ();
 		paralaxManager.enabled = true;
 
@@ -548,6 +548,14 @@ public class MapManager : MonoBehaviour
 			//paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel( mapLevels [0]));
 			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(currentLevel));
 		}
+
+
+	}
+
+	protected void activateStairs()
+	{
+		FindObjectOfType<Stairs> ().animateStairs ();
+
 	}
 
 	public void changeCurrentWorld(int world,bool isFirst, bool isLast)
@@ -712,6 +720,11 @@ public class MapManager : MonoBehaviour
 	{
 		worlds [currentWorld-1].SetActive (true);
 		WorldPrefab.SetActive (true);
+
+		if(toDoor)
+		{
+			Invoke ("activateStairs", 0.5f);
+		}
 	}
 
 	protected void deActivateWorld ()

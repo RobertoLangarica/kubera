@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Stairs : MonoBehaviour {
 
+	protected bool active;
 	protected MapManager mapManager;
 	public int toWorld;
 
@@ -14,10 +15,14 @@ public class Stairs : MonoBehaviour {
 	public void animateStairs()
 	{
 		//TODO animate
+		active = true;
 	}
 
 	public void onClick()
 	{
-		mapManager.changeCurrentWorld (toWorld,true,false);
+		if(active)
+		{			
+			mapManager.changeCurrentWorld (toWorld,true,false);
+		}
 	}
 }
