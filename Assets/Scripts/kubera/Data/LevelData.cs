@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using Data;
 
-namespace Data
+namespace Kubera.Data
 {
 	[Serializable]
 	public class LevelData : BasicData 
@@ -21,9 +22,11 @@ namespace Data
 			points = 0;
 		}
 
-		public override void updateFrom (BasicData readOnlyRemote)
+		public override void updateFrom (BasicData readOnlyRemote, bool ignoreVersion = false)
 		{
-			base.updateFrom (readOnlyRemote);
+			base.updateFrom (readOnlyRemote, ignoreVersion);
+
+			isDirty = false;
 
 			if(!updateOnlyIncrementalValues(((LevelData)readOnlyRemote).stars, ((LevelData)readOnlyRemote).points))
 			{

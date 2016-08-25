@@ -1,39 +1,41 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Data;
+using Kubera.Data.Sync;
 
-namespace Data
+namespace Kubera.Data
 {
 	public class LevelsDataManager : LocalDataManager<MultipleUsers>
 	{
+		public KuberaSyncManger syncManager;
+
 		protected Levels levelsList;
 
 		protected override void Start ()
 		{
 			base.Start ();
 			levelsList = PersistentData.GetInstance().levelsData;
-
-			//El usuario anonimo esta vacio
-			//currentData.getUserById(ANONYMOUS_USER).clear();
 		}
 
+		public KuberaUser currentUser{get{return currentData.getUserById(currentUserId);}}
 
 		protected override void fillDefaultData ()
 		{
 			base.fillDefaultData ();
 
 			//Usuario anonimo
-			currentData.users.Add(new UserLevels(ANONYMOUS_USER));
+			currentData.users.Add(new KuberaUser(ANONYMOUS_USER));
 		}
 
 		public void savePassedLevel(string levelName, int stars, int points)
 		{
-			LevelData level = currentUserLevels.getLevelById(levelName);
+			LevelData level = currentUser.getLevelById(levelName);
 
 			if(level != null)
 			{
-				level.isDirty = level.isDirty || level.updateOnlyIncrementalValues(stars, points);
-				level.isDirty = level.isDirty || level.updatePassed(true);
+				level.isDirty = level.updateOnlyIncrementalValues(stars, points) || level.isDirty;
+				level.isDirty = level.updatePassed(true) || level.isDirty;
 			}
 			else
 			{
@@ -42,19 +44,22 @@ namespace Data
 				level.stars		= stars;
 				level.passed	= true;
 				level.isDirty	= true;
-				currentUserLevels.addLevel(level);
+				currentUser.addLevel(level);
 			}
 
-			//Cuidamos de no sobreescribir al gun valor previo
+			//Cuidamos de no sobreescribir algun valor previo
 			currentData.isDirty = currentData.isDirty || level.isDirty;
 
-			//TODO: guardar en server
 			saveLocalData(false);
+
+			//TODO: guardar en server
+			//syncManager.updateData(data);
+
 		}
 
 		public bool isLevelPassed(string levelName)
 		{
-			LevelData level = currentUserLevels.getLevelById(levelName);
+			LevelData level = currentUser.getLevelById(levelName);
 
 			if(level != null)
 			{
@@ -101,7 +106,7 @@ namespace Data
 
 		public bool isLevelLocked(string levelName)
 		{
-			LevelData level =  currentUserLevels.getLevelById(levelName);
+			LevelData level =  currentUser.getLevelById(levelName);
 
 			if(level != null)
 			{
@@ -113,25 +118,29 @@ namespace Data
 
 		public void unlockLevel(string levelName)
 		{
-			LevelData level =  currentUserLevels.getLevelById(levelName);
+			LevelData level =  currentUser.getLevelById(levelName);
 
 			if(level != null)
 			{
-				level.isDirty = level.isDirty || level.updateLocked(false);
+				level.isDirty = level.updateLocked(false) || level.isDirty;
 			}
 			else
 			{
 				level = new LevelData(levelName);
 				level.locked = false;
 				level.isDirty = true;
-				currentUserLevels.addLevel(level);
+				currentUser.addLevel(level);
 			}
 
 			//Cuidamos de no sobreescribir algun valor previo
 			currentData.isDirty = currentData.isDirty || level.isDirty;
 
-			//TODO: Guardar al servidor
+
 			saveLocalData(false);
+
+			//TODO: Guardar al servidor
+
+			//syncManager.updateData(data);
 		}
 
 
@@ -169,7 +178,7 @@ namespace Data
 
 		public int getLevelStars(string levelName)
 		{
-			LevelData level = currentUserLevels.getLevelById(levelName);
+			LevelData level = currentUser.getLevelById(levelName);
 
 			if(level == null)
 			{
@@ -193,7 +202,7 @@ namespace Data
 
 		public int getLevelPoints(string levelName)
 		{
-			LevelData level = currentUserLevels.getLevelById(levelName);
+			LevelData level = currentUser.getLevelById(levelName);
 
 			if(level == null)
 			{
@@ -203,17 +212,68 @@ namespace Data
 			return level.points;
 		}
 
-		public UserLevels currentUserLevels
+		public void temporalUserChangeWithFacebookId(string facebookId)
 		{
-			get
-			{
-				return currentData.getUserById(currentUserId);
-			}
-		}
+			string newId;
+			KuberaUser user;
 
+			if(currentUserId == ANONYMOUS_USER)
+			{
+				//El nuevo usuario existe?
+				if(currentData.getUserByFacebookId(facebookId) == null)
+				{
+					//Este usuario toma los datos anonimos
+					user = currentData.getUserById(ANONYMOUS_USER);
+
+					user.id = facebookId;
+					user.facebookId = facebookId;
+					newId = facebookId;
+
+					//Agregamos un nuevo usuario anonimo
+					currentData.users.Add(new KuberaUser(ANONYMOUS_USER));
+				}
+				else
+				{
+					//Diff de los datos sin verificar version
+					user = currentData.getUserByFacebookId(facebookId);
+					user.compareAndUpdate(currentUser, true);
+					newId = user.id;
+					//Limpiamos al usuario anonimo
+					currentUser.clear();
+				}
+			}
+			else
+			{
+				//El nuevo usuario existe?
+				if(currentData.getUserByFacebookId(facebookId) == null)
+				{
+					user = new KuberaUser(facebookId);
+					user.facebookId = facebookId;
+					newId = facebookId;
+					currentData.users.Add(user);
+
+				}
+				else
+				{
+					//Hay un cambio de usuario sin consecuencias
+					newId = currentData.getUserByFacebookId(facebookId).id;
+				}
+			}
+
+			currentUserId = newId;
+			currentData.isDirty = currentUser.isDirty;
+			saveLocalData(false);
+		}
+			
 		public override void changeCurrentuser (string newUserId)
 		{
-			//Si es anoanimo hay que ver si los avances se guardan
+			if(currentUserId == newUserId)
+			{
+				//No hay cambios que hacer
+				return;	
+			}
+
+			//Si es anonimo hay que ver si los avances se guardan
 			if(currentUserId == ANONYMOUS_USER)
 			{
 				//El nuevo usuario existe?
@@ -223,17 +283,76 @@ namespace Data
 					currentData.getUserById(ANONYMOUS_USER).id = newUserId;
 
 					//Agregamos un nuevo usuario anonimo
-					currentData.users.Add(new UserLevels(ANONYMOUS_USER));
-					saveLocalData(false);
+					currentData.users.Add(new KuberaUser(ANONYMOUS_USER));
+				}
+				else
+				{
+					//Diff de los datos sin verificar version
+					currentData.getUserById(newUserId).compareAndUpdate(currentUser, true);
+					//Limpiamos al usuario anonimo
+					currentUser.clear();
+				}
+			}
+			else
+			{
+				//El nuevo usuario existe?
+				if(currentData.getUserById(newUserId) == null)
+				{
+					currentData.users.Add(new KuberaUser(newUserId));
+				}
+				else
+				{
+					//Hay un cambio de usuario sin consecuencias
 				}
 			}
 
-			//TODO: Detenemos las request del usuario anterior
 			base.changeCurrentuser (newUserId);
 
-			currentData.isDirty = currentUserLevels.isDirty;
+			currentData.isDirty = currentUser.isDirty;
+			saveLocalData(false);
+			Debug.Log("Current user: "+currentUserId);
+		}
+			
 
-			//TODO: Bajamos los datos y despues de bajar subimos lo necesario
+		public override void setUserAsAnonymous ()
+		{
+			base.setUserAsAnonymous ();
+			currentData.isDirty = currentUser.isDirty;
+		}
+
+		public void diffUser(KuberaUser remoteUser, bool ignoreVersion = false)
+		{
+			if(currentUserId != remoteUser.id)
+			{
+				Debug.Log("Se recibieron datos de otro usuario: "+currentUserId+","+ remoteUser.id);	
+				return;
+			}
+
+			currentUser.compareAndUpdate(remoteUser, ignoreVersion);
+		}
+
+		/**
+		 * Los datos de este usuario que necesiten subirse
+		 **/ 
+		public string getUserDirtyData()
+		{
+			KuberaUser user = currentUser;
+			KuberaUser tempUser = new KuberaUser(user.id);
+
+			if(!user.isDirty)
+			{
+				return "";
+			}
+
+			tempUser.facebookId = user.facebookId;
+			tempUser.levels = user.getDirtyLevels();
+
+			if(user.levels.Count == 0)
+			{
+				return "";
+			}
+
+			return JsonUtility.ToJson(tempUser);
 		}
 	}
 }

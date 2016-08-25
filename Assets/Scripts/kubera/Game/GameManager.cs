@@ -5,7 +5,7 @@ using ABC;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-using Data;
+using Kubera.Data;
 
 public class GameManager : MonoBehaviour 
 {
@@ -770,7 +770,7 @@ public class GameManager : MonoBehaviour
 		else 
 		{
 			//Se guarda en sus datos que ha pasado el nivel
-			(LevelsDataManager.GetInstance() as LevelsDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
+			( LevelsDataManager.GetInstance() as LevelsDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
 				hudManager.getEarnedStars(),pointsCount);
 
 			SceneManager.LoadScene ("Levels");

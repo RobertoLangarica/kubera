@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Kubera.Data;
 
 public class HomeManager : MonoBehaviour {
 
@@ -75,8 +76,7 @@ public class HomeManager : MonoBehaviour {
 	//HACK
 	public void ereaseData()
 	{
-		Data.LevelsDataManager.GetInstance ().deleteData ();
+		LevelsDataManager.GetInstance ().deleteData ();
 		PersistentData.GetInstance ().lifes = 2;
-		//Data.LevelsDataManager.GetInstance ().getCurrentData ().levels = new List<Data.LevelData> ();
 	}
 }
