@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Portal : MonoBehaviour {
+public class Stairs : MonoBehaviour {
 
 	protected MapManager mapManager;
 	public int toWorld;
@@ -11,8 +11,13 @@ public class Portal : MonoBehaviour {
 		mapManager = FindObjectOfType<MapManager> ();
 	}
 
+	public void animateStairs()
+	{
+		//TODO animate
+	}
+
 	public void onClick()
 	{
-		mapManager.changeCurrentWorld (toWorld,false,true);
+		mapManager.changeCurrentWorld (toWorld,true,false);
 	}
 }

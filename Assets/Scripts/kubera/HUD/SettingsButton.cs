@@ -21,7 +21,6 @@ public class SettingsButton : MonoBehaviour
 		if (AudioManager.GetInstance ()) 
 		{
 			//AudioManager.GetInstance ().Play ("fxButton");
-			setStateMusic ();
 
 			if (AudioManager.GetInstance ().activateMusic) 
 			{
@@ -33,6 +32,7 @@ public class SettingsButton : MonoBehaviour
 				AudioManager.GetInstance ().activateMusic = true;
 				UserDataManager.instance.isMusicActive = true;
 			}
+			setStateMusic ();
 		}
 	}
 
@@ -41,8 +41,6 @@ public class SettingsButton : MonoBehaviour
 		if(AudioManager.GetInstance())
 		{
 			//AudioManager.GetInstance().Play("fxButton");
-			setStateSounds ();
-
 			if(AudioManager.GetInstance().activateSounds)
 			{
 				AudioManager.GetInstance().activateSounds = false;
@@ -53,11 +51,15 @@ public class SettingsButton : MonoBehaviour
 				AudioManager.GetInstance().activateSounds = true;
 				UserDataManager.instance.isSoundEffectsActive = true;
 			}
+			setStateSounds ();
 		}
 	}
 
 	public void setStateMusic()
 	{
+		if (!AudioManager.GetInstance ()) {
+			return;
+		}
 		if (AudioManager.GetInstance().activateMusic) 
 		{
 			music.sprite = musicImages [0];
@@ -70,6 +72,9 @@ public class SettingsButton : MonoBehaviour
 
 	public void setStateSounds()
 	{
+		if (!AudioManager.GetInstance ()) {
+			return;
+		}
 		if (AudioManager.GetInstance().activateSounds) 
 		{
 			fx.sprite = soundsImages [0];

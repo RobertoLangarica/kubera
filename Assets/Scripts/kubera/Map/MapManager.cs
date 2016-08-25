@@ -24,7 +24,6 @@ public class MapManager : MonoBehaviour
 	protected LifesManager lifesHUDManager;
 	protected PopUpManager popUpManager;
 	protected ParalaxManager paralaxManager;
-	protected DoorsManager doorsManager;
 	protected InvitationToReview invitationToReview;
 	protected FriendsOnWorldManager friendsOnWorldManager;
 	private GoalManager		goalManager;
@@ -34,6 +33,8 @@ public class MapManager : MonoBehaviour
 	protected bool fromLoose;
 	protected bool toDoor;
 	protected bool toNextLevel;
+	protected bool first;
+	protected bool last;
 
 	protected MapLevel currentLevel = null;
 	protected MapLevel lastLevelPlayed = null;
@@ -48,7 +49,6 @@ public class MapManager : MonoBehaviour
 		popUpManager = FindObjectOfType<PopUpManager> ();
 		lifesHUDManager = FindObjectOfType<LifesManager> ();
 		paralaxManager = FindObjectOfType<ParalaxManager> ();
-		doorsManager = FindObjectOfType<DoorsManager> ();
 		goalManager = FindObjectOfType<GoalManager> ();
 		invitationToReview = FindObjectOfType<InvitationToReview> ();
 		friendsOnWorldManager = FindObjectOfType<FriendsOnWorldManager> ();
@@ -90,7 +90,8 @@ public class MapManager : MonoBehaviour
 	{
 		if (Input.GetKeyDown (KeyCode.A))
 		{
-			changeWorld ();
+			//changeWorld ();
+			Debug.Break ();
 		}
 	}
 
@@ -121,6 +122,8 @@ public class MapManager : MonoBehaviour
 			if(toNextLevel)
 			{
 				paralaxManager.setPosToNextLevel (nextLevel);
+				lastLevelPlayed.moveProgress (nextLevel);
+			
 				toNextLevel = false;
 			}
 			showWorld();
@@ -137,6 +140,13 @@ public class MapManager : MonoBehaviour
 			{
 				showWorld();
 				paralaxManager.setPosToNextLevel (nextLevel);
+				lastLevelPlayed.moveProgress (nextLevel);
+			}
+			else if(toDoor)
+			{
+				showWorld();
+				paralaxManager.setPosLastOrFirst (false);
+
 			}
 			else
 			{
@@ -167,13 +177,12 @@ public class MapManager : MonoBehaviour
 		worlds [world].SetActive (false);
 		WorldPrefab = (GameObject)Instantiate (worlds [world]);
 		WorldPrefab.transform.SetParent (worldParent,false);
-
-		doorsManager = FindObjectOfType<DoorsManager> ();
 	}
 
 	protected void initializeLevels()
 	{
 		List<Level> worldsLevels = new List<Level> ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelsOfWorld(currentWorld));
+		MapLevel lastLevel = null;
 
 		if(PersistentData.GetInstance().lastLevelReachedName == "")
 		{
@@ -183,11 +192,9 @@ public class MapManager : MonoBehaviour
 		
 		for (int i = 0; i < mapLevels.Count; i++)
 		{
-			print(mapLevels [i].status);
 			settingMapLevelInfo (mapLevels[i],worldsLevels[i]);
 			settingMapLevelStatus (mapLevels[i]);
 			setOnClickDelegates (mapLevels[i]);
-			print(mapLevels [i].status);
 
 			mapLevels [i].updateStatus();
 			mapLevels[i].updateStars();
@@ -218,52 +225,55 @@ public class MapManager : MonoBehaviour
 				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED)
 			{				
 				currentLevel = mapLevels [i];
-				print ("SSS");
+				
 				if(fromGame && PersistentData.GetInstance().currentLevel.name == mapLevels[i].fullLvlName) 
 				{
-					print ("entrando");
 					lastLevelPlayed = mapLevels [i];
 					if(i+1 < mapLevels.Count)
 					{
-						print ("entrando 2 ");
 						nextLevel = mapLevels [i+1];
-						isToNextLevel (mapLevels [i + 1]);
+						
 						if(mapLevels[i+1].status == MapLevel.EMapLevelsStatus.NORMAL_LOCKED ||mapLevels[i+1].status == MapLevel.EMapLevelsStatus.BOSS_LOCKED)
-						{							
-							print ("entrando 3 ");
+						{
+							lastLevel = mapLevels [i];
 							toNextLevel = true;
 						}
 					}
 				}
 				else if(nextLevel != null && nextLevel.fullLvlName == mapLevels[i].fullLvlName)
 				{
-					print ("a ver");
 					if(fromGame && nextLevel.fullLvlName == PersistentData.GetInstance().lastLevelReachedName)
 					{
-						print ("no!!");
+						print ("no");
 						toNextLevel = false;
 					}
 				}
 
-				/*if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
+				if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
 				{
 					toDoor = true;
-					if(doorsManager)
-					{						
-						doorsManager.DoorsCanOpen ();
-					}
-				}*/
+					//FindObjectOfType<Stairs> ().animateStairs ();
+				}
 			}
 		}
-	}
 
-	protected void isToNextLevel(MapLevel mapLvl)
-	{
-		print (mapLvl.status);
-		if(mapLvl.status == MapLevel.EMapLevelsStatus.NORMAL_LOCKED || mapLvl.status == MapLevel.EMapLevelsStatus.BOSS_LOCKED)
-		{							
-			print ("entrando 3 ");
+		if(!toNextLevel)
+		{
+			if(currentLevel != null)
+			{
+				print (currentLevel.fullLvlName);
+				currentLevel.myProgress ();
+			}
 		}
+		else
+		{
+			if(lastLevel)
+			{
+				print (lastLevel.fullLvlName);
+				lastLevel.myProgress ();
+			}
+		}
+
 	}
 
 	protected void settingMapLevelInfo(MapLevel level,Level data)
@@ -448,6 +458,7 @@ public class MapManager : MonoBehaviour
 
 		if(!fromGame)
 		{
+			//showWorld ();
 			Invoke ("showWorld", 0.05f);
 		}
 		//setParalaxManager ();
@@ -478,10 +489,16 @@ public class MapManager : MonoBehaviour
 		{
 			currentLevel = mapLevels [0];
 		}
-
-		if(toDoor)
+		
+		if(first)
 		{
-			paralaxManager.setPosToDoor ();
+			paralaxManager.setPosLastOrFirst(true);
+			first = false;
+		}
+		else if(last)
+		{
+			paralaxManager.setPosLastOrFirst(false);
+			last = false;
 		}
 		else if(fromGame)
 		{			
@@ -516,7 +533,14 @@ public class MapManager : MonoBehaviour
 				stopInput (true);
 			}
 
-			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(lastLevelPlayed));
+			if(toDoor)
+			{
+				paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(mapLevels[mapLevels.Count-1]));
+			}
+			else
+			{
+				paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(lastLevelPlayed));
+			}
 		}
 		else
 		{
@@ -526,9 +550,18 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
-	public void changeCurrentWorld(int world)
+	public void changeCurrentWorld(int world,bool isFirst, bool isLast)
 	{
 		currentWorld = world;
+
+		if(isFirst)
+		{
+			first = true;
+		}
+		else if(isLast)
+		{
+			last = true;
+		}
 
 		changeWorld ();
 	}
