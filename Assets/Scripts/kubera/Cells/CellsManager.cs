@@ -21,8 +21,20 @@ public class CellsManager : MonoBehaviour
 
 	protected float percentOfTheCellForInnerRect = 0.05f;
 
+	public Color firstCellCollor = new Color (0.39f, 0.79f, 0.81f);
+	public Color secondCellCollor = new Color (0.42f, 0.83f, 0.87f);
+	public Frame frame;
+
 	//Todas las celdas del grid
 	protected List<Cell> cells;
+
+	void Update()
+	{
+		if (Input.GetKeyDown (KeyCode.K)) 
+		{
+			getAvailableVerticalAndHorizontalLines ();
+		}
+	}
 
 	/*
 	 * Se crea la grid y se asigna cada celda como hijo de este gameObject.
@@ -57,10 +69,34 @@ public class CellsManager : MonoBehaviour
 					cellInstance = GameObject.Instantiate(cellPrefab,cellInitialPosition,Quaternion.identity) as GameObject;
 					cellInstance.GetComponent<SpriteRenderer> ().sortingOrder = -1;
 					cellInstance.transform.SetParent(transform);
+					cellInstance.name = cells.Count.ToString ();
 					cells.Add(cellInstance.GetComponent<Cell>());
 					cellInstance.transform.localScale = new Vector3 (cellScale,cellScale,cellScale);
 					
 					cellInitialPosition.x += cellSize + gap;
+
+					if(i % 2 == 0)
+					{
+						if(j % 2 == 0 )
+						{
+							cellInstance.GetComponent<SpriteRenderer> ().color = firstCellCollor;
+						}
+						else
+						{
+							cellInstance.GetComponent<SpriteRenderer> ().color = secondCellCollor;
+						}
+					}
+					else
+					{
+						if(j % 2 == 0 )
+						{
+							cellInstance.GetComponent<SpriteRenderer> ().color = secondCellCollor;
+						}
+						else
+						{
+							cellInstance.GetComponent<SpriteRenderer> ().color = firstCellCollor;
+						}
+					}
 				}
 				cellInitialPosition.y -= cellSize + gap;
 				cellInitialPosition.x = transform.position.x;
@@ -301,6 +337,142 @@ public class CellsManager : MonoBehaviour
 
 		result.AddRange(getCompletedHorizontalLines());
 		result.AddRange(getCompletedVerticalLines());
+
+		return result;
+	}
+
+	public List<List<Cell>> getAvailableHorizontalLines()
+	{
+		List<List<Cell>> result = new List<List<Cell>>(rows);
+		Cell cell;
+		bool keepAdding = false;
+		bool nothingFound = true;	
+		bool addRow = false;
+
+		for(int y = 0; y < rows; y++)
+		{
+			result.Add(new List<Cell>(columns));
+			keepAdding = true;
+			nothingFound = true;
+			addRow = true;
+
+			for(int x = 0; x < columns; x++)
+			{
+				cell = getCellAt(x,y);
+				if(!cell.occupied && cell.available)
+				{
+					if(cell.content == null && keepAdding)
+					{
+						result [result.Count - 1].Add (cell);
+						addRow = false;
+						nothingFound = false;
+					}
+					if(cell.contentType != Piece.EType.NONE)
+					{
+						//cell.name = "null";
+						if(!addRow)
+						{
+							result.Add(new List<Cell>(columns));
+						}
+						keepAdding = true;
+						addRow = true;
+						nothingFound = true;
+					}
+				}
+				else
+				{
+					if(keepAdding)
+					{
+						if(cell.contentType == Piece.EType.LETTER || cell.contentType == Piece.EType.LETTER_OBSTACLE || cell.contentType == Piece.EType.PIECE)
+						{
+							keepAdding = false;
+							result.RemoveAt(result.Count-1);
+
+							nothingFound = false;
+							addRow = false;
+						}
+					}
+				}
+			}
+			if(nothingFound)
+			{
+				result.RemoveAt(result.Count-1);
+
+			}
+		}
+
+		return result;
+	}
+
+	public List<List<Cell>> getAvailableVerticalLines()
+	{
+		List<List<Cell>> result = new List<List<Cell>>(columns);
+		Cell cell;
+		bool keepAdding = false;
+		bool nothingFound = true;	
+		bool addRow = false;
+
+		for(int x = 0; x < columns; x++)
+		{
+			result.Add(new List<Cell>(rows));
+
+			keepAdding = true;
+			nothingFound = true;
+			addRow = true;
+
+			for(int y = 0; y < rows; y++)
+			{
+				cell = getCellAt(x,y);
+				if(!cell.occupied && cell.available)
+				{
+					if(cell.content == null && keepAdding)
+					{
+						result [result.Count - 1].Add (cell);
+						addRow = false;
+						nothingFound = false;
+					}
+					if(cell.contentType != Piece.EType.NONE)
+					{
+						//cell.name = "null";
+						if(!addRow)
+						{
+							result.Add(new List<Cell>(columns));
+						}
+						keepAdding = true;
+						addRow = true;
+						nothingFound = true;
+					}
+				}
+				else
+				{
+					if(keepAdding)
+					{
+						if(cell.contentType == Piece.EType.LETTER || cell.contentType == Piece.EType.LETTER_OBSTACLE || cell.contentType == Piece.EType.PIECE)
+						{
+							keepAdding = false;
+							result.RemoveAt(result.Count-1);
+
+							nothingFound = false;
+							addRow = false;
+						}
+					}
+				}
+			}
+			if(nothingFound)
+			{
+				result.RemoveAt(result.Count-1);
+			}
+		}
+
+		return result;
+	}
+
+	public List<List<Cell>> getAvailableVerticalAndHorizontalLines()
+	{
+		List<List<Cell>> result = new List<List<Cell>>();
+
+		result.AddRange(getAvailableHorizontalLines());
+		result.AddRange(getAvailableVerticalLines());
 
 		return result;
 	}
@@ -645,6 +817,23 @@ public class CellsManager : MonoBehaviour
 	}
 
 	/*
+	 * regresa todas las celdas
+	 */
+	public Cell[] getAllShowedCels()
+	{
+		List<Cell> selection = new List<Cell>();
+
+		for(int i = 0;i < cells.Count;i++)
+		{
+			if(cells[i].cellType != Cell.EType.EMPTY_VISIBLE_CELL && cells[i].cellType != Cell.EType.EMPTY)
+			{
+				selection.Add(cells[i]);
+			}
+		}
+		return selection.ToArray();
+	}
+
+	/*
 	 * Busca la celdas que sean del mismo color en toda la grid y los agrega a 'selected'
 	 * 
 	 * @params cell{Cell}: Celda de la que se tomara su color comop parametro para evaluar
@@ -729,7 +918,7 @@ public class CellsManager : MonoBehaviour
 	public Piece.EColor colorRandom()
 	{
 		//HACK: Este rango existe por combinar tipos y colores
-		return (Piece.EColor)Random.Range (1, 9);
+		return (Piece.EColor)Random.Range (1, 6);
 	}
 
 	public Piece.EType getPredominantColor()
@@ -778,4 +967,94 @@ public class CellsManager : MonoBehaviour
 		}
 		return false;
 	}
+
+	public void createFrame()
+	{
+		bool left = false;
+		bool right = false;
+		bool top = false;
+		bool bottom = false;
+
+		for (int i = 0; i < rows; i++) 
+		{
+			for (int j = 0; j < columns; j++) 
+			{
+				left = false;
+             	right = false;
+             	top = false;
+				bottom = false;
+
+				if(cells[(i * rows) + j].cellType != Cell.EType.EMPTY)
+				{
+					//vecino de arriba
+					if( i== 0 || (i != 0 && cells[((i * rows) + j)-rows].cellType == Cell.EType.EMPTY))
+					{
+						frame.instanceFrames (frame.top, cells [(i * rows) + j].transform,-2);
+						//print ("marco arriba " + ((i * rows) + j));
+						top = true;
+					}
+					//vecino izquierdo
+					if(j== 0 ||(j != 0 && cells[((i * rows) + j)-1].cellType == Cell.EType.EMPTY))
+					{
+						frame.instanceFrames (frame.left, cells [(i * rows) + j].transform,-2);
+						//print ("marco izquierdo " + ((i * rows) + j));
+						left = true;
+					}
+					//vecino derecho
+					if(j== columns-1 || (j < columns+1 && cells[((i * rows) + j)+1].cellType == Cell.EType.EMPTY))
+					{
+						frame.instanceFrames (frame.right, cells [(i * rows) + j].transform,-2);
+						if(top)
+						{
+							frame.instanceFrames (frame.rightTopShadow, cells [(i * rows) + j].transform,-3);
+						}
+						else
+						{
+							frame.instanceFrames (frame.rightShadow, cells [(i * rows) + j].transform,-3);
+						}
+						//print ("marco derecho " + ((i * rows) + j));
+						right = true;
+					}
+					//vecino de abajo
+					if(i == rows-1 ||(i < rows +1  && cells[((i * rows) + j)+rows].cellType == Cell.EType.EMPTY))
+					{
+						frame.instanceFrames (frame.bottom, cells [(i * rows) + j].transform,-2);
+						if(left)
+						{
+							frame.instanceFrames (frame.bottonLeftShadow, cells [(i * rows) + j].transform,-3);
+						}
+						else
+						{							
+							frame.instanceFrames (frame.bottonShadow, cells [(i * rows) + j].transform,-3);
+						}
+						//print ("marco abajo " + ((i * rows) + j));
+						bottom = true;
+					}
+
+					if(left && top)
+					{
+						frame.instanceFrames (frame.leftTop, cells [(i * rows) + j].transform,-2);
+					}
+
+					if(top && right)
+					{
+						frame.instanceFrames (frame.topRight, cells [(i * rows) + j].transform,-2);
+					}
+
+					if(right && bottom)
+					{
+						frame.instanceFrames (frame.rightBottom, cells [(i * rows) + j].transform,-2);
+						frame.instanceFrames (frame.bottonRightShadow, cells [(i * rows) + j].transform,-3);
+					}
+
+					if (bottom && left)
+					{
+						frame.instanceFrames (frame.bottomLeft, cells [(i * rows) + j].transform,-2);
+					}
+				}
+			}
+		}
+	}
+
+
 }

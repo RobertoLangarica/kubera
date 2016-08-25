@@ -10,6 +10,10 @@ public class ParalaxLayers : MonoBehaviour {
 
 	void Awake()
 	{
+		if(rectTransform == null)
+		{
+			rectTransform = GetComponent<RectTransform> ();
+		}
 		content = FindObjectOfType<ParalaxManager> ();
 		content.OnMove += OnMove;
 		content.OnUnsubscribe += OnUnsubscribe;
@@ -17,7 +21,14 @@ public class ParalaxLayers : MonoBehaviour {
 
 	protected void OnMove(Vector2 pos)
 	{
-		rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x,pos.y*value);
+		if(value != -1)
+		{
+			rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x,pos.y*value);
+		}
+		else
+		{
+			rectTransform.anchoredPosition = rectTransform.anchoredPosition;
+		}
 	}
 
 	protected void OnUnsubscribe()

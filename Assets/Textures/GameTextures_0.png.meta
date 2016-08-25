@@ -1,0 +1,3198 @@
+fileFormatVersion: 2
+guid: b71b4e8e9378e364cac99955436162a8
+timeCreated: 1470345840
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: K-InGame_bar1
+    21300002: K-InGame_bar2
+    21300004: K-InGame_barlight
+    21300006: K-InGame_BaseTiles
+    21300008: K-InGame_BlackTile
+    21300010: K-InGame_BlueTile
+    21300012: K-InGame_DobleArrow
+    21300014: K-InGame_EmptyCircle
+    21300016: K-InGame_EmptyStar
+    21300018: K-InGame_Enter
+    21300020: K-InGame_Erase
+    21300022: K-InGame_fullCircle
+    21300024: K-InGame_FullStar
+    21300026: K-InGame_Gems
+    21300028: K-InGame_HUDbase
+    21300030: K-InGame_lvl
+    21300032: K-InGame_PWRBlock
+    21300034: K-InGame_PWRBomb
+    21300036: K-InGame_PWRLetter
+    21300038: K-InGame_PWRRotate
+    21300040: K-InGame_PWRThunder
+    21300042: K-InGame_PWRTip
+    21300044: K-InGame_settings
+    21300046: K-InGame_SpecialBlackTile
+    21300048: K-InGame_SpecialTile
+    21300050: K-InGame_Stars1
+    21300052: K-InGame_Stars2
+    21300054: K-InGame_WhiteTile
+    21300056: K-InGame_Tetrisblue
+    21300058: K-InGame_Tetrisgreen
+    21300060: K-InGame_Tetrisorange
+    21300062: K-InGame_Tetrispink
+    21300064: K-InGame_Tetrispurple
+    21300066: K-InGame_Tetrisyellow
+    21300068: letras-K-InGame_BlackTile
+    21300070: letras-K-InGame_BlueTile
+    21300072: letras-K-InGame_SpecialBlackTile
+    21300074: letras-K-InGame_SpecialTile
+    21300076: letras-K-InGame_WhiteTile
+    21300078: tetris-K-InGame_Tetrisblue
+    21300080: tetris-K-InGame_Tetrisgreen
+    21300082: tetris-K-InGame_Tetrisorange
+    21300084: tetris-K-InGame_Tetrispink
+    21300086: tetris-K-InGame_Tetrispurple
+    21300088: tetris-K-InGame_Tetrisyellow
+    21300090: K-InGame_Rotatetetris
+    21300092: tetris-K-InGame_Tetrissoft
+    21300094: K-InGame_Aspiradora
+    21300096: K-InGame_WordsBase
+    21300098: K-InGame_boardCorner
+    21300100: K-InGame_glow circulo
+    21300102: K-InGame_glow cuadrado
+    21300104: letras-K-InGame_bloquedTile
+    21300106: powerupsMove-K-InGame_pwrblockmove
+    21300108: Square
+    21300110: K-InGame_boardoutline
+    21300112: letras-K-InGame_bloquedBlackTile
+    21300114: gemas0001
+    21300116: glow0001
+    21300118: K-Tutoriales_ArrowTetris
+    21300120: K-Tutoriales_Arrowup
+    21300122: K-Tutoriales_Arrowuppq
+    21300124: K-Tutoriales_Estrellita
+    21300126: K-Tutoriales_Estrellita0001
+    21300128: movimientos0001
+    21300130: objetivo0001
+    21300132: palabras0001
+    21300134: glowcuadrado0001
+    21300136: glowhuevo0001
+    21300138: k-ejemploAnim20000
+    21300140: K-InGame_BaseTilesGray
+    21300142: tetris-K-InGame_Tetrisgray
+    21300144: piezasglow
+    21300146: bolitaanimada
+    21300148: Lvl1-2
+    21300150: Lvl1-3
+    21300152: Lvl1-4
+    21300154: Lvl1
+    21300156: puntaflecha
+    21300158: K-InGame_BACK1
+    21300160: K-InGame_BACK2
+    21300162: K-InGame_BACK3
+    21300164: K-InGame_musicOFF
+    21300166: K-InGame_musicON1
+    21300168: K-InGame_musicON2
+    21300170: K-InGame_ruedasettings
+    21300172: K-InGame_soundOFF
+    21300174: K-InGame_soundON1
+    21300176: K-InGame_soundON2
+    21300178: powerupsMove-bomba-sexbobomb0001
+    21300180: powerupsMove-bomba-sexbobomb0002
+    21300182: powerupsMove-bomba-sexbobomb0003
+    21300184: powerupsMove-bomba-sexbobomb0004
+    21300186: powerupsMove-bomba-sexbobomb0005
+    21300188: powerupsMove-bomba-sexbobomb0006
+    21300190: powerupsMove-bomba-sexbobomb0007
+    21300192: powerupsMove-bomba-sexbobomb0008
+    21300194: powerupsMove-bomba-sexbobomb0009
+    21300196: powerupsMove-bomba-sexbobomb0010
+    21300198: powerupsMove-bomba-sexbobomb0011
+    21300200: powerupsMove-bomba-sexbobomb0012
+    21300202: powerupsMove-bomba-sexbobomb0013
+    21300204: powerupsMove-comodin-comodin0001
+    21300206: powerupsMove-comodin-comodin0002
+    21300208: powerupsMove-comodin-comodin0003
+    21300210: powerupsMove-comodin-comodin0004
+    21300212: powerupsMove-comodin-comodin0005
+    21300214: powerupsMove-comodin-comodin0006
+    21300216: powerupsMove-comodin-comodin0007
+    21300218: powerupsMove-comodin-comodin0008
+    21300220: powerupsMove-comodin-comodin0009
+    21300222: powerupsMove-comodin-comodin0010
+    21300224: powerupsMove-Help-help0001
+    21300226: powerupsMove-Help-help0002
+    21300228: powerupsMove-Help-help0003
+    21300230: powerupsMove-Help-help0004
+    21300232: powerupsMove-Help-help0005
+    21300234: powerupsMove-Help-help0006
+    21300236: powerupsMove-Help-help0007
+    21300238: powerupsMove-Help-help0008
+    21300240: powerupsMove-Help-help0009
+    21300242: powerupsMove-Help-help0010
+    21300244: powerupsMove-rotate-rotate0001
+    21300246: powerupsMove-rotate-rotate0002
+    21300248: powerupsMove-rotate-rotate0003
+    21300250: powerupsMove-rotate-rotate0004
+    21300252: powerupsMove-rotate-rotate0005
+    21300254: powerupsMove-rotate-rotate0006
+    21300256: powerupsMove-rotate-rotate0007
+    21300258: powerupsMove-rotate-rotate0008
+    21300260: powerupsMove-rotate-rotate0009
+    21300262: powerupsMove-rotate-rotate0010
+    21300264: powerupsMove-rotate-rotate0011
+    21300266: powerupsMove-rotate-rotate0012
+    21300268: powerupsMove-rotate-rotate0013
+    21300270: powerupsMove-rotate-rotate0014
+    21300272: powerupsMove-rotate-rotate0015
+    21300274: powerupsMove-rotate-rotate0016
+    21300276: powerupsMove-rotate-rotate0017
+    21300278: powerupsMove-rotate-rotate0018
+    21300280: powerupsMove-rotate-rotate0019
+    21300282: powerupsMove-rotate-rotate0020
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 4096
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: bolitaanimada
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 740
+        width: 85
+        height: 91
+      alignment: 9
+      pivot: {x: 0.5176471, y: 0.47802198}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -34, y: 47.5}
+        - {x: -44, y: 32.5}
+        - {x: -44, y: -32.5}
+        - {x: -31, y: -43.5}
+        - {x: 27, y: -43.5}
+        - {x: 41, y: -39.5}
+        - {x: 41, y: 33.5}
+        - {x: 34, y: 47.5}
+    - name: gemas0001
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 838
+        width: 76
+        height: 47
+      alignment: 9
+      pivot: {x: 0.5131579, y: 0.4574468}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -39, y: 25.5}
+        - {x: -39, y: -12.5}
+        - {x: -33, y: -21.5}
+        - {x: 15, y: -21.5}
+        - {x: 26, y: -16.5}
+        - {x: 37, y: -3.5}
+        - {x: 37, y: 25.5}
+      - - {x: -22, y: -8.5}
+        - {x: -5, y: 13.5}
+        - {x: 23, y: 8.5}
+        - {x: -3, y: 7.5}
+    - name: glow0001
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 1014
+        width: 172
+        height: 173
+      alignment: 9
+      pivot: {x: 0.5116279, y: 0.4913295}
+      border: {x: 106, y: 106, z: 106, w: 106}
+      outline:
+      - - {x: -86, y: 88}
+        - {x: -88, y: 83}
+        - {x: -88, y: -70}
+        - {x: -40, y: -85}
+        - {x: 65, y: -85}
+        - {x: 84, y: -62}
+        - {x: 84, y: 88}
+      - - {x: -60, y: -6}
+        - {x: -25, y: 55}
+        - {x: 53, y: 21}
+        - {x: 21, y: -52}
+    - name: glowcuadrado0001
+      rect:
+        serializedVersion: 2
+        x: 1125
+        y: 996
+        width: 167
+        height: 167
+      alignment: 9
+      pivot: {x: 0.50898206, y: 0.49101797}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -83, y: 85}
+        - {x: -85, y: 80}
+        - {x: -85, y: -82}
+        - {x: 82, y: -82}
+        - {x: 82, y: 85}
+      - - {x: -59, y: 59}
+        - {x: 56, y: 59}
+        - {x: 56, y: -56}
+        - {x: -59, y: -56}
+    - name: k-ejemploAnim20000
+      rect:
+        serializedVersion: 2
+        x: 1999
+        y: 1961
+        width: 41
+        height: 41
+      alignment: 9
+      pivot: {x: 0.4878049, y: 0.5121951}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -20, y: 20}
+        - {x: -20, y: -21}
+        - {x: 21, y: -21}
+        - {x: 21, y: 20}
+    - name: K-InGame_Aspiradora
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 1216
+        width: 180
+        height: 51
+      alignment: 9
+      pivot: {x: 0.5, y: 0.47058824}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -72, y: 27}
+        - {x: -90, y: 7}
+        - {x: -90, y: -22}
+        - {x: -89, y: -24}
+        - {x: 90, y: -24}
+        - {x: 90, y: -8}
+        - {x: 89, y: -1}
+        - {x: 71, y: 27}
+    - name: K-InGame_BACK1
+      rect:
+        serializedVersion: 2
+        x: 526
+        y: 185
+        width: 139
+        height: 141
+      alignment: 9
+      pivot: {x: 0.4856115, y: 0.5035461}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -34.5, y: 70}
+        - {x: -44.5, y: 68}
+        - {x: -67.5, y: 46}
+        - {x: -67.5, y: -32}
+        - {x: -60.5, y: -61}
+        - {x: -52.5, y: -71}
+        - {x: 47.5, y: -71}
+        - {x: 71.5, y: -60}
+        - {x: 71.5, y: 36}
+        - {x: 29.5, y: 70}
+    - name: K-InGame_BACK2
+      rect:
+        serializedVersion: 2
+        x: 622
+        y: 338
+        width: 139
+        height: 141
+      alignment: 9
+      pivot: {x: 0.4856115, y: 0.47517732}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -67.5, y: 74}
+        - {x: -67.5, y: -37}
+        - {x: -34.5, y: -67}
+        - {x: 68.5, y: -67}
+        - {x: 71.5, y: -57}
+        - {x: 71.5, y: 62}
+        - {x: 56.5, y: 74}
+    - name: K-InGame_BACK3
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 483
+        width: 139
+        height: 141
+      alignment: 9
+      pivot: {x: 0.4856115, y: 0.4858156}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 41.5, y: 64.5}
+        - {x: 21.5, y: 72.5}
+        - {x: -39.5, y: 72.5}
+        - {x: -67.5, y: 41.5}
+        - {x: -67.5, y: -37.5}
+        - {x: -39.5, y: -68.5}
+        - {x: 43.5, y: -68.5}
+        - {x: 71.5, y: -36.5}
+        - {x: 71.5, y: 32.5}
+        - {x: 68.5, y: 42.5}
+    - name: K-InGame_bar1
+      rect:
+        serializedVersion: 2
+        x: 1125
+        y: 1167
+        width: 406
+        height: 85
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5058824}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 188, y: 39}
+        - {x: 177, y: 42}
+        - {x: -178, y: 42}
+        - {x: -189, y: 39}
+        - {x: -203, y: 22}
+        - {x: -203, y: -20}
+        - {x: -201, y: -29}
+        - {x: -184, y: -40}
+        - {x: -177, y: -43}
+        - {x: 179, y: -43}
+        - {x: 187, y: -38}
+        - {x: 203, y: -20}
+        - {x: 203, y: 20}
+    - name: K-InGame_bar2
+      rect:
+        serializedVersion: 2
+        x: 1535
+        y: 1179
+        width: 392
+        height: 73
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5068493}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 195, y: 29}
+        - {x: 179, y: 36}
+        - {x: -175, y: 36}
+        - {x: -196, y: 24}
+        - {x: -196, y: -17}
+        - {x: -184, y: -32}
+        - {x: -174, y: -37}
+        - {x: 174, y: -37}
+        - {x: 184, y: -31}
+        - {x: 196, y: -20}
+        - {x: 196, y: 25}
+    - name: K-InGame_barlight
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 1397
+        width: 334
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-InGame_BaseTiles
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1571
+        width: 910
+        height: 125
+      alignment: 9
+      pivot: {x: 0.50164837, y: 0.544}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 433.5, y: -59}
+        - {x: 444.5, y: -47}
+        - {x: 448.5, y: -42}
+        - {x: 452.5, y: -33}
+        - {x: 453.5, y: -30}
+        - {x: 453.5, y: 7}
+        - {x: 452.5, y: 10}
+        - {x: 443.5, y: 29}
+        - {x: 439.5, y: 35}
+        - {x: 430.5, y: 44}
+        - {x: 429.5, y: 44}
+        - {x: 425.5, y: 48}
+        - {x: 420.5, y: 52}
+        - {x: 413.5, y: 55}
+        - {x: 407.5, y: 57}
+        - {x: -412.5, y: 57}
+        - {x: -420.5, y: 55}
+        - {x: -427.5, y: 52}
+        - {x: -433.5, y: 48}
+        - {x: -443.5, y: 38}
+        - {x: -447.5, y: 33}
+        - {x: -449.5, y: 31}
+        - {x: -454.5, y: 20}
+        - {x: -456.5, y: 14}
+        - {x: -456.5, y: -18}
+        - {x: -453.5, y: -27}
+        - {x: -451.5, y: -32}
+        - {x: -449.5, y: -34}
+        - {x: -445.5, y: -41}
+        - {x: -435.5, y: -51}
+        - {x: -431.5, y: -53}
+        - {x: -424.5, y: -59}
+        - {x: -419.5, y: -63}
+        - {x: -410.5, y: -67}
+        - {x: -404.5, y: -68}
+        - {x: 415.5, y: -68}
+        - {x: 420.5, y: -66}
+        - {x: 427.5, y: -63}
+    - name: K-InGame_BaseTilesGray
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1700
+        width: 910
+        height: 126
+      alignment: 9
+      pivot: {x: 0.50109893, y: 0.5119048}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 435.99997, y: -52.5}
+        - {x: 441.99997, y: -46.5}
+        - {x: 445.99997, y: -41.5}
+        - {x: 447.99997, y: -39.5}
+        - {x: 451.99997, y: -30.5}
+        - {x: 453.99997, y: -25.5}
+        - {x: 453.99997, y: 9.5}
+        - {x: 450.99997, y: 17.5}
+        - {x: 443.99997, y: 32.5}
+        - {x: 439.99997, y: 38.5}
+        - {x: 429.99997, y: 48.5}
+        - {x: 424.99997, y: 52.5}
+        - {x: 422.99997, y: 54.5}
+        - {x: 411.99997, y: 59.5}
+        - {x: 405.99997, y: 61.5}
+        - {x: -413.00003, y: 61.5}
+        - {x: -419.00003, y: 59.5}
+        - {x: -430.00003, y: 54.5}
+        - {x: -449.00003, y: 35.5}
+        - {x: -454.00003, y: 24.5}
+        - {x: -456.00003, y: 18.5}
+        - {x: -456.00003, y: -15.5}
+        - {x: -454.00003, y: -23.5}
+        - {x: -448.00003, y: -33.5}
+        - {x: -435.00003, y: -46.5}
+        - {x: -431.00003, y: -49.5}
+        - {x: -424.00003, y: -55.5}
+        - {x: -419.00003, y: -59.5}
+        - {x: -412.00003, y: -62.5}
+        - {x: -406.00003, y: -64.5}
+        - {x: 414.99997, y: -64.5}
+        - {x: 417.99997, y: -63.5}
+        - {x: 428.99997, y: -58.5}
+        - {x: 430.99997, y: -56.5}
+    - name: K-InGame_boardCorner
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 1918
+        width: 38
+        height: 38
+      alignment: 9
+      pivot: {x: 0.6, y: 0.675}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 9.199951, y: 12.349976}
+        - {x: -22.800049, y: 12.349976}
+        - {x: -22.800049, y: -25.650024}
+        - {x: 15.199951, y: -25.650024}
+        - {x: 15.199951, y: 5.3499756}
+        - {x: 11.199951, y: 10.349976}
+    - name: K-InGame_boardoutline
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 2007
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -20, y: 20}
+        - {x: -20, y: -20}
+        - {x: 20, y: -20}
+        - {x: 20, y: 20}
+    - name: K-InGame_DobleArrow
+      rect:
+        serializedVersion: 2
+        x: 1983
+        y: 899
+        width: 63
+        height: 59
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4915254}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 18.5, y: 30}
+        - {x: -13.5, y: 30}
+        - {x: -31.5, y: 22}
+        - {x: -31.5, y: -18}
+        - {x: -12.5, y: -29}
+        - {x: 18.5, y: -29}
+        - {x: 27.5, y: -26}
+        - {x: 31.5, y: -23}
+        - {x: 31.5, y: 18}
+        - {x: 28.5, y: 28}
+    - name: K-InGame_EmptyCircle
+      rect:
+        serializedVersion: 2
+        x: 1999
+        y: 1894
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-InGame_EmptyStar
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 1131
+        width: 58
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 25, y: 14}
+        - {x: 12, y: 26}
+        - {x: 7, y: 28}
+        - {x: -15, y: 28}
+        - {x: -29, y: 20}
+        - {x: -29, y: -28}
+        - {x: 23, y: -28}
+        - {x: 26, y: -27}
+        - {x: 29, y: -6}
+        - {x: 29, y: 11}
+    - name: K-InGame_Enter
+      rect:
+        serializedVersion: 2
+        x: 1882
+        y: 962
+        width: 163
+        height: 138
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -74.5, y: 69}
+        - {x: -81.5, y: 62}
+        - {x: -81.5, y: -61}
+        - {x: -68.5, y: -69}
+        - {x: 74.5, y: -69}
+        - {x: 81.5, y: -63}
+        - {x: 81.5, y: 56}
+        - {x: 73.5, y: 69}
+    - name: K-InGame_Erase
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 1088
+        width: 177
+        height: 124
+      alignment: 9
+      pivot: {x: 0.50282484, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -42, y: 62}
+        - {x: -89, y: 17}
+        - {x: -89, y: -13}
+        - {x: -37, y: -62}
+        - {x: 88, y: -62}
+        - {x: 88, y: 52}
+        - {x: 79, y: 62}
+    - name: K-InGame_fullCircle
+      rect:
+        serializedVersion: 2
+        x: 2022
+        y: 1896
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-InGame_FullStar
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 1075
+        width: 54
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9, y: 26}
+        - {x: -27, y: 18}
+        - {x: -27, y: -23}
+        - {x: -26, y: -26}
+        - {x: 27, y: -26}
+        - {x: 27, y: 11}
+        - {x: 11, y: 26}
+    - name: K-InGame_Gems
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 1148
+        width: 289
+        height: 179
+      alignment: 9
+      pivot: {x: 0.4982699, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 145, y: 15.5}
+        - {x: 145, y: 56.5}
+        - {x: 128, y: 79.5}
+        - {x: 112, y: 81.5}
+        - {x: -21, y: 89.5}
+        - {x: -95, y: 89.5}
+        - {x: -133, y: 64.5}
+        - {x: -144, y: 47.5}
+        - {x: -144, y: -30.5}
+        - {x: -140, y: -57.5}
+        - {x: -96, y: -89.5}
+        - {x: 22, y: -89.5}
+        - {x: 41, y: -66.5}
+        - {x: 39, y: -8.5}
+        - {x: 130, y: -4.5}
+    - name: K-InGame_HUDbase
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1191
+        width: 644
+        height: 376
+      alignment: 9
+      pivot: {x: 0.4976708, y: 0.50265956}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 162.5, y: -167}
+        - {x: 163.5, y: -163}
+        - {x: 180.5, y: -137}
+        - {x: 190.5, y: -134}
+        - {x: 194.5, y: -132}
+        - {x: 205.5, y: -123}
+        - {x: 213.5, y: -112}
+        - {x: 216.5, y: -96}
+        - {x: 265.5, y: -96}
+        - {x: 272.5, y: -95}
+        - {x: 286.5, y: -89}
+        - {x: 290.5, y: -86}
+        - {x: 299.5, y: -76}
+        - {x: 304.5, y: -68}
+        - {x: 310.5, y: -53}
+        - {x: 323.5, y: 43}
+        - {x: 323.5, y: 74}
+        - {x: 322.5, y: 77}
+        - {x: 315.5, y: 95}
+        - {x: 311.5, y: 101}
+        - {x: 299.5, y: 112}
+        - {x: 288.5, y: 117}
+        - {x: 278.5, y: 120}
+        - {x: 271.5, y: 121}
+        - {x: 203.5, y: 121}
+        - {x: 195.5, y: 161}
+        - {x: 187.5, y: 176}
+        - {x: 178.5, y: 185}
+        - {x: 173.5, y: 187}
+        - {x: -177.5, y: 187}
+        - {x: -182.5, y: 185}
+        - {x: -192.5, y: 173}
+        - {x: -201.5, y: 128}
+        - {x: -203.5, y: 121}
+        - {x: -274.5, y: 121}
+        - {x: -281.5, y: 120}
+        - {x: -292.5, y: 117}
+        - {x: -300.5, y: 113}
+        - {x: -311.5, y: 103}
+        - {x: -315.5, y: 99}
+        - {x: -320.5, y: 89}
+        - {x: -320.5, y: 53}
+        - {x: -319.5, y: 46}
+        - {x: -318.5, y: 31}
+        - {x: -316.5, y: 17}
+        - {x: -309.5, y: -25}
+        - {x: -307.5, y: -39}
+        - {x: -304.5, y: -56}
+        - {x: -294.5, y: -73}
+        - {x: -284.5, y: -81}
+        - {x: -269.5, y: -91}
+        - {x: -262.5, y: -94}
+        - {x: -252.5, y: -96}
+        - {x: -211.5, y: -96}
+        - {x: -210.5, y: -100}
+        - {x: -205.5, y: -111}
+        - {x: -197.5, y: -120}
+        - {x: -185.5, y: -129}
+        - {x: -173.5, y: -135}
+        - {x: -166.5, y: -137}
+        - {x: -160.5, y: -137}
+        - {x: -160.5, y: -154}
+        - {x: -159.5, y: -158}
+        - {x: -158.5, y: -161}
+        - {x: -155.5, y: -168}
+        - {x: -151.5, y: -173}
+        - {x: -145.5, y: -178}
+        - {x: -134.5, y: -186}
+        - {x: -128.5, y: -189}
+        - {x: 143.5, y: -189}
+        - {x: 156.5, y: -180}
+        - {x: 160.5, y: -172}
+    - name: K-InGame_lvl
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 1271
+        width: 180
+        height: 296
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 67, y: 96}
+        - {x: 61, y: 148}
+        - {x: 38, y: 148}
+        - {x: 37, y: 147}
+        - {x: 13, y: 83}
+        - {x: -56, y: 43}
+        - {x: -90, y: -71}
+        - {x: -90, y: -107}
+        - {x: -89, y: -116}
+        - {x: -74, y: -132}
+        - {x: 7, y: -148}
+        - {x: 53, y: -148}
+        - {x: 90, y: -33}
+        - {x: 90, y: 9}
+        - {x: 87, y: 19}
+    - name: K-InGame_musicOFF
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 743
+        width: 140
+        height: 141
+      alignment: 9
+      pivot: {x: 0.49285713, y: 0.4822695}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 73}
+        - {x: -52, y: 67}
+        - {x: -69, y: 48}
+        - {x: -69, y: -27}
+        - {x: -51, y: -68}
+        - {x: 37, y: -68}
+        - {x: 71, y: -48}
+        - {x: 71, y: 51}
+        - {x: 38, y: 73}
+    - name: K-InGame_musicON1
+      rect:
+        serializedVersion: 2
+        x: 382
+        y: 178
+        width: 140
+        height: 141
+      alignment: 9
+      pivot: {x: 0.49285713, y: 0.5177305}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 39, y: 68}
+        - {x: -39, y: 68}
+        - {x: -69, y: 58}
+        - {x: -69, y: -38}
+        - {x: -46, y: -73}
+        - {x: 64, y: -73}
+        - {x: 71, y: -50}
+        - {x: 71, y: 34}
+        - {x: 40, y: 67}
+    - name: K-InGame_musicON2
+      rect:
+        serializedVersion: 2
+        x: 478
+        y: 330
+        width: 140
+        height: 141
+      alignment: 9
+      pivot: {x: 0.49285713, y: 0.4929078}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -38, y: 71.5}
+        - {x: -69, y: 61.5}
+        - {x: -69, y: -33.5}
+        - {x: -41, y: -69.5}
+        - {x: 41, y: -69.5}
+        - {x: 71, y: -57.5}
+        - {x: 71, y: 41.5}
+        - {x: 46, y: 71.5}
+    - name: K-InGame_PWRBlock
+      rect:
+        serializedVersion: 2
+        x: 1522
+        y: 576
+        width: 124
+        height: 125
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -35, y: 62.5}
+        - {x: -62, y: 39.5}
+        - {x: -62, y: -52.5}
+        - {x: -33, y: -62.5}
+        - {x: 62, y: -62.5}
+        - {x: 62, y: 60.5}
+        - {x: 50, y: 62.5}
+    - name: K-InGame_PWRBomb
+      rect:
+        serializedVersion: 2
+        x: 1271
+        y: 659
+        width: 124
+        height: 126
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49603173}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -29, y: 63.5}
+        - {x: -62, y: 51.5}
+        - {x: -62, y: -58.5}
+        - {x: -48, y: -62.5}
+        - {x: 56, y: -62.5}
+        - {x: 62, y: -55.5}
+        - {x: 62, y: 57.5}
+        - {x: 51, y: 63.5}
+    - name: K-InGame_PWRLetter
+      rect:
+        serializedVersion: 2
+        x: 1524
+        y: 705
+        width: 124
+        height: 126
+      alignment: 9
+      pivot: {x: 0.5080645, y: 0.49603173}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 50, y: 63.5}
+        - {x: -41, y: 63.5}
+        - {x: -63, y: 51.5}
+        - {x: -63, y: -40.5}
+        - {x: -26, y: -62.5}
+        - {x: 33, y: -62.5}
+        - {x: 38, y: -61.5}
+        - {x: 61, y: -39.5}
+        - {x: 61, y: 30.5}
+    - name: K-InGame_PWRRotate
+      rect:
+        serializedVersion: 2
+        x: 1271
+        y: 529
+        width: 124
+        height: 126
+      alignment: 9
+      pivot: {x: 0.5080645, y: 0.49603173}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -45, y: 63.5}
+        - {x: -63, y: 42.5}
+        - {x: -63, y: -26.5}
+        - {x: -50, y: -57.5}
+        - {x: -34, y: -62.5}
+        - {x: 41, y: -62.5}
+        - {x: 61, y: -49.5}
+        - {x: 61, y: 56.5}
+        - {x: 37, y: 63.5}
+    - name: K-InGame_PWRThunder
+      rect:
+        serializedVersion: 2
+        x: 1136
+        y: 468
+        width: 124
+        height: 126
+      alignment: 9
+      pivot: {x: 0.5080645, y: 0.49603173}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -45, y: 63.5}
+        - {x: -63, y: 42.5}
+        - {x: -63, y: -26.5}
+        - {x: -50, y: -57.5}
+        - {x: -34, y: -62.5}
+        - {x: 41, y: -62.5}
+        - {x: 61, y: -49.5}
+        - {x: 61, y: 56.5}
+        - {x: 37, y: 63.5}
+    - name: K-InGame_PWRTip
+      rect:
+        serializedVersion: 2
+        x: 1652
+        y: 609
+        width: 124
+        height: 126
+      alignment: 9
+      pivot: {x: 0.5080645, y: 0.49603173}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -45, y: 63.5}
+        - {x: -63, y: 42.5}
+        - {x: -63, y: -26.5}
+        - {x: -50, y: -57.5}
+        - {x: -34, y: -62.5}
+        - {x: 41, y: -62.5}
+        - {x: 61, y: -49.5}
+        - {x: 61, y: 56.5}
+        - {x: 37, y: 63.5}
+    - name: K-InGame_Rotatetetris
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 739
+        width: 86
+        height: 92
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -43, y: -11}
+        - {x: -43, y: -27}
+        - {x: -31, y: -46}
+        - {x: 19, y: -46}
+        - {x: 40, y: -27}
+        - {x: 40, y: -6}
+        - {x: -22, y: -6}
+        - {x: -32, y: -7}
+      - - {x: -18, y: 46}
+        - {x: -40, y: 30}
+        - {x: -40, y: 6}
+        - {x: 24, y: 6}
+        - {x: 43, y: 9}
+        - {x: 43, y: 27}
+        - {x: 32, y: 46}
+    - name: K-InGame_ruedasettings
+      rect:
+        serializedVersion: 2
+        x: 1171
+        y: 1256
+        width: 824
+        height: 792
+      alignment: 9
+      pivot: {x: 0.4836165, y: 0.50252527}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 214.5, y: -375}
+        - {x: 248.5, y: -361}
+        - {x: 274.5, y: -349}
+        - {x: 310.5, y: -329}
+        - {x: 340.5, y: -308}
+        - {x: 371.5, y: -281}
+        - {x: 400.5, y: -252}
+        - {x: 416.5, y: -233}
+        - {x: 425.5, y: -212}
+        - {x: 425.5, y: -159}
+        - {x: 423.5, y: -152}
+        - {x: 410.5, y: -129}
+        - {x: 390.5, y: -110}
+        - {x: 364.5, y: -97}
+        - {x: 355.5, y: -95}
+        - {x: 325.5, y: -94}
+        - {x: 310.5, y: -97}
+        - {x: 291.5, y: -105}
+        - {x: 278.5, y: -115}
+        - {x: 248.5, y: -146}
+        - {x: 218.5, y: -169}
+        - {x: 188.5, y: -187}
+        - {x: 163.5, y: -199}
+        - {x: 136.5, y: -207}
+        - {x: 105.5, y: -215}
+        - {x: 78.5, y: -218}
+        - {x: 41.5, y: -218}
+        - {x: 9.5, y: -214}
+        - {x: -19.5, y: -207}
+        - {x: -56.5, y: -193}
+        - {x: -73.5, y: -184}
+        - {x: -96.5, y: -170}
+        - {x: -124.5, y: -148}
+        - {x: -148.5, y: -125}
+        - {x: -176.5, y: -86}
+        - {x: -196.5, y: -45}
+        - {x: -211.5, y: -1}
+        - {x: -217.5, y: 39}
+        - {x: -217.5, y: 82}
+        - {x: -213.5, y: 112}
+        - {x: -195.5, y: 171}
+        - {x: -181.5, y: 198}
+        - {x: -159.5, y: 232}
+        - {x: -149.5, y: 244}
+        - {x: -136.5, y: 259}
+        - {x: -129.5, y: 274}
+        - {x: -125.5, y: 291}
+        - {x: -124.5, y: 312}
+        - {x: -129.5, y: 333}
+        - {x: -131.5, y: 342}
+        - {x: -140.5, y: 357}
+        - {x: -147.5, y: 366}
+        - {x: -160.5, y: 378}
+        - {x: -172.5, y: 386}
+        - {x: -189.5, y: 394}
+        - {x: -242.5, y: 394}
+        - {x: -256.5, y: 390}
+        - {x: -272.5, y: 378}
+        - {x: -283.5, y: 368}
+        - {x: -307.5, y: 339}
+        - {x: -318.5, y: 324}
+        - {x: -322.5, y: 318}
+        - {x: -345.5, y: 282}
+        - {x: -367.5, y: 236}
+        - {x: -376.5, y: 212}
+        - {x: -391.5, y: 158}
+        - {x: -396.5, y: 123}
+        - {x: -398.5, y: 106}
+        - {x: -398.5, y: 14}
+        - {x: -394.5, y: -16}
+        - {x: -390.5, y: -37}
+        - {x: -383.5, y: -65}
+        - {x: -376.5, y: -89}
+        - {x: -370.5, y: -108}
+        - {x: -341.5, y: -169}
+        - {x: -327.5, y: -192}
+        - {x: -296.5, y: -234}
+        - {x: -282.5, y: -249}
+        - {x: -240.5, y: -290}
+        - {x: -211.5, y: -313}
+        - {x: -195.5, y: -325}
+        - {x: -166.5, y: -342}
+        - {x: -134.5, y: -358}
+        - {x: -93.5, y: -376}
+        - {x: -57.5, y: -387}
+        - {x: -20.5, y: -394}
+        - {x: -7.5, y: -396}
+        - {x: 1.5, y: -398}
+        - {x: 113.5, y: -398}
+        - {x: 147.5, y: -394}
+        - {x: 177.5, y: -386}
+        - {x: 199.5, y: -381}
+    - name: K-InGame_settings
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 629
+        width: 104
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -40, y: 53}
+        - {x: -52, y: 29}
+        - {x: -52, y: -53}
+        - {x: 52, y: -53}
+        - {x: 52, y: 26}
+        - {x: 35, y: 53}
+    - name: K-InGame_soundOFF
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 483
+        width: 140
+        height: 141
+      alignment: 9
+      pivot: {x: 0.49642858, y: 0.5035461}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -69.5, y: -41}
+        - {x: -35.5, y: -71}
+        - {x: 28.5, y: -71}
+        - {x: 70.5, y: -47}
+        - {x: 70.5, y: 40}
+        - {x: 61.5, y: 70}
+        - {x: -41.5, y: 70}
+        - {x: -69.5, y: 62}
+    - name: K-InGame_soundON1
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 743
+        width: 140
+        height: 141
+      alignment: 9
+      pivot: {x: 0.49642858, y: 0.5319149}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -65.5, y: 66}
+        - {x: -69.5, y: 58}
+        - {x: -69.5, y: -39}
+        - {x: -67.5, y: -54}
+        - {x: -36.5, y: -75}
+        - {x: 39.5, y: -75}
+        - {x: 51.5, y: -73}
+        - {x: 70.5, y: -43}
+        - {x: 70.5, y: 61}
+        - {x: 52.5, y: 66}
+    - name: K-InGame_soundON2
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 33
+        width: 140
+        height: 141
+      alignment: 9
+      pivot: {x: 0.49642858, y: 0.5070922}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 36.5, y: 69.5}
+        - {x: -46.5, y: 69.5}
+        - {x: -69.5, y: 48.5}
+        - {x: -69.5, y: -40.5}
+        - {x: -34.5, y: -71.5}
+        - {x: 56.5, y: -71.5}
+        - {x: 70.5, y: -35.5}
+        - {x: 70.5, y: 37.5}
+        - {x: 49.5, y: 66.5}
+    - name: K-InGame_Stars1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1102
+        width: 406
+        height: 85
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5058824}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 188, y: 39}
+        - {x: 177, y: 42}
+        - {x: -178, y: 42}
+        - {x: -189, y: 39}
+        - {x: -203, y: 22}
+        - {x: -203, y: -20}
+        - {x: -201, y: -29}
+        - {x: -184, y: -40}
+        - {x: -177, y: -43}
+        - {x: 179, y: -43}
+        - {x: 187, y: -38}
+        - {x: 203, y: -20}
+        - {x: 203, y: 20}
+    - name: K-InGame_Stars2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1013
+        width: 406
+        height: 85
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5058824}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 188, y: 39}
+        - {x: 177, y: 42}
+        - {x: -178, y: 42}
+        - {x: -189, y: 39}
+        - {x: -203, y: 22}
+        - {x: -203, y: -20}
+        - {x: -201, y: -29}
+        - {x: -184, y: -40}
+        - {x: -177, y: -43}
+        - {x: 179, y: -43}
+        - {x: 187, y: -38}
+        - {x: 203, y: -20}
+        - {x: 203, y: 20}
+    - name: K-InGame_WordsBase
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1830
+        width: 1167
+        height: 218
+      alignment: 9
+      pivot: {x: 0.4965724, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 583.5, y: -96}
+        - {x: 587.5, y: -87}
+        - {x: 587.5, y: 28}
+        - {x: 584.5, y: 35}
+        - {x: 581.5, y: 37}
+        - {x: 581.5, y: 39}
+        - {x: 578.5, y: 46}
+        - {x: 566.5, y: 58}
+        - {x: 559.5, y: 61}
+        - {x: 554.5, y: 62}
+        - {x: 553.5, y: 63}
+        - {x: 124.5, y: 63}
+        - {x: 116.5, y: 71}
+        - {x: 111.5, y: 75}
+        - {x: 107.5, y: 78}
+        - {x: 106.5, y: 78}
+        - {x: 101.5, y: 82}
+        - {x: 97.5, y: 85}
+        - {x: 76.5, y: 95}
+        - {x: 71.5, y: 97}
+        - {x: 59.5, y: 101}
+        - {x: 57.5, y: 101}
+        - {x: 53.5, y: 103}
+        - {x: 41.5, y: 106}
+        - {x: 36.5, y: 107}
+        - {x: 31.5, y: 107}
+        - {x: 30.5, y: 108}
+        - {x: 25.5, y: 108}
+        - {x: 24.5, y: 109}
+        - {x: -35.5, y: 109}
+        - {x: -49.5, y: 108}
+        - {x: -59.5, y: 106}
+        - {x: -67.5, y: 104}
+        - {x: -68.5, y: 103}
+        - {x: -75.5, y: 102}
+        - {x: -78.5, y: 101}
+        - {x: -79.5, y: 100}
+        - {x: -87.5, y: 98}
+        - {x: -92.5, y: 96}
+        - {x: -97.5, y: 93}
+        - {x: -99.5, y: 93}
+        - {x: -112.5, y: 87}
+        - {x: -114.5, y: 85}
+        - {x: -119.5, y: 83}
+        - {x: -121.5, y: 81}
+        - {x: -125.5, y: 79}
+        - {x: -128.5, y: 76}
+        - {x: -132.5, y: 73}
+        - {x: -137.5, y: 68}
+        - {x: -138.5, y: 68}
+        - {x: -143.5, y: 63}
+        - {x: -551.5, y: 63}
+        - {x: -555.5, y: 62}
+        - {x: -564.5, y: 58}
+        - {x: -576.5, y: 46}
+        - {x: -579.5, y: 39}
+        - {x: -579.5, y: -78}
+        - {x: -574.5, y: -89}
+        - {x: -567.5, y: -96}
+        - {x: -563.5, y: -98}
+        - {x: -556.5, y: -104}
+        - {x: -554.5, y: -106}
+        - {x: -547.5, y: -109}
+        - {x: 567.5, y: -109}
+        - {x: 569.5, y: -108}
+        - {x: 579.5, y: -100}
+        - {x: 579.5, y: -99}
+    - name: K-Tutoriales_Estrellita0001
+      rect:
+        serializedVersion: 2
+        x: 1709
+        y: 1006
+        width: 169
+        height: 169
+      alignment: 9
+      pivot: {x: 0.5088757, y: 0.49408284}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -79, y: 85.5}
+        - {x: -86, y: 79.5}
+        - {x: -86, y: -83.5}
+        - {x: 83, y: -83.5}
+        - {x: 83, y: 83.5}
+        - {x: 78, y: 85.5}
+      - - {x: -55, y: -53.5}
+        - {x: -55, y: 54.5}
+        - {x: 56, y: 56.5}
+        - {x: 33, y: -55.5}
+    - name: letras-K-InGame_BlackTile
+      rect:
+        serializedVersion: 2
+        x: 1535
+        y: 835
+        width: 142
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -68, y: 71}
+        - {x: -71, y: 69}
+        - {x: -71, y: -71}
+        - {x: 68, y: -71}
+        - {x: 71, y: -69}
+        - {x: 71, y: 71}
+    - name: letras-K-InGame_bloquedBlackTile
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 743
+        width: 142
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -68, y: 71}
+        - {x: -71, y: 69}
+        - {x: -71, y: -71}
+        - {x: 68, y: -71}
+        - {x: 71, y: -69}
+        - {x: 71, y: 71}
+    - name: letras-K-InGame_bloquedTile
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 1003
+        width: 142
+        height: 141
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4964539}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -71, y: 71}
+        - {x: -71, y: -69}
+        - {x: -69, y: -70}
+        - {x: 64, y: -70}
+        - {x: 71, y: -66}
+        - {x: 71, y: 67}
+        - {x: 65, y: 71}
+    - name: letras-K-InGame_BlueTile
+      rect:
+        serializedVersion: 2
+        x: 829
+        y: 1003
+        width: 142
+        height: 141
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4964539}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -71, y: 71}
+        - {x: -71, y: -60}
+        - {x: -65, y: -70}
+        - {x: 67, y: -70}
+        - {x: 71, y: -66}
+        - {x: 71, y: 67}
+        - {x: 65, y: 71}
+    - name: letras-K-InGame_SpecialBlackTile
+      rect:
+        serializedVersion: 2
+        x: 1837
+        y: 816
+        width: 142
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -62, y: 71}
+        - {x: -71, y: 68}
+        - {x: -71, y: -61}
+        - {x: -65, y: -71}
+        - {x: 67, y: -71}
+        - {x: 71, y: -69}
+        - {x: 71, y: 71}
+    - name: letras-K-InGame_SpecialTile
+      rect:
+        serializedVersion: 2
+        x: 1681
+        y: 739
+        width: 142
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -67, y: 71}
+        - {x: -71, y: 69}
+        - {x: -71, y: -57}
+        - {x: -67, y: -71}
+        - {x: 71, y: -71}
+        - {x: 71, y: 71}
+    - name: letras-K-InGame_WhiteTile
+      rect:
+        serializedVersion: 2
+        x: 1827
+        y: 670
+        width: 142
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -69, y: 71}
+        - {x: -71, y: 63}
+        - {x: -71, y: -71}
+        - {x: 68, y: -71}
+        - {x: 71, y: -69}
+        - {x: 71, y: 69}
+        - {x: 70, y: 71}
+    - name: Lvl1-2
+      rect:
+        serializedVersion: 2
+        x: 914
+        y: 1409
+        width: 209
+        height: 374
+      alignment: 9
+      pivot: {x: 0.5167464, y: 0.49465242}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 17, y: 115}
+        - {x: 25, y: 175}
+        - {x: 19, y: 189}
+        - {x: -54, y: 189}
+        - {x: -108, y: 104}
+        - {x: -108, y: -32}
+        - {x: -85, y: -71}
+        - {x: -28, y: -134}
+        - {x: 24, y: -185}
+        - {x: 94, y: -185}
+        - {x: 101, y: -181}
+        - {x: 101, y: -120}
+        - {x: -26, y: 13}
+    - name: Lvl1-3
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 293
+        width: 121
+        height: 331
+      alignment: 9
+      pivot: {x: 0.49173555, y: 0.4954683}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 56.5, y: 167}
+        - {x: -2.5, y: 167}
+        - {x: -11.5, y: 149}
+        - {x: -19.5, y: 120}
+        - {x: -59.5, y: -101}
+        - {x: -59.5, y: -157}
+        - {x: -50.5, y: -164}
+        - {x: 2.5, y: -164}
+        - {x: 45.5, y: -99}
+        - {x: 61.5, y: 3}
+        - {x: 61.5, y: 142}
+    - name: Lvl1-4
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 225
+        width: 83
+        height: 399
+      alignment: 9
+      pivot: {x: 0.5421687, y: 0.49498746}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -38, y: 201.5}
+        - {x: -43, y: 200.5}
+        - {x: -38, y: 173.5}
+        - {x: -45, y: 105.5}
+        - {x: -45, y: -78.5}
+        - {x: -36, y: -179.5}
+        - {x: -25, y: -197.5}
+        - {x: 35, y: -197.5}
+        - {x: 38, y: -190.5}
+        - {x: 38, y: 192.5}
+        - {x: 34, y: 201.5}
+    - name: Lvl1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 142
+        width: 137
+        height: 482
+      alignment: 9
+      pivot: {x: 0.5291971, y: 0.49688795}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 5.5, y: -45.5}
+        - {x: 29.5, y: 120.5}
+        - {x: 64.5, y: 185.5}
+        - {x: 64.5, y: 232.5}
+        - {x: 53.5, y: 242.5}
+        - {x: 6.5, y: 242.5}
+        - {x: -29.5, y: 202.5}
+        - {x: -72.5, y: 74.5}
+        - {x: -72.5, y: -62.5}
+        - {x: -43.5, y: -183.5}
+        - {x: 2.5, y: -239.5}
+        - {x: 62.5, y: -239.5}
+        - {x: 64.5, y: -229.5}
+        - {x: 64.5, y: -173.5}
+        - {x: 26.5, y: -114.5}
+    - name: movimientos0001
+      rect:
+        serializedVersion: 2
+        x: 1983
+        y: 758
+        width: 59
+        height: 68
+      alignment: 9
+      pivot: {x: 0.5338983, y: 0.4779412}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -21.5, y: 35.5}
+        - {x: -31.5, y: 24.5}
+        - {x: -31.5, y: -32.5}
+        - {x: 27.5, y: -32.5}
+        - {x: 27.5, y: 35.5}
+      - - {x: -4.5, y: 26.5}
+        - {x: 15.5, y: 17.5}
+        - {x: 18.5, y: -20.5}
+        - {x: -20.5, y: -24.5}
+    - name: objetivo0001
+      rect:
+        serializedVersion: 2
+        x: 1535
+        y: 1106
+        width: 170
+        height: 69
+      alignment: 9
+      pivot: {x: 0.49411765, y: 0.47826087}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -60, y: 36}
+        - {x: -84, y: 18}
+        - {x: -84, y: -33}
+        - {x: 86, y: -33}
+        - {x: 86, y: 20}
+        - {x: 75, y: 36}
+      - - {x: -45, y: 2}
+        - {x: -37, y: 12}
+        - {x: 31, y: 7}
+        - {x: 64, y: -17}
+    - name: palabras0001
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 1331
+        width: 299
+        height: 62
+      alignment: 9
+      pivot: {x: 0.50668895, y: 0.46774194}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -113.5, y: 33}
+        - {x: -147.5, y: 29}
+        - {x: -151.5, y: 21}
+        - {x: -151.5, y: -29}
+        - {x: 147.5, y: -29}
+        - {x: 147.5, y: 22}
+        - {x: 90.5, y: 33}
+      - - {x: -133.5, y: 5}
+        - {x: 23.5, y: 4}
+        - {x: 135.5, y: -17}
+        - {x: -138.5, y: -17}
+    - name: piezasglow
+      rect:
+        serializedVersion: 2
+        x: 914
+        y: 1787
+        width: 236
+        height: 39
+      alignment: 9
+      pivot: {x: 0.50211865, y: 0.46153846}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -118.5, y: 21}
+        - {x: -118.5, y: -18}
+        - {x: 117.5, y: -18}
+        - {x: 117.5, y: 21}
+      - - {x: -101.5, y: 7}
+        - {x: 100.5, y: 7}
+        - {x: 101.5, y: -4}
+        - {x: -102.5, y: -4}
+    - name: powerupsMove-bomba-sexbobomb0001
+      rect:
+        serializedVersion: 2
+        x: 1019
+        y: 869
+        width: 102
+        height: 130
+      alignment: 9
+      pivot: {x: 0.5539216, y: 0.56153846}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 11.5, y: 54}
+        - {x: 8.5, y: 53}
+        - {x: -56.5, y: 4}
+        - {x: -56.5, y: -56}
+        - {x: -47.5, y: -73}
+        - {x: 31.5, y: -73}
+        - {x: 41.5, y: -69}
+        - {x: 45.5, y: -20}
+        - {x: 45.5, y: 35}
+        - {x: 20.5, y: 54}
+      - - {x: 35.5, y: 57}
+        - {x: 29.5, y: 52}
+        - {x: 29.5, y: 45}
+        - {x: 31.5, y: 41}
+        - {x: 39.5, y: 41}
+        - {x: 45.5, y: 46}
+        - {x: 45.5, y: 57}
+    - name: powerupsMove-bomba-sexbobomb0002
+      rect:
+        serializedVersion: 2
+        x: 1399
+        y: 465
+        width: 106
+        height: 137
+      alignment: 9
+      pivot: {x: 0.5424528, y: 0.540146}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 23.5, y: 51}
+        - {x: -21.5, y: 51}
+        - {x: -57.5, y: 0}
+        - {x: -57.5, y: -68}
+        - {x: -39.5, y: -74}
+        - {x: 20.5, y: -74}
+        - {x: 30.5, y: -62}
+        - {x: 48.5, y: 8}
+        - {x: 48.5, y: 45}
+      - - {x: 26.5, y: 63}
+        - {x: 25.5, y: 58}
+        - {x: 25.5, y: 46}
+        - {x: 27.5, y: 45}
+        - {x: 35.5, y: 45}
+        - {x: 40.5, y: 53}
+        - {x: 40.5, y: 63}
+    - name: powerupsMove-bomba-sexbobomb0003
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 735
+        width: 105
+        height: 138
+      alignment: 9
+      pivot: {x: 0.54761904, y: 0.5362319}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 4.5, y: 46}
+        - {x: 1.5, y: 35}
+        - {x: 7.5, y: 33}
+        - {x: 13.5, y: 32}
+        - {x: 16.5, y: 32}
+        - {x: 11.5, y: 32}
+        - {x: 2.5, y: 30}
+        - {x: -57.5, y: 7}
+        - {x: -57.5, y: -74}
+        - {x: 33.5, y: -74}
+        - {x: 47.5, y: 23}
+        - {x: 47.5, y: 46}
+      - - {x: 20.5, y: 46}
+        - {x: 28.5, y: 46}
+        - {x: 32.5, y: 47}
+        - {x: 32.5, y: 64}
+        - {x: 19.5, y: 64}
+        - {x: 19.5, y: 49}
+    - name: powerupsMove-bomba-sexbobomb0004
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 70
+        width: 110
+        height: 151
+      alignment: 9
+      pivot: {x: 0.5318182, y: 0.49668875}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 6.5, y: 51}
+        - {x: -5.5, y: 45}
+        - {x: -58.5, y: -3}
+        - {x: -58.5, y: -57}
+        - {x: -55.5, y: -64}
+        - {x: -41.5, y: -75}
+        - {x: 24.5, y: -75}
+        - {x: 43.5, y: -42}
+        - {x: 48.5, y: -4}
+        - {x: 48.5, y: 51}
+      - - {x: 39.5, y: 29}
+        - {x: 34.5, y: 29}
+        - {x: 34.5, y: 20}
+        - {x: 44.5, y: 8}
+        - {x: 51.5, y: 8}
+        - {x: 51.5, y: 21}
+      - - {x: -15.5, y: 48}
+        - {x: -15.5, y: 40}
+        - {x: -13.5, y: 38}
+        - {x: 8.5, y: 38}
+        - {x: 8.5, y: 47}
+        - {x: 7.5, y: 48}
+      - - {x: 12.5, y: 64}
+        - {x: 12.5, y: 49}
+        - {x: 14.5, y: 44}
+        - {x: 25.5, y: 44}
+        - {x: 27.5, y: 48}
+        - {x: 27.5, y: 56}
+        - {x: 23.5, y: 64}
+      - - {x: 36.5, y: 76}
+        - {x: 31.5, y: 69}
+        - {x: 31.5, y: 62}
+        - {x: 34.5, y: 59}
+        - {x: 38.5, y: 59}
+        - {x: 46.5, y: 69}
+        - {x: 46.5, y: 76}
+    - name: powerupsMove-bomba-sexbobomb0005
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 341
+        width: 106
+        height: 139
+      alignment: 9
+      pivot: {x: 0.5518868, y: 0.53956836}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 5.5, y: 46}
+        - {x: 3.5, y: 42}
+        - {x: 3.5, y: 36}
+        - {x: 7.5, y: 33}
+        - {x: 13.5, y: 32}
+        - {x: 16.5, y: 32}
+        - {x: 11.5, y: 31}
+        - {x: 6.5, y: 33}
+        - {x: -33.5, y: 20}
+        - {x: -55.5, y: 2}
+        - {x: -58.5, y: -12}
+        - {x: -58.5, y: -52}
+        - {x: -42.5, y: -74}
+        - {x: -36.5, y: -75}
+        - {x: 12.5, y: -75}
+        - {x: 41.5, y: -64}
+        - {x: 47.5, y: 11}
+        - {x: 47.5, y: 46}
+      - - {x: 20.5, y: 46}
+        - {x: 28.5, y: 46}
+        - {x: 32.5, y: 47}
+        - {x: 32.5, y: 64}
+        - {x: 19.5, y: 64}
+        - {x: 19.5, y: 49}
+    - name: powerupsMove-bomba-sexbobomb0006
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 196
+        width: 108
+        height: 139
+      alignment: 9
+      pivot: {x: 0.5509259, y: 0.5467626}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 20.5, y: 51}
+        - {x: 2.5, y: 51}
+        - {x: -59.5, y: 9}
+        - {x: -59.5, y: -73}
+        - {x: -50.5, y: -76}
+        - {x: 15.5, y: -76}
+        - {x: 42.5, y: -41}
+        - {x: 48.5, y: -8}
+        - {x: 48.5, y: 45}
+      - - {x: 26.5, y: 63}
+        - {x: 25.5, y: 58}
+        - {x: 25.5, y: 46}
+        - {x: 27.5, y: 45}
+        - {x: 35.5, y: 45}
+        - {x: 40.5, y: 53}
+        - {x: 40.5, y: 63}
+    - name: powerupsMove-bomba-sexbobomb0007
+      rect:
+        serializedVersion: 2
+        x: 1019
+        y: 243
+        width: 105
+        height: 133
+      alignment: 9
+      pivot: {x: 0.56666666, y: 0.5714286}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 19.5, y: 19}
+        - {x: 17.5, y: 19}
+        - {x: 25.5, y: 18}
+        - {x: 28.5, y: 19}
+        - {x: 45.5, y: 16}
+        - {x: 45.5, y: 33}
+        - {x: 17.5, y: 54}
+        - {x: 4.5, y: 54}
+        - {x: -52.5, y: 31}
+        - {x: -59.5, y: 6}
+        - {x: -59.5, y: -68}
+        - {x: -47.5, y: -76}
+        - {x: 19.5, y: -76}
+        - {x: 30.5, y: -66}
+        - {x: 41.5, y: -18}
+        - {x: 24.5, y: 15}
+      - - {x: 35.5, y: 57}
+        - {x: 29.5, y: 52}
+        - {x: 29.5, y: 45}
+        - {x: 31.5, y: 41}
+        - {x: 39.5, y: 41}
+        - {x: 45.5, y: 46}
+        - {x: 45.5, y: 57}
+    - name: powerupsMove-bomba-sexbobomb0008
+      rect:
+        serializedVersion: 2
+        x: 1413
+        y: 747
+        width: 107
+        height: 138
+      alignment: 9
+      pivot: {x: 0.54672897, y: 0.54347825}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 16.5, y: 51}
+        - {x: -0.5, y: 51}
+        - {x: -57.5, y: 24}
+        - {x: -58.5, y: 18}
+        - {x: -58.5, y: -75}
+        - {x: 15.5, y: -75}
+        - {x: 40.5, y: -45}
+        - {x: 48.5, y: 11}
+        - {x: 48.5, y: 41}
+      - - {x: 26.5, y: 63}
+        - {x: 25.5, y: 58}
+        - {x: 25.5, y: 46}
+        - {x: 27.5, y: 45}
+        - {x: 35.5, y: 45}
+        - {x: 40.5, y: 53}
+        - {x: 40.5, y: 63}
+    - name: powerupsMove-bomba-sexbobomb0009
+      rect:
+        serializedVersion: 2
+        x: 1931
+        y: 1104
+        width: 117
+        height: 148
+      alignment: 9
+      pivot: {x: 0.491453, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -16.5, y: 67}
+        - {x: -19.5, y: 61}
+        - {x: -57.5, y: -7}
+        - {x: -57.5, y: -58}
+        - {x: -42.5, y: -74}
+        - {x: 34.5, y: -74}
+        - {x: 54.5, y: -52}
+        - {x: 54.5, y: 46}
+        - {x: -4.5, y: 67}
+      - - {x: 23.5, y: 66}
+        - {x: 19.5, y: 64}
+        - {x: 19.5, y: 50}
+        - {x: 23.5, y: 46}
+        - {x: 28.5, y: 46}
+        - {x: 32.5, y: 50}
+        - {x: 32.5, y: 62}
+        - {x: 29.5, y: 66}
+      - - {x: 53.5, y: 74}
+        - {x: 34.5, y: 54}
+        - {x: 34.5, y: 49}
+        - {x: 36.5, y: 46}
+        - {x: 40.5, y: 46}
+        - {x: 44.5, y: 48}
+        - {x: 59.5, y: 65}
+        - {x: 59.5, y: 74}
+    - name: powerupsMove-bomba-sexbobomb0010
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 72
+        width: 104
+        height: 136
+      alignment: 9
+      pivot: {x: 0.55288464, y: 0.5441176}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -4.5, y: 51}
+        - {x: -57.5, y: 9}
+        - {x: -57.5, y: -70}
+        - {x: -41.5, y: -74}
+        - {x: 32.5, y: -74}
+        - {x: 36.5, y: -73}
+        - {x: 46.5, y: -15}
+        - {x: 46.5, y: 51}
+      - - {x: 13.5, y: 62}
+        - {x: 12.5, y: 60}
+        - {x: 12.5, y: 50}
+        - {x: 15.5, y: 44}
+        - {x: 25.5, y: 44}
+        - {x: 27.5, y: 48}
+        - {x: 27.5, y: 58}
+        - {x: 26.5, y: 62}
+    - name: powerupsMove-bomba-sexbobomb0011
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 55
+        width: 104
+        height: 137
+      alignment: 9
+      pivot: {x: 0.5432692, y: 0.5328467}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 4.5, y: 46}
+        - {x: 1.5, y: 34}
+        - {x: 13.5, y: 32}
+        - {x: 11.5, y: 31}
+        - {x: 3.5, y: 28}
+        - {x: -41.5, y: 14}
+        - {x: -56.5, y: -8}
+        - {x: -56.5, y: -53}
+        - {x: -55.5, y: -61}
+        - {x: -37.5, y: -73}
+        - {x: 28.5, y: -73}
+        - {x: 47.5, y: -14}
+        - {x: 47.5, y: 46}
+      - - {x: 20.5, y: 46}
+        - {x: 28.5, y: 46}
+        - {x: 32.5, y: 47}
+        - {x: 32.5, y: 64}
+        - {x: 19.5, y: 64}
+        - {x: 19.5, y: 49}
+    - name: powerupsMove-bomba-sexbobomb0012
+      rect:
+        serializedVersion: 2
+        x: 1133
+        y: 328
+        width: 105
+        height: 136
+      alignment: 9
+      pivot: {x: 0.53809524, y: 0.5367647}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -6.5, y: 51}
+        - {x: -56.5, y: 16}
+        - {x: -56.5, y: -60}
+        - {x: -52.5, y: -73}
+        - {x: 33.5, y: -73}
+        - {x: 48.5, y: -35}
+        - {x: 48.5, y: 51}
+      - - {x: 26.5, y: 63}
+        - {x: 25.5, y: 58}
+        - {x: 25.5, y: 46}
+        - {x: 27.5, y: 45}
+        - {x: 35.5, y: 45}
+        - {x: 40.5, y: 53}
+        - {x: 40.5, y: 63}
+    - name: powerupsMove-bomba-sexbobomb0013
+      rect:
+        serializedVersion: 2
+        x: 1019
+        y: 869
+        width: 102
+        height: 130
+      alignment: 9
+      pivot: {x: 0.5539216, y: 0.56153846}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 11.5, y: 54}
+        - {x: 8.5, y: 53}
+        - {x: -56.5, y: 4}
+        - {x: -56.5, y: -56}
+        - {x: -47.5, y: -73}
+        - {x: 31.5, y: -73}
+        - {x: 41.5, y: -69}
+        - {x: 45.5, y: -20}
+        - {x: 45.5, y: 35}
+        - {x: 20.5, y: 54}
+      - - {x: 35.5, y: 57}
+        - {x: 29.5, y: 52}
+        - {x: 29.5, y: 45}
+        - {x: 31.5, y: 41}
+        - {x: 39.5, y: 41}
+        - {x: 45.5, y: 46}
+        - {x: 45.5, y: 57}
+    - name: powerupsMove-comodin-comodin0001
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 893
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -49.5, y: 49.5}
+        - {x: -49.5, y: -49.5}
+        - {x: 49.5, y: -49.5}
+        - {x: 49.5, y: 49.5}
+    - name: powerupsMove-comodin-comodin0002
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 893
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -49.5, y: 49.5}
+        - {x: -49.5, y: -49.5}
+        - {x: 49.5, y: -49.5}
+        - {x: 49.5, y: 49.5}
+    - name: powerupsMove-comodin-comodin0003
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 636
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -49.5, y: 49.5}
+        - {x: -49.5, y: -49.5}
+        - {x: 49.5, y: -49.5}
+        - {x: 49.5, y: 49.5}
+    - name: powerupsMove-comodin-comodin0004
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 636
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -49.5, y: 49.5}
+        - {x: -49.5, y: -49.5}
+        - {x: 49.5, y: -49.5}
+        - {x: 49.5, y: 49.5}
+    - name: powerupsMove-comodin-comodin0005
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 893
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -49.5, y: 49.5}
+        - {x: -49.5, y: -49.5}
+        - {x: 49.5, y: -49.5}
+        - {x: 49.5, y: 49.5}
+    - name: powerupsMove-comodin-comodin0006
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 636
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -49.5, y: 49.5}
+        - {x: -49.5, y: -49.5}
+        - {x: 49.5, y: -49.5}
+        - {x: 49.5, y: 49.5}
+    - name: powerupsMove-comodin-comodin0007
+      rect:
+        serializedVersion: 2
+        x: 523
+        y: 636
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -49.5, y: 49.5}
+        - {x: -49.5, y: -49.5}
+        - {x: 49.5, y: -49.5}
+        - {x: 49.5, y: 49.5}
+    - name: powerupsMove-comodin-comodin0008
+      rect:
+        serializedVersion: 2
+        x: 626
+        y: 636
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -49.5, y: 49.5}
+        - {x: -49.5, y: -49.5}
+        - {x: 49.5, y: -49.5}
+        - {x: 49.5, y: 49.5}
+    - name: powerupsMove-comodin-comodin0009
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 636
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -49.5, y: 49.5}
+        - {x: -49.5, y: -49.5}
+        - {x: 49.5, y: -49.5}
+        - {x: 49.5, y: 49.5}
+    - name: powerupsMove-comodin-comodin0010
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 893
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -49.5, y: 49.5}
+        - {x: -49.5, y: -49.5}
+        - {x: 49.5, y: -49.5}
+        - {x: 49.5, y: 49.5}
+    - name: powerupsMove-Help-help0001
+      rect:
+        serializedVersion: 2
+        x: 1098
+        y: 115
+        width: 73
+        height: 124
+      alignment: 9
+      pivot: {x: 0.51369864, y: 0.58064514}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 5.5, y: -42}
+        - {x: -16.5, y: -42}
+        - {x: -17.5, y: -44}
+        - {x: -17.5, y: -72}
+        - {x: 12.5, y: -72}
+        - {x: 14.5, y: -67}
+        - {x: 14.5, y: -46}
+        - {x: 11.5, y: -43}
+      - - {x: -33.5, y: 52}
+        - {x: -37.5, y: 46}
+        - {x: -37.5, y: -42}
+        - {x: 17.5, y: -42}
+        - {x: 35.5, y: -20}
+        - {x: 35.5, y: 42}
+        - {x: 30.5, y: 52}
+    - name: powerupsMove-Help-help0002
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 380
+        width: 76
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5197368, y: 0.5625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 7.5, y: -43}
+        - {x: -13.5, y: -43}
+        - {x: -16.5, y: -51}
+        - {x: -16.5, y: -70}
+        - {x: -12.5, y: -72}
+        - {x: 9.5, y: -72}
+        - {x: 13.5, y: -71}
+        - {x: 14.5, y: -69}
+        - {x: 14.5, y: -46}
+      - - {x: 29.5, y: 56}
+        - {x: -24.5, y: 56}
+        - {x: -39.5, y: 52}
+        - {x: -39.5, y: -34}
+        - {x: -35.5, y: -41}
+        - {x: 11.5, y: -41}
+        - {x: 36.5, y: -4}
+        - {x: 36.5, y: 43}
+        - {x: 33.5, y: 53}
+    - name: powerupsMove-Help-help0003
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 512
+        width: 79
+        height: 132
+      alignment: 9
+      pivot: {x: 0.51265824, y: 0.5378788}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9.5, y: -44}
+        - {x: -16.5, y: -51}
+        - {x: -16.5, y: -63}
+        - {x: -15.5, y: -68}
+        - {x: -13.5, y: -71}
+        - {x: 10.5, y: -71}
+        - {x: 13.5, y: -70}
+        - {x: 13.5, y: -52}
+        - {x: 6.5, y: -44}
+      - - {x: -24.5, y: 61}
+        - {x: -40.5, y: 56}
+        - {x: -40.5, y: 1}
+        - {x: -19.5, y: 3}
+        - {x: -13.5, y: 15}
+        - {x: -18.5, y: -31}
+        - {x: -12.5, y: -40}
+        - {x: 32.5, y: -40}
+        - {x: 38.5, y: -13}
+        - {x: 38.5, y: 61}
+    - name: powerupsMove-Help-help0004
+      rect:
+        serializedVersion: 2
+        x: 1450
+        y: 889
+        width: 81
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5123457, y: 0.5147059}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -12.5, y: -45}
+        - {x: -15.5, y: -52}
+        - {x: -15.5, y: -68}
+        - {x: -13.5, y: -70}
+        - {x: 12.5, y: -70}
+        - {x: 12.5, y: -51}
+        - {x: 5.5, y: -45}
+      - - {x: -23.5, y: 66}
+        - {x: -41.5, y: 52}
+        - {x: -41.5, y: 11}
+        - {x: -22.5, y: 3}
+        - {x: -16.5, y: -33}
+        - {x: -11.5, y: -39}
+        - {x: 12.5, y: -39}
+        - {x: 27.5, y: -33}
+        - {x: 39.5, y: 8}
+        - {x: 39.5, y: 56}
+        - {x: 23.5, y: 66}
+    - name: powerupsMove-Help-help0005
+      rect:
+        serializedVersion: 2
+        x: 795
+        y: 50
+        width: 83
+        height: 140
+      alignment: 9
+      pivot: {x: 0.5120482, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 5.5, y: -45}
+        - {x: -12.5, y: -45}
+        - {x: -14.5, y: -51}
+        - {x: -14.5, y: -68}
+        - {x: -10.5, y: -70}
+        - {x: 7.5, y: -70}
+        - {x: 12.5, y: -65}
+        - {x: 12.5, y: -53}
+        - {x: 9.5, y: -46}
+      - - {x: -42.5, y: 70}
+        - {x: -42.5, y: -37}
+        - {x: 15.5, y: -37}
+        - {x: 40.5, y: -11}
+        - {x: 40.5, y: 60}
+        - {x: 34.5, y: 70}
+    - name: powerupsMove-Help-help0006
+      rect:
+        serializedVersion: 2
+        x: 1451
+        y: 1029
+        width: 80
+        height: 134
+      alignment: 9
+      pivot: {x: 0.51875, y: 0.52238804}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 4.5, y: -45}
+        - {x: -9.5, y: -45}
+        - {x: -15.5, y: -52}
+        - {x: -15.5, y: -69}
+        - {x: -13.5, y: -70}
+        - {x: 9.5, y: -70}
+        - {x: 12.5, y: -65}
+        - {x: 12.5, y: -51}
+      - - {x: -41.5, y: 64}
+        - {x: -41.5, y: -39}
+        - {x: 19.5, y: -39}
+        - {x: 38.5, y: 3}
+        - {x: 38.5, y: 63}
+        - {x: 36.5, y: 64}
+    - name: powerupsMove-Help-help0007
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 1437
+        width: 77
+        height: 130
+      alignment: 9
+      pivot: {x: 0.512987, y: 0.54615384}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -8.5, y: -44}
+        - {x: -10.5, y: -45}
+        - {x: -15.5, y: -49}
+        - {x: -15.5, y: -64}
+        - {x: -13.5, y: -71}
+        - {x: 11.5, y: -71}
+        - {x: 13.5, y: -66}
+        - {x: 13.5, y: -48}
+        - {x: 7.5, y: -44}
+      - - {x: -35.5, y: 59}
+        - {x: -39.5, y: 45}
+        - {x: -39.5, y: 4}
+        - {x: -32.5, y: 2}
+        - {x: -17.5, y: 1}
+        - {x: -15.5, y: -34}
+        - {x: -11.5, y: -40}
+        - {x: 21.5, y: -40}
+        - {x: 37.5, y: 9}
+        - {x: 37.5, y: 50}
+        - {x: 24.5, y: 59}
+    - name: powerupsMove-Help-help0008
+      rect:
+        serializedVersion: 2
+        x: 1973
+        y: 628
+        width: 75
+        height: 126
+      alignment: 9
+      pivot: {x: 0.5133333, y: 0.56349206}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -12.5, y: -44}
+        - {x: -16.5, y: -49}
+        - {x: -16.5, y: -69}
+        - {x: -14.5, y: -71}
+        - {x: 10.5, y: -71}
+        - {x: 13.5, y: -70}
+        - {x: 13.5, y: -46}
+        - {x: 7.5, y: -44}
+      - - {x: 22.5, y: 55}
+        - {x: -28.5, y: 55}
+        - {x: -38.5, y: 44}
+        - {x: -38.5, y: -27}
+        - {x: -10.5, y: -41}
+        - {x: 7.5, y: -41}
+        - {x: 14.5, y: -31}
+        - {x: 36.5, y: 3}
+        - {x: 36.5, y: 50}
+    - name: powerupsMove-Help-help0009
+      rect:
+        serializedVersion: 2
+        x: 925
+        y: 212
+        width: 73
+        height: 125
+      alignment: 9
+      pivot: {x: 0.51369864, y: 0.576}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -11.5, y: -43}
+        - {x: -16.5, y: -53}
+        - {x: -16.5, y: -66}
+        - {x: -13.5, y: -72}
+        - {x: 12.5, y: -72}
+        - {x: 14.5, y: -71}
+        - {x: 14.5, y: -51}
+        - {x: 10.5, y: -43}
+      - - {x: -23.5, y: 53}
+        - {x: -37.5, y: 38}
+        - {x: -37.5, y: -3}
+        - {x: -14.5, y: -2}
+        - {x: -7.5, y: 24}
+        - {x: -12.5, y: 1}
+        - {x: -21.5, y: -41}
+        - {x: -16.5, y: -42}
+        - {x: 7.5, y: -42}
+        - {x: 35.5, y: -4}
+        - {x: 35.5, y: 39}
+        - {x: 31.5, y: 53}
+    - name: powerupsMove-Help-help0010
+      rect:
+        serializedVersion: 2
+        x: 1098
+        y: 115
+        width: 73
+        height: 124
+      alignment: 9
+      pivot: {x: 0.51369864, y: 0.58064514}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 5.5, y: -42}
+        - {x: -16.5, y: -42}
+        - {x: -17.5, y: -44}
+        - {x: -17.5, y: -72}
+        - {x: 12.5, y: -72}
+        - {x: 14.5, y: -67}
+        - {x: 14.5, y: -46}
+        - {x: 11.5, y: -43}
+      - - {x: -33.5, y: 52}
+        - {x: -37.5, y: 46}
+        - {x: -37.5, y: -42}
+        - {x: 17.5, y: -42}
+        - {x: 35.5, y: -20}
+        - {x: 35.5, y: 42}
+        - {x: 30.5, y: 52}
+    - name: powerupsMove-K-InGame_pwrblockmove
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 633
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -51, y: 51}
+        - {x: -51, y: -51}
+        - {x: 51, y: -51}
+        - {x: 51, y: 49}
+        - {x: 47, y: 51}
+    - name: powerupsMove-rotate-rotate0001
+      rect:
+        serializedVersion: 2
+        x: 1145
+        y: 733
+        width: 122
+        height: 132
+      alignment: 9
+      pivot: {x: 0.51229507, y: 0.50757575}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61.5, y: -11}
+        - {x: -62.5, y: -14}
+        - {x: -62.5, y: -45}
+        - {x: -47.5, y: -67}
+        - {x: 15.5, y: -67}
+        - {x: 28.5, y: -66}
+        - {x: 55.5, y: -38}
+        - {x: 55.5, y: -11}
+      - - {x: -23.5, y: 65}
+        - {x: -58.5, y: 55}
+        - {x: -58.5, y: 8}
+        - {x: 59.5, y: 8}
+        - {x: 59.5, y: 40}
+        - {x: 51.5, y: 65}
+    - name: powerupsMove-rotate-rotate0002
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 888
+        width: 132
+        height: 122
+      alignment: 9
+      pivot: {x: 0.5113636, y: 0.5081967}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -11.5, y: 3}
+        - {x: -67.5, y: 3}
+        - {x: -67.5, y: -49}
+        - {x: -64.5, y: -55}
+        - {x: -29.5, y: -62}
+        - {x: 19.5, y: -62}
+        - {x: 38.5, y: -58}
+        - {x: 44.5, y: -51}
+        - {x: 44.5, y: -15}
+      - - {x: 47.5, y: 60}
+        - {x: -37.5, y: 60}
+        - {x: -48.5, y: 57}
+        - {x: -48.5, y: 28}
+        - {x: -43.5, y: 21}
+        - {x: -29.5, y: 20}
+        - {x: 10.5, y: 4}
+        - {x: 41.5, y: -4}
+        - {x: 64.5, y: -4}
+        - {x: 64.5, y: 39}
+        - {x: 62.5, y: 52}
+    - name: powerupsMove-rotate-rotate0003
+      rect:
+        serializedVersion: 2
+        x: 1125
+        y: 869
+        width: 142
+        height: 123
+      alignment: 9
+      pivot: {x: 0.51760566, y: 0.50406504}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -70.5, y: 25}
+        - {x: -73.5, y: 10}
+        - {x: -73.5, y: -36}
+        - {x: -29.5, y: -62}
+        - {x: 26.5, y: -62}
+        - {x: 29.5, y: -59}
+        - {x: 29.5, y: -22}
+        - {x: -31.5, y: 25}
+      - - {x: -32.5, y: 61}
+        - {x: -34.5, y: 59}
+        - {x: -34.5, y: 37}
+        - {x: -28.5, y: 28}
+        - {x: -15.5, y: 30}
+        - {x: -8.5, y: 32}
+        - {x: 12.5, y: 5}
+        - {x: 36.5, y: -17}
+        - {x: 51.5, y: -24}
+        - {x: 63.5, y: -24}
+        - {x: 68.5, y: -14}
+        - {x: 68.5, y: 33}
+        - {x: 31.5, y: 61}
+    - name: powerupsMove-rotate-rotate0004
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 1041
+        width: 151
+        height: 122
+      alignment: 9
+      pivot: {x: 0.51324505, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -56.5, y: 44}
+        - {x: -60.5, y: 39}
+        - {x: -74.5, y: 22}
+        - {x: -77.5, y: 11}
+        - {x: -77.5, y: -11}
+        - {x: -36.5, y: -59}
+        - {x: -31.5, y: -61}
+        - {x: 8.5, y: -61}
+        - {x: 12.5, y: -60}
+        - {x: 12.5, y: -27}
+        - {x: -32.5, y: 44}
+      - - {x: 23.5, y: 61}
+        - {x: -18.5, y: 61}
+        - {x: -18.5, y: -3}
+        - {x: 33.5, y: -42}
+        - {x: 73.5, y: -42}
+        - {x: 73.5, y: 18}
+        - {x: 52.5, y: 41}
+    - name: powerupsMove-rotate-rotate0005
+      rect:
+        serializedVersion: 2
+        x: 1689
+        y: 885
+        width: 144
+        height: 117
+      alignment: 9
+      pivot: {x: 0.5104167, y: 0.4957265}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -50.5, y: 59}
+        - {x: -73.5, y: 40}
+        - {x: -73.5, y: -12}
+        - {x: -66.5, y: -44}
+        - {x: -34.5, y: -58}
+        - {x: -3.5, y: -58}
+        - {x: -3.5, y: -10}
+        - {x: -19.5, y: 59}
+      - - {x: 36.5, y: 59}
+        - {x: -2.5, y: 59}
+        - {x: -2.5, y: -3}
+        - {x: 3.5, y: -29}
+        - {x: 24.5, y: -56}
+        - {x: 52.5, y: -56}
+        - {x: 70.5, y: -28}
+        - {x: 70.5, y: 7}
+        - {x: 61.5, y: 25}
+    - name: powerupsMove-rotate-rotate0006
+      rect:
+        serializedVersion: 2
+        x: 1264
+        y: 398
+        width: 122
+        height: 127
+      alignment: 9
+      pivot: {x: 0.51229507, y: 0.48818898}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 7.5, y: 55}
+        - {x: 7.5, y: 48}
+        - {x: 11.5, y: 31}
+        - {x: 7.5, y: 11}
+        - {x: 7.5, y: -58}
+        - {x: 9.5, y: -62}
+        - {x: 55.5, y: -62}
+        - {x: 59.5, y: -53}
+        - {x: 59.5, y: 49}
+        - {x: 52.5, y: 55}
+      - - {x: -35.5, y: 65}
+        - {x: -62.5, y: 54}
+        - {x: -62.5, y: -20}
+        - {x: -57.5, y: -32}
+        - {x: -40.5, y: -51}
+        - {x: -10.5, y: -51}
+        - {x: -7.5, y: -35}
+        - {x: -7.5, y: 65}
+    - name: powerupsMove-rotate-rotate0007
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 1
+        width: 122
+        height: 134
+      alignment: 9
+      pivot: {x: 0.51229507, y: 0.48507464}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 11.5, y: 43}
+        - {x: -11.5, y: 1}
+        - {x: -11.5, y: -65}
+        - {x: 49.5, y: -65}
+        - {x: 59.5, y: -53}
+        - {x: 59.5, y: 33}
+        - {x: 56.5, y: 43}
+      - - {x: 12.5, y: 69}
+        - {x: -47.5, y: 69}
+        - {x: -62.5, y: 38}
+        - {x: -62.5, y: -22}
+        - {x: -57.5, y: -38}
+        - {x: -32.5, y: -38}
+        - {x: -26.5, y: -28}
+        - {x: 13.5, y: 52}
+        - {x: 13.5, y: 67}
+    - name: powerupsMove-rotate-rotate0008
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 323
+        width: 121
+        height: 148
+      alignment: 9
+      pivot: {x: 0.5082645, y: 0.4864865}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -31.5, y: -65}
+        - {x: -26.5, y: -72}
+        - {x: 29.5, y: -72}
+        - {x: 59.5, y: -39}
+        - {x: 59.5, y: 29}
+        - {x: 10.5, y: 29}
+        - {x: -31.5, y: 5}
+      - - {x: -61.5, y: -22}
+        - {x: -15.5, y: -22}
+        - {x: 34.5, y: 18}
+        - {x: 34.5, y: 69}
+        - {x: 20.5, y: 76}
+        - {x: -42.5, y: 76}
+        - {x: -61.5, y: 43}
+    - name: powerupsMove-rotate-rotate0009
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 739
+        width: 121
+        height: 150
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 32.5, y: 13}
+        - {x: -48.5, y: -25}
+        - {x: -48.5, y: -48}
+        - {x: -46.5, y: -50}
+        - {x: -23.5, y: -72}
+        - {x: -15.5, y: -74}
+        - {x: 5.5, y: -74}
+        - {x: 35.5, y: -54}
+        - {x: 60.5, y: -28}
+        - {x: 60.5, y: 13}
+      - - {x: -24.5, y: 76}
+        - {x: -33.5, y: 74}
+        - {x: -56.5, y: 43}
+        - {x: -60.5, y: 29}
+        - {x: -60.5, y: -5}
+        - {x: 6.5, y: -5}
+        - {x: 51.5, y: 8}
+        - {x: 51.5, y: 61}
+        - {x: 47.5, y: 76}
+    - name: powerupsMove-rotate-rotate0010
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 0
+        width: 120
+        height: 135
+      alignment: 9
+      pivot: {x: 0.4875, y: 0.5037037}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30.5, y: -3}
+        - {x: -58.5, y: -19}
+        - {x: -58.5, y: -60}
+        - {x: -46.5, y: -68}
+        - {x: 14.5, y: -68}
+        - {x: 44.5, y: -55}
+        - {x: 58.5, y: -30}
+        - {x: 58.5, y: -3}
+      - - {x: -23.5, y: 67}
+        - {x: -56.5, y: 42}
+        - {x: -56.5, y: 16}
+        - {x: -50.5, y: 11}
+        - {x: 54.5, y: 11}
+        - {x: 61.5, y: 15}
+        - {x: 61.5, y: 60}
+        - {x: 46.5, y: 67}
+    - name: powerupsMove-rotate-rotate0011
+      rect:
+        serializedVersion: 2
+        x: 884
+        y: 877
+        width: 131
+        height: 122
+      alignment: 9
+      pivot: {x: 0.4923664, y: 0.4918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -64.5, y: -4}
+        - {x: -64.5, y: -60}
+        - {x: 40.5, y: -60}
+        - {x: 51.5, y: -57}
+        - {x: 51.5, y: -4}
+      - - {x: -46.5, y: 51}
+        - {x: -46.5, y: 7}
+        - {x: -29.5, y: -1}
+        - {x: 66.5, y: -1}
+        - {x: 66.5, y: 47}
+        - {x: 62.5, y: 62}
+        - {x: -31.5, y: 62}
+        - {x: -41.5, y: 60}
+    - name: powerupsMove-rotate-rotate0012
+      rect:
+        serializedVersion: 2
+        x: 1271
+        y: 789
+        width: 138
+        height: 122
+      alignment: 9
+      pivot: {x: 0.48913044, y: 0.4918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -67.5, y: 15}
+        - {x: -67.5, y: -45}
+        - {x: -33.5, y: -60}
+        - {x: 24.5, y: -60}
+        - {x: 35.5, y: -58}
+        - {x: 39.5, y: -54}
+        - {x: 39.5, y: -18}
+        - {x: -22.5, y: 15}
+      - - {x: 33.5, y: 61}
+        - {x: 28.5, y: 62}
+        - {x: -24.5, y: 62}
+        - {x: -33.5, y: 56}
+        - {x: -33.5, y: 28}
+        - {x: 51.5, y: -20}
+        - {x: 64.5, y: -20}
+        - {x: 70.5, y: -14}
+        - {x: 70.5, y: 38}
+    - name: powerupsMove-rotate-rotate0013
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 915
+        width: 150
+        height: 122
+      alignment: 9
+      pivot: {x: 0.49, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -63.5, y: 33}
+        - {x: -73.5, y: 12}
+        - {x: -73.5, y: -53}
+        - {x: -49.5, y: -61}
+        - {x: 26.5, y: -61}
+        - {x: 26.5, y: -17}
+        - {x: -17.5, y: 33}
+      - - {x: 48.5, y: 61}
+        - {x: -19.5, y: 61}
+        - {x: -19.5, y: 14}
+        - {x: 21.5, y: -38}
+        - {x: 65.5, y: -38}
+        - {x: 73.5, y: -33}
+        - {x: 76.5, y: -16}
+        - {x: 76.5, y: 28}
+    - name: powerupsMove-rotate-rotate0014
+      rect:
+        serializedVersion: 2
+        x: 1535
+        y: 981
+        width: 150
+        height: 121
+      alignment: 9
+      pivot: {x: 0.49666667, y: 0.5041322}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -21.5, y: 28}
+        - {x: -36.5, y: 48}
+        - {x: -50.5, y: 48}
+        - {x: -74.5, y: 27}
+        - {x: -74.5, y: -23}
+        - {x: -65.5, y: -47}
+        - {x: -27.5, y: -61}
+        - {x: 11.5, y: -61}
+        - {x: 11.5, y: -42}
+        - {x: 8.5, y: -34}
+      - - {x: -3.5, y: 60}
+        - {x: -3.5, y: -53}
+        - {x: 58.5, y: -53}
+        - {x: 75.5, y: -25}
+        - {x: 75.5, y: 16}
+        - {x: 42.5, y: 60}
+    - name: powerupsMove-rotate-rotate0015
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 890
+        width: 137
+        height: 119
+      alignment: 9
+      pivot: {x: 0.50729924, y: 0.52100843}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 9.5, y: 56}
+        - {x: 9.5, y: -58}
+        - {x: 11.5, y: -62}
+        - {x: 58.5, y: -62}
+        - {x: 67.5, y: -44}
+        - {x: 67.5, y: 37}
+        - {x: 42.5, y: 56}
+      - - {x: -49.5, y: -60}
+        - {x: -3.5, y: -60}
+        - {x: -3.5, y: 30}
+        - {x: -8.5, y: 57}
+        - {x: -47.5, y: 57}
+        - {x: -69.5, y: 43}
+        - {x: -69.5, y: -24}
+    - name: powerupsMove-rotate-rotate0016
+      rect:
+        serializedVersion: 2
+        x: 1145
+        y: 598
+        width: 122
+        height: 131
+      alignment: 9
+      pivot: {x: 0.49590164, y: 0.5114504}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 9.5, y: 46}
+        - {x: -0.5, y: 25}
+        - {x: -0.5, y: -67}
+        - {x: 56.5, y: -67}
+        - {x: 61.5, y: -66}
+        - {x: 61.5, y: 44}
+        - {x: 59.5, y: 46}
+      - - {x: -33.5, y: 64}
+        - {x: -60.5, y: 52}
+        - {x: -60.5, y: -36}
+        - {x: -58.5, y: -48}
+        - {x: -51.5, y: -52}
+        - {x: -9.5, y: -52}
+        - {x: -5.5, y: -22}
+        - {x: -5.5, y: 64}
+    - name: powerupsMove-rotate-rotate0017
+      rect:
+        serializedVersion: 2
+        x: 1019
+        y: 648
+        width: 122
+        height: 137
+      alignment: 9
+      pivot: {x: 0.49590164, y: 0.5182482}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 25.5, y: 33}
+        - {x: -20.5, y: -47}
+        - {x: -20.5, y: -67}
+        - {x: -12.5, y: -71}
+        - {x: 36.5, y: -71}
+        - {x: 61.5, y: -31}
+        - {x: 61.5, y: 19}
+        - {x: 57.5, y: 33}
+      - - {x: 13.5, y: 66}
+        - {x: -43.5, y: 66}
+        - {x: -60.5, y: 29}
+        - {x: -60.5, y: -27}
+        - {x: -50.5, y: -41}
+        - {x: -32.5, y: -41}
+        - {x: -30.5, y: -40}
+        - {x: -24.5, y: -32}
+        - {x: -2.5, y: 9}
+        - {x: 13.5, y: 48}
+    - name: powerupsMove-rotate-rotate0018
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 475
+        width: 122
+        height: 149
+      alignment: 9
+      pivot: {x: 0.50409836, y: 0.5167785}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 35.5, y: 19}
+        - {x: 24.5, y: 15}
+        - {x: -38.5, y: -41}
+        - {x: -38.5, y: -62}
+        - {x: -25.5, y: -77}
+        - {x: 26.5, y: -77}
+        - {x: 60.5, y: -29}
+        - {x: 60.5, y: 16}
+        - {x: 58.5, y: 19}
+      - - {x: -44.5, y: 72}
+        - {x: -61.5, y: 37}
+        - {x: -61.5, y: -27}
+        - {x: -19.5, y: -27}
+        - {x: 31.5, y: 15}
+        - {x: 31.5, y: 72}
+    - name: powerupsMove-rotate-rotate0019
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 139
+        width: 121
+        height: 150
+      alignment: 9
+      pivot: {x: 0.5082645, y: 0.50666666}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 30.5, y: 4}
+        - {x: -53.5, y: -32}
+        - {x: -53.5, y: -48}
+        - {x: -35.5, y: -76}
+        - {x: 15.5, y: -76}
+        - {x: 59.5, y: -50}
+        - {x: 59.5, y: 2}
+        - {x: 54.5, y: 4}
+      - - {x: -26.5, y: 74}
+        - {x: -61.5, y: 38}
+        - {x: -61.5, y: -13}
+        - {x: -25.5, y: -13}
+        - {x: 25.5, y: 20}
+        - {x: 46.5, y: 39}
+        - {x: 46.5, y: 60}
+        - {x: 26.5, y: 74}
+    - name: powerupsMove-rotate-rotate0020
+      rect:
+        serializedVersion: 2
+        x: 1399
+        y: 606
+        width: 119
+        height: 137
+      alignment: 9
+      pivot: {x: 0.5252101, y: 0.49635038}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -62.5, y: -10}
+        - {x: -62.5, y: -40}
+        - {x: -43.5, y: -68}
+        - {x: 20.5, y: -68}
+        - {x: 55.5, y: -41}
+        - {x: 55.5, y: -10}
+      - - {x: 39.5, y: 69}
+        - {x: -0.5, y: 69}
+        - {x: -41.5, y: 62}
+        - {x: -60.5, y: 30}
+        - {x: -60.5, y: 5}
+        - {x: -55.5, y: 2}
+        - {x: -3.5, y: 2}
+        - {x: 56.5, y: 21}
+        - {x: 56.5, y: 42}
+    - name: puntaflecha
+      rect:
+        serializedVersion: 2
+        x: 1983
+        y: 830
+        width: 61
+        height: 65
+      alignment: 9
+      pivot: {x: 0.5163934, y: 0.46923077}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -31.5, y: -10.5}
+        - {x: 2.5, y: -30.5}
+        - {x: 25.5, y: -30.5}
+        - {x: 29.5, y: -25.5}
+        - {x: 29.5, y: 34.5}
+        - {x: -0.5, y: 34.5}
+        - {x: -31.5, y: 25.5}
+    - name: Square
+      rect:
+        serializedVersion: 2
+        x: 2022
+        y: 1879
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: tetris-K-InGame_Tetrisblue
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 944
+        width: 142
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -67, y: 70}
+        - {x: -71, y: 69}
+        - {x: -71, y: -70}
+        - {x: 64, y: -70}
+        - {x: 71, y: -66}
+        - {x: 71, y: 69}
+        - {x: 68, y: 70}
+    - name: tetris-K-InGame_Tetrisgray
+      rect:
+        serializedVersion: 2
+        x: 651
+        y: 41
+        width: 140
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -68, y: 70}
+        - {x: -70, y: 69}
+        - {x: -70, y: -70}
+        - {x: 70, y: -70}
+        - {x: 70, y: 68}
+        - {x: 69, y: 70}
+    - name: tetris-K-InGame_Tetrisgreen
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 139
+        height: 138
+      alignment: 9
+      pivot: {x: 0.4964029, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -64, y: 69}
+        - {x: -69, y: 58}
+        - {x: -69, y: -55}
+        - {x: -66, y: -69}
+        - {x: 70, y: -69}
+        - {x: 70, y: 69}
+    - name: tetris-K-InGame_Tetrisorange
+      rect:
+        serializedVersion: 2
+        x: 738
+        y: 745
+        width: 142
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -67, y: 70}
+        - {x: -71, y: 69}
+        - {x: -71, y: -70}
+        - {x: 64, y: -70}
+        - {x: 71, y: -66}
+        - {x: 71, y: 69}
+        - {x: 68, y: 70}
+    - name: tetris-K-InGame_Tetrispink
+      rect:
+        serializedVersion: 2
+        x: 669
+        y: 194
+        width: 140
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -70, y: 70}
+        - {x: -70, y: -70}
+        - {x: 70, y: -70}
+        - {x: 70, y: 70}
+    - name: tetris-K-InGame_Tetrispurple
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 339
+        width: 140
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -70, y: 70}
+        - {x: -70, y: -70}
+        - {x: 70, y: -70}
+        - {x: 70, y: 70}
+    - name: tetris-K-InGame_Tetrissoft
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 484
+        width: 140
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -70, y: 70}
+        - {x: -70, y: -70}
+        - {x: 68, y: -70}
+        - {x: 70, y: -66}
+        - {x: 70, y: 67}
+        - {x: 64, y: 70}
+    - name: tetris-K-InGame_Tetrisyellow
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 486
+        width: 139
+        height: 138
+      alignment: 9
+      pivot: {x: 0.4964029, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -64, y: 69}
+        - {x: -69, y: 58}
+        - {x: -69, y: -55}
+        - {x: -66, y: -69}
+        - {x: 70, y: -69}
+        - {x: 70, y: 69}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

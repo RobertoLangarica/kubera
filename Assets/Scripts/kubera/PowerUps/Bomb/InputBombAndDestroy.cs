@@ -4,21 +4,29 @@ using DG.Tweening;
 
 public class InputBombAndDestroy : MonoBehaviour 
 {
-	public Vector3 offsetPositionOverFinger = new Vector3(0,1.5f,0);
+	public Vector3 offsetPositionOverFinger = new Vector3(0,0.3f,0);
 	public bool allowInput = true;
 
 	public delegate void DOnDragNotification();
+	public delegate void DOnCellNotification(Cell nCell);
 	public DOnDragNotification OnDrop;
+	public DOnCellNotification OnCellSelected;
 
 	protected bool somethingDragged = false;
 	protected int lastTimeDraggedFrame;
 	protected GameObject currentSelected = null;
+
+	protected CellsManager cellsManager;
+	protected Piece.EColor selectedCellColor;
 
 	public float pieceSpeed = 0.3f;
 
 	void Start()
 	{
 		enabled = false;
+
+		cellsManager = FindObjectOfType<CellsManager> ();
+		pieceSpeed = FindObjectOfType<InputPiece> ().pieceSpeed;
 	}
 
 	void OnDrag(DragGesture gesture) 
@@ -55,6 +63,41 @@ public class InputBombAndDestroy : MonoBehaviour
 					posOverFinger.z = currentSelected.transform.position.z;
 					posOverFinger += offsetPositionOverFinger;
 					moveTo(currentSelected,posOverFinger,pieceSpeed);
+
+					if (OnCellSelected != null) 
+					{
+						Cell cellSelected = cellsManager.getCellUnderPoint (currentSelected.transform.position);
+						if (cellSelected != null) 
+						{
+							if (cellSelected.content != null) 
+							{
+								if (cellSelected.contentColor != Piece.EColor.LETTER_OBSTACLE &&
+								   cellSelected.contentColor != Piece.EColor.NONE) 
+								{
+									if (selectedCellColor != null) 
+									{
+										if (selectedCellColor != cellSelected.contentColor) 
+										{
+											OnCellSelected (cellSelected);
+										}
+									} 
+									else 
+									{
+										selectedCellColor = cellSelected.contentColor;
+										OnCellSelected (cellSelected);	
+									}
+								} 
+								else 
+								{
+									OnCellSelected (null);	
+								}
+							}
+							else 
+							{
+								OnCellSelected (null);	
+							}
+						}
+					}
 				}
 			}
 			break;

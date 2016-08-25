@@ -11,7 +11,7 @@ public class ButonsFromEditor : MonoBehaviour
 	{
 		if (PersistentData.GetInstance().fromLevelBuilder) 
 		{
-			PersistentData.GetInstance().fromLevelBuilder = false;
+			//PersistentData.GetInstance().fromLevelBuilder = false;
 			resetSceneButton.SetActive (true);
 			toBuilderButton.SetActive (true);
 		}

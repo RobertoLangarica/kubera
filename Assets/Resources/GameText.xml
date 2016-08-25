@@ -1,109 +1,89 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <gameText>
 	<texts>
+		<text id="hudLevel">
+			<languages>
+				<language id="english" text="LVL"/>
+				<language id="spanish" text="NVL"/>
+				<language id="default" text="NVL"/>
+			</languages>
+		</text>
 		<text id="hudScore">
 			<languages>
-				<language id="english" text="Points:"/>
-				<language id="spanish" text="Puntos:"/>
-				<language id="default" text="Puntos:"/>
+				<language id="english" text="score"/>
+				<language id="spanish" text="puntuación"/>
+				<language id="default" text="puntuación"/>
 			</languages>
 		</text>
-		<text id="goalByPointsObjectivePopUp">
+
+		<text id="goalByPointsConditionUP">
 			<languages>
-				<language id="english" text="Get: {{goalPoints}} points."/>
-				<language id="spanish" text="Obten: {{goalPoints}} puntos."/>
-				<language id="default" text="Obten: {{goalPoints}} puntos."/>
-			</languages>
-		</text>
-		<text id="goalByWordsObjectivePopUp">
-			<languages>
-				<language id="english" text="Create: {{goalWords}} words."/>
-				<language id="spanish" text="Forma: {{goalWords}} palabras."/>
-				<language id="default" text="Forma: {{goalWords}} puntos."/>
-			</languages>
-		</text>
-		<text id="goalByLettersObjectivePopUp">
-			<languages>
-				<language id="english" text="Use: {{goalLetters}}"/>
-				<language id="spanish" text="Usa: {{goalLetters}}"/>
-				<language id="default" text="Usa: {{goalLetters}}"/>
-			</languages>
-		</text>
-		<text id="goalByObstaclesObjectivePopUp">
-			<languages>
-				<language id="english" text="Use: {{goalObstacleLetters}} black letters."/>
-				<language id="spanish" text="Usa: {{goalObstacleLetters}} letras negras."/>
-				<language id="default" text="Usa: {{goalObstacleLetters}} letras negras."/>
-			</languages>
-		</text>
-		<text id="goalBy1WordObjectivePopUp">
-			<languages>
-				<language id="english" text="Create: {{goalWord}} ."/>
-				<language id="spanish" text="Forma: {{goalWord}} ."/>
-				<language id="default" text="Forma: {{goalWord}} ."/>
-			</languages>
-		</text>
-		<text id="goalBySynonymousObjectivePopUp">
-			<languages>
-				<language id="english" text="Synonymous of: {{goalSin}} ."/>
-				<language id="spanish" text="Sinonimo de: {{goalSin}} ."/>
-				<language id="default" text="Sinonimo de: {{goalSin}} ."/>
-			</languages>
-		</text>
-		<text id="goalByAntonymObjectivePopUp">
-			<languages>
-				<language id="english" text="Antonym of: {{goalAnt}} ."/>
-				<language id="spanish" text="Antonimo de: {{goalAnt}} ."/>
-				<language id="default" text="Antonimo de: {{goalAnt}} ."/>
+				<language id="english" text="GOAL"/>
+				<language id="spanish" text="OBJETIVO"/>
+				<language id="default" text="OBJETIVO"/>
 			</languages>
 		</text>
 		<text id="goalByPointsCondition">
 			<languages>
-				<language id="english" text="Made: {{pointsMade}} points of  {{pointsNeed}} ."/>
-				<language id="spanish" text="{{pointsMade}} / {{pointsNeed}}"/>
-				<language id="default" text="Van: {{pointsMade}} puntos de {{pointsNeed}} ."/>
+				<language id="english" text="{{pointsMade}}/{{pointsNeed}} points"/>
+				<language id="spanish" text="{{pointsMade}}/{{pointsNeed}} puntos"/>
+				<language id="default" text="{{pointsMade}}/{{pointsNeed}} puntos"/>
+			</languages>
+		</text>
+		<text id="goalByWordsConditionUP">
+			<languages>
+				<language id="english" text="GOAL"/>
+				<language id="spanish" text="OBJETIVO"/>
+				<language id="default" text="OBJETIVO"/>
 			</languages>
 		</text>
 		<text id="goalByWordsCondition">
 			<languages>
-				<language id="english" text="Made: {{wordsMade}} words of  {{wordNeed}} ."/>
-				<language id="spanish" text="Van: {{wordsMade}} palabras de {{wordNeed}} ."/>
-				<language id="default" text="Van: {{wordsMade}} palabras de {{wordNeed}} ."/>
+				<language id="english" text="{{wordsMade}}/{{wordNeed}} words"/>
+				<language id="spanish" text="{{wordsMade}}/{{wordNeed}} palabras"/>
+				<language id="default" text="{{wordsMade}}/{{wordNeed}} palabras"/>
 			</languages>
 		</text>
 		<text id="goalByLettersCondition">
 			<languages>
-				<language id="english" text="Use:"/>
-				<language id="spanish" text="Usa:"/>
-				<language id="default" text="Usa:"/>
+				<language id="english" text="USE:"/>
+				<language id="spanish" text="USA:"/>
+				<language id="default" text="USA:"/>
+			</languages>
+		</text>
+		<text id="goalByObstaclesConditionUP">
+			<languages>
+				<language id="english" text="GOAL"/>
+				<language id="spanish" text="OBJETIVO"/>
+				<language id="default" text="OBJETIVO"/>
 			</languages>
 		</text>
 		<text id="goalByObstaclesCondition">
 			<languages>
-				<language id="english" text="Use: {{goalObstacleLetters}} black letters."/>
-				<language id="spanish" text="Usa: {{goalObstacleLetters}} letras negras."/>
-				<language id="default" text="Usa: {{goalObstacleLetters}} letras negras."/>
+				<language id="english" text="{{lettersUsed}}/{{lettersNeed}} black letters"/>
+				<language id="spanish" text="{{lettersUsed}}/{{lettersNeed}} letras negras"/>
+				<language id="default" text="{{lettersUsed}}/{{lettersNeed}} letras negras"/>
 			</languages>
 		</text>
 		<text id="goalBy1WordCondition">
 			<languages>
-				<language id="english" text="Create: {{goalWord}} ."/>
-				<language id="spanish" text="Forma: {{goalWord}} ."/>
-				<language id="default" text="Forma: {{goalWord}} ."/>
+				<language id="english" text="FORM"/>
+				<language id="spanish" text="FORMA"/>
+				<language id="default" text="FORMA"/>
 			</languages>
 		</text>
 		<text id="goalBySynonymousCondition">
 			<languages>
-				<language id="english" text="Synonymous of: {{goalSin}} ."/>
-				<language id="spanish" text="Sinonimo de: {{goalSin}} ."/>
-				<language id="default" text="Sinonimo de: {{goalSin}} ."/>
+				<language id="english" text="SYNONYM"/>
+				<language id="spanish" text="SINÓNIMO"/>
+				<language id="default" text="SINÓNIMO"/>
 			</languages>
 		</text>
 		<text id="goalByAntonymCondition">
 			<languages>
-				<language id="english" text="Antonym of: {{goalAnt}} ."/>
-				<language id="spanish" text="Antonimo de: {{goalAnt}} ."/>
-				<language id="default" text="Antonimo de: {{goalAnt}} ."/>
+				<language id="english" text="ANTONYM"/>
+				<language id="spanish" text="ANTÓNIMO"/>
+				<language id="default" text="ANTÓNIMO"/>
 			</languages>
 		</text>
 		<text id="exitText">
@@ -115,93 +95,86 @@
 		</text>
 		<text id="Tutorial_lvl1_phase1">
 			<languages>
-				<language id="english" text="Drag the letter '{{b}}M{{/b}}' to make the word '{{b}}AMAR{{/b}}'."/>
-				<language id="spanish" text="Arrastra la letra '{{b}}M{{/b}}' y forma la palabra '{{b}}AMAR{{/b}}'."/>
-				<language id="default" text="Arrastra la letra '{{b}}M{{/b}}' y forma la palabra '{{b}}AMAR{{/b}}'."/>
+				<language id="english" text="Drag a piece to make a line."/>
+				<language id="spanish" text="Arrastra una pieza para hacer una línea."/>
+				<language id="default" text="Arrastra una pieza para hacer una línea."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl1_phase2A">
+		<text id="Tutorial_lvl1_phase2">
 			<languages>
-				<language id="english" text="Press the button"/>
-				<language id="spanish" text="Presiona el botón"/>
-				<language id="default" text="Presiona el botón"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl1_phase2B">
-			<languages>
-				<language id="english" text="to gain the points for making a word."/>
-				<language id="spanish" text="para obtener puntos por formar una palabra."/>
-				<language id="default" text="para obtener puntos por formar una palabra."/>
+				<language id="english" text="Tap letters to form a correct word like {{b}}FELIZ{{/b}}."/>
+				<language id="spanish" text="Toca las letras para formar una palabra correcta, por ejemplo: {{b}}FELIZ{{/b}}."/>
+				<language id="default" text="Toca las letras para formar una palabra correcta, por ejemplo: {{b}}FELIZ{{/b}}."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl1_phase3">
 			<languages>
-				<language id="english" text="Drag a piece to create a line."/>
-				<language id="spanish" text="Arrastra una pieza para formar una línea."/>
-				<language id="default" text="Arrastra una pieza para formar una línea."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl1_phase4">
-			<languages>
-				<language id="english" text="Get {{score}} points to complete the level."/>
-				<language id="spanish" text="Obtén {{score}} puntos para pasar el nivel."/>
-				<language id="default" text="Obtén {{score}} puntos para pasar el nivel."/>
+				<language id="english" text="Tap the button to submit a correct word."/>
+				<language id="spanish" text="Presiona el botón para mandar una palabra correcta."/>
+				<language id="default" text="Presiona el botón para mandar una palabra correcta."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl2_phase1">
 			<languages>
-				<language id="english" text="Tap letter'{{b}}H{{/b}}' to deselect it and make the word '{{b}}PAZ{{/b}}'."/>
-				<language id="spanish" text="Haz tap en la letra '{{b}}H{{/b}}' para deseleccionarla y formar la palabra '{{b}}PAZ{{/b}}'."/>
-				<language id="default" text="Haz tap en la letra '{{b}}H{{/b}}' para deseleccionarla y formar la palabra '{{b}}PAZ{{/b}}'."/>
+				<language id="english" text="Drag a piece to make a line."/>
+				<language id="spanish" text="Arrastra una pieza para hacer una línea."/>
+				<language id="default" text="Arrastra una pieza para hacer una línea."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl2_phase2A">
+		<text id="Tutorial_lvl2_phase2">
 			<languages>
-				<language id="english" text="Press the button"/>
-				<language id="spanish" text="Presiona el botón"/>
-				<language id="default" text="Presiona el botón"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl2_phase2B">
-			<languages>
-				<language id="english" text="to get the points for the word '{{b}}PAZ{{/b}}'."/>
-				<language id="spanish" text="para obtener puntos por la palabra '{{b}}PAZ{{/b}}'."/>
-				<language id="default" text="para obtener puntos por la palabra '{{b}}PAZ{{/b}}'."/>
+				<language id="english" text="You've got {{points}} out of {{neededPoints}} point, get the remaining points to pass the level."/>
+				<language id="spanish" text="Llevas {{points}} de {{neededPoints}} puntos, haz los puntos restantes para completar el nivel."/>
+				<language id="default" text="Llevas {{points}} de {{neededPoints}} puntos, haz los puntos restantes para completar el nivel."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl2_phase3">
 			<languages>
-				<language id="english" text="Get {{score}} points to complete the level."/>
-				<language id="spanish" text="Obtén {{score}} puntos para pasar el nivel."/>
-				<language id="default" text="Obtén {{score}} puntos para pasar el nivel."/>
+				<language id="english" text="Careful! /n You lose if you run out of movements."/>
+				<language id="spanish" text="¡Cuidado! /n Pierdes si te quedas sin movimientos."/>
+				<language id="default" text="¡Cuidado! /n Pierdes si te quedas sin movimientos."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl2_phase4">
+			<languages>
+				<language id="english" text="Placing a piece or forming a word counts as one movement."/>
+				<language id="spanish" text="Poner una pieza o formar una palabra cuenta como un movimiento."/>
+				<language id="default" text="Poner una pieza o formar una palabra cuenta como un movimiento."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl2_phase5">
+			<languages>
+				<language id="english" text="{{b}}Remember:{{/b}} /n You get point by placing a piece, making a line and forming words."/>
+				<language id="spanish" text="{{b}}Recuerda:{{/b}} /n Obtienes puntos al colocar una pieza, hacer una línea o formar una palabra."/>
+				<language id="default" text="{{b}}Recuerda:{{/b}} /n Obtienes puntos al colocar una pieza, hacer una línea o formar una palabra."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl3_phase1">
 			<languages>
-				<language id="english" text="Tap letter'{{b}}Z{{/b}}' to deselect it."/>
-				<language id="spanish" text="Haz tap en la '{{b}}Z{{/b}}' para deseleccionarla."/>
-				<language id="default" text="Haz tap en la '{{b}}Z{{/b}}' para deseleccionarla."/>
+				<language id="english" text="Drag {{b}}HELP{{/b}} to the board to find out what word you can form with your letters."/>
+				<language id="spanish" text="Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes formar con tus letras."/>
+				<language id="default" text="Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes formar con tus letras."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl3_phase2A">
+		<text id="Tutorial_lvl3_phase2">
 			<languages>
-				<language id="english" text="Press the button"/>
-				<language id="spanish" text="Presiona el botón"/>
-				<language id="default" text="Presiona el botón"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl3_phase2B">
-			<languages>
-				<language id="english" text="to get the points for the word '{{b}}AÑO{{/b}}'."/>
-				<language id="spanish" text="para obtener puntos por la palabra '{{b}}AÑO{{/b}}'."/>
-				<language id="default" text="para obtener puntos por la palabra '{{b}}AÑO{{/b}}'."/>
+				<language id="english" text="The power up {{b}}HELP{{/b}} suggests you to form the word {{b}}YEN{{/b}}, form it."/>
+				<language id="spanish" text="El poder {{b}}AYUDA{{/b}} te sugiere formar la palabra {{b}}YEN{{/b}}. Forma esa palabra."/>
+				<language id="default" text="El poder {{b}}AYUDA{{/b}} te sugiere formar la palabra {{b}}YEN{{/b}}. Forma esa palabra."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl3_phase3">
 			<languages>
-				<language id="english" text="Get {{score}} points to complete the level."/>
-				<language id="spanish" text="Obtén {{score}} puntos para pasar el nivel."/>
-				<language id="default" text="Obtén {{score}} puntos para pasar el nivel."/>
+				<language id="english" text="Get the remaining points to pass the level."/>
+				<language id="spanish" text="Haz los puntos que faltan para pasar el nivel."/>
+				<language id="default" text="Haz los puntos que faltan para pasar el nivel."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl3_phase4">
+			<languages>
+				<language id="english" text="Remember: /n Drag {{b}}HELP{{/b}} to the board to find out what word you can form with your current letters."/>
+				<language id="spanish" text="Recuerda: /n Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes hacer con tus letras."/>
+				<language id="default" text="Recuerda: /n Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes hacer con tus letras."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl4_phase1A">
@@ -225,179 +198,88 @@
 				<language id="default" text="Obtén {{score}} puntos para pasar el nivel."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl8_phase1A">
+		<text id="Tutorial_lvl8_phase1">
 			<languages>
-				<language id="english" text="Drag"/>
-				<language id="spanish" text="Arrastra"/>
-				<language id="default" text="Arrastra"/>
+				<language id="english" text="Drag the {{b}}BOMB{{/b}} to a block."/>
+				<language id="spanish" text="Arrastra la {{b}}BOMBA{{/b}} a un bloque."/>
+				<language id="default" text="Arrastra la {{b}}BOMBA{{/b}} a un bloque."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl8_phase1B">
+		<text id="Tutorial_lvl8_phase2">
 			<languages>
-				<language id="english" text="to flip all adjacent blocks of the same color."/>
-				<language id="spanish" text="para voltear todos los bloques conectados del mismo color."/>
-				<language id="default" text="para voltear todos los bloques conectados del mismo color."/>
+				<language id="english" text="Use {{b}}BOMB{{/b}} as many times  as you need to pass the level."/>
+				<language id="spanish" text="Usa todas las {{b}}BOMBAS{{/b}} que necesites para pasar el nivel."/>
+				<language id="default" text="Usa todas las {{b}}BOMBAS{{/b}} que necesites para pasar el nivel."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl8_phase2A">
+		<text id="Tutorial_lvl22_phase1">
 			<languages>
-				<language id="english" text="Use as many"/>
-				<language id="spanish" text="Usa"/>
-				<language id="default" text="Usa"/>
+				<language id="english" text="Drag the {{b}}BLOCK{{/b}} to an empty space on the board."/>
+				<language id="spanish" text="Arrastra el {{b}}BLOQUE{{/b}} a un espacio vacío en el tablero."/>
+				<language id="default" text="Arrastra el {{b}}BLOQUE{{/b}} a un espacio vacío en el tablero."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl8_phase2B">
+		<text id="Tutorial_lvl22_phase2">
 			<languages>
-				<language id="english" text="times as you need to pass the level."/>
-				<language id="spanish" text="las veces que necesites para pasar el nivel."/>
-				<language id="default" text="las veces que necesites para pasar el nivel."/>
+				<language id="english" text="Use {{b}}BLOCK{{/b}} as many times  as you need to pass the level."/>
+				<language id="spanish" text="Usa todos los {{b}}BLOQUES{{/b}} que necesites para pasar el nivel."/>
+				<language id="default" text="Usa todos los {{b}}BLOQUES{{/b}} que necesites para pasar el nivel."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl22_phase1A">
+		<text id="Tutorial_lvl37_phase1">
 			<languages>
-				<language id="english" text="Drag"/>
-				<language id="spanish" text="Arrastra"/>
-				<language id="default" text="Arrastra"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl22_phase1B">
-			<languages>
-				<language id="english" text="to put a new block on an empty cell."/>
-				<language id="spanish" text="para llenar un espacio."/>
-				<language id="default" text="para llenar un espacio."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl22_phase2A">
-			<languages>
-				<language id="english" text="Use as many"/>
-				<language id="spanish" text="Usa"/>
-				<language id="default" text="Usa"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl22_phase2B">
-			<languages>
-				<language id="english" text="as you need to pass the level."/>
-				<language id="spanish" text="las veces que necesites para pasar el nivel."/>
-				<language id="default" text="las veces que necesites para pasar el nivel."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl37_phase1A">
-			<languages>
-				<language id="english" text="Drag"/>
-				<language id="spanish" text="Arrastra"/>
-				<language id="default" text="Arrastra"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl37_phase1B">
-			<languages>
-				<language id="english" text="toward any piece."/>
-				<language id="spanish" text="a una de las piezas."/>
-				<language id="default" text="a una de las piezas."/>
+				<language id="english" text="Drag {{b}}ROTATE{{/b}} to a piece."/>
+				<language id="spanish" text="Arrastra {{b}}ROTAR{{/b}} a una pieza."/>
+				<language id="default" text="Arrastra {{b}}ROTAR{{/b}} a una pieza."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl37_phase2">
 			<languages>
-				<language id="english" text="Tap in any piece to rotate it."/>
-				<language id="spanish" text="Da tap a las piezas para girarlas."/>
-				<language id="default" text="Da tap a las piezas para girarlas."/>
+				<language id="english" text="Use {{b}}ROTATE{{/b}} as many times  as you need to pass the level."/>
+				<language id="spanish" text="Usa {{b}}ROTAR{{/b}} las veces que necesites para pasar el nivel."/>
+				<language id="default" text="Usa {{b}}ROTAR{{/b}} las veces que necesites para pasar el nivel."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl37_phase3A">
+		<text id="Tutorial_lvl52_phase1">
 			<languages>
-				<language id="english" text="Use as many"/>
-				<language id="spanish" text="Usa"/>
-				<language id="default" text="Usa"/>
+				<language id="english" text="Drag {{b}}THUNDER{{/b}} to a block."/>
+				<language id="spanish" text="Arrastra el {{b}}RAYO{{/b}} a un bloque."/>
+				<language id="default" text="Arrastra el {{b}}RAYO{{/b}} a un bloque."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl37_phase3B">
+		<text id="Tutorial_lvl52_phase2">
 			<languages>
-				<language id="english" text="as you need to pass the level."/>
-				<language id="spanish" text="las veces que necesites para pasar el nivel."/>
-				<language id="default" text="las veces que necesites para pasar el nivel."/>
+				<language id="english" text="Use {{b}}THUNDER{{/b}} as many times  as you need to pass the level."/>
+				<language id="spanish" text="Usa el {{b}}RAYO{{/b}} las veces que necesites para pasar el nivel."/>
+				<language id="default" text="Usa el {{b}}RAYO{{/b}} las veces que necesites para pasar el nivel."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl52_phase1A">
+		<text id="Tutorial_lvl64_phase1">
 			<languages>
-				<language id="english" text="Drag"/>
-				<language id="spanish" text="Arrastra"/>
-				<language id="default" text="Arrastra"/>
+				<language id="english" text="You need a {{b}}Z{{/b}} to form {{b}}PEZ{{/b}}. /nDrag {{b}}WILD CARD{{/b}} to the area for forming words."/>
+				<language id="spanish" text="Necesitas una {{b}}Z{{/b}} para formar {{b}}PEZ{{/b}}. /nArrastra el {{b}}COMODIN{{/b}} al área para formar palabras."/>
+				<language id="default" text="Necesitas una {{b}}Z{{/b}} para formar {{b}}PEZ{{/b}}. /nArrastra el {{b}}COMODIN{{/b}} al área para formar palabras."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl52_phase1B">
+		<text id="Tutorial_lvl64_phase2">
 			<languages>
-				<language id="english" text="to flip all blocks of the same color."/>
-				<language id="spanish" text="para voltear todos los bloques del mismo color."/>
-				<language id="default" text="para voltear todos los bloques del mismo color."/>
+				<language id="english" text="Tsp the letter {{b}}Z{{/b}} do the {{b}}WILD CARD{{/b}} becomes a {{b}}Z{{/b}}."/>
+				<language id="spanish" text="Toca la letra {{b}}Z{{/b}} para que el {{b}}COMODIN{{/b}} se convierta en una {{b}}Z{{/b}}."/>
+				<language id="default" text="Toca la letra {{b}}Z{{/b}} para que el {{b}}COMODIN{{/b}} se convierta en una {{b}}Z{{/b}}."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl52_phase2A">
+		<text id="Tutorial_lvl64_phase3">
 			<languages>
-				<language id="english" text="Use as many"/>
-				<language id="spanish" text="Usa"/>
-				<language id="default" text="Usa"/>
+				<language id="english" text="If you need to change the letter of the {{b}}WILD CARD{{/b}} just tap it."/>
+				<language id="spanish" text="Si necesitas cambiar la letra del {{b}}COMODIN{{/b}} basta con tocarlo."/>
+				<language id="default" text="Si necesitas cambiar la letra del {{b}}COMODIN{{/b}} basta con tocarlo."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl52_phase2B">
+		<text id="Tutorial_lvl64_phase4">
 			<languages>
-				<language id="english" text="as you need to pass the level."/>
-				<language id="spanish" text="las veces que necesites para pasar el nivel."/>
-				<language id="default" text="las veces que necesites para pasar el nivel."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase1A">
-			<languages>
-				<language id="english" text="Drag"/>
-				<language id="spanish" text="Arrastra"/>
-				<language id="default" text="Arrastra"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase1B">
-			<languages>
-				<language id="english" text="to the word creation area."/>
-				<language id="spanish" text="al área para formar palabras."/>
-				<language id="default" text="al área para formar palabras."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase2A">
-			<languages>
-				<language id="english" text="Tap letter '{{b}}Z{{/b}}' to convert"/>
-				<language id="spanish" text="Da tap en la '{{b}}Z{{/b}}' para que"/>
-				<language id="default" text="Da tap en la '{{b}}Z{{/b}}' para que"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase2B">
-			<languages>
-				<language id="english" text="into a '{{b}}Z{{/b}}'."/>
-				<language id="spanish" text="se convierta en una '{{b}}Z{{/b}}'."/>
-				<language id="default" text="se convierta en una '{{b}}Z{{/b}}'."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase3A">
-			<languages>
-				<language id="english" text="Press the button"/>
-				<language id="spanish" text="Presiona el botón"/>
-				<language id="default" text="Presiona el botón"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase3B">
-			<languages>
-				<language id="english" text="to get the points for the word '{{b}}FELIZ{{/b}}'."/>
-				<language id="spanish" text="para obtener puntos por la palabra '{{b}}FELIZ{{/b}}'."/>
-				<language id="default" text="para obtener puntos por la palabra '{{b}}FELIZ{{/b}}'."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase4A">
-			<languages>
-				<language id="english" text="Use as many"/>
-				<language id="spanish" text="Usa"/>
-				<language id="default" text="Usa"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase4B">
-			<languages>
-				<language id="english" text="as you need to pass the level."/>
-				<language id="spanish" text="las veces que necesites para pasar el nivel."/>
-				<language id="default" text="las veces que necesites para pasar el nivel."/>
+				<language id="english" text="Use {{b}}WILD CARD{{/b}} as many times  as you need to pass the level."/>
+				<language id="spanish" text="Usa el {{b}}COMODIN{{/b}} las veces que necesites para pasar el nivel."/>
+				<language id="default" text="Usa el {{b}}COMODIN{{/b}} las veces que necesites para pasar el nivel."/>
 			</languages>
 		</text>
 		<text id="NoGemsPopUpTitle">
@@ -428,6 +310,13 @@
 				<language id="default" text="¡Objetivo completado!"/>
 			</languages>
 		</text>
+		<text id="StartTextPopUpID">
+			<languages>
+				<language id="english" text="Start game!"/>
+				<language id="spanish" text="¡Empieza a jugar!"/>
+				<language id="default" text="¡Empieza a jugar!"/>
+			</languages>
+		</text>
 		<text id="noMovementsPopUpID">
 			<languages>
 				<language id="english" text="You ran out of movements!"/>
@@ -440,6 +329,223 @@
 				<language id="english" text="You ran out of options!"/>
 				<language id="spanish" text="¡Tablero saturado y sin opciones!"/>
 				<language id="default" text="¡Tablero saturado y sin opciones!"/>
+			</languages>
+		</text>
+		<!--
+		Map	
+		-->
+		<text id="lvlTextObjectivePopUp">
+			<languages>
+				<language id="english" text="LVL {{levelName}}"/>
+				<language id="spanish" text="NVL {{levelName}}"/>
+				<language id="default" text="NVL {{levelName}}"/>
+			</languages>
+		</text>
+		<text id="goalTextObjectivePopUp">
+			<languages>
+				<language id="english" text="GOAL"/>
+				<language id="spanish" text="OBJETIVO"/>
+				<language id="default" text="OBJETIVO"/>
+			</languages>
+		</text>
+		<text id="goalByPointsObjectivePopUpA">
+			<languages>
+				<language id="english" text="Get"/>
+				<language id="spanish" text="Haz"/>
+				<language id="default" text="Haz"/>
+			</languages>
+		</text>
+		<text id="goalByPointsObjectivePopUpB">
+			<languages>
+				<language id="english" text="{{goalPoints}} points"/>
+				<language id="spanish" text="{{goalPoints}} puntos"/>
+				<language id="default" text="{{goalPoints}} puntos"/>
+			</languages>
+		</text>
+		<text id="goalByLettersObjectivePopUp">
+			<languages>
+				<language id="english" text="Use these letters"/>
+				<language id="spanish" text="Usa estas letras"/>
+				<language id="default" text="Usa estas letras"/>
+			</languages>
+		</text>
+		<text id="goalByObstaclesObjectivePopUp">
+			<languages>
+				<language id="english" text="Use all the black letters"/>
+				<language id="spanish" text="Usa todas las letras negras"/>
+				<language id="default" text="Usa todas las letras negras"/>
+			</languages>
+		</text>
+
+		<text id="goalByWordsObjectivePopUpA">
+			<languages>
+				<language id="english" text="Form"/>
+				<language id="spanish" text="Forma"/>
+				<language id="default" text="Forma"/>
+			</languages>
+		</text>
+		<text id="goalByWordsObjectivePopUpB">
+			<languages>
+				<language id="english" text="{{goalWords}} words"/>
+				<language id="spanish" text="{{goalWords}} palabras"/>
+				<language id="default" text="{{goalWords}} palabras"/>
+			</languages>
+		</text>
+		<text id="goalBy1WordObjectivePopUp">
+			<languages>
+				<language id="english" text="Form this word"/>
+				<language id="spanish" text="Forma esta palabra"/>
+				<language id="default" text="Forma esta palabra"/>
+			</languages>
+		</text>
+
+		<text id="goalBySynonymousObjectivePopUp">
+			<languages>
+				<language id="english" text="Form a synonym of"/>
+				<language id="spanish" text="Forma un sinónimo de"/>
+				<language id="default" text="Forma un sinónimo de"/>
+			</languages>
+		</text>
+		<text id="goalByAntonymObjectivePopUp">
+			<languages>
+				<language id="english" text="Form a antonym of"/>
+				<language id="spanish" text="Forma un antónimo de"/>
+				<language id="default" text="Forma un antónimo de"/>
+			</languages>
+		</text>
+
+		<!--
+		Invitation
+		-->
+		<text id="Invitation_11_text1">
+			<languages>
+				<language id="english" text="To all Kubera visitors, an autograph session will be held at the library. Don't miss it!"/>
+				<language id="spanish" text="¡A todos los visitantes de Kubera, les informamos que habrá una firma de autógrafos en la librería!"/>
+				<language id="default" text="¡A todos los visitantes de Kubera, les informamos que habrá una firma de autógrafos en la librería!"/>
+			</languages>
+		</text>
+
+		<text id="Invitation_21_text1">
+			<languages>
+				<language id="english" text="Do I know you \n Are you the person who'll have and autograph session at the library?"/>
+				<language id="spanish" text="¡Yo te conozco! \n¿Eres tú quien dará autógrafos en la librería?"/>
+				<language id="default" text="¡Yo te conozco! \n¿Eres tú quien dará autógrafos en la librería?"/>
+			</languages>
+		</text>
+		<text id="Invitation_21_Answer1">
+			<languages>
+				<language id="english" text="I'd swear it's you!"/>
+				<language id="spanish" text="Juraría que eres tú."/>
+				<language id="default" text="Juraría que eres tú."/>
+			</languages>
+		</text>
+		<text id="Invitation_21_option1">
+			<languages>
+				<language id="english" text="Nop"/>
+				<language id="spanish" text="En absoluto"/>
+				<language id="default" text="En absoluto"/>
+			</languages>
+		</text>
+		<text id="Invitation_21_option2">
+			<languages>
+				<language id="english" text="Not at all!"/>
+				<language id="spanish" text="¡Para nada!"/>
+				<language id="default" text="¡Para nada!"/>
+			</languages>
+		</text>
+
+		<text id="Invitation_28_text1">
+			<languages>
+				<language id="english" text="Naaaaaahhh yes you are!"/>
+				<language id="spanish" text="¡Naaaaaahhh sí eres tú!"/>
+				<language id="default" text="¡Naaaaaahhh sí eres tú!"/>
+			</languages>
+		</text>
+		<text id="Invitation_28_Answer1">
+			<languages>
+				<language id="english" text="It's not me!"/>
+				<language id="spanish" text="¡No, no soy!"/>
+				<language id="default" text="¡No, no soy!"/>
+			</languages>
+		</text>
+		<text id="Invitation_28_Answer2">
+			<languages>
+				<language id="english" text="Ok, it's me!"/>
+				<language id="spanish" text="¡Ok, sí soy yo!"/>
+				<language id="default" text="¡Ok, sí soy yo!"/>
+			</languages>
+		</text>
+		<text id="Invitation_28_option1">
+			<languages>
+				<language id="english" text="Sure, sure. \nYou are not that person. \nSee you in the library, \nwink, wink."/>
+				<language id="spanish" text="Claro, claro. \nNo eres tú. \nNos vemos en la librería, \nguiño, guiño"/>
+				<language id="default" text="Claro, claro. \nNo eres tú. \nNos vemos en la librería, \nguiño, guiño"/>
+			</languages>
+		</text>
+		<text id="Invitation_28_option2">
+			<languages>
+				<language id="english" text="Your secret is safe with me.\nSee you in the book store. \nI can't wait to get your autograph!"/>
+				<language id="spanish" text="Tú secreto está a salvo conmigo. \nNos vemos en la librería. \n¡Muero por tu autógrafo!"/>
+				<language id="default" text="Tú secreto está a salvo conmigo. \nNos vemos en la librería. \n¡Muero por tu autógrafo!"/>
+			</languages>
+		</text>
+
+		<text id="Invitation_32_text1">
+			<languages>
+				<language id="english" text="Welcome to the book store! \nEverybody is wating for you. \nThe autograph session will begin soon."/>
+				<language id="spanish" text="¡Bienvenido a la librería! \nTodos te están esperando! \nLa firma de autógrafos comenzará pronto."/>
+				<language id="default" text="¡Bienvenido a la librería! \nTodos te están esperando! \nLa firma de autógrafos comenzará pronto."/>
+			</languages>
+		</text>
+		<text id="Invitation_32_option1">
+			<languages>
+				<language id="english" text="Excellent!"/>
+				<language id="spanish" text="¡Excelente!"/>
+				<language id="default" text="¡Excelente!"/>
+			</languages>
+		</text>
+
+		<text id="Invitation_40_text1">
+			<languages>
+				<language id="english" text="The autograph session will be heald in level {{lvlSelected}}. Thanks for wating!"/>
+				<language id="spanish" text="La firma de autógrafos se levará a cabo en el nivel {{lvlSelected}}. ¡Gracias por esperar!"/>
+				<language id="default" text="La firma de autógrafos se levará a cabo en el nivel {{lvlSelected}}. ¡Gracias por esperar!"/>
+			</languages>
+		</text>
+		<text id="Invitation_40_option1">
+			<languages>
+				<language id="english" text="Perfect!"/>
+				<language id="spanish" text="¡Perfecto!"/>
+				<language id="default" text="¡Perfecto!"/>
+			</languages>
+		</text>
+
+		<text id="Invitation_44_text1">
+			<languages>
+				<language id="english" text="Hi! We're the creators of Kubera. \nWould you give us give us your autograph in the form of a review."/>
+				<language id="spanish" text="¡Hola! Somos los creadores de Kubera.\n¿Nos darías tu autógrafo a maera de reseña?"/>
+				<language id="default" text="¡Hola! Somos los creadores de Kubera.\n¿Nos darías tu autógrafo a maera de reseña?"/>
+			</languages>
+		</text>
+		<text id="Invitation_44_text2">
+			<languages>
+				<language id="english" text="We'd love to read what you have to tell us about Kubera."/>
+				<language id="spanish" text="Nos encantaría leer lo que tienes que decirnos sobre kubera"/>
+				<language id="default" text="Nos encantaría leer lo que tienes que decirnos sobre kubera"/>
+			</languages>
+		</text>
+		<text id="Invitation_44_option1">
+			<languages>
+				<language id="english" text="No, thank you."/>
+				<language id="spanish" text="Gracias, paso."/>
+				<language id="default" text="Gracias, paso."/>
+			</languages>
+		</text>
+		<text id="Invitation_44_option2">
+			<languages>
+				<language id="english" text="Sure!"/>
+				<language id="spanish" text="¡Claro qué sí!"/>
+				<language id="default" text="¡Claro qué sí!"/>
 			</languages>
 		</text>
 	</texts>

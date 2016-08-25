@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using Facebook.MiniJSON;
 using Kubera.Data;
 
-public class FacebookManager : MonoBehaviour
+public class FacebookManager : Manager<FacebookManager>
 {
 	protected FBGraph fbGraph;
 	protected FacebookNews facebookNews;
@@ -67,7 +67,7 @@ public class FacebookManager : MonoBehaviour
 
 	protected void OnLoginComplete(bool complete)
 	{
-		Debug.Log("OnLoginComplete " + complete);
+		//Debug.Log("OnLoginComplete " + complete);
 
 		if (complete)
 		{
@@ -89,7 +89,7 @@ public class FacebookManager : MonoBehaviour
 			if(!facebookConectMessageCreated)
 			{
 				//crear FacebookConectMessage
-				print ("creando mensaje para conectar");
+				//print ("creando mensaje para conectar");
 				conectFacebook = Instantiate (FacebookConectMessage);
 				conectFacebook.transform.SetParent (panelMessages,false);
 				facebookConectMessageCreated = true;

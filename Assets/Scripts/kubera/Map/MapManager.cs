@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Kubera.Data;
@@ -24,14 +25,23 @@ public class MapManager : MonoBehaviour
 	protected PopUpManager popUpManager;
 	protected ParalaxManager paralaxManager;
 	protected DoorsManager doorsManager;
+	protected InvitationToReview invitationToReview;
+	protected FriendsOnWorldManager friendsOnWorldManager;
+	private GoalManager		goalManager;
 
 	protected List<MapLevel> mapLevels;
+	protected bool fromGame;
+	protected bool fromLoose;
+	protected bool toDoor;
+	protected bool toNextLevel;
+
+	protected MapLevel currentLevel = null;
+	protected MapLevel lastLevelPlayed = null;
+	protected MapLevel nextLevel = null;
 
 	public FBFriendsRequestPanel fbFriendsRequestPanel;
 
-	//HACK CampusParty
-	public GameObject[] lifes;
-	public GameObject popUpNoLifes;
+	public List<string> test;
 
 	void Start()
 	{
@@ -39,36 +49,41 @@ public class MapManager : MonoBehaviour
 		lifesHUDManager = FindObjectOfType<LifesManager> ();
 		paralaxManager = FindObjectOfType<ParalaxManager> ();
 		doorsManager = FindObjectOfType<DoorsManager> ();
+		goalManager = FindObjectOfType<GoalManager> ();
+		invitationToReview = FindObjectOfType<InvitationToReview> ();
+		friendsOnWorldManager = FindObjectOfType<FriendsOnWorldManager> ();
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
-		print (PersistentData.GetInstance().currentWorld);
 		if(PersistentData.GetInstance().currentWorld == -1)
 		{
 			if(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.levels.Count != 0)
 			{
 				currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.levels.Count].world);
 				print (currentWorld);
+				print (PersistentData.GetInstance ().currentLevel.name);
 			}
 		}
 		else
 		{
 			currentWorld = PersistentData.GetInstance ().currentWorld;
 		}
+
+		if(PersistentData.GetInstance ().fromGameToLevels)
+		{
+			fromGame = true;
+			fromLoose= PersistentData.GetInstance ().fromLoose;
+			PersistentData.GetInstance ().fromGameToLevels = false;
+		}
+		PersistentData.GetInstance ().fromLevelsToGame = true;
+
 		//selectLevel (currentWorld);
 
 		//initializeLevels ();
 		//print (currentWorld);
 		changeWorld ();
 
-		//HACK CampusParty
-		for(int i=0; i<	PersistentData.GetInstance().lifes; i++)
-		{
-			lifes [i].SetActive (true);
-		}
-		if(	PersistentData.GetInstance().lifes == 0)
-		{
-			popUpNoLifes.SetActive (true);
-		}
+		paralaxManager.OnFinish += showNextLevelGoalPopUp;
+		invitationToReview.OnFinish += afterInvitation;
 	}
 
 	void Update()
@@ -102,6 +117,36 @@ public class MapManager : MonoBehaviour
 			popUpManager.activatePopUp ("fbFriendsRequestPanel");
 			fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_KEYS);
 			break;
+		case "closeObjective":
+			if(toNextLevel)
+			{
+				paralaxManager.setPosToNextLevel (nextLevel);
+				toNextLevel = false;
+			}
+			showWorld();
+			break;
+		case "retry":
+		case "playGame":
+			//TODO probablemente no haga falta mostrar el mundo
+			showWorld();
+			ScreenManager.instance.GoToScene ("Game");
+			break;
+		case "continue":
+			print (toNextLevel);
+			if(toNextLevel)
+			{
+				showWorld();
+				paralaxManager.setPosToNextLevel (nextLevel);
+			}
+			else
+			{
+				toNextLevel = true;
+				showNextLevelGoalPopUp ();
+			}
+			break;
+		case "closeRetry":
+			showWorld();
+			break;
 		default:
 			break;
 		}
@@ -119,7 +164,7 @@ public class MapManager : MonoBehaviour
 
 	protected void setWorldOnScene(int world)
 	{
-		worlds [world].SetActive (true);
+		worlds [world].SetActive (false);
 		WorldPrefab = (GameObject)Instantiate (worlds [world]);
 		WorldPrefab.transform.SetParent (worldParent,false);
 
@@ -128,50 +173,103 @@ public class MapManager : MonoBehaviour
 
 	protected void initializeLevels()
 	{
-		Debug.Log ((LevelsDataManager.GetInstance() as LevelsDataManager));
 		List<Level> worldsLevels = new List<Level> ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelsOfWorld(currentWorld));
 
-
-		MapLevel currentLevel = null;
+		if(PersistentData.GetInstance().lastLevelReachedName == "")
+		{
+			setLastLevelReached ();
+		}
+		bool isConectedToFacebook = FBLoggin.GetInstance ().isLoggedIn;
 		
 		for (int i = 0; i < mapLevels.Count; i++)
 		{
+			print(mapLevels [i].status);
 			settingMapLevelInfo (mapLevels[i],worldsLevels[i]);
-
 			settingMapLevelStatus (mapLevels[i]);
-
 			setOnClickDelegates (mapLevels[i]);
+			print(mapLevels [i].status);
 
 			mapLevels [i].updateStatus();
 			mapLevels[i].updateStars();
 			mapLevels [i].updateText ();
+
+			if(isConectedToFacebook)
+			{
+				FriendInfo friendInfo = isThereAnyFriendOnLevel (currentWorld, mapLevels [i].lvlName);
+
+				if(friendInfo != null)
+				{
+					mapLevels [i].updateFacebookFriendPicture (friendInfo);
+				}
+				else
+				{
+					mapLevels [i].noFriend ();
+				}
+			}
+			else
+			{
+				mapLevels [i].noFriend ();
+			}
 
 			if(mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_REACHED
 				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_PASSED
 				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_UNLOCKED
 				||  mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED
 				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED)
-			{
+			{				
 				currentLevel = mapLevels [i];
-
-				if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
+				print ("SSS");
+				if(fromGame && PersistentData.GetInstance().currentLevel.name == mapLevels[i].fullLvlName) 
 				{
-					doorsManager.DoorsCanOpen ();
-					paralaxManager.setPosToDoor ();
+					print ("entrando");
+					lastLevelPlayed = mapLevels [i];
+					if(i+1 < mapLevels.Count)
+					{
+						print ("entrando 2 ");
+						nextLevel = mapLevels [i+1];
+						isToNextLevel (mapLevels [i + 1]);
+						if(mapLevels[i+1].status == MapLevel.EMapLevelsStatus.NORMAL_LOCKED ||mapLevels[i+1].status == MapLevel.EMapLevelsStatus.BOSS_LOCKED)
+						{							
+							print ("entrando 3 ");
+							toNextLevel = true;
+						}
+					}
 				}
+				else if(nextLevel != null && nextLevel.fullLvlName == mapLevels[i].fullLvlName)
+				{
+					print ("a ver");
+					if(fromGame && nextLevel.fullLvlName == PersistentData.GetInstance().lastLevelReachedName)
+					{
+						print ("no!!");
+						toNextLevel = false;
+					}
+				}
+
+				/*if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
+				{
+					toDoor = true;
+					if(doorsManager)
+					{						
+						doorsManager.DoorsCanOpen ();
+					}
+				}*/
 			}
 		}
-		if(currentLevel == null)
-		{
-			currentLevel = mapLevels [0];
+	}
+
+	protected void isToNextLevel(MapLevel mapLvl)
+	{
+		print (mapLvl.status);
+		if(mapLvl.status == MapLevel.EMapLevelsStatus.NORMAL_LOCKED || mapLvl.status == MapLevel.EMapLevelsStatus.BOSS_LOCKED)
+		{							
+			print ("entrando 3 ");
 		}
-		print (currentLevel);
-		paralaxManager.setPosByCurrentLevel (currentLevel);
 	}
 
 	protected void settingMapLevelInfo(MapLevel level,Level data)
 	{
 		level.lvlName = data.name;
+		level.fullLvlName = data.name;
 		level.isBoss = data.isBoss;
 		level.starsNeeded = data.starsNeeded;
 		level.friendsNeeded = data.friendsNeeded;
@@ -180,6 +278,9 @@ public class MapManager : MonoBehaviour
 
 	protected void settingMapLevelStatus(MapLevel level)
 	{
+		//level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
+		//return;
+
 		if (level.isBoss)
 		{
 			if ((LevelsDataManager.GetInstance () as LevelsDataManager).isLevelPassed (level.lvlName))
@@ -242,6 +343,7 @@ public class MapManager : MonoBehaviour
 
 	protected void setOnClickDelegates(MapLevel level)
 	{
+
 		switch (level.status)
 		{
 		case(MapLevel.EMapLevelsStatus.BOSS_LOCKED):
@@ -312,7 +414,14 @@ public class MapManager : MonoBehaviour
 	protected void OnLevelUnlockedPressed(MapLevel pressed)
 	{
 		PersistentData.GetInstance ().setLevelNumber (int.Parse (pressed.lvlName));
-		SceneManager.LoadScene ("Game");
+		PersistentData.GetInstance ().lastLevelPlayedName = pressed.lvlName;
+
+		goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
+		int starsReached = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
+		
+		setGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters(),PersistentData.GetInstance().currentLevel.name,starsReached);
+
+		//SceneManager.LoadScene ("Game");
 	}
 
 	protected void OnLevelLockedPressed(MapLevel pressed)
@@ -331,8 +440,90 @@ public class MapManager : MonoBehaviour
 
 		selectLevel (currentWorld);
 
+		getFriendsOnMap (currentWorld);
+
 		initializeLevels ();
+		setLastLevelReached ();
+		Invoke ("setParalaxManager",0.05f);
+
+		if(!fromGame)
+		{
+			Invoke ("showWorld", 0.05f);
+		}
+		//setParalaxManager ();
 		paralaxManager.enabled = true;
+
+		PersistentData.GetInstance ().currentWorld = currentWorld;
+	}
+
+	protected void setLastLevelReached()
+	{
+		for(int i=mapLevels.Count-1 ; i>=0; i--)
+		{
+			if(mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_REACHED
+				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_PASSED
+				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_UNLOCKED
+				||  mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED
+				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED)
+			{	
+				PersistentData.GetInstance ().lastLevelReachedName = mapLevels [i].fullLvlName;
+				break;
+			}
+		}
+	}
+
+	protected void setParalaxManager()
+	{
+		if(currentLevel == null)
+		{
+			currentLevel = mapLevels [0];
+		}
+
+		if(toDoor)
+		{
+			paralaxManager.setPosToDoor ();
+		}
+		else if(fromGame)
+		{			
+			if(PersistentData.GetInstance().fromLoose)
+			{
+				popUpManager.activatePopUp ("retryPopUp");
+				stopInput (true);
+			}
+			else
+			{
+				int starsReached = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
+				int pointsMade = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
+				goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
+
+				string levelName = PersistentData.GetInstance ().currentLevel.name ;
+				for (int i = 0; i < levelName.Length; i++) 
+				{
+					if (levelName [i] == '0') 
+					{
+						levelName = levelName.Remove(i,1);
+						i--;
+					} 
+					else 
+					{
+						break;
+					}
+				}
+
+
+				popUpManager.getPopupByName ("goalAfterGame").GetComponent<GoalAfterGame>().setGoalPopUpInfo (starsReached,levelName , pointsMade.ToString());
+				popUpManager.activatePopUp ("goalAfterGame");
+				stopInput (true);
+			}
+
+			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(lastLevelPlayed));
+		}
+		else
+		{
+			print ("currentLevel " + currentLevel);
+			//paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel( mapLevels [0]));
+			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(currentLevel));
+		}
 	}
 
 	public void changeCurrentWorld(int world)
@@ -345,5 +536,179 @@ public class MapManager : MonoBehaviour
 	public void goToScene(string scene)
 	{
 		ScreenManager.instance.GoToScene (scene);
+	}
+
+	public void setGoalPopUp(string goalCondition, System.Object parameters,string levelName,int starsReached)
+	{
+		//Text goalText = goalPopUp.transform.FindChild("Objective").GetComponent<Text>();
+		string textId = string.Empty;
+		string textToReplace = string.Empty;
+		string replacement = string.Empty;
+		List<string> word = new List<string> ();
+		List<string> letter = new List<string> ();
+
+		string textA = string.Empty;
+		string textB = string.Empty;
+		int aABLetterObjectives = 0;
+
+		for (int i = 0; i < levelName.Length; i++) 
+		{
+			if (levelName [i] == '0') 
+			{
+				levelName = levelName.Remove(i,1);
+				i--;
+			} 
+			else 
+			{
+				break;
+			}
+		}
+
+		switch(goalCondition)
+		{
+		case GoalManager.LETTERS:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_LETTERS_ID;
+			textA = MultiLanguageTextManager.instance.getTextByID (textId);
+			textToReplace = "{{goalLetters}}";
+
+			replacement = "";
+			IEnumerable letters = parameters as IEnumerable;
+
+			foreach (object oLetter in letters) 
+			{
+				letter.Add (oLetter.ToString ());
+			}
+
+			aABLetterObjectives = 2;
+			break;
+		case GoalManager.OBSTACLES:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_OBSTACLES_ID;
+			textA = MultiLanguageTextManager.instance.getTextByID (textId);
+			/*textToReplace = "{{goalObstacleLetters}}";
+			replacement = (Convert.ToInt32(parameters)).ToString();*/
+			aABLetterObjectives = 1;
+			break;
+		case GoalManager.POINTS:
+			textToReplace = "{{goalPoints}}";
+			replacement = (Convert.ToInt32 (parameters)).ToString ();
+
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_POINTS_ID_A;
+			textA = MultiLanguageTextManager.instance.getTextByID (textId);
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_POINTS_ID_B;
+			textB = MultiLanguageTextManager.instance.getTextByID (textId).Replace (textToReplace, replacement);
+			aABLetterObjectives = 0;
+			break;
+		case GoalManager.WORDS_COUNT:
+			textToReplace = "{{goalWords}}";
+			replacement = (Convert.ToInt32(parameters)).ToString();
+
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_WORDS_ID_A;
+			textA = MultiLanguageTextManager.instance.getTextByID (textId);
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_WORDS_ID_B;
+			textB = MultiLanguageTextManager.instance.getTextByID (textId).Replace(textToReplace,replacement);
+			aABLetterObjectives = 0;
+			break;
+		case GoalManager.SYNONYMOUS:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID;
+			textA = MultiLanguageTextManager.instance.getTextByID (textId);
+			word= (List<string>)parameters;
+			replacement = word[0];
+			textB = replacement;
+			aABLetterObjectives = 0;
+			break;
+		case GoalManager.WORD:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_1_WORD_ID;
+			textA = MultiLanguageTextManager.instance.getTextByID (textId);
+			word= (List<string>)parameters;
+			replacement = word[0];
+			textB = replacement;
+			aABLetterObjectives = 0;
+			break;		
+		case GoalManager.ANTONYMS:
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_ANTONYM_ID;
+			textA = MultiLanguageTextManager.instance.getTextByID (textId);
+			word= (List<string>)parameters;
+			replacement = word[0];
+			textB = replacement;
+			aABLetterObjectives = 0;
+			break;
+		}
+			
+		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (textA,textB,starsReached, letter, levelName,aABLetterObjectives);
+		popUpManager.activatePopUp ("goalPopUp");
+
+		stopInput (true);
+
+		//goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
+		//activatePopUp("goalPopUp");
+		//goalPopUp.SetActive(true);
+	}
+		
+	protected void showNextLevelGoalPopUp ()
+	{
+		if (toNextLevel)
+		{
+			if(!invitationToReview.isHappeningAReview (int.Parse (PersistentData.GetInstance ().lastLevelReachedName)))
+			{
+				OnLevelUnlockedPressed (nextLevel);
+			}
+			else
+			{
+				invitationToReview.showInvitationProcessByLevelNumber(int.Parse (PersistentData.GetInstance().lastLevelReachedName));
+			}
+
+		}
+		else
+		{
+			if(invitationToReview.isHappeningAReview (int.Parse (PersistentData.GetInstance ().lastLevelReachedName)))
+			{
+				invitationToReview.showInvitationProcessByLevelNumber(int.Parse (PersistentData.GetInstance().lastLevelReachedName));
+			}
+		}
+	}
+
+	protected void afterInvitation()
+	{
+		if (toNextLevel) 
+		{
+			OnLevelUnlockedPressed (nextLevel);
+		}
+	}
+
+	protected void showWorld ()
+	{
+		worlds [currentWorld-1].SetActive (true);
+		WorldPrefab.SetActive (true);
+	}
+
+	protected void deActivateWorld ()
+	{
+		worlds [currentWorld-1].SetActive (false);
+		WorldPrefab.SetActive (false);
+	}
+
+	protected FriendInfo isThereAnyFriendOnLevel(int world, string level)
+	{
+		print ("isThereAnyFriendOnLevel "+level + " "+world);
+		return friendsOnWorldManager.getFriendOnLevel (world, level);
+	}
+
+	protected void getFriendsOnMap(int world)
+	{
+		if(FBLoggin.GetInstance().isLoggedIn)
+		{
+			FriendsOnWorld friendsOnWorld = friendsOnWorldManager.existFriendsOnWorld (world.ToString ());
+
+			if(friendsOnWorld == null)
+			{
+				//TODO info del server
+				string[] facebokId = new string[test.Count];
+				for(int i=0; i<test.Count; i++)
+				{
+					facebokId [i] = "10154899709081808";//UnityEngine.Random.Range (123, 1230123).ToString ();
+				}
+				friendsOnWorld = friendsOnWorldManager.getNewFriendsOnWorld (world.ToString(), test.ToArray (), facebokId);
+			}
+		}
 	}
 }

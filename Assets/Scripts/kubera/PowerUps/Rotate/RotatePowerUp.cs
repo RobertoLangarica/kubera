@@ -12,6 +12,8 @@ public class RotatePowerUp : PowerupBase
 
 	protected GameObject powerUpGO;
 	protected bool canUse;
+	protected Transform[] imageToRotate;
+	protected Vector3 initiaImageToRotateScale;
 
 	void Start()
 	{
@@ -19,12 +21,18 @@ public class RotatePowerUp : PowerupBase
 		inputPowerUpRotate = FindObjectOfType<InputPowerUpRotate> ();
 		inputPowerUp = FindObjectOfType<InputBombAndDestroy> ();
 
-		inputPowerUpRotate.gameObject.SetActive (false);
+
 		this.gameObject.SetActive( false);
+		inputPowerUpRotate.enabled = false;
+		inputPowerUpRotate.gameObject.SetActive (false);
+
+		imageToRotate = FindObjectOfType<HUDManager>().rotationImagePositions;
+		initiaImageToRotateScale = imageToRotate [0].transform.localScale;
 	}
 
 	public override void activate (bool canUse)
 	{
+		print ("activate");
 		this.gameObject.SetActive( true);
 		if (powerUpGO != null) 
 		{
@@ -33,7 +41,8 @@ public class RotatePowerUp : PowerupBase
 		powerUpGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
 		powerUpGO.name = "RotatePowerUp";
 		powerUpGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
-		powerUpGO.transform.localScale = new Vector3 (1, 1, 1);
+		powerUpGO.transform.localScale = new Vector3 (4, 4, 4);
+		powerUpGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
 		inputPowerUp.enabled = true;
 		inputPowerUp.setCurrentSelected(powerUpGO);
 		inputPowerUp.OnDrop += powerUpPositioned;
@@ -42,6 +51,8 @@ public class RotatePowerUp : PowerupBase
 		this.canUse = canUse;
 
 		updateDragableObjectImage (powerUpGO);
+
+		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.ROTATE_POWERUP);
 	}
 
 	public void powerUpPositioned()
@@ -86,7 +97,7 @@ public class RotatePowerUp : PowerupBase
 
 		}
 		inputPowerUp.OnDrop -= powerUpPositioned;
-
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.ROTATE_POWERUP);
 	}
 
 	public void powerUpActivateRotate(bool canUse)
@@ -94,10 +105,23 @@ public class RotatePowerUp : PowerupBase
 		inputPowerUp.OnDrop -= powerUpPositioned;
 		if(canUse)
 		{
+			if(inputPowerUpRotate.gameObject.activeSelf)
+			{
+				cancel ();
+				return;
+			}
 			inputPowerUpRotate.gameObject.SetActive (true);
 			inputPowerUpRotate.enabled = true;
 			inputPowerUpRotate.startRotate ();
 			inputPowerUpRotate.OnPowerupRotateCompleted += completePowerUp;
+			print ("activate");
+			Invoke ("rotateImage", 2);
+
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop("startRotate");
+				AudioManager.GetInstance().Play("startRotate");
+			}
 		}
 		else
 		{
@@ -108,17 +132,62 @@ public class RotatePowerUp : PowerupBase
 	protected void completePowerUp()
 	{
 		inputPowerUpRotate.OnPowerupRotateCompleted -= completePowerUp;
-		OnComplete ();
-		inputPowerUpRotate.enabled = false;
 		this.gameObject.SetActive( false);
+		inputPowerUpRotate.enabled = false;
+		inputPowerUpRotate.gameObject.SetActive (false);
+		cancelInvoke ();
+		OnComplete ();
 	}
 
 	public override void cancel()
 	{
 		//print ("cancelPowerUp");
 		OnCancel ();
+		inputPowerUp.enabled = false;
+
+
+		if(inputPowerUpRotate.gameObject.activeSelf)
+		{
+			return;
+		}
 		inputPowerUpRotate.enabled = false;
 		this.gameObject.SetActive( false);
+	}
+
+	protected void rotateImage()
+	{
+		for(int i=0; i<imageToRotate.Length; i++)
+		{
+			imageToRotate [i].DOScale (new Vector2 (imageToRotate [i].localScale.x + 0.1f, imageToRotate [i].localScale.y + 0.1f), 0.5f).OnComplete(()=>
+				{
+					imageToRotate [i].DOScale (new Vector2 (imageToRotate [i].localScale.x - 0.1f, imageToRotate [i].localScale.y - 0.1f), 0.5f).OnComplete(()=>
+						{
+							print("Sssss");
+						}).SetId("imageToRotate");
+				}).SetId("imageToRotate");
+			imageToRotate [i].DOShakeRotation (1.0f).SetId("imageToRotate");
+		}
+		Invoke ("scaleRotateImage", 0.5f);
+	}
+
+	protected void scaleRotateImage()
+	{
+		for(int i=0; i<imageToRotate.Length; i++)
+		{
+			imageToRotate [i].DOScale (new Vector2 (imageToRotate [i].localScale.x - 0.1f, imageToRotate [i].localScale.y - 0.1f), 0.5f).SetId("imageToRotate");;
+		}
+		Invoke ("rotateImage", Random.Range(2,5));
+	}
+
+	protected void cancelInvoke()
+	{
+		CancelInvoke ("rotateImage");
+		CancelInvoke ("scaleRotateImage");
+		DOTween.Kill ("imageToRotate");
+		for(int i=0; i<imageToRotate.Length; i++)
+		{
+			imageToRotate [i].transform.localScale = initiaImageToRotateScale;
+		}
 	}
 }
 

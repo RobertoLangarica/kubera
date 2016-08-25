@@ -32,6 +32,8 @@ public class HomeManager : MonoBehaviour {
 			piecesMoved [j].startRotate (speed);
 		}
 		StartCoroutine (showLetters ());
+
+
 	}
 
 	IEnumerator showLetters()
@@ -70,6 +72,12 @@ public class HomeManager : MonoBehaviour {
 
 	public void goToScene(string scene)
 	{
+		if(AudioManager.GetInstance())
+		{
+			
+			AudioManager.GetInstance().Play("fxButton");
+		}
+
 		ScreenManager.instance.GoToScene (scene);
 	}
 
@@ -77,6 +85,10 @@ public class HomeManager : MonoBehaviour {
 	public void ereaseData()
 	{
 		LevelsDataManager.GetInstance ().deleteData ();
-		PersistentData.GetInstance ().lifes = 2;
+		if(AudioManager.GetInstance())
+		{
+			
+			AudioManager.GetInstance().Play("fxButton");
+		}
 	}
 }

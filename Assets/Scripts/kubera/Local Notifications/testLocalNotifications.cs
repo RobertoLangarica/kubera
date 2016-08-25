@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
-//using VoxelBusters.NativePlugins;
+using VoxelBusters.NativePlugins;
 
 public class testLocalNotifications : MonoBehaviour {
 
 	//Create an instance of CrossPlatformNotification and fill with details.
-	/*private CrossPlatformNotification CreateNotification (long _fireAfterSec, eNotificationRepeatInterval _repeatInterval)
+	private CrossPlatformNotification CreateNotification (long _fireAfterSec, eNotificationRepeatInterval _repeatInterval)
 	{
 		// User info
 		IDictionary _userInfo			= new Dictionary<string, string>();
@@ -40,5 +40,5 @@ public class testLocalNotifications : MonoBehaviour {
 		//Schedule this local notification.
 		CrossPlatformNotification _notification = CreateNotification(5, eNotificationRepeatInterval.MINUTE);
 		NPBinding.NotificationService.ScheduleLocalNotification(_notification);
-	}*/
+	}
 }

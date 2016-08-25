@@ -28,25 +28,32 @@ public class MapLevel : MonoBehaviour
 	public EMapLevelsStatus status;
 	public Text lvlNameText;
 
-	public Color lockedColor;
-	public Color normalColor;
-	public Color bossPassedColor;
-	public Color bossReachedColor;
-	public Color starsColor;
+	public Sprite starsPassed;
+	public Sprite starsUnpassed;
 
 	public Image levelIcon;
+
 	public Sprite levelLockedSprite;
-	public Image levelBossIcon;
+	public Sprite levelNormalSprite;
+
 	public Sprite levelLockedBossSprite;
+	public Sprite levelNormalBossSprite;
+	public Sprite levelUnlockedBossSprite;
+
 	public List<Image> levelStars;
 
 	public string lvlName;
+	public string fullLvlName;
 
 	public bool isBoss;
 
 	public int friendsNeeded;
 	public int gemsNeeded;
 	public int starsNeeded;
+
+	public GameObject facebookBackground;
+	public Image facebookFriend;
+	public FriendPicture friend;
 
 	public delegate void DOnClickNotification(MapLevel pressed);
 	public DOnClickNotification OnClickNotification;
@@ -94,7 +101,7 @@ public class MapLevel : MonoBehaviour
 			if (i < until) 
 			{
 				levelStars [i].gameObject.SetActive (true);
-				levelStars [i].color = starsColor;
+				levelStars [i].sprite = starsPassed;
 			}
 			else
 			{
@@ -105,38 +112,68 @@ public class MapLevel : MonoBehaviour
 
 	public void updateStatus()
 	{
+		//print (status + "  "+lvlName);
 		switch (status) 
 		{
 		case(EMapLevelsStatus.BOSS_LOCKED):
-			levelBossIcon.gameObject.SetActive (true);
-			levelIcon.color = lockedColor;
-			levelIcon.sprite = levelLockedSprite;
-			levelBossIcon.sprite = levelLockedBossSprite;
+			levelIcon.sprite = levelLockedBossSprite;
 			break;
 		case(EMapLevelsStatus.NORMAL_LOCKED):
-			levelIcon.color = lockedColor;
 			levelIcon.sprite = levelLockedSprite;
 			break;
 		case(EMapLevelsStatus.BOSS_PASSED):
-			levelBossIcon.color = levelIcon.color = bossPassedColor;
-			levelBossIcon.gameObject.SetActive (true);
+			levelIcon.sprite = levelNormalBossSprite;
 			break;
 		case(EMapLevelsStatus.BOSS_REACHED):
 		case(EMapLevelsStatus.BOSS_UNLOCKED):
-			levelBossIcon.gameObject.SetActive (true);
-			//levelBossIcon.color = levelIcon.color = bossReachedColor;
+			levelIcon.sprite = levelUnlockedBossSprite;
 			break;
 		case(EMapLevelsStatus.NORMAL_PASSED):
 		case(EMapLevelsStatus.NORMAL_REACHED):
-			levelIcon.color = normalColor;
+			levelIcon.sprite = levelNormalSprite;
 			break;
 		}
 	}
 
+	public void updateFacebookFriendPicture(FriendInfo friendInfo)
+	{
+		friend = facebookBackground.GetComponent < FriendPicture>();
+		friend.fbId = friendInfo.facebookID;
+
+		Invoke ("pictureRequest", 0.5f);
+	}
+
+	protected void pictureRequest()
+	{
+		facebookBackground.SetActive (true);
+		Sprite image = friend.getPicture();
+		if(image != null)
+		{
+			facebookFriend.sprite = image;
+		}
+		else
+		{
+			//TODO poner imagen de reload
+			friend.OnFound += pictureFound;
+		}
+	}
+
+	protected void pictureFound(Sprite picture)
+	{
+		facebookFriend.sprite = picture;
+	}
+
+	public void noFriend()
+	{
+		facebookBackground.SetActive (false);
+	}
+
 	public void onClick()
 	{
-		print (status);
-
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Play("fxButton");
+		}
 		if (OnClickNotification != null) 
 		{
 			OnClickNotification (this);

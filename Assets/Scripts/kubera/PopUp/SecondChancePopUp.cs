@@ -97,8 +97,8 @@ public class SecondChancePopUp : PopUpBase
 			OnGiveUp ();
 		}
 			
-		OnComplete ();
+		OnComplete ("loose");
 
-		popUpManager.activatePopUp ("RetryPopUp");
+		//popUpManager.activatePopUp ("RetryPopUp");
 	}
 }

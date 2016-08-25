@@ -1,116 +1,59 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using DG.Tweening;
 
 public class TutorialLvl37 : TutorialBase 
 {
-	protected Vector3 offset;
+	public Image powerUpDommy;
+	public GameObject fromPosition;
+
+	protected bool doAnimation;
 
 	protected override void Start()
 	{
 		base.Start ();
-
-		offset = new Vector3(0,handObject.gameObject.GetComponent<Image> ().sprite.bounds.extents.y,0);
 	}
 
 	public override bool canMoveToNextPhase ()
 	{
+		phaseEvent.Clear ();
 		switch (phase) 
 		{
 		case(0):
-			hideHand ();
 			phasesPanels [0].SetActive (true);
-			phaseEvent = ENextPhaseEvent.ROTATE_USED;
+			phaseEvent.Add(ENextPhaseEvent.POSITIONATE_PIECE);
 
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = true;
-
-			freeBlocks = false;
-			freeBombs = false;
 			freeRotates = true;
-			freeDestroy = false;
-			freeWildCard = false;
 
-			instructions [0].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE1A);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.ROTATE_BUTTON);
 
-			instructions [1].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE1B);
+			instructions [0].text = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE1),
+				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+
+			doAnimation = true;
+			Invoke ("powerUpAnim",1);
 
 			phase = 1;
-			goalPopUp.OnPopUpCompleted += startTutorialAnimation;
 			return true;
 		case(1):
-			hideHand ();
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent = ENextPhaseEvent.PIECE_ROTATED;
+			phaseEvent.Add(ENextPhaseEvent.TAP);
 
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = false;
-
-			freeBlocks = false;
-			freeBombs = false;
-			freeRotates = false;
-			freeDestroy = false;
-			freeWildCard = false;
-
-			instructions [2].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE2);		
-			phase = 2;
-			finishMovements ();
-			StopCoroutine ("playPressAndContinueWithMethod");
-			hideHand ();
-			phase2Animation ();
-			return true;
-		case(2):
-			hideHand ();
-			phasesPanels [1].SetActive (false);
-			phasesPanels [2].SetActive (true);
-			phaseEvent = ENextPhaseEvent.TAP;
-
-			allowGridTap = false;
-			allowWordTap = false;
-			allowLetterDrag = false;
-			allowErraseWord = false;
-			allowDragPieces = false;
-			allowPowerUps = false;
-
-			freeBlocks = false;
-			freeBombs = false;
-			freeRotates = false;
-			freeDestroy = false;
-			freeWildCard = false;
-
-			instructions [3].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE3A);
-		
-			instructions [4].text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE3B);			
-			phase = 3;
-			finishMovements ();
-			hideHand ();
-			return true;
-		case(3):
-			hideHand ();
-			phasesPanels [2].SetActive (false);
-
-			allowGridTap = true;
-			allowWordTap = true;
-			allowLetterDrag = true;
-			allowErraseWord = true;
-			allowDragPieces = true;
-			allowPowerUps = true;
-
-			freeBlocks = false;
-			freeBombs = false;
 			freeRotates = true;
-			freeDestroy = false;
-			freeWildCard = false;
-			return true;			
+
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.ROTATE_BUTTON);
+
+			instructions [1].text = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE2),
+				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+
+			doAnimation = false;
+
+			phase = 2;
+			return true;
 		}
 
 		return base.canMoveToNextPhase ();
@@ -122,61 +65,48 @@ public class TutorialLvl37 : TutorialBase
 		{
 		case(1):
 			return true;
-		case(2):
-			Invoke ("callForTutorialManager",0.7f);
-			return false;
-		case(3):
-			return true;
 		}
 
 		return base.phaseObjectiveAchived ();
-	}	
-
-	protected void callForTutorialManager ()
-	{
-		FindObjectOfType<TutorialManager> ().moveTutorialToNextPhase ();
 	}
 
-	private void startTutorialAnimation(PopUpBase thisPopUp, string action)
+	protected void powerUpAnim()
 	{
-		Invoke ("phase0Animation",0.5f);
-		showHandAt (handPositions [0].transform.position,Vector3.zero,false);
-	}
-
-	private void phase0Animation()
-	{
-		if (phase == 1) 
+		if (!doAnimation) 
 		{
-			showHandAt (handPositions [0].transform.position,Vector3.zero,false);
-			playReleaseAnimation ();
-
-			StartCoroutine (playPressAndContinueWithMethod ("phase1Animation", 0.5f));
+			DOTween.Kill ("Tutorial2");
+			return;
 		}
-	}
 
-	private void phase1Animation()
-	{
-		if (phase == 1) 
-		{
-			playPressAnimation ();
-			showObjectAtHand (offset);
-			moveHandFromGameObjects (handPositions[0],handPositions[1],offset);
-			OnMovementComplete += hideHand;
+		Vector3 posFrom = fromPosition.transform.position;
+		Vector3 posTo = hudManager.rotationImagePositions[1].transform.position;
 
-			Invoke ("phase0Animation", 2);
-		}
-	}
+		powerUpDommy.transform.position = posFrom;
 
-	private void phase2Animation()
-	{
-		if (phase == 2) 
-		{
-			hideObject ();
-			playTapAnimation ();
-			showHandAt (handPositions [1].transform.position, Vector3.zero, false);
-			OnMovementComplete -= hideHand;
+		//Los valores de las animaciones los paso Liloo
+		powerUpDommy.transform.DOScale (new Vector3 (1.4f, 1.4f, 1.4f), 0.5f).SetId("Tutorial2");
+		powerUpDommy.DOColor (new Color(1,1,1,0.5f),0.5f).OnComplete(
+			()=>{
 
-			Invoke ("phase2Animation", 1);
-		}
+				//TODO: intentar que sea linea curva
+				powerUpDommy.transform.DOMove (posTo,1).OnComplete(
+					()=>{
+
+						powerUpDommy.transform.DOScale (new Vector3 (1, 1, 1), 1f).OnComplete(
+							()=>{
+
+								powerUpDommy.DOColor (new Color(1,1,1,0),0.5f).SetId("Tutorial2");
+							}
+
+						).SetId("Tutorial2");
+
+					}
+
+				).SetId("Tutorial2");
+
+			}
+		).SetId("Tutorial2");
+
+		Invoke ("powerUpAnim",3.5f);
 	}
 }

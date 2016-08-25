@@ -17,7 +17,7 @@ public class InputPiece : MonoBehaviour
 
 	protected bool somethingDragged = false;
 	protected int lastTimeDraggedFrame;
-	protected GameObject currentSelected = null;
+	public GameObject currentSelected = null;
 	protected Vector3 selectedInitialScale;
 	protected Vector3 selectedInitialPosition;
 
@@ -102,9 +102,10 @@ public class InputPiece : MonoBehaviour
 
 	void OnFingerDown(FingerDownEvent  gesture)
 	{
-		if(allowInput && gesture.Raycast.Hits2D != null)
+		if(currentSelected == false && allowInput && gesture.Raycast.Hits2D != null)
 		{
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
+			offsetPositionOverFinger.y = Mathf.Round (gesture.Raycast.Hit2D.collider.bounds.size.y * 15) * .10f;
 
 			/*selectedInitialPosition = currentSelected.transform.position;
 			selectedInitialScale = currentSelected.transform.localScale;*/
@@ -116,7 +117,6 @@ public class InputPiece : MonoBehaviour
 		if (allowInput && gesture.Raycast.Hits2D != null) 
 		{
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
-
 			//DOTween.Kill("Input_InitialPosition",true);
 			//DOTween.Kill("Input_ScalePosition",true);
 
@@ -127,12 +127,21 @@ public class InputPiece : MonoBehaviour
 			posOverFinger.z = -1;
 			posOverFinger += offsetPositionOverFinger;
 
-			currentSelected.transform.DOScale (currentSelected.transform.localScale * 0.8f, 0.1f).SetId(currentSelected).OnComplete (()=>
+			moveTo(currentSelected,posOverFinger,pieceSpeed); 
+			OnSelected (currentSelected,true);
+			currentSelected.transform.DOScale(selectedScale,.075f).SetId("Input_SelectedScale").OnComplete(()=>{});
+
+			if(AudioManager.GetInstance())
+			{
+				print ("S");
+				AudioManager.GetInstance().Stop("pieceSelected");
+				AudioManager.GetInstance().Play("pieceSelected");
+			}
+
+			/*currentSelected.transform.DOScale (currentSelected.transform.localScale * 0.8f, 0.075f).SetId(currentSelected).OnComplete (()=>
 				{
-					moveTo(currentSelected,posOverFinger,pieceSpeed); 
-					currentSelected.transform.DOScale(selectedScale,.1f).SetId("Input_SelectedScale").OnComplete(()=>{});
-					OnSelected (currentSelected,true);
-				});
+					currentSelected.transform.DOScale(selectedScale,.075f).SetId("Input_SelectedScale").OnComplete(()=>{});
+				});*/
 
 
 			isLongPressed = true;
@@ -169,8 +178,8 @@ public class InputPiece : MonoBehaviour
 		else
 		{
 			allowInput = false;
-			currentSelected.transform.DOScale (piece.initialPieceScale, .1f).SetId("Input_ScalePosition");
-			currentSelected.transform.DOMove (piece.positionOnScene, .1f).SetId("Input_InitialPosition").OnComplete(()=>{allowInput = true; });
+			currentSelected.transform.DOScale (piece.initialPieceScale, delay).SetId("Input_ScalePosition");
+			currentSelected.transform.DOMove (piece.positionOnScene, delay).SetId("Input_InitialPosition").OnComplete(()=>{allowInput = true; });
 		}
 		OnSelected (currentSelected,false);
 	}

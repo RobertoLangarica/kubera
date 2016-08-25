@@ -44,7 +44,7 @@ public class InputPowerUpRotate : MonoBehaviour
 		pieceManager = FindObjectOfType<PieceManager> ();
 		gameManager = FindObjectOfType<GameManager> ();
 		hudManager = FindObjectOfType<HUDManager> ();
-
+		pieceSpeed = FindObjectOfType<InputPiece> ().pieceSpeed;
 		if(pieceStock == null)
 		{
 			print("Falta asignarlo en el editor");
@@ -137,11 +137,11 @@ public class InputPowerUpRotate : MonoBehaviour
 
 	void OnFingerDown(FingerDownEvent  gesture)
 	{
-		if (allowInput && gesture.Raycast.Hits2D != null) 
+		if (!currentSelected && allowInput && gesture.Raycast.Hits2D != null) 
 		{
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
-
-			//currentSelected.transform.DOMove(overFingerPosition,.1f).SetId("Input_SelectedPosition");
+			offsetPositionOverFinger.y = Mathf.Round (gesture.Raycast.Hit2D.collider.bounds.size.y * 20) * .10f;
+		//currentSelected.transform.DOMove(overFingerPosition,.1f).SetId("Input_SelectedPosition");
 
 		}
 		else if(!allowInput)
@@ -264,6 +264,12 @@ public class InputPowerUpRotate : MonoBehaviour
 
 			StartCoroutine( changePiece (piece,piece.transform.position, rotateSpeed));
 
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop("rotate");
+				AudioManager.GetInstance().Play("rotate");
+			}
+
 			piece.gameObject.transform.DOScale (new Vector3 (0, 0), rotateSpeed).OnComplete (() => {
 
 				/*piece.transform.localRotation = Quaternion.Euler(new Vector3(0,0,piece.transform.rotation.eulerAngles.z+90));
@@ -271,6 +277,7 @@ public class InputPowerUpRotate : MonoBehaviour
 				piece.transform.DOScale (selectedInitialScale, 0.25f).OnComplete (() => {
 					isRotating(false);
 				});*/
+				
 				if(OnPieceRotated != null)
 				{
 					OnPieceRotated();
@@ -304,6 +311,7 @@ public class InputPowerUpRotate : MonoBehaviour
 		piece.createdIndex = oldPiece.createdIndex;
 		piece.positionOnScene = oldPiece.positionOnScene;
 		piece.initialPieceScale = oldPiece.initialPieceScale;
+		piece.switchGreyPiece (oldPiece.isGrey());
 	}
 
 	public void activateRotateImage(bool activate,int posOnScene =-1)

@@ -54,7 +54,6 @@ namespace Kubera.Data
 
 			//TODO: guardar en server
 			//syncManager.updateData(data);
-
 		}
 
 		public bool isLevelPassed(string levelName)

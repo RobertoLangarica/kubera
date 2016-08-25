@@ -8,7 +8,7 @@ public class PowerupBase : MonoBehaviour
 
 	public enum EType
 	{
-		BOMB,BLOCK,ROTATE,DESTROY,WILDCARD	
+		HINT_WORD,BOMB,BLOCK,ROTATE,WILDCARD,DESTROY
 	}
 
 	public delegate void DPowerUpNotification();
@@ -59,7 +59,7 @@ public class PowerupBase : MonoBehaviour
 	{
 		Image temp = powerUpObject.GetComponentInChildren<Image> ();
 		SpriteRenderer tempS = powerUpObject.GetComponentInChildren<SpriteRenderer> ();
-
+	
 		if (powerUpImage != null) 
 		{
 			powerUpObject.GetComponent<Piece> ().currentColor = Piece.EColor.NONE;
@@ -73,6 +73,8 @@ public class PowerupBase : MonoBehaviour
 			{
 				tempS.sprite = Sprite.Create (powerUpImage.texture, powerUpImage.textureRect, new Vector2 (0.5f, 0.5f));
 				tempS.color = Color.white;
+				powerUpImage = tempS.sprite;
+				print (powerUpImage);
 			}
 		}
 	}

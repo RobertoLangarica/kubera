@@ -41,14 +41,11 @@ public class FacebookPersistentData : Manager<FacebookPersistentData>
 		}
 		else
 		{
-			print ("rea");
+			print ("friend image exist");
 		}
 	}
 
-	public Texture getTextureById(string id)
-	{
-		return friendsImage [id];
-	}
+
 
 	public void addInvitableFriend(List<object> friends)
 	{
@@ -100,5 +97,53 @@ public class FacebookPersistentData : Manager<FacebookPersistentData>
 	{
 		allFriends.AddRange (gameFriends);
 		allFriends.AddRange (invitableFriends);
+	}
+
+	public Texture getTextureById(string id)
+	{
+		if(friendsImage.ContainsKey(id))
+		{
+			return friendsImage [id];
+		}
+		return null;
+	}
+
+	protected Texture2D getFriendPicture(Texture picture)
+	{	
+		Texture2D tPicture = null;
+
+		if(picture != null)
+		{
+			tPicture = picture as Texture2D;
+		}
+		return tPicture;
+	}
+
+	protected Sprite getFriendPicture(Texture2D picture)
+	{
+		Sprite sPicture = null;
+
+		if(picture != null)
+		{
+			sPicture = Sprite.Create (picture, new Rect (0, 0, picture.width, picture.height), new Vector2 (0, 0));
+		}
+		return sPicture;
+	}
+
+	public Sprite getSpritePictureById(string id)
+	{
+		return getFriendPicture (getFriendPicture (getTextureById(id)));
+	}
+
+	public string getFriendNameById(string id)
+	{
+		Dictionary<string,object> friendInfo = getFriendInfo (id);
+		
+		if(friendInfo != null)
+		{
+			return ((string)friendInfo ["name"]).Split (' ') [0];
+		}
+
+		return "";
 	}
 }

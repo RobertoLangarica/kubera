@@ -22,6 +22,7 @@ public class PersistentData : Manager<PersistentData>
 	public int maxWordLength = 10;
 	[HideInInspector]public int levelNumber = -1;
 	[HideInInspector]public Level currentLevel;
+	[HideInInspector]public string lastLevelReachedName;
 	[HideInInspector]public Levels levelsData;
 	[HideInInspector]public ABCDictionary abcDictionary;
 
@@ -35,12 +36,19 @@ public class PersistentData : Manager<PersistentData>
 	public bool fromLevelBuilder;
 	[HideInInspector]
 	public bool fromGameToEdit;
+	[HideInInspector]
+	public bool fromGameToLevels = false;
 
+	[HideInInspector]
+	public bool fromLevelsToGame = false;
+
+	[HideInInspector]
 	public int startLevel = 1;
 
-	//HACK CampusParty
-	public int lifes = 2;
-	public bool opened;
+	[HideInInspector]
+	public string lastLevelPlayedName = "";
+	[HideInInspector]
+	public bool fromLoose;
 
 	protected override void Awake() 
 	{
@@ -205,8 +213,7 @@ public class PersistentData : Manager<PersistentData>
 	public Level getRandomLevel()
 	{
 		int le = 15;
-		//return levelsData.levels[0];
-		//return levelsData.levels[Random.Range(le,le+1)];
+		return levelsData.levels[3];
 		return levelsData.levels[Random.Range(0,levelsData.levels.Length-1)];
 	}
 
