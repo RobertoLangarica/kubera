@@ -12,6 +12,7 @@ namespace Kubera.Data
 		public int points;
 		public bool locked;
 		public bool passed;
+		public int world;
 
 		public LevelData(string levelId)
 		{

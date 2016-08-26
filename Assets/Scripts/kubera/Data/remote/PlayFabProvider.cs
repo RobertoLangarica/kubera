@@ -140,10 +140,10 @@ namespace Kubera.Data.Remote
 
 				//Para que se desmarquen como sucios los datos locales hacemos un diff
 				KuberaUser remoteUser = JsonUtility.FromJson<KuberaUser>(request.sendedJSON);
-				//remoteUser.id = loginRequest.data.data.PlayFabId;
-				//remoteUser.PlayFab_dataVersion = request.data.data.FunctionResult.DataVersion;
+				remoteUser.id = loginRequest.data.data.PlayFabId;
+				remoteUser.PlayFab_dataVersion = request.data.data.FunctionResult.DataVersion;
 
-				//OnDataUpdated(JsonUtility.ToJson(remoteUser));
+				OnDataUpdated(JsonUtility.ToJson(remoteUser));
 			}
 		}
 

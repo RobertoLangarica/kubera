@@ -16,7 +16,7 @@ namespace Kubera.Data.Remote.PFResponseData
 	}
 	**/
 	[Serializable]
-	public class PFResponseBasicData<T>
+	public class PFResponseBase<T>
 	{
 		public int code;
 		public string status;

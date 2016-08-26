@@ -62,8 +62,7 @@ namespace Kubera.Data.Sync
 			{
 				Debug.Log("Getting data from remote user.");
 				//Nos traemos los datos de este usuario
-				//server.getUserData(currentUser.id, localData.currentUser.getCSVKeysToQuery(), localData.currentUser.PlayFab_dataVersion);	
-				server.updateUserData(currentUser.id,JsonUtility.ToJson(localData.currentUser));
+				server.getUserData(currentUser.id, localData.currentUser.getCSVKeysToQuery(), localData.currentUser.PlayFab_dataVersion);	
 			}
 		}
 
@@ -106,8 +105,10 @@ namespace Kubera.Data.Sync
 		{
 			base.OnDataUpdated (updatedData);
 
-			//Ignoramos la version
-			localData.diffUser(JsonUtility.FromJson<KuberaUser>(updatedData), true);
+			KuberaUser updatedUser = JsonUtility.FromJson<KuberaUser>(updatedData);
+
+			//Se actualizo algo en el server
+			localData.diffUser(updatedUser, true);//Ignoramos la version
 			Debug.Log("Usuario sincronizado.");
 
 			//Necesita subirse?

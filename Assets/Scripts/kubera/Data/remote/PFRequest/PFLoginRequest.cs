@@ -12,7 +12,7 @@ namespace Kubera.Data.Remote
 	public class PFLoginRequest :  BaseRequest
 	{
 		private HTTPRequest request;
-		public PFResponseBasicData<PFLoginData> data;
+		public PFResponseBase<PFLoginData> data;
 
 		public void initialize(string titleID,string accessToken)
 		{
@@ -42,7 +42,7 @@ namespace Kubera.Data.Remote
 				case HTTPRequestStates.Finished:
 					Debug.Log("Request Finished Successfully!\n" + response.DataAsText);
 
-					data = JsonUtility.FromJson<PFResponseBasicData<PFLoginData>>(response.DataAsText);
+					data = JsonUtility.FromJson<PFResponseBase<PFLoginData>>(response.DataAsText);
 
 					if(data.code == 200)
 					{

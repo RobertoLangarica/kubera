@@ -24,19 +24,19 @@ namespace Kubera.Data.Remote.PFResponseData
 	}
 	**/
 	[Serializable]
-	public class PFResponseUserData
+	public class PFUserData
 	{
-		public PFUserData Data;
+		public PFUser Data;
 		public int	DataVersion;
 	}
 
 	[Serializable]
-	public class PFUserData
+	public class PFUser
 	{
 		public PFLevelsData levels;
 		public PFVersionData version;
 
-		public PFUserData()
+		public PFUser()
 		{
 			levels = new PFLevelsData();
 			version = new PFVersionData();

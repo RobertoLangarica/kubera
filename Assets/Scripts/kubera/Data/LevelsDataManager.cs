@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Data;
 using Kubera.Data.Sync;
+using Kubera.Data.Remote.PFResponseData;
 
 namespace Kubera.Data
 {
@@ -44,16 +45,23 @@ namespace Kubera.Data
 				level.stars		= stars;
 				level.passed	= true;
 				level.isDirty	= true;
+				level.world		= levelsList.getLevelByName(levelName).world;
+
 				currentUser.addLevel(level);
 			}
 
 			//Cuidamos de no sobreescribir algun valor previo
 			currentData.isDirty = currentData.isDirty || level.isDirty;
 
-			saveLocalData(false);
+			if(currentData.isDirty)
+			{
+				saveLocalData(false);
 
-			//TODO: guardar en server
-			//syncManager.updateData(data);
+				//mandamos un usuairo solo con este nivel
+				KuberaUser user = new KuberaUser(currentUserId);
+				user.levels.Add(level);
+				syncManager.updateData(JsonUtility.ToJson(user));	
+			}
 		}
 
 		public bool isLevelPassed(string levelName)
@@ -126,20 +134,25 @@ namespace Kubera.Data
 			else
 			{
 				level = new LevelData(levelName);
-				level.locked = false;
-				level.isDirty = true;
+				level.locked	= false;
+				level.isDirty	= true;
+				level.world		= levelsList.getLevelByName(levelName).world;
+
 				currentUser.addLevel(level);
 			}
 
 			//Cuidamos de no sobreescribir algun valor previo
 			currentData.isDirty = currentData.isDirty || level.isDirty;
 
+			if(currentData.isDirty)
+			{
+				saveLocalData(false);
 
-			saveLocalData(false);
-
-			//TODO: Guardar al servidor
-
-			//syncManager.updateData(data);
+				//mandamos un usuairo solo con este nivel
+				KuberaUser user = new KuberaUser(currentUserId);
+				user.levels.Add(level);
+				syncManager.updateData(JsonUtility.ToJson(user));	
+			}
 		}
 
 
@@ -309,7 +322,6 @@ namespace Kubera.Data
 
 			currentData.isDirty = currentUser.isDirty;
 			saveLocalData(false);
-			Debug.Log("Current user: "+currentUserId);
 		}
 			
 
