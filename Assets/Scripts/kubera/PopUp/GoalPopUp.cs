@@ -43,6 +43,8 @@ public class GoalPopUp : PopUpBase {
 	public Transform slotParent;
 	public ScrollRect scrollRect;
 
+	public GridLayoutGroup FriendsgridLayoutGroup;
+
 	void Start()
 	{
 		//TODO checar login a facebook
@@ -62,6 +64,8 @@ public class GoalPopUp : PopUpBase {
 			gridLayoutGroup.cellSize = new Vector2(goalLettersContainer.GetComponent<RectTransform>().rect.height*.8f
 				,goalLettersContainer.GetComponent<RectTransform>().rect.height*.8f);
 		}
+
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.15f);
 	}
 
 	void Update()

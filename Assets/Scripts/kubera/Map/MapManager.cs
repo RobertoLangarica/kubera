@@ -108,7 +108,6 @@ public class MapManager : MonoBehaviour
 
 	private void OnPopupCompleted(string action ="")
 	{
-		stopInput(false);
 		switch (action) {
 		case "needLifes":
 			openPopUp ("fbFriendsRequestPanel");
@@ -160,6 +159,8 @@ public class MapManager : MonoBehaviour
 		default:
 			break;
 		}
+
+		stopInput(false);
 	}
 
 	protected void selectLevel(int world)
@@ -465,6 +466,8 @@ public class MapManager : MonoBehaviour
 		paralaxManager.enabled = true;
 
 		PersistentData.GetInstance ().currentWorld = currentWorld;
+
+		Invoke ("onFinishLoad",0.1f);
 	}
 
 	protected void setLastLevelReached()
@@ -577,6 +580,11 @@ public class MapManager : MonoBehaviour
 	public void goToScene(string scene)
 	{
 		ScreenManager.instance.GoToScene (scene);
+	}
+
+	protected void onFinishLoad()
+	{
+		ScreenManager.instance.sceneFinishLoading();
 	}
 
 	public void setGoalPopUp(string goalCondition, System.Object parameters,string levelName,int starsReached)
