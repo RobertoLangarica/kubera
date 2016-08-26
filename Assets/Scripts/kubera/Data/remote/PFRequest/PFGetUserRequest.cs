@@ -13,7 +13,7 @@ namespace Kubera.Data.Remote
 	public class PFGetUserRequest : BaseRequest {
 
 		private HTTPRequest request;
-		public PFResponseBasicData<PFResponseUserData> data;
+		public PFResponseBase<PFUserData> data;
 
 		public override void start ()
 		{
@@ -57,7 +57,7 @@ namespace Kubera.Data.Remote
 				case HTTPRequestStates.Finished:
 					Debug.Log("Request Finished Successfully!\n" + response.DataAsText);
 
-					data = JsonUtility.FromJson<PFResponseBasicData<PFResponseUserData>>(response.DataAsText);
+					data = JsonUtility.FromJson<PFResponseBase<PFUserData>>(response.DataAsText);
 
 
 					if(data.code == 200)

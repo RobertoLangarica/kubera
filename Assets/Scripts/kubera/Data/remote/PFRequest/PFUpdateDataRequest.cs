@@ -12,7 +12,7 @@ namespace Kubera.Data.Remote
 	public class PFUpdateDataRequest : BaseRequest {
 
 		private HTTPRequest request;
-		public PFCloudScriptData<PFAfterUpdateData> data;
+		public PFResponseBase<PFAfterUpdateData> data;
 		public string sendedJSON;
 
 		public override void start ()
@@ -30,7 +30,7 @@ namespace Kubera.Data.Remote
 			request.ConnectTimeout = TimeSpan.FromSeconds(timeBeforeTimeout);
 			request.Timeout = TimeSpan.FromSeconds(timeBeforeTimeout*3);
 			//request.AddField(quotedString("FunctionParameter"),jsonData.Replace("[","{").Replace("]","}"));
-			request.AddField(quotedString("FunctionName"), quotedString("helloWorld"));
+			request.AddField(quotedString("FunctionName"), quotedString("updateUserLevels"));
 			request.AddField(quotedString("FunctionParameter"),jsonData);
 			request.FormUsage = BestHTTP.Forms.HTTPFormUsage.App_JSON;
 
@@ -46,14 +46,10 @@ namespace Kubera.Data.Remote
 				case HTTPRequestStates.Finished:
 					Debug.Log("Request Finished Successfully!\n" + response.DataAsText);
 
-					data = JsonUtility.FromJson<PFCloudScriptData<PFAfterUpdateData>>(response.DataAsText);
-					Debug.Log("Data:"+data);
-					Debug.Log("Data.data:"+(data.data == null));
-					Debug.Log("Data.result:"+(data.data.FunctionResult == null));
-					Debug.Log("Error: "+(data.data.Error == null));
+					data = JsonUtility.FromJson<PFResponseBase<PFAfterUpdateData>>(response.DataAsText);
 
 					//TODO: actulizar version del JSON local para el diff
-					if(data.code == 200)
+					if(data.code == 200 && !data.data.hasError())
 					{
 						OnRequestComplete();
 					}	

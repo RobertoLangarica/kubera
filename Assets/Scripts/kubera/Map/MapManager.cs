@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Kubera.Data;
+using Kubera.Data.Sync;
 
 public class MapManager : MonoBehaviour
 {
@@ -189,7 +190,7 @@ public class MapManager : MonoBehaviour
 		{
 			setLastLevelReached ();
 		}
-		bool isConectedToFacebook = FBLoggin.GetInstance ().isLoggedIn;
+		bool isConectedToFacebook = KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn;
 		
 		for (int i = 0; i < mapLevels.Count; i++)
 		{
@@ -749,7 +750,7 @@ public class MapManager : MonoBehaviour
 
 	protected void getFriendsOnMap(int world)
 	{
-		if(FBLoggin.GetInstance().isLoggedIn)
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 		{
 			FriendsOnWorld friendsOnWorld = friendsOnWorldManager.existFriendsOnWorld (world.ToString ());
 
