@@ -546,13 +546,17 @@ public class AudioManager : Manager<AudioManager>
 
 			if(_musicActive == true)
 			{
-				GetCategory ("MAIN MUSIC").isEnabled = true;
-
+				if(GetCategory("MAIN MUSIC") != null)
+				{
+					GetCategory ("MAIN MUSIC").isEnabled = true;
+				}
 			}
 			else
 			{
-				GetCategory ("MAIN MUSIC").isEnabled = false;
-
+				if (GetCategory ("MAIN MUSIC") != null) 
+				{
+					GetCategory ("MAIN MUSIC").isEnabled = false;	
+				}					
 			}
 		}
 	}
@@ -568,13 +572,19 @@ public class AudioManager : Manager<AudioManager>
 
 			if(_fxActive == true)
 			{
-				GetCategory ("LOOP FX").isEnabled = true;
-				GetCategory ("FX").isEnabled = true;
+				if (GetCategory ("FX") != null) 
+				{
+					GetCategory ("LOOP FX").isEnabled = true;
+					GetCategory ("FX").isEnabled = true;
+				}
 			}
 			else
 			{
-				GetCategory ("LOOP FX").isEnabled = false;
-				GetCategory ("FX").isEnabled = false;
+				if (GetCategory ("FX") != null) 
+				{
+					GetCategory ("LOOP FX").isEnabled = false;
+					GetCategory ("FX").isEnabled = false;
+				}
 			}
 		}
 	}

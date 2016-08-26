@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class MapLevel : MonoBehaviour 
 {
@@ -166,6 +167,25 @@ public class MapLevel : MonoBehaviour
 	public void noFriend()
 	{
 		facebookBackground.SetActive (false);
+	}
+
+	public void myProgress()
+	{
+		facebookBackground.SetActive (true);
+	}
+
+	public void moveProgress(MapLevel nextLevel)
+	{
+		//facebookBackground.transform.DOShakePosition (1000);
+		facebookBackground.transform.SetParent (nextLevel.gameObject.transform,true);
+
+		facebookBackground.transform.DOLocalMove (nextLevel.facebookBackground.transform.localPosition, 1.5f).OnComplete(()=>
+			{
+				facebookBackground.transform.SetSiblingIndex (0); 
+
+				FindObjectOfType<ParalaxManager>().finish();
+			});
+		facebookBackground.transform.DOScale (nextLevel.facebookBackground.transform.localScale,1.5f);
 	}
 
 	public void onClick()

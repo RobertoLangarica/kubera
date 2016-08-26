@@ -124,12 +124,10 @@ public class GameManager : MonoBehaviour
 	{
 		if(!PersistentData.GetInstance().fromLevelsToGame && !PersistentData.GetInstance().fromLevelBuilder)
 		{
-			print ("Sasdas");
 			configureLevel(PersistentData.GetInstance().getRandomLevel());
 		}
 		else
 		{
-			print ("S");
 			configureLevel(PersistentData.GetInstance().currentLevel);
 		}
 
@@ -159,6 +157,13 @@ public class GameManager : MonoBehaviour
 		if (Input.GetKeyUp (KeyCode.Z)) 
 		{
 			onUsersAction (5, 0);
+			//activatePopUp ("noOptionsPopUp");
+			//onUsersAction (0);
+		}
+
+		if (Input.GetKeyUp (KeyCode.X)) 
+		{
+			onUsersAction (1, 0);
 			//activatePopUp ("noOptionsPopUp");
 			//onUsersAction (0);
 		}
@@ -387,8 +392,11 @@ public class GameManager : MonoBehaviour
 				pieceManager.initializePiecesToShow ();
 				hudManager.showPieces (pieceManager.getShowingPieces ());
 
-				AudioManager.GetInstance().Stop("pieceCreated");
-				AudioManager.GetInstance().Play("pieceCreated");
+				if(AudioManager.GetInstance())
+				{
+					AudioManager.GetInstance().Stop("pieceCreated");
+					AudioManager.GetInstance().Play("pieceCreated");
+				}
 			}
 
 			//Damos puntos por cada cuadro en la pieza

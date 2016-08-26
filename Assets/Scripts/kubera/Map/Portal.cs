@@ -4,14 +4,15 @@ using System.Collections;
 public class Portal : MonoBehaviour {
 
 	protected MapManager mapManager;
+	public int toWorld;
 
 	void Start()
 	{
 		mapManager = FindObjectOfType<MapManager> ();
 	}
 
-	public void OnClick(int world)
+	public void onClick()
 	{
-		mapManager.changeCurrentWorld (world);
+		mapManager.changeCurrentWorld (toWorld,false,true);
 	}
 }

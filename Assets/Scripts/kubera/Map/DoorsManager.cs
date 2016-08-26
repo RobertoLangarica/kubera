@@ -103,6 +103,6 @@ public class DoorsManager : MonoBehaviour {
 
 	public void OnChangeWorld()
 	{
-		mapManager.changeCurrentWorld (toWorld);
+		mapManager.changeCurrentWorld (toWorld,false,true);
 	}
 }

@@ -68,7 +68,7 @@ public class HUDMetterAndStars : MonoBehaviour
 		{
 			size = (scoreToReachStar [2] - scoreToReachStar [1]) / (Star3 -Star2);
 
-			size = (float)(points-scoreToReachStar [1]) / size;
+			size = (float)(points-scoreToReachStar [1]+1) / size;
 
 			size = size + Star2;
 			if (!star3Reached && size >= Star3) 
@@ -83,7 +83,7 @@ public class HUDMetterAndStars : MonoBehaviour
 			size = (scoreToReachStar [1] - scoreToReachStar [0]) / (Star2 -Star1);
 
 
-			size = (float)(points-scoreToReachStar [0]) / size;
+			size = (float)(points-scoreToReachStar [0]+1) / size;
 
 			size = size + Star1;
 
