@@ -155,7 +155,10 @@ public class PersistentData : Manager<PersistentData>
 		fs.Close();
 		fs.Dispose();
 
-		Debug.Log("Diccionario guardado y serializado con exito");
+		if(_mustShowDebugInfo)
+		{
+			Debug.Log("Diccionario guardado y serializado con exito");
+		}
 	}
 
 	private void loadAndDeserializeDictionary(string language)
@@ -174,7 +177,10 @@ public class PersistentData : Manager<PersistentData>
 		abcDictionary.setTreeRoot(data);
 		Resources.UnloadAsset(resource);
 
-		Debug.Log("Diccionario deserializado con exito");
+		if(_mustShowDebugInfo)
+		{
+			Debug.Log("Diccionario deserializado con exito");
+		}
 	}
 
 	public void addWordToDictionary(string word, string language = "")

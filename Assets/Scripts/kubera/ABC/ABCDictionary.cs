@@ -125,7 +125,6 @@ namespace ABC
 
 			if(word.Count > 0)
 			{
-				Debug.Log("Posible palabra: "+getStringFromCharList(word));
 				return true;
 			}
 

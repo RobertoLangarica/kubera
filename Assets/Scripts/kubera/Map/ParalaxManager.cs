@@ -111,8 +111,6 @@ public class ParalaxManager : MonoBehaviour {
 		
 		levelPosition = levelPosition / fixMin;
 
-		print (levelPosition);
-
 		if(levelPosition >1)
 		{
 			levelPosition = 1;

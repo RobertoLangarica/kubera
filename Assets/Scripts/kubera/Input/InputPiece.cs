@@ -133,7 +133,6 @@ public class InputPiece : MonoBehaviour
 
 			if(AudioManager.GetInstance())
 			{
-				print ("S");
 				AudioManager.GetInstance().Stop("pieceSelected");
 				AudioManager.GetInstance().Play("pieceSelected");
 			}

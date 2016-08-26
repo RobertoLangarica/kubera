@@ -60,8 +60,6 @@ public class MapManager : MonoBehaviour
 			if(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.levels.Count != 0)
 			{
 				currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.levels.Count].world);
-				print (currentWorld);
-				print (PersistentData.GetInstance ().currentLevel.name);
 			}
 		}
 		else
@@ -135,7 +133,6 @@ public class MapManager : MonoBehaviour
 			ScreenManager.instance.GoToScene ("Game");
 			break;
 		case "continue":
-			print (toNextLevel);
 			if(toNextLevel)
 			{
 				showWorld();
@@ -246,7 +243,6 @@ public class MapManager : MonoBehaviour
 				{
 					if(fromGame && nextLevel.fullLvlName == PersistentData.GetInstance().lastLevelReachedName)
 					{
-						print ("no");
 						toNextLevel = false;
 					}
 				}
@@ -263,7 +259,6 @@ public class MapManager : MonoBehaviour
 		{
 			if(currentLevel != null)
 			{
-				print (currentLevel.fullLvlName);
 				currentLevel.myProgress ();
 			}
 		}
@@ -271,7 +266,6 @@ public class MapManager : MonoBehaviour
 		{
 			if(lastLevel)
 			{
-				print (lastLevel.fullLvlName);
 				lastLevel.myProgress ();
 			}
 		}
@@ -548,7 +542,6 @@ public class MapManager : MonoBehaviour
 		}
 		else
 		{
-			print ("currentLevel " + currentLevel);
 			//paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel( mapLevels [0]));
 			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(currentLevel));
 		}
