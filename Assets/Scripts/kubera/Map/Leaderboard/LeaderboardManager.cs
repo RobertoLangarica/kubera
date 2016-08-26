@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Kubera.Data.Sync;
 
 public class LeaderboardManager : MonoBehaviour {
 
@@ -79,7 +80,7 @@ public class LeaderboardManager : MonoBehaviour {
 		leaderboard.parent = parent;
 
 		test[] test = null;
-		if(!FBLoggin.GetInstance().isLoggedIn)
+		if(!KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 		{
 			test = new test[Random.Range(3,6)];
 		}

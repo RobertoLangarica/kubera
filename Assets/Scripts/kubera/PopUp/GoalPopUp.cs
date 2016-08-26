@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using Kubera.Data.Sync;
 
 public class GoalPopUp : PopUpBase {
 
@@ -74,7 +75,7 @@ public class GoalPopUp : PopUpBase {
 
 	protected void fbLogin()
 	{
-		if(FBLoggin.GetInstance().isLoggedIn)
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 		{
 			//TODO HARCODING
 			inviteFriendsText.text = "invita Amigos";
@@ -252,7 +253,7 @@ public class GoalPopUp : PopUpBase {
 	public void fbAction()
 	{
 		soundButton ();
-		if(FBLoggin.GetInstance().isLoggedIn)
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 		{
 			//TODO HARCODING
 			inviteFriendsText.text = "invita Amigos";
@@ -261,7 +262,7 @@ public class GoalPopUp : PopUpBase {
 		else
 		{
 			inviteFriendsText.text = "Conectate";
-			FBLoggin.GetInstance ().OnLoginClick ();
+			KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookLogin();
 		}
 	}
 }
