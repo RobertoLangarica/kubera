@@ -169,14 +169,12 @@ public class WordManager : MonoBehaviour
 					AudioManager.GetInstance().Stop("badPositionated");
 					AudioManager.GetInstance().Play("badPositionated");
 				}
-				print ("deseleccionar");
 				return;
 			}
 			//Se va eliminar
 			removeLetter(letter.letterReference);
 			arrangeSortingOrder ();
 			StartCoroutine( correctTweens ());
-			print ("deseleccionar");
 		}
 		else
 		{
@@ -192,7 +190,6 @@ public class WordManager : MonoBehaviour
 				{
 					addLetterFromGrid (letter,byDrag);
 				}
-				print ("seleccionarLetra");
 			}
 		}
 	}
@@ -641,7 +638,6 @@ public class WordManager : MonoBehaviour
 	{
 		if(!wordsValidator.isAWordPossible(pool))
 		{
-			print("no se puede hacer palabra");
 			return false;
 		}
 		return true;
@@ -721,10 +717,10 @@ public class WordManager : MonoBehaviour
 		activatePointsGO(letterOnContainer);
 		activateNoWordPosibleText (!letterOnContainer,letterOnContainer);
 
-		if(completeWord && letterOnContainer)
+		/*if(completeWord && letterOnContainer)
 		{
 			Debug.Log("Se completo: "+getCurrentWordOnList());
-		}
+		}*/
 	}
 
 	public void activateWordBtn(bool completeWord, bool isThereAnyLetterOnContainer)

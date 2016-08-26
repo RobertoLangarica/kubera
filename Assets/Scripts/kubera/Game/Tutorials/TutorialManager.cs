@@ -169,7 +169,6 @@ public class TutorialManager : Manager<TutorialManager>
 			powerUpManager.getPowerupByType (PowerupBase.EType.HINT_WORD).OnPowerupCompleted += canCompletePhase;
 			break;
 		case(TutorialBase.ENextPhaseEvent.POSITIONATE_PIECE):
-			Debug.Log (gameManager);
 			gameManager.OnPiecePositionated += canCompletePhase;
 			break;
 		case(TutorialBase.ENextPhaseEvent.EARNED_POINTS):
@@ -305,7 +304,6 @@ public class TutorialManager : Manager<TutorialManager>
 		{
 			unregisterForNextPhase (currentTutorial.phaseEvent[i]);
 		}
-		Debug.Log ("Desregistrado");
 
 		currentTutorial.canMoveToNextPhase ();
 
@@ -313,7 +311,6 @@ public class TutorialManager : Manager<TutorialManager>
 		{
 			registerForNextPhase (currentTutorial.phaseEvent[i]);
 		}
-		Debug.Log ("Registrado");
 
 		for (int i = 0; i < powerUpManager.powerups.Count; i++) 
 		{

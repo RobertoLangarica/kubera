@@ -686,7 +686,6 @@ public class GameManager : MonoBehaviour
 
 		if((!canFit || remainingMoves == 0) && !gameOver)
 		{
-			print("no puede poner piezas");
 			updatePiecesLightAndUpdateLetterState ();
 			if(remainingMoves == 0)
 			{
@@ -819,7 +818,7 @@ public class GameManager : MonoBehaviour
 		if (!gameOver) 
 		{
 			allowGameInput (false);
-			Debug.Log ("Gano de verdad.");
+			//Debug.Log ("Gano de verdad.");
 			gameOver = true;
 			unlockPowerUp ();
 			activatePopUp ("winGamePopUp");
@@ -1246,7 +1245,6 @@ public class GameManager : MonoBehaviour
 		//Se movio el chequeo para aca ya que aqui se suman lineas y puntos
 		if (OnPointsEarned != null) 
 		{
-			Debug.Log ("Se añadieron puntos!!!!!!" + amount);
 			OnPointsEarned ();
 		}
 	}

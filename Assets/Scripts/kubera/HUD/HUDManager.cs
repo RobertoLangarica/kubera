@@ -71,10 +71,6 @@ public class HUDManager : MonoBehaviour
 
 		setLevelGoFinalPosition ();
 		setText ();
-
-		print ("_________________________");
-		print (Screen.height*.5f);
-		print (Screen.height);
 	}
 
 	protected void setLevelGoFinalPosition()

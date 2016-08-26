@@ -25,7 +25,11 @@ namespace Kubera.Data.Sync
 		{
 			base.logout ();
 			localData.setUserAsAnonymous();
-			Debug.Log("Logged OUT");
+
+			if(_mustShowDebugInfo)
+			{
+				Debug.Log("Logged OUT");
+			}
 		}
 
 		/**
@@ -54,13 +58,20 @@ namespace Kubera.Data.Sync
 
 			if(user.newlyCreated)
 			{
-				Debug.Log("Creating remote user.");
+				if(_mustShowDebugInfo)
+				{
+					Debug.Log("Creating remote user.");
+				}
+
 				//Datos nuevos
 				server.createUserData(currentUser.id, JsonUtility.ToJson(localData.currentUser));
 			}
 			else
 			{
-				Debug.Log("Getting data from remote user.");
+				if(_mustShowDebugInfo)
+				{
+					Debug.Log("Getting data from remote user.");
+				}
 				//Nos traemos los datos de este usuario
 				server.getUserData(currentUser.id, localData.currentUser.getCSVKeysToQuery(), localData.currentUser.PlayFab_dataVersion);	
 			}
@@ -75,12 +86,19 @@ namespace Kubera.Data.Sync
 			base.OnDataReceived (fullData);
 
 			localData.diffUser(JsonUtility.FromJson<KuberaUser>(fullData), true);
-			Debug.Log("Usuario sincronizado.");
+
+			if(_mustShowDebugInfo)
+			{
+				Debug.Log("Usuario sincronizado.");
+			}
 
 			//Necesita subirse?
 			if(localData.currentUser.isDirty)
 			{
-				Debug.Log("Subiendo datos sucios del usuario.");
+				if(_mustShowDebugInfo)
+				{
+					Debug.Log("Subiendo datos sucios del usuario.");
+				}
 				updateData(localData.getUserDirtyData());
 			}
 		}
@@ -95,7 +113,11 @@ namespace Kubera.Data.Sync
 				return;	
 			}
 
-			server.updateUserData(currentUser.id, data);
+			//Si no hay usuario remoto entonces no hay nada que actualizar
+			if(existCurrentUser())
+			{
+				server.updateUserData(currentUser.id, data);
+			}
 		}
 
 		/**
@@ -109,12 +131,19 @@ namespace Kubera.Data.Sync
 
 			//Se actualizo algo en el server
 			localData.diffUser(updatedUser, true);//Ignoramos la version
-			Debug.Log("Usuario sincronizado.");
+
+			if(_mustShowDebugInfo)
+			{
+				Debug.Log("Usuario sincronizado.");
+			}
 
 			//Necesita subirse?
 			if(localData.currentUser.isDirty)
 			{
-				Debug.Log("Subiendo datos sucios del usuario.");
+				if(_mustShowDebugInfo)
+				{
+					Debug.Log("Subiendo datos sucios del usuario.");
+				}
 				updateData(localData.getUserDirtyData());
 			}
 		}

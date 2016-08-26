@@ -31,7 +31,7 @@ namespace Data.Sync
 
 		public void InitCallback()
 		{
-			Debug.Log("FB->InitCallback");
+			//Debug.Log("FB->InitCallback");
 
 			// App Launch events should be logged on app launch & app resume
 			// See more: https://developers.facebook.com/docs/app-events/unity#quickstart
