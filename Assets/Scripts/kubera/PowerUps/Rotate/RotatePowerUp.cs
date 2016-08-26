@@ -32,7 +32,6 @@ public class RotatePowerUp : PowerupBase
 
 	public override void activate (bool canUse)
 	{
-		print ("activate");
 		this.gameObject.SetActive( true);
 		if (powerUpGO != null) 
 		{

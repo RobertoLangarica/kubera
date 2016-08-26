@@ -34,6 +34,7 @@ public class GoalAfterGame : PopUpBase {
 	public ScrollRect scrollRect;
 
 	public Transform goalPopUpSlotsParent;
+	public GridLayoutGroup FriendsgridLayoutGroup;
 
 	void Start()
 	{
@@ -42,6 +43,7 @@ public class GoalAfterGame : PopUpBase {
 		//FBLoggin.GetInstance().onLoginComplete += fbLogin;
 
 		setStartingPlaces ();
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.15f);
 	}
 
 	protected void fbLogin()

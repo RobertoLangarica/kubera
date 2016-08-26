@@ -60,6 +60,8 @@ public class HUDManager : MonoBehaviour
 	public DNotifyEvent OnPiecesScaled;
 	public GameObject wordsHighlight;
 
+	public Button[] powerUps;
+
 	void Start () 
 	{
 		hudStars = FindObjectOfType<HUDMetterAndStars> ();
@@ -442,5 +444,26 @@ public class HUDManager : MonoBehaviour
 		{
 			modal.SetActive (false);
 		}  
+	}
+
+	public void activatePowerUpButtont(bool activate)
+	{
+		if(activate)
+		{
+			for(int i=0; i<powerUps.Length; i++)
+			{
+				powerUps [i].transition = Selectable.Transition.ColorTint;
+				powerUps [i].interactable = true;
+			}
+		}
+		else
+		{
+			for(int i=0; i<powerUps.Length; i++)
+			{
+				powerUps [i].transition = Selectable.Transition.None;
+				powerUps [i].interactable = false;
+
+			}
+		}
 	}
 }

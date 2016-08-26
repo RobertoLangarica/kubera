@@ -106,6 +106,11 @@ public class GameManager : MonoBehaviour
 		powerupManager.getPowerupByType (PowerupBase.EType.ROTATE).OnPowerupCompleted += rotationDeactivated;
 		inputRotate.OnRotateArrowsActivated += rotationActivated;
 
+		if(ScreenManager.instance)
+		{
+			ScreenManager.instance.sceneFinishLoading ();
+		}
+
 		if (PersistentData.GetInstance().abcDictionary.getAlfabet () == null) 
 		{
 			PersistentData.GetInstance ().onDictionaryFinished += startGame;
@@ -143,16 +148,16 @@ public class GameManager : MonoBehaviour
 		if (Input.GetKeyUp (KeyCode.R)) 
 		{
 			PersistentData.GetInstance().startLevel -= 1;
-			SceneManager.LoadScene ("Game");
+			ScreenManager.instance.GoToScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.N)) 
 		{
-			SceneManager.LoadScene ("Game");
+			ScreenManager.instance.GoToScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.B) && PersistentData.GetInstance().startLevel > 1) 
 		{
 			PersistentData.GetInstance().startLevel -= 2;
-			SceneManager.LoadScene ("Game");
+			ScreenManager.instance.GoToScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.Z)) 
 		{
@@ -817,7 +822,7 @@ public class GameManager : MonoBehaviour
 	{
 		if (!gameOver) 
 		{
-			allowGameInput (false);
+			allowGameInput (false,true);
 			//Debug.Log ("Gano de verdad.");
 			gameOver = true;
 			unlockPowerUp ();
@@ -982,7 +987,7 @@ public class GameManager : MonoBehaviour
 
 	protected void toLevels()
 	{
-		SceneManager.LoadScene ("Levels");
+		ScreenManager.instance.GoToScene ("Levels");
 	}
 
 	protected void showDestroyedLetterScore(Cell cell)
@@ -999,13 +1004,23 @@ public class GameManager : MonoBehaviour
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
 	}
 
-	public void allowGameInput(bool allowInput = true)
+	public void allowGameInput(bool allowInput = true,bool deactivateAll = false)
 	{
+		if(deactivateAll)
+		{
+			hudManager.activatePowerUpButtont (false);
+			inputPiece.allowInput = false;
+			inputRotate.allowInput = false;
+			hudManager.activatePowerUpButtont (false);
+		}
+
 		if (!rotationActive) 
 		{
 			inputPiece.allowInput = allowInput;
 			inputWords.allowInput = allowInput;
 		}
+
+
 	}
 		
 	protected void unlockPowerUp()
@@ -1040,6 +1055,12 @@ public class GameManager : MonoBehaviour
 	{
 		//TODO: Chequeo con transaction manager para ver que onda con las gemas
 		//TODO: Checar lo del precio de los powerUps
+
+		if(!inputPiece.allowInput && !inputRotate.allowInput)
+		{
+			return;
+		}
+
 		allowGameInput(false);
 
 		powerupManager.activatePowerUp((PowerupBase.EType) powerupTypeIndex,canActivatePowerUp((PowerupBase.EType) powerupTypeIndex));
@@ -1179,7 +1200,7 @@ public class GameManager : MonoBehaviour
 		case "loose":
 			PersistentData.GetInstance ().fromLoose = true;
 			PersistentData.GetInstance ().fromGameToLevels = true;
-			SceneManager.LoadScene ("Levels");
+			ScreenManager.instance.GoToScene ("Levels");
 			break;
 		default:		
 				Invoke ("allowInputFromInvoke", 0.5f);
@@ -1204,7 +1225,7 @@ public class GameManager : MonoBehaviour
 		PersistentData.GetInstance ().fromLoose = true;
 		PersistentData.GetInstance ().fromGameToLevels = true;
 		//activatePopUp ("exitGame");
-		SceneManager.LoadScene ("Levels");
+		ScreenManager.instance.GoToScene ("Levels");
 		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		activatePopUp ("exitGame");*/
 	}

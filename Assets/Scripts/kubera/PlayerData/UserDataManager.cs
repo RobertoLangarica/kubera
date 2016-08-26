@@ -62,6 +62,8 @@ public class UserDataManager
 		PlayerPrefs.SetInt("version",version);
 		PlayerPrefs.SetString("language",getOSLanguage());
 		PlayerPrefs.SetInt("playerLifes",maximumLifes);
+		PlayerPrefs.SetInt("musicSetting",1);
+		PlayerPrefs.SetInt("soundEffectsSetting",1);
 	}
 
 	/**

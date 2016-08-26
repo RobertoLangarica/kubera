@@ -23,6 +23,8 @@ public class HomeManager : MonoBehaviour {
 
 	void Start()
 	{
+		ScreenManager.instance.sceneFinishLoading ();
+
 		for(int i=0, j=0; i<pieces.Count; j++)
 		{
 			piecesMoved.Add (pieces[Random.Range (0, pieces.Count)]);
@@ -32,8 +34,6 @@ public class HomeManager : MonoBehaviour {
 			piecesMoved [j].startRotate (speed);
 		}
 		StartCoroutine (showLetters ());
-
-
 	}
 
 	IEnumerator showLetters()

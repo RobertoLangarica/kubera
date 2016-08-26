@@ -29,6 +29,7 @@ public class RetryPopUp : PopUpBase
 	public ScrollRect scrollRect;
 
 	public Transform goalPopUpSlotsParent;
+	public GridLayoutGroup FriendsgridLayoutGroup;
 
 	void Start()
 	{
@@ -40,6 +41,7 @@ public class RetryPopUp : PopUpBase
 
 		setStartingPlaces ();
 		content.text = "Seguro lo lograras";
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.15f);
 	}
 
 	protected void fbLogin()
