@@ -343,18 +343,53 @@ public class HUDManager : MonoBehaviour
 		print (Sounds.gameObject.activeSelf);*/
 		if (!settingsBackground.activeSelf) 
 		{
-			/*points.enabled = false;
-			scoreText.enabled = false;*/
-			//Activar los otros botones
+			DOTween.Kill(settingsBackground,true);
+
+			Exit.enabled = false;
+			Music.enabled = false;
+			Sounds.enabled = false;
+			Exit.transform.localScale = Vector2.zero;
+			Music.transform.localScale = Vector2.zero;
+			Sounds.transform.localScale = Vector2.zero;
+
+			settingsBackground.transform.localScale = Vector3.one;
+			settingsBackground.transform.localRotation = Quaternion.Euler (new Vector3 (0, 0, -180));
 			settingsBackground.SetActive(true);
+
+			settingsBackground.GetComponent<RectTransform> ().pivot = new Vector2(0.5f,0.5f);
+
+			//Activar los otros botones
+			settingsBackground.transform.DOLocalRotate (Vector3.zero,0.3f).SetId(settingsBackground).OnComplete(()=>
+				{
+					
+
+					Exit.enabled = true;
+					Music.enabled = true;
+					Sounds.enabled = true;
+
+					Exit.transform.DOScale(Vector3.one,0.2f).SetEase(Ease.OutBack);
+					Music.transform.DOScale(Vector3.one,0.2f).SetEase(Ease.OutBack);
+					Sounds.transform.DOScale(Vector3.one,0.2f).SetEase(Ease.OutBack);
+				});
 			PointerOnScene.SetActive(true);
 		}
 		else 
 		{
-			/*scoreText.enabled = true;
-			points.enabled = true;*/
-			//Desactivar los otros botones
-			settingsBackground.SetActive(false);
+			DOTween.Kill(settingsBackground,true);
+
+			Exit.transform.DOScale(Vector3.zero,0.2f).SetEase(Ease.InBack);
+			Music.transform.DOScale(Vector3.zero,0.2f).SetEase(Ease.InBack);
+			Sounds.transform.DOScale(Vector3.zero,0.2f).SetEase(Ease.InBack).OnComplete(()=>
+				{
+					settingsBackground.GetComponent<RectTransform> ().pivot = Vector2.one;
+
+					settingsBackground.transform.DOScale (new Vector3 (0, 0,0),0.3f).SetId(settingsBackground).OnComplete(()=>
+						{
+							settingsBackground.SetActive(false);
+
+						});
+				});
+
 			PointerOnScene.SetActive(false);
 		}
 	}
