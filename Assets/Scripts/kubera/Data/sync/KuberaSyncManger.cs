@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Text;
 using System.Collections;
 using Data.Sync;
 
@@ -64,7 +65,7 @@ namespace Kubera.Data.Sync
 				}
 
 				//Datos nuevos
-				server.createUserData(currentUser.id, JsonUtility.ToJson(localData.currentUser));
+				server.createUserData<KuberaUser>(currentUser.id, userToPlayFabJSON(localData.currentUser), localData.currentUser.clone());
 			}
 			else
 			{
@@ -73,7 +74,7 @@ namespace Kubera.Data.Sync
 					Debug.Log("Getting data from remote user.");
 				}
 				//Nos traemos los datos de este usuario
-				server.getUserData(currentUser.id, localData.currentUser.getCSVKeysToQuery(), localData.currentUser.PlayFab_dataVersion);	
+				server.getUserData(currentUser.id, localData.getCSVKeysToQuery(), localData.currentUser.PlayFab_dataVersion);	
 			}
 		}
 
@@ -106,17 +107,12 @@ namespace Kubera.Data.Sync
 		/**
 		 * Manda actualizar los datos del usuario
 		 **/ 
-		public void updateData(string data)
+		public void updateData(KuberaUser dirtyUser)
 		{
-			if(data == "")
-			{
-				return;	
-			}
-
 			//Si no hay usuario remoto entonces no hay nada que actualizar
 			if(existCurrentUser())
 			{
-				server.updateUserData(currentUser.id, data);
+				server.updateUserData(currentUser.id, userToPlayFabJSON(dirtyUser), dirtyUser);
 			}
 		}
 
@@ -144,9 +140,39 @@ namespace Kubera.Data.Sync
 				{
 					Debug.Log("Subiendo datos sucios del usuario.");
 				}
+
 				updateData(localData.getUserDirtyData());
 			}
 		}
+
+		/**
+		 * Usuario en el formato:
+		 * {
+		 * 	"id":string,
+		 * 	"facebookId":string,
+		 * 	"version":int,
+		 * 	"PlayFab_dataVersion":int,
+		 * 	"world_nn":WorldData (cualquier cantidad de mundos donde nn es igual a su id)
+		 * }
+		 **/ 
+		public string userToPlayFabJSON(KuberaUser user)
+		{
+			StringBuilder builder = new StringBuilder("{");
+			builder.Append(quotted("id")+":"+quotted(user.id)+","+quotted("facebookId")+":"+quotted(user.facebookId)+","+quotted("version")+":"+user.version.ToString()+","+quotted("PlayFab_dataVersion")+":"+user.PlayFab_dataVersion.ToString());
+
+			//agregamos los mundos
+			foreach(WorldData world in user.worlds)
+			{
+				builder.Append(",");
+				builder.Append(quotted("world_"+world.id)+":");
+				builder.Append(JsonUtility.ToJson(world));
+			}
+
+			builder.Append("}");
+			return builder.ToString();
+		}
+
+		public string quotted(string target){return "\""+target+"\"";}
 	}
 		
 }

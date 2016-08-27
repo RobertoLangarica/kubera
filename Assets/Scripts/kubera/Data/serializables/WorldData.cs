@@ -7,22 +7,21 @@ using Data;
 namespace Kubera.Data
 {
 	[Serializable]
-	public class KuberaUser : BasicData 
+	public class WorldData:BasicData
 	{
-		public int PlayFab_dataVersion;
-		public string facebookId;
-
 		public List<LevelData> levels;
 
-		public KuberaUser()
+		public WorldData()
 		{
-			levels = new List<LevelData>();
+			levels = new List<LevelData>();	
+			isDirty = false;
 		}
 
-		public KuberaUser(string userId)
+		public WorldData(string worldId)
 		{
-			id = userId;
-			levels = new List<LevelData>();
+			id = worldId;
+			levels = new List<LevelData>();	
+			isDirty = false;
 		}
 
 		public override void updateFrom (BasicData readOnlyRemote, bool ignoreVersion = false)
@@ -31,16 +30,14 @@ namespace Kubera.Data
 
 			LevelData level;
 
-			//Version de playfab
-			PlayFab_dataVersion = ((KuberaUser)readOnlyRemote).PlayFab_dataVersion;
-
 			//Le quitamos lo sucio a los datos
 			isDirty = false;
 
 			//revisamos los niveles
-			foreach(LevelData remoteLevel in ((KuberaUser)readOnlyRemote).levels )
+			foreach(LevelData remoteLevel in ((WorldData)readOnlyRemote).levels )
 			{
 				level = getLevelById(remoteLevel.id);
+
 				if(level != null)
 				{
 					//Actualizamos el nivel existente
@@ -51,11 +48,11 @@ namespace Kubera.Data
 				else
 				{
 					//nivel nuevo
+					remoteLevel.isDirty = false;//nunca se marcan como sucios al llegar
 					levels.Add(remoteLevel);
 				}
 			}
 		}
-
 
 		public LevelData getLevelById(string id)
 		{
@@ -66,36 +63,47 @@ namespace Kubera.Data
 		{
 			return (levels.Find(item=>item.id == id) != null);
 		}
-			
+
 		public void addLevel(LevelData level)
 		{
 			levels.Add(level);
 		}
 
-		public void clear()
+		public WorldData getOnlyDirtyCopy()
 		{
-			levels.Clear();
-			isDirty = false;
-		}
-
-		public string getCSVKeysToQuery()
-		{
-			return "levels";
-		}
-
-		public List<LevelData> getDirtyLevels()
-		{
-			List<LevelData> result = new List<LevelData>();
+			WorldData result = new WorldData(this.id);
 
 			foreach(LevelData level in levels)
 			{
 				if(level.isDirty)
 				{
-					result.Add(level);
+					result.addLevel(level.clone());
 				}
 			}
 
 			return result;
 		}
-	}	
+
+		public void markAllLevelsAsNoDirty()
+		{
+			foreach(LevelData level in levels)
+			{
+				level.isDirty = false;
+			}	
+		}
+
+		public WorldData clone()
+		{
+			WorldData result = new WorldData(this.id);
+			result.version = this.version;
+			result.isDirty = this.isDirty;
+
+			foreach(LevelData level in levels)
+			{
+				result.addLevel(level.clone());
+			}
+
+			return result;
+		}
+	}
 }

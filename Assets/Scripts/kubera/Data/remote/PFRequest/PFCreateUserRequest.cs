@@ -9,11 +9,11 @@ using Kubera.Data.Remote.PFResponseData;
 
 namespace Kubera.Data.Remote
 {
-	public class PFCreateUserRequest : BaseRequest {
+	public class PFCreateUserRequest<T> : BaseRequest {
 
 		private HTTPRequest request;
 		public PFResponseBase<PFCreateData> data;
-		public string sendedJSON;
+		public T dataSended;
 
 		public override void start ()
 		{
@@ -23,7 +23,7 @@ namespace Kubera.Data.Remote
 			request.Send();
 		}
 
-		public void initialize(string titleID,string jsonData, string sessionTicket)
+		public void initialize<T>(string titleID,string jsonData, string sessionTicket, T dataToSend)
 		{
 			request = new HTTPRequest(new System.Uri("https://"+titleID+".playfabapi.com/Client/UpdateUserData"), HTTPMethods.Post);
 			request.AddHeader("X-Authentication",sessionTicket);
@@ -35,7 +35,7 @@ namespace Kubera.Data.Remote
 			request.AddField(quotedString("Permission"), quotedString("Public"));
 			request.FormUsage = BestHTTP.Forms.HTTPFormUsage.App_JSON;
 
-			sendedJSON = jsonData;
+			dataSended = dataToSend;
 		}
 
 		private void OnCompleteCallback(HTTPRequest originalRequest, HTTPResponse response)

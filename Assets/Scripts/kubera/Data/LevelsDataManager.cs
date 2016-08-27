@@ -31,12 +31,17 @@ namespace Kubera.Data
 
 		public void savePassedLevel(string levelName, int stars, int points)
 		{
-			LevelData level = currentUser.getLevelById(levelName);
+			Level lvl = levelsList.getLevelByName(levelName);
+			WorldData world = getOrCreateWorldById(lvl.world.ToString());
+
+			LevelData level = world.getLevelById(levelName);
 
 			if(level != null)
 			{
 				level.isDirty = level.updateOnlyIncrementalValues(stars, points) || level.isDirty;
 				level.isDirty = level.updatePassed(true) || level.isDirty;
+
+				world.isDirty = world.isDirty || level.isDirty;
 			}
 			else
 			{
@@ -44,34 +49,62 @@ namespace Kubera.Data
 				level.points	= points;
 				level.stars		= stars;
 				level.passed	= true;
-				level.isDirty	= true;
-				level.world		= levelsList.getLevelByName(levelName).world;
+				level.world		= level.world;
 
-				currentUser.addLevel(level);
+				level.isDirty	= true;
+				world.isDirty	= true;
+
+				world.addLevel(level);
 			}
 
 			//Cuidamos de no sobreescribir algun valor previo
-			currentData.isDirty = currentData.isDirty || level.isDirty;
+			currentData.isDirty = currentData.isDirty || world.isDirty;
 
 			if(currentData.isDirty)
 			{
 				saveLocalData(false);
 
-				//mandamos un usuairo solo con este nivel
+				//mandamos un usuario solo con este nivel
 				KuberaUser user = new KuberaUser(currentUserId);
-				user.levels.Add(level);
-				syncManager.updateData(JsonUtility.ToJson(user));	
+				WorldData worldToSend = new WorldData(world.id);
+				worldToSend.addLevel(level);
+				user.addWorld(worldToSend);
+
+				//TODO: formato para playfab
+				syncManager.updateData(user);	
 			}
+		}
+
+		public WorldData getOrCreateWorldById(string id)
+		{
+			KuberaUser user = currentUser;
+			WorldData result = user.getWorldById(id);
+
+			if(result == null)
+			{
+				result = new WorldData(id);
+				user.addWorld(result);
+				saveLocalData(false);
+			}
+
+			return result;
 		}
 
 		public bool isLevelPassed(string levelName)
 		{
-			LevelData level = currentUser.getLevelById(levelName);
+			Level lvl = levelsList.getLevelByName(levelName);
+			WorldData world = currentUser.getWorldById(lvl.world.ToString());
 
-			if(level != null)
+			if(world != null)
 			{
-				return level.passed;
+				LevelData level = world.getLevelById(levelName);
+
+				if(level != null)
+				{
+					return level.passed;
+				}	
 			}
+
 
 			return false;
 		}
@@ -113,11 +146,17 @@ namespace Kubera.Data
 
 		public bool isLevelLocked(string levelName)
 		{
-			LevelData level =  currentUser.getLevelById(levelName);
+			Level lvl = levelsList.getLevelByName(levelName);
+			WorldData world = currentUser.getWorldById(lvl.world.ToString());
 
-			if(level != null)
+			if(world != null)
 			{
-				return level.locked;
+				LevelData level =  world.getLevelById(levelName);
+
+				if(level != null)
+				{
+					return level.locked;
+				}
 			}
 
 			return true;
@@ -125,33 +164,42 @@ namespace Kubera.Data
 
 		public void unlockLevel(string levelName)
 		{
-			LevelData level =  currentUser.getLevelById(levelName);
+			Level lvl = levelsList.getLevelByName(levelName);
+			WorldData world = getOrCreateWorldById(lvl.world.ToString());
+
+			LevelData level =  world.getLevelById(levelName);
 
 			if(level != null)
 			{
 				level.isDirty = level.updateLocked(false) || level.isDirty;
+				world.isDirty = world.isDirty || level.isDirty;
 			}
 			else
 			{
 				level = new LevelData(levelName);
 				level.locked	= false;
+				level.world		= lvl.world;
 				level.isDirty	= true;
-				level.world		= levelsList.getLevelByName(levelName).world;
+				world.isDirty	= true;
 
-				currentUser.addLevel(level);
+				world.addLevel(level);
 			}
 
 			//Cuidamos de no sobreescribir algun valor previo
-			currentData.isDirty = currentData.isDirty || level.isDirty;
+			currentData.isDirty = currentData.isDirty || world.isDirty;
 
 			if(currentData.isDirty)
 			{
 				saveLocalData(false);
 
-				//mandamos un usuairo solo con este nivel
+				//mandamos un usuario solo con este nivel
 				KuberaUser user = new KuberaUser(currentUserId);
-				user.levels.Add(level);
-				syncManager.updateData(JsonUtility.ToJson(user));	
+				WorldData worldToSend = new WorldData(world.id);
+				worldToSend.addLevel(level);
+				user.addWorld(worldToSend);
+
+				//TODO: formato para playfab
+				syncManager.updateData(user);
 			}
 		}
 
@@ -190,7 +238,15 @@ namespace Kubera.Data
 
 		public int getLevelStars(string levelName)
 		{
-			LevelData level = currentUser.getLevelById(levelName);
+			Level lvl = levelsList.getLevelByName(levelName);
+			WorldData world = currentUser.getWorldById(lvl.world.ToString());
+
+			if(world == null)
+			{
+				return 0;	
+			}	
+
+			LevelData level = world.getLevelById(levelName);
 
 			if(level == null)
 			{
@@ -214,7 +270,15 @@ namespace Kubera.Data
 
 		public int getLevelPoints(string levelName)
 		{
-			LevelData level = currentUser.getLevelById(levelName);
+			Level lvl = levelsList.getLevelByName(levelName);
+			WorldData world = currentUser.getWorldById(lvl.world.ToString());
+
+			if(world == null)
+			{
+				return 0;	
+			}
+
+			LevelData level = world.getLevelById(levelName);
 
 			if(level == null)
 			{
@@ -345,25 +409,28 @@ namespace Kubera.Data
 		/**
 		 * Los datos de este usuario que necesiten subirse
 		 **/ 
-		public string getUserDirtyData()
+		public KuberaUser getUserDirtyData()
 		{
 			KuberaUser user = currentUser;
-			KuberaUser tempUser = new KuberaUser(user.id);
+			KuberaUser result = new KuberaUser(user.id);
 
-			if(!user.isDirty)
+			result.facebookId = user.facebookId;
+			result.worlds = user.getDirtyWorlds();
+
+			return result;
+		}
+
+		public string getCSVKeysToQuery()
+		{
+			string result = "id,facebookId,version,PlayFab_dataVersion";
+
+			//Mundos
+			foreach (int key in levelsList.worlds.Keys)
 			{
-				return "";
+				result += "," + "world_" + key.ToString();
 			}
 
-			tempUser.facebookId = user.facebookId;
-			tempUser.levels = user.getDirtyLevels();
-
-			if(user.levels.Count == 0)
-			{
-				return "";
-			}
-
-			return JsonUtility.ToJson(tempUser);
+			return result;
 		}
 	}
 }

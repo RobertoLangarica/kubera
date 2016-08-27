@@ -35,6 +35,7 @@ namespace Data.Remote
 		 * asi usamos menos ancho de banda
 		 **/ 
 		public virtual void updateUserData(string id, string jsonData){Debug.LogError("No existe implementación de esta función");}
+		public virtual void updateUserData<T>(string id, string jsonData, T objectToSave){Debug.LogError("No existe implementación de esta función");}
 
 		/**
 		 * Sube el json indicado.
@@ -42,6 +43,7 @@ namespace Data.Remote
 		 * asi usamos menos ancho de banda
 		 **/ 
 		public virtual void createUserData(string id, string jsonData){Debug.LogError("No existe implementación de esta función");}
+		public virtual void createUserData<T>(string id, string jsonData,T objectToSave){Debug.LogError("No existe implementación de esta función");}
 
 		public virtual void stopAndRemoveCurrentRequests()
 		{
