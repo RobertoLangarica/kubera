@@ -8,7 +8,7 @@ namespace Data
 	{
 		public string id;
 		public int version;
-		[NonSerialized]public bool isDirty;
+		public bool isDirty;
 
 		public BasicData(){}
 

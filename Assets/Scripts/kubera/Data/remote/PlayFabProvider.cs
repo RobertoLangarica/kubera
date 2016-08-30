@@ -4,6 +4,7 @@ using System.Collections;
 using Data.Remote;
 using Data.Sync;
 using Kubera.Data.Remote.PFResponseData;
+using Kubera.Data;
 
 namespace Kubera.Data.Remote
 {
@@ -13,7 +14,7 @@ namespace Kubera.Data.Remote
 
 		private bool isLogged = false;
 		private PFLoginRequest loginRequest;
-		PFCreateUserRequest creatingUserRequest;
+		PFCreateUserRequest<KuberaUser> creatingUserRequest;
 		private string currentFacebookId;
 		private string sessionTicket;
 
@@ -62,25 +63,25 @@ namespace Kubera.Data.Remote
 		/**
 		 * En caso de que sea un usuario que no existe en el servidor hay que subir los datos locales por primera vez
 		 **/ 
-		public override void createUserData (string id, string jsonData)
+		public override void createUserData<KuberaUser>(string id, string jsonData, KuberaUser objectToSave)
 		{
-			creatingUserRequest = queue.getComponentAttachedToGameObject<PFCreateUserRequest>("PF_UserCreate");
+			/*creatingUserRequest = queue.getComponentAttachedToGameObject<PFCreateUserRequest<KuberaUser>>("PF_UserCreate");
 			creatingUserRequest.id = "create_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
 			creatingUserRequest.persistAfterFailed = true;
-			creatingUserRequest.initialize(TITLE_ID,jsonData, sessionTicket);
+			creatingUserRequest.initialize(TITLE_ID,jsonData, sessionTicket, objectToSave);
 			creatingUserRequest.OnComplete += afterUserCreated;
 
-			addLoginDependantRequest(creatingUserRequest,true);
+			addLoginDependantRequest(creatingUserRequest,true);*/
 		}
 
 		private void afterUserCreated(string request_id)
 		{
 			if(OnDataReceived != null)
 			{
-				PFCreateUserRequest request = (PFCreateUserRequest)getRequestById(request_id);
+				PFCreateUserRequest<KuberaUser> request = (PFCreateUserRequest<KuberaUser>)getRequestById(request_id);
 
 				//Hacemos un usuario para el diff
-				KuberaUser remoteUser = JsonUtility.FromJson<KuberaUser>(creatingUserRequest.sendedJSON);
+				KuberaUser remoteUser = creatingUserRequest.dataSended;
 				remoteUser.id = loginRequest.data.data.PlayFabId;
 				remoteUser.PlayFab_dataVersion = request.data.data.DataVersion;
 
@@ -96,18 +97,19 @@ namespace Kubera.Data.Remote
 		 **/ 
 		public override void getUserData (string id, string extraData, int aboveVersion)
 		{
-			PFGetUserRequest request = queue.getComponentAttachedToGameObject<PFGetUserRequest>("PF_GetUserData");
+			/*PFGetUserRequest request = queue.getComponentAttachedToGameObject<PFGetUserRequest>("PF_GetUserData");
 			request.id = "get_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
 			request.persistAfterFailed = true;
 			request.initialize(TITLE_ID, extraData, aboveVersion, sessionTicket);
 			request.OnComplete += OnUserDataObtained;
 
 			addLoginDependantRequest(request,false);
+			*/
 		}
 
 		private void OnUserDataObtained(string request_id)
 		{
-			if(OnDataReceived != null)
+			/*if(OnDataReceived != null)
 			{
 				PFGetUserRequest request = (PFGetUserRequest)getRequestById(request_id);
 
@@ -118,15 +120,15 @@ namespace Kubera.Data.Remote
 				remoteUser.PlayFab_dataVersion = request.data.data.DataVersion;
 
 				OnDataReceived(JsonUtility.ToJson(remoteUser));
-			}
+			}*/
 		}
 
-		public override void updateUserData (string id, string jsonData)
+		public override void updateUserData<KuberaUser> (string id, string jsonData, KuberaUser objectToSave)
 		{
-			PFUpdateDataRequest request = queue.getComponentAttachedToGameObject<PFUpdateDataRequest>("PF_UpdateUserData");
+			PFUpdateDataRequest<KuberaUser> request = queue.getComponentAttachedToGameObject<PFUpdateDataRequest<KuberaUser>>("PF_UpdateUserData");
 			request.id = "update_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
 			request.persistAfterFailed = true;
-			request.initialize(TITLE_ID,jsonData, sessionTicket);
+			request.initialize(TITLE_ID,jsonData, sessionTicket, objectToSave);
 			request.OnComplete += OnUserDataUpdated;
 
 			addLoginDependantRequest(request,false);
@@ -136,10 +138,10 @@ namespace Kubera.Data.Remote
 		{
 			if(OnDataUpdated != null)
 			{
-				PFUpdateDataRequest request = (PFUpdateDataRequest)getRequestById(request_id);
+				PFUpdateDataRequest<KuberaUser> request = (PFUpdateDataRequest<KuberaUser>)getRequestById(request_id);
 
 				//Para que se desmarquen como sucios los datos locales hacemos un diff
-				KuberaUser remoteUser = JsonUtility.FromJson<KuberaUser>(request.sendedJSON);
+				KuberaUser remoteUser = request.dataSended;
 				remoteUser.id = loginRequest.data.data.PlayFabId;
 				remoteUser.PlayFab_dataVersion = request.data.data.FunctionResult.DataVersion;
 

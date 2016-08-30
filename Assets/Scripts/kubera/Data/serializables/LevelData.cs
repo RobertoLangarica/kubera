@@ -102,5 +102,19 @@ namespace Kubera.Data
 
 			return updated;
 		}
+
+		public LevelData clone()
+		{
+			LevelData result = new LevelData(this.id);
+			result.version = this.version;
+			result.isDirty = this.isDirty;
+			result.stars = this.stars;
+			result.points = this.points;
+			result.locked = this.locked;
+			result.passed = this.passed;
+			result.world = this.world;
+
+			return result;
+		}
 	}
 }
