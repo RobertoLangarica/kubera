@@ -23,12 +23,12 @@ public class LeaderboardManager : MonoBehaviour {
 
 	void Update()
 	{
-		if(Input.GetKeyDown(KeyCode.C))
+		/*if(Input.GetKeyDown(KeyCode.C))
 		{
 			print (FacebookPersistentData.GetInstance ().getFriendNameById ("10154899709081808"));
 			print (FacebookPersistentData.GetInstance ().getSpritePictureById ("10154899709081808"));
 			
-		}
+		}*/
 	}
 
 	protected LevelLeaderboard existLeaderboard(string id)

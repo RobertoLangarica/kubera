@@ -23,6 +23,7 @@ public class PersistentData : Manager<PersistentData>
 	[HideInInspector]public int levelNumber = -1;
 	[HideInInspector]public Level currentLevel;
 	[HideInInspector]public string lastLevelReachedName;
+	[HideInInspector]public bool nextLevelIsReached;
 	[HideInInspector]public Levels levelsData;
 	[HideInInspector]public ABCDictionary abcDictionary;
 
@@ -219,7 +220,7 @@ public class PersistentData : Manager<PersistentData>
 	public Level getRandomLevel()
 	{
 		int le = 15;
-		return levelsData.levels[2];
+		return levelsData.levels[5];
 		return levelsData.levels[Random.Range(0,levelsData.levels.Length-1)];
 	}
 

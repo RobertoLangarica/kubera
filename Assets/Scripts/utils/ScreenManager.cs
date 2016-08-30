@@ -168,8 +168,8 @@ public class ScreenManager : Manager<ScreenManager> {
 			modal.DOFade (1, 0.5f).SetId(modal);
 		}
 
-		//StartCoroutine (loadScene (newScene));
-		SceneManager.LoadScene (newScene);
+		StartCoroutine (loadScene (newScene));
+		//SceneManager.LoadScene (newScene);
 	}
 
 
