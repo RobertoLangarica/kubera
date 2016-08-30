@@ -137,7 +137,6 @@ public class ParalaxManager : MonoBehaviour {
 		posNextLevel = getPosByLevel (mapLevel);
 		
 		toNextLevel = true;
-		print (posNextLevel);
 	}
 
 	public void cancelAutomaticMovements()

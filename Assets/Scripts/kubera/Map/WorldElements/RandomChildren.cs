@@ -27,6 +27,7 @@ public class RandomChildren : MonoBehaviour {
 			random = Random.Range (0, Children.Count);
 			randomList.Add(Children [random]);
 			randomList[i].AddComponent<RotateObject> ().startRotate ();
+			//randomList [i].AddComponent<MoveInfinityObjects> ();
 			Children.Remove (Children[random]);
 		}
 	}
