@@ -45,11 +45,12 @@ namespace Kubera.Data
 			}
 			else
 			{
+				Debug.Log("Level null:");
 				level = new LevelData(levelName);
 				level.points	= points;
 				level.stars		= stars;
 				level.passed	= true;
-				level.world		= level.world;
+				level.world		= lvl.world;
 
 				level.isDirty	= true;
 				world.isDirty	= true;
@@ -66,11 +67,11 @@ namespace Kubera.Data
 
 				//mandamos un usuario solo con este nivel
 				KuberaUser user = new KuberaUser(currentUserId);
-				WorldData worldToSend = new WorldData(world.id);
+				WorldData worldToSend = world.clone(false);
 				worldToSend.addLevel(level);
 				user.addWorld(worldToSend);
 
-				//TODO: formato para playfab
+				Debug.Log("Nivel pasado");
 				syncManager.updateData(user);	
 			}
 		}
@@ -194,11 +195,11 @@ namespace Kubera.Data
 
 				//mandamos un usuario solo con este nivel
 				KuberaUser user = new KuberaUser(currentUserId);
-				WorldData worldToSend = new WorldData(world.id);
+				WorldData worldToSend = world.clone(false);
 				worldToSend.addLevel(level);
 				user.addWorld(worldToSend);
 
-				//TODO: formato para playfab
+				Debug.Log("Unlock nivel");
 				syncManager.updateData(user);
 			}
 		}
@@ -422,7 +423,9 @@ namespace Kubera.Data
 
 		public string getCSVKeysToQuery()
 		{
-			string result = "id,facebookId,version,PlayFab_dataVersion";
+			//string result = "id,facebookId,version,DataVersion";
+			string result = "version,DataVersion";
+			//string result = "DataVersion";
 
 			//Mundos
 			foreach (int key in levelsList.worlds.Keys)
