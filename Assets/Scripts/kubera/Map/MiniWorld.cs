@@ -8,6 +8,7 @@ public class MiniWorld : MonoBehaviour {
 	public Text starsCount;
 	public GameObject obtained;
 	public GameObject imageBloqued;
+	public Image starImage;
 
 	public int world;
 
@@ -36,5 +37,6 @@ public class MiniWorld : MonoBehaviour {
 		name.text = "???";
 		obtained.SetActive (false);
 		imageBloqued.SetActive (true);
+		starImage.enabled = false;
 	}
 }

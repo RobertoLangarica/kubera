@@ -59,21 +59,23 @@ public class MapManager : MonoBehaviour
 		{
 			if(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds.Count != 0)
 			{
-				print ("__" + LevelsDataManager.GetCastedInstance<LevelsDataManager> ().currentUser.worlds.Count.ToString());
+				int worldCount = LevelsDataManager.GetCastedInstance<LevelsDataManager> ().getWorldCount ();
+				print ("worldCount "+ worldCount);
 
-
-
-				/*currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds.Count].world);
-				print ("currentWorld  "+currentWorld);*/
 				currentWorld = int.Parse(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds.Count-1].id);
 
-				print ("currentWorld  "+currentWorld);
+				List<WorldData> worldData = LevelsDataManager.GetCastedInstance<LevelsDataManager> ().currentUser.worlds;
+				int currentLevel = worldData [worldData.Count - 1].levels.Count;
 
-				int currentLevel = LevelsDataManager.GetCastedInstance<LevelsDataManager> ().currentUser.worlds [LevelsDataManager.GetCastedInstance<LevelsDataManager> ().currentUser.worlds.Count - 1].levels.Count;
 				int levelsInWorld = LevelsDataManager.GetCastedInstance<LevelsDataManager> ().getLevelsOfWorld (currentWorld).Length;
 
-				print ("currentLevel "+ currentLevel);
-				print ("levelsInWorld "+ levelsInWorld);
+				if(currentLevel == levelsInWorld)
+				{
+					if(currentWorld+1 <= worldCount)
+					{
+						currentWorld++;
+					}
+				}
 			}
 		}
 		else
@@ -582,7 +584,6 @@ public class MapManager : MonoBehaviour
 
 	public void changeCurrentWorld(int world,bool isFirst, bool isLast)
 	{
-		currentWorld = world;
 
 		if(isFirst)
 		{
@@ -593,7 +594,11 @@ public class MapManager : MonoBehaviour
 			last = true;
 		}
 
-		changeWorld ();
+		if(world != currentWorld)
+		{
+			currentWorld = world;
+			changeWorld ();
+		}
 	}
 
 	public void goToScene(string scene)
@@ -789,10 +794,30 @@ public class MapManager : MonoBehaviour
 	{
 		WorldsPopUp worldsPopUp = popUpManager.getPopupByName ("worldsPopUp").GetComponent<WorldsPopUp> ();
 
-		print ("PersistentData.GetInstance().currentWorld  " + PersistentData.GetInstance ().currentWorld);
+		List<WorldData> worldData = LevelsDataManager.GetCastedInstance<LevelsDataManager> ().currentUser.worlds;
+		int starsObtained =0;
+
+		int levelsInWorld = LevelsDataManager.GetCastedInstance<LevelsDataManager> ().getLevelsOfWorld (currentWorld).Length;
+
 		for(int i=0; i<LevelsDataManager.GetCastedInstance<LevelsDataManager> ().getWorldCount (); i++)
 		{
-			
+			if(worldData.Count > i)
+			{
+				for(int j=0; j<worldData[i].levels.Count; j++)
+				{
+					starsObtained += worldData [i].levels [j].stars;
+				}
+				worldsPopUp.initializeMiniWorld (i, true, starsObtained, worldData [i].levels.Count * 3);
+			}
+			else if(currentWorld > i)
+			{
+				worldsPopUp.initializeMiniWorld (i, true, 0,LevelsDataManager.GetCastedInstance<LevelsDataManager> ().getLevelsCountByWorld(i)  * 3);
+			}
+			else
+			{
+				worldsPopUp.initializeMiniWorld (i, false, 0,LevelsDataManager.GetCastedInstance<LevelsDataManager> ().getLevelsCountByWorld(i)  * 3);
+			}
+
 		}
 	}
 }
