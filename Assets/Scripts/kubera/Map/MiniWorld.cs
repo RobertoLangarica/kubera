@@ -23,6 +23,7 @@ public class MiniWorld : MonoBehaviour {
 
 	public void setStars(int obtainedStars, int worldStars)
 	{
+		print (world);
 		starsCount.text = obtainedStars.ToString () + "/" + worldStars.ToString ();
 	}
 
@@ -33,6 +34,7 @@ public class MiniWorld : MonoBehaviour {
 
 	public void blocked()
 	{
+		print (world);
 		starsCount.text = "";
 		name.text = "???";
 		obtained.SetActive (false);

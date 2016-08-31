@@ -808,6 +808,7 @@ public class MapManager : MonoBehaviour
 					starsObtained += worldData [i].levels [j].stars;
 				}
 				worldsPopUp.initializeMiniWorld (i, true, starsObtained, worldData [i].levels.Count * 3);
+				starsObtained = 0;
 			}
 			else if(currentWorld > i)
 			{
@@ -815,7 +816,7 @@ public class MapManager : MonoBehaviour
 			}
 			else
 			{
-				worldsPopUp.initializeMiniWorld (i, false, 0,LevelsDataManager.GetCastedInstance<LevelsDataManager> ().getLevelsCountByWorld(i)  * 3);
+				worldsPopUp.initializeMiniWorld (i, false, 0,0);
 			}
 
 		}
