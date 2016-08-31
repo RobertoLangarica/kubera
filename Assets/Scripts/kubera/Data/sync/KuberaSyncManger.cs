@@ -64,8 +64,11 @@ namespace Kubera.Data.Sync
 					Debug.Log("Creating remote user.");
 				}
 
-				//Datos nuevos
-				server.createUserData<KuberaUser>(currentUser.id, userToPlayFabJSON(localData.currentUser), localData.currentUser.clone());
+				//Datos nuevos DEPRECATED
+				//server.createUserData<KuberaUser>(currentUser.id, userToPlayFabJSON(localData.currentUser), localData.currentUser.clone());
+
+				//Hacemos un update normal del usuario
+				updateData(localData.getUserDirtyData());
 			}
 			else
 			{
@@ -100,6 +103,7 @@ namespace Kubera.Data.Sync
 				{
 					Debug.Log("Subiendo datos sucios del usuario.");
 				}
+				Debug.Log("Update interno");
 				updateData(localData.getUserDirtyData());
 			}
 		}
@@ -109,6 +113,12 @@ namespace Kubera.Data.Sync
 		 **/ 
 		public void updateData(KuberaUser dirtyUser)
 		{
+			if(_mustShowDebugInfo)
+			{
+				Debug.Log("To update:");
+				Debug.Log(userToPlayFabJSON(dirtyUser));
+			}
+
 			//Si no hay usuario remoto entonces no hay nada que actualizar
 			if(existCurrentUser())
 			{
@@ -140,7 +150,7 @@ namespace Kubera.Data.Sync
 				{
 					Debug.Log("Subiendo datos sucios del usuario.");
 				}
-
+				Debug.Log("Update interno");
 				updateData(localData.getUserDirtyData());
 			}
 		}
@@ -158,7 +168,8 @@ namespace Kubera.Data.Sync
 		public string userToPlayFabJSON(KuberaUser user)
 		{
 			StringBuilder builder = new StringBuilder("{");
-			builder.Append(quotted("id")+":"+quotted(user.id)+","+quotted("facebookId")+":"+quotted(user.facebookId)+","+quotted("version")+":"+user.version.ToString()+","+quotted("PlayFab_dataVersion")+":"+user.PlayFab_dataVersion.ToString());
+			//builder.Append(quotted("id")+":"+quotted(user.id)+","+quotted("facebookId")+":"+quotted(user.facebookId)+","+quotted("version")+":"+user.version.ToString()+","+quotted("PlayFab_dataVersion")+":"+user.PlayFab_dataVersion.ToString());
+			builder.Append(quotted("id")+":"+quotted(user.id)+","+quotted("facebookId")+":"+quotted(user.facebookId)+","+quotted("version")+":"+user.version.ToString());
 
 			//agregamos los mundos
 			foreach(WorldData world in user.worlds)
@@ -167,6 +178,9 @@ namespace Kubera.Data.Sync
 				builder.Append(quotted("world_"+world.id)+":");
 				builder.Append(JsonUtility.ToJson(world));
 			}
+
+			//Helper para el servidor
+			builder.Append(","+quotted("world_count")+":"+user.worlds.Count);
 
 			builder.Append("}");
 			return builder.ToString();

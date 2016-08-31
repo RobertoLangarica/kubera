@@ -2,6 +2,7 @@
 using System;
 using System.Text;
 using System.Collections;
+using System.Collections.Generic;
 
 using BestHTTP;
 
@@ -55,13 +56,16 @@ namespace Kubera.Data.Remote
 			{
 				// The request finished without any problem.
 				case HTTPRequestStates.Finished:
+					string dataAsText = response.DataAsText;
 					Debug.Log("Request Finished Successfully!\n" + response.DataAsText);
 
 					data = JsonUtility.FromJson<PFResponseBase<PFUserData>>(response.DataAsText);
 
-
 					if(data.code == 200)
 					{
+						Dictionary<string,object> obj = MiniJSON.Json.Deserialize(response.DataAsText) as Dictionary<string,object>;
+						data.data.Data = ((Dictionary<string,object>)obj["data"])["Data"] as Dictionary<string,object>;
+
 						OnRequestComplete();
 					}	
 					else

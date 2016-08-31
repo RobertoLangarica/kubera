@@ -26,7 +26,7 @@ namespace Kubera.Data.Remote.PFResponseData
 	[Serializable]
 	public class PFUserData
 	{
-		public PFUser Data;
+		[NonSerialized]public Dictionary<string,object> Data;
 		public int	DataVersion;
 	}
 

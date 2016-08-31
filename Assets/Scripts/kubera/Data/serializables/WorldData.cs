@@ -92,15 +92,18 @@ namespace Kubera.Data
 			}	
 		}
 
-		public WorldData clone()
+		public WorldData clone(bool addLevels = true)
 		{
 			WorldData result = new WorldData(this.id);
 			result.version = this.version;
 			result.isDirty = this.isDirty;
 
-			foreach(LevelData level in levels)
+			if(addLevels)
 			{
-				result.addLevel(level.clone());
+				foreach(LevelData level in levels)
+				{
+					result.addLevel(level.clone());
+				}
 			}
 
 			return result;

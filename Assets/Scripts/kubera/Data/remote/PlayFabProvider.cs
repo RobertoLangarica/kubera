@@ -1,10 +1,10 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Data.Remote;
 using Data.Sync;
 using Kubera.Data.Remote.PFResponseData;
-using Kubera.Data;
 
 namespace Kubera.Data.Remote
 {
@@ -14,7 +14,7 @@ namespace Kubera.Data.Remote
 
 		private bool isLogged = false;
 		private PFLoginRequest loginRequest;
-		PFCreateUserRequest<KuberaUser> creatingUserRequest;
+		PFCreateUserRequest<Kubera.Data.KuberaUser> creatingUserRequest;
 		private string currentFacebookId;
 		private string sessionTicket;
 
@@ -61,21 +61,27 @@ namespace Kubera.Data.Remote
 		}
 
 		/**
+		 * [DEPRECATED]
 		 * En caso de que sea un usuario que no existe en el servidor hay que subir los datos locales por primera vez
 		 **/ 
 		public override void createUserData<KuberaUser>(string id, string jsonData, KuberaUser objectToSave)
 		{
-			/*creatingUserRequest = queue.getComponentAttachedToGameObject<PFCreateUserRequest<KuberaUser>>("PF_UserCreate");
+			//DEPRECATED en Kubera
+			creatingUserRequest = queue.getComponentAttachedToGameObject<PFCreateUserRequest<Kubera.Data.KuberaUser>>("PF_UserCreate");
 			creatingUserRequest.id = "create_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
 			creatingUserRequest.persistAfterFailed = true;
 			creatingUserRequest.initialize(TITLE_ID,jsonData, sessionTicket, objectToSave);
 			creatingUserRequest.OnComplete += afterUserCreated;
 
-			addLoginDependantRequest(creatingUserRequest,true);*/
+			addLoginDependantRequest(creatingUserRequest,true);
 		}
 
+		/**
+		 * [DEPRECATED]
+		 **/ 
 		private void afterUserCreated(string request_id)
 		{
+			//DEPRECATED en Kubera
 			if(OnDataReceived != null)
 			{
 				PFCreateUserRequest<KuberaUser> request = (PFCreateUserRequest<KuberaUser>)getRequestById(request_id);
@@ -97,30 +103,45 @@ namespace Kubera.Data.Remote
 		 **/ 
 		public override void getUserData (string id, string extraData, int aboveVersion)
 		{
-			/*PFGetUserRequest request = queue.getComponentAttachedToGameObject<PFGetUserRequest>("PF_GetUserData");
+			PFGetUserRequest request = queue.getComponentAttachedToGameObject<PFGetUserRequest>("PF_GetUserData");
 			request.id = "get_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
 			request.persistAfterFailed = true;
 			request.initialize(TITLE_ID, extraData, aboveVersion, sessionTicket);
 			request.OnComplete += OnUserDataObtained;
 
 			addLoginDependantRequest(request,false);
-			*/
 		}
 
 		private void OnUserDataObtained(string request_id)
 		{
-			/*if(OnDataReceived != null)
+			if(OnDataReceived != null)
 			{
 				PFGetUserRequest request = (PFGetUserRequest)getRequestById(request_id);
 
 				//Hacemos un usuario para el diff
 				KuberaUser remoteUser = new KuberaUser(loginRequest.data.data.PlayFabId);
-				remoteUser.levels = request.data.data.Data.levels.Value;
-				remoteUser.version = request.data.data.Data.version.Value;
+
+
+				if(request.data.data.Data.ContainsKey("version"))
+				{
+					remoteUser.version = int.Parse(((Dictionary<string, object>)request.data.data.Data["version"])["Value"].ToString());
+				}
+
 				remoteUser.PlayFab_dataVersion = request.data.data.DataVersion;
 
+				foreach (string key in request.data.data.Data.Keys)
+				{
+					Debug.Log(key);
+					if(key.Contains("world_"))
+					{
+						string world = MiniJSON.Json.Serialize(((Dictionary<string, object>)request.data.data.Data[key])["Value"]);
+						Debug.Log(world);
+						remoteUser.worlds.Add(JsonUtility.FromJson<WorldData>(world));	
+					}
+				}
+
 				OnDataReceived(JsonUtility.ToJson(remoteUser));
-			}*/
+			}
 		}
 
 		public override void updateUserData<KuberaUser> (string id, string jsonData, KuberaUser objectToSave)
@@ -171,8 +192,10 @@ namespace Kubera.Data.Remote
 		{
 			if(isLogged)
 			{
-				//el usuario se esta creando
-				if(creatingUserRequest != null && creatingUserRequest.id != request.id)
+				//Creacion DEPRECATED para Kubera
+
+				//El usuario se esta creando
+				/*if(creatingUserRequest != null && creatingUserRequest.id != request.id)
 				{
 					//request dependiente de que se termine de crear el usuario
 					creatingUserRequest.dependantRequests.Add(request);
@@ -181,7 +204,10 @@ namespace Kubera.Data.Remote
 				{
 					//request normal
 					addRequest(request, isPriority);
-				}
+				}*/
+
+				//request normal
+				addRequest(request, isPriority);
 			}
 			else if(loginRequest != null)//Si no hay usuario logeado entonces no hay request remotas
 			{
