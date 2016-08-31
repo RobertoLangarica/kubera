@@ -11,6 +11,7 @@ namespace Data
 		public string currentUserId = "anon_user";
 
 		public string mainDirectoryName = "Data";
+		public string fileName 			= "data.json";
 
 		protected T currentData;
 
@@ -45,7 +46,7 @@ namespace Data
 
 		public string getLocalDataPath()
 		{
-			return getMainFolderPath() + "/data.json";
+			return getMainFolderPath() + "/" + fileName;
 		}
 
 		//HACK: delete
