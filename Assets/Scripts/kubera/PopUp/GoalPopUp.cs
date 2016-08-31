@@ -48,6 +48,10 @@ public class GoalPopUp : PopUpBase {
 
 	void Start()
 	{
+		print (FriendsgridLayoutGroup.cellSize);
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.15f);
+		print ((Screen.width * 0.16f));
+
 		//TODO checar login a facebook
 		fbLogin ();
 		//FBLoggin.GetInstance().onLoginComplete += fbLogin;
@@ -66,7 +70,7 @@ public class GoalPopUp : PopUpBase {
 				,goalLettersContainer.GetComponent<RectTransform>().rect.height*.8f);
 		}
 
-		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.15f);
+
 	}
 
 	void Update()
@@ -172,8 +176,7 @@ public class GoalPopUp : PopUpBase {
 	public void playGame()
 	{
 		soundButton ();
-		setStartingPlaces ();
-		OnComplete ("playGame");
+		OnComplete ("playGame",false);
 	}
 
 	public void exit ()

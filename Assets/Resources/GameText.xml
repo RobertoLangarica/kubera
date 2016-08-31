@@ -548,5 +548,72 @@
 				<language id="default" text="¡Claro qué sí!"/>
 			</languages>
 		</text>
+
+		<!--
+		worldsName
+		-->
+		<text id="World1_name">
+			<languages>
+				<language id="english" text="PENTATONIC"/>
+				<language id="spanish" text="PENTATONICA"/>
+				<language id="default" text="PENTATONICA"/>
+			</languages>
+		</text>
+		<text id="World2_name">
+			<languages>
+				<language id="english" text="PENTATONIC"/>
+				<language id="spanish" text="PENTATONICA"/>
+				<language id="default" text="PENTATONICA"/>
+			</languages>
+		</text>
+		<text id="World3_name">
+			<languages>
+				<language id="english" text="PENTATONIC"/>
+				<language id="spanish" text="PENTATONICA"/>
+				<language id="default" text="PENTATONICA"/>
+			</languages>
+		</text>
+		<text id="World4_name">
+			<languages>
+				<language id="english" text="PENTATONIC"/>
+				<language id="spanish" text="PENTATONICA"/>
+				<language id="default" text="PENTATONICA"/>
+			</languages>
+		</text>
+		<text id="World5_name">
+			<languages>
+				<language id="english" text="PENTATONIC"/>
+				<language id="spanish" text="PENTATONICA"/>
+				<language id="default" text="PENTATONICA"/>
+			</languages>
+		</text>
+		<text id="World6_name">
+			<languages>
+				<language id="english" text="PENTATONIC"/>
+				<language id="spanish" text="PENTATONICA"/>
+				<language id="default" text="PENTATONICA"/>
+			</languages>
+		</text>
+		<text id="World7_name">
+			<languages>
+				<language id="english" text="PENTATONIC"/>
+				<language id="spanish" text="PENTATONICA"/>
+				<language id="default" text="PENTATONICA"/>
+			</languages>
+		</text>
+		<text id="World8_name">
+			<languages>
+				<language id="english" text="PENTATONIC"/>
+				<language id="spanish" text="PENTATONICA"/>
+				<language id="default" text="PENTATONICA"/>
+			</languages>
+		</text>
+		<text id="World9_name">
+			<languages>
+				<language id="english" text="PENTATONIC"/>
+				<language id="spanish" text="PENTATONICA"/>
+				<language id="default" text="PENTATONICA"/>
+			</languages>
+		</text>
 	</texts>
 </gameText>

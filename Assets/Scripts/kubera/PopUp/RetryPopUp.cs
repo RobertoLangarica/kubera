@@ -81,7 +81,7 @@ public class RetryPopUp : PopUpBase
 		if (UserDataManager.instance.playerLifes > 0) 
 		{
 			setStartingPlaces ();
-			OnComplete ("retry");
+			OnComplete ("retry",false);
 		} 
 		else 
 		{

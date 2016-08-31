@@ -36,6 +36,8 @@ namespace Kubera.Data
 
 			LevelData level = world.getLevelById(levelName);
 
+			print (level);
+			print (level.world);
 			if(level != null)
 			{
 				level.isDirty = level.updateOnlyIncrementalValues(stars, points) || level.isDirty;
@@ -431,6 +433,16 @@ namespace Kubera.Data
 			}
 
 			return result;
+		}
+
+		public int getWorldCount()
+		{
+			return levelsList.getLevelByNumber(levelsList.levels.Length-1).world;
+		}
+
+		public Level getCurrentLevel()
+		{
+			return null;
 		}
 	}
 }

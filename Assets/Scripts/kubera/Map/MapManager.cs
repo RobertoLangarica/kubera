@@ -17,7 +17,7 @@ public class MapManager : MonoBehaviour
 	public GameObject modal;
 	public BossLocked bossLockedPopUp;
 
-	public int currentWorld;
+	[HideInInspector]public int currentWorld =-1;
 	public Transform worldParent;
 	public List<GameObject> worlds;
 	protected GameObject WorldPrefab;
@@ -55,14 +55,25 @@ public class MapManager : MonoBehaviour
 		friendsOnWorldManager = FindObjectOfType<FriendsOnWorldManager> ();
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
-		if(PersistentData.GetInstance().currentWorld == -1)
+		if(PersistentData.GetInstance().currentWorld == -1||!PersistentData.GetInstance().fromGameToLevels)
 		{
 			if(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds.Count != 0)
 			{
-				print ("currentWorld  "+currentWorld);
-				print ("currentLevelName  "+PersistentData.GetInstance ().currentLevel.name);
-				//currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds.Count].world);
+				print ("__" + LevelsDataManager.GetCastedInstance<LevelsDataManager> ().currentUser.worlds.Count.ToString());
+
+
+
+				/*currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds.Count].world);
+				print ("currentWorld  "+currentWorld);*/
 				currentWorld = int.Parse(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds.Count-1].id);
+
+				print ("currentWorld  "+currentWorld);
+
+				int currentLevel = LevelsDataManager.GetCastedInstance<LevelsDataManager> ().currentUser.worlds [LevelsDataManager.GetCastedInstance<LevelsDataManager> ().currentUser.worlds.Count - 1].levels.Count;
+				int levelsInWorld = LevelsDataManager.GetCastedInstance<LevelsDataManager> ().getLevelsOfWorld (currentWorld).Length;
+
+				print ("currentLevel "+ currentLevel);
+				print ("levelsInWorld "+ levelsInWorld);
 			}
 		}
 		else
@@ -87,6 +98,8 @@ public class MapManager : MonoBehaviour
 
 		paralaxManager.OnFinish += showNextLevelGoalPopUp;
 		invitationToReview.OnFinish += afterInvitation;
+
+		initializeWorldsPopUpInfo ();
 	}
 
 	void Update()
@@ -133,14 +146,18 @@ public class MapManager : MonoBehaviour
 			break;
 		case "retry":
 		case "playGame":
+			stopInput(true);
 			//TODO probablemente no haga falta mostrar el mundo
 			showWorld();
 			ScreenManager.instance.GoToScene ("Game");
 			break;
 		case "continue":
-			print (toNextLevel);
-			print (nextLevel);
-			if(toNextLevel)
+			if(toDoor)
+			{
+				showWorld();
+				paralaxManager.setPosLastOrFirst (false);
+			}
+			else if(toNextLevel)
 			{
 				showWorld();
 				paralaxManager.setPosToNextLevel (nextLevel);
@@ -765,6 +782,17 @@ public class MapManager : MonoBehaviour
 				}
 				friendsOnWorld = friendsOnWorldManager.getNewFriendsOnWorld (world.ToString(), test.ToArray (), facebokId);
 			}
+		}
+	}
+
+	protected void initializeWorldsPopUpInfo()
+	{
+		WorldsPopUp worldsPopUp = popUpManager.getPopupByName ("worldsPopUp").GetComponent<WorldsPopUp> ();
+
+		print ("PersistentData.GetInstance().currentWorld  " + PersistentData.GetInstance ().currentWorld);
+		for(int i=0; i<LevelsDataManager.GetCastedInstance<LevelsDataManager> ().getWorldCount (); i++)
+		{
+			
 		}
 	}
 }

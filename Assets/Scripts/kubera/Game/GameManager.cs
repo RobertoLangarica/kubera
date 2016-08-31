@@ -970,6 +970,10 @@ public class GameManager : MonoBehaviour
 			else
 			#endif	
 			{
+				if(PersistentData.GetInstance ().fromGameToLevels)
+				{
+					return;
+				}
 				//Se guarda en sus datos que ha pasado el nivel
 				(LevelsDataManager.GetInstance() as LevelsDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
 					hudManager.getEarnedStars(),pointsCount);
@@ -977,6 +981,7 @@ public class GameManager : MonoBehaviour
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
 
+				print ("SSSS");
 				Invoke ("toLevels", 0.75f);
 				//Gano y ya se termino win bonification
 				/*PersistentData.GetInstance().fromLevelBuilder = true;
