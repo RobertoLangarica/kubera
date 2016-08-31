@@ -64,8 +64,11 @@ namespace Kubera.Data.Sync
 					Debug.Log("Creating remote user.");
 				}
 
-				//Datos nuevos
-				server.createUserData<KuberaUser>(currentUser.id, userToPlayFabJSON(localData.currentUser), localData.currentUser.clone());
+				//Datos nuevos DEPRECATED
+				//server.createUserData<KuberaUser>(currentUser.id, userToPlayFabJSON(localData.currentUser), localData.currentUser.clone());
+
+				//Hacemos un update normal del usuario
+				updateData(localData.getUserDirtyData());
 			}
 			else
 			{
