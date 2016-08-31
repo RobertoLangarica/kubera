@@ -25,6 +25,12 @@ public class ScreenManager : Manager<ScreenManager> {
 	protected float timeBeforeNextScreen;
 	protected AsyncOperation waitingScreen = null;
 	protected int framesBeforeSwitch;
+
+	public SpriteRenderer modal;
+
+	public delegate void DOnFinishLoadScene();
+	public DOnFinishLoadScene OnFinish;
+
 	void Awake()
 	{
 		GameObject[] go = GameObject.FindGameObjectsWithTag ("screenManager");
@@ -45,6 +51,16 @@ public class ScreenManager : Manager<ScreenManager> {
 		backScreens = new Dictionary<string, string>();
 	
 		transform.SetAsLastSibling(); 
+
+		if(modal != null)
+		{
+			float width = modal.sprite.bounds.size.x;
+			float height = modal.sprite.bounds.size.y;
+			float worldScreenHeight = Camera.main.orthographicSize * 2;
+			float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
+
+			modal.transform.localScale = new Vector3 (worldScreenWidth / width,worldScreenHeight / height);
+		}
 	}
 
 	void Start()
@@ -147,15 +163,42 @@ public class ScreenManager : Manager<ScreenManager> {
 		{
 			backScreens.Add(newScene,SceneManager.GetActiveScene().name);
 		}
-		//StartCoroutine (loadScene (newScene));
-		SceneManager.LoadScene (newScene);
+		if(modal != null)
+		{			
+			modal.DOFade (1, 0.5f).SetId(modal);
+		}
+
+		StartCoroutine (loadScene (newScene));
+		//SceneManager.LoadScene (newScene);
 	}
 
 
 	IEnumerator loadScene(string level)
 	{
 		AsyncOperation async = SceneManager.LoadSceneAsync(level);
-		yield return async;
+		async.allowSceneActivation = false;
+		yield return async.isDone;
+		if (modal != null) 
+		{
+			if(DOTween.IsTweening(modal))
+			{
+				modal.DOFade (1, 0.5f).OnComplete(()=>{async.allowSceneActivation = true;});
+			}
+			else
+			{
+				async.allowSceneActivation = true;
+				print ("el tween ya no esta");
+			}
+		}
+		else
+		{
+			async.allowSceneActivation = true;
+		}
+	}
+
+	public void sceneFinishLoading()
+	{
+		modal.DOFade (0, 0.3f);
 	}
 
 	public void GoToSceneAsync(string newScene,float waitTime = -1, int waitFrames = 10)

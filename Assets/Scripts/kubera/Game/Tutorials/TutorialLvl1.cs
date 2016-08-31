@@ -125,7 +125,7 @@ public class TutorialLvl1 : TutorialBase
 
 	protected void powerUpAnim()
 	{
-		if (!doAnimation) 
+		if (!doAnimation || cellManager.getAllEmptyCells().Length < 11 ) 
 		{
 			DOTween.Kill ("Tutorial1");
 			DestroyImmediate(powerUpDommy);

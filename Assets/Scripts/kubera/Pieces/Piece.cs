@@ -167,6 +167,15 @@ public class Piece : MonoBehaviour
 		}
 	}
 
+	public bool isGrey()
+	{
+		if(currentColor == EColor.GREY)
+		{
+			return true;
+		}
+		return false;
+	}
+
 	public void moveAlphaByTween(float alphaPercent,float time,string tweenID,TweenCallback onLastSquareComplete)
 	{
 		for (int i = 0; i < squaresSprite.Length; i++) 

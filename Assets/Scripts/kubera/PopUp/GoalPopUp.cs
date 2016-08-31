@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using Kubera.Data.Sync;
 
 public class GoalPopUp : PopUpBase {
 
@@ -14,6 +15,7 @@ public class GoalPopUp : PopUpBase {
 	public Text LevelNumber;
 	public Text LevelText;
 	public Text inviteFriendsText;
+
 	public Transform goalLettersContainer;
 
 	public GameObject lettersObjective;
@@ -42,8 +44,14 @@ public class GoalPopUp : PopUpBase {
 	public Transform slotParent;
 	public ScrollRect scrollRect;
 
+	public GridLayoutGroup FriendsgridLayoutGroup;
+
 	void Start()
 	{
+		print (FriendsgridLayoutGroup.cellSize);
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.15f);
+		print ((Screen.width * 0.16f));
+
 		//TODO checar login a facebook
 		fbLogin ();
 		//FBLoggin.GetInstance().onLoginComplete += fbLogin;
@@ -61,6 +69,8 @@ public class GoalPopUp : PopUpBase {
 			gridLayoutGroup.cellSize = new Vector2(goalLettersContainer.GetComponent<RectTransform>().rect.height*.8f
 				,goalLettersContainer.GetComponent<RectTransform>().rect.height*.8f);
 		}
+
+
 	}
 
 	void Update()
@@ -73,7 +83,7 @@ public class GoalPopUp : PopUpBase {
 
 	protected void fbLogin()
 	{
-		if(FBLoggin.GetInstance().isLoggedIn)
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 		{
 			//TODO HARCODING
 			inviteFriendsText.text = "invita Amigos";
@@ -165,12 +175,13 @@ public class GoalPopUp : PopUpBase {
 
 	public void playGame()
 	{
-		setStartingPlaces ();
-		OnComplete ("playGame");
+		soundButton ();
+		OnComplete ("playGame",false);
 	}
 
 	public void exit ()
 	{
+		soundButton ();
 		setStartingPlaces ();
 		OnComplete ("closeRetry");
 	}
@@ -235,5 +246,30 @@ public class GoalPopUp : PopUpBase {
 							});
 					});
 			});
+	}
+
+	protected void soundButton()
+	{
+		if(AudioManager.GetInstance())
+		{
+			
+			AudioManager.GetInstance().Play("fxButton");
+		}
+	}
+
+	public void fbAction()
+	{
+		soundButton ();
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+		{
+			//TODO HARCODING
+			inviteFriendsText.text = "invita Amigos";
+			FacebookManager.GetInstance ().requestNewFriends ();
+		}
+		else
+		{
+			inviteFriendsText.text = "Conectate";
+			KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookLogin();
+		}
 	}
 }

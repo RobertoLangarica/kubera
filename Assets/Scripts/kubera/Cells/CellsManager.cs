@@ -989,28 +989,28 @@ public class CellsManager : MonoBehaviour
 					//vecino de arriba
 					if( i== 0 || (i != 0 && cells[((i * rows) + j)-rows].cellType == Cell.EType.EMPTY))
 					{
-						frame.instanceFrames (frame.top, cells [(i * rows) + j].transform);
+						frame.instanceFrames (frame.top, cells [(i * rows) + j].transform,-2);
 						//print ("marco arriba " + ((i * rows) + j));
 						top = true;
 					}
 					//vecino izquierdo
 					if(j== 0 ||(j != 0 && cells[((i * rows) + j)-1].cellType == Cell.EType.EMPTY))
 					{
-						frame.instanceFrames (frame.left, cells [(i * rows) + j].transform);
+						frame.instanceFrames (frame.left, cells [(i * rows) + j].transform,-2);
 						//print ("marco izquierdo " + ((i * rows) + j));
 						left = true;
 					}
 					//vecino derecho
 					if(j== columns-1 || (j < columns+1 && cells[((i * rows) + j)+1].cellType == Cell.EType.EMPTY))
 					{
-						frame.instanceFrames (frame.right, cells [(i * rows) + j].transform);
+						frame.instanceFrames (frame.right, cells [(i * rows) + j].transform,-2);
 						if(top)
 						{
-							frame.instanceFrames (frame.rightTopShadow, cells [(i * rows) + j].transform,-1);
+							frame.instanceFrames (frame.rightTopShadow, cells [(i * rows) + j].transform,-3);
 						}
 						else
 						{
-							frame.instanceFrames (frame.rightShadow, cells [(i * rows) + j].transform,-1);
+							frame.instanceFrames (frame.rightShadow, cells [(i * rows) + j].transform,-3);
 						}
 						//print ("marco derecho " + ((i * rows) + j));
 						right = true;
@@ -1018,14 +1018,14 @@ public class CellsManager : MonoBehaviour
 					//vecino de abajo
 					if(i == rows-1 ||(i < rows +1  && cells[((i * rows) + j)+rows].cellType == Cell.EType.EMPTY))
 					{
-						frame.instanceFrames (frame.bottom, cells [(i * rows) + j].transform);
+						frame.instanceFrames (frame.bottom, cells [(i * rows) + j].transform,-2);
 						if(left)
 						{
-							frame.instanceFrames (frame.bottonLeftShadow, cells [(i * rows) + j].transform,-1);
+							frame.instanceFrames (frame.bottonLeftShadow, cells [(i * rows) + j].transform,-3);
 						}
 						else
 						{							
-							frame.instanceFrames (frame.bottonShadow, cells [(i * rows) + j].transform,-1);
+							frame.instanceFrames (frame.bottonShadow, cells [(i * rows) + j].transform,-3);
 						}
 						//print ("marco abajo " + ((i * rows) + j));
 						bottom = true;
@@ -1033,23 +1033,23 @@ public class CellsManager : MonoBehaviour
 
 					if(left && top)
 					{
-						frame.instanceFrames (frame.leftTop, cells [(i * rows) + j].transform);
+						frame.instanceFrames (frame.leftTop, cells [(i * rows) + j].transform,-2);
 					}
 
 					if(top && right)
 					{
-						frame.instanceFrames (frame.topRight, cells [(i * rows) + j].transform);
+						frame.instanceFrames (frame.topRight, cells [(i * rows) + j].transform,-2);
 					}
 
 					if(right && bottom)
 					{
-						frame.instanceFrames (frame.rightBottom, cells [(i * rows) + j].transform);
-						frame.instanceFrames (frame.bottonRightShadow, cells [(i * rows) + j].transform,-1);
+						frame.instanceFrames (frame.rightBottom, cells [(i * rows) + j].transform,-2);
+						frame.instanceFrames (frame.bottonRightShadow, cells [(i * rows) + j].transform,-3);
 					}
 
 					if (bottom && left)
 					{
-						frame.instanceFrames (frame.bottomLeft, cells [(i * rows) + j].transform);
+						frame.instanceFrames (frame.bottomLeft, cells [(i * rows) + j].transform,-2);
 					}
 				}
 			}

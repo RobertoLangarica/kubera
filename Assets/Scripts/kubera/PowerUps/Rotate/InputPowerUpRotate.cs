@@ -264,6 +264,12 @@ public class InputPowerUpRotate : MonoBehaviour
 
 			StartCoroutine( changePiece (piece,piece.transform.position, rotateSpeed));
 
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop("rotate");
+				AudioManager.GetInstance().Play("rotate");
+			}
+
 			piece.gameObject.transform.DOScale (new Vector3 (0, 0), rotateSpeed).OnComplete (() => {
 
 				/*piece.transform.localRotation = Quaternion.Euler(new Vector3(0,0,piece.transform.rotation.eulerAngles.z+90));
@@ -271,6 +277,7 @@ public class InputPowerUpRotate : MonoBehaviour
 				piece.transform.DOScale (selectedInitialScale, 0.25f).OnComplete (() => {
 					isRotating(false);
 				});*/
+				
 				if(OnPieceRotated != null)
 				{
 					OnPieceRotated();
@@ -304,6 +311,7 @@ public class InputPowerUpRotate : MonoBehaviour
 		piece.createdIndex = oldPiece.createdIndex;
 		piece.positionOnScene = oldPiece.positionOnScene;
 		piece.initialPieceScale = oldPiece.initialPieceScale;
+		piece.switchGreyPiece (oldPiece.isGrey());
 	}
 
 	public void activateRotateImage(bool activate,int posOnScene =-1)

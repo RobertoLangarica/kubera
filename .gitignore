@@ -21,9 +21,10 @@ obj/
 *.booproj
 
 #=============#
-# Administrativos#
+# VillaVanilla#
 #=============#
 Administrativos/*
+LocalBuilds/*
 
 #=============#
 # Protobuf#

@@ -153,7 +153,7 @@ public class TutorialLvl3 : TutorialBase
 
 	protected void powerUpAnim()
 	{
-		if (!doAnimation) 
+		if (!doAnimation || cellManager.getAllEmptyCells().Length < 9) 
 		{
 			DOTween.Kill ("Tutorial2");
 			return;

@@ -32,7 +32,7 @@ public class ParalaxManager : MonoBehaviour {
 		//OnMove (rectTransform.anchoredPosition);
 		//scrollRect.verticalNormalizedPosition = 0.5f;
 		Invoke ("setFixHeight",0.05f);
-		print (Screen.height);
+		//print (Screen.height);
 	}
 
 	void Update()
@@ -66,10 +66,7 @@ public class ParalaxManager : MonoBehaviour {
 			{
 				toNextLevel = false;
 				scrollRect.enabled = true;
-				if(OnFinish != null)
-				{
-					OnFinish();
-				}
+
 			}
 		}
 	}
@@ -93,16 +90,38 @@ public class ParalaxManager : MonoBehaviour {
 		Canvas.ForceUpdateCanvases ();
 	}
 
+	public void setPosLastOrFirst(bool first)
+	{
+		if(first)
+		{
+			scrollRect.verticalNormalizedPosition = 0;
+		}
+		else
+		{
+			scrollRect.verticalNormalizedPosition = 1;
+		}
+		Canvas.ForceUpdateCanvases ();
+	}
+
 	public float getPosByLevel(MapLevel mapLevel)
 	{
-		float a = 0;
+		float levelPosition = 0;
 
-		a = fixHeight + mapLevel.transform.localPosition.y;
+		levelPosition = fixHeight + mapLevel.transform.localPosition.y;
 		
-		a = a / fixMin;
+		levelPosition = levelPosition / fixMin;
 
-		float sizeOfLevelIcon = mapLevel.GetComponent<RectTransform> ().anchorMax.y - mapLevel.GetComponent<RectTransform> ().anchorMin.y;
-		float levelPosition = a;//mapLevel.GetComponent<RectTransform> ().anchorMin.y - sizeOfLevelIcon;
+		if(levelPosition >1)
+		{
+			levelPosition = 1;
+		}
+		else if(levelPosition < 0)
+		{
+			levelPosition = 0;
+		}
+
+		//float sizeOfLevelIcon = mapLevel.GetComponent<RectTransform> ().anchorMax.y - mapLevel.GetComponent<RectTransform> ().anchorMin.y;
+		//mapLevel.GetComponent<RectTransform> ().anchorMin.y - sizeOfLevelIcon;
 
 		return levelPosition;
 	}
@@ -114,10 +133,11 @@ public class ParalaxManager : MonoBehaviour {
 
 	public void setPosToNextLevel(MapLevel mapLevel)
 	{
-		print (mapLevel.fullLvlName);
+		
 		posNextLevel = getPosByLevel (mapLevel);
+		
 		toNextLevel = true;
-		print (posNextLevel);
+		//print (posNextLevel);
 	}
 
 	public void cancelAutomaticMovements()
@@ -129,6 +149,13 @@ public class ParalaxManager : MonoBehaviour {
 		}
 	}
 
+	public void finish()
+	{
+		if(OnFinish != null)
+		{
+			OnFinish();
+		}
+	}
 
 	public void Unsubscribe()
 	{

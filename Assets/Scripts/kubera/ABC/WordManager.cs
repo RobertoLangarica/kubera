@@ -162,6 +162,15 @@ public class WordManager : MonoBehaviour
 
 		if(letter.isPreviouslySelected())
 		{
+			if(byDrag)
+			{
+				if(AudioManager.GetInstance())
+				{
+					AudioManager.GetInstance().Stop("badPositionated");
+					AudioManager.GetInstance().Play("badPositionated");
+				}
+				return;
+			}
 			//Se va eliminar
 			removeLetter(letter.letterReference);
 			arrangeSortingOrder ();
@@ -228,7 +237,6 @@ public class WordManager : MonoBehaviour
 	public void onLetterTap(GameObject go,bool byDrag)
 	{
 		Letter letter = go.GetComponent<Letter>();
-
 
 		if (!letter.abcChar.wildcard && !letter.wildCard) 
 		{
@@ -630,7 +638,6 @@ public class WordManager : MonoBehaviour
 	{
 		if(!wordsValidator.isAWordPossible(pool))
 		{
-			print("no se puede hacer palabra");
 			return false;
 		}
 		return true;
@@ -710,10 +717,10 @@ public class WordManager : MonoBehaviour
 		activatePointsGO(letterOnContainer);
 		activateNoWordPosibleText (!letterOnContainer,letterOnContainer);
 
-		if(completeWord && letterOnContainer)
+		/*if(completeWord && letterOnContainer)
 		{
 			Debug.Log("Se completo: "+getCurrentWordOnList());
-		}
+		}*/
 	}
 
 	public void activateWordBtn(bool completeWord, bool isThereAnyLetterOnContainer)
@@ -1067,6 +1074,7 @@ public class WordManager : MonoBehaviour
 
 	IEnumerator updateLetterHintState(List<Letter> gridLetter)
 	{
+		
 		CellsManager cellManager = FindObjectOfType<CellsManager> ();
 		Cell cellSelected = null;
 
@@ -1081,6 +1089,11 @@ public class WordManager : MonoBehaviour
 				HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SPECIFIC_CELL,cellSelected.transform);
 				cellSelected.content.transform.DOShakePosition (0.5f);
 				//gridLetter [i].updateState (Letter.EState.HINTED);
+				if(AudioManager.GetInstance())
+				{
+					AudioManager.GetInstance().Stop("helpLetterSuggested");
+					AudioManager.GetInstance().Play("helpLetterSuggested");
+				}
 
 				yield return new WaitForSeconds (0.4f);
 			}

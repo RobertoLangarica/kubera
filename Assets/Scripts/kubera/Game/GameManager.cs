@@ -5,7 +5,7 @@ using ABC;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-using Data;
+using Kubera.Data;
 
 public class GameManager : MonoBehaviour 
 {
@@ -106,6 +106,11 @@ public class GameManager : MonoBehaviour
 		powerupManager.getPowerupByType (PowerupBase.EType.ROTATE).OnPowerupCompleted += rotationDeactivated;
 		inputRotate.OnRotateArrowsActivated += rotationActivated;
 
+		if(ScreenManager.instance)
+		{
+			ScreenManager.instance.sceneFinishLoading ();
+		}
+
 		if (PersistentData.GetInstance().abcDictionary.getAlfabet () == null) 
 		{
 			PersistentData.GetInstance ().onDictionaryFinished += startGame;
@@ -124,12 +129,10 @@ public class GameManager : MonoBehaviour
 	{
 		if(!PersistentData.GetInstance().fromLevelsToGame && !PersistentData.GetInstance().fromLevelBuilder)
 		{
-			print ("Sasdas");
 			configureLevel(PersistentData.GetInstance().getRandomLevel());
 		}
 		else
 		{
-			print ("S");
 			configureLevel(PersistentData.GetInstance().currentLevel);
 		}
 
@@ -145,20 +148,27 @@ public class GameManager : MonoBehaviour
 		if (Input.GetKeyUp (KeyCode.R)) 
 		{
 			PersistentData.GetInstance().startLevel -= 1;
-			SceneManager.LoadScene ("Game");
+			ScreenManager.instance.GoToScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.N)) 
 		{
-			SceneManager.LoadScene ("Game");
+			ScreenManager.instance.GoToScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.B) && PersistentData.GetInstance().startLevel > 1) 
 		{
 			PersistentData.GetInstance().startLevel -= 2;
-			SceneManager.LoadScene ("Game");
+			ScreenManager.instance.GoToScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.Z)) 
 		{
 			onUsersAction (5, 0);
+			//activatePopUp ("noOptionsPopUp");
+			//onUsersAction (0);
+		}
+
+		if (Input.GetKeyUp (KeyCode.X)) 
+		{
+			onUsersAction (1, 0);
 			//activatePopUp ("noOptionsPopUp");
 			//onUsersAction (0);
 		}
@@ -325,7 +335,11 @@ public class GameManager : MonoBehaviour
 			List<Cell> cellsUnderPiece = cellManager.getFreeCellsUnderPiece(piece);
 
 			putPiecesOnGrid (piece, cellsUnderPiece);
-			//AudioManagerOld.instance.PlaySoundEffect(AudioManagerOld.ESOUND_EFFECTS.PIECE_POSITIONATED);
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop("piecePositionated");
+				AudioManager.GetInstance().Play("piecePositionated");
+			}
 
 			//Tomamos en cuenta los tiempos de todos los twens de posicionamiento
 			StartCoroutine(afterPiecePositioned(piece));
@@ -333,6 +347,11 @@ public class GameManager : MonoBehaviour
 			return true;
 		}
 
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("badPositionated");
+			AudioManager.GetInstance().Play("badPositionated");
+		}
 		return false;
 	}
 
@@ -377,6 +396,12 @@ public class GameManager : MonoBehaviour
 				piecesWhereCreated = true;
 				pieceManager.initializePiecesToShow ();
 				hudManager.showPieces (pieceManager.getShowingPieces ());
+
+				if(AudioManager.GetInstance())
+				{
+					AudioManager.GetInstance().Stop("pieceCreated");
+					AudioManager.GetInstance().Play("pieceCreated");
+				}
 			}
 
 			//Damos puntos por cada cuadro en la pieza
@@ -511,6 +536,12 @@ public class GameManager : MonoBehaviour
 
 	public void OnDeleteWord()
 	{
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("destroyWord");
+			AudioManager.GetInstance().Play("destroyWord");
+		}
+
 		wordManager.removeAllLetters(false);
 	}
 
@@ -526,6 +557,12 @@ public class GameManager : MonoBehaviour
 		removeLettersFromGrid(wordManager.letters, true);
 
 		//wordManager.removeAllLetters(true);
+
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("retrieveWord");
+			AudioManager.GetInstance().Play("retrieveWord");
+		}
 
 		checkIfLose ();
 		useHintWord (false);
@@ -586,13 +623,33 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
+
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("vacuum");
+			AudioManager.GetInstance().Play("vacuum");
+		}
 	}
 
 	public void linesCreated(int totalLines)
 	{
-		if(totalLines > 0)
+		if(AudioManager.GetInstance () && totalLines >0)
 		{
-			//AudioManagerOld.instance.PlaySoundEffect(AudioManagerOld.ESOUND_EFFECTS.LINE_CREATED);
+			if(totalLines == 1)
+			{
+				AudioManager.GetInstance().Stop("lines1");
+				AudioManager.GetInstance().Play("lines1");
+			}
+			else if( totalLines == 2)
+			{
+				AudioManager.GetInstance().Stop("lines2");
+				AudioManager.GetInstance().Play("lines2");
+			}
+			else
+			{
+				AudioManager.GetInstance().Stop("lines3orMore");
+				AudioManager.GetInstance().Play("lines3orMore");
+			}
 		}
 
 		addPoints(linesCreatedPoints[totalLines]);
@@ -634,7 +691,6 @@ public class GameManager : MonoBehaviour
 
 		if((!canFit || remainingMoves == 0) && !gameOver)
 		{
-			print("no puede poner piezas");
 			updatePiecesLightAndUpdateLetterState ();
 			if(remainingMoves == 0)
 			{
@@ -657,7 +713,12 @@ public class GameManager : MonoBehaviour
 		{
 			allowGameInput (false);
 			Debug.Log ("Perdio de verdad");
-			//AudioManagerOld.instance.PlaySoundEffect(AudioManagerOld.ESOUND_EFFECTS.LOSE);
+			
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop("loose");
+				AudioManager.GetInstance().Play("losse");
+			}
 
 			if(remainingMoves <=0)
 			{
@@ -761,13 +822,17 @@ public class GameManager : MonoBehaviour
 	{
 		if (!gameOver) 
 		{
-			allowGameInput (false);
-			Debug.Log ("Gano de verdad.");
+			allowGameInput (false,true);
+			//Debug.Log ("Gano de verdad.");
 			gameOver = true;
 			unlockPowerUp ();
 			activatePopUp ("winGamePopUp");
 
-
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop("won");
+				AudioManager.GetInstance().Play("won");
+			}
 		}
 	}
 
@@ -777,7 +842,6 @@ public class GameManager : MonoBehaviour
 		wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
 		updatePiecesLight (true);
 
-		//AudioManagerOld.instance.PlaySoundEffect(AudioManagerOld.ESOUND_EFFECTS.WON);
 
 		bombAnimation.OnAllAnimationsCompleted += destroyAndCountAllLetters;
 
@@ -796,12 +860,22 @@ public class GameManager : MonoBehaviour
 		if(cellManager.getAllEmptyCells().Length > 0 && remainingMoves > 0 )
 		{
 			add1x1Block ();
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop("addBlock");
+				AudioManager.GetInstance().Play("addBlock");
+			}
 		}
 		else
 		{
 			if (remainingMoves > 0) 
 			{
 				addMovementPoint ();
+				if(AudioManager.GetInstance())
+				{
+					AudioManager.GetInstance().Stop("point");
+					AudioManager.GetInstance().Play("point");
+				}
 			}
 			else
 			{
@@ -878,17 +952,28 @@ public class GameManager : MonoBehaviour
 			cellToLetter [random].destroyCell ();
 			cellToLetter.RemoveAt (random);
 
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop("letterPoint");
+				AudioManager.GetInstance().Play("letterPoint");
+			}
+
 			Invoke ("destroyLetter", 0.2f);
 		} 
 		else 
 		{
+			#if UNITY_EDITOR
 			if(!LevelsDataManager.GetInstance())
 			{
-				//print ("S");
 
 			}
 			else
+			#endif	
 			{
+				if(PersistentData.GetInstance ().fromGameToLevels)
+				{
+					return;
+				}
 				//Se guarda en sus datos que ha pasado el nivel
 				(LevelsDataManager.GetInstance() as LevelsDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
 					hudManager.getEarnedStars(),pointsCount);
@@ -896,6 +981,7 @@ public class GameManager : MonoBehaviour
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
 
+				print ("SSSS");
 				Invoke ("toLevels", 0.75f);
 				//Gano y ya se termino win bonification
 				/*PersistentData.GetInstance().fromLevelBuilder = true;
@@ -906,7 +992,7 @@ public class GameManager : MonoBehaviour
 
 	protected void toLevels()
 	{
-		SceneManager.LoadScene ("Levels");
+		ScreenManager.instance.GoToScene ("Levels");
 	}
 
 	protected void showDestroyedLetterScore(Cell cell)
@@ -923,13 +1009,23 @@ public class GameManager : MonoBehaviour
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
 	}
 
-	public void allowGameInput(bool allowInput = true)
+	public void allowGameInput(bool allowInput = true,bool deactivateAll = false)
 	{
+		if(deactivateAll)
+		{
+			hudManager.activatePowerUpButtont (false);
+			inputPiece.allowInput = false;
+			inputRotate.allowInput = false;
+			hudManager.activatePowerUpButtont (false);
+		}
+
 		if (!rotationActive) 
 		{
 			inputPiece.allowInput = allowInput;
 			inputWords.allowInput = allowInput;
 		}
+
+
 	}
 		
 	protected void unlockPowerUp()
@@ -964,9 +1060,21 @@ public class GameManager : MonoBehaviour
 	{
 		//TODO: Chequeo con transaction manager para ver que onda con las gemas
 		//TODO: Checar lo del precio de los powerUps
+
+		if(!inputPiece.allowInput && !inputRotate.allowInput)
+		{
+			return;
+		}
+
 		allowGameInput(false);
 
 		powerupManager.activatePowerUp((PowerupBase.EType) powerupTypeIndex,canActivatePowerUp((PowerupBase.EType) powerupTypeIndex));
+
+		if(AudioManager.GetInstance())
+		{
+			
+			AudioManager.GetInstance().Play("fxButton");
+		}
 	}
 
 	protected bool canActivatePowerUp(PowerupBase.EType type)
@@ -986,6 +1094,12 @@ public class GameManager : MonoBehaviour
 
 	private void OnPowerupCanceled(PowerupBase.EType type)
 	{
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("powerupCanceled");
+			AudioManager.GetInstance().Play("powerupCanceled");
+		}
+		
 		allowGameInput(true);
 	}
 
@@ -1055,8 +1169,10 @@ public class GameManager : MonoBehaviour
 
 	public void activateSettings(bool activate)
 	{
-		//AudioManagerOld.instance.PlaySoundEffect(AudioManagerOld.ESOUND_EFFECTS.BUTTON);
-
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Play("fxButton");
+		}
 		hudManager.activateSettings (activate);
 	}
 
@@ -1089,7 +1205,7 @@ public class GameManager : MonoBehaviour
 		case "loose":
 			PersistentData.GetInstance ().fromLoose = true;
 			PersistentData.GetInstance ().fromGameToLevels = true;
-			SceneManager.LoadScene ("Levels");
+			ScreenManager.instance.GoToScene ("Levels");
 			break;
 		default:		
 				Invoke ("allowInputFromInvoke", 0.5f);
@@ -1114,7 +1230,7 @@ public class GameManager : MonoBehaviour
 		PersistentData.GetInstance ().fromLoose = true;
 		PersistentData.GetInstance ().fromGameToLevels = true;
 		//activatePopUp ("exitGame");
-		SceneManager.LoadScene ("Levels");
+		ScreenManager.instance.GoToScene ("Levels");
 		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		activatePopUp ("exitGame");*/
 	}
@@ -1155,7 +1271,6 @@ public class GameManager : MonoBehaviour
 		//Se movio el chequeo para aca ya que aqui se suman lineas y puntos
 		if (OnPointsEarned != null) 
 		{
-			Debug.Log ("Se añadieron puntos!!!!!!" + amount);
 			OnPointsEarned ();
 		}
 	}

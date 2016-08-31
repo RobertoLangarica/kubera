@@ -69,7 +69,6 @@ public class TutorialLvl2 : TutorialBase
 			phase = 2;
 			return true;
 		case(2):
-			Debug.Log ("CAso2");
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.EARNED_POINTS);

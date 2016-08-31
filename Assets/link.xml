@@ -2,6 +2,7 @@
   <assembly fullname="mscorlib">
     <type fullname="System.Type" preserve="all" />
     <namespace fullname="System.Reflection" preserve="all" />
+    <namespace fullname="System.Security.Cryptography" preserve="all" />
   </assembly>
   <assembly fullname="Assembly-CSharp-firstpass">
     <namespace fullname="VoxelBusters.NativePlugins" preserve="all" />
@@ -16,5 +17,10 @@
   <assembly fullname="Parse.Unity">
     <namespace fullname="Parse" preserve="all" />
     <namespace fullname="Parse.Internal" preserve="all" />
+  </assembly>
+  <assembly fullname="System">
+    <namespace fullname="System.Configuration" preserve="all" />
+    <namespace fullname="System.ComponentModel" preserve="all" />
+    <namespace fullname="System.Net.Configuration" preserve="all" />
   </assembly>
 </linker>
