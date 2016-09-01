@@ -46,6 +46,12 @@ public class BombAnimation : MonoBehaviour
 
 		yield return new WaitForSeconds (0.1f);
 		StartCoroutine (startAnimation (square, cellSelected, letter, 0.1f));
+
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("bombBlock");
+			AudioManager.GetInstance().Play("bombBlock");
+		}
 	}
 
 	public IEnumerator startSameColorSearchAnimation(Cell cellSelected)

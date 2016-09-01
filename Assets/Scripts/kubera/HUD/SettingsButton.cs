@@ -54,6 +54,9 @@ public class SettingsButton : MonoBehaviour
 			{
 				AudioManager.GetInstance().activateSounds = false;
 				UserDataManager.instance.isSoundEffectsActive = false;
+
+				AudioManager.GetInstance ().StopAllAudiosInCategory ("LOOP FX");
+				AudioManager.GetInstance ().StopAllAudiosInCategory ("FX");
 			}
 			else
 			{
