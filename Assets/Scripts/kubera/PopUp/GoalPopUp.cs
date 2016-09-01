@@ -48,9 +48,7 @@ public class GoalPopUp : PopUpBase {
 
 	void Start()
 	{
-		print (FriendsgridLayoutGroup.cellSize);
 		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.15f);
-		print ((Screen.width * 0.16f));
 
 		//TODO checar login a facebook
 		fbLogin ();

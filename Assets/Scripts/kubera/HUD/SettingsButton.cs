@@ -12,6 +12,11 @@ public class SettingsButton : MonoBehaviour
 
 	void Start()
 	{
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance ().Play ("gamePlay");
+		}
+
 		setStateMusic ();
 		setStateSounds ();
 	}
@@ -26,11 +31,15 @@ public class SettingsButton : MonoBehaviour
 			{
 				AudioManager.GetInstance ().activateMusic = false;
 				UserDataManager.instance.isMusicActive = false;
+
+				AudioManager.GetInstance ().Stop ("gamePlay");
 			}
 			else 
 			{
 				AudioManager.GetInstance ().activateMusic = true;
 				UserDataManager.instance.isMusicActive = true;
+
+				AudioManager.GetInstance ().Play ("gamePlay");
 			}
 			setStateMusic ();
 		}

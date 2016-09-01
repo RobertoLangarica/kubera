@@ -122,7 +122,6 @@ public class GameManager : MonoBehaviour
 		//TODO: hardcoding
 		bonificationPiecePrefab.SetActive (true);
 		//TODO: Control de flujo de juego con un init
-	
 	}
 
 	protected void startGame()
@@ -873,8 +872,8 @@ public class GameManager : MonoBehaviour
 				addMovementPoint ();
 				if(AudioManager.GetInstance())
 				{
-					AudioManager.GetInstance().Stop("point");
-					AudioManager.GetInstance().Play("point");
+					AudioManager.GetInstance().Stop("letterPoint");
+					AudioManager.GetInstance().Play("letterPoint");
 				}
 			}
 			else

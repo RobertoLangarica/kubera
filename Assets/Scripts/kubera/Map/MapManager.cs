@@ -60,7 +60,6 @@ public class MapManager : MonoBehaviour
 			if(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds.Count != 0)
 			{
 				int worldCount = LevelsDataManager.GetCastedInstance<LevelsDataManager> ().getWorldCount ();
-				print ("worldCount "+ worldCount);
 
 				currentWorld = int.Parse(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds.Count-1].id);
 
@@ -173,6 +172,12 @@ public class MapManager : MonoBehaviour
 			break;
 		case "closeRetry":
 			showWorld();
+			break;
+		case "toWorldTraveler":
+			openPopUp ("worldsPopUp");
+			break;
+		case "toFacebookMessages":
+			openPopUp ("facebookNews");
 			break;
 		default:
 			break;

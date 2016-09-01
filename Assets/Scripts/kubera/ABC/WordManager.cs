@@ -164,17 +164,14 @@ public class WordManager : MonoBehaviour
 		{
 			if(byDrag)
 			{
-				if(AudioManager.GetInstance())
-				{
-					AudioManager.GetInstance().Stop("badPositionated");
-					AudioManager.GetInstance().Play("badPositionated");
-				}
 				return;
 			}
 			//Se va eliminar
 			removeLetter(letter.letterReference);
 			arrangeSortingOrder ();
 			StartCoroutine( correctTweens ());
+
+			deselectSound ();
 		}
 		else
 		{
@@ -240,6 +237,7 @@ public class WordManager : MonoBehaviour
 
 		if (!letter.abcChar.wildcard && !letter.wildCard) 
 		{
+			deselectSound ();
 			removeLetter (letter);
 			arrangeSortingOrder ();
 		} 
@@ -368,6 +366,13 @@ public class WordManager : MonoBehaviour
 			releaseChild (goByDrag);
 			goByDrag = null;
 		}
+		else
+		{
+			if(AudioManager.GetInstance())
+			{					
+				AudioManager.GetInstance ().Play ("letterChoosed");
+			}
+		}
 	}
 
 	private void setSiblingIndex(GameObject target, int siblingPosition)
@@ -475,17 +480,21 @@ public class WordManager : MonoBehaviour
 
 	public void removeLetter(Letter letter)
 	{
-		letter.deselect();
 		//letters.Remove(letter);
 		if (DOTween.IsTweening (letter.GetInstanceID()))
 		{
 			DOTween.Complete (letter.GetInstanceID());
 		}
-		GameObject.DestroyImmediate(letter.gameObject);
+		letter.transform.SetParent (this.transform, true);
+		letter.transform.DOMove (letter.letterReference.transform.position, 0.1f).OnComplete (() => {
 
-		resetValidationToSiblingOrder();
+			letter.deselect();
+			GameObject.DestroyImmediate (letter.gameObject);
 
-		onLettersChange();
+			resetValidationToSiblingOrder();
+
+			onLettersChange();
+		});
 	}
 
 	public void arrangeSortingOrder()
@@ -1157,5 +1166,13 @@ public class WordManager : MonoBehaviour
 	{
 		yield return new WaitForSeconds (wait+0.1f);
 		onLettersChange ();
+	}
+
+	protected void deselectSound()
+	{
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance ().Play ("letterDeselected");
+		}
 	}
 }
