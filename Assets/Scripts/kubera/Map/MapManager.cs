@@ -477,7 +477,6 @@ public class MapManager : MonoBehaviour
 
 				if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
 				{
-					print ("uhu");
 					toDoor = true;
 					toNextLevel = false;
 					//FindObjectOfType<Stairs> ().animateStairs ();
@@ -772,7 +771,6 @@ public class MapManager : MonoBehaviour
 
 	protected FriendInfo isThereAnyFriendOnLevel(int world, string level)
 	{
-		print ("isThereAnyFriendOnLevel "+level + " "+world);
 		return friendsOnWorldManager.getFriendOnLevel (world, level);
 	}
 
