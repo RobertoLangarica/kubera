@@ -65,7 +65,6 @@ public class DestroyPowerUp : PowerupBase
 
 		if(AudioManager.GetInstance())
 		{
-			AudioManager.GetInstance().Stop("ray");
 			AudioManager.GetInstance().Play("ray");
 		}
 	}
@@ -74,6 +73,11 @@ public class DestroyPowerUp : PowerupBase
 	{
 		bombInput.OnCellSelected -= onOverCellChanged;
 		Cell cellSelected = cellsManager.getCellUnderPoint(destroyGO.transform.position);
+
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("ray");
+		}
 
 		if(cellSelected != null)
 		{

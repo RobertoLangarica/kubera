@@ -822,6 +822,7 @@ public class GameManager : MonoBehaviour
 		if (!gameOver) 
 		{
 			allowGameInput (false,true);
+			useHintWord (false);
 			//Debug.Log ("Gano de verdad.");
 			gameOver = true;
 			unlockPowerUp ();
@@ -980,7 +981,6 @@ public class GameManager : MonoBehaviour
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
 
-				print ("SSSS");
 				Invoke ("toLevels", 0.75f);
 				//Gano y ya se termino win bonification
 				/*PersistentData.GetInstance().fromLevelBuilder = true;
