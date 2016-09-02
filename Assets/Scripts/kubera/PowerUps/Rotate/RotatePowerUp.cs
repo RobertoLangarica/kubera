@@ -9,6 +9,7 @@ public class RotatePowerUp : PowerupBase
 	protected InputPowerUpRotate inputPowerUpRotate;
 	protected InputBombAndDestroy inputPowerUp;
 	protected InputWords inputWords;
+	protected GameManager gameManager;
 
 	protected GameObject powerUpGO;
 	protected bool canUse;
@@ -20,7 +21,7 @@ public class RotatePowerUp : PowerupBase
 		inputWords = FindObjectOfType<InputWords> ();
 		inputPowerUpRotate = FindObjectOfType<InputPowerUpRotate> ();
 		inputPowerUp = FindObjectOfType<InputBombAndDestroy> ();
-
+		gameManager = FindObjectOfType<GameManager> ();
 
 		this.gameObject.SetActive( false);
 		inputPowerUpRotate.enabled = false;
@@ -114,6 +115,7 @@ public class RotatePowerUp : PowerupBase
 			inputPowerUpRotate.startRotate ();
 			inputPowerUpRotate.OnPowerupRotateCompleted += completePowerUp;
 			print ("activate");
+			gameManager.updatePiecesLightAndUpdateLetterState ();
 			Invoke ("rotateImage", 2);
 
 			if(AudioManager.GetInstance())

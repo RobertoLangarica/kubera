@@ -482,7 +482,7 @@ public class GameManager : MonoBehaviour
 	public void OnAllCellsFlipped()
 	{
 		allowGameInput (true);
-		Invoke("checkIfLose",0.2f);
+		Invoke("checkIfLose",0);
 	}
 
 	public void showShadowOnPiece (GameObject obj, bool showing = true)
@@ -737,10 +737,12 @@ public class GameManager : MonoBehaviour
 
 		if (!rotationActive) 
 		{
+			print ("checando SIN rotar");
 			canFit = cellManager.checkIfOnePieceCanFit (pieceManager.getShowingPieces ());
 		} 
 		else 
 		{
+			print ("checando con rotar");
 			List<Piece> tempList = new List<Piece> (pieceManager.getShowingPieces ());
 			Piece tempPiece= null;
 
@@ -766,7 +768,7 @@ public class GameManager : MonoBehaviour
 		return canFit;
 	}
 
-	protected void updatePiecesLightAndUpdateLetterState()
+	public void updatePiecesLightAndUpdateLetterState()
 	{
 		updatePiecesLight (checkIfIsPosiblePutPieces ());
 		updateLettersState ();
@@ -1113,7 +1115,6 @@ public class GameManager : MonoBehaviour
 			//TODO: consumimos gemas
 
 		}
-		updatePiecesLightAndUpdateLetterState ();
 
 		allowGameInput(true);
 	}
@@ -1207,7 +1208,8 @@ public class GameManager : MonoBehaviour
 			ScreenManager.instance.GoToScene ("Levels");
 			break;
 		default:		
-				Invoke ("allowInputFromInvoke", 0.5f);
+			print ("quien lo llama?");
+				Invoke ("allowInputFromInvoke", 0);
 			break;
 		}
 	}

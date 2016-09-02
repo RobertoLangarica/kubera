@@ -161,589 +161,11 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: fondo-K-Mapa1-17
-      rect:
-        serializedVersion: 2
-        x: 787
-        y: 1061
-        width: 53
-        height: 50
-      alignment: 9
-      pivot: {x: 0.49056605, y: 0.56}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 8, y: -24}
-        - {x: 17, y: -20}
-        - {x: 27, y: -10}
-        - {x: 27, y: 14}
-        - {x: 24, y: 22}
-        - {x: 7, y: 22}
-        - {x: -26, y: 11}
-        - {x: -26, y: -28}
-        - {x: -17, y: -28}
-        - {x: -12, y: -23}
-        - {x: -13, y: -13}
-        - {x: -4, y: -20}
-    - name: fondo-K-Mapa1_bolitaparallax
-      rect:
-        serializedVersion: 2
-        x: 265
-        y: 8
-        width: 8
-        height: 7
-      alignment: 9
-      pivot: {x: 0.4375, y: 0.5714286}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: fondo-K-Mapa1_Estrallasdeco
-      rect:
-        serializedVersion: 2
-        x: 1018
-        y: 3
-        width: 72
-        height: 71
-      alignment: 9
-      pivot: {x: 0.47916666, y: 0.57746476}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -21.5, y: 30.000004}
-        - {x: -34.5, y: 23.000004}
-        - {x: -34.5, y: -7.999996}
-        - {x: -31.5, y: -17.999996}
-        - {x: -11.5, y: -40.999996}
-        - {x: 14.5, y: -40.999996}
-        - {x: 36.5, y: -33.999996}
-        - {x: 37.5, y: -28.999996}
-        - {x: 37.5, y: 22.000004}
-        - {x: 21.5, y: 30.000004}
-    - name: fondo-K-Mapa1_Luz1
-      rect:
-        serializedVersion: 2
-        x: 1377
-        y: 189
-        width: 338
-        height: 252
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -169, y: -126}
-        - {x: -61, y: -126}
-        - {x: 169, y: 122}
-        - {x: 169, y: 126}
-        - {x: 147, y: 126}
-        - {x: -169, y: -74}
-    - name: 'fondo-K-Mapa1_Luz2 '
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 48
-        width: 274
-        height: 321
-      alignment: 9
-      pivot: {x: 0.790146, y: 0.758567}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 53.5, y: -9.5}
-        - {x: 57.5, y: 0.5}
-        - {x: 57.5, y: 7.5}
-        - {x: 37.5, y: 17.5}
-        - {x: -57.5, y: 61.5}
-        - {x: -94.5, y: 77.5}
-        - {x: -102.5, y: 77.5}
-        - {x: -103.5, y: 76.5}
-        - {x: -121.5, y: 29.5}
-        - {x: -163.5, y: -90.5}
-        - {x: -186.5, y: -153.5}
-        - {x: -194.5, y: -176.5}
-        - {x: -216.5, y: -237.5}
-        - {x: -216.5, y: -243.5}
-        - {x: -90.5, y: -243.5}
-        - {x: -89.5, y: -242.5}
-        - {x: -51.5, y: -180.5}
-        - {x: 26.5, y: -52.5}
-    - name: fondo-K-Mapa1_Luz3h
-      rect:
-        serializedVersion: 2
-        x: 792
-        y: 76
-        width: 152
-        height: 297
-      alignment: 9
-      pivot: {x: 1.3157895, y: 0.06397306}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -198, y: 227}
-        - {x: -200, y: 226}
-        - {x: -200, y: -14}
-        - {x: -198, y: -19}
-        - {x: -119, y: -19}
-        - {x: -78, y: -10}
-        - {x: -78, y: 71}
-        - {x: -148, y: 227}
-      - - {x: -188, y: 268}
-        - {x: -196, y: 278}
-        - {x: -200, y: 278}
-        - {x: -200, y: 245}
-        - {x: -88, y: 68}
-        - {x: -72, y: 44}
-        - {x: -63, y: 44}
-        - {x: -48, y: 50}
-        - {x: -48, y: 60}
-        - {x: -49, y: 64}
-    - name: fondo-K-Mapa1_Luz4
-      rect:
-        serializedVersion: 2
-        x: 950
-        y: 151
-        width: 165
-        height: 235
-      alignment: 9
-      pivot: {x: 0.8575758, y: 0.21702127}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -60.5, y: -45}
-        - {x: -51.5, y: -51}
-        - {x: -40.5, y: -51}
-        - {x: 23.5, y: -15}
-        - {x: 23.5, y: 28}
-        - {x: -84.5, y: 184}
-        - {x: -141.5, y: 184}
-        - {x: -141.5, y: 140}
-    - name: fondo-K-Mapa1_Luz5
-      rect:
-        serializedVersion: 2
-        x: 326
-        y: 46
-        width: 180
-        height: 323
-      alignment: 9
-      pivot: {x: 0.13333334, y: 0.7879257}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 120, y: 68.5}
-        - {x: 108, y: 68.5}
-        - {x: -24, y: 6.5}
-        - {x: -24, y: -1.5}
-        - {x: -19, y: -12.5}
-        - {x: 31, y: -91.5}
-        - {x: 132, y: -253.5}
-        - {x: 134, y: -254.5}
-        - {x: 156, y: -254.5}
-        - {x: 156, y: -46.5}
-        - {x: 153, y: -31.5}
-    - name: fondo-K-Mapa1_Luz6
-      rect:
-        serializedVersion: 2
-        x: 519
-        y: 1358
-        width: 133
-        height: 292
-      alignment: 9
-      pivot: {x: -0.47368422, y: -0.14383562}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 63, y: 66}
-        - {x: 63, y: 47}
-        - {x: 87, y: 42}
-        - {x: 132, y: 42}
-        - {x: 196, y: 282}
-        - {x: 196, y: 334}
-        - {x: 193, y: 334}
-        - {x: 190, y: 331}
-    - name: fondo-K-Mapa1_Miniestrella
-      rect:
-        serializedVersion: 2
-        x: 197
-        y: 1
-        width: 15
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: fondo-K-Mapa1_nota1
-      rect:
-        serializedVersion: 2
-        x: 1959
-        y: 1408
-        width: 86
-        height: 117
-      alignment: 9
-      pivot: {x: 0.4883721, y: 0.53846157}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 14, y: 54}
-        - {x: -40, y: 14}
-        - {x: -42, y: 4}
-        - {x: -42, y: -63}
-        - {x: 15, y: -63}
-        - {x: 44, y: -13}
-        - {x: 44, y: 54}
-    - name: fondo-K-Mapa1_nota2
-      rect:
-        serializedVersion: 2
-        x: 913
-        y: 805
-        width: 68
-        height: 59
-      alignment: 9
-      pivot: {x: 0.4852941, y: 0.4915254}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 32, y: 30}
-        - {x: 1, y: 30}
-        - {x: -33, y: 21}
-        - {x: -33, y: -29}
-        - {x: -3, y: -29}
-        - {x: 8, y: -27}
-        - {x: 35, y: -11}
-        - {x: 35, y: 17}
-        - {x: 34, y: 23}
-    - name: fondo-K-Mapa1_nota3
-      rect:
-        serializedVersion: 2
-        x: 1090
-        y: 81
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.53125}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 4, y: 30}
-        - {x: -25, y: 30}
-        - {x: -32, y: 28}
-        - {x: -32, y: 0}
-        - {x: -25, y: -4}
-        - {x: -16, y: -31}
-        - {x: -12, y: -34}
-        - {x: 19, y: -34}
-        - {x: 32, y: -25}
-        - {x: 32, y: -1}
-        - {x: 27, y: 11}
-    - name: fondo-K-Mapa1_nota5
-      rect:
-        serializedVersion: 2
-        x: 846
-        y: 1062
-        width: 77
-        height: 49
-      alignment: 9
-      pivot: {x: 0.4935065, y: 0.56122446}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 30, y: 21.5}
-        - {x: 25, y: 17.5}
-        - {x: 12, y: 17.5}
-        - {x: 4, y: 11.5}
-        - {x: 5, y: 2.5}
-        - {x: 2, y: 4.5}
-        - {x: -14, y: 14.5}
-        - {x: -38, y: 3.5}
-        - {x: -38, y: -27.5}
-        - {x: -8, y: -27.5}
-        - {x: 39, y: -9.5}
-        - {x: 39, y: 21.5}
-    - name: fondo-K-Mapa1_nota6
-      rect:
-        serializedVersion: 2
-        x: 800
-        y: 381
-        width: 22
-        height: 19
-      alignment: 9
-      pivot: {x: 0.6818182, y: 0.28947368}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: fondo-K-Mapa1_nota7
-      rect:
-        serializedVersion: 2
-        x: 785
-        y: 379
-        width: 9
-        height: 21
-      alignment: 9
-      pivot: {x: 0.44444445, y: 0.6666667}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: fondo-K-Mapa1_nota8
-      rect:
-        serializedVersion: 2
-        x: 760
-        y: 377
-        width: 19
-        height: 23
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5652174}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: fondo-K-Mapa1_nota9
-      rect:
-        serializedVersion: 2
-        x: 326
-        y: 7
-        width: 25
-        height: 33
-      alignment: 9
-      pivot: {x: 0.66, y: 0.6363636}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: fondo-K-Mapa1_partitura
-      rect:
-        serializedVersion: 2
-        x: 1110
-        y: 1390
-        width: 288
-        height: 182
-      alignment: 9
-      pivot: {x: 0.5, y: 0.42307693}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 94, y: 2}
-        - {x: 144, y: 21}
-        - {x: 144, y: 27}
-        - {x: 116, y: 26}
-        - {x: 103, y: 22}
-        - {x: 93, y: 15}
-        - {x: 144, y: 51}
-        - {x: 144, y: 57}
-        - {x: 138, y: 57}
-        - {x: 127, y: 55}
-        - {x: 114, y: 52}
-        - {x: 102, y: 45}
-        - {x: 144, y: 79}
-        - {x: 144, y: 87}
-        - {x: 134, y: 86}
-        - {x: 122, y: 80}
-        - {x: 108, y: 75}
-        - {x: 106, y: 71}
-        - {x: 123, y: 91}
-        - {x: 144, y: 100}
-        - {x: 144, y: 105}
-        - {x: 110, y: 105}
-        - {x: -144, y: -53}
-        - {x: -144, y: -59}
-        - {x: -132, y: -59}
-        - {x: -125, y: -58}
-        - {x: -124, y: -57}
-        - {x: -120, y: -57}
-        - {x: -119, y: -56}
-        - {x: -116, y: -56}
-        - {x: -115, y: -55}
-        - {x: -112, y: -55}
-        - {x: -111, y: -54}
-        - {x: -103, y: -52}
-        - {x: -90, y: -46}
-        - {x: -89, y: -44}
-        - {x: -88, y: -44}
-        - {x: -85, y: -42}
-        - {x: -81, y: -40}
-        - {x: -60, y: -24}
-        - {x: -54, y: -20}
-        - {x: -70, y: -31}
-        - {x: -85, y: -43}
-        - {x: -89, y: -44}
-        - {x: -91, y: -46}
-        - {x: -102, y: -52}
-        - {x: -104, y: -52}
-        - {x: -107, y: -53}
-        - {x: -108, y: -54}
-        - {x: -110, y: -54}
-        - {x: -114, y: -56}
-        - {x: -122, y: -57}
-        - {x: -123, y: -58}
-        - {x: -144, y: -60}
-        - {x: -144, y: -71}
-        - {x: -128, y: -71}
-        - {x: -120, y: -70}
-        - {x: -144, y: -72}
-        - {x: -144, y: -77}
-        - {x: -54, y: -77}
-        - {x: 70, y: -56}
-        - {x: 144, y: 1}
-        - {x: 144, y: 7}
-        - {x: 123, y: 8}
-    - name: K-Mapa1_arpa
-      rect:
-        serializedVersion: 2
-        x: 1851
-        y: 1215
-        width: 82
-        height: 145
-      alignment: 9
-      pivot: {x: 0.4695122, y: 0.5275862}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -3.5, y: 68.5}
-        - {x: -37.5, y: 68.5}
-        - {x: -38.5, y: 33.5}
-        - {x: -38.5, y: -76.5}
-        - {x: 8.5, y: -76.5}
-        - {x: 43.5, y: 11.5}
-        - {x: 43.5, y: 29.5}
-        - {x: 40.5, y: 36.5}
-    - name: K-Mapa1_bocina
-      rect:
-        serializedVersion: 2
-        x: 1953
-        y: 1306
-        width: 91
-        height: 96
-      alignment: 9
-      pivot: {x: 0.47252747, y: 0.5572917}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 25, y: 42.5}
-        - {x: -37, y: 42.5}
-        - {x: -40, y: 38.5}
-        - {x: -43, y: -22.5}
-        - {x: -43, y: -52.5}
-        - {x: -42, y: -53.5}
-        - {x: 41, y: -53.5}
-        - {x: 48, y: -49.5}
-        - {x: 48, y: -2.5}
-        - {x: 37, y: 40.5}
-    - name: K-Mapa1_CD
-      rect:
-        serializedVersion: 2
-        x: 1318
-        y: 1662
-        width: 59
-        height: 101
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5445545}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 3.5, y: -4}
-        - {x: 2.5, y: -5}
-        - {x: -1.5, y: -17}
-        - {x: 13.5, y: -25}
-        - {x: 16.5, y: -24}
-        - {x: 14.5, y: -45}
-        - {x: -8.5, y: -21}
-        - {x: -20.5, y: -25}
-        - {x: -20.5, y: -43}
-        - {x: -10.5, y: -55}
-        - {x: 21.5, y: -55}
-        - {x: 29.5, y: -51}
-        - {x: 29.5, y: -18}
-        - {x: 16.5, y: -4}
-      - - {x: -24.5, y: 46}
-        - {x: -29.5, y: 39}
-        - {x: -29.5, y: 9}
-        - {x: -16.5, y: 1}
-        - {x: 5.5, y: 1}
-        - {x: 15.5, y: 12}
-        - {x: 15.5, y: 43}
-        - {x: 6.5, y: 46}
-    - name: K-Mapa1_columna
-      rect:
-        serializedVersion: 2
-        x: 197
-        y: 21
-        width: 123
-        height: 344
-      alignment: 9
-      pivot: {x: 0.5081301, y: 0.51744187}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 60.5, y: 166}
-        - {x: -62.5, y: 166}
-        - {x: -62.5, y: 150}
-        - {x: -61.5, y: 149}
-        - {x: -42.5, y: 149}
-        - {x: -42.5, y: -178}
-        - {x: 40.5, y: -178}
-        - {x: 40.5, y: 149}
-        - {x: 59.5, y: 149}
-        - {x: 60.5, y: 150}
-    - name: K-Mapa1_guitarra
-      rect:
-        serializedVersion: 2
-        x: 1939
-        y: 1118
-        width: 72
-        height: 182
-      alignment: 9
-      pivot: {x: 0.5, y: 0.4945055}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 8, y: 92}
-        - {x: -15, y: 92}
-        - {x: -36, y: 81}
-        - {x: -36, y: -90}
-        - {x: 34, y: -90}
-        - {x: 36, y: -86}
-        - {x: 36, y: 10}
-        - {x: 20, y: 82}
-    - name: K-Mapa1_piano
-      rect:
-        serializedVersion: 2
-        x: 787
-        y: 1163
-        width: 132
-        height: 130
-      alignment: 9
-      pivot: {x: 0.47348484, y: 0.5576923}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 69.5, y: -56.5}
-        - {x: 69.5, y: 36.5}
-        - {x: 63.5, y: 57.5}
-        - {x: -4.5, y: 57.5}
-        - {x: -62.5, y: 9.5}
-        - {x: -62.5, y: -72.5}
-        - {x: 17.5, y: -72.5}
-        - {x: 20.5, y: -71.5}
-        - {x: 24.5, y: -72.5}
-        - {x: 60.5, y: -72.5}
-    - name: K-Mapa1_PlataformaChica
-      rect:
-        serializedVersion: 2
-        x: 574
-        y: 377
-        width: 180
-        height: 23
-      alignment: 9
-      pivot: {x: 0.50277776, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: K-Mapa1_PllataformaGrande
-      rect:
-        serializedVersion: 2
-        x: 383
-        y: 17
-        width: 252
-        height: 23
-      alignment: 9
-      pivot: {x: 0.49603173, y: 0.54347825}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: K-Mapa1_Tambor
-      rect:
-        serializedVersion: 2
-        x: 1383
-        y: 1693
-        width: 53
-        height: 70
-      alignment: 9
-      pivot: {x: 0.509434, y: 0.5642857}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 26, y: -34.5}
-        - {x: 26, y: 30.5}
-        - {x: -27, y: 30.5}
-        - {x: -27, y: -39.5}
-        - {x: -18, y: -39.5}
-        - {x: -16, y: -36.5}
-        - {x: -5, y: -39.5}
-        - {x: 24, y: -39.5}
     - name: K-Mapa_1caminoAzul
       rect:
         serializedVersion: 2
-        x: 1907
-        y: 313
+        x: 1975
+        y: 1820
         width: 67
         height: 227
       alignment: 9
@@ -760,7 +182,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 934
-        y: 1055
+        y: 566
         width: 77
         height: 239
       alignment: 9
@@ -778,8 +200,8 @@ TextureImporter:
     - name: K-Mapa_2caminoAzul
       rect:
         serializedVersion: 2
-        x: 1143
-        y: 291
+        x: 1801
+        y: 1086
         width: 228
         height: 268
       alignment: 9
@@ -797,8 +219,8 @@ TextureImporter:
     - name: K-Mapa_2caminoBlanco
       rect:
         serializedVersion: 2
-        x: 866
-        y: 1370
+        x: 405
+        y: 89
         width: 238
         height: 280
       alignment: 9
@@ -819,8 +241,8 @@ TextureImporter:
     - name: K-Mapa_3caminoAzul
       rect:
         serializedVersion: 2
-        x: 1399
-        y: 974
+        x: 1406
+        y: 1263
         width: 389
         height: 267
       alignment: 9
@@ -845,7 +267,7 @@ TextureImporter:
     - name: K-Mapa_3caminoBlanco
       rect:
         serializedVersion: 2
-        x: 1038
+        x: 519
         y: 1769
         width: 400
         height: 278
@@ -872,8 +294,8 @@ TextureImporter:
     - name: K-Mapa_base-escalera
       rect:
         serializedVersion: 2
-        x: 1149
-        y: 801
+        x: 1801
+        y: 1360
         width: 239
         height: 98
       alignment: 9
@@ -889,8 +311,8 @@ TextureImporter:
     - name: K-Mapa_bloqued
       rect:
         serializedVersion: 2
-        x: 1851
-        y: 1366
+        x: 787
+        y: 923
         width: 96
         height: 99
       alignment: 0
@@ -909,8 +331,8 @@ TextureImporter:
     - name: K-Mapa_bossbloqued
       rect:
         serializedVersion: 2
-        x: 1930
-        y: 950
+        x: 1285
+        y: 1596
         width: 115
         height: 162
       alignment: 9
@@ -927,8 +349,8 @@ TextureImporter:
     - name: K-Mapa_bossplay
       rect:
         serializedVersion: 2
-        x: 1907
-        y: 782
+        x: 1925
+        y: 1582
         width: 114
         height: 162
       alignment: 9
@@ -950,8 +372,8 @@ TextureImporter:
     - name: K-Mapa_bosswin
       rect:
         serializedVersion: 2
-        x: 1786
-        y: 783
+        x: 1285
+        y: 1428
         width: 115
         height: 162
       alignment: 9
@@ -970,8 +392,8 @@ TextureImporter:
     - name: K-Mapa_brilloAvatar
       rect:
         serializedVersion: 2
-        x: 218
-        y: 8
+        x: 574
+        y: 393
         width: 41
         height: 7
       alignment: 9
@@ -981,8 +403,8 @@ TextureImporter:
     - name: K-Mapa_escalera
       rect:
         serializedVersion: 2
-        x: 641
-        y: 2
+        x: 836
+        y: 1093
         width: 300
         height: 40
       alignment: 9
@@ -999,8 +421,8 @@ TextureImporter:
     - name: K-Mapa_MarcoAvatardorado
       rect:
         serializedVersion: 2
-        x: 519
-        y: 1295
+        x: 1220
+        y: 1336
         width: 57
         height: 57
       alignment: 0
@@ -1019,8 +441,8 @@ TextureImporter:
     - name: K-Mapa_MarcoAvatargris
       rect:
         serializedVersion: 2
-        x: 582
-        y: 1295
+        x: 1346
+        y: 1093
         width: 57
         height: 57
       alignment: 0
@@ -1038,8 +460,8 @@ TextureImporter:
     - name: K-Mapa_play
       rect:
         serializedVersion: 2
-        x: 1213
-        y: 1661
+        x: 1281
+        y: 1156
         width: 99
         height: 102
       alignment: 9
@@ -1058,8 +480,8 @@ TextureImporter:
     - name: K-Mapa_Puertas
       rect:
         serializedVersion: 2
-        x: 1149
-        y: 905
+        x: 519
+        y: 1500
         width: 244
         height: 146
       alignment: 9
@@ -1170,8 +592,8 @@ TextureImporter:
     - name: K-Mapa_stargray
       rect:
         serializedVersion: 2
-        x: 1794
-        y: 1198
+        x: 1925
+        y: 1750
         width: 43
         height: 43
       alignment: 0
@@ -1188,8 +610,8 @@ TextureImporter:
     - name: K-Mapa_starwin
       rect:
         serializedVersion: 2
-        x: 1017
-        y: 1115
+        x: 787
+        y: 1091
         width: 43
         height: 42
       alignment: 9
@@ -1207,8 +629,8 @@ TextureImporter:
     - name: K-MapaGeneral-31
       rect:
         serializedVersion: 2
-        x: 1399
-        y: 887
+        x: 500
+        y: 2
         width: 381
         height: 81
       alignment: 9
@@ -1310,8 +732,8 @@ TextureImporter:
     - name: K-MapaGeneral_3caminoFondo
       rect:
         serializedVersion: 2
-        x: 519
-        y: 1656
+        x: 887
+        y: 9
         width: 513
         height: 391
       alignment: 9
@@ -1365,8 +787,8 @@ TextureImporter:
     - name: K-MapaGeneral_HUDbaseAbajo
       rect:
         serializedVersion: 2
-        x: 1018
-        y: 1282
+        x: 408
+        y: 1
         width: 86
         height: 82
       alignment: 9
@@ -1382,8 +804,8 @@ TextureImporter:
     - name: K-MapaGeneral_HUDbaseGem-Cor
       rect:
         serializedVersion: 2
-        x: 787
-        y: 1117
+        x: 1281
+        y: 1264
         width: 111
         height: 40
       alignment: 9
@@ -1401,8 +823,8 @@ TextureImporter:
     - name: K-MapaGeneral_HUDgemas
       rect:
         serializedVersion: 2
-        x: 1963
-        y: 1620
+        x: 1370
+        y: 997
         width: 84
         height: 83
       alignment: 9
@@ -1420,8 +842,8 @@ TextureImporter:
     - name: K-MapaGeneral_HUDvidas
       rect:
         serializedVersion: 2
-        x: 1963
-        y: 1531
+        x: 1409
+        y: 1095
         width: 83
         height: 83
       alignment: 9
@@ -1439,8 +861,8 @@ TextureImporter:
     - name: K-MapaGeneral_HUDvidas_barandal-escalera
       rect:
         serializedVersion: 2
-        x: 1794
-        y: 1077
+        x: 787
+        y: 1648
         width: 130
         height: 115
       alignment: 9
@@ -1457,8 +879,8 @@ TextureImporter:
     - name: K-MapaGeneral_HUDvidas_base-escalera2
       rect:
         serializedVersion: 2
-        x: 1121
-        y: 171
+        x: 1202
+        y: 966
         width: 162
         height: 114
       alignment: 0
@@ -1474,8 +896,8 @@ TextureImporter:
     - name: K-MapaGeneral_interaccionFB
       rect:
         serializedVersion: 2
-        x: 950
-        y: 80
+        x: 268
+        y: 7
         width: 64
         height: 65
       alignment: 0
@@ -1494,8 +916,8 @@ TextureImporter:
     - name: K-MapaGeneral_Navegacion
       rect:
         serializedVersion: 2
-        x: 947
-        y: 5
+        x: 197
+        y: 7
         width: 65
         height: 65
       alignment: 0
@@ -1513,8 +935,8 @@ TextureImporter:
     - name: K-MapaGeneral_settings
       rect:
         serializedVersion: 2
-        x: 1020
-        y: 81
+        x: 338
+        y: 8
         width: 64
         height: 64
       alignment: 9
@@ -1532,8 +954,8 @@ TextureImporter:
     - name: K-menus_baseCuadrada
       rect:
         serializedVersion: 2
-        x: 1404
-        y: 1343
+        x: 934
+        y: 1860
         width: 441
         height: 187
       alignment: 9
@@ -1559,8 +981,8 @@ TextureImporter:
     - name: K-menus_BTNMusica
       rect:
         serializedVersion: 2
-        x: 934
-        y: 585
+        x: 1017
+        y: 591
         width: 209
         height: 214
       alignment: 9
@@ -1586,8 +1008,8 @@ TextureImporter:
     - name: K-menus_corazon
       rect:
         serializedVersion: 2
-        x: 1794
-        y: 951
+        x: 787
+        y: 1189
         width: 123
         height: 120
       alignment: 9
@@ -1605,8 +1027,8 @@ TextureImporter:
     - name: K-menus_flecha
       rect:
         serializedVersion: 2
-        x: 357
-        y: 8
+        x: 1375
+        y: 1822
         width: 20
         height: 32
       alignment: 9
@@ -1616,8 +1038,8 @@ TextureImporter:
     - name: K-menus_grisBolsa_atras
       rect:
         serializedVersion: 2
-        x: 1017
-        y: 1057
+        x: 519
+        y: 1652
         width: 256
         height: 52
       alignment: 9
@@ -1682,8 +1104,8 @@ TextureImporter:
     - name: K-menus_llave
       rect:
         serializedVersion: 2
-        x: 1247
-        y: 15
+        x: 934
+        y: 410
         width: 142
         height: 150
       alignment: 9
@@ -1702,8 +1124,8 @@ TextureImporter:
     - name: K-menus_Musicabolsa_atras
       rect:
         serializedVersion: 2
-        x: 645
-        y: 1299
+        x: 519
+        y: 1710
         width: 256
         height: 53
       alignment: 9
@@ -1765,8 +1187,8 @@ TextureImporter:
     - name: K-menus_nube1
       rect:
         serializedVersion: 2
-        x: 1038
-        y: 1657
+        x: 1232
+        y: 735
         width: 169
         height: 106
       alignment: 9
@@ -1783,7 +1205,7 @@ TextureImporter:
     - name: K-menus_nube2
       rect:
         serializedVersion: 2
-        x: 1851
+        x: 1801
         y: 1471
         width: 102
         height: 59
@@ -1803,8 +1225,8 @@ TextureImporter:
     - name: K-menus_nube3
       rect:
         serializedVersion: 2
-        x: 1096
-        y: 1
+        x: 649
+        y: 90
         width: 145
         height: 74
       alignment: 9
@@ -1903,8 +1325,8 @@ TextureImporter:
     - name: K-menus_tag
       rect:
         serializedVersion: 2
-        x: 934
-        y: 392
+        x: 519
+        y: 1307
         width: 203
         height: 187
       alignment: 9
@@ -1922,8 +1344,8 @@ TextureImporter:
     - name: K-popups-pq_adornoBoss
       rect:
         serializedVersion: 2
-        x: 658
-        y: 1363
+        x: 197
+        y: 78
         width: 202
         height: 287
       alignment: 9
@@ -1949,8 +1371,8 @@ TextureImporter:
     - name: K-popups-pq_baseGris
       rect:
         serializedVersion: 2
-        x: 1399
-        y: 1247
+        x: 934
+        y: 1764
         width: 435
         height: 90
       alignment: 9
@@ -1974,8 +1396,8 @@ TextureImporter:
     - name: K-popups-pq_btnAzul
       rect:
         serializedVersion: 2
-        x: 1149
-        y: 722
+        x: 649
+        y: 327
         width: 230
         height: 73
       alignment: 9
@@ -1992,8 +1414,8 @@ TextureImporter:
     - name: K-popups-pq_btnRojo
       rect:
         serializedVersion: 2
-        x: 1149
-        y: 565
+        x: 649
+        y: 170
         width: 230
         height: 72
       alignment: 9
@@ -2008,8 +1430,8 @@ TextureImporter:
     - name: K-popups-pq_btnVerde
       rect:
         serializedVersion: 2
-        x: 1149
-        y: 643
+        x: 649
+        y: 248
         width: 230
         height: 73
       alignment: 9
@@ -2025,8 +1447,8 @@ TextureImporter:
     - name: K-popups-pq_candado
       rect:
         serializedVersion: 2
-        x: 1017
-        y: 1163
+        x: 1202
+        y: 847
         width: 85
         height: 113
       alignment: 9
@@ -2051,8 +1473,8 @@ TextureImporter:
     - name: K-popups-pq_gemaLibre
       rect:
         serializedVersion: 2
-        x: 950
-        y: 1300
+        x: 1975
+        y: 1750
         width: 62
         height: 64
       alignment: 9
@@ -2118,8 +1540,8 @@ TextureImporter:
     - name: K-popUps_Avatar1
       rect:
         serializedVersion: 2
-        x: 987
-        y: 805
+        x: 836
+        y: 1028
         width: 59
         height: 59
       alignment: 9
@@ -2136,8 +1558,8 @@ TextureImporter:
     - name: K-popUps_Avatar2
       rect:
         serializedVersion: 2
-        x: 1052
-        y: 805
+        x: 1090
+        y: 1334
         width: 59
         height: 59
       alignment: 9
@@ -2152,8 +1574,8 @@ TextureImporter:
     - name: K-popUps_Avatar3
       rect:
         serializedVersion: 2
-        x: 1289
-        y: 226
+        x: 1155
+        y: 1334
         width: 59
         height: 59
       alignment: 9
@@ -2170,8 +1592,8 @@ TextureImporter:
     - name: K-popUps_Avatar4
       rect:
         serializedVersion: 2
-        x: 1980
-        y: 481
+        x: 1281
+        y: 1091
         width: 59
         height: 59
       alignment: 9
@@ -2188,7 +1610,7 @@ TextureImporter:
     - name: K-popUps_baseGrande
       rect:
         serializedVersion: 2
-        x: 1444
+        x: 1406
         y: 1536
         width: 513
         height: 257
@@ -2241,8 +1663,8 @@ TextureImporter:
     - name: K-popUps_close
       rect:
         serializedVersion: 2
-        x: 1160
-        y: 101
+        x: 800
+        y: 100
         width: 63
         height: 64
       alignment: 9
@@ -2260,8 +1682,8 @@ TextureImporter:
     - name: K-popUps_corazonRoto
       rect:
         serializedVersion: 2
-        x: 1110
-        y: 1115
+        x: 913
+        y: 811
         width: 283
         height: 269
       alignment: 9
@@ -2298,8 +1720,8 @@ TextureImporter:
     - name: K-popUps_grayStar
       rect:
         serializedVersion: 2
-        x: 1756
-        y: 638
+        x: 769
+        y: 1503
         width: 145
         height: 139
       alignment: 0
@@ -2320,8 +1742,8 @@ TextureImporter:
     - name: K-popUps_level
       rect:
         serializedVersion: 2
-        x: 1385
-        y: 447
+        x: 934
+        y: 1139
         width: 341
         height: 170
       alignment: 9
@@ -2350,8 +1772,8 @@ TextureImporter:
     - name: K-popUps_monito
       rect:
         serializedVersion: 2
-        x: 1907
-        y: 546
+        x: 1284
+        y: 1310
         width: 112
         height: 112
       alignment: 9
@@ -2365,8 +1787,8 @@ TextureImporter:
     - name: K-popUps_monito2
       rect:
         serializedVersion: 2
-        x: 1907
-        y: 664
+        x: 1925
+        y: 1464
         width: 113
         height: 112
       alignment: 9
@@ -2382,8 +1804,8 @@ TextureImporter:
     - name: K-popUps_objetiveBase
       rect:
         serializedVersion: 2
-        x: 787
-        y: 870
+        x: 728
+        y: 1315
         width: 356
         height: 179
       alignment: 9
@@ -2414,8 +1836,8 @@ TextureImporter:
     - name: K-popUps_playBTN
       rect:
         serializedVersion: 2
-        x: 1395
-        y: 88
+        x: 1090
+        y: 1399
         width: 188
         height: 95
       alignment: 9
@@ -2429,7 +1851,7 @@ TextureImporter:
     - name: K-popUps_roof
       rect:
         serializedVersion: 2
-        x: 1444
+        x: 1406
         y: 1921
         width: 563
         height: 126
@@ -2464,7 +1886,7 @@ TextureImporter:
     - name: K-popUps_rug
       rect:
         serializedVersion: 2
-        x: 1444
+        x: 1406
         y: 1799
         width: 563
         height: 116
@@ -2501,8 +1923,8 @@ TextureImporter:
     - name: K-popUps_socialBasepick
       rect:
         serializedVersion: 2
-        x: 1963
-        y: 1709
+        x: 1293
+        y: 876
         width: 84
         height: 84
       alignment: 0
@@ -2518,8 +1940,8 @@ TextureImporter:
     - name: K-popUps_socialBTN
       rect:
         serializedVersion: 2
-        x: 1110
-        y: 1578
+        x: 1406
+        y: 1184
         width: 327
         height: 73
       alignment: 9
@@ -2538,8 +1960,8 @@ TextureImporter:
     - name: K-popUps_stars-base
       rect:
         serializedVersion: 2
-        x: 1394
-        y: 623
+        x: 923
+        y: 1500
         width: 356
         height: 258
       alignment: 9
@@ -2569,8 +1991,8 @@ TextureImporter:
     - name: K-popUps_winStar
       rect:
         serializedVersion: 2
-        x: 1756
-        y: 493
+        x: 1082
+        y: 446
         width: 145
         height: 139
       alignment: 0
