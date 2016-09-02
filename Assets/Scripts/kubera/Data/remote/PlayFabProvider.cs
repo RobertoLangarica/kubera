@@ -131,7 +131,6 @@ namespace Kubera.Data.Remote
 
 				foreach (string key in request.data.data.Data.Keys)
 				{
-					Debug.Log(key);
 					if(key.Contains("world_"))
 					{
 						string world = MiniJSON.Json.Serialize(((Dictionary<string, object>)request.data.data.Data[key])["Value"]);
@@ -146,7 +145,7 @@ namespace Kubera.Data.Remote
 
 		public override void updateUserData<KuberaUser> (string id, string jsonData, KuberaUser objectToSave)
 		{
-			PFUpdateDataRequest<KuberaUser> request = queue.getComponentAttachedToGameObject<PFUpdateDataRequest<KuberaUser>>("PF_UpdateUserData");
+			PFUpdateDataRequest request = queue.getComponentAttachedToGameObject<PFUpdateDataRequest>("PF_UpdateUserData");
 			request.id = "update_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
 			request.persistAfterFailed = true;
 			request.initialize(TITLE_ID,jsonData, sessionTicket, objectToSave);
@@ -159,10 +158,10 @@ namespace Kubera.Data.Remote
 		{
 			if(OnDataUpdated != null)
 			{
-				PFUpdateDataRequest<KuberaUser> request = (PFUpdateDataRequest<KuberaUser>)getRequestById(request_id);
+				PFUpdateDataRequest request = (PFUpdateDataRequest)getRequestById(request_id);
 
 				//Para que se desmarquen como sucios los datos locales hacemos un diff
-				KuberaUser remoteUser = request.dataSended;
+				KuberaUser remoteUser = request.dataSended as KuberaUser;
 				remoteUser.id = loginRequest.data.data.PlayFabId;
 				remoteUser.PlayFab_dataVersion = request.data.data.FunctionResult.DataVersion;
 

@@ -103,7 +103,6 @@ namespace Kubera.Data.Sync
 				{
 					Debug.Log("Subiendo datos sucios del usuario.");
 				}
-				Debug.Log("Update interno");
 				updateData(localData.getUserDirtyData());
 			}
 		}
@@ -115,7 +114,6 @@ namespace Kubera.Data.Sync
 		{
 			if(_mustShowDebugInfo)
 			{
-				Debug.Log("To update:");
 				Debug.Log(userToPlayFabJSON(dirtyUser));
 			}
 
@@ -150,7 +148,6 @@ namespace Kubera.Data.Sync
 				{
 					Debug.Log("Subiendo datos sucios del usuario.");
 				}
-				Debug.Log("Update interno");
 				updateData(localData.getUserDirtyData());
 			}
 		}

@@ -8,6 +8,11 @@ namespace Kubera.Data.Remote.PFResponseData
 	public class PFAfterUpdateData:PFCloudDataBase
 	{
 		public PFAfterUpdateResultObject FunctionResult;
+
+		public override bool hasError ()
+		{
+			return base.hasError() || FunctionResult.error;
+		}
 	}
 
 	//Este es el struct que hay que modificar para cada respuesta de funcion
@@ -15,5 +20,6 @@ namespace Kubera.Data.Remote.PFResponseData
 	public class PFAfterUpdateResultObject
 	{
 		public int	DataVersion;
+		public bool error;
 	}
 }

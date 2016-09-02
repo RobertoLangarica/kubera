@@ -45,7 +45,6 @@ namespace Kubera.Data
 			}
 			else
 			{
-				Debug.Log("Level null:");
 				level = new LevelData(levelName);
 				level.points	= points;
 				level.stars		= stars;
@@ -71,7 +70,6 @@ namespace Kubera.Data
 				worldToSend.addLevel(level);
 				user.addWorld(worldToSend);
 
-				Debug.Log("Nivel pasado");
 				syncManager.updateData(user);	
 			}
 		}
@@ -423,9 +421,7 @@ namespace Kubera.Data
 
 		public string getCSVKeysToQuery()
 		{
-			//string result = "id,facebookId,version,DataVersion";
 			string result = "version,DataVersion";
-			//string result = "DataVersion";
 
 			//Mundos
 			foreach (int key in levelsList.worlds.Keys)

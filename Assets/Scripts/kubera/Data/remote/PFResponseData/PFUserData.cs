@@ -29,40 +29,4 @@ namespace Kubera.Data.Remote.PFResponseData
 		[NonSerialized]public Dictionary<string,object> Data;
 		public int	DataVersion;
 	}
-
-	[Serializable]
-	public class PFUser
-	{
-		public PFLevelsData levels;
-		public PFVersionData version;
-
-		public PFUser()
-		{
-			levels = new PFLevelsData();
-			version = new PFVersionData();
-		}
-	}
-
-	[Serializable]
-	public class PFLevelsData
-	{
-		public List<LevelData> Value;
-		public string LastUpdated;
-		public string Permission;
-
-		public PFLevelsData()
-		{
-			Value = new List<LevelData>();
-		}
-	}
-
-
-	[Serializable]
-	public class PFVersionData
-	{
-		public int Value;
-		public string LastUpdated;
-		public string Permission;
-	}
-
 }
