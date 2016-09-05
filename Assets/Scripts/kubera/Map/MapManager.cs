@@ -348,7 +348,6 @@ public class MapManager : MonoBehaviour
 
 	protected void OnLevelUnlockedPressed(MapLevel pressed)
 	{
-		print ("OnLevelUnlockedPressed");
 		PersistentData.GetInstance ().setLevelNumber (int.Parse (pressed.lvlName));
 		PersistentData.GetInstance ().lastLevelPlayedName = pressed.lvlName;
 		PersistentData.GetInstance ().nextLevelIsReached = pressed.nextLevelIsReached;
