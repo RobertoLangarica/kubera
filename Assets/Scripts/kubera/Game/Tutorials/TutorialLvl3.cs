@@ -155,7 +155,7 @@ public class TutorialLvl3 : TutorialBase
 	{
 		if (!doAnimation || cellManager.getAllEmptyCells().Length < 9) 
 		{
-			DOTween.Kill ("Tutorial2");
+			DOTween.Kill ("Tutorial3");
 			return;
 		}
 
@@ -165,7 +165,7 @@ public class TutorialLvl3 : TutorialBase
 		powerUpDommy.transform.position = posFrom;
 
 		//Los valores de las animaciones los paso Liloo
-		powerUpDommy.transform.DOScale (new Vector3 (1.4f, 1.4f, 1.4f), 0.5f).SetId("Tutorial2");
+		powerUpDommy.transform.DOScale (new Vector3 (1.4f, 1.4f, 1.4f), 0.5f).SetId("Tutorial3");
 		powerUpDommy.DOColor (new Color(1,1,1,0.5f),0.5f).OnComplete(
 			()=>{
 
@@ -176,17 +176,17 @@ public class TutorialLvl3 : TutorialBase
 						powerUpDommy.transform.DOScale (new Vector3 (1, 1, 1), 1f).OnComplete(
 							()=>{
 
-								powerUpDommy.DOColor (new Color(1,1,1,0),0.5f).SetId("Tutorial2");
+								powerUpDommy.DOColor (new Color(1,1,1,0),0.5f).SetId("Tutorial3");
 							}
 
-						).SetId("Tutorial2");
+						).SetId("Tutorial3");
 
 					}
 
-				).SetId("Tutorial2");
+				).SetId("Tutorial3");
 
 			}
-		).SetId("Tutorial2");
+		).SetId("Tutorial3");
 
 		Invoke ("powerUpAnim",3.5f);
 	}

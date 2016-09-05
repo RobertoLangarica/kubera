@@ -981,7 +981,8 @@ public class GameManager : MonoBehaviour
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
 
-				print ("SSSS");
+				LifesManager.GetInstance ().giveALife();
+
 				Invoke ("toLevels", 0.75f);
 				//Gano y ya se termino win bonification
 				/*PersistentData.GetInstance().fromLevelBuilder = true;
@@ -1191,6 +1192,7 @@ public class GameManager : MonoBehaviour
 			updatePiecesLightAndUpdateLetterState ();
 			hudManager.animateLvlGo ();
 			TutorialManager.GetInstance ().init ();
+			LifesManager.GetInstance ().takeALife ();
 			break;
 		case "endGame":
 			//SceneManager.LoadScene ("Levels");

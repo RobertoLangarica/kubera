@@ -29,6 +29,14 @@ public class LocalNotificationManager : LocalDataManager<MultipleNotificationUse
 		protected CrossPlatformNotification.AndroidSpecificProperties androidProperties;
 		protected CrossPlatformNotification.iOSSpecificProperties iosProperties;
 
+		public CrossPlatformNotification createNotification(string content, string title,double nTime = 0,Dictionary<string,object> notificationExtraInfo = null)
+		{
+			alertBody = content;
+			androidContentTitle = androidTickerText = title;
+
+			return createNotification (nTime, notificationExtraInfo);
+		}	
+
 		public CrossPlatformNotification createNotification(double nTime = 0,Dictionary<string,object> notificationExtraInfo = null)
 		{
 			if (nTime != 0) 
@@ -191,6 +199,27 @@ public class LocalNotificationManager : LocalDataManager<MultipleNotificationUse
 		receivedCallBacks -= callBack;
 	}
 
+	public string modifyAndScheduleNotificationByName(ERegisteredNotification notification,string content,string title,double nTime = 0)
+	{
+		string nID = "";
+
+		for (int i = 0; i < notificationTemplates.Count; i++) 
+		{
+			if (notificationTemplates [i].notificationName == notification) 
+			{
+				CrossPlatformNotification newNotification = notificationTemplates [i].createNotification (content,title,nTime);
+
+				nID = scheduleLocalNotification (newNotification);
+
+				currentUser.addNotification(new NotificationJSONData(nID,notification,newNotification.FireDate.ToString("dd-MM-yyyy HH:mm:ss")));
+			}
+		}
+
+		saveLocalData ();
+
+		return nID;
+	}
+
 	public string scheduleNotificationByName(ERegisteredNotification notification,double nTime = 0)
 	{
 		string nID = "";
@@ -220,16 +249,20 @@ public class LocalNotificationManager : LocalDataManager<MultipleNotificationUse
 
 	public void cancelScheduledTypeOfNotifications(ERegisteredNotification typeName)
 	{
-		for (int i = currentUser.notifications.Count - 1; i >= 0; i--) 
+		if (currentData != null) 
 		{
-			if (currentUser.notifications [i].templateName == typeName) 
-			{
-				cancelLocalNotification (currentUser.notifications[i]);
-				currentUser.notifications.RemoveAt(i);
-			}
-		}
 
-		saveLocalData ();
+			for (int i = currentUser.notifications.Count - 1; i >= 0; i--) 
+			{
+				if (currentUser.notifications [i].templateName == typeName) 
+				{
+					cancelLocalNotification (currentUser.notifications [i]);
+					currentUser.notifications.RemoveAt (i);
+				}
+			}
+
+			saveLocalData ();
+		}
 	}
 
 	public void cancelScheduledNotification(string notificationID)

@@ -116,6 +116,14 @@ public class MultiLanguageTextManager
 	public const string WORLD8_NAME 						="World8_name";
 	public const string WORLD9_NAME 						="World9_name";
 
+	//Notifications
+	public const string NOTIFICATION_LIFE1					="Life_1_Notification";
+	public const string NOTIFICATION_FULL_LIFES				="FullLifes_Notification";
+	public const string NOTIFICATION_3_DAYS 				= "3_Days_Without_Playing";
+	public const string NOTIFICATION_7_DAYS 				= "7_Days_Without_Playing";
+	public const string NOTIFICATION_14_DAYS 				= "14_Days_Without_Playing";
+	public const string NOTIFICATION_30_DAYS 				= "30_Days_Without_Playing";
+
 	protected static MultiLanguageTextManager _instance;
 
 	protected string _gameLanguage;

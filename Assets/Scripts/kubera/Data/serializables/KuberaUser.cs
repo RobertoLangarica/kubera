@@ -14,15 +14,22 @@ namespace Kubera.Data
 
 		public List<WorldData> worlds;
 
+		public int maximumLifes = 2;//Maximo de vida que puede tener el jugador
+		public int playerLifes;
+
+		public string lifeTimerDate;
+
 		public KuberaUser()
 		{
 			worlds = new List<WorldData>();
+			playerLifes = maximumLifes;
 		}
 
 		public KuberaUser(string userId)
 		{
 			id = userId;
 			worlds = new List<WorldData>();
+			playerLifes = maximumLifes;
 		}
 
 		public override void updateFrom (BasicData readOnlyRemote, bool ignoreVersion = false)
@@ -109,6 +116,24 @@ namespace Kubera.Data
 			}
 
 			return result;
+		}
+
+		public void giveLifeToPlayer(int amount = 1)
+		{
+			int totalLifes = playerLifes + amount;
+
+			if (totalLifes > maximumLifes) 
+			{
+				playerLifes = maximumLifes;
+			} 
+			else if (totalLifes < 0) 
+			{
+				playerLifes = 0;
+			}
+			else 
+			{
+				playerLifes = totalLifes;
+			}
 		}
 	}
 }

@@ -5,7 +5,8 @@ namespace villavanilla.Notifications
 {
 	public enum ERegisteredNotification
 	{
-		TEST_1MIN,
-		TEST_5MIN
+		FULL_LIFES,
+		LIFE_1,
+		NO_PLAYING_GAMES
 	}
 }
