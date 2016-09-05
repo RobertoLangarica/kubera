@@ -222,34 +222,6 @@
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Menus/K-menus_nube3.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Menus/K-menus_sombraCirculo         .png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Menus/K-menus_tag.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/K-Mapa1_CD.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/K-Mapa1_PlataformaChica.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/K-Mapa1_PllataformaGrande.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/K-Mapa1_Tambor.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/K-Mapa1_arpa.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/K-Mapa1_bocina.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/K-Mapa1_columna.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/K-Mapa1_guitarra.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/K-Mapa1_piano.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1-17.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_Estrallasdeco.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_Luz1.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_Luz2 .png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_Luz3h.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_Luz4.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_Luz5.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_Luz6.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_Miniestrella.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_bolitaparallax.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_nota1.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_nota2.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_nota3.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_nota5.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_nota6.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_nota7.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_nota8.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_nota9.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1/fondo/K-Mapa1_partitura.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/camino/K-MapaGeneral_1camonoFondo.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/camino/K-MapaGeneral_2caminoFondo.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/camino/K-MapaGeneral_3caminoFondo.png</key>
@@ -310,7 +282,6 @@
             <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_play.png</filename>
             <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_Puertas.png</filename>
             <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_stargray.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo1</filename>
             <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/camino</filename>
             <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/escalera</filename>
             <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/HUD</filename>

@@ -93,6 +93,7 @@ public class DestroyPowerUp : PowerupBase
 					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_POWERUP);
 					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR);
 
+					gameManager.updatePiecesLightAndUpdateLetterState ();
 					OnComplete ();
 				}
 				else

@@ -187,7 +187,6 @@ public class ScreenManager : Manager<ScreenManager> {
 			else
 			{
 				async.allowSceneActivation = true;
-				print ("el tween ya no esta");
 			}
 		}
 		else
