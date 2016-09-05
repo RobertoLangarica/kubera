@@ -46,7 +46,6 @@ public class FBGraph : MonoBehaviour
 		bool textureReady = false;
 		bool infoReady = false;
 
-		Debug.Log("GetPlayerInfoCallback");
 		if (result.Error != null)
 		{
 			Debug.LogError(result.Error);
@@ -153,7 +152,6 @@ public class FBGraph : MonoBehaviour
 
 	private void GetFriendsCallback(IGraphResult result)
 	{
-		Debug.Log("GetFriendsCallback");
 		if (result.Error != null)
 		{
 			Debug.LogError(result.Error);
@@ -199,7 +197,6 @@ public class FBGraph : MonoBehaviour
 
 	private void GetInvitableFriendsCallback(IGraphResult result)
 	{
-		Debug.Log("GetInvitableFriendsCallback");
 		if (result.Error != null)
 		{
 			Debug.LogError(result.Error);
@@ -292,14 +289,12 @@ public class FBGraph : MonoBehaviour
 		if (!result.ResultDictionary.ContainsKey ("apprequests"))
 		{
 			//deleteAppRequest ((string)dict["id"]);
-			print ("none friendsRequest ");
 			appRequestReady = true;
 			AllinfoGathered ();
 			return;
 		}
 
 		//print (dict.Keys.ToCommaSeparateList ());
-		print ("getfriends true");
 		object dataObject;
 		List<object> apprequestsData = new List<object>();
 
@@ -319,7 +314,6 @@ public class FBGraph : MonoBehaviour
 		
 		if(gameFriendsReady&& invitableFriendsReady && appRequestReady && playerInfoReady && texturesFriendReady)
 		{
-			print("onFinishGettingInfo");
 			onFinishGettingInfo ();
 		}
 	}   

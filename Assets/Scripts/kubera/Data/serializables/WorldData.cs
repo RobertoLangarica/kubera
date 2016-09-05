@@ -52,6 +52,19 @@ namespace Kubera.Data
 					levels.Add(remoteLevel);
 				}
 			}
+
+			//Alguno de los niveles sigue sucio
+			if(!isDirty)
+			{
+				foreach(LevelData item in levels)
+				{
+					if(item.isDirty)
+					{
+						isDirty = true;
+						return;//Dejamos de iterar
+					}
+				}
+			}
 		}
 
 		public LevelData getLevelById(string id)

@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
 	private Level currentLevel;
 	private List<Letter> gridCharacters = new List<Letter>();
 
+
 	void Start()
 	{
 		wordManager			= FindObjectOfType<WordManager>();

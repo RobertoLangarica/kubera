@@ -56,6 +56,19 @@ namespace Kubera.Data
 					worlds.Add(remoteWorld);
 				}		
 			}
+
+			//Alguno de los mundos sigue sucio
+			if(!isDirty)
+			{
+				foreach(WorldData item in worlds)
+				{
+					if(item.isDirty)
+					{
+						isDirty = true;
+						return;//Dejamos de iterar
+					}
+				}
+			}
 		}
 
 

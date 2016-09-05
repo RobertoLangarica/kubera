@@ -41,7 +41,7 @@ public class FacebookPersistentData : Manager<FacebookPersistentData>
 		}
 		else
 		{
-			print ("friend image exist");
+			//print ("friend image exist");
 		}
 	}
 

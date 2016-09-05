@@ -133,9 +133,8 @@ namespace Kubera.Data.Remote
 				{
 					if(key.Contains("world_"))
 					{
-						string world = MiniJSON.Json.Serialize(((Dictionary<string, object>)request.data.data.Data[key])["Value"]);
-						Debug.Log(world);
-						remoteUser.worlds.Add(JsonUtility.FromJson<WorldData>(world));	
+						//Debug.Log(((Dictionary<string, object>)request.data.data.Data[key])["Value"]);
+						remoteUser.worlds.Add(JsonUtility.FromJson<WorldData>(((Dictionary<string, object>)request.data.data.Data[key])["Value"].ToString()));	
 					}
 				}
 
