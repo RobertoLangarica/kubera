@@ -20,16 +20,16 @@ public class Stairs : MonoBehaviour {
 
 	void Update()
 	{
-		/*if (Input.GetKey (KeyCode.C))
+		if (Input.GetKey (KeyCode.C))
 		{
 			animateStairs ();
-		}*/
+		}
 
 		if(!active)
 		{
 			return;
 		}
-
+		
 		for(int i=0; i<stairs.Length; i++)
 		{
 			stairs [i].rectTransform.anchoredPosition = new Vector2 (stairs [i].rectTransform.anchoredPosition.x + 1, stairs [i].rectTransform.anchoredPosition.y + 1);

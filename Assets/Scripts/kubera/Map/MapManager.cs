@@ -576,19 +576,20 @@ public class MapManager : MonoBehaviour
 			//paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel( mapLevels [0]));
 			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(currentLevel));
 		}
-
-
 	}
 
 	protected void activateStairs()
 	{
-		FindObjectOfType<Stairs> ().animateStairs ();
-
+		Stairs stairs = FindObjectOfType<Stairs> ();
+		if(stairs)
+		{
+			stairs.animateStairs ();
+		}
 	}
 
 	public void changeCurrentWorld(int world,bool isFirst, bool isLast)
 	{
-
+		toDoor = false;
 		if(isFirst)
 		{
 			first = true;
