@@ -506,7 +506,7 @@ public class FacebookManager : Manager<FacebookManager>
 
 	protected void actualizeMessageNumber()
 	{
-		facebookNews.actualizeMessageNumber (messageCount.ToString());
+		//facebookNews.actualizeMessageNumber (messageCount.ToString());
 	}
 
 	void OnDestroy() 

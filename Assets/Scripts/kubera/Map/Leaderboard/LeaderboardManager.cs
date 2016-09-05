@@ -149,6 +149,8 @@ public class LeaderboardManager : MonoBehaviour {
 
 	public void moveCurrentLeaderboardSlots(Transform parent)
 	{
+		print (currentLeaderboard);
+		print (parent);
 		currentLeaderboard.moveSlots (parent);
 	}
 }

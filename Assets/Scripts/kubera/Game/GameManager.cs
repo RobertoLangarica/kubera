@@ -737,12 +737,10 @@ public class GameManager : MonoBehaviour
 
 		if (!rotationActive) 
 		{
-			print ("checando SIN rotar");
 			canFit = cellManager.checkIfOnePieceCanFit (pieceManager.getShowingPieces ());
 		} 
 		else 
 		{
-			print ("checando con rotar");
 			List<Piece> tempList = new List<Piece> (pieceManager.getShowingPieces ());
 			Piece tempPiece= null;
 
@@ -1208,7 +1206,7 @@ public class GameManager : MonoBehaviour
 			ScreenManager.instance.GoToScene ("Levels");
 			break;
 		default:		
-			print ("quien lo llama?");
+			//print ("quien lo llama?");
 				Invoke ("allowInputFromInvoke", 0);
 			break;
 		}

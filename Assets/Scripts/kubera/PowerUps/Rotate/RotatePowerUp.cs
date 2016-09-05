@@ -163,7 +163,6 @@ public class RotatePowerUp : PowerupBase
 				{
 					imageToRotate [i].DOScale (new Vector2 (imageToRotate [i].localScale.x - 0.1f, imageToRotate [i].localScale.y - 0.1f), 0.5f).OnComplete(()=>
 						{
-							print("Sssss");
 						}).SetId("imageToRotate");
 				}).SetId("imageToRotate");
 			imageToRotate [i].DOShakeRotation (1.0f).SetId("imageToRotate");
