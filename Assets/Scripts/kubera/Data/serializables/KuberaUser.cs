@@ -87,9 +87,19 @@ namespace Kubera.Data
 			worlds.Add(world);
 		}
 
+		public void markAllworldsAsNoDirty()
+		{
+			foreach(WorldData item in worlds)
+			{
+				item.markAllLevelsAsNoDirty();
+			}	
+		}
+
 		public void clear()
 		{
 			worlds.Clear();
+			PlayFab_dataVersion = 0;
+			facebookId = "";
 			isDirty = false;
 		}
 			
