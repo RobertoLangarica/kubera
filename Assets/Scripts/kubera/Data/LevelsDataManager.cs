@@ -419,8 +419,8 @@ namespace Kubera.Data
 			result.facebookId = user.facebookId;
 			result.worlds = user.getDirtyWorlds();
 
-			//Al server se envian como no sucios
-			result.markAllworldsAsNoDirty();
+			//Se envian como no sucios
+			result.markAllWorldsAsNoDirty();
 
 			return result;
 		}

@@ -94,7 +94,7 @@ namespace Kubera.Data
 			worlds.Add(world);
 		}
 
-		public void markAllworldsAsNoDirty()
+		public void markAllWorldsAsNoDirty()
 		{
 			foreach(WorldData item in worlds)
 			{

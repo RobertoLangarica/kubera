@@ -1,9 +1,9 @@
 //Actualiza los niveles pasados por el usuario solo de manera incremental
 handlers.updateUserLevels = function(args, context)
 {
-  var world_keys = [];
-  var incomming_worlds = [];
-  var existing_worlds = [];
+  var world_keys = [];//Keys para hacer la query de datos existentes
+  var incomming_worlds = [];//mundos entrantes filtrados en una lista
+  var existing_worlds = [];//mundos existentes filtrados en una lista
 
   //Filtrando los mundos entrantes
   var keys = Object.keys(args);
@@ -17,13 +17,13 @@ handlers.updateUserLevels = function(args, context)
     }
   }
 
-//Obtenemos los mundos existentes
+//Basado en los mundos entrantes nos traemos los existentes
 	var currPlayer = server.GetUserData({
     PlayFabId: currentPlayerId,
     Keys: world_keys
   });
 
-  //Filtrando los mundos existentes
+  //Filtrando los mundos existentes en una lista
   keys = Object.keys(currPlayer.Data);
   for (var i = 0; i < keys.length; i++)
   {
@@ -34,14 +34,15 @@ handlers.updateUserLevels = function(args, context)
     }
   }
 
+  //Actualizamos las estadisticas para los leaderboards por nivel
+  updateLevelsStatistics(existing_worlds, incomming_worlds);
+
   //Obtenemos solo el upgrade de mundos
-  var toSave = getOnlyUpgradedWorlds(existing_worlds, incomming_worlds);
+  var toSave = getUpgradedWorlds(existing_worlds, incomming_worlds);
 
   //Hay algo que guardar?
   if(Object.keys(toSave).length > 0)
   {
-    //log.info("SAVE:"+JSON.stringify(toSave));
-
     //Guardamos los nuevos mundos
     var updatedUserDataResult = server.UpdateUserData({
       PlayFabId: currentPlayerId,
@@ -49,7 +50,7 @@ handlers.updateUserLevels = function(args, context)
       Permission:"Public"
     });
 
-
+    //Error en el guardado?
     if(!updatedUserDataResult)
     {
     	//ERROR!
@@ -57,7 +58,7 @@ handlers.updateUserLevels = function(args, context)
     }
 	else
     {
-      //Nueva version
+    //Mandamos la nueva version
     return {DataVersion:updatedUserDataResult["DataVersion"], error: false}
     }
   }
@@ -68,11 +69,17 @@ handlers.updateUserLevels = function(args, context)
   }
 }
 
-function getOnlyUpgradedWorlds(existing_worlds, incomming_worlds)
+/**
+* Filtra los mundos entrantes contra los existentes y devuelve una lista con un
+* merge a la version mas actualizada de los mundos
+* @params existing_worlds:[], existing_worlds:[]
+**/
+function getUpgradedWorlds(existing_worlds, incomming_worlds)
 {
   var result = {};
-  var added_worlds = [];
+  var added_worlds = [];//Vamos almacenando un record de los agregados
 
+  //Hacemos un merge de los mundos entrantes vs los existentes
   for(var i = 0; i < incomming_worlds.length; i++)
   {
     var world = getItemById(existing_worlds, incomming_worlds[i].id);
@@ -99,14 +106,14 @@ function getOnlyUpgradedWorlds(existing_worlds, incomming_worlds)
     added_worlds.push(world);
   }
 
-  //Retenemos los preexistentes que no se han agregado todavia
+  //Los existentes que no tuvieron merge tambien se agregan para no perderlos
   for(var i = 0; i < existing_worlds.length; i++)
   {
     var world = getItemById(added_worlds, existing_worlds[i].id);
 
     if(world == null)
     {
-      //No existe asi que lo guardamos (sin basura)
+      //No existe asi que lo guardamos (world_key solo es un helper)
       var key = existing_worlds[i].world_key;
       delete existing_worlds[i].world_key;
       world = existing_worlds[i];
@@ -117,6 +124,12 @@ function getOnlyUpgradedWorlds(existing_worlds, incomming_worlds)
   return result;
 }
 
+/**
+* Evalua los niveles entrantes contra la lista de existentes y determina
+* si alguno recibe un upgrade, si un nivel entrante no existe
+* se toma como upgrade
+* @params existing_levels:[], incomming_levels:[]
+*/
 function anyLevelIsUpgraded(existing_levels, incomming_levels)
 {
   for(var i = 0; i < incomming_levels.length; i++)
@@ -140,6 +153,12 @@ function anyLevelIsUpgraded(existing_levels, incomming_levels)
   return false;
 }
 
+/**
+* Evalua el nivel existente vs el entrante para ver si el entrante representa
+* un upgrade en algun valor
+*  @params existing:{stars:int,points:int,passed:bool,locked:bool},
+*          incomming:{stars:int,points:int,passed:bool,locked:bool}
+**/
 function levelIsUpgraded(existing, incomming)
 {
   if(	   incomming.stars	> existing.stars
@@ -210,6 +229,80 @@ function getMergedLevel(existing, incomming)
   level.world   = existing.world;
 
   return level;
+}
+
+/**
+* Actualiza las estadisticas de este jugador basadas en los mundos que vienen
+**/
+function updateLevelsStatistics(existing_worlds, incomming_worlds)
+{
+  //Solo nos interesan los niveles que aumentan sus puntos
+  var upgradedLevels = {};
+
+  //Hacemos un merge de los mundos entrantes vs los existentes
+  for(var i = 0; i < incomming_worlds.length; i++)
+  {
+    var world = getItemById(existing_worlds, incomming_worlds[i].id);
+
+    if(world != null)
+    {
+       //Se obtienen los niveles que tienen upgrade de puntos
+      var levels = getUpgradedLevelsByPoints(world, incomming_worlds[i]);
+      for(var j = 0; j < levels.length; j++)
+      {upgradedLevels["level_"+levels[j].id] = levels[j].points;}
+
+    }
+    else
+    {
+      //No existe asi que sus niveles todos se guardan
+      for(var j = 0; j < incomming_worlds[i].levels.length; j++)
+      {upgradedLevels["level_"+incomming_worlds[i].levels[j].id] = incomming_worlds[i].levels[j].points;}
+
+    }
+  }
+
+  //Guardamos si es necesario
+  var keys = Object.keys(upgradedLevels);
+  if(keys.length > 0)
+  {
+    var toSave = [];
+
+    for(var i = 0; i < keys.length; i++)
+    {
+      toSave.push({StatisticName:keys[i], Value:upgradedLevels[keys[i]]});
+    }
+
+    server.UpdateUserStatistics (
+      {
+          PlayFabId: currentPlayerId,
+          Statistics: toSave
+      }
+    );
+  }
+}
+
+function getUpgradedLevelsByPoints(existing, incomming)
+{
+  var result = [];
+
+  for(var i = 0; i < incomming.levels.length; i++)
+  {
+    var level = getItemById(existing.levels, incomming.levels[i].id);
+
+    if(level != null)
+    {
+      //se agrega solo el entrante si tiene mas puntos
+      if(level.points < incomming.levels[i].points)
+      {result.push(incomming.levels[i].points);}
+    }
+    else
+    {
+      //se agrega
+      result.push(incomming.levels[i]);
+    }
+  }
+
+  return result;
 }
 
 function getItemById(list,id)
