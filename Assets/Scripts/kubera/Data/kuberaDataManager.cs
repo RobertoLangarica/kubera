@@ -7,7 +7,7 @@ using Kubera.Data.Remote.PFResponseData;
 
 namespace Kubera.Data
 {
-	public class LevelsDataManager : LocalDataManager<MultipleUsers>
+	public class KuberaDataManager : LocalDataManager<MultipleUsers>
 	{
 		public KuberaSyncManger syncManager;
 

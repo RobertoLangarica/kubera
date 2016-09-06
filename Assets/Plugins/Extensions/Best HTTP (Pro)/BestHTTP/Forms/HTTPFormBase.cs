@@ -10,6 +10,8 @@ namespace BestHTTP.Forms
     /// </summary>
     public class HTTPFormBase
     {
+		public bool _showDebugInfo = false;
+
         const int LongLength = 256;
 
         #region Properties

@@ -55,16 +55,16 @@ public class MapManager : MonoBehaviour
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 		if(PersistentData.GetInstance().currentWorld == -1||!PersistentData.GetInstance().fromGameToLevels)
 		{
-			if(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds.Count != 0)
+			if(KuberaDataManager.GetCastedInstance<KuberaDataManager>().currentUser.worlds.Count != 0)
 			{
-				int worldCount = LevelsDataManager.GetCastedInstance<LevelsDataManager> ().getWorldCount ();
+				int worldCount = KuberaDataManager.GetCastedInstance<KuberaDataManager> ().getWorldCount ();
 
-				currentWorld = int.Parse(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds.Count-1].id);
+				currentWorld = int.Parse(KuberaDataManager.GetCastedInstance<KuberaDataManager>().currentUser.worlds[KuberaDataManager.GetCastedInstance<KuberaDataManager>().currentUser.worlds.Count-1].id);
 
-				List<WorldData> worldData = LevelsDataManager.GetCastedInstance<LevelsDataManager> ().currentUser.worlds;
+				List<WorldData> worldData = KuberaDataManager.GetCastedInstance<KuberaDataManager> ().currentUser.worlds;
 				int currentLevel = worldData [worldData.Count - 1].levels.Count;
 
-				int levelsInWorld = LevelsDataManager.GetCastedInstance<LevelsDataManager> ().getLevelsOfWorld (currentWorld).Length;
+				int levelsInWorld = KuberaDataManager.GetCastedInstance<KuberaDataManager> ().getLevelsOfWorld (currentWorld).Length;
 
 				if(currentLevel == levelsInWorld)
 				{
@@ -216,19 +216,19 @@ public class MapManager : MonoBehaviour
 
 		if (level.isBoss)
 		{
-			if ((LevelsDataManager.GetInstance () as LevelsDataManager).isLevelPassed (level.lvlName))
+			if ((KuberaDataManager.GetInstance () as KuberaDataManager).isLevelPassed (level.lvlName))
 			{
 				level.status = MapLevel.EMapLevelsStatus.BOSS_PASSED;
 			}
 			else
 			{
-				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.lvlName))
+				if ((KuberaDataManager.GetInstance() as KuberaDataManager).isLevelReached (level.lvlName))
 				{
 					level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
 					Debug.Log ("boss reached");
-					Debug.Log (!(LevelsDataManager.GetInstance () as LevelsDataManager).isLevelLocked (level.lvlName));
+					Debug.Log (!(KuberaDataManager.GetInstance () as KuberaDataManager).isLevelLocked (level.lvlName));
 
-					if (!(LevelsDataManager.GetInstance () as LevelsDataManager).isLevelLocked (level.lvlName))
+					if (!(KuberaDataManager.GetInstance () as KuberaDataManager).isLevelLocked (level.lvlName))
 					{
 						level.status = MapLevel.EMapLevelsStatus.BOSS_UNLOCKED;
 					}
@@ -242,13 +242,13 @@ public class MapManager : MonoBehaviour
 		}
 		else
 		{
-			if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelPassed (level.lvlName))
+			if ((KuberaDataManager.GetInstance() as KuberaDataManager).isLevelPassed (level.lvlName))
 			{
 				level.status = MapLevel.EMapLevelsStatus.NORMAL_PASSED;
 			}
 			else
 			{
-				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.lvlName))
+				if ((KuberaDataManager.GetInstance() as KuberaDataManager).isLevelReached (level.lvlName))
 				{
 						level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
 				}
@@ -260,7 +260,7 @@ public class MapManager : MonoBehaviour
 		}
 
 		level.stars = MapLevel.EMapLevelStars.NONE;
-		switch ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelStars (level.lvlName))
+		switch ((KuberaDataManager.GetInstance() as KuberaDataManager).getLevelStars (level.lvlName))
 		{
 		case(1):
 			level.stars = MapLevel.EMapLevelStars.ONE;
@@ -298,7 +298,7 @@ public class MapManager : MonoBehaviour
 
 	public void OnLifesPressed()
 	{
-		KuberaUser currentUser = (LevelsDataManager.GetInstance () as LevelsDataManager).currentUser;
+		KuberaUser currentUser = (KuberaDataManager.GetInstance () as KuberaDataManager).currentUser;
 		
 		if (currentUser.playerLifes == currentUser.maximumLifes)
 		{
@@ -317,7 +317,7 @@ public class MapManager : MonoBehaviour
 
 	public void unlockBoss(string lvlName)
 	{
-		(LevelsDataManager.GetInstance () as LevelsDataManager).unlockLevel (lvlName);
+		(KuberaDataManager.GetInstance () as KuberaDataManager).unlockLevel (lvlName);
 
 		for (int i = 0; i < mapLevels.Count; i++)
 		{
@@ -332,7 +332,7 @@ public class MapManager : MonoBehaviour
 
 	protected void OnBossReachedPressed(MapLevel pressed)
 	{
-		if ((LevelsDataManager.GetInstance () as LevelsDataManager).getAllEarnedStars() >= pressed.starsNeeded)
+		if ((KuberaDataManager.GetInstance () as KuberaDataManager).getAllEarnedStars() >= pressed.starsNeeded)
 		{
 			unlockBoss (pressed.lvlName);
 		}
@@ -353,7 +353,7 @@ public class MapManager : MonoBehaviour
 		PersistentData.GetInstance ().nextLevelIsReached = pressed.nextLevelIsReached;
 
 		goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
-		int starsReached = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
+		int starsReached = (KuberaDataManager.GetInstance () as KuberaDataManager).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
 		
 		setGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters(),PersistentData.GetInstance().currentLevel.name,starsReached);
 
@@ -398,7 +398,7 @@ public class MapManager : MonoBehaviour
 
 	protected void initializeLevels()
 	{
-		List<Level> worldsLevels = new List<Level> ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelsOfWorld(currentWorld));
+		List<Level> worldsLevels = new List<Level> ((KuberaDataManager.GetInstance() as KuberaDataManager).getLevelsOfWorld(currentWorld));
 
 		if(PersistentData.GetInstance().lastLevelReachedName == "")
 		{
@@ -536,8 +536,8 @@ public class MapManager : MonoBehaviour
 			}
 			else
 			{
-				int starsReached = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
-				int pointsMade = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
+				int starsReached = (KuberaDataManager.GetInstance () as KuberaDataManager).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
+				int pointsMade = (KuberaDataManager.GetInstance () as KuberaDataManager).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
 				goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
 
 				string levelName = PersistentData.GetInstance ().currentLevel.name ;
@@ -797,12 +797,12 @@ public class MapManager : MonoBehaviour
 	{
 		WorldsPopUp worldsPopUp = popUpManager.getPopupByName ("worldsPopUp").GetComponent<WorldsPopUp> ();
 
-		List<WorldData> worldData = LevelsDataManager.GetCastedInstance<LevelsDataManager> ().currentUser.worlds;
+		List<WorldData> worldData = KuberaDataManager.GetCastedInstance<KuberaDataManager> ().currentUser.worlds;
 		int starsObtained =0;
 
-		int levelsInWorld = LevelsDataManager.GetCastedInstance<LevelsDataManager> ().getLevelsOfWorld (currentWorld).Length;
+		int levelsInWorld = KuberaDataManager.GetCastedInstance<KuberaDataManager> ().getLevelsOfWorld (currentWorld).Length;
 
-		for(int i=0; i<LevelsDataManager.GetCastedInstance<LevelsDataManager> ().getWorldCount (); i++)
+		for(int i=0; i<KuberaDataManager.GetCastedInstance<KuberaDataManager> ().getWorldCount (); i++)
 		{
 			if(worldData.Count > i)
 			{
@@ -815,7 +815,7 @@ public class MapManager : MonoBehaviour
 			}
 			else if(currentWorld > i)
 			{
-				worldsPopUp.initializeMiniWorld (i, true, 0,LevelsDataManager.GetCastedInstance<LevelsDataManager> ().getLevelsCountByWorld(i)  * 3);
+				worldsPopUp.initializeMiniWorld (i, true, 0,KuberaDataManager.GetCastedInstance<KuberaDataManager> ().getLevelsCountByWorld(i)  * 3);
 			}
 			else
 			{

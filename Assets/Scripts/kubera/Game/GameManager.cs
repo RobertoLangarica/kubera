@@ -983,7 +983,7 @@ public class GameManager : MonoBehaviour
 	protected void afterBonification()
 	{
 		#if UNITY_EDITOR
-		if(!LevelsDataManager.GetInstance())
+		if(!KuberaDataManager.GetInstance())
 		{
 
 		}
@@ -998,7 +998,7 @@ public class GameManager : MonoBehaviour
 			if(cancelBonify)
 			{
 				//Se guarda en sus datos que ha pasado el nivel
-				(LevelsDataManager.GetInstance() as LevelsDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
+				(KuberaDataManager.GetInstance() as KuberaDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
 					3,Random.Range(70,200));
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
@@ -1010,7 +1010,7 @@ public class GameManager : MonoBehaviour
 			#endif	
 			{
 				//Se guarda en sus datos que ha pasado el nivel
-				(LevelsDataManager.GetInstance() as LevelsDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
+				(KuberaDataManager.GetInstance() as KuberaDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
 					hudManager.getEarnedStars(),pointsCount);
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
