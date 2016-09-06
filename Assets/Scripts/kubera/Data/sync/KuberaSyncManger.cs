@@ -41,7 +41,7 @@ namespace Kubera.Data.Sync
 			base.OnUserReceived (user);
 
 			//Exsitia un usuario creado con id de facebook temporal?
-			KuberaUser kUser = localData.getCurrentData().getUserById(user.facebookId);
+			KuberaUser kUser = localData.getCurrentData().getUserById(currentUser.facebookId);
 			if(kUser != null)
 			{
 				//Le asignamos su id de verdad
@@ -114,7 +114,7 @@ namespace Kubera.Data.Sync
 		{
 			if(_mustShowDebugInfo)
 			{
-				Debug.Log(userToPlayFabJSON(dirtyUser));
+				Debug.Log("To update: \n"+userToPlayFabJSON(dirtyUser));
 			}
 
 			//Si no hay usuario remoto entonces no hay nada que actualizar

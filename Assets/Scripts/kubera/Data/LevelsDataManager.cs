@@ -31,6 +31,7 @@ namespace Kubera.Data
 
 		public void savePassedLevel(string levelName, int stars, int points)
 		{
+			Debug.Log ("Aqui!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			Level lvl = levelsList.getLevelByName(levelName);
 			WorldData world = getOrCreateWorldById(lvl.world.ToString());
 
@@ -297,7 +298,7 @@ namespace Kubera.Data
 				//El nuevo usuario existe?
 				if(currentData.getUserByFacebookId(facebookId) == null)
 				{
-					//Este usuario toma los datos anonimos
+					//NO existe y creamos uno nuevo
 					user = currentData.getUserById(ANONYMOUS_USER);
 
 					user.id = facebookId;
@@ -311,6 +312,8 @@ namespace Kubera.Data
 				{
 					//Diff de los datos sin verificar version
 					user = currentData.getUserByFacebookId(facebookId);
+					//prevalece la version del usuario que no es anonimo
+					currentUser.PlayFab_dataVersion = user.PlayFab_dataVersion;
 					user.compareAndUpdate(currentUser, true);
 					newId = user.id;
 					//Limpiamos al usuario anonimo
@@ -336,7 +339,6 @@ namespace Kubera.Data
 			}
 
 			currentUserId = newId;
-			//currentData.isDirty = currentUser.isDirty;
 			saveLocalData(false);
 		}
 			
@@ -417,6 +419,9 @@ namespace Kubera.Data
 			result.facebookId = user.facebookId;
 			result.worlds = user.getDirtyWorlds();
 
+			//Al server se envian como no sucios
+			result.markAllworldsAsNoDirty();
+
 			return result;
 		}
 
@@ -441,6 +446,13 @@ namespace Kubera.Data
 		public int getLevelsCountByWorld(int world)
 		{
 			return getLevelsOfWorld(world).Length;
+		}
+
+		public void giveUserLifes(int amount = 1)
+		{
+			currentUser.giveLifeToPlayer (amount);
+
+			saveLocalData ();
 		}
 	}
 }

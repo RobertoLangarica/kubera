@@ -48,7 +48,6 @@ namespace Kubera.Data
 				else
 				{
 					//nivel nuevo
-					remoteLevel.isDirty = false;//nunca se marcan como sucios al llegar
 					levels.Add(remoteLevel);
 				}
 			}

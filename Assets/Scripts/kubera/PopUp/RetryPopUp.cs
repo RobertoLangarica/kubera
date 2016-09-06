@@ -3,14 +3,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Kubera.Data;
 using Kubera.Data.Sync;
 
 public class RetryPopUp : PopUpBase
 {
 	public Text LevelNumber;
 	public Text inviteFriendsText;
-
-	protected LifesManager lifesManager;
 
 	public RectTransform leftDoor;
 	public RectTransform rightDoor;
@@ -36,8 +35,6 @@ public class RetryPopUp : PopUpBase
 		//TODO checar login a facebook
 		fbLogin ();
 		//FBLoggin.GetInstance().onLoginComplete += fbLogin;
-
-		lifesManager = FindObjectOfType<LifesManager> ();
 
 		setStartingPlaces ();
 		content.text = "Seguro lo lograras";
@@ -78,7 +75,7 @@ public class RetryPopUp : PopUpBase
 	public void retryLevel()
 	{
 		soundButton ();
-		if (UserDataManager.instance.playerLifes > 0) 
+		if ((LevelsDataManager.GetInstance () as LevelsDataManager).currentUser.playerLifes > 0) 
 		{
 			setStartingPlaces ();
 			OnComplete ("retry",false);

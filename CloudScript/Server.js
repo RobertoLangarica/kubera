@@ -9,7 +9,7 @@ handlers.updateUserLevels = function(args, context)
   var keys = Object.keys(args);
   for (var i = 0; i < keys.length; i++)
   {
-    if(String(keys[i]).includes("world_"))
+    if(String(keys[i]).includes("world_") && String(keys[i]) != "world_count")
     {
       world_keys.push(String(keys[i]));
       incomming_worlds.push(args[keys[i]]);
@@ -29,7 +29,7 @@ handlers.updateUserLevels = function(args, context)
   {
     if(String(keys[i]).includes("world_"))
     {
-      existing_worlds.push(currPlayer.Data[keys[i]]);
+      existing_worlds.push(JSON.parse(currPlayer.Data[keys[i]].Value));
       existing_worlds[existing_worlds.length-1].world_key = String(keys[i]);
     }
   }
@@ -38,8 +38,10 @@ handlers.updateUserLevels = function(args, context)
   var toSave = getOnlyUpgradedWorlds(existing_worlds, incomming_worlds);
 
   //Hay algo que guardar?
-	if(Object.keys(toSave).length > 0)
+  if(Object.keys(toSave).length > 0)
   {
+    //log.info("SAVE:"+JSON.stringify(toSave));
+
     //Guardamos los nuevos mundos
     var updatedUserDataResult = server.UpdateUserData({
       PlayFabId: currentPlayerId,
@@ -69,6 +71,7 @@ handlers.updateUserLevels = function(args, context)
 function getOnlyUpgradedWorlds(existing_worlds, incomming_worlds)
 {
   var result = {};
+  var added_worlds = [];
 
   for(var i = 0; i < incomming_worlds.length; i++)
   {
@@ -80,13 +83,34 @@ function getOnlyUpgradedWorlds(existing_worlds, incomming_worlds)
       if(anyLevelIsUpgraded(world.levels, incomming_worlds[i].levels))
       {
           //Se obtiene un merge de ambos mundos
-          result[incomming_worlds[i].world_key] = getMergedWorld(world, incomming_worlds[i]);
+          world = getMergedWorld(world, incomming_worlds[i]);
+          result[incomming_worlds[i].world_key] = JSON.stringify(world);
       }
     }
     else
     {
-      //No existe asi que lo guardamos
-      result[incomming_worlds[i].world_key] = incomming_worlds[i];
+      //No existe asi que lo guardamos (sin basura)
+      var key = incomming_worlds[i].world_key;
+      delete incomming_worlds[i].world_key;
+      world = incomming_worlds[i];
+      result[key] = JSON.stringify(world);
+    }
+
+    added_worlds.push(world);
+  }
+
+  //Retenemos los preexistentes que no se han agregado todavia
+  for(var i = 0; i < existing_worlds.length; i++)
+  {
+    var world = getItemById(added_worlds, existing_worlds[i].id);
+
+    if(world == null)
+    {
+      //No existe asi que lo guardamos (sin basura)
+      var key = existing_worlds[i].world_key;
+      delete existing_worlds[i].world_key;
+      world = existing_worlds[i];
+      result[key] = JSON.stringify(world);
     }
   }
 
@@ -131,10 +155,13 @@ function levelIsUpgraded(existing, incomming)
 
 function getMergedWorld(existing, incomming)
 {
+  //log.info("Mergin world: "+existing.id);
   var result = {};
   result.id       = existing.id;
   result.version  = existing.version + 1;
   result.levels   = [];
+
+  var added_levels = [];
 
   for(var i = 0; i < incomming.levels.length; i++)
   {
@@ -149,7 +176,22 @@ function getMergedWorld(existing, incomming)
     else
     {
       //se agrega
-      result.levels.push(incomming.levels[i]);
+      level = incomming.levels[i];
+      result.levels.push(level);
+    }
+
+    added_levels.push(level);
+  }
+
+  //Los niveles preexistentes no agregados se agregan
+  for(var i = 0; i < existing.levels.length; i++)
+  {
+    var level = getItemById(added_levels, existing.levels[i].id);
+
+    if(level == null)
+    {
+      //se agrega
+      result.levels.push(existing.levels[i]);
     }
   }
 

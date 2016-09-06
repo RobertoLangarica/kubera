@@ -63,17 +63,17 @@ public class WebViewManager : Manager<WebViewManager>
 		WebView.DidReceiveMessageEvent				-= receiveMessageEvent;
 	}
 
-	public void createWebView(string nURL,bool fullScreen)
+	public void createWebView(string nURL,bool fullScreen,bool isHtmlText)
 	{
 		if (fullScreen) 
 		{
 			displayWebView.SetFullScreenFrame ();
 		}
 
-		createWebView (nURL);
+		createWebView (nURL,isHtmlText);
 	}
 
-	public void createWebView(string nURL,RectTransform rectTransform,Camera canvasCamera)
+	public void createWebView(string nURL,RectTransform rectTransform,Camera canvasCamera,bool isHtmlText)
 	{
 		Vector3[] temp = new Vector3[4];
 
@@ -82,20 +82,26 @@ public class WebViewManager : Manager<WebViewManager>
 		Vector3 screenPoint = canvasCamera.WorldToScreenPoint (temp[1]);
 
 		displayWebView.Frame = new Rect(screenPoint.x,Screen.height - screenPoint.y,rectTransform.rect.width,rectTransform.rect.height);
-		createWebView (nURL);
+		createWebView (nURL,isHtmlText);
 	}
 
-	public void createWebView(string nURL,Rect viewRect)
+	public void createWebView(string nURL,Rect viewRect,bool isHtmlText)
 	{
 		displayWebView.Frame = viewRect;
-		createWebView (nURL);
+		createWebView (nURL,isHtmlText);
 	}
 
-	public void createWebView (string nURL)
+	public void createWebView (string nURL,bool isHtmlText)
 	{
-		displayWebView.LoadRequest(nURL);
-		//HTML de prueba
-		//displayWebView.LoadHTMLString("<!DOCTYPE html>\n<html>\n<body bgcolor=\"#91ACFF\">\n\t<font color=\"white\">\n\t\t<h1><center>WebView Demo</center></h1>\n\t\t<p>This code is used demo purpose. Can be used to test following features</p>\n\t\t<ul type=\"square\">\n\t\t\t<li>Load HTML string</li>\n\t\t\t<li>Load HTML string with JS</li>\n\t\t\t<li>Evaluate JS</li>\n\t\t\t<li>Send message to Unity3d</li>\n\t\t</ul>\n\t</font>\n\t<center><input type='button' value=\"Open scheme: unity\" onclick='window.location=\"unity://test/number?var1=12345&var2=67890\"'/></center>\n\n\t<center><input type='button' value=\"Open scheme: mailto\" onclick='window.location=\"mailto://info@airportpark.de\"'/></center>\n\n\t<center><input type='button' value=\"Open scheme: tel\" onclick='window.location=\"tel://+111111111111\"'/></center>\n\n\t<script>\n\tfunction Concat (str1, str2) \n\t{\n\t\treturn str1.concat(str2);\n\t}\n\t</script>\n</body>\n</html>");
+		if (isHtmlText) 
+		{
+			Debug.Log ("Cargando HYTML");
+			displayWebView.LoadHTMLString(nURL);
+		} 
+		else 
+		{
+			displayWebView.LoadRequest (nURL);
+		}
 	}
 
 	public void changeViewControls(eWebviewControlType control)
@@ -216,11 +222,11 @@ public class WebViewManager : Manager<WebViewManager>
 
 	protected void receiveMessageEvent (WebView webview,  WebViewMessage message)
 	{
-		Debug.Log("Received a new message from web view.");
+		/*Debug.Log("Received a new message from web view.");
 		Debug.Log(string.Format("Host: {0}.", 		message.Host));
 		Debug.Log(string.Format("Scheme: {0}.", 		message.Scheme));
 		Debug.Log(string.Format("URL: {0}.", 		message.URL));
-		Debug.Log(string.Format("Arguments: {0}.", 	message.Arguments.ToJSON()));
+		Debug.Log(string.Format("Arguments: {0}.", 	message.Arguments.ToJSON()));*/
 
 		if (webViewMessagesSubscriptors.ContainsKey (message.Scheme)) 
 		{
