@@ -174,7 +174,6 @@ function levelIsUpgraded(existing, incomming)
 
 function getMergedWorld(existing, incomming)
 {
-  //log.info("Mergin world: "+existing.id);
   var result = {};
   result.id       = existing.id;
   result.version  = existing.version + 1;
@@ -249,14 +248,18 @@ function updateLevelsStatistics(existing_worlds, incomming_worlds)
        //Se obtienen los niveles que tienen upgrade de puntos
       var levels = getUpgradedLevelsByPoints(world, incomming_worlds[i]);
       for(var j = 0; j < levels.length; j++)
-      {upgradedLevels["level_"+levels[j].id] = levels[j].points;}
+      {
+        upgradedLevels["level_"+levels[j].id] = levels[j].points;
+      }
 
     }
     else
     {
       //No existe asi que sus niveles todos se guardan
       for(var j = 0; j < incomming_worlds[i].levels.length; j++)
-      {upgradedLevels["level_"+incomming_worlds[i].levels[j].id] = incomming_worlds[i].levels[j].points;}
+      {
+        upgradedLevels["level_"+incomming_worlds[i].levels[j].id] = incomming_worlds[i].levels[j].points;
+      }
 
     }
   }
@@ -285,7 +288,7 @@ function getUpgradedLevelsByPoints(existing, incomming)
     {
       //se agrega solo el entrante si tiene mas puntos
       if(level.points < incomming.levels[i].points)
-      {result.push(incomming.levels[i].points);}
+      {result.push(incomming.levels[i]);}
     }
     else
     {

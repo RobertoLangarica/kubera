@@ -19,13 +19,13 @@ public class LifesManager : Manager<LifesManager>
 	protected float updateLifeTimer;
 
 	protected string life1NotificationID;
-	private LevelsDataManager dataManager;
+	private KuberaDataManager dataManager;
 
 	void Start()
 	{
 		showTimer = false;
 
-		dataManager = (LevelsDataManager.GetInstance () as LevelsDataManager);
+		dataManager = (KuberaDataManager.GetInstance () as KuberaDataManager);
 
 		if (currentUser.playerLifes < currentUser.maximumLifes) 
 		{
@@ -81,7 +81,7 @@ public class LifesManager : Manager<LifesManager>
 			setLifeDate ();
 		}
 
-		(LevelsDataManager.GetInstance () as LevelsDataManager).giveUserLifes (-1);
+		(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (-1);
 
 		//setLifeDate ();
 
@@ -137,7 +137,7 @@ public class LifesManager : Manager<LifesManager>
 			if (lifesGained > 0) 
 			{
 				Debug.Log (lifesGained);
-				(LevelsDataManager.GetInstance () as LevelsDataManager).giveUserLifes (lifesGained);
+				(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (lifesGained);
 
 				updateDateOnData (lifesGained);
 			}
@@ -158,7 +158,7 @@ public class LifesManager : Manager<LifesManager>
 		} 
 		else 
 		{
-			(LevelsDataManager.GetInstance () as LevelsDataManager).giveUserLifes (tempUsr.maximumLifes);
+			(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (tempUsr.maximumLifes);
 		}
 	}
 
@@ -220,7 +220,7 @@ public class LifesManager : Manager<LifesManager>
 
 	protected void gotALife()
 	{
-		(LevelsDataManager.GetInstance () as LevelsDataManager).giveUserLifes ();
+		(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes ();
 
 		if (currentUser.playerLifes == currentUser.maximumLifes) 
 		{

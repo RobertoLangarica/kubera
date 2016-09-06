@@ -52,7 +52,7 @@ public class KuberaLocalNotifications : MonoBehaviour
 		//86400 sconds per day
 
 		//3 days
-		List<WorldData> worldData = LevelsDataManager.GetCastedInstance<LevelsDataManager> ().currentUser.worlds;
+		List<WorldData> worldData = KuberaDataManager.GetCastedInstance<KuberaDataManager> ().currentUser.worlds;
 		int currentLevel = 1;
 
 

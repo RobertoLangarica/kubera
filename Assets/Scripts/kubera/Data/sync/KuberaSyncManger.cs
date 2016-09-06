@@ -8,7 +8,7 @@ namespace Kubera.Data.Sync
 {
 	public class KuberaSyncManger : SyncManager
 	{
-		public LevelsDataManager localData;
+		public KuberaDataManager localData;
 
 
 		/**

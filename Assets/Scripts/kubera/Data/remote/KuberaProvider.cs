@@ -8,7 +8,7 @@ using Kubera.Data.Remote.PFResponseData;
 
 namespace Kubera.Data.Remote
 {
-	public class PlayFabProvider : ServerProvider 
+	public class KuberaProvider : ServerProvider 
 	{
 		public string TITLE_ID = "74A";
 

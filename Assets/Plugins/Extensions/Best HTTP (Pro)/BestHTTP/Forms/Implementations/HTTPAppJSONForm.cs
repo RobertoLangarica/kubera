@@ -9,6 +9,11 @@ namespace BestHTTP.Forms
 	{
 		private byte[] CachedData;
 
+		public HTTPAppJSONForm(bool showDebugInfo = false)
+		{
+			_showDebugInfo = showDebugInfo;
+		}
+
 		public override void PrepareRequest(HTTPRequest request)
 		{
 			//Debug.Log("Preparing HEADER");
@@ -67,7 +72,12 @@ namespace BestHTTP.Forms
 			}
 			sb.Append("}");
 			IsChanged = false;
-			Debug.Log(sb.ToString());
+
+			if(_showDebugInfo)
+			{
+				Debug.Log(sb.ToString());
+			}
+
 			return CachedData = Encoding.UTF8.GetBytes(sb.ToString());
 		}
 	}	
