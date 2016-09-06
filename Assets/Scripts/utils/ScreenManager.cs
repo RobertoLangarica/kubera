@@ -169,17 +169,12 @@ public class ScreenManager : Manager<ScreenManager> {
 
 	IEnumerator loadScene(string level)
 	{
-		Scene lastScene = SceneManager.GetActiveScene ();
-		async = SceneManager.LoadSceneAsync(level);
+		async = SceneManager.LoadSceneAsync(level,LoadSceneMode.Single);
+
 		async.allowSceneActivation = false;
 
 		yield return async.isDone;
 
-		async.allowSceneActivation = true;
-	}
-
-	void asd()
-	{
 		async.allowSceneActivation = true;
 	}
 

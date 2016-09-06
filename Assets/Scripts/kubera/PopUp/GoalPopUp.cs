@@ -48,7 +48,7 @@ public class GoalPopUp : PopUpBase {
 
 	void Start()
 	{
-		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.15f);
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.10f);
 
 		//TODO checar login a facebook
 		fbLogin ();
@@ -81,7 +81,7 @@ public class GoalPopUp : PopUpBase {
 
 	protected void fbLogin()
 	{
-		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>() && KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 		{
 			//TODO HARCODING
 			inviteFriendsText.text = "invita Amigos";
