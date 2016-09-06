@@ -74,8 +74,7 @@ public class KeyBoardManager : MonoBehaviour
 			addButton (clone);
 		}
 
-		switchAllImages (false);
-		StartCoroutine("removeGridContainerAndMoveAnchors",0);
+		Invoke("removeGridContainerAndMoveAnchors",0.1f);
 	}
 
 	protected void addLetterToContainer(Letter letter)
@@ -117,8 +116,6 @@ public class KeyBoardManager : MonoBehaviour
 
 		yield return new WaitForEndOfFrame();
 		keys.Adjust ();
-		switchAllImages (true);
-		gameObject.SetActive (false);
 	}
 
 	public void hideKeyBoard()
@@ -131,6 +128,7 @@ public class KeyBoardManager : MonoBehaviour
 	{
 		gameObject.SetActive (true);
 		gameManager.allowGameInput (false);
+		moveAnchorsTo0 ();
 
 		if(AudioManager.GetInstance())
 		{
@@ -156,13 +154,13 @@ public class KeyBoardManager : MonoBehaviour
 		hideKeyBoard ();
 	}
 
-	protected void switchAllImages(bool val)
+	protected void moveAnchorsTo0()
 	{
-		Image[] temp = transform.parent.GetComponentsInChildren<Image> ();
+		RectTransform rectT = GetComponent<RectTransform> ();
 
-		for(int i = 0;i < temp.Length;i++)
-		{
-			temp [i].enabled = val;
-		}
+		rectT.anchorMax = new Vector2 (rectT.anchorMax.x,1);
+		rectT.anchorMin = new Vector2 (rectT.anchorMin.x,0);
+
+		Debug.Log ("Debi moverme a 0");
 	}
 }
