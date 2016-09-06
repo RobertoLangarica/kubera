@@ -615,5 +615,50 @@
 				<language id="default" text="PENTATONICA"/>
 			</languages>
 		</text>
+		<!--
+		NotificationTexts
+		-->
+		<text id="Life_1_Notification">
+			<languages>
+				<language id="english" text="Pass level {{level}}, you just got a life. Could you pass it?"/>
+				<language id="spanish" text="Vence el nivel {{level}}, ya tienes una vida. ¿Podras lograrlo"/>
+				<language id="default" text="Vence el nivel {{level}}, ya tienes una vida. ¿Podras lograrlo"/>
+			</languages>
+		</text>
+		<text id="FullLifes_Notification">
+			<languages>
+				<language id="english" text="Your lives are fully replenished."/>
+				<language id="spanish" text="¡Tus vidas se han recargado por completo!"/>
+				<language id="default" text="¡Tus vidas se han recargado por completo!"/>
+			</languages>
+		</text>
+		<text id="3_Days_Without_Playing">
+			<languages>
+				<language id="english" text="The level {{level}}, awaits you. Could you pass it?"/>
+				<language id="spanish" text="El nivel {{level}}, te espera. ¿Podras pasarlo?"/>
+				<language id="default" text="El nivel {{level}}, te espera. ¿Podras pasarlo?"/>
+			</languages>
+		</text>
+		<text id="7_Days_Without_Playing">
+			<languages>
+				<language id="english" text="Your friends in Kubera miss you."/>
+				<language id="spanish" text="Tus amigos en Kubera te extrañan."/>
+				<language id="default" text="Tus amigos en Kubera te extrañan."/>
+			</languages>
+		</text>
+		<text id="14_Days_Without_Playing">
+			<languages>
+				<language id="english" text="Words won’t make by themselves."/>
+				<language id="spanish" text="Esas palabras no se van a hacer solas."/>
+				<language id="default" text="Esas palabras no se van a hacer solas."/>
+			</languages>
+		</text>
+		<text id="30_Days_Without_Playing">
+			<languages>
+				<language id="english" text="Your friends in Kubera miss you."/>
+				<language id="spanish" text="Tus amigos en Kubera te extrañan."/>
+				<language id="default" text="Tus amigos en Kubera te extrañan."/>
+			</languages>
+		</text>
 	</texts>
 </gameText>

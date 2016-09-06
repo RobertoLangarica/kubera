@@ -31,6 +31,7 @@ namespace Kubera.Data
 
 		public void savePassedLevel(string levelName, int stars, int points)
 		{
+			Debug.Log ("Aqui!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			Level lvl = levelsList.getLevelByName(levelName);
 			WorldData world = getOrCreateWorldById(lvl.world.ToString());
 
@@ -445,6 +446,13 @@ namespace Kubera.Data
 		public int getLevelsCountByWorld(int world)
 		{
 			return getLevelsOfWorld(world).Length;
+		}
+
+		public void giveUserLifes(int amount = 1)
+		{
+			currentUser.giveLifeToPlayer (amount);
+
+			saveLocalData ();
 		}
 	}
 }

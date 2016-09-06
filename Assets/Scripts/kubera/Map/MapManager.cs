@@ -22,7 +22,6 @@ public class MapManager : MonoBehaviour
 	public List<GameObject> worlds;
 	protected GameObject WorldPrefab;
 
-	protected LifesManager lifesHUDManager;
 	protected PopUpManager popUpManager;
 	protected ParalaxManager paralaxManager;
 	protected InvitationToReview invitationToReview;
@@ -48,7 +47,6 @@ public class MapManager : MonoBehaviour
 	void Start()
 	{
 		popUpManager = FindObjectOfType<PopUpManager> ();
-		lifesHUDManager = FindObjectOfType<LifesManager> ();
 		paralaxManager = FindObjectOfType<ParalaxManager> ();
 		goalManager = FindObjectOfType<GoalManager> ();
 		invitationToReview = FindObjectOfType<InvitationToReview> ();
@@ -300,11 +298,13 @@ public class MapManager : MonoBehaviour
 
 	public void OnLifesPressed()
 	{
-		if (UserDataManager.instance.playerLifes == UserDataManager.instance.maximumLifes)
+		KuberaUser currentUser = (LevelsDataManager.GetInstance () as LevelsDataManager).currentUser;
+		
+		if (currentUser.playerLifes == currentUser.maximumLifes)
 		{
 			openPopUp (fullLifes_PopUp);
 		}
-		else if (UserDataManager.instance.playerLifes == 0)
+		else if (currentUser.playerLifes == 0)
 		{
 			openPopUp (noLifes_PopUp);
 		}
@@ -575,19 +575,20 @@ public class MapManager : MonoBehaviour
 			//paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel( mapLevels [0]));
 			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(currentLevel));
 		}
-
-
 	}
 
 	protected void activateStairs()
 	{
-		FindObjectOfType<Stairs> ().animateStairs ();
-
+		Stairs stairs = FindObjectOfType<Stairs> ();
+		if(stairs)
+		{
+			stairs.animateStairs ();
+		}
 	}
 
 	public void changeCurrentWorld(int world,bool isFirst, bool isLast)
 	{
-
+		toDoor = false;
 		if(isFirst)
 		{
 			first = true;
