@@ -265,19 +265,11 @@ function updateLevelsStatistics(existing_worlds, incomming_worlds)
   var keys = Object.keys(upgradedLevels);
   if(keys.length > 0)
   {
-    var toSave = [];
-
-    for(var i = 0; i < keys.length; i++)
-    {
-      toSave.push({StatisticName:keys[i], Value:upgradedLevels[keys[i]]});
-    }
-
     server.UpdateUserStatistics (
       {
           PlayFabId: currentPlayerId,
-          Statistics: toSave
-      }
-    );
+          UserStatistics: upgradedLevels
+      });
   }
 }
 

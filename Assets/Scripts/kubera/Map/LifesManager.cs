@@ -19,14 +19,13 @@ public class LifesManager : Manager<LifesManager>
 	protected float updateLifeTimer;
 
 	protected string life1NotificationID;
-	protected KuberaUser currentUser;
+	private LevelsDataManager dataManager;
 
 	void Start()
 	{
-		return;
 		showTimer = false;
 
-		currentUser = (LevelsDataManager.GetInstance () as LevelsDataManager).currentUser;
+		dataManager = (LevelsDataManager.GetInstance () as LevelsDataManager);
 
 		if (currentUser.playerLifes < currentUser.maximumLifes) 
 		{
@@ -70,6 +69,8 @@ public class LifesManager : Manager<LifesManager>
 			Debug.Log ("Se inicia el update");
 		}*/
 	}
+
+	public KuberaUser currentUser{get{return dataManager.currentUser;}}
 
 	public void takeALife()
 	{
