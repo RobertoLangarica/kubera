@@ -45,6 +45,9 @@ namespace Data.Remote
 		public virtual void createUserData(string id, string jsonData){Debug.LogError("No existe implementación de esta función");}
 		public virtual void createUserData<T>(string id, string jsonData,T objectToSave){Debug.LogError("No existe implementación de esta función");}
 
+
+		public virtual void getLeaderboardData(string id, string leaderboardName, int maxResultsCount){Debug.LogError("No existe implementación de esta función");}
+
 		public virtual void stopAndRemoveCurrentRequests()
 		{
 			foreach(BaseRequest request in requests)

@@ -10,6 +10,8 @@ namespace Kubera.Data.Remote
 {
 	public class KuberaProvider : ServerProvider 
 	{
+		public Action<PFLeaderboardData> OnLeaderboardObtained;
+
 		public string TITLE_ID = "74A";
 
 		private bool isLogged = false;
@@ -69,6 +71,7 @@ namespace Kubera.Data.Remote
 			//DEPRECATED en Kubera
 			creatingUserRequest = queue.getComponentAttachedToGameObject<PFCreateUserRequest<Kubera.Data.KuberaUser>>("PF_UserCreate");
 			creatingUserRequest.id = "create_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
+			creatingUserRequest.showDebugInfo = false;
 			creatingUserRequest.persistAfterFailed = true;
 			creatingUserRequest.initialize(TITLE_ID,jsonData, sessionTicket, objectToSave);
 			creatingUserRequest.OnComplete += afterUserCreated;
@@ -106,6 +109,7 @@ namespace Kubera.Data.Remote
 			PFGetUserRequest request = queue.getComponentAttachedToGameObject<PFGetUserRequest>("PF_GetUserData");
 			request.id = "get_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
 			request.persistAfterFailed = true;
+			request.showDebugInfo = false;
 			request.initialize(TITLE_ID, extraData, aboveVersion, sessionTicket);
 			request.OnComplete += OnUserDataObtained;
 
@@ -146,6 +150,7 @@ namespace Kubera.Data.Remote
 		{
 			PFUpdateDataRequest request = queue.getComponentAttachedToGameObject<PFUpdateDataRequest>("PF_UpdateUserData");
 			request.id = "update_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
+			request.showDebugInfo = false;
 			request.persistAfterFailed = true;
 			request.initialize(TITLE_ID,jsonData, sessionTicket, objectToSave);
 			request.OnComplete += OnUserDataUpdated;
@@ -165,6 +170,28 @@ namespace Kubera.Data.Remote
 				remoteUser.PlayFab_dataVersion = request.data.data.FunctionResult.DataVersion;
 
 				OnDataUpdated(JsonUtility.ToJson(remoteUser));
+			}
+		}
+
+		public override void getLeaderboardData (string id, string leaderboardName, int maxResultsCount)
+		{
+			PFGetLeaderboardRequest request = queue.getComponentAttachedToGameObject<PFGetLeaderboardRequest>("PF_LeaderboardRequest");
+			request.id = "leaderboard_"+id+"_"+leaderboardName+"_"+UnityEngine.Random.Range(0,99999).ToString("00");
+			request.persistAfterFailed = true;
+			request.initialize(TITLE_ID, id, leaderboardName, maxResultsCount, sessionTicket);
+			request.OnComplete += OnLeaderboardDataObtained;
+
+			addLoginDependantRequest(request,false);
+		}
+
+		private void OnLeaderboardDataObtained(string request_id)
+		{
+			if(OnLeaderboardObtained != null)
+			{
+				PFGetLeaderboardRequest request = (PFGetLeaderboardRequest)getRequestById(request_id);
+				request.data.data.name = request.statisticUsed;
+
+				OnLeaderboardObtained(request.data.data);
 			}
 		}
 

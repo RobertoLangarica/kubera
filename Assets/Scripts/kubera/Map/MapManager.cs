@@ -357,6 +357,8 @@ public class MapManager : MonoBehaviour
 		
 		setGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters(),PersistentData.GetInstance().currentLevel.name,starsReached);
 
+		//HACK temporal para probar el leaderboard
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().getLevelLeaderboard(pressed.lvlName);
 		//SceneManager.LoadScene ("Game");
 	}
 
