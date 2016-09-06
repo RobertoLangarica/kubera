@@ -5,7 +5,7 @@ using DG.Tweening;
 public class BlockPowerUp : PowerupBase
 {
 	protected InputBlockPowerUp inputBlockPowerUp;
-
+	protected GameManager gameManager;
 	void Start()
 	{
 		inputBlockPowerUp = FindObjectOfType<InputBlockPowerUp> ();
@@ -14,6 +14,7 @@ public class BlockPowerUp : PowerupBase
 		inputBlockPowerUp.OnPowerupCompletedNoGems += completePowerUpNoGems;
 			
 		inputBlockPowerUp.enabled = false;
+		gameManager = FindObjectOfType<GameManager> ();
 	}
 
 	public override void activate (bool canUse)
@@ -32,6 +33,8 @@ public class BlockPowerUp : PowerupBase
 	{
 		inputBlockPowerUp.enabled = false;
 		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SQUARE_POWERUP);
+
+		gameManager.updatePiecesLightAndUpdateLetterState ();
 		OnComplete ();
 	}
 

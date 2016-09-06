@@ -93,7 +93,6 @@ public class FacebookManager : Manager<FacebookManager>
 
 	public bool canRequestMoreFriends()
 	{
-		print (FacebookPersistentData.GetInstance().infoRequested);
 		if(FacebookPersistentData.GetInstance().infoRequested)
 		{
 			return false;
@@ -506,7 +505,7 @@ public class FacebookManager : Manager<FacebookManager>
 
 	protected void actualizeMessageNumber()
 	{
-		facebookNews.actualizeMessageNumber (messageCount.ToString());
+		//facebookNews.actualizeMessageNumber (messageCount.ToString());
 	}
 
 	void OnDestroy() 

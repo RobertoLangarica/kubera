@@ -58,7 +58,6 @@ public class MapManager : MonoBehaviour
 			if(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds.Count != 0)
 			{
 				int worldCount = LevelsDataManager.GetCastedInstance<LevelsDataManager> ().getWorldCount ();
-				print ("worldCount "+ worldCount);
 
 				currentWorld = int.Parse(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUser.worlds.Count-1].id);
 
@@ -171,6 +170,12 @@ public class MapManager : MonoBehaviour
 			break;
 		case "closeRetry":
 			showWorld();
+			break;
+		case "toWorldTraveler":
+			openPopUp ("worldsPopUp");
+			break;
+		case "toFacebookMessages":
+			openPopUp ("facebookNews");
 			break;
 		default:
 			break;
@@ -343,7 +348,6 @@ public class MapManager : MonoBehaviour
 
 	protected void OnLevelUnlockedPressed(MapLevel pressed)
 	{
-		print ("OnLevelUnlockedPressed");
 		PersistentData.GetInstance ().setLevelNumber (int.Parse (pressed.lvlName));
 		PersistentData.GetInstance ().lastLevelPlayedName = pressed.lvlName;
 		PersistentData.GetInstance ().nextLevelIsReached = pressed.nextLevelIsReached;
@@ -472,7 +476,6 @@ public class MapManager : MonoBehaviour
 
 				if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
 				{
-					print ("uhu");
 					toDoor = true;
 					toNextLevel = false;
 					//FindObjectOfType<Stairs> ().animateStairs ();
@@ -572,19 +575,20 @@ public class MapManager : MonoBehaviour
 			//paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel( mapLevels [0]));
 			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(currentLevel));
 		}
-
-
 	}
 
 	protected void activateStairs()
 	{
-		FindObjectOfType<Stairs> ().animateStairs ();
-
+		Stairs stairs = FindObjectOfType<Stairs> ();
+		if(stairs)
+		{
+			stairs.animateStairs ();
+		}
 	}
 
 	public void changeCurrentWorld(int world,bool isFirst, bool isLast)
 	{
-
+		toDoor = false;
 		if(isFirst)
 		{
 			first = true;
@@ -767,7 +771,6 @@ public class MapManager : MonoBehaviour
 
 	protected FriendInfo isThereAnyFriendOnLevel(int world, string level)
 	{
-		print ("isThereAnyFriendOnLevel "+level + " "+world);
 		return friendsOnWorldManager.getFriendOnLevel (world, level);
 	}
 

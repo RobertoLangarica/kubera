@@ -104,8 +104,8 @@ public class KeyBoardManager : MonoBehaviour
 
 			if(AudioManager.GetInstance())
 			{
-				AudioManager.GetInstance().Stop("letterChoosed");
-				AudioManager.GetInstance().Play("letterChoosed");
+				AudioManager.GetInstance().Stop("letterKeyboardChoosed");
+				AudioManager.GetInstance().Play("letterKeyboardChoosed");
 			}
 		});
 	}

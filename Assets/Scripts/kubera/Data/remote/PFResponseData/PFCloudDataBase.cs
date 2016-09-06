@@ -46,7 +46,7 @@ namespace Kubera.Data.Remote.PFResponseData
 		public int HttpRequestsIssued;
 		public ScriptExecutionError Error;
 
-		public bool hasError()
+		public virtual bool hasError()
 		{
 			return (!string.IsNullOrEmpty(Error.Error));
 		}

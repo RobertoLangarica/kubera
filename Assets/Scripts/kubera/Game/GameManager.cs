@@ -65,6 +65,8 @@ public class GameManager : MonoBehaviour
 	private Level currentLevel;
 	private List<Letter> gridCharacters = new List<Letter>();
 
+	protected bool cancelBonify;
+
 	void Start()
 	{
 		wordManager			= FindObjectOfType<WordManager>();
@@ -105,12 +107,7 @@ public class GameManager : MonoBehaviour
 
 		powerupManager.getPowerupByType (PowerupBase.EType.ROTATE).OnPowerupCompleted += rotationDeactivated;
 		inputRotate.OnRotateArrowsActivated += rotationActivated;
-
-		if(ScreenManager.instance)
-		{
-			ScreenManager.instance.sceneFinishLoading ();
-		}
-
+	
 		if (PersistentData.GetInstance().abcDictionary.getAlfabet () == null) 
 		{
 			PersistentData.GetInstance ().onDictionaryFinished += startGame;
@@ -122,7 +119,6 @@ public class GameManager : MonoBehaviour
 		//TODO: hardcoding
 		bonificationPiecePrefab.SetActive (true);
 		//TODO: Control de flujo de juego con un init
-	
 	}
 
 	protected void startGame()
@@ -141,6 +137,17 @@ public class GameManager : MonoBehaviour
 
 		refreshCurrentWordScoreOnHUD (wordManager.wordPoints);
 
+		StartCoroutine (finishLoadingFix ());
+	}
+
+	IEnumerator finishLoadingFix()
+	{
+		yield return new WaitForEndOfFrame ();
+
+		if(ScreenManager.instance)
+		{
+			ScreenManager.instance.sceneFinishLoading ();
+		}
 	}
 
 	void Update()
@@ -171,6 +178,12 @@ public class GameManager : MonoBehaviour
 			onUsersAction (1, 0);
 			//activatePopUp ("noOptionsPopUp");
 			//onUsersAction (0);
+		}
+
+		if (Input.GetKeyUp (KeyCode.Y)) 
+		{
+			goalManager.OnGoalAchieved ();
+			cancelBonify = true;
 		}
 
 		if (Input.GetKeyUp (KeyCode.Q)) 
@@ -483,7 +496,7 @@ public class GameManager : MonoBehaviour
 	public void OnAllCellsFlipped()
 	{
 		allowGameInput (true);
-		Invoke("checkIfLose",0.2f);
+		Invoke("checkIfLose",0);
 	}
 
 	public void showShadowOnPiece (GameObject obj, bool showing = true)
@@ -767,7 +780,7 @@ public class GameManager : MonoBehaviour
 		return canFit;
 	}
 
-	protected void updatePiecesLightAndUpdateLetterState()
+	public void updatePiecesLightAndUpdateLetterState()
 	{
 		updatePiecesLight (checkIfIsPosiblePutPieces ());
 		updateLettersState ();
@@ -823,6 +836,7 @@ public class GameManager : MonoBehaviour
 		if (!gameOver) 
 		{
 			allowGameInput (false,true);
+			useHintWord (false);
 			//Debug.Log ("Gano de verdad.");
 			gameOver = true;
 			unlockPowerUp ();
@@ -873,8 +887,8 @@ public class GameManager : MonoBehaviour
 				addMovementPoint ();
 				if(AudioManager.GetInstance())
 				{
-					AudioManager.GetInstance().Stop("point");
-					AudioManager.GetInstance().Play("point");
+					AudioManager.GetInstance().Stop("letterPoint");
+					AudioManager.GetInstance().Play("letterPoint");
 				}
 			}
 			else
@@ -962,18 +976,39 @@ public class GameManager : MonoBehaviour
 		} 
 		else 
 		{
-			#if UNITY_EDITOR
-			if(!LevelsDataManager.GetInstance())
-			{
+			afterBonification ();
+		}
+	}
 
+	protected void afterBonification()
+	{
+		#if UNITY_EDITOR
+		if(!LevelsDataManager.GetInstance())
+		{
+
+		}
+		else
+		#endif	
+		{
+			if(PersistentData.GetInstance ().fromGameToLevels)
+			{
+				return;
+			}
+			#if UNITY_EDITOR
+			if(cancelBonify)
+			{
+				//Se guarda en sus datos que ha pasado el nivel
+				(LevelsDataManager.GetInstance() as LevelsDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
+					3,Random.Range(70,200));
+
+				PersistentData.GetInstance ().fromGameToLevels = true;
+				PersistentData.GetInstance ().fromLoose = false;
+
+				Invoke ("toLevels", 0.75f);
 			}
 			else
 			#endif	
 			{
-				if(PersistentData.GetInstance ().fromGameToLevels)
-				{
-					return;
-				}
 				//Se guarda en sus datos que ha pasado el nivel
 				(LevelsDataManager.GetInstance() as LevelsDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
 					hudManager.getEarnedStars(),pointsCount);
@@ -1115,7 +1150,6 @@ public class GameManager : MonoBehaviour
 			//TODO: consumimos gemas
 
 		}
-		updatePiecesLightAndUpdateLetterState ();
 
 		allowGameInput(true);
 	}
@@ -1199,7 +1233,14 @@ public class GameManager : MonoBehaviour
 			//ScreenManager.instance.GoToScene ("Levels");
 			break;
 		case "winPopUpEnd":
-			Invoke ("winBonification", piecePositionedDelay * 2);
+			if(cancelBonify)
+			{
+				afterBonification ();
+			}
+			else
+			{
+				Invoke ("winBonification", piecePositionedDelay * 2);
+			}
 			break;
 		case "looseNoMovements":
 			activatePopUp ("SecondChance");
@@ -1210,7 +1251,8 @@ public class GameManager : MonoBehaviour
 			ScreenManager.instance.GoToScene ("Levels");
 			break;
 		default:		
-				Invoke ("allowInputFromInvoke", 0.5f);
+			//print ("quien lo llama?");
+				Invoke ("allowInputFromInvoke", 0);
 			break;
 		}
 	}

@@ -77,7 +77,6 @@ public class PowerupBase : MonoBehaviour
 				tempS.sprite = Sprite.Create (powerUpImage.texture, powerUpImage.textureRect, new Vector2 (0.5f, 0.5f));
 				tempS.color = Color.white;
 				powerUpImage = tempS.sprite;
-				print (powerUpImage);
 			}
 		}
 	}

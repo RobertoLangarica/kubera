@@ -98,6 +98,7 @@ public class InputWords : MonoBehaviour
 
 				if(letter == null)
 				{
+					gridLetter = null;
 					return;
 				}
 
@@ -299,6 +300,14 @@ public class InputWords : MonoBehaviour
 
 			allowPushDownAnimation = true;
 			allowAnimation = false;
+
+			if(!gridLetter.GetComponent<Letter>().isPreviouslySelected())
+			{
+				if(AudioManager.GetInstance())
+				{					
+					AudioManager.GetInstance ().Play ("letterChoosed");
+				}
+			}
 		}
 	}
 

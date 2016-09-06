@@ -10,28 +10,30 @@ public class Stairs : MonoBehaviour {
 	public int toWorld;
 
 	public Image[] stairs;
-
+	public float lastPosition;
 	void Start()
 	{
 		mapManager = FindObjectOfType<MapManager> ();
+
+		lastPosition = stairs [stairs.Length - 1].rectTransform.anchoredPosition.x;
 	}
 
 	void Update()
 	{
-		/*if (Input.GetKey (KeyCode.C))
+		if (Input.GetKey (KeyCode.C))
 		{
 			animateStairs ();
-		}*/
+		}
 
 		if(!active)
 		{
 			return;
 		}
-
+		
 		for(int i=0; i<stairs.Length; i++)
 		{
 			stairs [i].rectTransform.anchoredPosition = new Vector2 (stairs [i].rectTransform.anchoredPosition.x + 1, stairs [i].rectTransform.anchoredPosition.y + 1);
-			if(stairs[i].rectTransform.anchoredPosition.x >= 320)
+			if(stairs[i].rectTransform.anchoredPosition.x >= lastPosition)
 			{
 				stairs [i].rectTransform.anchoredPosition = Vector2.zero;
 			}

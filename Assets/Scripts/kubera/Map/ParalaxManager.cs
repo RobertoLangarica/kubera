@@ -14,6 +14,7 @@ public class ParalaxManager : MonoBehaviour {
 	public DOnUnsubscribe OnUnsubscribe;
 
 	public RectTransform rectTransform;
+	public RectTransform canvasRectTransform;
 
 	protected Vector2 oldPos;
 	public ScrollRect scrollRect;

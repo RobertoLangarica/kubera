@@ -46,7 +46,6 @@ public class BombPowerUp : PowerupBase
 
 		if(AudioManager.GetInstance())
 		{
-			AudioManager.GetInstance().Stop("bomb");
 			AudioManager.GetInstance().Play("bomb");
 		}
 	}
@@ -55,6 +54,11 @@ public class BombPowerUp : PowerupBase
 	{
 		bombInput.OnCellSelected -= onOverCellChanged;
 		Cell cellSelected = cellsManager.getCellUnderPoint(bombGO.transform.position);
+
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("bomb");
+		}
 
 		if(cellSelected != null)
 		{
@@ -69,6 +73,8 @@ public class BombPowerUp : PowerupBase
 
 					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_POWERUP);
 					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_SPECIFIC_COLOR);
+
+					gameManager.updatePiecesLightAndUpdateLetterState ();
 
 					OnComplete ();
 				}

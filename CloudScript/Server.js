@@ -6,13 +6,14 @@ handlers.updateUserLevels = function(args, context)
   var existing_worlds = [];
 
   //Filtrando los mundos entrantes
-  for (var i = 0; i < args.properties.length; i++)
+  var keys = Object.keys(args);
+  for (var i = 0; i < keys.length; i++)
   {
-    if(args.properties[i].name.includes("world_"))
+    if(String(keys[i]).includes("world_"))
     {
-      world_keys.push(args.properties[i].name);
-      incomming_worlds.push(args.properties[i].value);
-      incomming_worlds[incomming_worlds.length-1].world_key = args.properties[i].name;
+      world_keys.push(String(keys[i]));
+      incomming_worlds.push(args[keys[i]]);
+      incomming_worlds[incomming_worlds.length-1].world_key = String(keys[i]);
     }
   }
 
@@ -23,12 +24,13 @@ handlers.updateUserLevels = function(args, context)
   });
 
   //Filtrando los mundos existentes
-  for (var i = 0; i < currPlayer.Data.properties.length; i++)
+  keys = Object.keys(currPlayer.Data);
+  for (var i = 0; i < keys.length; i++)
   {
-    if(currPlayer.Data.properties[i].name.includes("world_"))
+    if(String(keys[i]).includes("world_"))
     {
-      existing_worlds.push(currPlayer.Data.properties[i].value);
-      existing_worlds[existing_worlds.length-1].world_key = currPlayer.Data.properties[i].name;
+      existing_worlds.push(currPlayer.Data[keys[i]]);
+      existing_worlds[existing_worlds.length-1].world_key = String(keys[i]);
     }
   }
 
@@ -36,22 +38,31 @@ handlers.updateUserLevels = function(args, context)
   var toSave = getOnlyUpgradedWorlds(existing_worlds, incomming_worlds);
 
   //Hay algo que guardar?
-	if(toSave.properties.length > 0)
+	if(Object.keys(toSave).length > 0)
   {
     //Guardamos los nuevos mundos
     var updatedUserDataResult = server.UpdateUserData({
       PlayFabId: currentPlayerId,
-      Data: toSave
+      Data: toSave,
+      Permission:"Public"
     });
 
-    //Nueva version
-    return {DataVersion:updatedUserDataResult.Data["DataVersion"]}
 
+    if(!updatedUserDataResult)
+    {
+    	//ERROR!
+      return {error:true}
+    }
+	else
+    {
+      //Nueva version
+    return {DataVersion:updatedUserDataResult["DataVersion"], error: false}
+    }
   }
 	else
   {
     //No hay cambios y respondemos con la misma version
-    return {DataVersion:currPlayer.Data["DataVersion"]}
+    return {DataVersion:currPlayer["DataVersion"], error: false}
   }
 }
 

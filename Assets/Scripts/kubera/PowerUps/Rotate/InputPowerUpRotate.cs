@@ -167,6 +167,12 @@ public class InputPowerUpRotate : MonoBehaviour
 			currentSelected.transform.DOScale(selectedScale,.1f).SetId("InputRotate_SelectedScale");
 			gameManager.showShadowOnPiece (currentSelected, true);
 
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop("pieceSelected");
+				AudioManager.GetInstance().Play("pieceSelected");
+			}
+
 			isLongPressed = true;
 		}
 	}

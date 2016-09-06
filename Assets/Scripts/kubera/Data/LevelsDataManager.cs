@@ -46,7 +46,6 @@ namespace Kubera.Data
 			}
 			else
 			{
-				Debug.Log("Level null:");
 				level = new LevelData(levelName);
 				level.points	= points;
 				level.stars		= stars;
@@ -60,9 +59,9 @@ namespace Kubera.Data
 			}
 
 			//Cuidamos de no sobreescribir algun valor previo
-			currentData.isDirty = currentData.isDirty || world.isDirty;
+			currentUser.isDirty = currentUser.isDirty || world.isDirty;
 
-			if(currentData.isDirty)
+			if(currentUser.isDirty)
 			{
 				saveLocalData(false);
 
@@ -72,7 +71,6 @@ namespace Kubera.Data
 				worldToSend.addLevel(level);
 				user.addWorld(worldToSend);
 
-				Debug.Log("Nivel pasado");
 				syncManager.updateData(user);	
 			}
 		}
@@ -188,9 +186,9 @@ namespace Kubera.Data
 			}
 
 			//Cuidamos de no sobreescribir algun valor previo
-			currentData.isDirty = currentData.isDirty || world.isDirty;
+			currentUser.isDirty = currentUser.isDirty || world.isDirty;
 
-			if(currentData.isDirty)
+			if(currentUser.isDirty)
 			{
 				saveLocalData(false);
 
@@ -339,7 +337,7 @@ namespace Kubera.Data
 			}
 
 			currentUserId = newId;
-			currentData.isDirty = currentUser.isDirty;
+			//currentData.isDirty = currentUser.isDirty;
 			saveLocalData(false);
 		}
 			
@@ -386,7 +384,7 @@ namespace Kubera.Data
 
 			base.changeCurrentuser (newUserId);
 
-			currentData.isDirty = currentUser.isDirty;
+			//currentData.isDirty = currentUser.isDirty;
 			saveLocalData(false);
 		}
 			
@@ -394,7 +392,7 @@ namespace Kubera.Data
 		public override void setUserAsAnonymous ()
 		{
 			base.setUserAsAnonymous ();
-			currentData.isDirty = currentUser.isDirty;
+			//currentData.isDirty = currentUser.isDirty;
 		}
 
 		public void diffUser(KuberaUser remoteUser, bool ignoreVersion = false)
@@ -406,6 +404,7 @@ namespace Kubera.Data
 			}
 
 			currentUser.compareAndUpdate(remoteUser, ignoreVersion);
+			saveLocalData(false);
 		}
 
 		/**
@@ -424,9 +423,7 @@ namespace Kubera.Data
 
 		public string getCSVKeysToQuery()
 		{
-			//string result = "id,facebookId,version,DataVersion";
 			string result = "version,DataVersion";
-			//string result = "DataVersion";
 
 			//Mundos
 			foreach (int key in levelsList.worlds.Keys)

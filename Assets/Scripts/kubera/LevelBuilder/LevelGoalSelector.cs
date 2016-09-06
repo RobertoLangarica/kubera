@@ -333,7 +333,6 @@ namespace LevelBuilder
 						result += ",";
 					}
 				}
-				print (result);
 			}			
 			else if(antonymToggle.isOn)
 			{
@@ -355,7 +354,6 @@ namespace LevelBuilder
 						result += ",";
 					}
 				}
-				print (result);
 			}
 			else if(toggleWord.isOn)
 			{
@@ -369,7 +367,6 @@ namespace LevelBuilder
 				word = words.Replace('Á','A').Replace('É','E').Replace('Í','I').Replace('Ó','O').Replace('Ú','U').Replace('Ü','U');
 				word =word.ToUpper ();
 				result += word;
-				print (result);
 			}	
 
 			return result;

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -26,10 +27,11 @@ public class ScreenManager : Manager<ScreenManager> {
 	protected AsyncOperation waitingScreen = null;
 	protected int framesBeforeSwitch;
 
-	public SpriteRenderer modal;
+	public Image modal;
 
 	public delegate void DOnFinishLoadScene();
 	public DOnFinishLoadScene OnFinish;
+	protected AsyncOperation async;
 
 	void Awake()
 	{
@@ -51,16 +53,6 @@ public class ScreenManager : Manager<ScreenManager> {
 		backScreens = new Dictionary<string, string>();
 	
 		transform.SetAsLastSibling(); 
-
-		if(modal != null)
-		{
-			float width = modal.sprite.bounds.size.x;
-			float height = modal.sprite.bounds.size.y;
-			float worldScreenHeight = Camera.main.orthographicSize * 2;
-			float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
-
-			modal.transform.localScale = new Vector3 (worldScreenWidth / width,worldScreenHeight / height);
-		}
 	}
 
 	void Start()
@@ -163,37 +155,32 @@ public class ScreenManager : Manager<ScreenManager> {
 		{
 			backScreens.Add(newScene,SceneManager.GetActiveScene().name);
 		}
+
 		if(modal != null)
 		{			
-			modal.DOFade (1, 0.5f).SetId(modal);
+			modal.DOFade (1, 0.25f).SetId(modal).OnComplete(()=>{StartCoroutine (loadScene (newScene));});
 		}
-
-		StartCoroutine (loadScene (newScene));
-		//SceneManager.LoadScene (newScene);
+		else
+		{
+			SceneManager.LoadScene (newScene);
+		}
 	}
 
 
 	IEnumerator loadScene(string level)
 	{
-		AsyncOperation async = SceneManager.LoadSceneAsync(level);
+		Scene lastScene = SceneManager.GetActiveScene ();
+		async = SceneManager.LoadSceneAsync(level);
 		async.allowSceneActivation = false;
+
 		yield return async.isDone;
-		if (modal != null) 
-		{
-			if(DOTween.IsTweening(modal))
-			{
-				modal.DOFade (1, 0.5f).OnComplete(()=>{async.allowSceneActivation = true;});
-			}
-			else
-			{
-				async.allowSceneActivation = true;
-				print ("el tween ya no esta");
-			}
-		}
-		else
-		{
-			async.allowSceneActivation = true;
-		}
+
+		async.allowSceneActivation = true;
+	}
+
+	void asd()
+	{
+		async.allowSceneActivation = true;
 	}
 
 	public void sceneFinishLoading()

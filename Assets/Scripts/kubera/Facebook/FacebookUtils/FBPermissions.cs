@@ -67,8 +67,9 @@ public class FBPermissions : MonoBehaviour {
 			{
 				if (FB.IsLoggedIn)
 				{
-					Debug.Log("Logged in with ID: " + AccessToken.CurrentAccessToken.UserId +
+					/*Debug.Log("Logged in with ID: " + AccessToken.CurrentAccessToken.UserId +
 						"\nGranted Permissions: " + AccessToken.CurrentAccessToken.Permissions.ToCommaSeparateList());
+						*/
 				}
 				else
 				{

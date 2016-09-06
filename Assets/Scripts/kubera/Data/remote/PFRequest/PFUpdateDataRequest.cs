@@ -9,11 +9,11 @@ using Kubera.Data.Remote.PFResponseData;
 
 namespace Kubera.Data.Remote
 {
-	public class PFUpdateDataRequest<T> : BaseRequest {
+	public class PFUpdateDataRequest : BaseRequest {
 
 		private HTTPRequest request;
 		public PFResponseBase<PFAfterUpdateData> data;
-		public T dataSended;
+		public object dataSended;
 
 		public override void start ()
 		{
@@ -23,7 +23,7 @@ namespace Kubera.Data.Remote
 			request.Send();
 		}
 
-		public void initialize(string titleID,string jsonData, string sessionTicket, T dataToSend)
+		public void initialize(string titleID,string jsonData, string sessionTicket, object dataToSend)
 		{
 			request = new HTTPRequest(new System.Uri("https://"+titleID+".playfabapi.com/Client/ExecuteCloudScript"), HTTPMethods.Post);
 			request.AddHeader("X-Authentication",sessionTicket);

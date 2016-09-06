@@ -46,4 +46,9 @@ public class WorldsPopUp : PopUpBase {
 			worlds [world].blocked ();
 		}
 	}
+
+	public void toMessages()
+	{
+		OnComplete ("toFacebookMessages");
+	}
 }
