@@ -30,6 +30,8 @@ public class HighLight : MonoBehaviour
 	protected bool isDescending;
 	protected bool startAnim;
 
+	protected Vector3 previousScale;
+
 	protected bool isActive;
 	protected List<HighLightManager.EHighLightType> suscribedTypes = new List<HighLightManager.EHighLightType> ();
 	protected List<HighLightManager.EHighLightStatus> suscribedStatus = new List<HighLightManager.EHighLightStatus> ();
@@ -59,6 +61,7 @@ public class HighLight : MonoBehaviour
 	public bool activateHighLight(HighLightManager.EHighLightType type,HighLightManager.EHighLightStatus status)
 	{
 		int index = suscribedTypes.IndexOf (type);
+		previousScale = transform.localScale;
 
 		if (index < 0) 
 		{
@@ -201,6 +204,12 @@ public class HighLight : MonoBehaviour
 
 				finishAnim ();
 
+				if (hasBeat) 
+				{
+					transform.localScale = previousScale;
+					DOTween.Kill ("HighLightBeat");	
+				}
+
 				return true;
 			} 
 			else 
@@ -252,6 +261,11 @@ public class HighLight : MonoBehaviour
 
 	protected void highLightBeat()
 	{
+		if (suscribedTypes.Count == 0) 
+		{
+			return;
+		}
+
 		transform.parent.DOShakeScale (beatTime,beatStrength,beatVibrato,beatRandom).OnComplete(
 			()=>
 			{

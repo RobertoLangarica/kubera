@@ -14,7 +14,7 @@ public class Cell : MonoBehaviour
 	public bool available;
 	public bool occupied;
 	public GameObject content;
-
+	public Transform frameParent;
 	/*
 	 * Valores en el XML para cada tipo de celda
 	 * 0x0000

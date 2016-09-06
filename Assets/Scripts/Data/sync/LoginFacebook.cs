@@ -17,10 +17,10 @@ namespace Data.Sync
 			{
 				FB.Init(InitCallback);
 			}
-
-			if(FB.IsLoggedIn)
+			else if(FB.IsLoggedIn)
 			{
 				isLoggedIn = true;
+				userId = AccessToken.CurrentAccessToken.UserId;
 
 				if(OnLoginSuccessfull != null)
 				{
@@ -31,7 +31,7 @@ namespace Data.Sync
 
 		public void InitCallback()
 		{
-			Debug.Log("FB->InitCallback");
+			//Debug.Log("FB->InitCallback");
 
 			// App Launch events should be logged on app launch & app resume
 			// See more: https://developers.facebook.com/docs/app-events/unity#quickstart
@@ -39,6 +39,9 @@ namespace Data.Sync
 
 			if (FB.IsLoggedIn) 
 			{
+				isLoggedIn = true;
+				userId = AccessToken.CurrentAccessToken.UserId;
+
 				if(OnLoginSuccessfull != null)
 				{
 					OnLoginSuccessfull("success");
@@ -58,9 +61,7 @@ namespace Data.Sync
 			if (FB.IsLoggedIn) 
 			{
 				userId = AccessToken.CurrentAccessToken.UserId;
-
-
-				//TODO: traernos el mail del usuario
+				isLoggedIn = true;
 
 				if(OnLoginSuccessfull != null)
 				{
@@ -79,7 +80,7 @@ namespace Data.Sync
 		public override void logout()
 		{
 			FB.LogOut();
-
+			isLoggedIn = false;
 			if(OnLogoutSuccessfull != null)
 			{
 				OnLogoutSuccessfull("success");
@@ -97,18 +98,11 @@ namespace Data.Sync
 			// Check the pauseStatus to see if we are in the foreground
 			// or background
 			if (!pauseStatus) {
-				//app resume
+				//Solo nos interesa cuando ya lo inicializamos nosotros
 				if (FB.IsInitialized) 
 				{
 					FB.ActivateApp();
 				} 
-				else 
-				{
-					//Handle FB.Init
-					FB.Init( () => {
-						FB.ActivateApp();
-					});
-				}
 			}	
 			#endif
 		}

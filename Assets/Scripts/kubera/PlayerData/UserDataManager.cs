@@ -7,8 +7,6 @@ public class UserDataManager
 
 	//Version para controlar cambios a los datos en el futuro
 	public const int version = 1;
-	//Maximo de vida que puede tener el jugador
-	public int maximumLifes = 5;
 
 	public static UserDataManager instance 
 	{
@@ -45,12 +43,6 @@ public class UserDataManager
 	 **/ 
 	protected void resolveVersion()
 	{
-		//No hay que sobreescribir datos innecesarios
-		if(PlayerPrefs.GetInt("version") == 0)
-		{
-			PlayerPrefs.SetInt("playerLifes",maximumLifes);	
-		}
-
 		PlayerPrefs.SetInt("version",version);
 	}
 
@@ -61,7 +53,8 @@ public class UserDataManager
 	{
 		PlayerPrefs.SetInt("version",version);
 		PlayerPrefs.SetString("language",getOSLanguage());
-		PlayerPrefs.SetInt("playerLifes",maximumLifes);
+		PlayerPrefs.SetInt("musicSetting",1);
+		PlayerPrefs.SetInt("soundEffectsSetting",1);
 	}
 
 	/**
@@ -245,48 +238,6 @@ public class UserDataManager
 		protected set
 		{
 			PlayerPrefs.SetInt("playerGems",value);
-		}
-	}
-
-	public int playerLifes
-	{
-		get
-		{
-			return PlayerPrefs.GetInt("playerLifes");
-		}		
-		protected set
-		{
-			PlayerPrefs.SetInt("playerLifes",value);
-		}
-	}
-
-	public string lifeTimerDate
-	{
-		get
-		{
-			return PlayerPrefs.GetString ("lifeTimerDate");
-		}
-		set
-		{
-			PlayerPrefs.SetString ("lifeTimerDate",value);
-		}
-	}
-
-	public void giveLifeToPlayer(int amount = 1)
-	{
-		int totalLifes = playerLifes + amount;
-
-		if (totalLifes > maximumLifes) 
-		{
-			playerLifes = maximumLifes;
-		} 
-		else if (totalLifes < 0) 
-		{
-			playerLifes = 0;
-		}
-		else 
-		{
-			playerLifes = totalLifes;
 		}
 	}
 

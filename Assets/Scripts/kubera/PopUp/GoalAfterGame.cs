@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using Kubera.Data.Sync;
 
 public class GoalAfterGame : PopUpBase {
 
@@ -10,6 +11,7 @@ public class GoalAfterGame : PopUpBase {
 
 	public Text PointsText;
 	public Text Points;
+	public Text inviteFriendsText;
 
 	public GameObject[] stars;
 	public GameObject[] starsGray;
@@ -32,10 +34,29 @@ public class GoalAfterGame : PopUpBase {
 	public ScrollRect scrollRect;
 
 	public Transform goalPopUpSlotsParent;
+	public GridLayoutGroup FriendsgridLayoutGroup;
 
 	void Start()
 	{
+		//TODO checar login a facebook
+		fbLogin ();
+		//FBLoggin.GetInstance().onLoginComplete += fbLogin;
+
 		setStartingPlaces ();
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.15f);
+	}
+
+	protected void fbLogin()
+	{
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+		{
+			//TODO hardcoding de textos
+			inviteFriendsText.text = "invita Amigos";
+		}
+		else
+		{
+			inviteFriendsText.text = "Conectate";
+		}
 	}
 
 	public override void activate()
@@ -66,12 +87,15 @@ public class GoalAfterGame : PopUpBase {
 	{
 		if(starsReached >=1)
 		{
+			winStar ();
 			stars [0].SetActive (true);
 			stars [0].transform.DOScale (new Vector2(1,1),speedShowStars).OnComplete (() => {
 				if (starsReached >= 2) {
+					winStar ();
 					stars [1].SetActive (true);
 					stars [1].transform.DOScale (new Vector2(1,1),speedShowStars).OnComplete (() => {
 						if (starsReached == 3) {
+							winStar ();
 							stars [2].SetActive (true);
 							stars [2].transform.DOScale (new Vector2(1,1),speedShowStars).OnComplete (() => {
 								//print ("Termino de mostrar estrellas");
@@ -85,6 +109,8 @@ public class GoalAfterGame : PopUpBase {
 
 	public void playGame()
 	{
+		soundButton ();
+
 		setStartingPlaces ();
 		OnComplete ("continue");
 		leaderboardManager.moveCurrentLeaderboardSlots (goalPopUpSlotsParent);
@@ -92,10 +118,11 @@ public class GoalAfterGame : PopUpBase {
 
 	public void exit ()
 	{
-		setStartingPlaces ();
-		OnComplete ("closeObjective");
+		soundButton ();
 
+		setStartingPlaces ();
 		leaderboardManager.moveCurrentLeaderboardSlots (goalPopUpSlotsParent);
+		OnComplete ("closeObjective");
 	}
 
 	protected void setStartingPlaces()
@@ -156,5 +183,39 @@ public class GoalAfterGame : PopUpBase {
 
 					});
 			});
+	}
+
+	protected void soundButton()
+	{
+		if(AudioManager.GetInstance())
+		{
+			
+			AudioManager.GetInstance().Play("fxButton");
+		}
+	}
+
+	protected void winStar()
+	{
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("star");
+			AudioManager.GetInstance().Play("star");
+		}
+	}
+
+	public void fbAction()
+	{
+		soundButton ();
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+		{
+			//TODO HARCODING
+			inviteFriendsText.text = "invita Amigos";
+			FacebookManager.GetInstance ().requestNewFriends ();
+		}
+		else
+		{
+			inviteFriendsText.text = "Conectate";
+			KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookLogin();
+		}
 	}
 }

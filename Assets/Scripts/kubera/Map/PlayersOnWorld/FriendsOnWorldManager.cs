@@ -45,7 +45,6 @@ public class FriendsOnWorldManager : MonoBehaviour {
 		{
 			if(currentFriends.friendsInfo[i].level == level)
 			{
-				print (currentFriends.friendsInfo [i].level);
 				return currentFriends.friendsInfo [i];
 			}
 		}

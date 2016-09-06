@@ -28,7 +28,7 @@ public class WinGamePopUp : PopUpBase {
 						winContent.DOAnchorPos (-v3, speed).SetEase(Ease.InBack).OnComplete(()=>
 							{
 								//TODO: salirnos del nivel
-								print("gano");
+								//print("gano");
 								popUpCompleted("winPopUpEnd");
 							});
 					});

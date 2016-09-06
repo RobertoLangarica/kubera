@@ -26,7 +26,7 @@ public class FBPermissions : MonoBehaviour {
 		// https://developers.facebook.com/docs/unity/reference/current/FB.LogInWithReadPermissions
 		FB.LogInWithReadPermissions(readPermissions, delegate (ILoginResult result)
 			{
-				Debug.Log("LoginCallback");
+
 				if (FB.IsLoggedIn)
 				{
 					Debug.Log("Logged in with ID: " + AccessToken.CurrentAccessToken.UserId +
@@ -40,6 +40,7 @@ public class FBPermissions : MonoBehaviour {
 					}
 					Debug.Log("Not Logged In");
 				}
+
 				if (callback != null)
 				{
 					callback();
@@ -64,11 +65,11 @@ public class FBPermissions : MonoBehaviour {
 
 		FB.LogInWithPublishPermissions(publishPermissions, delegate (ILoginResult result)
 			{
-				Debug.Log("LoginCallback");
 				if (FB.IsLoggedIn)
 				{
-					Debug.Log("Logged in with ID: " + AccessToken.CurrentAccessToken.UserId +
+					/*Debug.Log("Logged in with ID: " + AccessToken.CurrentAccessToken.UserId +
 						"\nGranted Permissions: " + AccessToken.CurrentAccessToken.Permissions.ToCommaSeparateList());
+						*/
 				}
 				else
 				{

@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Kubera.Data;
 
 public class HomeManager : MonoBehaviour {
 
@@ -22,6 +23,7 @@ public class HomeManager : MonoBehaviour {
 
 	void Start()
 	{
+
 		for(int i=0, j=0; i<pieces.Count; j++)
 		{
 			piecesMoved.Add (pieces[Random.Range (0, pieces.Count)]);
@@ -30,7 +32,13 @@ public class HomeManager : MonoBehaviour {
 			piecesMoved [j].explodePosition = positions [j + 8].position;
 			piecesMoved [j].startRotate (speed);
 		}
+		Invoke ("startScene",0.3f);
+	}
+
+	void startScene()
+	{
 		StartCoroutine (showLetters ());
+		ScreenManager.instance.sceneFinishLoading ();
 	}
 
 	IEnumerator showLetters()
@@ -69,13 +77,23 @@ public class HomeManager : MonoBehaviour {
 
 	public void goToScene(string scene)
 	{
+		if(AudioManager.GetInstance())
+		{
+			
+			AudioManager.GetInstance().Play("fxButton");
+		}
+
 		ScreenManager.instance.GoToScene (scene);
 	}
 
 	//HACK
 	public void ereaseData()
 	{
-		Data.LevelsDataManager.GetInstance ().deleteData ();
-		//Data.LevelsDataManager.GetInstance ().getCurrentData ().levels = new List<Data.LevelData> ();
+		LevelsDataManager.GetInstance ().deleteData ();
+		if(AudioManager.GetInstance())
+		{
+			
+			AudioManager.GetInstance().Play("fxButton");
+		}
 	}
 }

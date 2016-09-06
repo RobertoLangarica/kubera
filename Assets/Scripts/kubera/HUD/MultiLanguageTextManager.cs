@@ -105,6 +105,25 @@ public class MultiLanguageTextManager
 	public const string INVITATION_44_OPTION1 				="Invitation_44_option1";
 	public const string INVITATION_44_OPTION2 				="Invitation_44_option2";
 
+	//WorldsName
+	public const string WORLD1_NAME 						="World1_name";
+	public const string WORLD2_NAME 						="World2_name";
+	public const string WORLD3_NAME 						="World3_name";
+	public const string WORLD4_NAME 						="World4_name";
+	public const string WORLD5_NAME 						="World5_name";
+	public const string WORLD6_NAME 						="World6_name";
+	public const string WORLD7_NAME 						="World7_name";
+	public const string WORLD8_NAME 						="World8_name";
+	public const string WORLD9_NAME 						="World9_name";
+
+	//Notifications
+	public const string NOTIFICATION_LIFE1					="Life_1_Notification";
+	public const string NOTIFICATION_FULL_LIFES				="FullLifes_Notification";
+	public const string NOTIFICATION_3_DAYS 				= "3_Days_Without_Playing";
+	public const string NOTIFICATION_7_DAYS 				= "7_Days_Without_Playing";
+	public const string NOTIFICATION_14_DAYS 				= "14_Days_Without_Playing";
+	public const string NOTIFICATION_30_DAYS 				= "30_Days_Without_Playing";
+
 	protected static MultiLanguageTextManager _instance;
 
 	protected string _gameLanguage;

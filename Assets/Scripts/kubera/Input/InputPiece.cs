@@ -130,6 +130,13 @@ public class InputPiece : MonoBehaviour
 			moveTo(currentSelected,posOverFinger,pieceSpeed); 
 			OnSelected (currentSelected,true);
 			currentSelected.transform.DOScale(selectedScale,.075f).SetId("Input_SelectedScale").OnComplete(()=>{});
+
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop("pieceSelected");
+				AudioManager.GetInstance().Play("pieceSelected");
+			}
+
 			/*currentSelected.transform.DOScale (currentSelected.transform.localScale * 0.8f, 0.075f).SetId(currentSelected).OnComplete (()=>
 				{
 					currentSelected.transform.DOScale(selectedScale,.075f).SetId("Input_SelectedScale").OnComplete(()=>{});

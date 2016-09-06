@@ -24,6 +24,9 @@ namespace LevelBuilder
 		protected string defaultLetters2  ="12_A_1_1,00_B_3_1,05_C_3_1,05_D_2_1,12_E_1_1,00_F_4_1,00_G_2_1,00_H_4_1,06_I_1_1,00_J_8_1,00_K_0_1,05_L_1_1,00_M_3_1,05_N_1_1,00_Ñ_8_1,09_O_1_1,00_P_3_1,00_Q_5_1,07_R_1_1,06_S_1_1,04_T_1_1,05_U_1_1,00_V_4_1,00_W_0_1,00_X_8_1,00_Y_4_1,00_Z_10_1" ;
 		protected string defaultObstacles ="0_A_1_0,02_B_3_0,00_C_3_0,00_D_2_0,00_E_1_0,01_F_4_0,02_G_2_0,03_H_4_0,00_I_1_0,01_J_8_0,00_K_0_0,00_L_1_0,02_M_3_0,00_N_1_0,01_Ñ_8_0,00_O_1_0,02_P_3_0,01_Q_5_0,00_R_1_0,00_S_1_0,00_T_1_0,00_U_1_0,01_V_4_0,00_W_0_0,01_X_8_0,01_Y_4_0,01_Z_10_1" ;
 
+		protected string defaultLettersEnglish   ="09_A_1_1,02_B_3_1,02_C_3_1,04_D_2_1,12_E_1_1,02_F_4_1,03_G_2_1,02_H_4_1,09_I_1_1,01_J_8_1,01_K_5_1,04_L_1_1,02_M_3_1,06_N_1_1,00_Ñ_8_1,08_O_1_1,02_P_3_1,01_Q_5_1,05_R_1_1,04_S_1_1,06_T_1_1,04_U_1_1,02_V_4_1,02_W_4_1,01_X_8_1,02_Y_4_1,01_Z_10_1" ;
+
+
 		public InputField inputStar1;
 		public InputField inputStar2;
 		public InputField inputStar3;
@@ -426,6 +429,11 @@ namespace LevelBuilder
 		public void OnResetABCSelector()
 		{
 			abcSelector.sincronizeDataWithCSV (defaultLetters);
+		}
+
+		public void OnResetABCEnglishSelector()
+		{
+			abcSelector.sincronizeDataWithCSV (defaultLettersEnglish);
 		}
 
 		public void OnResetABCSelector2()

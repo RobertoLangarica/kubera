@@ -12,20 +12,24 @@ namespace Data
 
 		public BasicData(){}
 
-		public bool compareAndUpdate(BasicData remote)
+		public bool compareAndUpdate(BasicData remote, bool ignoreVersion = false)
 		{
-			if(remote.version > version)
+			if(remote.version != version || ignoreVersion)
 			{
-				updateFrom(remote);
+				updateFrom(remote, ignoreVersion);
 				return true;
 			}
 
 			return false;
 		}
 
-		public virtual void updateFrom(BasicData readOnlyRemote)
+		public virtual void updateFrom(BasicData readOnlyRemote, bool ignoreVersion = false)
 		{
-			version = readOnlyRemote.version;
+			//Si se ignora la version entonces no la cambiamos
+			if(ignoreVersion)
+			{
+				version = readOnlyRemote.version;
+			}
 		}
 	}
 }

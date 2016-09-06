@@ -3,12 +3,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Kubera.Data;
+using Kubera.Data.Sync;
 
 public class RetryPopUp : PopUpBase
 {
 	public Text LevelNumber;
-
-	protected LifesManager lifesManager;
+	public Text inviteFriendsText;
 
 	public RectTransform leftDoor;
 	public RectTransform rightDoor;
@@ -27,13 +28,30 @@ public class RetryPopUp : PopUpBase
 	public ScrollRect scrollRect;
 
 	public Transform goalPopUpSlotsParent;
+	public GridLayoutGroup FriendsgridLayoutGroup;
 
 	void Start()
 	{
-		lifesManager = FindObjectOfType<LifesManager> ();
+		//TODO checar login a facebook
+		fbLogin ();
+		//FBLoggin.GetInstance().onLoginComplete += fbLogin;
 
 		setStartingPlaces ();
 		content.text = "Seguro lo lograras";
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.15f);
+	}
+
+	protected void fbLogin()
+	{
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+		{
+			//TODO HARCODING
+			inviteFriendsText.text = "invita Amigos";
+		}
+		else
+		{
+			inviteFriendsText.text = "Conectate";
+		}
 	}
 
 	public override void activate()
@@ -48,6 +66,7 @@ public class RetryPopUp : PopUpBase
 
 	public void close()
 	{
+		soundButton ();
 		leaderboardManager.moveCurrentLeaderboardSlots (goalPopUpSlotsParent);
 		setStartingPlaces ();
 		OnComplete ("closeRetry");
@@ -55,10 +74,11 @@ public class RetryPopUp : PopUpBase
 
 	public void retryLevel()
 	{
-		if (UserDataManager.instance.playerLifes > 0) 
+		soundButton ();
+		if ((LevelsDataManager.GetInstance () as LevelsDataManager).currentUser.playerLifes > 0) 
 		{
 			setStartingPlaces ();
-			OnComplete ("retry");
+			OnComplete ("retry",false);
 		} 
 		else 
 		{
@@ -123,4 +143,28 @@ public class RetryPopUp : PopUpBase
 			});
 	}
 
+	protected void soundButton()
+	{
+		if(AudioManager.GetInstance())
+		{
+			
+			AudioManager.GetInstance().Play("fxButton");
+		}
+	}
+
+	public void fbAction()
+	{
+		soundButton ();
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+		{
+			//TODO HARCODING
+			inviteFriendsText.text = "invita Amigos";
+			FacebookManager.GetInstance ().requestNewFriends ();
+		}
+		else
+		{
+			inviteFriendsText.text = "Conectate";
+			KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookLogin();
+		}
+	}
 }

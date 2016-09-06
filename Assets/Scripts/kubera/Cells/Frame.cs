@@ -27,5 +27,16 @@ public class Frame : MonoBehaviour
 		frameInstance.SetActive (true);
 	}
 
+	public void correctSize(float cellSize, Transform parent)
+	{
+		float fixedSize = cellSize - 1;
+
+		if(fixedSize <0)
+		{
+			fixedSize *= -1;
+		}
+
+		parent.localScale = new Vector3 (parent.localScale.x + fixedSize, parent.localScale.y + fixedSize);
+	}
 }
 

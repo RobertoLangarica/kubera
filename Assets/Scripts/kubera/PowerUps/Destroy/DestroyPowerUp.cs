@@ -62,12 +62,22 @@ public class DestroyPowerUp : PowerupBase
 		updateDragableObjectImage (destroyGO);
 
 		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.DESTROY_POWERUP);
+
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Play("ray");
+		}
 	}
 
 	public void powerUpPositioned()
 	{
 		bombInput.OnCellSelected -= onOverCellChanged;
 		Cell cellSelected = cellsManager.getCellUnderPoint(destroyGO.transform.position);
+
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("ray");
+		}
 
 		if(cellSelected != null)
 		{
@@ -83,6 +93,7 @@ public class DestroyPowerUp : PowerupBase
 					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_POWERUP);
 					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR);
 
+					gameManager.updatePiecesLightAndUpdateLetterState ();
 					OnComplete ();
 				}
 				else

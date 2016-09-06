@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using Data;
+using Kubera.Data;
 
 public class BossLocked : PopUpBase {
 
