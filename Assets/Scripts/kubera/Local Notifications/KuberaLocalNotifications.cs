@@ -65,7 +65,7 @@ public class KuberaLocalNotifications : MonoBehaviour
 		(LocalNotificationManager.GetInstance () as LocalNotificationManager).modifyAndScheduleNotificationByName (
 			villavanilla.Notifications.ERegisteredNotification.NO_PLAYING_GAMES,
 			MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.NOTIFICATION_3_DAYS).Replace ("{{level}}", currentLevel.ToString ()),
-			"Kubera", 60);//259200);
+			"Kubera",259200);
 
 		//7 days
 		(LocalNotificationManager.GetInstance () as LocalNotificationManager).modifyAndScheduleNotificationByName (
