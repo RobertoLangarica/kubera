@@ -29,7 +29,7 @@ public class BossLocked : PopUpBase {
 	public void initializeValues(int friendsNeeded,int gems,int starsNeeded)
 	{
 		//TODO: estrellas
-		starsNumber.text = (LevelsDataManager.GetInstance () as LevelsDataManager).getAllEarnedStars ().ToString() + " / " + starsNeeded.ToString();
+		starsNumber.text = (KuberaDataManager.GetInstance () as KuberaDataManager).getAllEarnedStars ().ToString() + " / " + starsNeeded.ToString();
 		gemsNumber.text = gems.ToString ();
 		friendsText.text = friendsNeeded.ToString ();
 		gemsNeeded = gems;

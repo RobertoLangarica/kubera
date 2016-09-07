@@ -87,6 +87,11 @@ namespace BestHTTP
                                                             HTTPMethods.Patch.ToString().ToUpper()
                                                         };
 
+		/// <summary>
+		/// Added as a helper to limit the logs
+		/// </summary>
+		public bool _showDebugInfo = false;
+
         /// <summary>
         /// Size of the internal buffer, and upload progress will be fired when this size of data sent to the wire. It's default value is 1024 bytes.
         /// </summary>
@@ -688,7 +693,7 @@ namespace BestHTTP
 #if !BESTHTTP_DISABLE_UNITY_FORM
                 case HTTPFormUsage.Unity:       FormImpl = new UnityForm(); break;
 #endif
-				case HTTPFormUsage.App_JSON: 	FormImpl = new HTTPAppJSONForm(); break;
+				case HTTPFormUsage.App_JSON: 	FormImpl = new HTTPAppJSONForm(_showDebugInfo); break;
             }
 
             // Copy the fields, and other properties to the new implementation

@@ -29,6 +29,8 @@ namespace Data.Remote
 		protected float elapsedWhenRequested;
 		protected float elapsedWhenFailed;
 
+		public bool showDebugInfo = true;
+
 		public virtual void stop()
 		{
 			status = EStatus.WAITING;
@@ -114,6 +116,24 @@ namespace Data.Remote
 		public string quotedString(string input)
 		{
 			return "\""+input+"\"";
+		}
+
+		public void secureLog(object message)
+		{
+			if(showDebugInfo)
+			{Debug.Log(message);}
+		}
+
+		public void secureLogError(object message)
+		{
+			if(showDebugInfo)
+			{Debug.LogError(message);}
+		}
+
+		public void secureLogWarning(object message)
+		{
+			if(showDebugInfo)
+			{Debug.LogWarning(message);}
 		}
 	}
 }

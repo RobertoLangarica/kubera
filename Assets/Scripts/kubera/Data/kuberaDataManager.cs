@@ -7,7 +7,7 @@ using Kubera.Data.Remote.PFResponseData;
 
 namespace Kubera.Data
 {
-	public class LevelsDataManager : LocalDataManager<MultipleUsers>
+	public class KuberaDataManager : LocalDataManager<MultipleUsers>
 	{
 		public KuberaSyncManger syncManager;
 
@@ -31,7 +31,6 @@ namespace Kubera.Data
 
 		public void savePassedLevel(string levelName, int stars, int points)
 		{
-			Debug.Log ("Aqui!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			Level lvl = levelsList.getLevelByName(levelName);
 			WorldData world = getOrCreateWorldById(lvl.world.ToString());
 
@@ -419,8 +418,8 @@ namespace Kubera.Data
 			result.facebookId = user.facebookId;
 			result.worlds = user.getDirtyWorlds();
 
-			//Al server se envian como no sucios
-			result.markAllworldsAsNoDirty();
+			//Se envian como no sucios
+			result.markAllWorldsAsNoDirty();
 
 			return result;
 		}

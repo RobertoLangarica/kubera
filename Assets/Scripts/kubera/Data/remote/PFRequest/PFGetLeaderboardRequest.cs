@@ -11,10 +11,11 @@ using Kubera.Data.Remote.PFResponseData;
 
 namespace Kubera.Data.Remote
 {
-	public class PFGetUserRequest : BaseRequest {
+	public class PFGetLeaderboardRequest : BaseRequest {
 
 		private HTTPRequest request;
-		public PFResponseBase<PFUserData> data;
+		public PFResponseBase<PFLeaderboardData> data;
+		public string statisticUsed;
 
 		public override void start ()
 		{
@@ -24,31 +25,21 @@ namespace Kubera.Data.Remote
 			request.Send();
 		}
 
-		public void initialize(string titleID,string CSVkeysToQuery,int aboveVersion, string sessionTicket)
+		public void initialize(string titleID, string userPlayFabId, string statisticName, int maxResultsCount, string sessionTicket)
 		{
-			request = new HTTPRequest(new System.Uri("https://"+titleID+".playfabapi.com/Client/GetUserData"), HTTPMethods.Post);
+			request = new HTTPRequest(new System.Uri("https://"+titleID+".playfabapi.com/Client/GetFriendLeaderboardAroundPlayer"), HTTPMethods.Post);
 			request.AddHeader("X-Authentication",sessionTicket);
 			request.ConnectTimeout = TimeSpan.FromSeconds(timeBeforeTimeout);
 			request.Timeout = TimeSpan.FromSeconds(timeBeforeTimeout*3);
 			request._showDebugInfo = showDebugInfo;
 			request.FormUsage = BestHTTP.Forms.HTTPFormUsage.App_JSON;
 
-			StringBuilder sbuilder = new StringBuilder("");
-			string[] strings = CSVkeysToQuery.Split(',');
+			request.AddField(quotedString("StatisticName"),quotedString(statisticName));
+			request.AddField(quotedString("MaxResultsCount"), maxResultsCount.ToString());
+			request.AddField(quotedString("PlayFabId"), quotedString(userPlayFabId));
+			request.AddField(quotedString("IncludeFacebookFriends"), "true");
 
-			sbuilder.Append("[");
-			for(int i = 0; i < strings.Length; i++)
-			{
-				if(i > 0)
-				{
-					sbuilder.Append(",");
-				}	
-
-				sbuilder.Append(quotedString(strings[i]));
-			}
-			sbuilder.Append("]");
-			request.AddField(quotedString("keys"),sbuilder.ToString());
-			request.AddField(quotedString("IfChangedFromDataVersion"), aboveVersion.ToString());
+			statisticUsed = statisticName;
 		}
 
 		private void OnCompleteCallback(HTTPRequest originalRequest, HTTPResponse response)
@@ -60,13 +51,10 @@ namespace Kubera.Data.Remote
 					string dataAsText = response.DataAsText;
 					secureLog("Request Finished Successfully!\n" + response.DataAsText);
 
-					data = JsonUtility.FromJson<PFResponseBase<PFUserData>>(response.DataAsText);
+					data = JsonUtility.FromJson<PFResponseBase<PFLeaderboardData>>(response.DataAsText);
 
 					if(data.code == 200)
 					{
-						Dictionary<string,object> obj = MiniJSON.Json.Deserialize(response.DataAsText) as Dictionary<string,object>;
-						data.data.Data = ((Dictionary<string,object>)obj["data"])["Data"] as Dictionary<string,object>;
-
 						OnRequestComplete();
 					}	
 					else

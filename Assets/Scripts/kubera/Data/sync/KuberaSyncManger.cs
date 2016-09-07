@@ -3,13 +3,25 @@ using System;
 using System.Text;
 using System.Collections;
 using Data.Sync;
+using Kubera.Data.Remote.PFResponseData;
+using Kubera.Data.Remote;
 
 namespace Kubera.Data.Sync
 {
 	public class KuberaSyncManger : SyncManager
 	{
-		public LevelsDataManager localData;
+		public Action<PFLeaderboardData> OnLeaderboardObtained;
 
+		public KuberaDataManager localData;
+
+		protected override void Awake()
+		{
+			base.Awake();
+
+
+			((KuberaProvider)server).OnLeaderboardObtained += OnLeaderboardDataObtained;
+
+		}
 
 		/**
 		 * Login en local para que el usuario pueda comenzar a jugar aun cuando no se a hecho un login al servicio remoto 
@@ -108,23 +120,6 @@ namespace Kubera.Data.Sync
 		}
 
 		/**
-		 * Manda actualizar los datos del usuario
-		 **/ 
-		public void updateData(KuberaUser dirtyUser)
-		{
-			if(_mustShowDebugInfo)
-			{
-				Debug.Log("To update: \n"+userToPlayFabJSON(dirtyUser));
-			}
-
-			//Si no hay usuario remoto entonces no hay nada que actualizar
-			if(existCurrentUser())
-			{
-				server.updateUserData(currentUser.id, userToPlayFabJSON(dirtyUser), dirtyUser);
-			}
-		}
-
-		/**
 		 * Una vez actualizados los datos hay que actualizar el estado local de los datos
 		 **/ 
 		protected override void OnDataUpdated (string updatedData)
@@ -150,6 +145,54 @@ namespace Kubera.Data.Sync
 				}
 				updateData(localData.getUserDirtyData());
 			}
+		}
+
+		/**
+		 * Manda actualizar los datos del usuario
+		 **/ 
+		public void updateData(KuberaUser dirtyUser)
+		{
+			if(_mustShowDebugInfo)
+			{
+				Debug.Log("To update: \n"+userToPlayFabJSON(dirtyUser));
+			}
+
+			//Si no hay usuario remoto entonces no hay nada que actualizar
+			if(existCurrentUser())
+			{
+				server.updateUserData(currentUser.id, userToPlayFabJSON(dirtyUser), dirtyUser);
+			}
+		}
+
+		/**
+		 * Obtiene el leaderboard de nivel especificado
+		 **/ 
+		public void getLevelLeaderboard(string levelId, int maxResultsCount = 10)
+		{
+			//Si no hay usuario remoto entonces no hay nada que actualizar
+			if(existCurrentUser())
+			{
+				if(_mustShowDebugInfo)
+				{
+					Debug.Log("Leaderboard: level_"+levelId);	
+				}
+
+				server.getLeaderboardData(currentUser.id, "level_"+levelId, maxResultsCount);
+			}
+		}
+
+		private void OnLeaderboardDataObtained(PFLeaderboardData leaderboard)
+		{
+			string result = "Leaderboard result: {";
+
+			for(int i = 0; i < leaderboard.Leaderboard.Count; i++)
+			{
+				result += "\n" + JsonUtility.ToJson(leaderboard.Leaderboard[1]);
+			}
+
+			result+="\n}";
+
+			Debug.Log(result);
 		}
 
 		/**

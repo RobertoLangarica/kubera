@@ -22,6 +22,7 @@ namespace Kubera.Data.Remote
 			request.AddField(quotedString("TitleId"), quotedString(titleID));
 			request.AddField(quotedString("AccessToken"), quotedString(accessToken));
 			request.AddField(quotedString("CreateAccount"),"true");
+			request._showDebugInfo = showDebugInfo;
 			request.FormUsage = BestHTTP.Forms.HTTPFormUsage.App_JSON;
 
 		}
@@ -40,7 +41,7 @@ namespace Kubera.Data.Remote
 			{
 				// The request finished without any problem.
 				case HTTPRequestStates.Finished:
-					Debug.Log("Request Finished Successfully!\n" + response.DataAsText);
+					secureLog("Request Finished Successfully!\n" + response.DataAsText);
 
 					data = JsonUtility.FromJson<PFResponseBase<PFLoginData>>(response.DataAsText);
 
@@ -58,7 +59,7 @@ namespace Kubera.Data.Remote
 					// The request finished with an unexpected error.
 					// The request's Exception property may contain more information about the error.
 				case HTTPRequestStates.Error:
-					Debug.LogError("Request Finished with Error! " +
+					secureLogError("Request Finished with Error! " +
 						(originalRequest.Exception != null ?
 							(originalRequest.Exception.Message + "\n" + originalRequest.Exception.StackTrace) :
 							"No Exception"));
@@ -67,19 +68,19 @@ namespace Kubera.Data.Remote
 
 					// The request aborted, initiated by the user.
 				case HTTPRequestStates.Aborted:
-					Debug.LogWarning("Request Aborted!");
+					secureLogWarning("Request Aborted!");
 				break;
 
 					// Ceonnecting to the server timed out.
 				case HTTPRequestStates.ConnectionTimedOut:
-					Debug.LogError("Connection Timed Out!");
+					secureLogError("Connection Timed Out!");
 					OnRequestTimeout();
 					originalRequest.Abort();
 				break;
 
 					// The request didn't finished in the given time.
 				case HTTPRequestStates.TimedOut:
-					Debug.LogError("Processing the request Timed Out!");
+					secureLogError("Processing the request Timed Out!");
 					OnRequestTimeout();
 					originalRequest.Abort();
 				break;

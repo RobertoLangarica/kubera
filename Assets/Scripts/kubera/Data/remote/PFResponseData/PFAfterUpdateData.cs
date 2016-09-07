@@ -11,15 +11,13 @@ namespace Kubera.Data.Remote.PFResponseData
 
 		public override bool hasError ()
 		{
-			return base.hasError() || FunctionResult.error;
+			return base.hasError();
 		}
 	}
 
-	//Este es el struct que hay que modificar para cada respuesta de funcion
 	[Serializable]
 	public class PFAfterUpdateResultObject
 	{
 		public int	DataVersion;
-		public bool error;
 	}
 }

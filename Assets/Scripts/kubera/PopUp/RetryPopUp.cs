@@ -75,7 +75,7 @@ public class RetryPopUp : PopUpBase
 	public void retryLevel()
 	{
 		soundButton ();
-		if ((LevelsDataManager.GetInstance () as LevelsDataManager).currentUser.playerLifes > 0) 
+		if ((KuberaDataManager.GetInstance () as KuberaDataManager).currentUser.playerLifes > 0) 
 		{
 			setStartingPlaces ();
 			OnComplete ("retry",false);

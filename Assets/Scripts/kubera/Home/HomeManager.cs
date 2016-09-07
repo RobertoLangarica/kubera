@@ -89,7 +89,7 @@ public class HomeManager : MonoBehaviour {
 	//HACK
 	public void ereaseData()
 	{
-		LevelsDataManager.GetInstance ().deleteData ();
+		KuberaDataManager.GetInstance ().deleteData ();
 		if(AudioManager.GetInstance())
 		{
 			
