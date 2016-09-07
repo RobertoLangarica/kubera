@@ -55,6 +55,7 @@ public class MapManager : MonoBehaviour
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 		if(PersistentData.GetInstance().currentWorld == -1||!PersistentData.GetInstance().fromGameToLevels)
 		{
+			print (KuberaDataManager.GetCastedInstance<KuberaDataManager>());
 			if(KuberaDataManager.GetCastedInstance<KuberaDataManager>().currentUser.worlds.Count != 0)
 			{
 				int worldCount = KuberaDataManager.GetCastedInstance<KuberaDataManager> ().getWorldCount ();
@@ -614,7 +615,14 @@ public class MapManager : MonoBehaviour
 
 	protected void onFinishLoad()
 	{
-		ScreenManager.instance.sceneFinishLoading();
+		if(fromGame)
+		{
+			ScreenManager.instance.sceneFinishLoading(0);
+		}
+		else
+		{
+			ScreenManager.instance.sceneFinishLoading();
+		}
 	}
 
 	public void setGoalPopUp(string goalCondition, System.Object parameters,string levelName,int starsReached)

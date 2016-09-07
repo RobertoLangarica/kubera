@@ -33,6 +33,8 @@ public class ScreenManager : Manager<ScreenManager> {
 	public DOnFinishLoadScene OnFinish;
 	protected AsyncOperation async;
 
+	protected AsyncOperation testAsync;
+
 	void Awake()
 	{
 		GameObject[] go = GameObject.FindGameObjectsWithTag ("screenManager");
@@ -166,6 +168,22 @@ public class ScreenManager : Manager<ScreenManager> {
 		}
 	}
 
+	public void testLoading(string level)
+	{
+		testAsync = SceneManager.LoadSceneAsync(level);
+		testAsync.allowSceneActivation = false;
+	}
+
+	public void testContinue()
+	{
+		print (testAsync);
+
+		modal.DOFade (1, 0).SetId(modal).OnComplete(()=>
+			{
+				testAsync.allowSceneActivation = true;
+			});
+
+	}
 
 	IEnumerator loadScene(string level)
 	{
@@ -178,9 +196,9 @@ public class ScreenManager : Manager<ScreenManager> {
 		async.allowSceneActivation = true;
 	}
 
-	public void sceneFinishLoading()
+	public void sceneFinishLoading(float speed = 0.3f)
 	{
-		modal.DOFade (0, 0.3f);
+		modal.DOFade (0, speed);
 	}
 
 	public void GoToSceneAsync(string newScene,float waitTime = -1, int waitFrames = 10)
