@@ -10,6 +10,8 @@ namespace Kubera.Data.Remote
 {
 	public class KuberaProvider : ServerProvider 
 	{
+		public bool _mustShowDebugInfo = false;
+
 		public Action<PFLeaderboardData> OnLeaderboardObtained;
 
 		public string TITLE_ID = "74A";
@@ -36,6 +38,7 @@ namespace Kubera.Data.Remote
 		{
 			//Primero hay que hacer login
 			loginRequest = queue.getComponentAttachedToGameObject<PFLoginRequest>("PlayFabFBLogin");
+			loginRequest.showDebugInfo = _mustShowDebugInfo;
 			loginRequest.id = "login_"+currentFacebookId;
 			loginRequest.persistAfterFailed = true;
 			loginRequest.initialize(TITLE_ID,Facebook.Unity.AccessToken.CurrentAccessToken.TokenString);
@@ -71,7 +74,7 @@ namespace Kubera.Data.Remote
 			//DEPRECATED en Kubera
 			creatingUserRequest = queue.getComponentAttachedToGameObject<PFCreateUserRequest<Kubera.Data.KuberaUser>>("PF_UserCreate");
 			creatingUserRequest.id = "create_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
-			creatingUserRequest.showDebugInfo = false;
+			creatingUserRequest.showDebugInfo = _mustShowDebugInfo;
 			creatingUserRequest.persistAfterFailed = true;
 			creatingUserRequest.initialize(TITLE_ID,jsonData, sessionTicket, objectToSave);
 			creatingUserRequest.OnComplete += afterUserCreated;
@@ -91,7 +94,7 @@ namespace Kubera.Data.Remote
 
 				//Hacemos un usuario para el diff
 				KuberaUser remoteUser = creatingUserRequest.dataSended;
-				remoteUser.id = loginRequest.data.data.PlayFabId;
+				remoteUser._id = loginRequest.data.data.PlayFabId;
 				remoteUser.PlayFab_dataVersion = request.data.data.DataVersion;
 
 				OnDataReceived(JsonUtility.ToJson(remoteUser));
@@ -109,7 +112,7 @@ namespace Kubera.Data.Remote
 			PFGetUserRequest request = queue.getComponentAttachedToGameObject<PFGetUserRequest>("PF_GetUserData");
 			request.id = "get_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
 			request.persistAfterFailed = true;
-			request.showDebugInfo = false;
+			request.showDebugInfo = _mustShowDebugInfo;
 			request.initialize(TITLE_ID, extraData, aboveVersion, sessionTicket);
 			request.OnComplete += OnUserDataObtained;
 
@@ -137,8 +140,7 @@ namespace Kubera.Data.Remote
 				{
 					if(key.Contains("world_"))
 					{
-						//Debug.Log(((Dictionary<string, object>)request.data.data.Data[key])["Value"]);
-						remoteUser.worlds.Add(JsonUtility.FromJson<WorldData>(((Dictionary<string, object>)request.data.data.Data[key])["Value"].ToString()));	
+						//remoteUser.worlds.Add(JsonUtility.FromJson<WorldData>(((Dictionary<string, object>)request.data.data.Data[key])["Value"].ToString()));	
 					}
 				}
 
@@ -150,7 +152,7 @@ namespace Kubera.Data.Remote
 		{
 			PFUpdateDataRequest request = queue.getComponentAttachedToGameObject<PFUpdateDataRequest>("PF_UpdateUserData");
 			request.id = "update_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
-			request.showDebugInfo = false;
+			request.showDebugInfo = _mustShowDebugInfo;
 			request.persistAfterFailed = true;
 			request.initialize(TITLE_ID,jsonData, sessionTicket, objectToSave);
 			request.OnComplete += OnUserDataUpdated;
@@ -166,7 +168,7 @@ namespace Kubera.Data.Remote
 
 				//Para que se desmarquen como sucios los datos locales hacemos un diff
 				KuberaUser remoteUser = request.dataSended as KuberaUser;
-				remoteUser.id = loginRequest.data.data.PlayFabId;
+				remoteUser._id = loginRequest.data.data.PlayFabId;
 				remoteUser.PlayFab_dataVersion = request.data.data.FunctionResult.DataVersion;
 
 				OnDataUpdated(JsonUtility.ToJson(remoteUser));
@@ -177,6 +179,7 @@ namespace Kubera.Data.Remote
 		{
 			PFGetLeaderboardRequest request = queue.getComponentAttachedToGameObject<PFGetLeaderboardRequest>("PF_LeaderboardRequest");
 			request.id = "leaderboard_"+id+"_"+leaderboardName+"_"+UnityEngine.Random.Range(0,99999).ToString("00");
+			request.showDebugInfo = _mustShowDebugInfo;
 			request.persistAfterFailed = true;
 			request.initialize(TITLE_ID, id, leaderboardName, maxResultsCount, sessionTicket);
 			request.OnComplete += OnLeaderboardDataObtained;

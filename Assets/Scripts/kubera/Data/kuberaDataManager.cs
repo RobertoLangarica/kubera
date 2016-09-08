@@ -26,22 +26,20 @@ namespace Kubera.Data
 			base.fillDefaultData ();
 
 			//Usuario anonimo
-			currentData.users.Add(new KuberaUser(ANONYMOUS_USER));
+			KuberaUser anonymous = new KuberaUser(ANONYMOUS_USER);
+			//TODO: Vidas maximas
+			//anonymous.playerLifes = ;
+			currentData.users.Add(anonymous);
 		}
 
 		public void savePassedLevel(string levelName, int stars, int points)
 		{
-			Level lvl = levelsList.getLevelByName(levelName);
-			WorldData world = getOrCreateWorldById(lvl.world.ToString());
-
-			LevelData level = world.getLevelById(levelName);
+			LevelData level = currentUser.getLevelById(levelName);
 
 			if(level != null)
 			{
 				level.isDirty = level.updateOnlyIncrementalValues(stars, points) || level.isDirty;
 				level.isDirty = level.updatePassed(true) || level.isDirty;
-
-				world.isDirty = world.isDirty || level.isDirty;
 			}
 			else
 			{
@@ -49,61 +47,36 @@ namespace Kubera.Data
 				level.points	= points;
 				level.stars		= stars;
 				level.passed	= true;
-				level.world		= lvl.world;
+				level.world		= levelsList.getLevelByName(levelName).world;
 
 				level.isDirty	= true;
-				world.isDirty	= true;
 
-				world.addLevel(level);
+				currentUser.addLevel(level);
 			}
 
 			//Cuidamos de no sobreescribir algun valor previo
-			currentUser.isDirty = currentUser.isDirty || world.isDirty;
+			currentUser.isDirty = currentUser.isDirty || level.isDirty;
 
 			if(currentUser.isDirty)
 			{
 				saveLocalData(false);
 
-				//mandamos un usuario solo con este nivel
+				//Mandamos un usuario solo con este nivel
 				KuberaUser user = new KuberaUser(currentUserId);
-				WorldData worldToSend = world.clone(false);
-				worldToSend.addLevel(level);
-				user.addWorld(worldToSend);
+				user.addLevel(level);
 
 				syncManager.updateData(user);	
 			}
 		}
 
-		public WorldData getOrCreateWorldById(string id)
-		{
-			KuberaUser user = currentUser;
-			WorldData result = user.getWorldById(id);
-
-			if(result == null)
-			{
-				result = new WorldData(id);
-				user.addWorld(result);
-				saveLocalData(false);
-			}
-
-			return result;
-		}
-
 		public bool isLevelPassed(string levelName)
 		{
-			Level lvl = levelsList.getLevelByName(levelName);
-			WorldData world = currentUser.getWorldById(lvl.world.ToString());
+			LevelData level = currentUser.getLevelById(levelName);
 
-			if(world != null)
+			if(level != null)
 			{
-				LevelData level = world.getLevelById(levelName);
-
-				if(level != null)
-				{
-					return level.passed;
-				}	
+				return level.passed;
 			}
-
 
 			return false;
 		}
@@ -146,16 +119,11 @@ namespace Kubera.Data
 		public bool isLevelLocked(string levelName)
 		{
 			Level lvl = levelsList.getLevelByName(levelName);
-			WorldData world = currentUser.getWorldById(lvl.world.ToString());
+			LevelData level =  currentUser.getLevelById(levelName);
 
-			if(world != null)
+			if(level != null)
 			{
-				LevelData level =  world.getLevelById(levelName);
-
-				if(level != null)
-				{
-					return level.locked;
-				}
+				return level.locked;
 			}
 
 			return true;
@@ -163,29 +131,24 @@ namespace Kubera.Data
 
 		public void unlockLevel(string levelName)
 		{
-			Level lvl = levelsList.getLevelByName(levelName);
-			WorldData world = getOrCreateWorldById(lvl.world.ToString());
-
-			LevelData level =  world.getLevelById(levelName);
+			LevelData level =  currentUser.getLevelById(levelName);
 
 			if(level != null)
 			{
 				level.isDirty = level.updateLocked(false) || level.isDirty;
-				world.isDirty = world.isDirty || level.isDirty;
 			}
 			else
 			{
 				level = new LevelData(levelName);
 				level.locked	= false;
-				level.world		= lvl.world;
+				level.world		= levelsList.getLevelByName(levelName).world;
 				level.isDirty	= true;
-				world.isDirty	= true;
 
-				world.addLevel(level);
+				currentUser.addLevel(level);
 			}
 
 			//Cuidamos de no sobreescribir algun valor previo
-			currentUser.isDirty = currentUser.isDirty || world.isDirty;
+			currentUser.isDirty = currentUser.isDirty || level.isDirty;
 
 			if(currentUser.isDirty)
 			{
@@ -193,11 +156,8 @@ namespace Kubera.Data
 
 				//mandamos un usuario solo con este nivel
 				KuberaUser user = new KuberaUser(currentUserId);
-				WorldData worldToSend = world.clone(false);
-				worldToSend.addLevel(level);
-				user.addWorld(worldToSend);
+				user.addLevel(level);
 
-				Debug.Log("Unlock nivel");
 				syncManager.updateData(user);
 			}
 		}
@@ -220,32 +180,9 @@ namespace Kubera.Data
 			return -1;
 		}
 
-		public Level[] getLevelsOfWorld(int worldIndex)
-		{
-			List<Level> sameWorldLevels = new List<Level> ();
-
-			for (int i = 0; i < levelsList.levels.Length; i++)
-			{
-				if (levelsList.levels [i].world == worldIndex)
-				{
-					sameWorldLevels.Add (levelsList.levels[i]);
-				}
-			}
-
-			return sameWorldLevels.ToArray ();
-		}
-
 		public int getLevelStars(string levelName)
 		{
-			Level lvl = levelsList.getLevelByName(levelName);
-			WorldData world = currentUser.getWorldById(lvl.world.ToString());
-
-			if(world == null)
-			{
-				return 0;	
-			}	
-
-			LevelData level = world.getLevelById(levelName);
+			LevelData level = currentUser.getLevelById(levelName);
 
 			if(level == null)
 			{
@@ -269,15 +206,7 @@ namespace Kubera.Data
 
 		public int getLevelPoints(string levelName)
 		{
-			Level lvl = levelsList.getLevelByName(levelName);
-			WorldData world = currentUser.getWorldById(lvl.world.ToString());
-
-			if(world == null)
-			{
-				return 0;	
-			}
-
-			LevelData level = world.getLevelById(levelName);
+			LevelData level = currentUser.getLevelById(levelName);
 
 			if(level == null)
 			{
@@ -300,7 +229,7 @@ namespace Kubera.Data
 					//NO existe y creamos uno nuevo
 					user = currentData.getUserById(ANONYMOUS_USER);
 
-					user.id = facebookId;
+					user._id = facebookId;
 					user.facebookId = facebookId;
 					newId = facebookId;
 
@@ -314,7 +243,7 @@ namespace Kubera.Data
 					//prevalece la version del usuario que no es anonimo
 					currentUser.PlayFab_dataVersion = user.PlayFab_dataVersion;
 					user.compareAndUpdate(currentUser, true);
-					newId = user.id;
+					newId = user._id;
 					//Limpiamos al usuario anonimo
 					currentUser.clear();
 				}
@@ -324,16 +253,21 @@ namespace Kubera.Data
 				//El nuevo usuario existe?
 				if(currentData.getUserByFacebookId(facebookId) == null)
 				{
+					//Se crea un nuevo usuario
 					user = new KuberaUser(facebookId);
 					user.facebookId = facebookId;
+					//TODO: Vidas maximas
+					//user.playerLifes=;
+
 					newId = facebookId;
+
 					currentData.users.Add(user);
 
 				}
 				else
 				{
 					//Hay un cambio de usuario sin consecuencias
-					newId = currentData.getUserByFacebookId(facebookId).id;
+					newId = currentData.getUserByFacebookId(facebookId)._id;
 				}
 			}
 
@@ -356,7 +290,7 @@ namespace Kubera.Data
 				if(currentData.getUserById(newUserId) == null)
 				{
 					//Este usuario toma los datos anonimos
-					currentData.getUserById(ANONYMOUS_USER).id = newUserId;
+					currentData.getUserById(ANONYMOUS_USER)._id = newUserId;
 
 					//Agregamos un nuevo usuario anonimo
 					currentData.users.Add(new KuberaUser(ANONYMOUS_USER));
@@ -374,7 +308,10 @@ namespace Kubera.Data
 				//El nuevo usuario existe?
 				if(currentData.getUserById(newUserId) == null)
 				{
-					currentData.users.Add(new KuberaUser(newUserId));
+					KuberaUser newUser = new KuberaUser(newUserId);
+					//TODO: Vidas maximas
+					//newUser.playerLifes=;
+					currentData.users.Add(newUser);
 				}
 				else
 				{
@@ -397,9 +334,9 @@ namespace Kubera.Data
 
 		public void diffUser(KuberaUser remoteUser, bool ignoreVersion = false)
 		{
-			if(currentUserId != remoteUser.id)
+			if(currentUserId != remoteUser._id)
 			{
-				Debug.Log("Se recibieron datos de otro usuario: "+currentUserId+","+ remoteUser.id);	
+				Debug.Log("Se recibieron datos de otro usuario: "+currentUserId+","+ remoteUser._id);	
 				return;
 			}
 
@@ -413,17 +350,17 @@ namespace Kubera.Data
 		public KuberaUser getUserDirtyData()
 		{
 			KuberaUser user = currentUser;
-			KuberaUser result = new KuberaUser(user.id);
+			KuberaUser result = new KuberaUser(user._id);
 
 			result.facebookId = user.facebookId;
-			result.worlds = user.getDirtyWorlds();
+			result.levels = user.getDirtyLevelsCopy();
 
 			//Se envian como no sucios
-			result.markAllWorldsAsNoDirty();
+			result.markAllLevelsAsNoDirty();
 
 			return result;
 		}
-
+			
 		public string getCSVKeysToQuery()
 		{
 			string result = "version,DataVersion";
@@ -435,16 +372,6 @@ namespace Kubera.Data
 			}
 
 			return result;
-		}
-
-		public int getWorldCount()
-		{
-			return levelsList.getLevelByNumber(levelsList.levels.Length-1).world;
-		}
-
-		public int getLevelsCountByWorld(int world)
-		{
-			return getLevelsOfWorld(world).Length;
 		}
 
 		public void giveUserLifes(int amount = 1)

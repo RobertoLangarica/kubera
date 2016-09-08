@@ -57,7 +57,7 @@ namespace Kubera.Data.Sync
 			if(kUser != null)
 			{
 				//Le asignamos su id de verdad
-				kUser.id = currentUser.id;
+				kUser._id = currentUser.id;
 			}
 
 			localData.changeCurrentuser(currentUser.id);
@@ -154,13 +154,13 @@ namespace Kubera.Data.Sync
 		{
 			if(_mustShowDebugInfo)
 			{
-				Debug.Log("To update: \n"+userToPlayFabJSON(dirtyUser));
+				Debug.Log("To update: \n"+userToJSON(dirtyUser));
 			}
 
 			//Si no hay usuario remoto entonces no hay nada que actualizar
 			if(existCurrentUser())
 			{
-				server.updateUserData(currentUser.id, userToPlayFabJSON(dirtyUser), dirtyUser);
+				server.updateUserData(currentUser.id, userToJSON(dirtyUser), dirtyUser);
 			}
 		}
 
@@ -196,37 +196,12 @@ namespace Kubera.Data.Sync
 		}
 
 		/**
-		 * Usuario en el formato:
-		 * {
-		 * 	"id":string,
-		 * 	"facebookId":string,
-		 * 	"version":int,
-		 * 	"PlayFab_dataVersion":int,
-		 * 	"world_nn":WorldData (cualquier cantidad de mundos donde nn es igual a su id)
-		 * }
+		 * Usuario en el formato JSON que necesite el servicio remoto
 		 **/ 
-		public string userToPlayFabJSON(KuberaUser user)
+		public string userToJSON(KuberaUser user)
 		{
-			StringBuilder builder = new StringBuilder("{");
-			//builder.Append(quotted("id")+":"+quotted(user.id)+","+quotted("facebookId")+":"+quotted(user.facebookId)+","+quotted("version")+":"+user.version.ToString()+","+quotted("PlayFab_dataVersion")+":"+user.PlayFab_dataVersion.ToString());
-			builder.Append(quotted("id")+":"+quotted(user.id)+","+quotted("facebookId")+":"+quotted(user.facebookId)+","+quotted("version")+":"+user.version.ToString());
-
-			//agregamos los mundos
-			foreach(WorldData world in user.worlds)
-			{
-				builder.Append(",");
-				builder.Append(quotted("world_"+world.id)+":");
-				builder.Append(JsonUtility.ToJson(world));
-			}
-
-			//Helper para el servidor
-			builder.Append(","+quotted("world_count")+":"+user.worlds.Count);
-
-			builder.Append("}");
-			return builder.ToString();
+			return JsonUtility.ToJson(user);
 		}
-
-		public string quotted(string target){return "\""+target+"\"";}
 	}
 		
 }

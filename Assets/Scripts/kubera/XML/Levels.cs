@@ -143,4 +143,29 @@ public class Levels
 	{
 		return getLevelWorld(getLevelByName(levelName));
 	}
+
+	public int getWorldCount()
+	{
+		return getLevelByNumber(levels.Length-1).world;
+	}
+
+	public Level[] getLevelsByWorld(int worldIndex)
+	{
+		List<Level> sameWorldLevels = new List<Level> ();
+
+		for (int i = 0; i < levels.Length; i++)
+		{
+			if (levels [i].world == worldIndex)
+			{
+				sameWorldLevels.Add (levels[i]);
+			}
+		}
+
+		return sameWorldLevels.ToArray ();
+	}
+
+	public int getLevelsCountByWorld(int world)
+	{
+		return getLevelsByWorld(world).Length;
+	}
 }
