@@ -10,6 +10,7 @@ namespace Kubera.Data
 	public class KuberaDataManager : LocalDataManager<MultipleUsers>
 	{
 		public KuberaSyncManger syncManager;
+		public int initialLifes;
 
 		protected Levels levelsList;
 
@@ -445,13 +446,6 @@ namespace Kubera.Data
 		public int getLevelsCountByWorld(int world)
 		{
 			return getLevelsOfWorld(world).Length;
-		}
-
-		public void giveUserLifes(int amount = 1)
-		{
-			currentUser.giveLifeToPlayer (amount);
-
-			saveLocalData ();
 		}
 	}
 }
