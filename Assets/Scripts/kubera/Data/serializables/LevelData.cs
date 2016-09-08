@@ -16,7 +16,7 @@ namespace Kubera.Data
 
 		public LevelData(string levelId)
 		{
-			id = levelId;
+			_id = levelId;
 			locked = true;
 			passed = false;
 			stars = 0;
@@ -105,7 +105,7 @@ namespace Kubera.Data
 
 		public LevelData clone()
 		{
-			LevelData result = new LevelData(this.id);
+			LevelData result = new LevelData(this._id);
 			result.version = this.version;
 			result.isDirty = this.isDirty;
 			result.stars = this.stars;

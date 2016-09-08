@@ -6,7 +6,7 @@ namespace Data
 	[Serializable]
 	public class BasicData
 	{
-		public string id;
+		public string _id;
 		public int version;
 		public bool isDirty;
 

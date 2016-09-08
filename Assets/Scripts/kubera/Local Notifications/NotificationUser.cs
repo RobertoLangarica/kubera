@@ -16,18 +16,18 @@ namespace Data
 
 		public NotificationUser(string userID)
 		{
-			id = userID;
+			_id = userID;
 			notifications = new List<NotificationJSONData> ();
 		}
 
 		public NotificationJSONData getNotificationById(string id)
 		{
-			return notifications.Find(item=>item.id == id);
+			return notifications.Find(item=>item._id == id);
 		}
 
 		public bool existNotification(string id)
 		{
-			return (notifications.Find(item=>item.id == id) != null);
+			return (notifications.Find(item=>item._id == id) != null);
 		}
 
 		public void addNotification(NotificationJSONData notification)

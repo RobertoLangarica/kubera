@@ -89,15 +89,7 @@ public class LifesManager : Manager<LifesManager>
 		//LocalNotification*******De cuando se queda sin vidas y gana 1 vida
 		if (tempUsr.playerLifes == 0) 
 		{
-			List<WorldData> worldData = tempUsr.worlds;
-			int currentLevel = 1;
-
-
-			if (worldData.Count != 0) 
-			{
-				currentLevel = worldData [worldData.Count - 1].levels.Count;
-				currentLevel++;				
-			}
+			int currentLevel = tempUsr.levels.Count +1;
 
 			life1NotificationID = (LocalNotificationManager.GetInstance () as LocalNotificationManager).modifyAndScheduleNotificationByName (
 				villavanilla.Notifications.ERegisteredNotification.LIFE_1,

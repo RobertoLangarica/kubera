@@ -19,7 +19,7 @@ namespace Kubera.Data
 
 		public WorldData(string worldId)
 		{
-			id = worldId;
+			_id = worldId;
 			levels = new List<LevelData>();	
 			isDirty = false;
 		}
@@ -36,7 +36,7 @@ namespace Kubera.Data
 			//revisamos los niveles
 			foreach(LevelData remoteLevel in ((WorldData)readOnlyRemote).levels )
 			{
-				level = getLevelById(remoteLevel.id);
+				level = getLevelById(remoteLevel._id);
 
 				if(level != null)
 				{
@@ -68,12 +68,12 @@ namespace Kubera.Data
 
 		public LevelData getLevelById(string id)
 		{
-			return levels.Find(item=>item.id == id);
+			return levels.Find(item=>item._id == id);
 		}
 
 		public bool existLevel(string id)
 		{
-			return (levels.Find(item=>item.id == id) != null);
+			return (levels.Find(item=>item._id == id) != null);
 		}
 
 		public void addLevel(LevelData level)
@@ -83,7 +83,7 @@ namespace Kubera.Data
 
 		public WorldData getOnlyDirtyCopy()
 		{
-			WorldData result = new WorldData(this.id);
+			WorldData result = new WorldData(this._id);
 
 			foreach(LevelData level in levels)
 			{
@@ -106,7 +106,7 @@ namespace Kubera.Data
 
 		public WorldData clone(bool addLevels = true)
 		{
-			WorldData result = new WorldData(this.id);
+			WorldData result = new WorldData(this._id);
 			result.version = this.version;
 			result.isDirty = this.isDirty;
 

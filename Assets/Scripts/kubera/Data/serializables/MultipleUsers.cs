@@ -28,7 +28,7 @@ namespace Kubera.Data
 			//revisamos los usuarios
 			foreach(KuberaUser remoteUser in ((MultipleUsers)readOnlyRemote).users )
 			{
-				user = getUserById(remoteUser.id);
+				user = getUserById(remoteUser._id);
 				if(user != null)
 				{
 					//Actualizamos el usuario existente
@@ -46,7 +46,7 @@ namespace Kubera.Data
 
 		public KuberaUser getUserById(string id)
 		{
-			return users.Find(item=>item.id == id);
+			return users.Find(item=>item._id == id);
 		}
 
 		public KuberaUser getUserByFacebookId(string id)
