@@ -6,6 +6,11 @@ using System.Collections;
  */
 public class MultiLanguageTextManager
 {
+	//HOME
+	public const string START_GAME		= "startGame";
+
+
+
 	//GAME
 	public const string GOAL_CONDITION_BY_POINT_UP_ID		= "goalByPointsConditionUP";
 	public const string GOAL_CONDITION_BY_POINT_ID 			= "goalByPointsCondition";
@@ -78,6 +83,12 @@ public class MultiLanguageTextManager
 	public const string NO_GEMS_POPUP_TITLE					= "NoGemsPopUpTitle";
 	public const string NO_GEMS_POPUP_INFO					= "NoGemsPopUpInfo";
 	public const string NO_GEMS_POPUP_BUTTON				= "NoGemsPopUpButton";
+
+	public const string BOSS_LOCKED_UNLOCK_TEXT 			= "BossLockedUnlockText";
+	public const string BOSS_LOCKED_OPTION_TEXT 			= "BossLockedOptionText";
+	public const string BOSS_LOCKED_KEY_TEXT 				= "BossLockedKeyText";
+	public const string BOSS_LOCKED_GEM_TEXT 				= "BossLockedGemText";
+	public const string BOSS_LOCKED_STAR_TEXT 				= "BossLockedStarText";
 
 	//Invitation to review
 

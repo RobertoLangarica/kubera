@@ -22,12 +22,13 @@ public class MiniWorld : MonoBehaviour {
 
 	void Start()
 	{
-		//name.text = MultiLanguageTextManager.instance.getTextByID ("World" + world + "_Name");
 	}
 
 	public void setStars(int obtainedStars, int worldStars)
 	{
 		starsCount.text = obtainedStars.ToString () + "/" + worldStars.ToString ();
+
+		name.text = MultiLanguageTextManager.instance.getTextByID ("World" + world + "_name");
 	}
 
 	public void toWorld()

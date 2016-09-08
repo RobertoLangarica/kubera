@@ -287,13 +287,13 @@ public class MapManager : MonoBehaviour
 		case(MapLevel.EMapLevelsStatus.BOSS_PASSED):
 		case(MapLevel.EMapLevelsStatus.NORMAL_PASSED):
 		case(MapLevel.EMapLevelsStatus.BOSS_UNLOCKED):
-		case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
+		//case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
 		case(MapLevel.EMapLevelsStatus.NORMAL_REACHED):
 			level.OnClickNotification += OnLevelUnlockedPressed;
 			break;
-		/*case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
+		case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
 			level.OnClickNotification += OnBossReachedPressed;
-			break;*/
+			break;
 		}
 	}
 
@@ -341,7 +341,7 @@ public class MapManager : MonoBehaviour
 		{
 			bossLockedPopUp.lvlName = pressed.lvlName;
 
-			bossLockedPopUp.initializeValues (pressed.friendsNeeded,pressed.gemsNeeded,pressed.starsNeeded);
+			bossLockedPopUp.initializeValues (pressed.friendsNeeded,pressed.gemsNeeded,pressed.starsNeeded,pressed.lvlName);
 
 			openPopUp ("bossLocked");
 		}
