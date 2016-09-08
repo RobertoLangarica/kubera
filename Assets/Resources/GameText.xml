@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <gameText>
 	<texts>
+		<!--
+		Home
+		-->
+		<text id="startGame">
+			<languages>
+				<language id="english" text="Play"/>
+				<language id="spanish" text="Juega"/>
+				<language id="default" text="Juega"/>
+			</languages>
+		</text>
+
+
+		<!--
+		Game	
+		-->
 		<text id="hudLevel">
 			<languages>
 				<language id="english" text="LVL"/>
@@ -413,6 +428,43 @@
 				<language id="default" text="Forma un antónimo de"/>
 			</languages>
 		</text>
+		<text id="BossLockedUnlockText">
+			<languages>
+				<language id="english" text="Unlock level {{level}}"/>
+				<language id="spanish" text="Desbloquea el nivel {{level}}"/>
+				<language id="default" text="Desbloquea el nivel {{level}}"/>
+			</languages>
+		</text>
+		<text id="BossLockedOptionText">
+			<languages>
+				<language id="english" text="You have three options"/>
+				<language id="spanish" text="Tienes tres opciones"/>
+				<language id="default" text="Tienes tres opciones"/>
+			</languages>
+		</text>
+		<text id="BossLockedKeyText">
+			<languages>
+				<language id="english" text="Form a antonym of"/>
+				<language id="spanish" text="Junta más estrellas"/>
+				<language id="default" text="Junta más estrellas"/>
+			</languages>
+		</text>
+		<text id="BossLockedGemText">
+			<languages>
+				<language id="english" text="Form a antonym of"/>
+				<language id="spanish" text="Pide {{keyNumber}} keys"/>
+				<language id="default" text="Pide {{keyNumber}} keys"/>
+			</languages>
+		</text>
+		<text id="BossLockedStarText">
+			<languages>
+				<language id="english" text="Form a antonym of"/>
+				<language id="spanish" text="Juega ahora"/>
+				<language id="default" text="Juega ahora"/>
+			</languages>
+		</text>
+
+
 
 		<!--
 		Invitation

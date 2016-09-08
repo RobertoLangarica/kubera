@@ -29,15 +29,21 @@ public class TutorialLvl64 : TutorialBase
 
 			freeWildCard = true;
 
+			firstAnim ();
+
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WILDCARD_BUTTON);
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 
-			instructions [0].text =	MultiLanguageTextManager.instance.multipleReplace (
+			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE1),
 				new string[3]{ "{{b}}","{{/b}}","/n"}, new string[3]{ "<b>", "</b>","\n"});
+			instructionsText = instructions [0];
+			instructionsText.text = "";
 
 			doAnimation = true;
 			Invoke ("powerUpAnim",1);
+
+			Invoke ("writeLetterByLetter",initialAnim*2);
 
 			phase = 1;
 			return true;
@@ -49,16 +55,28 @@ public class TutorialLvl64 : TutorialBase
 
 			phaseEvent.Add(ENextPhaseEvent.KEYBOARD_LETER_SELECTED);
 
+			if (instructionIndex < currentInstruction.Length) {
+				changeInstruction = true;
+				foundStringTag = false;
+			}
+
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_BUTTON);
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 
 			freeWildCard = true;
 
-			instructions [1].text =	MultiLanguageTextManager.instance.multipleReplace (
+			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE2),
 				new string[2]{ "{{b}}","{{/b}}"}, new string[2]{ "<b>", "</b>"});
+			instructionsText = instructions [1];
+			instructionsText.text = "";
+			instructionIndex = 0;
+
+			shakeToErrase ();
 
 			doAnimation = false;
+
+			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
 
 			phase = 2;
 			return true;
@@ -70,13 +88,25 @@ public class TutorialLvl64 : TutorialBase
 
 			phaseEvent.Add(ENextPhaseEvent.SUBMIT_WORD);
 
+			if (instructionIndex < currentInstruction.Length) {
+				changeInstruction = true;
+				foundStringTag = false;
+			}
+
 			freeWildCard = true;
 
-			instructions [2].text =	MultiLanguageTextManager.instance.multipleReplace (
+			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE3),
 				new string[2]{ "{{b}}","{{/b}}"}, new string[2]{ "<b>", "</b>"});
+			instructionsText = instructions [2];
+			instructionsText.text = "";
+			instructionIndex = 0;
+
+			shakeToErrase ();
 
 			doAnimation = false;
+
+			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
 
 			phase = 3;
 			return true;
@@ -86,13 +116,25 @@ public class TutorialLvl64 : TutorialBase
 			phasesPanels [3].SetActive (true);
 			phaseEvent.Add(ENextPhaseEvent.TAP);
 
+			if (instructionIndex < currentInstruction.Length) {
+				changeInstruction = true;
+				foundStringTag = false;
+			}
+
 			freeWildCard = true;
 
-			instructions [3].text =	MultiLanguageTextManager.instance.multipleReplace (
+			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE4),
 				new string[2]{ "{{b}}","{{/b}}"}, new string[2]{ "<b>", "</b>"});
+			instructionsText = instructions [3];
+			instructionsText.text = "";
+			instructionIndex = 0;
+
+			shakeToErrase ();
 
 			doAnimation = false;
+
+			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
 
 			phase = 4;
 			return true;
@@ -130,7 +172,7 @@ public class TutorialLvl64 : TutorialBase
 	{
 		if (!doAnimation) 
 		{
-			DOTween.Kill ("Tutorial2");
+			DOTween.Kill ("Tutorial64");
 			return;
 		}
 
@@ -140,7 +182,7 @@ public class TutorialLvl64 : TutorialBase
 		powerUpDommy.transform.position = posFrom;
 
 		//Los valores de las animaciones los paso Liloo
-		powerUpDommy.transform.DOScale (new Vector3 (1.4f, 1.4f, 1.4f), 0.5f).SetId("Tutorial2");
+		powerUpDommy.transform.DOScale (new Vector3 (1.4f, 1.4f, 1.4f), 0.5f).SetId("Tutorial64");
 		powerUpDommy.DOColor (new Color(1,1,1,0.5f),0.5f).OnComplete(
 			()=>{
 
@@ -151,17 +193,17 @@ public class TutorialLvl64 : TutorialBase
 						powerUpDommy.transform.DOScale (new Vector3 (1, 1, 1), 1f).OnComplete(
 							()=>{
 
-								powerUpDommy.DOColor (new Color(1,1,1,0),0.5f).SetId("Tutorial2");
+								powerUpDommy.DOColor (new Color(1,1,1,0),0.5f).SetId("Tutorial64");
 							}
 
-						).SetId("Tutorial2");
+						).SetId("Tutorial64");
 
 					}
 
-				).SetId("Tutorial2");
+				).SetId("Tutorial64");
 
 			}
-		).SetId("Tutorial2");
+		).SetId("Tutorial64");
 
 		Invoke ("powerUpAnim",3.5f);
 	}

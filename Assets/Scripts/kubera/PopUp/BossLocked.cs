@@ -7,11 +7,14 @@ public class BossLocked : PopUpBase {
 
 	protected PopUpManager popUpManager;
 
-	public Text friendsText;
+	public Text bossLockedUnlockText;
+	public Text bossLockedOptionText;
 	public Text starsText;
+	public Text friendsText;
+	public Text gemsText;
+
 	public Text starsNumber;
 	public Text gemsNumber;
-	public Text gemsText;
 
 	[HideInInspector]public int gemsNeeded;
 	[HideInInspector]public string lvlName;
@@ -19,6 +22,10 @@ public class BossLocked : PopUpBase {
 	void Start()
 	{
 		popUpManager = FindObjectOfType<PopUpManager> ();
+
+		bossLockedOptionText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.BOSS_LOCKED_OPTION_TEXT);
+		starsText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.BOSS_LOCKED_STAR_TEXT);
+		gemsText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.BOSS_LOCKED_GEM_TEXT);
 	}
 
 	public override void activate()
@@ -26,12 +33,13 @@ public class BossLocked : PopUpBase {
 		popUp.SetActive (true);
 	}
 
-	public void initializeValues(int friendsNeeded,int gems,int starsNeeded)
+	public void initializeValues(int friendsNeeded,int gems,int starsNeeded, string levelNumber)
 	{
-		//TODO: estrellas
+		bossLockedUnlockText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.BOSS_LOCKED_UNLOCK_TEXT).Replace ("{{level}}",levelNumber);
 		starsNumber.text = (KuberaDataManager.GetInstance () as KuberaDataManager).getAllEarnedStars ().ToString() + " / " + starsNeeded.ToString();
 		gemsNumber.text = gems.ToString ();
-		friendsText.text = friendsNeeded.ToString ();
+
+		friendsText.text =MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.BOSS_LOCKED_KEY_TEXT).Replace ("{{keyNumber}}",friendsNeeded.ToString ());
 		gemsNeeded = gems;
 	}
 

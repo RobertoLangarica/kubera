@@ -143,7 +143,7 @@ public class HighLightManager : Manager<HighLightManager>
 			break;
 		case(EHighLightType.ROTATE_POWERUP):
 		case(EHighLightType.PIECES_AREA):
-			turnOnHighLights (hudManager.rotationImagePositions[0].parent.parent,EHighLightStatus.NORMAL);
+			turnOnHighLights (hudManager.rotationImagePositions[0].parent,EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.SQUARE_POWERUP):
 		case(EHighLightType.EMPTY_CELLS):
@@ -172,7 +172,7 @@ public class HighLightManager : Manager<HighLightManager>
 			turnOnHighLights (wordManager.wordCompleteButton.transform,EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.OBJECTIVE):
-			turnOnHighLights (hudManager.goalText.transform.parent,EHighLightStatus.NORMAL);
+			turnOnHighLights (hudManager.goalText.transform.parent.parent,EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.MOVEMENTS):
 			turnOnHighLights (hudManager.movementsText.transform.parent,EHighLightStatus.NORMAL);

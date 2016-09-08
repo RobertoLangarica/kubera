@@ -142,8 +142,12 @@ public class GameManager : MonoBehaviour
 
 	IEnumerator finishLoadingFix()
 	{
+		if(PersistentData.GetInstance().fromLevelsToGame)
+		{
+			yield return new WaitForEndOfFrame ();
+			ScreenManager.instance.testLoading ("Levels");
+		}
 		yield return new WaitForEndOfFrame ();
-
 		if(ScreenManager.instance)
 		{
 			ScreenManager.instance.sceneFinishLoading ();
@@ -182,8 +186,8 @@ public class GameManager : MonoBehaviour
 
 		if (Input.GetKeyUp (KeyCode.Y)) 
 		{
-			goalManager.OnGoalAchieved ();
 			cancelBonify = true;
+			goalManager.OnGoalAchieved ();
 		}
 
 		if (Input.GetKeyUp (KeyCode.Q)) 
@@ -803,10 +807,12 @@ public class GameManager : MonoBehaviour
 	{
 		if(wordManager.checkIfAWordIsPossible(gridCharacters))
 		{
+			print ("Available");
 			wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
 		}
 		else if(gridCharacters.Count > 0)
 		{				
+			print ("not");
 			wordManager.updateGridLettersState (gridCharacters, WordManager.EWordState.NO_WORDS_AVAILABLE);
 		}
 	}
@@ -990,7 +996,7 @@ public class GameManager : MonoBehaviour
 		else
 		#endif	
 		{
-			if(PersistentData.GetInstance ().fromGameToLevels)
+			if(PersistentData.GetInstance ().fromLevelsToGame)
 			{
 				return;
 			}
@@ -1019,6 +1025,7 @@ public class GameManager : MonoBehaviour
 				LifesManager.GetInstance ().giveALife();
 
 				Invoke ("toLevels", 0.75f);
+
 				//Gano y ya se termino win bonification
 				/*PersistentData.GetInstance().fromLevelBuilder = true;
 				SceneManager.LoadScene ("Game");*/
@@ -1028,7 +1035,9 @@ public class GameManager : MonoBehaviour
 
 	protected void toLevels()
 	{
-		ScreenManager.instance.GoToScene ("Levels");
+		ScreenManager.instance.testContinue();
+
+		//ScreenManager.instance.GoToScene ("Levels");
 	}
 
 	protected void showDestroyedLetterScore(Cell cell)
@@ -1229,13 +1238,12 @@ public class GameManager : MonoBehaviour
 			LifesManager.GetInstance ().takeALife ();
 			break;
 		case "endGame":
-			//SceneManager.LoadScene ("Levels");
-			//ScreenManager.instance.GoToScene ("Levels");
+			//toLevels ();
 			break;
 		case "winPopUpEnd":
 			if(cancelBonify)
 			{
-				afterBonification ();
+				Invoke ("afterBonification", piecePositionedDelay * 2);
 			}
 			else
 			{
@@ -1248,7 +1256,7 @@ public class GameManager : MonoBehaviour
 		case "loose":
 			PersistentData.GetInstance ().fromLoose = true;
 			PersistentData.GetInstance ().fromGameToLevels = true;
-			ScreenManager.instance.GoToScene ("Levels");
+			toLevels ();
 			break;
 		default:		
 			//print ("quien lo llama?");
@@ -1274,7 +1282,7 @@ public class GameManager : MonoBehaviour
 		PersistentData.GetInstance ().fromLoose = true;
 		PersistentData.GetInstance ().fromGameToLevels = true;
 		//activatePopUp ("exitGame");
-		ScreenManager.instance.GoToScene ("Levels");
+		toLevels ();
 		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		activatePopUp ("exitGame");*/
 	}

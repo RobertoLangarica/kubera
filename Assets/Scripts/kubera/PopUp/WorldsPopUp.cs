@@ -20,18 +20,19 @@ public class WorldsPopUp : PopUpBase {
 
 	public override void activate()
 	{
+		animateWorldsLights (true);
 		popUp.SetActive (true);
 	}
 
 	public void goToWorld(int world)
 	{
 		mapManager.changeCurrentWorld (world, true, false);
-		OnComplete ();
+		CompletePopUp ();
 	}
 
 	public void exit()
 	{
-		OnComplete ();
+		CompletePopUp ();
 	}
 
 	public void initializeMiniWorld(int world, bool unLocked, int starsObtained, int worldStars)
@@ -49,6 +50,27 @@ public class WorldsPopUp : PopUpBase {
 
 	public void toMessages()
 	{
-		OnComplete ("toFacebookMessages");
+		CompletePopUp ("toFacebookMessages");
+	}
+
+	protected void animateWorldsLights(bool animate)
+	{
+		for(int i=0; i<worlds.Length; i++)
+		{
+			if(animate)
+			{
+				worlds [i].animateLights ();
+			}
+			else
+			{
+				worlds [i].killAnimateLights ();
+			}
+		}
+	}
+
+	protected void CompletePopUp(string action= "")
+	{
+		animateWorldsLights (false);
+		OnComplete (action);
 	}
 }

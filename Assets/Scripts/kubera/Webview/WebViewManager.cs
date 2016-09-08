@@ -32,7 +32,7 @@ public class WebViewManager : Manager<WebViewManager>
 	protected WebView displayWebView;
 	protected Dictionary<string,ReceivedMessage> webViewMessagesSubscriptors;
 
-	void Start()
+	void init()
 	{
 		displayWebView = GetComponent<WebView> ();
 
