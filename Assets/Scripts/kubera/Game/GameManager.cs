@@ -142,8 +142,11 @@ public class GameManager : MonoBehaviour
 
 	IEnumerator finishLoadingFix()
 	{
-		yield return new WaitForEndOfFrame ();
-		ScreenManager.instance.testLoading ("Levels");
+		if(PersistentData.GetInstance().fromLevelsToGame)
+		{
+			yield return new WaitForEndOfFrame ();
+			ScreenManager.instance.testLoading ("Levels");
+		}
 		yield return new WaitForEndOfFrame ();
 		if(ScreenManager.instance)
 		{
@@ -804,10 +807,12 @@ public class GameManager : MonoBehaviour
 	{
 		if(wordManager.checkIfAWordIsPossible(gridCharacters))
 		{
+			print ("Available");
 			wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
 		}
 		else if(gridCharacters.Count > 0)
 		{				
+			print ("not");
 			wordManager.updateGridLettersState (gridCharacters, WordManager.EWordState.NO_WORDS_AVAILABLE);
 		}
 	}
@@ -991,7 +996,7 @@ public class GameManager : MonoBehaviour
 		else
 		#endif	
 		{
-			if(PersistentData.GetInstance ().fromGameToLevels)
+			if(PersistentData.GetInstance ().fromLevelsToGame)
 			{
 				return;
 			}

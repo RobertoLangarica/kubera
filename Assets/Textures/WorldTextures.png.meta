@@ -45,6 +45,23 @@ TextureImporter:
     21300076: K-2-MapaMascotas_perro
     21300078: K-2-MapaMascotas_pez
     21300080: K-2-MapaMascotas_serpiente
+    21300082: K-2-MapaMascotas_techomascotas
+    21300084: K-4-MapaLibros_estante1
+    21300086: K-4-MapaLibros_L
+    21300088: K-4-MapaLibros_L1
+    21300090: K-4-MapaLibros_L2
+    21300092: K-4-MapaLibros_L3
+    21300094: K-4-MapaLibros_L4
+    21300096: K-4-MapaLibros_L7
+    21300098: K-4-MapaLibros_L8
+    21300100: K-4-MapaLibros_L9
+    21300102: K-4-MapaLibros_librero
+    21300104: K-4-MapaLibros_librero2
+    21300106: K-4-MapaLibros_libreroamarillo
+    21300108: K-4-MapaLibros_libreroazul
+    21300110: K-4-MapaLibros_LSEIS
+    21300112: K-4-MapaLibros_separador
+    21300114: K-4-MapaLibros_techolibros
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -94,8 +111,8 @@ TextureImporter:
     - name: fondo-K-Mapa1-17
       rect:
         serializedVersion: 2
-        x: 812
-        y: 1227
+        x: 474
+        y: 1445
         width: 85
         height: 82
       alignment: 9
@@ -112,8 +129,8 @@ TextureImporter:
     - name: fondo-K-Mapa1_bolitaparallax
       rect:
         serializedVersion: 2
-        x: 69
-        y: 23
+        x: 1
+        y: 9
         width: 11
         height: 10
       alignment: 9
@@ -123,8 +140,8 @@ TextureImporter:
     - name: fondo-K-Mapa1_Estrallasdeco
       rect:
         serializedVersion: 2
-        x: 1004
-        y: 1504
+        x: 603
+        y: 741
         width: 120
         height: 116
       alignment: 9
@@ -142,7 +159,7 @@ TextureImporter:
     - name: fondo-K-Mapa1_Luz1
       rect:
         serializedVersion: 2
-        x: 766
+        x: 566
         y: 1626
         width: 563
         height: 421
@@ -169,7 +186,7 @@ TextureImporter:
     - name: 'fondo-K-Mapa1_Luz2 '
       rect:
         serializedVersion: 2
-        x: 1335
+        x: 1135
         y: 1207
         width: 458
         height: 534
@@ -226,8 +243,8 @@ TextureImporter:
     - name: fondo-K-Mapa1_Luz3h
       rect:
         serializedVersion: 2
-        x: 712
-        y: 260
+        x: 1021
+        y: 239
         width: 253
         height: 495
       alignment: 9
@@ -262,7 +279,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 413
-        y: 810
+        y: 946
         width: 274
         height: 391
       alignment: 9
@@ -291,8 +308,8 @@ TextureImporter:
     - name: fondo-K-Mapa1_Luz5
       rect:
         serializedVersion: 2
-        x: 450
-        y: 1508
+        x: 1621
+        y: 1424
         width: 301
         height: 539
       alignment: 9
@@ -337,8 +354,8 @@ TextureImporter:
     - name: fondo-K-Mapa1_Luz6
       rect:
         serializedVersion: 2
-        x: 1821
-        y: 1561
+        x: 1280
+        y: 248
         width: 221
         height: 486
       alignment: 9
@@ -358,7 +375,7 @@ TextureImporter:
     - name: fondo-K-Mapa1_Miniestrella
       rect:
         serializedVersion: 2
-        x: 42
+        x: 271
         y: 12
         width: 21
         height: 21
@@ -369,8 +386,8 @@ TextureImporter:
     - name: fondo-K-Mapa1_nota1
       rect:
         serializedVersion: 2
-        x: 1144
-        y: 1115
+        x: 413
+        y: 1706
         width: 143
         height: 194
       alignment: 9
@@ -387,8 +404,8 @@ TextureImporter:
     - name: fondo-K-Mapa1_nota2
       rect:
         serializedVersion: 2
-        x: 605
-        y: 1211
+        x: 1928
+        y: 1559
         width: 112
         height: 98
       alignment: 9
@@ -405,8 +422,8 @@ TextureImporter:
     - name: fondo-K-Mapa1_nota3
       rect:
         serializedVersion: 2
-        x: 891
-        y: 1515
+        x: 1928
+        y: 1448
         width: 107
         height: 105
       alignment: 9
@@ -430,8 +447,8 @@ TextureImporter:
     - name: fondo-K-Mapa1_nota5
       rect:
         serializedVersion: 2
-        x: 903
-        y: 1229
+        x: 558
+        y: 1540
         width: 127
         height: 80
       alignment: 9
@@ -451,7 +468,7 @@ TextureImporter:
     - name: fondo-K-Mapa1_nota6
       rect:
         serializedVersion: 2
-        x: 1
+        x: 230
         y: 3
         width: 35
         height: 30
@@ -462,8 +479,8 @@ TextureImporter:
     - name: fondo-K-Mapa1_nota7
       rect:
         serializedVersion: 2
-        x: 413
-        y: 2012
+        x: 1599
+        y: 1706
         width: 13
         height: 35
       alignment: 9
@@ -473,8 +490,8 @@ TextureImporter:
     - name: fondo-K-Mapa1_nota8
       rect:
         serializedVersion: 2
-        x: 308
-        y: 11
+        x: 652
+        y: 1497
         width: 29
         height: 37
       alignment: 9
@@ -484,8 +501,8 @@ TextureImporter:
     - name: fondo-K-Mapa1_nota9
       rect:
         serializedVersion: 2
-        x: 818
-        y: 1326
+        x: 413
+        y: 690
         width: 40
         height: 54
       alignment: 9
@@ -504,7 +521,7 @@ TextureImporter:
     - name: fondo-K-Mapa1_partitura
       rect:
         serializedVersion: 2
-        x: 1335
+        x: 1135
         y: 1747
         width: 480
         height: 300
@@ -556,8 +573,8 @@ TextureImporter:
     - name: "K-1-MapaM\xFAsica_PlataformaChica"
       rect:
         serializedVersion: 2
-        x: 693
-        y: 821
+        x: 1599
+        y: 1382
         width: 297
         height: 36
       alignment: 9
@@ -573,8 +590,8 @@ TextureImporter:
     - name: "K-1-MapaM\xFAsica_PllataformaGrande"
       rect:
         serializedVersion: 2
-        x: 343
-        y: 12
+        x: 1621
+        y: 2011
         width: 417
         height: 36
       alignment: 9
@@ -590,7 +607,7 @@ TextureImporter:
     - name: K-2-MapaMascotas_cotorros
       rect:
         serializedVersion: 2
-        x: 859
+        x: 1132
         y: 867
         width: 279
         height: 334
@@ -620,8 +637,8 @@ TextureImporter:
     - name: K-2-MapaMascotas_gato
       rect:
         serializedVersion: 2
-        x: 413
-        y: 1239
+        x: 1052
+        y: 16
         width: 186
         height: 217
       alignment: 9
@@ -638,8 +655,8 @@ TextureImporter:
     - name: K-2-MapaMascotas_huella1
       rect:
         serializedVersion: 2
-        x: 723
-        y: 1217
+        x: 474
+        y: 1347
         width: 83
         height: 92
       alignment: 9
@@ -657,8 +674,8 @@ TextureImporter:
     - name: K-2-MapaMascotas_huella3
       rect:
         serializedVersion: 2
-        x: 757
-        y: 1509
+        x: 729
+        y: 746
         width: 128
         height: 111
       alignment: 9
@@ -679,8 +696,8 @@ TextureImporter:
     - name: K-2-MapaMascotas_huella4
       rect:
         serializedVersion: 2
-        x: 1036
-        y: 1232
+        x: 474
+        y: 863
         width: 71
         height: 77
       alignment: 9
@@ -699,8 +716,8 @@ TextureImporter:
     - name: K-2-MapaMascotas_huella5
       rect:
         serializedVersion: 2
-        x: 818
-        y: 1386
+        x: 474
+        y: 740
         width: 123
         height: 117
       alignment: 9
@@ -719,8 +736,8 @@ TextureImporter:
     - name: K-2-MapaMascotas_huello2
       rect:
         serializedVersion: 2
-        x: 1144
-        y: 1315
+        x: 413
+        y: 1906
         width: 145
         height: 141
       alignment: 9
@@ -858,7 +875,7 @@ TextureImporter:
     - name: K-2-MapaMascotas_perro
       rect:
         serializedVersion: 2
-        x: 1
+        x: 230
         y: 39
         width: 301
         height: 253
@@ -886,8 +903,8 @@ TextureImporter:
     - name: K-2-MapaMascotas_pez
       rect:
         serializedVersion: 2
-        x: 413
-        y: 361
+        x: 1599
+        y: 940
         width: 293
         height: 394
       alignment: 9
@@ -911,7 +928,7 @@ TextureImporter:
     - name: K-2-MapaMascotas_serpiente
       rect:
         serializedVersion: 2
-        x: 693
+        x: 757
         y: 863
         width: 160
         height: 338
@@ -928,11 +945,361 @@ TextureImporter:
         - {x: 72, y: -178}
         - {x: 72, y: 45}
         - {x: 61, y: 114}
+    - name: K-2-MapaMascotas_techomascotas
+      rect:
+        serializedVersion: 2
+        x: 796
+        y: 115
+        width: 250
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5289855}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -125, y: 32.5}
+        - {x: -125, y: -36.5}
+        - {x: 125, y: -36.5}
+        - {x: 125, y: 32.5}
+    - name: K-4-MapaLibros_estante1
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 14
+        width: 262
+        height: 19
+      alignment: 9
+      pivot: {x: 0.5019084, y: 0.4473684}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-4-MapaLibros_L
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 1352
+        width: 32
+        height: 182
+      alignment: 9
+      pivot: {x: 0.546875, y: 0.49175823}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -17.5, y: 92.5}
+        - {x: -17.5, y: -89.5}
+        - {x: 14.5, y: -89.5}
+        - {x: 14.5, y: 92.5}
+    - name: K-4-MapaLibros_L1
+      rect:
+        serializedVersion: 2
+        x: 923
+        y: 837
+        width: 189
+        height: 204
+      alignment: 9
+      pivot: {x: 0.5026455, y: 0.5122549}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -93, y: 99.5}
+        - {x: -95, y: 98.5}
+        - {x: -95, y: -103.5}
+        - {x: -94, y: -104.5}
+        - {x: 92, y: -104.5}
+        - {x: 94, y: -101.5}
+        - {x: 94, y: 95.5}
+        - {x: 91, y: 99.5}
+      - - {x: -57, y: 81.5}
+        - {x: 73, y: 81.5}
+        - {x: 73, y: -26.5}
+        - {x: -57, y: -26.5}
+    - name: K-4-MapaLibros_L2
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 1329
+        width: 203
+        height: 59
+      alignment: 9
+      pivot: {x: 0.5049261, y: 0.4915254}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -102.5, y: 30}
+        - {x: -102.5, y: -29}
+        - {x: 100.5, y: -29}
+        - {x: 100.5, y: 30}
+    - name: K-4-MapaLibros_L3
+      rect:
+        serializedVersion: 2
+        x: 551
+        y: 863
+        width: 200
+        height: 71
+      alignment: 9
+      pivot: {x: 0.49, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -98, y: 35.5}
+        - {x: -98, y: -35.5}
+        - {x: 102, y: -35.5}
+        - {x: 102, y: 35.5}
+    - name: K-4-MapaLibros_L4
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 750
+        width: 55
+        height: 184
+      alignment: 9
+      pivot: {x: 0.4909091, y: 0.4972826}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -27, y: 27.5}
+        - {x: -27, y: -91.5}
+        - {x: 28, y: -91.5}
+        - {x: 28, y: 27.5}
+      - - {x: -27, y: 92.5}
+        - {x: -27, y: 47.5}
+        - {x: -26, y: 46.5}
+        - {x: 27, y: 46.5}
+        - {x: 28, y: 47.5}
+        - {x: 28, y: 92.5}
+    - name: K-4-MapaLibros_L7
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 1350
+        width: 43
+        height: 184
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -21.5, y: 17}
+        - {x: -21.5, y: -92}
+        - {x: 21.5, y: -92}
+        - {x: 21.5, y: 17}
+      - - {x: -21.5, y: 92}
+        - {x: -21.5, y: 43}
+        - {x: -20.5, y: 42}
+        - {x: 20.5, y: 42}
+        - {x: 21.5, y: 43}
+        - {x: 21.5, y: 92}
+    - name: K-4-MapaLibros_L8
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 1343
+        width: 53
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5283019, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -26, y: -75}
+        - {x: -28, y: -77}
+        - {x: -28, y: -92}
+        - {x: 25, y: -92}
+        - {x: 25, y: -76}
+        - {x: 24, y: -75}
+      - - {x: -28, y: 23}
+        - {x: -28, y: -69}
+        - {x: 25, y: -69}
+        - {x: 25, y: 23}
+      - - {x: -27, y: 43}
+        - {x: -28, y: 42}
+        - {x: -28, y: 26}
+        - {x: -27, y: 25}
+        - {x: 24, y: 25}
+        - {x: 25, y: 26}
+        - {x: 25, y: 42}
+        - {x: 24, y: 43}
+      - - {x: -28, y: 92}
+        - {x: -28, y: 44}
+        - {x: 24, y: 44}
+        - {x: 25, y: 45}
+        - {x: 25, y: 92}
+    - name: K-4-MapaLibros_L9
+      rect:
+        serializedVersion: 2
+        x: 1898
+        y: 1148
+        width: 24
+        height: 186
+      alignment: 9
+      pivot: {x: 0.5208333, y: 0.50537634}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-4-MapaLibros_librero
+      rect:
+        serializedVersion: 2
+        x: 796
+        y: 190
+        width: 219
+        height: 544
+      alignment: 9
+      pivot: {x: 0.51141554, y: 0.5055147}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 101, y: -77}
+        - {x: 107, y: -35}
+        - {x: 107, y: 40}
+        - {x: 101, y: 76}
+        - {x: 107, y: 78}
+        - {x: 107, y: 95}
+        - {x: 105, y: 100}
+        - {x: 107, y: 123}
+        - {x: 107, y: 181}
+        - {x: 101, y: 185}
+        - {x: 107, y: 228}
+        - {x: 107, y: 268}
+        - {x: 104, y: 269}
+        - {x: -112, y: 269}
+        - {x: -112, y: 252}
+        - {x: -105, y: 249}
+        - {x: -109, y: 187}
+        - {x: -112, y: 181}
+        - {x: -112, y: 166}
+        - {x: -105, y: 162}
+        - {x: -106, y: 99}
+        - {x: -112, y: 96}
+        - {x: -112, y: 78}
+        - {x: -109, y: 73}
+        - {x: -112, y: 45}
+        - {x: -112, y: -98}
+        - {x: -105, y: -99}
+        - {x: -106, y: -217}
+        - {x: -85, y: -220}
+        - {x: -84, y: -216}
+        - {x: -84, y: -98}
+        - {x: 81, y: -98}
+        - {x: 81, y: -274}
+        - {x: 82, y: -275}
+        - {x: 100, y: -275}
+        - {x: 107, y: -104}
+        - {x: 107, y: -79}
+    - name: K-4-MapaLibros_librero2
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 1394
+        width: 219
+        height: 226
+      alignment: 9
+      pivot: {x: 0.50913244, y: 0.5176991}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 107.5, y: -67}
+        - {x: 107.5, y: 109}
+        - {x: -108.5, y: 109}
+        - {x: -111.5, y: 106}
+        - {x: -111.5, y: -43}
+        - {x: -104.5, y: -117}
+        - {x: -83.5, y: -117}
+        - {x: -83.5, y: -116}
+        - {x: -60.5, y: -117}
+        - {x: 101.5, y: -117}
+    - name: K-4-MapaLibros_libreroamarillo
+      rect:
+        serializedVersion: 2
+        x: 566
+        y: 16
+        width: 224
+        height: 718
+      alignment: 9
+      pivot: {x: 0.50446427, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 108, y: -353}
+        - {x: 111, y: -349}
+        - {x: 111, y: 349}
+        - {x: 110, y: 352}
+        - {x: 104, y: 358}
+        - {x: 101, y: 359}
+        - {x: -103, y: 359}
+        - {x: -106, y: 358}
+        - {x: -112, y: 352}
+        - {x: -113, y: 349}
+        - {x: -113, y: -350}
+        - {x: -108, y: -357}
+        - {x: -103, y: -359}
+        - {x: 99, y: -359}
+        - {x: 103, y: -358}
+        - {x: 108, y: -354}
+    - name: K-4-MapaLibros_libreroazul
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 25
+        width: 223
+        height: 267
+      alignment: 9
+      pivot: {x: 0.50224215, y: 0.51498127}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 111, y: 121.5}
+        - {x: 107, y: 126.5}
+        - {x: 106, y: 126.5}
+        - {x: 103, y: 129.5}
+        - {x: -104, y: 129.5}
+        - {x: -112, y: 121.5}
+        - {x: -112, y: -129.5}
+        - {x: -104, y: -137.5}
+        - {x: 103, y: -137.5}
+        - {x: 111, y: -129.5}
+    - name: K-4-MapaLibros_LSEIS
+      rect:
+        serializedVersion: 2
+        x: 1417
+        y: 968
+        width: 170
+        height: 233
+      alignment: 9
+      pivot: {x: 0.4970588, y: 0.50214595}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 81.5, y: 116}
+        - {x: -81.5, y: 116}
+        - {x: -84.5, y: 113}
+        - {x: -84.5, y: -115}
+        - {x: -81.5, y: -117}
+        - {x: 82.5, y: -117}
+        - {x: 85.5, y: -115}
+        - {x: 85.5, y: 113}
+    - name: K-4-MapaLibros_separador
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 1533
+        width: 139
+        height: 167
+      alignment: 9
+      pivot: {x: 0.51079136, y: 0.51197606}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -71, y: 81.5}
+        - {x: -71, y: -85.5}
+        - {x: 68, y: -85.5}
+        - {x: 68, y: 26.5}
+        - {x: 47, y: 81.5}
+    - name: K-4-MapaLibros_techolibros
+      rect:
+        serializedVersion: 2
+        x: 863
+        y: 762
+        width: 251
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5072464}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -119.5, y: 34}
+        - {x: -125.5, y: 27}
+        - {x: -125.5, y: -34}
+        - {x: -123.5, y: -35}
+        - {x: 125.5, y: -35}
+        - {x: 125.5, y: 34}
     - name: K-Mapa1_arpa
       rect:
         serializedVersion: 2
-        x: 308
-        y: 54
+        x: 1898
+        y: 740
         width: 136
         height: 238
       alignment: 9
@@ -951,8 +1318,8 @@ TextureImporter:
     - name: K-Mapa1_bocina
       rect:
         serializedVersion: 2
-        x: 1144
-        y: 1462
+        x: 1898
+        y: 984
         width: 148
         height: 158
       alignment: 9
@@ -972,8 +1339,8 @@ TextureImporter:
     - name: K-Mapa1_CD
       rect:
         serializedVersion: 2
-        x: 716
-        y: 1336
+        x: 1928
+        y: 1276
         width: 96
         height: 166
       alignment: 9
@@ -1000,8 +1367,8 @@ TextureImporter:
     - name: K-Mapa1_columna
       rect:
         serializedVersion: 2
-        x: 1799
-        y: 761
+        x: 923
+        y: 1047
         width: 203
         height: 573
       alignment: 9
@@ -1021,8 +1388,8 @@ TextureImporter:
     - name: K-Mapa1_guitarra
       rect:
         serializedVersion: 2
-        x: 450
-        y: 55
+        x: 1928
+        y: 1663
         width: 119
         height: 300
       alignment: 9
@@ -1039,8 +1406,8 @@ TextureImporter:
     - name: K-Mapa1_piano
       rect:
         serializedVersion: 2
-        x: 1799
-        y: 1340
+        x: 1244
+        y: 18
         width: 218
         height: 215
       alignment: 9
@@ -1062,8 +1429,8 @@ TextureImporter:
     - name: K-Mapa1_PlataformaChica
       rect:
         serializedVersion: 2
-        x: 413
-        y: 1466
+        x: 1599
+        y: 1340
         width: 297
         height: 36
       alignment: 9
@@ -1078,8 +1445,8 @@ TextureImporter:
     - name: K-Mapa1_PllataformaGrande
       rect:
         serializedVersion: 2
-        x: 413
-        y: 768
+        x: 1621
+        y: 1969
         width: 417
         height: 36
       alignment: 9
@@ -1094,8 +1461,8 @@ TextureImporter:
     - name: K-Mapa1_Tambor
       rect:
         serializedVersion: 2
-        x: 605
-        y: 1344
+        x: 1928
+        y: 1154
         width: 85
         height: 116
       alignment: 9
