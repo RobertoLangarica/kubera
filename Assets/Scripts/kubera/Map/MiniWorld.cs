@@ -49,18 +49,14 @@ public class MiniWorld : MonoBehaviour {
 		float randomRotation = Random.Range (180f, 360f);
 		for(int i=0; i<lights.Length; i++)
 		{
-			lights [i].DORotate (new Vector3 (0, 0, lights [i].rotation.z * randomRotation), Random.Range (1, 3), RotateMode.FastBeyond360).OnComplete(()=>
-				{
-					if(i+1 == lights.Length)
-					{
-						Invoke("animateLights",Random.Range(3,5));
-					}
-				}).SetId(lights[i]);
+			lights [i].DORotate (new Vector3 (0, 0, lights [i].rotation.z * randomRotation), Random.Range (1, 3), RotateMode.FastBeyond360).SetId(lights[i]);
 		}
+		Invoke("animateLights",Random.Range(3,5));
 	}
 
 	public void killAnimateLights()
 	{
+		CancelInvoke ();
 		for(int i=0; i<lights.Length; i++)
 		{
 			DOTween.Kill (lights [i], true);
