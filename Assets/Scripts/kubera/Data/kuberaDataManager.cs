@@ -29,7 +29,7 @@ namespace Kubera.Data
 			//Usuario anonimo
 			KuberaUser anonymous = new KuberaUser(ANONYMOUS_USER);
 			//TODO: Vidas maximas
-			//anonymous.playerLifes = ;
+			anonymous.playerLifes = initialLifes;
 			currentData.users.Add(anonymous);
 		}
 
@@ -258,7 +258,7 @@ namespace Kubera.Data
 					user = new KuberaUser(facebookId);
 					user.facebookId = facebookId;
 					//TODO: Vidas maximas
-					//user.playerLifes=;
+					user.playerLifes = initialLifes;
 
 					newId = facebookId;
 
@@ -311,7 +311,7 @@ namespace Kubera.Data
 				{
 					KuberaUser newUser = new KuberaUser(newUserId);
 					//TODO: Vidas maximas
-					//newUser.playerLifes=;
+					newUser.playerLifes = initialLifes;
 					currentData.users.Add(newUser);
 				}
 				else
