@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using Kubera.Data;
 using Kubera.Data.Sync;
 
 public class GoalPopUp : PopUpBase {
@@ -174,7 +175,14 @@ public class GoalPopUp : PopUpBase {
 	public void playGame()
 	{
 		soundButton ();
-		OnComplete ("playGame",false);
+		if ((KuberaDataManager.GetInstance () as KuberaDataManager).currentUser.playerLifes > 0) 
+		{
+			OnComplete ("playGame",false);
+		} 
+		else 
+		{
+			OnComplete ("NoLifes",false);
+		}
 	}
 
 	public void exit ()
