@@ -375,19 +375,22 @@ namespace Kubera.Data
 			return result;
 		}
 
-		public int getWorldCount()
-		{
-			return levelsList.getLevelByNumber(levelsList.levels.Length-1).world;
-		}
-
-		public int getLevelsCountByWorld(int world)
-		{
-			return getLevelsOfWorld (world).Length;
-		}
-
 		public void giveUserLifes(int amount = 1)
 		{
-			currentUser.giveLifeToPlayer (amount);
+			int totalLifes = currentUser.playerLifes + amount;
+
+			if (totalLifes > initialLifes) 
+			{
+				currentUser.playerLifes = initialLifes;
+			} 
+			else if (totalLifes < 0) 
+			{
+				currentUser.playerLifes = 0;
+			}
+			else 
+			{
+				currentUser.playerLifes = totalLifes;
+			}
 
 			saveLocalData ();
 		}

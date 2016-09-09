@@ -288,22 +288,6 @@ public class LifesManager : Manager<LifesManager>
 
 	public void giveLifesToUser(int amount = 1)
 	{
-		KuberaUser tempUsr = currentUser;
-		int totalLifes = tempUsr.playerLifes + amount;
-
-		if (totalLifes > maximumLifes) 
-		{
-			tempUsr.playerLifes = maximumLifes;
-		} 
-		else if (totalLifes < 0) 
-		{
-			tempUsr.playerLifes = 0;
-		}
-		else 
-		{
-			tempUsr.playerLifes = totalLifes;
-		}
-
-		(KuberaDataManager.GetInstance () as KuberaDataManager).saveLocalData ();
+		(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (amount);
 	}
 }
