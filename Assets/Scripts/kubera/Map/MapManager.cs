@@ -177,6 +177,10 @@ public class MapManager : MonoBehaviour
 		case "toFacebookMessages":
 			openPopUp ("facebookNews");
 			break;
+		case "NoLifes":
+			stopInput(true);
+			openPopUp ("NoLifes");
+			break;
 		default:
 			break;
 		}
