@@ -7,6 +7,12 @@ public class WorldsPopUp : PopUpBase {
 	public GridLayoutGroup grid;
 
 	protected MapManager mapManager;
+
+	public GameObject rightArrow;
+	public GameObject leftArrow;
+
+	public ScrollRect scrollRect;
+
 	public MiniWorld[] worlds;
 	void Start()
 	{
@@ -72,5 +78,27 @@ public class WorldsPopUp : PopUpBase {
 	{
 		animateWorldsLights (false);
 		OnComplete (action);
+	}
+
+	public void checkPosition()
+	{
+		//print (scrollRect.normalizedPosition.x);
+		if(scrollRect.normalizedPosition.x > 0)
+		{
+			leftArrow.SetActive (false);
+		}
+		else
+		{
+			leftArrow.SetActive (true);
+		}
+
+		if(scrollRect.normalizedPosition.x < 1)
+		{
+			rightArrow.SetActive (false);
+		}
+		else
+		{
+			rightArrow.SetActive (true);
+		}
 	}
 }
