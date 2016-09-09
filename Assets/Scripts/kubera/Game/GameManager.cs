@@ -996,7 +996,7 @@ public class GameManager : MonoBehaviour
 		else
 		#endif	
 		{
-			if(PersistentData.GetInstance ().fromLevelsToGame)
+			if(!PersistentData.GetInstance ().fromLevelsToGame)
 			{
 				return;
 			}
