@@ -12,6 +12,7 @@ public class LifesManager : Manager<LifesManager>
 	public List<Text> lifesTimer = new List<Text> ();
 
 	public int timeForLifeInMinutes;
+	public int maximumLifes;
 
 	protected bool showTimer;
 	protected int currentMinutes = 0;
@@ -27,7 +28,7 @@ public class LifesManager : Manager<LifesManager>
 
 		dataManager = (KuberaDataManager.GetInstance () as KuberaDataManager);
 
-		if (currentUser.playerLifes < currentUser.maximumLifes) 
+		if (currentUser.playerLifes < dataManager.initialLifes) 
 		{
 			updateLifesSinceLastPlay ();
 		}
@@ -76,12 +77,12 @@ public class LifesManager : Manager<LifesManager>
 	{
 		KuberaUser tempUsr = currentUser;
 		
-		if (tempUsr.playerLifes == tempUsr.maximumLifes) 
+		if (tempUsr.playerLifes == dataManager.initialLifes) 
 		{
 			setLifeDate ();
 		}
 
-		(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (-1);
+		giveLifesToUser(-1);
 
 		//setLifeDate ();
 
@@ -129,12 +130,12 @@ public class LifesManager : Manager<LifesManager>
 			if (lifesGained > 0) 
 			{
 				Debug.Log (lifesGained);
-				(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (lifesGained);
+				giveLifesToUser(lifesGained);
 
 				updateDateOnData (lifesGained);
 			}
 
-			int missingLifes = tempUsr.maximumLifes - tempUsr.playerLifes;
+			int missingLifes = dataManager.initialLifes - tempUsr.playerLifes;
 
 			difference -= (missingLifes - 1) * (60 * timeForLifeInMinutes);
 
@@ -150,13 +151,13 @@ public class LifesManager : Manager<LifesManager>
 		} 
 		else 
 		{
-			(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (tempUsr.maximumLifes);
+			giveLifesToUser(dataManager.initialLifes);
 		}
 	}
 
 	public double getTimeToWait()
 	{
-		if (currentUser.playerLifes >= currentUser.maximumLifes) 
+		if (currentUser.playerLifes >= dataManager.initialLifes) 
 		{
 			return 0;
 		}
@@ -176,7 +177,7 @@ public class LifesManager : Manager<LifesManager>
 
 	protected double calculateTotalWaitingTime()
 	{
-		return (double)(timeForLifeInMinutes * (currentUser.maximumLifes - currentUser.playerLifes) * 60);
+		return (double)(timeForLifeInMinutes * (dataManager.initialLifes - currentUser.playerLifes) * 60);
 	}
 
 	protected double lifeDateDifferenceInSecs()
@@ -212,9 +213,9 @@ public class LifesManager : Manager<LifesManager>
 
 	protected void gotALife()
 	{
-		(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes ();
+		giveLifesToUser();
 
-		if (currentUser.playerLifes == currentUser.maximumLifes) 
+		if (currentUser.playerLifes == dataManager.initialLifes) 
 		{
 			showTimer = false;	
 		} 
@@ -285,5 +286,24 @@ public class LifesManager : Manager<LifesManager>
 		return result;
 	}
 
+	public void giveLifesToUser(int amount = 1)
+	{
+		KuberaUser tempUsr = currentUser;
+		int totalLifes = tempUsr.playerLifes + amount;
 
+		if (totalLifes > maximumLifes) 
+		{
+			tempUsr.playerLifes = maximumLifes;
+		} 
+		else if (totalLifes < 0) 
+		{
+			tempUsr.playerLifes = 0;
+		}
+		else 
+		{
+			tempUsr.playerLifes = totalLifes;
+		}
+
+		(KuberaDataManager.GetInstance () as KuberaDataManager).saveLocalData ();
+	}
 }
