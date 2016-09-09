@@ -20,7 +20,6 @@ namespace Kubera.Data
 
 		public KuberaUser()
 		{
-			worlds = new List<WorldData>();
 			levels = new Dictionary<string, LevelData>();
 		}
 

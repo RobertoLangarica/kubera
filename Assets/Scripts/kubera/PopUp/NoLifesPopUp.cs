@@ -50,8 +50,7 @@ public class NoLifesPopUp : PopUpBase
 	{
 		if(TransactionManager.GetInstance().tryToUseGems(price))
 		{
-			(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (
-				(KuberaDataManager.GetInstance () as KuberaDataManager).currentUser.maximumLifes);
+			LifesManager.GetInstance().giveLifesToUser ((KuberaDataManager.GetInstance () as KuberaDataManager).initialLifes);
 
 			LifesManager.GetInstance().takeALife ();
 
