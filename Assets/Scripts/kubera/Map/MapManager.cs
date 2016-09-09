@@ -300,7 +300,7 @@ public class MapManager : MonoBehaviour
 	{
 		KuberaUser currentUser = (KuberaDataManager.GetInstance () as KuberaDataManager).currentUser;
 		
-		if (currentUser.playerLifes == currentUser.maximumLifes)
+		if (currentUser.playerLifes == (KuberaDataManager.GetInstance () as KuberaDataManager).initialLifes)
 		{
 			openPopUp (fullLifes_PopUp);
 		}
