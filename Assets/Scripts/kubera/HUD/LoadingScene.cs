@@ -18,7 +18,6 @@ public class LoadingScene : MonoBehaviour
 
 		for(int i=0; i<kuberaLoading.Length; i++)
 		{
-			print (kuberaLoading [i].GetComponent<Text> ());
 			textKuberaLoading [i] = kuberaLoading [i].transform.GetComponentInChildren<Text> ();
 		}
 	}

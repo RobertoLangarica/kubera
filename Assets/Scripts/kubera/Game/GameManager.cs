@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
 		linesAnimation 		= FindObjectOfType<LinesCreatedAnimation> ();
 		bombAnimation 		= FindObjectOfType<BombAnimation> ();
 		SecondChanceFreeBombs 	= FindObjectOfType<SecondChanceFreeBombs> ();
+		settingsButton 		= FindObjectOfType<SettingsButton> ();
 
 		secondChance.OnSecondChanceAquired += secondChanceBought;
 		secondChance.gameObject.SetActive (false);
