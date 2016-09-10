@@ -27,6 +27,7 @@ public class MapManager : MonoBehaviour
 	protected InvitationToReview invitationToReview;
 	protected FriendsOnWorldManager friendsOnWorldManager;
 	private GoalManager		goalManager;
+	public SettingsButton settingButtons;
 
 	protected List<MapLevel> mapLevels;
 	protected bool fromGame;
@@ -99,6 +100,8 @@ public class MapManager : MonoBehaviour
 		invitationToReview.OnFinish += afterInvitation;
 
 		initializeWorldsPopUpInfo ();
+
+		settingButtons.OnActivateMusic += activateMusic;
 	}
 
 	void Update()
@@ -843,5 +846,10 @@ public class MapManager : MonoBehaviour
 			}
 
 		}
+	}
+
+	protected void activateMusic(bool activate)
+	{
+		
 	}
 }

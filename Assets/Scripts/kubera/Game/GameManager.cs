@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
 	private InputWords 		inputWords;
 	private GoalManager		goalManager;
 
+	private SettingsButton settingsButton;
 	private LinesCreatedAnimation linesAnimation;
 	private BombAnimation bombAnimation;
 	public SecondChancePopUp secondChance;
@@ -104,6 +105,7 @@ public class GameManager : MonoBehaviour
 		hudManager.OnPiecesScaled += checkIfLose;
 
 		wordManager.onWordChange += refreshCurrentWordScoreOnHUD;
+		settingsButton.OnActivateMusic += activateMusic;
 
 		powerupManager.getPowerupByType (PowerupBase.EType.ROTATE).OnPowerupCompleted += rotationDeactivated;
 		inputRotate.OnRotateArrowsActivated += rotationActivated;
@@ -1035,6 +1037,7 @@ public class GameManager : MonoBehaviour
 
 	protected void toLevels()
 	{
+		activateMusic (false);
 		ScreenManager.instance.testContinue();
 
 		//ScreenManager.instance.GoToScene ("Levels");
@@ -1324,6 +1327,22 @@ public class GameManager : MonoBehaviour
 		if (OnPointsEarned != null) 
 		{
 			OnPointsEarned ();
+		}
+	}
+
+	protected void activateMusic(bool activate)
+	{
+		if(AudioManager.GetInstance())
+		{
+			if(activate)
+			{
+				AudioManager.GetInstance ().Play ("gamePlay");
+			}
+			else
+			{
+				AudioManager.GetInstance ().Stop ("gamePlay");
+			}
+
 		}
 	}
 }

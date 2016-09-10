@@ -9,6 +9,7 @@ public class HomeManager : MonoBehaviour {
 	public List<PiecesControllAnimation> pieces;
 	public LettersControllerAnimation[] letters;
 	public AnimatedSprite homeAnimatedSprite;
+	public SettingsButton settingButtons;
 
 	public Transform[] positions;
 	protected float speed = .33f;
@@ -33,6 +34,8 @@ public class HomeManager : MonoBehaviour {
 			piecesMoved [j].startRotate (speed);
 		}
 		Invoke ("startScene",0.3f);
+
+		settingButtons.OnActivateMusic += activateMusic;
 	}
 
 	void startScene()
@@ -95,5 +98,15 @@ public class HomeManager : MonoBehaviour {
 			
 			AudioManager.GetInstance().Play("fxButton");
 		}
+	}
+
+	public void activateSettings()
+	{
+		settingButtons.activeSettings ();
+	}
+
+	public void activateMusic(bool activate)
+	{
+		
 	}
 }
