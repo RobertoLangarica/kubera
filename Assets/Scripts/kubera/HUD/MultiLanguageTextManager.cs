@@ -38,6 +38,18 @@ public class MultiLanguageTextManager
 	public const string OBJECTIVE_POPUP_BY_SYNONYMOUS_ID 	= "goalBySynonymousObjectivePopUp";
 	public const string OBJECTIVE_POPUP_BY_ANTONYM_ID 		= "goalByAntonymObjectivePopUp";
 
+	public const string NO_GEMS_POPUP_TITLE					= "NoGemsPopUpTitle";
+	public const string NO_GEMS_POPUP_INFO					= "NoGemsPopUpInfo";
+	public const string NO_GEMS_POPUP_BUTTON				= "NoGemsPopUpButton";
+
+	public const string BOSS_LOCKED_UNLOCK_TEXT 			= "BossLockedUnlockText";
+	public const string BOSS_LOCKED_OPTION_TEXT 			= "BossLockedOptionText";
+	public const string BOSS_LOCKED_KEY_TEXT 				= "BossLockedKeyText";
+	public const string BOSS_LOCKED_GEM_TEXT 				= "BossLockedGemText";
+	public const string BOSS_LOCKED_STAR_TEXT 				= "BossLockedStarText";
+
+
+	//GAME
 	public const string EXIT_POPUP_ID 						= "exitText";
 	public const string WIN_TEXT_POPUP_ID					= "WinTextPopUpID";
 	public const string STARTGAME_TEXT_POPUP_ID				= "StartTextPopUpID";
@@ -80,18 +92,8 @@ public class MultiLanguageTextManager
 	public const string TUTORIAL_LV64_PHASE3				= "Tutorial_lvl64_phase3";
 	public const string TUTORIAL_LV64_PHASE4				= "Tutorial_lvl64_phase4";
 
-	public const string NO_GEMS_POPUP_TITLE					= "NoGemsPopUpTitle";
-	public const string NO_GEMS_POPUP_INFO					= "NoGemsPopUpInfo";
-	public const string NO_GEMS_POPUP_BUTTON				= "NoGemsPopUpButton";
-
-	public const string BOSS_LOCKED_UNLOCK_TEXT 			= "BossLockedUnlockText";
-	public const string BOSS_LOCKED_OPTION_TEXT 			= "BossLockedOptionText";
-	public const string BOSS_LOCKED_KEY_TEXT 				= "BossLockedKeyText";
-	public const string BOSS_LOCKED_GEM_TEXT 				= "BossLockedGemText";
-	public const string BOSS_LOCKED_STAR_TEXT 				= "BossLockedStarText";
 
 	//Invitation to review
-
 	public const string INVITATION_11_TEXT1 				="Invitation_11_text1";
 
 	public const string INVITATION_21_TEXT1 				="Invitation_21_text1";

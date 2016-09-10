@@ -162,10 +162,11 @@ TextureImporter:
     21300310: K-popups-pq_gemaLibre
     21300312: K-popups-pq_lineapunteada
     21300314: K-popups-pq_oferta
+    21300316: Copia de K-popUps_close
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -187,7 +188,7 @@ TextureImporter:
   textureFormat: -3
   maxTextureSize: 4096
   textureSettings:
-    filterMode: -1
+    filterMode: 2
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -195,7 +196,7 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  allowsAlphaSplitting: 1
+  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
@@ -205,19 +206,14 @@ TextureImporter:
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
-  buildTargetSettings:
-  - buildTarget: Android
-    maxTextureSize: 4096
-    textureFormat: -3
-    compressionQuality: 100
-    allowsAlphaSplitting: 1
+  buildTargetSettings: []
   spriteSheet:
     sprites:
     - name: bolitaanimada
       rect:
         serializedVersion: 2
-        x: 721
-        y: 585
+        x: 0
+        y: 715
         width: 67
         height: 71
       alignment: 9
@@ -273,7 +269,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1585
-        y: 1191
+        y: 1222
         width: 451
         height: 90
       alignment: 9
@@ -414,6 +410,25 @@ TextureImporter:
         - {x: 246, y: -373.5}
         - {x: 253, y: -365.5}
         - {x: 255, y: -362.5}
+    - name: Copia de K-popUps_close
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 902
+        width: 107
+        height: 109
+      alignment: 9
+      pivot: {x: 0.4813084, y: 0.51376146}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -36.5, y: 53}
+        - {x: -51.5, y: 34}
+        - {x: -51.5, y: -32}
+        - {x: -34.5, y: -56}
+        - {x: 48.5, y: -56}
+        - {x: 55.5, y: -38}
+        - {x: 55.5, y: 40}
+        - {x: 42.5, y: 53}
     - name: Copia de K-popUps_monito
       rect:
         serializedVersion: 2
@@ -440,8 +455,8 @@ TextureImporter:
     - name: gemas0001
       rect:
         serializedVersion: 2
-        x: 71
-        y: 52
+        x: 598
+        y: 743
         width: 61
         height: 38
       alignment: 9
@@ -485,8 +500,8 @@ TextureImporter:
     - name: glowcuadrado0001
       rect:
         serializedVersion: 2
-        x: 624
-        y: 900
+        x: 664
+        y: 824
         width: 133
         height: 133
       alignment: 9
@@ -506,7 +521,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1669
-        y: 1819
+        y: 1857
         width: 32
         height: 33
       alignment: 9
@@ -538,8 +553,8 @@ TextureImporter:
     - name: K-InGame_BACK1
       rect:
         serializedVersion: 2
-        x: 1065
-        y: 362
+        x: 1235
+        y: 99
         width: 112
         height: 113
       alignment: 9
@@ -558,8 +573,8 @@ TextureImporter:
     - name: K-InGame_BACK2
       rect:
         serializedVersion: 2
-        x: 699
-        y: 461
+        x: 417
+        y: 97
         width: 112
         height: 114
       alignment: 9
@@ -577,8 +592,8 @@ TextureImporter:
     - name: K-InGame_BACK3
       rect:
         serializedVersion: 2
-        x: 694
-        y: 78
+        x: 521
+        y: 215
         width: 112
         height: 114
       alignment: 9
@@ -617,8 +632,8 @@ TextureImporter:
     - name: K-InGame_bar2
       rect:
         serializedVersion: 2
-        x: 485
-        y: 1037
+        x: 1580
+        y: 673
         width: 314
         height: 59
       alignment: 0
@@ -637,8 +652,8 @@ TextureImporter:
     - name: K-InGame_barlight
       rect:
         serializedVersion: 2
-        x: 1722
-        y: 1828
+        x: 1689
+        y: 1317
         width: 268
         height: 7
       alignment: 9
@@ -720,34 +735,34 @@ TextureImporter:
     - name: K-InGame_boardCorner
       rect:
         serializedVersion: 2
-        x: 1621
-        y: 1719
-        width: 32
-        height: 32
+        x: 364
+        y: 2
+        width: 81
+        height: 82
       alignment: 9
-      pivot: {x: 0.59375, y: 0.671875}
+      pivot: {x: 0.52469134, y: 0.5731707}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -19, y: 10.5}
-        - {x: -19, y: -21.5}
-        - {x: 13, y: -21.5}
-        - {x: 13, y: 9.5}
-        - {x: 9, y: 10.5}
+      - - {x: -42.5, y: 35}
+        - {x: -42.5, y: -47}
+        - {x: 38.5, y: -47}
+        - {x: 38.5, y: 20}
+        - {x: 21.5, y: 35}
     - name: K-InGame_boardoutline
       rect:
         serializedVersion: 2
-        x: 1669
-        y: 1856
-        width: 34
-        height: 34
+        x: 449
+        y: 7
+        width: 86
+        height: 86
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -17, y: 17}
-        - {x: -17, y: -17}
-        - {x: 17, y: -17}
-        - {x: 17, y: 17}
+      - - {x: -43, y: 43}
+        - {x: -43, y: -43}
+        - {x: 43, y: -43}
+        - {x: 43, y: 43}
     - name: K-InGame_DobleArrow
       rect:
         serializedVersion: 2
@@ -771,8 +786,8 @@ TextureImporter:
     - name: K-InGame_EmptyCircle
       rect:
         serializedVersion: 2
-        x: 2029
-        y: 1818
+        x: 1669
+        y: 1836
         width: 17
         height: 17
       alignment: 0
@@ -783,7 +798,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1989
-        y: 843
+        y: 874
         width: 46
         height: 44
       alignment: 0
@@ -802,8 +817,8 @@ TextureImporter:
     - name: K-InGame_Enter
       rect:
         serializedVersion: 2
-        x: 761
-        y: 878
+        x: 663
+        y: 709
         width: 129
         height: 111
       alignment: 0
@@ -836,8 +851,8 @@ TextureImporter:
     - name: K-InGame_fullCircle
       rect:
         serializedVersion: 2
-        x: 1705
-        y: 1822
+        x: 1690
+        y: 1840
         width: 13
         height: 13
       alignment: 0
@@ -848,7 +863,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1989
-        y: 796
+        y: 827
         width: 45
         height: 43
       alignment: 0
@@ -944,8 +959,8 @@ TextureImporter:
     - name: K-InGame_musicOFF
       rect:
         serializedVersion: 2
-        x: 715
-        y: 201
+        x: 533
+        y: 97
         width: 112
         height: 114
       alignment: 9
@@ -964,8 +979,8 @@ TextureImporter:
     - name: K-InGame_musicON1
       rect:
         serializedVersion: 2
-        x: 813
-        y: 343
+        x: 637
+        y: 215
         width: 112
         height: 114
       alignment: 9
@@ -985,8 +1000,8 @@ TextureImporter:
     - name: K-InGame_musicON2
       rect:
         serializedVersion: 2
-        x: 815
-        y: 542
+        x: 649
+        y: 97
         width: 112
         height: 114
       alignment: 9
@@ -1004,8 +1019,8 @@ TextureImporter:
     - name: K-InGame_PWRBlock
       rect:
         serializedVersion: 2
-        x: 1622
-        y: 392
+        x: 1570
+        y: 0
         width: 99
         height: 100
       alignment: 0
@@ -1022,8 +1037,8 @@ TextureImporter:
     - name: K-InGame_PWRBomb
       rect:
         serializedVersion: 2
-        x: 819
-        y: 1196
+        x: 1585
+        y: 1316
         width: 100
         height: 101
       alignment: 0
@@ -1042,8 +1057,8 @@ TextureImporter:
     - name: K-InGame_PWRLetter
       rect:
         serializedVersion: 2
-        x: 1459
-        y: 196
+        x: 1542
+        y: 492
         width: 99
         height: 101
       alignment: 9
@@ -1062,7 +1077,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 819
-        y: 1091
+        y: 1196
         width: 100
         height: 101
       alignment: 9
@@ -1080,8 +1095,8 @@ TextureImporter:
     - name: K-InGame_PWRThunder
       rect:
         serializedVersion: 2
-        x: 1520
-        y: 496
+        x: 819
+        y: 1091
         width: 100
         height: 101
       alignment: 9
@@ -1099,8 +1114,8 @@ TextureImporter:
     - name: K-InGame_PWRTip
       rect:
         serializedVersion: 2
-        x: 1581
-        y: 608
+        x: 1775
+        y: 2
         width: 100
         height: 101
       alignment: 9
@@ -1118,8 +1133,8 @@ TextureImporter:
     - name: K-InGame_Rotatetetris
       rect:
         serializedVersion: 2
-        x: 845
-        y: 698
+        x: 1979
+        y: 665
         width: 69
         height: 75
       alignment: 0
@@ -1221,8 +1236,8 @@ TextureImporter:
     - name: K-InGame_settings
       rect:
         serializedVersion: 2
-        x: 171
-        y: 272
+        x: 539
+        y: 7
         width: 85
         height: 86
       alignment: 0
@@ -1237,8 +1252,8 @@ TextureImporter:
     - name: K-InGame_soundOFF
       rect:
         serializedVersion: 2
-        x: 810
-        y: 83
+        x: 753
+        y: 215
         width: 112
         height: 114
       alignment: 9
@@ -1255,8 +1270,8 @@ TextureImporter:
     - name: K-InGame_soundON1
       rect:
         serializedVersion: 2
-        x: 831
-        y: 226
+        x: 987
+        y: 216
         width: 113
         height: 113
       alignment: 9
@@ -1273,8 +1288,8 @@ TextureImporter:
     - name: K-InGame_soundON2
       rect:
         serializedVersion: 2
-        x: 485
-        y: 561
+        x: 808
+        y: 973
         width: 113
         height: 114
       alignment: 9
@@ -1388,8 +1403,8 @@ TextureImporter:
     - name: K-popups-pq_adornoBoss
       rect:
         serializedVersion: 2
-        x: 1669
-        y: 1308
+        x: 1690
+        y: 1328
         width: 356
         height: 507
       alignment: 9
@@ -1482,8 +1497,8 @@ TextureImporter:
     - name: K-popups-pq_bolsaAtras
       rect:
         serializedVersion: 2
-        x: 1581
-        y: 1098
+        x: 1582
+        y: 1129
         width: 451
         height: 89
       alignment: 9
@@ -1505,7 +1520,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1581
-        y: 841
+        y: 872
         width: 404
         height: 124
       alignment: 9
@@ -1534,7 +1549,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1581
-        y: 969
+        y: 1000
         width: 404
         height: 125
       alignment: 9
@@ -1565,7 +1580,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1581
-        y: 713
+        y: 744
         width: 404
         height: 124
       alignment: 9
@@ -1620,8 +1635,8 @@ TextureImporter:
     - name: K-popups-pq_gemaLibre
       rect:
         serializedVersion: 2
-        x: 285
-        y: 150
+        x: 0
+        y: 790
         width: 107
         height: 108
       alignment: 9
@@ -1658,8 +1673,8 @@ TextureImporter:
     - name: K-popups-pq_lineapunteada
       rect:
         serializedVersion: 2
-        x: 0
-        y: 31
+        x: 1580
+        y: 736
         width: 395
         height: 4
       alignment: 9
@@ -1697,7 +1712,7 @@ TextureImporter:
     - name: K-popups-pq_Tiket
       rect:
         serializedVersion: 2
-        x: 0
+        x: 113
         y: 362
         width: 481
         height: 749
@@ -1846,8 +1861,8 @@ TextureImporter:
     - name: K-Tutoriales_Estrellita0001
       rect:
         serializedVersion: 2
-        x: 485
-        y: 898
+        x: 669
+        y: 961
         width: 135
         height: 135
       alignment: 9
@@ -1867,8 +1882,8 @@ TextureImporter:
     - name: letras-K-InGame_BlackTile
       rect:
         serializedVersion: 2
-        x: 926
-        y: 109
+        x: 1001
+        y: 99
         width: 113
         height: 113
       alignment: 0
@@ -1883,8 +1898,8 @@ TextureImporter:
     - name: letras-K-InGame_bloquedBlackTile
       rect:
         serializedVersion: 2
-        x: 929
-        y: 425
+        x: 1104
+        y: 216
         width: 113
         height: 113
       alignment: 0
@@ -1899,8 +1914,8 @@ TextureImporter:
     - name: letras-K-InGame_bloquedTile
       rect:
         serializedVersion: 2
-        x: 696
-        y: 319
+        x: 404
+        y: 215
         width: 113
         height: 114
       alignment: 9
@@ -1914,8 +1929,8 @@ TextureImporter:
     - name: letras-K-InGame_BlueTile
       rect:
         serializedVersion: 2
-        x: 598
-        y: 196
+        x: 808
+        y: 855
         width: 113
         height: 114
       alignment: 9
@@ -1929,8 +1944,8 @@ TextureImporter:
     - name: letras-K-InGame_SpecialBlackTile
       rect:
         serializedVersion: 2
-        x: 609
-        y: 681
+        x: 765
+        y: 98
         width: 114
         height: 113
       alignment: 9
@@ -1944,8 +1959,8 @@ TextureImporter:
     - name: letras-K-InGame_SpecialTile
       rect:
         serializedVersion: 2
-        x: 485
-        y: 679
+        x: 869
+        y: 216
         width: 114
         height: 113
       alignment: 9
@@ -1961,8 +1976,8 @@ TextureImporter:
     - name: letras-K-InGame_WhiteTile
       rect:
         serializedVersion: 2
-        x: 727
-        y: 660
+        x: 883
+        y: 99
         width: 114
         height: 113
       alignment: 9
@@ -1998,8 +2013,8 @@ TextureImporter:
     - name: Lvl1-3
       rect:
         serializedVersion: 2
-        x: 71
-        y: 94
+        x: 0
+        y: 446
         width: 96
         height: 264
       alignment: 9
@@ -2018,8 +2033,8 @@ TextureImporter:
     - name: Lvl1-4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 39
+        x: 1898
+        y: 413
         width: 67
         height: 319
       alignment: 9
@@ -2035,8 +2050,8 @@ TextureImporter:
     - name: Lvl1
       rect:
         serializedVersion: 2
-        x: 485
-        y: 171
+        x: 0
+        y: 23
         width: 109
         height: 386
       alignment: 9
@@ -2128,8 +2143,8 @@ TextureImporter:
     - name: powerupsMove-bomba-sexbobomb0001
       rect:
         serializedVersion: 2
-        x: 399
-        y: 140
+        x: 1930
+        y: 224
         width: 82
         height: 105
       alignment: 9
@@ -2154,8 +2169,8 @@ TextureImporter:
     - name: powerupsMove-bomba-sexbobomb0002
       rect:
         serializedVersion: 2
-        x: 1356
-        y: 23
+        x: 1657
+        y: 107
         width: 84
         height: 109
       alignment: 9
@@ -2180,8 +2195,8 @@ TextureImporter:
     - name: powerupsMove-bomba-sexbobomb0003
       rect:
         serializedVersion: 2
-        x: 1078
-        y: 75
+        x: 1338
+        y: 391
         width: 85
         height: 112
       alignment: 9
@@ -2206,8 +2221,8 @@ TextureImporter:
     - name: powerupsMove-bomba-sexbobomb0004
       rect:
         serializedVersion: 2
-        x: 399
-        y: 15
+        x: 113
+        y: 208
         width: 88
         height: 121
       alignment: 9
@@ -2239,8 +2254,8 @@ TextureImporter:
     - name: powerupsMove-bomba-sexbobomb0005
       rect:
         serializedVersion: 2
-        x: 1163
-        y: 479
+        x: 1339
+        y: 622
         width: 86
         height: 113
       alignment: 9
@@ -2264,8 +2279,8 @@ TextureImporter:
     - name: powerupsMove-bomba-sexbobomb0006
       rect:
         serializedVersion: 2
-        x: 1167
-        y: 131
+        x: 1338
+        y: 507
         width: 86
         height: 111
       alignment: 9
@@ -2290,8 +2305,8 @@ TextureImporter:
     - name: powerupsMove-bomba-sexbobomb0007
       rect:
         serializedVersion: 2
-        x: 1367
-        y: 411
+        x: 1831
+        y: 111
         width: 84
         height: 107
       alignment: 9
@@ -2318,8 +2333,8 @@ TextureImporter:
     - name: powerupsMove-bomba-sexbobomb0008
       rect:
         serializedVersion: 2
-        x: 1231
-        y: 249
+        x: 1466
+        y: 103
         width: 86
         height: 111
       alignment: 9
@@ -2346,8 +2361,8 @@ TextureImporter:
     - name: powerupsMove-bomba-sexbobomb0009
       rect:
         serializedVersion: 2
-        x: 598
-        y: 314
+        x: 306
+        y: 210
         width: 94
         height: 119
       alignment: 9
@@ -2372,8 +2387,8 @@ TextureImporter:
     - name: powerupsMove-bomba-sexbobomb0010
       rect:
         serializedVersion: 2
-        x: 399
-        y: 249
+        x: 1745
+        y: 107
         width: 82
         height: 109
       alignment: 9
@@ -2396,8 +2411,8 @@ TextureImporter:
     - name: powerupsMove-bomba-sexbobomb0011
       rect:
         serializedVersion: 2
-        x: 1167
-        y: 16
+        x: 1553
+        y: 218
         width: 84
         height: 111
       alignment: 9
@@ -2421,8 +2436,8 @@ TextureImporter:
     - name: powerupsMove-bomba-sexbobomb0012
       rect:
         serializedVersion: 2
-        x: 1279
-        y: 409
+        x: 1741
+        y: 220
         width: 84
         height: 109
       alignment: 9
@@ -2447,8 +2462,8 @@ TextureImporter:
     - name: powerupsMove-bomba-sexbobomb0013
       rect:
         serializedVersion: 2
-        x: 399
-        y: 140
+        x: 1930
+        y: 224
         width: 82
         height: 105
       alignment: 9
@@ -2473,8 +2488,8 @@ TextureImporter:
     - name: powerupsMove-comodin-comodin0001
       rect:
         serializedVersion: 2
-        x: 1585
-        y: 1368
+        x: 1969
+        y: 582
         width: 79
         height: 79
       alignment: 0
@@ -2488,8 +2503,8 @@ TextureImporter:
     - name: powerupsMove-comodin-comodin0002
       rect:
         serializedVersion: 2
-        x: 1585
-        y: 1285
+        x: 1969
+        y: 499
         width: 79
         height: 79
       alignment: 0
@@ -2503,8 +2518,8 @@ TextureImporter:
     - name: powerupsMove-comodin-comodin0003
       rect:
         serializedVersion: 2
-        x: 810
-        y: 0
+        x: 1969
+        y: 416
         width: 79
         height: 79
       alignment: 0
@@ -2518,8 +2533,8 @@ TextureImporter:
     - name: powerupsMove-comodin-comodin0004
       rect:
         serializedVersion: 2
-        x: 893
-        y: 0
+        x: 1969
+        y: 333
         width: 79
         height: 79
       alignment: 0
@@ -2533,8 +2548,8 @@ TextureImporter:
     - name: powerupsMove-comodin-comodin0005
       rect:
         serializedVersion: 2
-        x: 1541
-        y: 303
+        x: 113
+        y: 1
         width: 79
         height: 79
       alignment: 0
@@ -2548,8 +2563,8 @@ TextureImporter:
     - name: powerupsMove-comodin-comodin0006
       rect:
         serializedVersion: 2
-        x: 1685
-        y: 630
+        x: 196
+        y: 1
         width: 79
         height: 79
       alignment: 0
@@ -2563,8 +2578,8 @@ TextureImporter:
     - name: powerupsMove-comodin-comodin0007
       rect:
         serializedVersion: 2
-        x: 1510
-        y: 113
+        x: 628
+        y: 14
         width: 79
         height: 79
       alignment: 0
@@ -2578,8 +2593,8 @@ TextureImporter:
     - name: powerupsMove-comodin-comodin0008
       rect:
         serializedVersion: 2
-        x: 1562
-        y: 220
+        x: 711
+        y: 14
         width: 79
         height: 79
       alignment: 0
@@ -2593,8 +2608,8 @@ TextureImporter:
     - name: powerupsMove-comodin-comodin0009
       rect:
         serializedVersion: 2
-        x: 1624
-        y: 309
+        x: 913
+        y: 16
         width: 79
         height: 79
       alignment: 0
@@ -2608,8 +2623,8 @@ TextureImporter:
     - name: powerupsMove-comodin-comodin0010
       rect:
         serializedVersion: 2
-        x: 1585
-        y: 1368
+        x: 1969
+        y: 582
         width: 79
         height: 79
       alignment: 0
@@ -2624,7 +2639,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1989
-        y: 891
+        y: 922
         width: 58
         height: 99
       alignment: 9
@@ -2643,8 +2658,8 @@ TextureImporter:
     - name: powerupsMove-Help-help0002
       rect:
         serializedVersion: 2
-        x: 1455
-        y: 492
+        x: 598
+        y: 785
         width: 61
         height: 103
       alignment: 9
@@ -2677,8 +2692,8 @@ TextureImporter:
     - name: powerupsMove-Help-help0003
       rect:
         serializedVersion: 2
-        x: 1389
-        y: 302
+        x: 1621
+        y: 1421
         width: 63
         height: 105
       alignment: 9
@@ -2706,8 +2721,8 @@ TextureImporter:
     - name: powerupsMove-Help-help0004
       rect:
         serializedVersion: 2
-        x: 1512
-        y: 601
+        x: 1621
+        y: 1642
         width: 65
         height: 109
       alignment: 9
@@ -2733,8 +2748,8 @@ TextureImporter:
     - name: powerupsMove-Help-help0005
       rect:
         serializedVersion: 2
-        x: 1160
-        y: 246
+        x: 598
+        y: 999
         width: 67
         height: 112
       alignment: 9
@@ -2764,8 +2779,8 @@ TextureImporter:
     - name: powerupsMove-Help-help0006
       rect:
         serializedVersion: 2
-        x: 1321
-        y: 297
+        x: 1621
+        y: 1530
         width: 64
         height: 108
       alignment: 9
@@ -2792,8 +2807,8 @@ TextureImporter:
     - name: powerupsMove-Help-help0007
       rect:
         serializedVersion: 2
-        x: 1444
-        y: 80
+        x: 598
+        y: 892
         width: 62
         height: 103
       alignment: 9
@@ -2824,8 +2839,8 @@ TextureImporter:
     - name: powerupsMove-Help-help0008
       rect:
         serializedVersion: 2
-        x: 1558
-        y: 391
+        x: 598
+        y: 638
         width: 60
         height: 101
       alignment: 9
@@ -2851,7 +2866,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1989
-        y: 994
+        y: 1025
         width: 59
         height: 100
       alignment: 9
@@ -2870,7 +2885,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1989
-        y: 891
+        y: 922
         width: 58
         height: 99
       alignment: 9
@@ -2889,8 +2904,8 @@ TextureImporter:
     - name: powerupsMove-K-InGame_pwrblockmove
       rect:
         serializedVersion: 2
-        x: 1456
-        y: 301
+        x: 279
+        y: 0
         width: 81
         height: 81
       alignment: 0
@@ -2906,32 +2921,32 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0001
       rect:
         serializedVersion: 2
-        x: 1357
-        y: 187
+        x: 1879
+        y: 1
         width: 98
         height: 106
       alignment: 9
       pivot: {x: 0.5153061, y: 0.509434}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -50.5, y: -8}
-        - {x: -50.5, y: -33}
-        - {x: -37.5, y: -54}
-        - {x: 16.5, y: -54}
-        - {x: 44.5, y: -38}
-        - {x: 44.5, y: -10}
-        - {x: 42.5, y: -8}
-      - - {x: -26.5, y: 52}
-        - {x: -47.5, y: 41}
-        - {x: -47.5, y: 6}
-        - {x: 47.5, y: 6}
-        - {x: 47.5, y: 36}
-        - {x: 38.5, y: 52}
+      - - {x: -50.5, y: -8.000004}
+        - {x: -50.5, y: -33.000004}
+        - {x: -37.5, y: -54.000004}
+        - {x: 16.5, y: -54.000004}
+        - {x: 44.5, y: -38.000004}
+        - {x: 44.5, y: -10.000004}
+        - {x: 42.5, y: -8.000004}
+      - - {x: -26.5, y: 51.999996}
+        - {x: -47.5, y: 40.999996}
+        - {x: -47.5, y: 5.999996}
+        - {x: 47.5, y: 5.999996}
+        - {x: 47.5, y: 35.999996}
+        - {x: 38.5, y: 51.999996}
     - name: powerupsMove-rotate-rotate0002
       rect:
         serializedVersion: 2
-        x: 1282
-        y: 522
+        x: 1351
+        y: 0
         width: 106
         height: 98
       alignment: 9
@@ -2960,8 +2975,8 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0003
       rect:
         serializedVersion: 2
-        x: 603
-        y: 579
+        x: 1221
+        y: 637
         width: 114
         height: 98
       alignment: 9
@@ -2991,8 +3006,8 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0004
       rect:
         serializedVersion: 2
-        x: 624
-        y: 798
+        x: 796
+        y: 651
         width: 121
         height: 98
       alignment: 9
@@ -3019,8 +3034,8 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0005
       rect:
         serializedVersion: 2
-        x: 803
-        y: 993
+        x: 794
+        y: 0
         width: 115
         height: 94
       alignment: 9
@@ -3048,8 +3063,8 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0006
       rect:
         serializedVersion: 2
-        x: 1456
-        y: 386
+        x: 1673
+        y: 1
         width: 98
         height: 102
       alignment: 9
@@ -3072,8 +3087,8 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0007
       rect:
         serializedVersion: 2
-        x: 285
-        y: 39
+        x: 1829
+        y: 222
         width: 97
         height: 107
       alignment: 9
@@ -3100,8 +3115,8 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0008
       rect:
         serializedVersion: 2
-        x: 171
-        y: 140
+        x: 316
+        y: 88
         width: 97
         height: 118
       alignment: 9
@@ -3127,8 +3142,8 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0009
       rect:
         serializedVersion: 2
-        x: 593
-        y: 47
+        x: 205
+        y: 209
         width: 97
         height: 120
       alignment: 9
@@ -3155,8 +3170,8 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0010
       rect:
         serializedVersion: 2
-        x: 1257
-        y: 136
+        x: 1641
+        y: 220
         width: 96
         height: 109
       alignment: 9
@@ -3179,8 +3194,8 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0011
       rect:
         serializedVersion: 2
-        x: 1624
-        y: 506
+        x: 1461
+        y: 0
         width: 105
         height: 98
       alignment: 9
@@ -3204,8 +3219,8 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0012
       rect:
         serializedVersion: 2
-        x: 171
-        y: 39
+        x: 1542
+        y: 391
         width: 110
         height: 97
       alignment: 9
@@ -3229,8 +3244,8 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0013
       rect:
         serializedVersion: 2
-        x: 485
-        y: 796
+        x: 801
+        y: 753
         width: 120
         height: 98
       alignment: 9
@@ -3255,8 +3270,8 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0014
       rect:
         serializedVersion: 2
-        x: 749
-        y: 777
+        x: 662
+        y: 608
         width: 120
         height: 97
       alignment: 9
@@ -3281,60 +3296,60 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0015
       rect:
         serializedVersion: 2
-        x: 285
-        y: 262
+        x: 0
+        y: 1015
         width: 109
         height: 96
       alignment: 9
       pivot: {x: 0.5091743, y: 0.5208333}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 7.5, y: 45}
-        - {x: 7.5, y: -50}
-        - {x: 33.5, y: -50}
-        - {x: 53.5, y: -34}
-        - {x: 53.5, y: 22}
-        - {x: 44.5, y: 45}
-      - - {x: -35.5, y: 46}
-        - {x: -55.5, y: 33}
-        - {x: -55.5, y: -15}
-        - {x: -31.5, y: -48}
-        - {x: -2.5, y: -48}
-        - {x: -2.5, y: 0}
-        - {x: -15.5, y: 46}
+      - - {x: 7.500004, y: 45}
+        - {x: 7.500004, y: -50}
+        - {x: 33.500004, y: -50}
+        - {x: 53.500004, y: -34}
+        - {x: 53.500004, y: 22}
+        - {x: 44.500004, y: 45}
+      - - {x: -35.499996, y: 46}
+        - {x: -55.499996, y: 33}
+        - {x: -55.499996, y: -15}
+        - {x: -31.499996, y: -48}
+        - {x: -2.4999962, y: -48}
+        - {x: -2.4999962, y: 0}
+        - {x: -15.499996, y: 46}
     - name: powerupsMove-rotate-rotate0016
       rect:
         serializedVersion: 2
-        x: 976
-        y: 0
+        x: 1919
+        y: 113
         width: 98
         height: 105
       alignment: 9
       pivot: {x: 0.49489796, y: 0.51428574}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 42.5, y: 36.999996}
-        - {x: 16.5, y: 36.999996}
-        - {x: 12.5, y: 34.999996}
-        - {x: 16.5, y: 15.999996}
-        - {x: 6.5, y: -5.000004}
-        - {x: -1.5, y: -31.000004}
-        - {x: -1.5, y: -54.000004}
-        - {x: 47.5, y: -54.000004}
-        - {x: 49.5, y: -50.000004}
-        - {x: 49.5, y: 21.999996}
-      - - {x: -28.5, y: 50.999996}
-        - {x: -48.5, y: 42.999996}
-        - {x: -48.5, y: -24.000004}
-        - {x: -36.5, y: -42.000004}
-        - {x: -5.5, y: -42.000004}
-        - {x: -3.5, y: -37.000004}
-        - {x: -3.5, y: 50.999996}
+      - - {x: 42.5, y: 37}
+        - {x: 16.5, y: 37}
+        - {x: 12.5, y: 35}
+        - {x: 16.5, y: 16}
+        - {x: 6.5, y: -5}
+        - {x: -1.5, y: -31}
+        - {x: -1.5, y: -54}
+        - {x: 47.5, y: -54}
+        - {x: 49.5, y: -50}
+        - {x: 49.5, y: 22}
+      - - {x: -28.5, y: 51}
+        - {x: -48.5, y: 43}
+        - {x: -48.5, y: -24}
+        - {x: -36.5, y: -42}
+        - {x: -5.5, y: -42}
+        - {x: -3.5, y: -37}
+        - {x: -3.5, y: 51}
     - name: powerupsMove-rotate-rotate0017
       rect:
         serializedVersion: 2
-        x: 1255
-        y: 17
+        x: 1556
+        y: 104
         width: 97
         height: 110
       alignment: 9
@@ -3358,8 +3373,8 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0018
       rect:
         serializedVersion: 2
-        x: 491
-        y: 47
+        x: 113
+        y: 84
         width: 98
         height: 120
       alignment: 9
@@ -3384,8 +3399,8 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0019
       rect:
         serializedVersion: 2
-        x: 598
-        y: 437
+        x: 215
+        y: 85
         width: 97
         height: 120
       alignment: 9
@@ -3413,8 +3428,8 @@ TextureImporter:
     - name: powerupsMove-rotate-rotate0020
       rect:
         serializedVersion: 2
-        x: 1181
-        y: 364
+        x: 1455
+        y: 218
         width: 94
         height: 111
       alignment: 9
@@ -3472,8 +3487,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrisblue
       rect:
         serializedVersion: 2
-        x: 931
-        y: 596
+        x: 1221
+        y: 520
         width: 113
         height: 113
       alignment: 0
@@ -3488,8 +3503,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrisgray
       rect:
         serializedVersion: 2
-        x: 948
-        y: 308
+        x: 1429
+        y: 597
         width: 113
         height: 113
       alignment: 0
@@ -3505,8 +3520,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrisgreen
       rect:
         serializedVersion: 2
-        x: 1282
-        y: 624
+        x: 1427
+        y: 392
         width: 111
         height: 111
       alignment: 0
@@ -3522,8 +3537,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrisorange
       rect:
         serializedVersion: 2
-        x: 1046
-        y: 479
+        x: 1221
+        y: 403
         width: 113
         height: 113
       alignment: 0
@@ -3538,8 +3553,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrispink
       rect:
         serializedVersion: 2
-        x: 1048
-        y: 596
+        x: 1118
+        y: 99
         width: 113
         height: 113
       alignment: 0
@@ -3554,8 +3569,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrispurple
       rect:
         serializedVersion: 2
-        x: 1043
-        y: 191
+        x: 1221
+        y: 216
         width: 113
         height: 113
       alignment: 0
@@ -3570,8 +3585,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrissoft
       rect:
         serializedVersion: 2
-        x: 1165
-        y: 597
+        x: 1338
+        y: 217
         width: 113
         height: 112
       alignment: 9
@@ -3586,8 +3601,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrisyellow
       rect:
         serializedVersion: 2
-        x: 1397
-        y: 599
+        x: 1351
+        y: 102
         width: 111
         height: 111
       alignment: 0
