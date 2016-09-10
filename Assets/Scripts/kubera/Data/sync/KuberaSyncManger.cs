@@ -20,7 +20,6 @@ namespace Kubera.Data.Sync
 
 
 			((KuberaProvider)server).OnLeaderboardObtained += OnLeaderboardDataObtained;
-
 		}
 
 		/**
@@ -48,9 +47,9 @@ namespace Kubera.Data.Sync
 		/**
 		 * Cuando se recibe el usuario (sin informacion solo sus identificaciones)
 		 **/ 
-		protected override void OnUserReceived (GameUser user)
+		protected override void OnUserReceived (RemoteUser remoteUser)
 		{
-			base.OnUserReceived (user);
+			base.OnUserReceived (remoteUser);
 
 			//Exsitia un usuario creado con id de facebook temporal?
 			KuberaUser kUser = localData.getCurrentData().getUserById(currentUser.facebookId);
@@ -69,15 +68,12 @@ namespace Kubera.Data.Sync
 				localData.saveLocalData(false);
 			}
 
-			if(user.newlyCreated)
+			if(remoteUser.newlyCreated)
 			{
 				if(_mustShowDebugInfo)
 				{
 					Debug.Log("Creating remote user.");
 				}
-
-				//Datos nuevos DEPRECATED
-				//server.createUserData<KuberaUser>(currentUser.id, userToPlayFabJSON(localData.currentUser), localData.currentUser.clone());
 
 				//Hacemos un update normal del usuario
 				updateData(localData.getUserDirtyData());
@@ -89,7 +85,8 @@ namespace Kubera.Data.Sync
 					Debug.Log("Getting data from remote user.");
 				}
 				//Nos traemos los datos de este usuario
-				server.getUserData(currentUser.id, localData.getCSVKeysToQuery(), localData.currentUser.PlayFab_dataVersion);	
+
+				server.getUserData(currentUser.id, localData.currentUser.remoteDataVersion, true);
 			}
 		}
 

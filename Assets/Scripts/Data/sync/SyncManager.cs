@@ -11,7 +11,7 @@ namespace Data.Sync
 		public LoginProvider facebookProvider;
 		public ServerProvider server;
 
-		protected GameUser currentUser;
+		protected RemoteUser currentUser;
 		 
 
 
@@ -161,7 +161,7 @@ namespace Data.Sync
 			currentUser = null;
 		}
 
-		protected virtual void OnUserReceived(GameUser user)
+		protected virtual void OnUserReceived(RemoteUser user)
 		{
 			currentUser = user;
 		}

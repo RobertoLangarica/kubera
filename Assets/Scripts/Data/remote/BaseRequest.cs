@@ -92,6 +92,11 @@ namespace Data.Remote
 			get{return (status == EStatus.REQUESTING);}	
 		}
 
+		public bool isComplete
+		{
+			get{return (status == EStatus.COMPLETE);}	
+		}
+
 		public bool isWaiting
 		{
 			get{return (status == EStatus.WAITING);}	

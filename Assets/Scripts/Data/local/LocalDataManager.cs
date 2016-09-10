@@ -74,7 +74,6 @@ namespace Data
 			FileStream stream = new FileStream(getLocalDataPath(),FileMode.Create,FileAccess.Write,FileShare.None);
 			StreamWriter streamWriter = new StreamWriter(stream);
 			string jsonData = JsonUtility.ToJson(currentData,true);
-
 			streamWriter.Write(jsonData);
 			streamWriter.Close();
 			streamWriter.Dispose();

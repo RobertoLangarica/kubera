@@ -56,7 +56,6 @@ public class MapManager : MonoBehaviour
 
 		if(PersistentData.GetInstance().currentWorld == -1 || !PersistentData.GetInstance().fromGameToLevels)
 		{
-			print (KuberaDataManager.GetCastedInstance<KuberaDataManager>());
 			if(KuberaDataManager.GetCastedInstance<KuberaDataManager>().currentUser.levels.Count != 0)
 			{
 				currentWorld = KuberaDataManager.GetCastedInstance<KuberaDataManager>().currentUser.maxWorldReached();

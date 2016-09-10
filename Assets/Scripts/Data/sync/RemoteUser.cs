@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Data.Sync
 {
-	public class GameUser
+	public class RemoteUser
 	{
 		public string facebookId;
 		public string customId;//Id de servicio custom
