@@ -243,7 +243,6 @@ public class LocalNotificationManager : LocalDataManager<MultipleNotificationUse
 
 	protected string scheduleLocalNotification(CrossPlatformNotification notification)
 	{
-		Debug.Log ("Enviando " + notification.GetNotificationID());
 		return NPBinding.NotificationService.ScheduleLocalNotification (notification);
 	}
 

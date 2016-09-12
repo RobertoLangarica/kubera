@@ -9,10 +9,10 @@ namespace Kubera.Data
 	[Serializable]
 	public class KuberaUser : BasicData 
 	{
-		public int PlayFab_dataVersion;
+		public int remoteDataVersion;
 		public string facebookId;
 
-		public Dictionary<string,LevelData> levels;
+		public List<LevelData> levels;
 
 		public int playerLifes;
 
@@ -20,13 +20,13 @@ namespace Kubera.Data
 
 		public KuberaUser()
 		{
-			levels = new Dictionary<string, LevelData>();
+			levels = new List<LevelData>();
 		}
 
 		public KuberaUser(string userId)
 		{
 			_id = userId;
-			levels = new Dictionary<string, LevelData>();
+			levels = new List<LevelData>();
 		}
 
 		public override void updateFrom (BasicData readOnlyRemote, bool ignoreVersion = false)
@@ -35,36 +35,36 @@ namespace Kubera.Data
 
 			LevelData level;
 
-			PlayFab_dataVersion = ((KuberaUser)readOnlyRemote).PlayFab_dataVersion;
+			remoteDataVersion = ((KuberaUser)readOnlyRemote).remoteDataVersion;
 				
 			//Le quitamos lo sucio a los datos
 			isDirty = false;
 
 			//revisamos los niveles
-			foreach(KeyValuePair<string, LevelData> remoteItem in ((KuberaUser)readOnlyRemote).levels )
+			foreach(LevelData remoteLevel in ((KuberaUser)readOnlyRemote).levels )
 			{
-				level = getLevelById(remoteItem.Value._id);
+				level = getLevelById(remoteLevel._id);
 
 				if(level != null)
 				{
 					//Actualizamos el nivel existente
-					level.compareAndUpdate(remoteItem.Value, ignoreVersion);
+					level.compareAndUpdate(remoteLevel, ignoreVersion);
 
 					isDirty = isDirty || level.isDirty;
 				}
 				else
 				{
 					//nivel nuevo
-					addLevel(remoteItem.Value);
+					addLevel(remoteLevel);
 				}
 			}
 
 			//Alguno de los niveles sigue sucio
 			if(!isDirty)
 			{
-				foreach(KeyValuePair<string, LevelData> item in levels)
+				foreach(LevelData item in levels)
 				{
-					if(item.Value.isDirty)
+					if(item.isDirty)
 					{
 						isDirty = true;
 						return;//Dejamos de iterar
@@ -73,53 +73,46 @@ namespace Kubera.Data
 			}
 		}
 
-
 		public LevelData getLevelById(string id)
 		{
-			if(levels.ContainsKey(id))
-			{
-				return levels[id];
-			}
-
-			return null;
+			return levels.Find(item=>item._id == id);
 		}
 
 		public bool existLevel(string id)
 		{
-			
-			return levels.ContainsKey(id);
+			return (levels.Find(item=>item._id == id) != null);
 		}
 		
 		public void addLevel(LevelData item)
 		{
-			levels.Add(item._id,item);
+			levels.Add(item);
 		}
 
 		public void markAllLevelsAsNoDirty()
 		{
-			foreach(KeyValuePair<string, LevelData> item in levels)
+			foreach(LevelData item in levels)
 			{
-				item.Value.isDirty = false;
+				item.isDirty = false;
 			}	
 		}
 
 		public void clear()
 		{
 			levels.Clear();
-			PlayFab_dataVersion = 0;
+			remoteDataVersion = 0;
 			facebookId = "";
 			isDirty = false;
 		}
 			
-		public Dictionary<string, LevelData> getDirtyLevelsCopy()
+		public List<LevelData> getDirtyLevelsCopy()
 		{
-			Dictionary<string, LevelData> result = new Dictionary<string, LevelData>();
+			List<LevelData> result = new List<LevelData>();
 
-			foreach(KeyValuePair<string,LevelData> level in levels)
+			foreach(LevelData level in levels)
 			{
-				if(level.Value.isDirty)
+				if(level.isDirty)
 				{
-					result.Add(level.Value._id, level.Value.clone());
+					result.Add(level.clone());
 				}
 			}
 
@@ -131,12 +124,12 @@ namespace Kubera.Data
 			KuberaUser result = new KuberaUser(this._id);
 			result.isDirty = this.isDirty;
 			result.version = this.version;
-			result.PlayFab_dataVersion = this.PlayFab_dataVersion;
+			result.remoteDataVersion = this.remoteDataVersion;
 			result.facebookId = this.facebookId;
 
-			foreach(KeyValuePair<string, LevelData> level in this.levels)
+			foreach(LevelData level in this.levels)
 			{
-				result.addLevel(level.Value.clone());
+				result.addLevel(level.clone());
 			}
 
 			return result;
@@ -146,11 +139,11 @@ namespace Kubera.Data
 		{
 			int result = 0;
 
-			foreach(KeyValuePair<string, LevelData> item in levels)
+			foreach(LevelData item in levels)
 			{
-				if(item.Value.world > result)
+				if(item.world > result)
 				{
-					result = item.Value.world;
+					result = item.world;
 				}
 			}
 
@@ -161,9 +154,9 @@ namespace Kubera.Data
 		{
 			int result = 0;
 
-			foreach(KeyValuePair<string, LevelData> item in levels)
+			foreach(LevelData item in levels)
 			{
-				if(item.Value.world == world)
+				if(item.world == world)
 				{
 					result++;
 				}
@@ -176,11 +169,11 @@ namespace Kubera.Data
 		{
 			List<LevelData> result = new List<LevelData>();
 
-			foreach(KeyValuePair<string, LevelData> item in levels)
+			foreach(LevelData item in levels)
 			{
-				if(item.Value.world == world)
+				if(item.world == world)
 				{
-					result.Add(item.Value);
+					result.Add(item);
 				}
 			}
 

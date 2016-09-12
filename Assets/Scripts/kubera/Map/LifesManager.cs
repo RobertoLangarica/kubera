@@ -129,7 +129,6 @@ public class LifesManager : Manager<LifesManager>
 			//Se entregan las vidas que se hayan juntado
 			if (lifesGained > 0) 
 			{
-				Debug.Log (lifesGained);
 				giveLifesToUser(lifesGained);
 
 				updateDateOnData (lifesGained);

@@ -5,29 +5,46 @@ using System.Collections.Generic;
 using Data.Remote;
 using Data.Sync;
 using Kubera.Data.Remote.PFResponseData;
+using Kubera.Data.Remote.GSResponseData;
 
 namespace Kubera.Data.Remote
 {
 	public class KuberaProvider : ServerProvider 
 	{
 		public bool _mustShowDebugInfo = false;
+		public string GS_API_KEY = "f299147zFN10";
+		/// <summary>
+		/// preview or live
+		/// </summary>
+		public string GS_STAGE = "preview";
+		public string GS_CREDENTIAL = "device";
+		public string GS_SECRET = "smdB4Xb5uqfprRTaDNm8aquzW0ceptqF";
+
+		public string GS_PATH = "https://{API_KEY}.{GS_STAGE}.gamesparks.net/rs/{GS_CREDENTIAL}/{GS_SECRET}";
+
 
 		public Action<PFLeaderboardData> OnLeaderboardObtained;
-
 		public string TITLE_ID = "74A";
 
 		private bool isLogged = false;
-		private PFLoginRequest loginRequest;
-		PFCreateUserRequest<Kubera.Data.KuberaUser> creatingUserRequest;
+		private GSLoginRequest loginRequest;
+		private GSGetUserRequest mainUpdateRequest;
 		private string currentFacebookId;
-		private string sessionTicket;
+		private string sessionToken;
 
+
+		public string getPath()
+		{
+			return GS_PATH.Replace("{API_KEY}",GS_API_KEY).Replace("{GS_STAGE}",GS_STAGE)
+				.Replace("{GS_CREDENTIAL}",GS_CREDENTIAL).Replace("{GS_SECRET}",GS_SECRET);
+		}
 		/**
 		 * Obtiene el usuario unico desde el servicio remoto (lo creo si es necesario)
 		 **/ 
 		public override void getUniqueUser (string customId, string facebookId)
 		{
 			currentFacebookId = facebookId;
+
 			doRemoteLogin();
 		}
 
@@ -37,11 +54,12 @@ namespace Kubera.Data.Remote
 		private void doRemoteLogin()
 		{
 			//Primero hay que hacer login
-			loginRequest = queue.getComponentAttachedToGameObject<PFLoginRequest>("PlayFabFBLogin");
+			loginRequest = queue.getComponentAttachedToGameObject<GSLoginRequest>("GameSparkFBLogin");
 			loginRequest.showDebugInfo = _mustShowDebugInfo;
 			loginRequest.id = "login_"+currentFacebookId;
 			loginRequest.persistAfterFailed = true;
-			loginRequest.initialize(TITLE_ID,Facebook.Unity.AccessToken.CurrentAccessToken.TokenString);
+			loginRequest.facebookAccessToken = Facebook.Unity.AccessToken.CurrentAccessToken.TokenString; 
+			loginRequest.initialize(getPath());
 			loginRequest.OnComplete += OnRemoteLoginComplete;
 
 			addRequest(loginRequest,true);
@@ -50,80 +68,58 @@ namespace Kubera.Data.Remote
 		private void OnRemoteLoginComplete(string request_id)
 		{
 			isLogged = true;
-			sessionTicket = loginRequest.data.data.SessionTicket;
+			sessionToken = loginRequest.data.authToken;
 				
 			if(OnUserReceived != null)
 			{
 				//Creamos el usuario a manipular
-				GameUser user = new GameUser();
+				RemoteUser user = new RemoteUser();
 				user.facebookId = currentFacebookId;
 				user.customId = string.Empty;
-				user.id = loginRequest.data.data.PlayFabId;
-				user.newlyCreated = loginRequest.data.data.NewlyCreated;
+				user.id = loginRequest.data.userId;
+				user.newlyCreated = loginRequest.data.newPlayer;
 
 				OnUserReceived(user);
 			}
 		}
 
-		/**
-		 * [DEPRECATED]
-		 * En caso de que sea un usuario que no existe en el servidor hay que subir los datos locales por primera vez
-		 **/ 
-		public override void createUserData<KuberaUser>(string id, string jsonData, KuberaUser objectToSave)
-		{
-			//DEPRECATED en Kubera
-			creatingUserRequest = queue.getComponentAttachedToGameObject<PFCreateUserRequest<Kubera.Data.KuberaUser>>("PF_UserCreate");
-			creatingUserRequest.id = "create_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
-			creatingUserRequest.showDebugInfo = _mustShowDebugInfo;
-			creatingUserRequest.persistAfterFailed = true;
-			creatingUserRequest.initialize(TITLE_ID,jsonData, sessionTicket, objectToSave);
-			creatingUserRequest.OnComplete += afterUserCreated;
-
-			addLoginDependantRequest(creatingUserRequest,true);
-		}
-
-		/**
-		 * [DEPRECATED]
-		 **/ 
-		private void afterUserCreated(string request_id)
-		{
-			//DEPRECATED en Kubera
-			if(OnDataReceived != null)
-			{
-				PFCreateUserRequest<KuberaUser> request = (PFCreateUserRequest<KuberaUser>)getRequestById(request_id);
-
-				//Hacemos un usuario para el diff
-				KuberaUser remoteUser = creatingUserRequest.dataSended;
-				remoteUser._id = loginRequest.data.data.PlayFabId;
-				remoteUser.PlayFab_dataVersion = request.data.data.DataVersion;
-
-				OnDataReceived(JsonUtility.ToJson(remoteUser));
-			}
-
-			//Para que se dejen de agregar dependencias
-			creatingUserRequest = null;
-		}
 
 		/**
 		 * Para obtener los datos del usuario
 		 **/ 
-		public override void getUserData (string id, string extraData, int aboveVersion)
+		public override void getUserData (string id, int aboveVersion, bool saveAsMainRequest = false)
 		{
-			PFGetUserRequest request = queue.getComponentAttachedToGameObject<PFGetUserRequest>("PF_GetUserData");
+			GSGetUserRequest request = queue.getComponentAttachedToGameObject<GSGetUserRequest>("GS_GetUserData");
+
+			if(saveAsMainRequest)
+			{
+				mainUpdateRequest = request;	
+			}
+
 			request.id = "get_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
+			request.playerId = id;
 			request.persistAfterFailed = true;
 			request.showDebugInfo = _mustShowDebugInfo;
-			request.initialize(TITLE_ID, extraData, aboveVersion, sessionTicket);
+			request.aboveVersion = aboveVersion;
+			request.initialize(getPath());
 			request.OnComplete += OnUserDataObtained;
 
-			addLoginDependantRequest(request,false);
+			addDependantRequest(request,saveAsMainRequest);
 		}
 
 		private void OnUserDataObtained(string request_id)
 		{
+			if(mainUpdateRequest != null && mainUpdateRequest.id == request_id)
+			{
+				mainUpdateRequest = null;
+			}
+
 			if(OnDataReceived != null)
 			{
-				PFGetUserRequest request = (PFGetUserRequest)getRequestById(request_id);
+				GSGetUserRequest request = (GSGetUserRequest)getRequestById(request_id);
+
+				//Debug.Log(request.data.scriptData.userData);
+				/*PFGetUserRequest request = (PFGetUserRequest)getRequestById(request_id);
 
 				//Hacemos un usuario para el diff
 				KuberaUser remoteUser = new KuberaUser(loginRequest.data.data.PlayFabId);
@@ -134,7 +130,7 @@ namespace Kubera.Data.Remote
 					remoteUser.version = int.Parse(((Dictionary<string, object>)request.data.data.Data["version"])["Value"].ToString());
 				}
 
-				remoteUser.PlayFab_dataVersion = request.data.data.DataVersion;
+				remoteUser.remoteDataVersion = request.data.data.DataVersion;
 
 				foreach (string key in request.data.data.Data.Keys)
 				{
@@ -144,58 +140,58 @@ namespace Kubera.Data.Remote
 					}
 				}
 
-				OnDataReceived(JsonUtility.ToJson(remoteUser));
+				OnDataReceived(JsonUtility.ToJson(remoteUser));*/
 			}
 		}
 
 		public override void updateUserData<KuberaUser> (string id, string jsonData, KuberaUser objectToSave)
 		{
-			PFUpdateDataRequest request = queue.getComponentAttachedToGameObject<PFUpdateDataRequest>("PF_UpdateUserData");
+			/*PFUpdateDataRequest request = queue.getComponentAttachedToGameObject<PFUpdateDataRequest>("PF_UpdateUserData");
 			request.id = "update_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
 			request.showDebugInfo = _mustShowDebugInfo;
 			request.persistAfterFailed = true;
 			request.initialize(TITLE_ID,jsonData, sessionTicket, objectToSave);
 			request.OnComplete += OnUserDataUpdated;
 
-			addLoginDependantRequest(request,false);
+			addLoginDependantRequest(request,false);*/
 		}
 
 		private void OnUserDataUpdated(string request_id)
 		{
-			if(OnDataUpdated != null)
+			/*if(OnDataUpdated != null)
 			{
 				PFUpdateDataRequest request = (PFUpdateDataRequest)getRequestById(request_id);
 
 				//Para que se desmarquen como sucios los datos locales hacemos un diff
 				KuberaUser remoteUser = request.dataSended as KuberaUser;
 				remoteUser._id = loginRequest.data.data.PlayFabId;
-				remoteUser.PlayFab_dataVersion = request.data.data.FunctionResult.DataVersion;
+				remoteUser.remoteDataVersion = request.data.data.FunctionResult.DataVersion;
 
 				OnDataUpdated(JsonUtility.ToJson(remoteUser));
-			}
+			}*/
 		}
 
 		public override void getLeaderboardData (string id, string leaderboardName, int maxResultsCount)
 		{
-			PFGetLeaderboardRequest request = queue.getComponentAttachedToGameObject<PFGetLeaderboardRequest>("PF_LeaderboardRequest");
+			/*PFGetLeaderboardRequest request = queue.getComponentAttachedToGameObject<PFGetLeaderboardRequest>("PF_LeaderboardRequest");
 			request.id = "leaderboard_"+id+"_"+leaderboardName+"_"+UnityEngine.Random.Range(0,99999).ToString("00");
 			request.showDebugInfo = _mustShowDebugInfo;
 			request.persistAfterFailed = true;
 			request.initialize(TITLE_ID, id, leaderboardName, maxResultsCount, sessionTicket);
 			request.OnComplete += OnLeaderboardDataObtained;
 
-			addLoginDependantRequest(request,false);
+			addLoginDependantRequest(request,false);*/
 		}
 
 		private void OnLeaderboardDataObtained(string request_id)
 		{
-			if(OnLeaderboardObtained != null)
+			/*if(OnLeaderboardObtained != null)
 			{
 				PFGetLeaderboardRequest request = (PFGetLeaderboardRequest)getRequestById(request_id);
 				request.data.data.name = request.statisticUsed;
 
 				OnLeaderboardObtained(request.data.data);
-			}
+			}*/
 		}
 
 		protected BaseRequest getRequestById(string id)
@@ -216,23 +212,21 @@ namespace Kubera.Data.Remote
 			}
 		}
 
-		private void addLoginDependantRequest(BaseRequest request, bool isPriority = false)
+		private void addDependantRequest(BaseRequest request, bool isPriority = false)
 		{
 			if(isLogged)
 			{
-				//Creacion DEPRECATED para Kubera
-
-				//El usuario se esta creando
-				/*if(creatingUserRequest != null && creatingUserRequest.id != request.id)
+				//El usuario se esta actualizando por primera vez?
+				if(mainUpdateRequest != null && mainUpdateRequest.id != request.id)
 				{
-					//request dependiente de que se termine de crear el usuario
-					creatingUserRequest.dependantRequests.Add(request);
+					//request dependiente de que se termine de actualizar el usuario
+					mainUpdateRequest.dependantRequests.Add(request);
 				}
 				else
 				{
 					//request normal
 					addRequest(request, isPriority);
-				}*/
+				}
 
 				//request normal
 				addRequest(request, isPriority);
@@ -249,7 +243,7 @@ namespace Kubera.Data.Remote
 			base.stopAndRemoveCurrentRequests ();
 			isLogged = false;
 			loginRequest = null;
-			creatingUserRequest = null;
+			mainUpdateRequest = null;
 		}
 	}	
 }

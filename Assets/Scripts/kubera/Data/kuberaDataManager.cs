@@ -28,7 +28,6 @@ namespace Kubera.Data
 
 			//Usuario anonimo
 			KuberaUser anonymous = new KuberaUser(ANONYMOUS_USER);
-			//TODO: Vidas maximas
 			anonymous.playerLifes = initialLifes;
 			currentData.users.Add(anonymous);
 		}
@@ -49,13 +48,12 @@ namespace Kubera.Data
 				level.stars		= stars;
 				level.passed	= true;
 				level.world		= levelsList.getLevelByName(levelName).world;
-
 				level.isDirty	= true;
 
 				currentUser.addLevel(level);
 			}
-
-			//Cuidamos de no sobreescribir algun valor previo
+				
+			//Es sucio porque ya estaba sucio o por un cambio aqui
 			currentUser.isDirty = currentUser.isDirty || level.isDirty;
 
 			if(currentUser.isDirty)
@@ -217,6 +215,26 @@ namespace Kubera.Data
 			return level.points;
 		}
 
+		public void giveUserLifes(int amount = 1)
+		{
+			int totalLifes = currentUser.playerLifes + amount;
+
+			if (totalLifes > initialLifes) 
+			{
+				currentUser.playerLifes = initialLifes;
+			} 
+			else if (totalLifes < 0) 
+			{
+				currentUser.playerLifes = 0;
+			}
+			else 
+			{
+				currentUser.playerLifes = totalLifes;
+			}
+
+			saveLocalData(false);
+		}
+
 		public void temporalUserChangeWithFacebookId(string facebookId)
 		{
 			string newId;
@@ -242,7 +260,7 @@ namespace Kubera.Data
 					//Diff de los datos sin verificar version
 					user = currentData.getUserByFacebookId(facebookId);
 					//prevalece la version del usuario que no es anonimo
-					currentUser.PlayFab_dataVersion = user.PlayFab_dataVersion;
+					currentUser.remoteDataVersion = user.remoteDataVersion;
 					user.compareAndUpdate(currentUser, true);
 					newId = user._id;
 					//Limpiamos al usuario anonimo
@@ -257,7 +275,6 @@ namespace Kubera.Data
 					//Se crea un nuevo usuario
 					user = new KuberaUser(facebookId);
 					user.facebookId = facebookId;
-					//TODO: Vidas maximas
 					user.playerLifes = initialLifes;
 
 					newId = facebookId;
@@ -310,7 +327,6 @@ namespace Kubera.Data
 				if(currentData.getUserById(newUserId) == null)
 				{
 					KuberaUser newUser = new KuberaUser(newUserId);
-					//TODO: Vidas maximas
 					newUser.playerLifes = initialLifes;
 					currentData.users.Add(newUser);
 				}
@@ -360,39 +376,6 @@ namespace Kubera.Data
 			result.markAllLevelsAsNoDirty();
 
 			return result;
-		}
-			
-		public string getCSVKeysToQuery()
-		{
-			string result = "version,DataVersion";
-
-			//Mundos
-			foreach (int key in levelsList.worlds.Keys)
-			{
-				result += "," + "world_" + key.ToString();
-			}
-
-			return result;
-		}
-
-		public void giveUserLifes(int amount = 1)
-		{
-			int totalLifes = currentUser.playerLifes + amount;
-
-			if (totalLifes > initialLifes) 
-			{
-				currentUser.playerLifes = initialLifes;
-			} 
-			else if (totalLifes < 0) 
-			{
-				currentUser.playerLifes = 0;
-			}
-			else 
-			{
-				currentUser.playerLifes = totalLifes;
-			}
-
-			saveLocalData ();
 		}
 	}
 }
