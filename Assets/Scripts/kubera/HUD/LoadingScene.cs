@@ -31,6 +31,7 @@ public class LoadingScene : MonoBehaviour
 			kuberaLoading[i].DOFade (1,duration);
 			textKuberaLoading[i].DOFade (1,duration);
 		}
+		backGround.gameObject.SetActive (true);
 	}
 
 	public void hideLoading(float duration)
@@ -38,6 +39,7 @@ public class LoadingScene : MonoBehaviour
 		backGround.DOFade (0,duration);
 		killAnimation (duration);
 		current = 0;
+		backGround.gameObject.SetActive (false);
 	}
 
 	protected void killAnimation(float duration)
@@ -53,7 +55,15 @@ public class LoadingScene : MonoBehaviour
 
 	public void animateKuberaLoading()
 	{
-		if(current == kuberaLoading.Length)
+		float temp = 0;
+
+		for (int i = 0; i < kuberaLoading.Length; i++) 
+		{
+			temp = Random.Range (-45,45);
+
+			kuberaLoading [i].transform.localRotation = Quaternion.Euler(new Vector3(0,0,temp));
+		}
+		/*if(current == kuberaLoading.Length)
 		{
 			current =0;
 		}
@@ -64,6 +74,6 @@ public class LoadingScene : MonoBehaviour
 				kuberaLoading[current].rectTransform.DOAnchorPos(new Vector2(0,0),0.25f).SetId("kuberaLoading");
 				current++;
 				animateKuberaLoading();
-			});
+			});*/
 	}
 }

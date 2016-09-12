@@ -3,9 +3,10 @@ using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
 
-public class ExitGamePopUp : PopUpBase {
-
+public class ExitGamePopUp : PopUpBase 
+{
 	public Text exitText;
+	public Text flavorText;
 	public RectTransform exitContent;
 	public float speed =1;
 
@@ -14,6 +15,7 @@ public class ExitGamePopUp : PopUpBase {
 		popUp.SetActive (true);
 		
 		exitText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.EXIT_POPUP_ID);
+		flavorText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FLAVOR_TEXT);
 		Vector3 v3 = new Vector3 ();
 		v3 = exitContent.anchoredPosition;
 

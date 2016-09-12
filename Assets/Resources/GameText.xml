@@ -108,6 +108,17 @@
 				<language id="default" text="Presionaste el boton de salida"/>
 			</languages>
 		</text>
+		<text id="ticketFlavorText">
+			<languages>
+				<language id="english" text="****Thanks for visit****"/>
+				<language id="spanish" text="****Gracias por su visita****"/>
+				<language id="default" text="****Gracias por su visita****"/>
+			</languages>
+		</text>
+
+		<!--
+		Game	
+		-->
 		<text id="Tutorial_lvl1_phase1">
 			<languages>
 				<language id="english" text="Drag a piece to make a line."/>

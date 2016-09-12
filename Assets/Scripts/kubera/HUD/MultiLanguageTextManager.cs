@@ -50,6 +50,7 @@ public class MultiLanguageTextManager
 
 
 	//GAME
+	public const string FLAVOR_TEXT							= "ticketFlavorText";
 	public const string EXIT_POPUP_ID 						= "exitText";
 	public const string WIN_TEXT_POPUP_ID					= "WinTextPopUpID";
 	public const string STARTGAME_TEXT_POPUP_ID				= "StartTextPopUpID";

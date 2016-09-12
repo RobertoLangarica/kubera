@@ -399,7 +399,7 @@ public class HUDManager : MonoBehaviour
 		poolText.text = "+" + score.ToString();
 
 		scorePosition.z = 0;
-		finish.y += 2;// HACK: poolText.rectTransform.rect.height;
+		finish.y += 1;// HACK: poolText.rectTransform.rect.height;
 
 		//Se inicia la animacion del texto
 		bText.startAnim(scorePosition,finish);

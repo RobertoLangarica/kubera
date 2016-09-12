@@ -30,11 +30,19 @@ public class HighLight : MonoBehaviour
 	protected bool isDescending;
 	protected bool startAnim;
 
+	protected ParticleSystem particles;
+
 	protected Vector3 previousScale;
 
 	protected bool isActive;
 	protected List<HighLightManager.EHighLightType> suscribedTypes = new List<HighLightManager.EHighLightType> ();
 	protected List<HighLightManager.EHighLightStatus> suscribedStatus = new List<HighLightManager.EHighLightStatus> ();
+
+	void Start()
+	{
+		particles = borderStars.GetComponent<ParticleSystem> ();
+		borderStars.SetActive (true);
+	}
 
 	void Update()
 	{
@@ -93,9 +101,10 @@ public class HighLight : MonoBehaviour
 		Image tempImg = null;
 		SpriteRenderer tempSpt = null;
 
-		if (borderStars != null) 
+		if (particles != null) 
 		{
-			borderStars.SetActive (true);
+			//borderStars.SetActive (true);
+			particles.Play();
 		}
 
 		switch (suscribedStatus[suscribedStatus.Count -1]) 
@@ -106,9 +115,11 @@ public class HighLight : MonoBehaviour
 		case(HighLightManager.EHighLightStatus.WRONG):
 			temp = HighLightManager.GetInstance().wrongHighLight;
 
-			if (borderStars != null) 
+			if (particles != null) 
 			{
-				borderStars.SetActive (false);
+				//borderStars.SetActive (false);
+				particles.Clear();
+				particles.Stop();
 			}
 
 			break;
@@ -197,9 +208,11 @@ public class HighLight : MonoBehaviour
 			if (suscribedTypes.Count == 0) 
 			{
 				gameObject.SetActive (false);
-				if (borderStars != null) 
+				if (particles != null) 
 				{
-					borderStars.SetActive (false);
+					particles.Clear();
+					particles.Stop ();
+					//borderStars.SetActive (false);
 				}
 
 				finishAnim ();
@@ -227,9 +240,11 @@ public class HighLight : MonoBehaviour
 		suscribedStatus.Clear ();
 
 		gameObject.SetActive (false);
-		if (borderStars != null) 
+		if (particles != null) 
 		{
-			borderStars.SetActive (false);
+			particles.Clear();
+			particles.Stop ();
+			//borderStars.SetActive (false);
 		}
 
 		finishAnim ();

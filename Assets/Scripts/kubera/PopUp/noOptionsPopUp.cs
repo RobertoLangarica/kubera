@@ -9,6 +9,7 @@ public class noOptionsPopUp : PopUpBase {
 	public GameObject toChose;
 
 	public Text FirstText;
+	public Text flavorText;
 	public Text toChoseText;
 	public Text buttonContinue;
 	public Text buttonExit;
@@ -21,6 +22,7 @@ public class noOptionsPopUp : PopUpBase {
 	void Start()
 	{
 		FirstText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.NO_PIECES_POPUP_ID);
+		flavorText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FLAVOR_TEXT);
 		startPosition = new Vector2(winContent.localPosition.x, Screen.height * 2);
 
 		winContent.localPosition = startPosition;
