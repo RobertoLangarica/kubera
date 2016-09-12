@@ -140,6 +140,7 @@ namespace Kubera.Data
 			{
 				level = new LevelData(levelName);
 				level.locked	= false;
+
 				level.world		= levelsList.getLevelByName(levelName).world;
 				level.isDirty	= true;
 
