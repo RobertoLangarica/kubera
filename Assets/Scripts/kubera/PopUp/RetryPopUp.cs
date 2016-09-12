@@ -30,6 +30,11 @@ public class RetryPopUp : PopUpBase
 	public Transform goalPopUpSlotsParent;
 	public GridLayoutGroup FriendsgridLayoutGroup;
 
+	public Sprite[] worldTopBackground;
+	public Sprite[] worldIcon;
+	public Image topLevelImage;
+	public Image topIcon;
+
 	void Start()
 	{
 		//TODO checar login a facebook
@@ -38,7 +43,11 @@ public class RetryPopUp : PopUpBase
 
 		setStartingPlaces ();
 		content.text = "Seguro lo lograras";
-		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.15f);
+		print ("S");
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.225f, Screen.height * 0.1675f);
+
+		print (Screen.width);
+		print (Screen.height);
 	}
 
 	protected void fbLogin()

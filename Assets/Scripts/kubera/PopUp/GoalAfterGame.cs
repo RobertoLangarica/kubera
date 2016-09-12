@@ -36,6 +36,11 @@ public class GoalAfterGame : PopUpBase {
 	public Transform goalPopUpSlotsParent;
 	public GridLayoutGroup FriendsgridLayoutGroup;
 
+	public Sprite[] worldTopBackground;
+	public Sprite[] worldIcon;
+	public Image topLevelImage;
+	public Image topIcon;
+
 	void Start()
 	{
 		//TODO checar login a facebook
@@ -43,7 +48,7 @@ public class GoalAfterGame : PopUpBase {
 		//FBLoggin.GetInstance().onLoginComplete += fbLogin;
 
 		setStartingPlaces ();
-		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.15f);
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.225f, Screen.height * 0.1675f);
 	}
 
 	protected void fbLogin()
@@ -65,10 +70,13 @@ public class GoalAfterGame : PopUpBase {
 		startAnimation ();
 	}
 
-	public void setGoalPopUpInfo(int starsReached, string levelName, string points)
+	public void setGoalPopUpInfo(int starsReached, string levelName, string points,int currentWorld =0)
 	{
 		this.LevelName.text = levelName;
 		this.Points.text = points;
+
+		topLevelImage.sprite = worldTopBackground [currentWorld];
+		topIcon.sprite = worldIcon [currentWorld];
 
 		showStars (starsReached);
 	}

@@ -14,7 +14,6 @@ public class GoalPopUp : PopUpBase {
 	public Text goalTextLetters;
 
 	public Text LevelNumber;
-	public Text LevelText;
 	public Text inviteFriendsText;
 
 	public Transform goalLettersContainer;
@@ -47,9 +46,14 @@ public class GoalPopUp : PopUpBase {
 
 	public GridLayoutGroup FriendsgridLayoutGroup;
 
+	public Sprite[] worldTopBackground;
+	public Sprite[] worldIcon;
+	public Image topLevelImage;
+	public Image topIcon;
+
 	void Start()
 	{
-		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.10f);
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.225f, Screen.height * 0.1675f);
 
 		//TODO checar login a facebook
 		fbLogin ();
@@ -99,7 +103,7 @@ public class GoalPopUp : PopUpBase {
 		startAnimation ();
 	}
 
-	public void setGoalPopUpInfo(string textA,string textB,int starsReached, List<string> letters = null, string levelName = "" , int aABLetterObjectives = 0)
+	public void setGoalPopUpInfo(string textA,string textB,int starsReached, List<string> letters = null, string levelName = "" , int aABLetterObjectives = 0,int currentWorld =0)
 	{
 		this.LevelNumber.text = levelName;
 		ABObjective.SetActive (false);
@@ -107,6 +111,10 @@ public class GoalPopUp : PopUpBase {
 		lettersObjective.SetActive (false);
 		resetStars ();
 
+		topLevelImage.sprite = worldTopBackground [currentWorld-1];
+		topIcon.sprite = worldIcon [currentWorld-1];
+
+		print ("current " + currentWorld);
 
 		objective = aABLetterObjectives;
 		switch (objective) {

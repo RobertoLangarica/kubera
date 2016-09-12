@@ -729,7 +729,7 @@ public class MapManager : MonoBehaviour
 			break;
 		}
 			
-		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (textA,textB,starsReached, letter, levelName,aABLetterObjectives);
+		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (textA,textB,starsReached, letter, levelName,aABLetterObjectives,currentWorld);
 		popUpManager.activatePopUp ("goalPopUp");
 
 		stopInput (true);

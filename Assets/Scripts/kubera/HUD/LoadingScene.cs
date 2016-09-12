@@ -24,6 +24,7 @@ public class LoadingScene : MonoBehaviour
 
 	public void showLoading(float duration,TweenCallback callBack)
 	{
+		backGround.gameObject.SetActive(true);
 		animateKuberaLoading ();
 		backGround.DOFade (1,duration).SetId("backGround").OnComplete(callBack);
 		for(int i=0; i<kuberaLoading.Length; i++)
@@ -36,7 +37,7 @@ public class LoadingScene : MonoBehaviour
 
 	public void hideLoading(float duration)
 	{
-		backGround.DOFade (0,duration);
+		backGround.DOFade (0,duration).OnComplete(()=>{backGround.gameObject.SetActive(false);});
 		killAnimation (duration);
 		current = 0;
 		backGround.gameObject.SetActive (false);
