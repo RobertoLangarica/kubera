@@ -170,7 +170,7 @@
 		</text>
 		<text id="Tutorial_lvl1_phase2">
 			<languages>
-				<language id="english" text="Tap letters to form a correct word like {{b}}FELIZ{{/b}}."/>
+				<language id="english" text="Tap letters to form a correct word like {{b}}HAPPY{{/b}}."/>
 				<language id="spanish" text="Toca las letras para formar una palabra correcta, por ejemplo: {{b}}FELIZ{{/b}}."/>
 				<language id="default" text="Toca las letras para formar una palabra correcta, por ejemplo: {{b}}FELIZ{{/b}}."/>
 			</languages>
