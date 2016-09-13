@@ -96,6 +96,7 @@ namespace Kubera.Data.Sync
 		{
 			base.OnDataReceived (fullData);
 
+			Debug.Log("BEforeDiff:\n"+fullData);
 			localData.diffUser(JsonUtility.FromJson<KuberaUser>(fullData), true);
 
 			if(_mustShowDebugInfo)

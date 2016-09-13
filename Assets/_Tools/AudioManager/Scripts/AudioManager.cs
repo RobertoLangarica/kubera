@@ -68,8 +68,14 @@ public class AudioManager : Manager<AudioManager>
             {
                 //create audio object from this audio Item and play it
                 AudioObject AM_pAOPrefab = (ac.audioObjPrefab == null ? audioObjDefaultPrefab : ac.audioObjPrefab);
+
+				if(parent == null)
+				{
+					parent = CachedTransform;	
+				}
                 AudioObject result = ai.Play(parent, point, ac.GetVolume() * globalVolume, ref AM_pAOPrefab);
-                if (result != null)
+                
+				if (result != null)
                 {
                     if (ac.onlyOneItemAllowed)
                     {

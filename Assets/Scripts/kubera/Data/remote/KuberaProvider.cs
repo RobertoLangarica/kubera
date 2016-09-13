@@ -125,6 +125,7 @@ namespace Kubera.Data.Remote
 				KuberaUser remoteUser = new KuberaUser(loginRequest.data.userId);
 				remoteUser.remoteDataVersion = request.data.version;
 				remoteUser.levels = request.data.levels;
+				remoteUser.maxLevelReached = request.data.maxLevelReached;
 
 				OnDataReceived(JsonUtility.ToJson(remoteUser));
 			}
