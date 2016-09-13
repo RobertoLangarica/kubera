@@ -248,7 +248,7 @@ public class LifesManager : Manager<LifesManager>
 		{
 			for (int i = 0; i < lifesTimer.Count; i++) 
 			{
-				lifesTimer[i].text = "Lleno";
+				lifesTimer[i].text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.FULL_LIFES_TEXT);
 			}
 		}
 

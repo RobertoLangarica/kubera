@@ -521,9 +521,9 @@
 
 		<text id="afterGamePoints">
 			<languages>
-				<language id="english" text="antonym of {{word}}"/>
-				<language id="spanish" text="antónimo de {{word}}"/>
-				<language id="default" text="antónimo de {{word}}"/>
+				<language id="english" text="Score"/>
+				<language id="spanish" text="Puntuación"/>
+				<language id="default" text="Puntuación"/>
 			</languages>
 		</text>
 		<text id="afterGameNext">
