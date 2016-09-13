@@ -48,16 +48,16 @@ public class NoLifesPopUp : PopUpBase
 
 	public void rechargeLifes()
 	{
-		if(TransactionManager.GetInstance().tryToUseGems(price))
+		if (TransactionManager.GetInstance ().tryToUseGems (price)) 
 		{
-			LifesManager.GetInstance().giveLifesToUser ((KuberaDataManager.GetInstance () as KuberaDataManager).initialLifes);
-
-			LifesManager.GetInstance().takeALife ();
+			LifesManager.GetInstance ().giveLifesToUser ((KuberaDataManager.GetInstance () as KuberaDataManager).initialLifes);
 
 			popUp.SetActive (false);
 			OnComplete ("needLifes");
+		} 
+		else 
+		{
+			Debug.Log ("Fondos insuficientes");
 		}
-
-		Debug.Log("Fondos insuficientes");
 	}
 }
