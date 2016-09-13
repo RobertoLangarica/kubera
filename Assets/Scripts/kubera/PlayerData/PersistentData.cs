@@ -66,7 +66,7 @@ public class PersistentData : Manager<PersistentData>
 
 		abcDictionary = FindObjectOfType<ABCDictionary>();
 		onDictionaryFinished += foo;
-		configureGameForLanguage("english");
+		configureGameForLanguage("spanish");//english,spanish
 
 		/*currentWorld = */
 		//print((LevelsDataManager.GetInstance () as LevelsDataManager).getCurrentData ().levels [((LevelsDataManager.GetInstance () as LevelsDataManager).getCurrentData ().levels.Count - 1)]);
