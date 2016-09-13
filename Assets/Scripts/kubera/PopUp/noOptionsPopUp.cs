@@ -47,6 +47,9 @@ public class noOptionsPopUp : PopUpBase {
 							{
 								initial.SetActive(false);
 								toChose.SetActive(true);
+								toChoseText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GAME_NO_OPTION_TITLE);
+								buttonContinue.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GAME_NO_OPTION_CONTINUE);
+								buttonExit.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GAME_NO_OPTION_GIVEUP);
 							});
 					});
 			});

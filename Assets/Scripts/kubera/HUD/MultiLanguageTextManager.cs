@@ -24,6 +24,12 @@ public class MultiLanguageTextManager
 	public const string GOAL_CONDITION_BY_ANTONYM_ID 		= "goalByAntonymCondition";
 	public const string SCORE_HUD_TITLE_ID 					= "hudScore";
 	public const string LVL_HUD_TITLE_ID 					= "hudLevel";
+	public const string SECONDCHANCE_GIVEUP 				= "secondChanceGiveUp";
+	public const string SECONDCHANCE_RETRY					= "secondChanceRetry";
+	public const string SECONDCHANCE_TITLE 					= "secondChanceTitle";
+	public const string GAME_NO_OPTION_CONTINUE 			= "noOptionsGameGiveUp";
+	public const string GAME_NO_OPTION_GIVEUP				= "noOptionsGameContinue";
+	public const string GAME_NO_OPTION_TITLE				= "noOptionGameTitle";
 
 	//MAP
 	public const string OBJECTIVE_POPUP_LVL_TEXT_ID 		= "lvlTextObjectivePopUp";

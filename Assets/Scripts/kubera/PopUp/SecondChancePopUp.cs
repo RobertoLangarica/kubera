@@ -20,6 +20,10 @@ public class SecondChancePopUp : PopUpBase
 	public Text movementsText;
 	public Text bombsText;
 
+	public Text title;
+	public Text acceptText;
+	public Text cancelText;
+
 	public GameObject discountDisplay;
 
 	protected int secondChanceTimes = 0;
@@ -31,6 +35,10 @@ public class SecondChancePopUp : PopUpBase
 
 		movementsText.text = "+" + movements.ToString ();
 		bombsText.text = bombs.ToString ();
+
+		title.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SECONDCHANCE_TITLE);
+		acceptText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SECONDCHANCE_RETRY);
+		cancelText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SECONDCHANCE_GIVEUP);
 
 		setPrice ();
 		
