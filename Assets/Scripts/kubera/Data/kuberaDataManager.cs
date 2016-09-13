@@ -28,13 +28,15 @@ namespace Kubera.Data
 
 			//Usuario anonimo
 			KuberaUser anonymous = new KuberaUser(ANONYMOUS_USER);
-			anonymous.playerLifes = initialLifes;
+			cleanToAnonymousData(anonymous);
 			currentData.users.Add(anonymous);
 		}
 
 		public void savePassedLevel(string levelName, int stars, int points)
 		{
-			LevelData level = currentUser.getLevelById(levelName);
+			KuberaUser currUser = currentUser;
+			LevelData level = currUser.getLevelById(levelName);
+
 
 			if(level != null)
 			{
@@ -50,13 +52,16 @@ namespace Kubera.Data
 				level.world		= levelsList.getLevelByName(levelName).world;
 				level.isDirty	= true;
 
-				currentUser.addLevel(level);
+				currUser.addLevel(level);
 			}
+
+			//El maximo avance
+			currUser.isDirty = currUser.upgradeMaxLevelReached(int.Parse(level._id)) || currUser.isDirty;
 				
 			//Es sucio porque ya estaba sucio o por un cambio aqui
-			currentUser.isDirty = currentUser.isDirty || level.isDirty;
+			currUser.isDirty = currUser.isDirty || level.isDirty;
 
-			if(currentUser.isDirty)
+			if(currUser.isDirty)
 			{
 				saveLocalData(false);
 
@@ -253,7 +258,11 @@ namespace Kubera.Data
 					newId = facebookId;
 
 					//Agregamos un nuevo usuario anonimo
-					currentData.users.Add(new KuberaUser(ANONYMOUS_USER));
+					KuberaUser anon = new KuberaUser(ANONYMOUS_USER);
+					cleanToAnonymousData(anon);
+					currentData.users.Add(anon);
+
+
 				}
 				else
 				{
@@ -263,8 +272,9 @@ namespace Kubera.Data
 					currentUser.remoteDataVersion = user.remoteDataVersion;
 					user.compareAndUpdate(currentUser, true);
 					newId = user._id;
-					//Limpiamos al usuario anonimo
-					currentUser.clear();
+
+					//Limpiamos al usuario anonimo para que tenga valores iniciales
+					cleanToAnonymousData(currentUser);
 				}
 			}
 			else
@@ -311,14 +321,17 @@ namespace Kubera.Data
 					currentData.getUserById(ANONYMOUS_USER)._id = newUserId;
 
 					//Agregamos un nuevo usuario anonimo
-					currentData.users.Add(new KuberaUser(ANONYMOUS_USER));
+					KuberaUser anon = new KuberaUser(ANONYMOUS_USER);
+					cleanToAnonymousData(anon);
+					currentData.users.Add(anon);
 				}
 				else
 				{
 					//Diff de los datos sin verificar version
 					currentData.getUserById(newUserId).compareAndUpdate(currentUser, true);
-					//Limpiamos al usuario anonimo
-					currentUser.clear();
+
+					//Limpiamos al usuario anonimo para que tenga valores iniciales
+					cleanToAnonymousData(currentUser);
 				}
 			}
 			else
@@ -342,11 +355,16 @@ namespace Kubera.Data
 			saveLocalData(false);
 		}
 			
+		private void cleanToAnonymousData(KuberaUser user)
+		{
+			user.clear();
+			user._id = ANONYMOUS_USER;
+			user.playerLifes = initialLifes;
+		}
 
 		public override void setUserAsAnonymous ()
 		{
 			base.setUserAsAnonymous ();
-			//currentData.isDirty = currentUser.isDirty;
 		}
 
 		public void diffUser(KuberaUser remoteUser, bool ignoreVersion = false)
@@ -371,6 +389,7 @@ namespace Kubera.Data
 
 			result.facebookId = user.facebookId;
 			result.levels = user.getDirtyLevelsCopy();
+			result.maxLevelReached = user.maxLevelReached;
 
 			//Se envian como no sucios
 			result.markAllLevelsAsNoDirty();

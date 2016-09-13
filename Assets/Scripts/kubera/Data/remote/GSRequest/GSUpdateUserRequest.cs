@@ -10,10 +10,10 @@ using Kubera.Data.Remote.GSResponseData;
 
 namespace Kubera.Data.Remote
 {
-	public class GSGetUserRequest :  RemoteRequest<GSGetUserResponse>
+	public class GSUpdateUserRequest :  RemoteRequest<GSGetUserResponse>
 	{
 		public string playerId;
-		public int aboveVersion;
+		public string jsonToUpdate;
 
 		public override string getCompletePath (string path)
 		{
@@ -27,8 +27,8 @@ namespace Kubera.Data.Remote
 			request.ConnectTimeout = TimeSpan.FromSeconds(timeBeforeTimeout);
 			request.Timeout = TimeSpan.FromSeconds(timeBeforeTimeout*3);
 			request.AddField(quotedString("@class"), quotedString(".LogEventRequest"));
-			request.AddField(quotedString("eventKey"), quotedString("GET_DATA"));
-			request.AddField(quotedString("above_version"),aboveVersion.ToString());
+			request.AddField(quotedString("eventKey"), quotedString("UPDATE_USER"));
+			request.AddField(quotedString("data"),jsonToUpdate);
 			request.AddField(quotedString("requestId"),quotedString(this.id));
 			request.AddField(quotedString("playerId"),quotedString(playerId));
 			request._showDebugInfo = showDebugInfo;
@@ -49,8 +49,18 @@ namespace Kubera.Data.Remote
 			}
 			else
 			{
-				//data sin error
+				//data
 				Dictionary<string,object> scriptData = (preData["scriptData"] as Dictionary<string,object>)["userData"] as Dictionary<string,object>;
+
+				//Vemos si viene algun error
+				if(scriptData.ContainsKey("error"))
+				{
+					if((bool)(scriptData["error"]))
+					{
+						data.error = "Error on the update";
+						return;
+					}
+				}
 
 				if(scriptData.ContainsKey("version"))
 				{
@@ -63,16 +73,18 @@ namespace Kubera.Data.Remote
 
 				if(scriptData.ContainsKey("maxLevelReached"))
 				{
-					data.version = int.Parse(scriptData["maxLevelReached"].ToString());
+					data.maxLevelReached = int.Parse(scriptData["maxLevelReached"].ToString());
 				}
 				else
 				{
 					data.maxLevelReached = -1;
 				}
-					
-				if(scriptData.ContainsKey("levels"))
+
+				//Niveles de los datos enviados
+				Dictionary<string,object> dataSended = MiniJSON.Json.Deserialize(jsonToUpdate) as Dictionary<string,object>;
+				if(dataSended.ContainsKey("levels"))
 				{
-					Dictionary<string,object> levelsData = 	scriptData["levels"] as Dictionary<string,object>;
+					Dictionary<string,object> levelsData = 	dataSended["levels"] as Dictionary<string,object>;
 					List<LevelData> levels = new List<LevelData>();
 
 					foreach(KeyValuePair<string, object> item in levelsData)
@@ -80,10 +92,10 @@ namespace Kubera.Data.Remote
 						LevelData level = new LevelData(item.Key);
 						Dictionary<string,object> value = item.Value as Dictionary<string,object>;
 						level.points= int.Parse(value["points"].ToString());
-						level.stars	= int.Parse(value["stars"].ToString());
-						level.world = int.Parse(value["world"].ToString());
-						level.passed= int.Parse(value ["passed"].ToString()) == 1 ? true:false;
-						level.locked= int.Parse(value ["locked"].ToString()) == 1 ? true:false;
+						level.stars	= int.Parse(value ["stars"].ToString());
+						level.world = int.Parse(value ["world"].ToString());
+						level.passed= ((bool)value ["passed"]);
+						level.locked= ((bool)value ["locked"]);
 						levels.Add(level); 	
 					}
 

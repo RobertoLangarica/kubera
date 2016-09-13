@@ -11,12 +11,10 @@ namespace Kubera.Data
 	{
 		public int remoteDataVersion;
 		public string facebookId;
-
 		public List<LevelData> levels;
-
 		public int playerLifes;
-
 		public string lifeTimerDate;
+		public int maxLevelReached;
 
 		public KuberaUser()
 		{
@@ -35,10 +33,26 @@ namespace Kubera.Data
 
 			LevelData level;
 
-			remoteDataVersion = ((KuberaUser)readOnlyRemote).remoteDataVersion;
+			//-1 es el dato vacio del server y se debe ignorar
+			remoteDataVersion = ((KuberaUser)readOnlyRemote).remoteDataVersion < 0 ? this.remoteDataVersion:((KuberaUser)readOnlyRemote).remoteDataVersion;
 				
 			//Le quitamos lo sucio a los datos
 			isDirty = false;
+
+			//-1 es el dato vacio del server y se debe ignorar
+			if(((KuberaUser)readOnlyRemote).maxLevelReached >= 0)
+			{
+				if(!upgradeMaxLevelReached(((KuberaUser)readOnlyRemote).maxLevelReached))
+				{
+					if(maxLevelReached > ((KuberaUser)readOnlyRemote).maxLevelReached)
+					{
+						Debug.Log("DIRTY FOR MAX REACHED: "+((KuberaUser)readOnlyRemote).maxLevelReached);
+						//El local es mayor
+						isDirty = true;
+					}		
+				}
+
+			}
 
 			//revisamos los niveles
 			foreach(LevelData remoteLevel in ((KuberaUser)readOnlyRemote).levels )
@@ -73,6 +87,19 @@ namespace Kubera.Data
 			}
 		}
 
+		public bool upgradeMaxLevelReached(int incommingValue)
+		{
+			bool updgraded = false;
+
+			if(incommingValue > maxLevelReached)
+			{
+				maxLevelReached = incommingValue;
+				updgraded = true;
+			}
+
+			return updgraded;
+		}
+
 		public LevelData getLevelById(string id)
 		{
 			return levels.Find(item=>item._id == id);
@@ -99,6 +126,7 @@ namespace Kubera.Data
 		public void clear()
 		{
 			levels.Clear();
+			maxLevelReached = 0;
 			remoteDataVersion = 0;
 			facebookId = "";
 			isDirty = false;
@@ -126,6 +154,7 @@ namespace Kubera.Data
 			result.version = this.version;
 			result.remoteDataVersion = this.remoteDataVersion;
 			result.facebookId = this.facebookId;
+			result.maxLevelReached = this.maxLevelReached;
 
 			foreach(LevelData level in this.levels)
 			{
