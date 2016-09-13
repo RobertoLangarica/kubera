@@ -14,11 +14,11 @@ public class MissingLifesPopUp : PopUpBase
 	{
 		popUp.SetActive (true);
 
-		title.text = "te quedaste sin vidas";
+		title.text =  MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.MISSING_LIFES_POPUP_TITLE);
 
-		lifeTimer.text = "Seguro lo lograras";
-		descriptionText.text = "Seguro lo lograras";
-		askButton.text = "Seguro lo lograras";
+		lifeTimer.text =  MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.MISSING_LIFES_POPUP_INFO1);
+		descriptionText.text =  MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.MISSING_LIFES_POPUP_INFO2);
+		askButton.text =  MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.MISSING_LIFES_POPUP_BUTTON);
 	}
 
 	public void closePressed()
