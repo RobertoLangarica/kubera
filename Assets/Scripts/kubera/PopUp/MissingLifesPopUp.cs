@@ -14,25 +14,25 @@ public class MissingLifesPopUp : PopUpBase
 	{
 		popUp.SetActive (true);
 
-		title.text = "te quedaste sin vidas";
+		title.text =  MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.MISSING_LIFES_POPUP_TITLE);
 
-		lifeTimer.text = "Seguro lo lograras";
-		descriptionText.text = "Seguro lo lograras";
-		askButton.text = "Seguro lo lograras";
+		lifeTimer.text =  MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.MISSING_LIFES_POPUP_INFO1);
+		descriptionText.text =  MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.MISSING_LIFES_POPUP_INFO2);
+		askButton.text =  MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.MISSING_LIFES_POPUP_BUTTON);
 	}
 
 	public void closePressed()
 	{
-		popUp.SetActive (false);
-		OnPopUpCompleted (this);
+		//popUp.SetActive (false);
+		OnComplete ();
 	}
 
 	public void askForLifes()
 	{
 		//TODO: hacer animacion de cerrado
-		popUp.SetActive (false);
+		//popUp.SetActive (false);
 		//cuando se cierre hacer stuff de facebook
 		//TODO:Hacer stuff de facebook
-		OnPopUpCompleted (this,"needLifes");
+		OnComplete ("needLifes");
 	}
 }

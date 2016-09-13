@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using Kubera.Data;
@@ -16,6 +17,7 @@ public class HomeManager : MonoBehaviour {
 
 	protected List<PiecesControllAnimation> piecesMoved = new List<PiecesControllAnimation>();
 
+	public Text playText;
 	public RectTransform play;
 	public RectTransform config;
 	public RectTransform facebookLogin;
@@ -24,7 +26,6 @@ public class HomeManager : MonoBehaviour {
 
 	void Start()
 	{
-
 		for(int i=0, j=0; i<pieces.Count; j++)
 		{
 			piecesMoved.Add (pieces[Random.Range (0, pieces.Count)]);
@@ -36,6 +37,8 @@ public class HomeManager : MonoBehaviour {
 		Invoke ("startScene",0.3f);
 
 		settingButtons.OnActivateMusic += activateMusic;
+
+		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.START_GAME);
 	}
 
 	void startScene()

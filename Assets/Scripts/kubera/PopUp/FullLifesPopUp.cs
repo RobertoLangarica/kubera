@@ -13,10 +13,9 @@ public class FullLifesPopUp : PopUpBase
 	{
 		popUp.SetActive (true);
 
-		title.text = "te quedaste sin vidas";
-
-		descriptionText.text = "Seguro lo lograras";
-		askButton.text = "Seguro lo lograras";
+		title.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.FULL_LIFES_POPUP_TITLE);
+		descriptionText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.FULL_LIFES_POPUP_INFO);
+		askButton.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.FULL_LIFES_POPUP_BUTTON);
 	}
 
 	public void closePressed()
@@ -31,6 +30,6 @@ public class FullLifesPopUp : PopUpBase
 		popUp.SetActive (false);
 		//cuando se cierre hacer stuff de facebook
 		//TODO:Hacer stuff de facebook
-		OnPopUpCompleted (this,"needLifes");
+		OnComplete ("needLifes");
 	}
 }

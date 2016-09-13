@@ -194,6 +194,21 @@ namespace Kubera.Data
 			return result;
 		}
 
+		public int countPassedLevelsByWorld(int world)
+		{
+			int result = 0;
+
+			foreach(LevelData item in levels)
+			{
+				if(item.world == world && item.passed == true)
+				{
+					result++;
+				}
+			}
+
+			return result;
+		}
+
 		public List<LevelData> getLevelsByWorld(int world)
 		{
 			List<LevelData> result = new List<LevelData>();

@@ -250,7 +250,6 @@ public class LocalNotificationManager : LocalDataManager<MultipleNotificationUse
 	{
 		if (currentData != null) 
 		{
-
 			for (int i = currentUser.notifications.Count - 1; i >= 0; i--) 
 			{
 				if (currentUser.notifications [i].templateName == typeName) 

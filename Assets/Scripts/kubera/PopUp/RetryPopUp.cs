@@ -10,6 +10,7 @@ public class RetryPopUp : PopUpBase
 {
 	public Text LevelNumber;
 	public Text inviteFriendsText;
+	public Text playText;
 
 	public RectTransform leftDoor;
 	public RectTransform rightDoor;
@@ -30,15 +31,23 @@ public class RetryPopUp : PopUpBase
 	public Transform goalPopUpSlotsParent;
 	public GridLayoutGroup FriendsgridLayoutGroup;
 
+	public Sprite[] worldTopBackground;
+	public Sprite[] worldIcon;
+	public Image topLevelImage;
+	public Image topIcon;
+
 	void Start()
 	{
 		//TODO checar login a facebook
-		fbLogin ();
+		//fbLogin ();
 		//FBLoggin.GetInstance().onLoginComplete += fbLogin;
 
 		setStartingPlaces ();
-		content.text = "Seguro lo lograras";
-		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.15f);
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.225f, Screen.height * 0.1675f);
+
+		inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.LOOSEGAME_POPUP_FACEBOOK);
+		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.LOOSEGAME_POPUP_NEXT);
+		content.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.LOOSEGAME_POPUP_TEXT);
 	}
 
 	protected void fbLogin()

@@ -1059,7 +1059,7 @@ public class WordManager : MonoBehaviour
 
 			break;
 		case EWordState.WORDS_AVAILABLE:
-			if(currentWordPosibleState != EWordState.WORDS_AVAILABLE)
+			//if(currentWordPosibleState != EWordState.WORDS_AVAILABLE)
 			{
 				currentWordPosibleState = EWordState.WORDS_AVAILABLE;
 				for(int i=0; i<gridLetter.Count; i++)

@@ -24,6 +24,7 @@ public class LoadingScene : MonoBehaviour
 
 	public void showLoading(float duration,TweenCallback callBack)
 	{
+		backGround.gameObject.SetActive(true);
 		animateKuberaLoading ();
 		backGround.DOFade (1,duration).SetId("backGround").OnComplete(callBack);
 		for(int i=0; i<kuberaLoading.Length; i++)
@@ -31,13 +32,15 @@ public class LoadingScene : MonoBehaviour
 			kuberaLoading[i].DOFade (1,duration);
 			textKuberaLoading[i].DOFade (1,duration);
 		}
+		backGround.gameObject.SetActive (true);
 	}
 
 	public void hideLoading(float duration)
 	{
-		backGround.DOFade (0,duration);
+		backGround.DOFade (0,duration).OnComplete(()=>{backGround.gameObject.SetActive(false);});
 		killAnimation (duration);
 		current = 0;
+		backGround.gameObject.SetActive (false);
 	}
 
 	protected void killAnimation(float duration)
@@ -53,7 +56,15 @@ public class LoadingScene : MonoBehaviour
 
 	public void animateKuberaLoading()
 	{
-		if(current == kuberaLoading.Length)
+		float temp = 0;
+
+		for (int i = 0; i < kuberaLoading.Length; i++) 
+		{
+			temp = Random.Range (-45,45);
+
+			kuberaLoading [i].transform.localRotation = Quaternion.Euler(new Vector3(0,0,temp));
+		}
+		/*if(current == kuberaLoading.Length)
 		{
 			current =0;
 		}
@@ -64,6 +75,6 @@ public class LoadingScene : MonoBehaviour
 				kuberaLoading[current].rectTransform.DOAnchorPos(new Vector2(0,0),0.25f).SetId("kuberaLoading");
 				current++;
 				animateKuberaLoading();
-			});
+			});*/
 	}
 }

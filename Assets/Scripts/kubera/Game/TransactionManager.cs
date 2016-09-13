@@ -3,7 +3,14 @@ using System.Collections;
 
 public class TransactionManager : Manager<TransactionManager> 
 {
+	public int testGems;
+
 	protected bool isTest = true;
+
+	void Start()
+	{
+		setCurrentGemsToUserData (testGems);
+	}
 
 	//TODO: quien se traiga datos del usuario setearlos a local aqui
 	public void setCurrentGemsToUserData(int gems)

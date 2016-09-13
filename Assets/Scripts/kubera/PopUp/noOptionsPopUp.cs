@@ -9,6 +9,7 @@ public class noOptionsPopUp : PopUpBase {
 	public GameObject toChose;
 
 	public Text FirstText;
+	public Text flavorText;
 	public Text toChoseText;
 	public Text buttonContinue;
 	public Text buttonExit;
@@ -21,9 +22,14 @@ public class noOptionsPopUp : PopUpBase {
 	void Start()
 	{
 		FirstText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.NO_PIECES_POPUP_ID);
+		flavorText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FLAVOR_TEXT);
 		startPosition = new Vector2(winContent.localPosition.x, Screen.height * 2);
 
 		winContent.localPosition = startPosition;
+
+		toChoseText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GAME_NO_OPTION_TITLE);
+		buttonContinue.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GAME_NO_OPTION_CONTINUE);
+		buttonExit.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GAME_NO_OPTION_GIVEUP);
 	}
 
 	public override void activate()
@@ -45,6 +51,7 @@ public class noOptionsPopUp : PopUpBase {
 							{
 								initial.SetActive(false);
 								toChose.SetActive(true);
+
 							});
 					});
 			});
@@ -61,6 +68,7 @@ public class noOptionsPopUp : PopUpBase {
 
 	public void exitPlaying()
 	{
+		print ("SSSS");
 		popUpCompleted("loose");
 	}
 
