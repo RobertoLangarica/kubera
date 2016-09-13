@@ -921,6 +921,16 @@ public class AudioItem
                     }
 
                     float itemVolume = fVolume * volume;
+
+					if(relatedCategory.onlyOneItemAllowed)
+					{
+						if(mustShowDebugInfo)
+						{
+							Debug.Log("Stopping all audios in category["+relatedCategory.categoryId+"] because only one is allowed and will give chance for a new ["+itemId+"] audio.");
+						}
+						relatedCategory.StopAllAudios();
+					}
+
                     //substitute for pool manager function
                     if(AudioManager.GetInstance().usePooledAudioObjects)
                     {
