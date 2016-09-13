@@ -211,6 +211,7 @@ public class GoalAfterGame : PopUpBase {
 	{
 		if(AudioManager.GetInstance())
 		{
+			//TODO: este audio no existe, pero existen star1, star2 y star3, que show?
 			AudioManager.GetInstance().Stop("star");
 			AudioManager.GetInstance().Play("star");
 		}
