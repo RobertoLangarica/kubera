@@ -20,13 +20,12 @@ public class NoLifesPopUp : PopUpBase
 	{
 		popUp.SetActive (true);
 
+		title.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.NO_LIFES_POPUP_TITLE);
 
-		title.text = "te quedaste sin vidas";
-
-		lifeTimer.text = "Seguro lo lograras";
-		descriptionText.text = "Seguro lo lograras";
-		askButton.text = "Seguro lo lograras";
-		rechargeButton.text = "Seguro lo lograras";
+		lifeTimer.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.NO_LIFES_POPUP_INFO1);
+		descriptionText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.NO_LIFES_POPUP_INFO2);
+		askButton.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.NO_LIFES_POPUP_BUTTON1);
+		rechargeButton.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.NO_LIFES_POPUP_BUTTON2);
 
 		priceText.text = price.ToString ();
 	}

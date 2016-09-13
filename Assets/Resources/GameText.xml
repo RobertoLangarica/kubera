@@ -558,7 +558,99 @@
 			</languages>
 		</text>
 
+		<text id="fullLifesTitle">
+			<languages>
+				<language id="english" text="Get more lives!"/>
+				<language id="spanish" text="¡Obtén más vidas!"/>
+				<language id="default" text="¡Obtén más vidas!"/>
+			</languages>
+		</text>
+		<text id="fullLifesInfo">
+			<languages>
+				<language id="english" text="Ask lives to your friends"/>
+				<language id="spanish" text="Pide más vidas a tus amigos"/>
+				<language id="default" text="Pide más vidas a tus amigos"/>
+			</languages>
+		</text>
+		<text id="fullLifesButton">
+			<languages>
+				<language id="english" text="ASK FOR LIVES"/>
+				<language id="spanish" text="PEDIR VIDAS"/>
+				<language id="default" text="PEDIR VIDAS"/>
+			</languages>
+		</text>
 
+		<text id="missingLifesTitle">
+			<languages>
+				<language id="english" text="Get more lives!"/>
+				<language id="spanish" text="¡Obtén más vidas!"/>
+				<language id="default" text="¡Obtén más vidas!"/>
+			</languages>
+		</text>
+		<text id="missingLifesInfo1">
+			<languages>
+				<language id="english" text="Free life in"/>
+				<language id="spanish" text="Vida gratis en"/>
+				<language id="default" text="Vida gratis en"/>
+			</languages>
+		</text>
+		<text id="missingLifesInfo2">
+			<languages>
+				<language id="english" text="Ask lives to your friends."/>
+				<language id="spanish" text="Pide más vidas a tus amigos"/>
+				<language id="default" text="Pide más vidas a tus amigos"/>
+			</languages>
+		</text>
+		<text id="missingLifesButton">
+			<languages>
+				<language id="english" text="ASK FOR LIVES"/>
+				<language id="spanish" text="PEDIR VIDAS"/>
+				<language id="default" text="PEDIR VIDAS"/>
+			</languages>
+		</text>
+
+		<text id="noLifesTitle">
+			<languages>
+				<language id="english" text="You ran out of lives!"/>
+				<language id="spanish" text="¡Te quedaste sin vidas!"/>
+				<language id="default" text="¡Te quedaste sin vidas!"/>
+			</languages>
+		</text>
+		<text id="noLifesInfo1">
+			<languages>
+				<language id="english" text="Free life in"/>
+				<language id="spanish" text="Vida gratis en"/>
+				<language id="default" text="Vida gratis en"/>
+			</languages>
+		</text>
+		<text id="noLifesInfo2">
+			<languages>
+				<language id="english" text="Refill your lives or ask lives to your friends"/>
+				<language id="spanish" text="Recarga tus vidas opide vidas a tus amigos"/>
+				<language id="default" text="Recarga tus vidas opide vidas a tus amigos"/>
+			</languages>
+		</text>
+		<text id="noLifesButton1">
+			<languages>
+				<language id="english" text="ASK FOR LIVES"/>
+				<language id="spanish" text="PEDIR VIDAS"/>
+				<language id="default" text="PEDIR VIDAS"/>
+			</languages>
+		</text>
+		<text id="noLifesButton2">
+			<languages>
+				<language id="english" text="REFILL LIVES"/>
+				<language id="spanish" text="RECARGAR VIDAS"/>
+				<language id="default" text="RECARGAR VIDAS"/>
+			</languages>
+		</text>
+		<text id="fullLifesText">
+			<languages>
+				<language id="english" text="FULL"/>
+				<language id="spanish" text="LLENO"/>
+				<language id="default" text="LLENO"/>
+			</languages>
+		</text>
 
 		<!--
 		Invitation

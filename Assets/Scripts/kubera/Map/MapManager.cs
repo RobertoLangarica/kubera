@@ -683,7 +683,6 @@ public class MapManager : MonoBehaviour
 			aABLetterObjectives = 1;
 			break;
 		case GoalManager.POINTS:
-			print ("SSSSSSSSSS");
 			print (MultiLanguageTextManager.instance.gameLanguage);
 			textToReplace = "{{goalPoints}}";
 			replacement = (Convert.ToInt32 (parameters)).ToString ();

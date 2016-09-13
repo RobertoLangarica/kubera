@@ -58,7 +58,22 @@ public class MultiLanguageTextManager
 	public const string BOSS_LOCKED_GEM_TEXT 				= "BossLockedGemText";
 	public const string BOSS_LOCKED_STAR_TEXT 				= "BossLockedStarText";
 
+	public const string FULL_LIFES_POPUP_TITLE				= "fullLifesTitle";
+	public const string FULL_LIFES_POPUP_INFO				= "fullLifesInfo";
+	public const string FULL_LIFES_POPUP_BUTTON				= "fullLifesButton";
 
+	public const string MISSING_LIFES_POPUP_TITLE			= "missingLifesTitle";
+	public const string MISSING_LIFES_POPUP_INFO1			= "missingLifesInfo1";
+	public const string MISSING_LIFES_POPUP_INFO2			= "missingLifesInfo2";
+	public const string MISSING_LIFES_POPUP_BUTTON			= "missingLifesButton";
+
+	public const string NO_LIFES_POPUP_TITLE				= "noLifesTitle";
+	public const string NO_LIFES_POPUP_INFO1				= "noLifesInfo1";
+	public const string NO_LIFES_POPUP_INFO2				= "noLifesInfo2";
+	public const string NO_LIFES_POPUP_BUTTON1				= "noLifesButton1";
+	public const string NO_LIFES_POPUP_BUTTON2				= "noLifesButton2";
+
+	public const string FULL_LIFES_TEXT						= "fullLifesText";
 	//GAME
 	public const string FLAVOR_TEXT							= "ticketFlavorText";
 	public const string EXIT_POPUP_ID 						= "exitText";
