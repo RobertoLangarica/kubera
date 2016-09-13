@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Text;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Data.Remote;
 using Data.Sync;
+using Kubera.Data;
 using Kubera.Data.Remote.PFResponseData;
 using Kubera.Data.Remote.GSResponseData;
 
@@ -118,57 +120,76 @@ namespace Kubera.Data.Remote
 			{
 				GSGetUserRequest request = (GSGetUserRequest)getRequestById(request_id);
 
-				//Debug.Log(request.data.scriptData.userData);
-				/*PFGetUserRequest request = (PFGetUserRequest)getRequestById(request_id);
 
 				//Hacemos un usuario para el diff
-				KuberaUser remoteUser = new KuberaUser(loginRequest.data.data.PlayFabId);
+				KuberaUser remoteUser = new KuberaUser(loginRequest.data.userId);
+				remoteUser.remoteDataVersion = request.data.version;
+				remoteUser.levels = request.data.levels;
+				remoteUser.maxLevelReached = request.data.maxLevelReached;
 
-
-				if(request.data.data.Data.ContainsKey("version"))
-				{
-					remoteUser.version = int.Parse(((Dictionary<string, object>)request.data.data.Data["version"])["Value"].ToString());
-				}
-
-				remoteUser.remoteDataVersion = request.data.data.DataVersion;
-
-				foreach (string key in request.data.data.Data.Keys)
-				{
-					if(key.Contains("world_"))
-					{
-						//remoteUser.worlds.Add(JsonUtility.FromJson<WorldData>(((Dictionary<string, object>)request.data.data.Data[key])["Value"].ToString()));	
-					}
-				}
-
-				OnDataReceived(JsonUtility.ToJson(remoteUser));*/
+				OnDataReceived(JsonUtility.ToJson(remoteUser));
 			}
 		}
 
-		public override void updateUserData<KuberaUser> (string id, string jsonData, KuberaUser objectToSave)
+		public override void updateUserData<T> (string id, T serializableData)
 		{
-			/*PFUpdateDataRequest request = queue.getComponentAttachedToGameObject<PFUpdateDataRequest>("PF_UpdateUserData");
+			GSUpdateUserRequest request = queue.getComponentAttachedToGameObject<GSUpdateUserRequest>("GS_UpdateUserData");
+
 			request.id = "update_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
 			request.showDebugInfo = _mustShowDebugInfo;
 			request.persistAfterFailed = true;
-			request.initialize(TITLE_ID,jsonData, sessionTicket, objectToSave);
+			request.playerId = id;
+			request.jsonToUpdate = convertUserToJSON(serializableData as KuberaUser);
+			request.initialize(getPath());
 			request.OnComplete += OnUserDataUpdated;
 
-			addLoginDependantRequest(request,false);*/
+			addDependantRequest(request,false);
+
+
 		}
 
 		private void OnUserDataUpdated(string request_id)
 		{
-			/*if(OnDataUpdated != null)
+			if(OnDataUpdated != null)
 			{
-				PFUpdateDataRequest request = (PFUpdateDataRequest)getRequestById(request_id);
+				GSUpdateUserRequest request = (GSUpdateUserRequest)getRequestById(request_id);
 
 				//Para que se desmarquen como sucios los datos locales hacemos un diff
-				KuberaUser remoteUser = request.dataSended as KuberaUser;
-				remoteUser._id = loginRequest.data.data.PlayFabId;
-				remoteUser.remoteDataVersion = request.data.data.FunctionResult.DataVersion;
+				KuberaUser remoteUser = new KuberaUser(request.playerId);
+				remoteUser.remoteDataVersion = request.data.version;
+				remoteUser.levels = request.data.levels;
+				remoteUser.maxLevelReached = request.data.maxLevelReached;
 
 				OnDataUpdated(JsonUtility.ToJson(remoteUser));
-			}*/
+			}
+		}
+
+		private string convertUserToJSON(KuberaUser user)
+		{
+			StringBuilder builder = new StringBuilder();
+
+			builder.Append("{");
+			builder.Append("\"_id\":\""+user._id+"\"");
+			builder.Append(",\"maxLevelReached\":"+user.maxLevelReached.ToString());
+
+			builder.Append(",\"levels\":{");
+
+			LevelData level;
+			for(int i = 0; i < user.levels.Count; i++)
+			{
+				level = user.levels[i];
+				if(i > 0)
+				{
+					builder.Append(",");
+				}
+
+				builder.Append("\""+level._id+"\":"+JsonUtility.ToJson(level));
+			}
+
+			builder.Append("}");
+			builder.Append("}");
+
+			return builder.ToString();
 		}
 
 		public override void getLeaderboardData (string id, string leaderboardName, int maxResultsCount)

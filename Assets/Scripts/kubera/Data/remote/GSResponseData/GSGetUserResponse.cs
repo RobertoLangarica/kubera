@@ -7,19 +7,15 @@ namespace Kubera.Data.Remote.GSResponseData
 {
 
 	/**
+	 * Se reciben datos en el formato:
 	{
 	  "@class": ".AuthenticationResponse",
 	  "error": JSON
 	  "message": string
-	}
-	**/
-	public class GSGetUserResponse
-	{
-		public string @class;
-		public string error;
-		/**
+	  "scripData":
 		 {
 		    "_id" : "user2",
+		    "version":int
 		    "levels" : {
 		        "5" : {
 		            "points" : 4000
@@ -39,7 +35,16 @@ namespace Kubera.Data.Remote.GSResponseData
 		        }
 		    }
 		}
-		 **/ 
-		public Dictionary<string, object> scriptData;
+	}
+	**/
+	public class GSGetUserResponse
+	{
+		public string @class;
+		public string error;
+
+		public List<LevelData> levels;
+		public int version;
+		public int maxLevelReached;
+		//public Dictionary<string, object> scriptData;
 	}
 }

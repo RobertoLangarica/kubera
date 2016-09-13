@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System;
-using System.Text;
 using System.Collections;
 using Data.Sync;
 using Kubera.Data.Remote.PFResponseData;
@@ -85,7 +84,6 @@ namespace Kubera.Data.Sync
 					Debug.Log("Getting data from remote user.");
 				}
 				//Nos traemos los datos de este usuario
-
 				server.getUserData(currentUser.id, localData.currentUser.remoteDataVersion, true);
 			}
 		}
@@ -98,6 +96,7 @@ namespace Kubera.Data.Sync
 		{
 			base.OnDataReceived (fullData);
 
+			Debug.Log("BEforeDiff:\n"+fullData);
 			localData.diffUser(JsonUtility.FromJson<KuberaUser>(fullData), true);
 
 			if(_mustShowDebugInfo)
@@ -151,13 +150,13 @@ namespace Kubera.Data.Sync
 		{
 			if(_mustShowDebugInfo)
 			{
-				Debug.Log("To update: \n"+userToJSON(dirtyUser));
+				Debug.Log("To update: \n"+JsonUtility.ToJson(dirtyUser));
 			}
 
 			//Si no hay usuario remoto entonces no hay nada que actualizar
 			if(existCurrentUser())
 			{
-				server.updateUserData(currentUser.id, userToJSON(dirtyUser), dirtyUser);
+				server.updateUserData<KuberaUser>(currentUser.id, dirtyUser);
 			}
 		}
 
@@ -190,14 +189,6 @@ namespace Kubera.Data.Sync
 			result+="\n}";
 
 			Debug.Log(result);
-		}
-
-		/**
-		 * Usuario en el formato JSON que necesite el servicio remoto
-		 **/ 
-		public string userToJSON(KuberaUser user)
-		{
-			return JsonUtility.ToJson(user);
 		}
 	}
 		
