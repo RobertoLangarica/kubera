@@ -12,6 +12,7 @@ public class GoalAfterGame : PopUpBase {
 	public Text PointsText;
 	public Text Points;
 	public Text inviteFriendsText;
+	public Text playText;
 
 	public GameObject[] stars;
 	public GameObject[] starsGray;
@@ -49,6 +50,10 @@ public class GoalAfterGame : PopUpBase {
 
 		setStartingPlaces ();
 		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.225f, Screen.height * 0.1675f);
+
+		inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_FACEBOOK);
+		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_NEXT);
+		PointsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_POINTS);
 	}
 
 	protected void fbLogin()

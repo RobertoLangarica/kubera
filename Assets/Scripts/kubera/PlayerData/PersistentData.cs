@@ -66,7 +66,7 @@ public class PersistentData : Manager<PersistentData>
 
 		abcDictionary = FindObjectOfType<ABCDictionary>();
 		onDictionaryFinished += foo;
-		configureGameForLanguage("spanish");
+		configureGameForLanguage("english");
 
 		/*currentWorld = */
 		//print((LevelsDataManager.GetInstance () as LevelsDataManager).getCurrentData ().levels [((LevelsDataManager.GetInstance () as LevelsDataManager).getCurrentData ().levels.Count - 1)]);
@@ -88,6 +88,10 @@ public class PersistentData : Manager<PersistentData>
 		if(language == "")
 		{
 			language = UserDataManager.instance.language;
+		}
+		else
+		{
+			UserDataManager.instance.language = language;
 		}
 
 		currentLanguage = language;
@@ -220,7 +224,7 @@ public class PersistentData : Manager<PersistentData>
 	public Level getRandomLevel()
 	{
 		int le = 15;
-		return levelsData.levels[36];
+		return levelsData.levels[2];
 		return levelsData.levels[Random.Range(0,levelsData.levels.Length-1)];
 	}
 

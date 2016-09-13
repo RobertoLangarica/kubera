@@ -37,6 +37,16 @@ public class MultiLanguageTextManager
 	public const string OBJECTIVE_POPUP_BY_1_WORD_ID 		= "goalBy1WordObjectivePopUp";
 	public const string OBJECTIVE_POPUP_BY_SYNONYMOUS_ID 	= "goalBySynonymousObjectivePopUp";
 	public const string OBJECTIVE_POPUP_BY_ANTONYM_ID 		= "goalByAntonymObjectivePopUp";
+	public const string OBJECTIVE_POPUP_PLAY		 		= "goalPlay";
+	public const string OBJECTIVE_POPUP_FACEBOOK	 		= "goalFacebook";
+
+	public const string AFTERGAME_POPUP_POINTS		 		= "afterGamePoints";
+	public const string AFTERGAME_POPUP_NEXT		 		= "afterGameNext";
+	public const string AFTERGAME_POPUP_FACEBOOK	 		= "afterGameFacebook";
+
+	public const string LOOSEGAME_POPUP_TEXT		 		= "looseGameText";
+	public const string LOOSEGAME_POPUP_NEXT		 		= "looseGameNext";
+	public const string LOOSEGAME_POPUP_FACEBOOK	 		= "looseGameFacebook";
 
 	public const string NO_GEMS_POPUP_TITLE					= "NoGemsPopUpTitle";
 	public const string NO_GEMS_POPUP_INFO					= "NoGemsPopUpInfo";
@@ -56,6 +66,9 @@ public class MultiLanguageTextManager
 	public const string STARTGAME_TEXT_POPUP_ID				= "StartTextPopUpID";
 	public const string NO_MOVEMENTS_POPUP_ID				= "noMovementsPopUpID";
 	public const string NO_PIECES_POPUP_ID					= "noPiecesPopUpID";
+	public const string NO_OPTIONS_FIRST					= "noOptionsFirst";
+	public const string NO_OPTIONS_GIVEUP					= "noOptionsGiveUp";
+	public const string NO_OPTIONS_USEPOWER					= "noOptionsUsePower";
 
 	public const string TUTORIAL_LV1_PHASE1					= "Tutorial_lvl1_phase1";
 	public const string TUTORIAL_LV1_PHASE2					= "Tutorial_lvl1_phase2";
