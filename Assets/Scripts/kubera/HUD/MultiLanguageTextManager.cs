@@ -27,8 +27,8 @@ public class MultiLanguageTextManager
 	public const string SECONDCHANCE_GIVEUP 				= "secondChanceGiveUp";
 	public const string SECONDCHANCE_RETRY					= "secondChanceRetry";
 	public const string SECONDCHANCE_TITLE 					= "secondChanceTitle";
-	public const string GAME_NO_OPTION_CONTINUE 			= "noOptionsGameGiveUp";
-	public const string GAME_NO_OPTION_GIVEUP				= "noOptionsGameContinue";
+	public const string GAME_NO_OPTION_CONTINUE 			= "noOptionsGameContinue";
+	public const string GAME_NO_OPTION_GIVEUP				= "noOptionsGameGiveUp";
 	public const string GAME_NO_OPTION_TITLE				= "noOptionGameTitle";
 
 	//MAP
