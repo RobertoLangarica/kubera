@@ -10,6 +10,7 @@ public class RetryPopUp : PopUpBase
 {
 	public Text LevelNumber;
 	public Text inviteFriendsText;
+	public Text playText;
 
 	public RectTransform leftDoor;
 	public RectTransform rightDoor;
@@ -38,7 +39,7 @@ public class RetryPopUp : PopUpBase
 	void Start()
 	{
 		//TODO checar login a facebook
-		fbLogin ();
+		//fbLogin ();
 		//FBLoggin.GetInstance().onLoginComplete += fbLogin;
 
 		setStartingPlaces ();
@@ -46,8 +47,9 @@ public class RetryPopUp : PopUpBase
 		print ("S");
 		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.225f, Screen.height * 0.1675f);
 
-		print (Screen.width);
-		print (Screen.height);
+		inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.LOOSEGAME_POPUP_FACEBOOK);
+		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.LOOSEGAME_POPUP_NEXT);
+		content.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.LOOSEGAME_POPUP_TEXT);
 	}
 
 	protected void fbLogin()

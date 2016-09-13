@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using DG.Tweening;
 
 public class SecondChancePopUp : PopUpBase 
 {
@@ -8,6 +9,10 @@ public class SecondChancePopUp : PopUpBase
 
 	public DSecondChanceNotification OnSecondChanceAquired;
 	public DSecondChanceNotification OnGiveUp;
+
+	public RectTransform thisObject;
+	public float speed =0.5f;
+	protected Vector3 v3;
 
 	public int movements = 5;
 	public int bombs = 2;
@@ -20,8 +25,6 @@ public class SecondChancePopUp : PopUpBase
 	protected int secondChanceTimes = 0;
 	protected int price;
 
-	protected PopUpManager popUpManager;
-
 	public override void activate()
 	{
 		popUp.SetActive (true);
@@ -30,8 +33,10 @@ public class SecondChancePopUp : PopUpBase
 		bombsText.text = bombs.ToString ();
 
 		setPrice ();
+		
 
-		popUpManager = FindObjectOfType<PopUpManager> ();
+		v3 = thisObject.anchoredPosition;
+		thisObject.DOAnchorPos (new Vector3(thisObject.anchoredPosition.x,0), speed).SetEase(Ease.OutBack);
 	}
 
 	protected void setPrice()
@@ -72,17 +77,24 @@ public class SecondChancePopUp : PopUpBase
 		{
 			secondChanceTimes++;
 
-			if (OnSecondChanceAquired != null) 
-			{
-				OnSecondChanceAquired ();
-			}
-
-			popUp.SetActive (false);
-			OnComplete ();
+			thisObject.DOAnchorPos (new Vector3(thisObject.anchoredPosition.x,0), speed).OnComplete(()=>
+				{
+					thisObject.DOAnchorPos (-v3, speed).SetEase(Ease.InBack).OnComplete(()=>
+						{
+							//TODO: salirnos del nivel
+							//print("gano");
+							if (OnSecondChanceAquired != null) 
+							{
+								OnSecondChanceAquired ();
+							}
+							popUp.SetActive (false);
+							OnComplete ();
+						});
+				});
 		}
 		else
 		{
-			popUpManager.activatePopUp ("NoGemsPopUp");
+			OnComplete ("NoGemsPopUp");
 		}
 
 		Debug.Log("Fondos insuficientes");
@@ -90,14 +102,22 @@ public class SecondChancePopUp : PopUpBase
 
 	public void giveUp()
 	{
-		popUp.SetActive (false);
+		thisObject.DOAnchorPos (new Vector3(thisObject.anchoredPosition.x,0), speed).OnComplete(()=>
+			{
+				thisObject.DOAnchorPos (-v3, speed).SetEase(Ease.InBack).OnComplete(()=>
+					{
+						//TODO: salirnos del nivel
+						//print("gano");
+						if (OnGiveUp != null) 
+						{
+							OnGiveUp ();
+						}
 
-		if (OnGiveUp != null) 
-		{
-			OnGiveUp ();
-		}
-			
-		OnComplete ("loose");
+						OnComplete ("loose");
+						popUp.SetActive (false);
+					});
+			});
+		
 
 		//popUpManager.activatePopUp ("RetryPopUp");
 	}

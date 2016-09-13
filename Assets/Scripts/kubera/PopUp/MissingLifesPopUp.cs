@@ -23,16 +23,16 @@ public class MissingLifesPopUp : PopUpBase
 
 	public void closePressed()
 	{
-		popUp.SetActive (false);
-		OnPopUpCompleted (this);
+		//popUp.SetActive (false);
+		OnComplete ();
 	}
 
 	public void askForLifes()
 	{
 		//TODO: hacer animacion de cerrado
-		popUp.SetActive (false);
+		//popUp.SetActive (false);
 		//cuando se cierre hacer stuff de facebook
 		//TODO:Hacer stuff de facebook
-		OnPopUpCompleted (this,"needLifes");
+		OnComplete ("needLifes");
 	}
 }

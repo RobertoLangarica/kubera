@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
 		}
 		if (Input.GetKeyUp (KeyCode.Z)) 
 		{
-			onUsersAction (5, 0);
+			onUsersAction (0, 1);
 			//activatePopUp ("noOptionsPopUp");
 			//onUsersAction (0);
 		}
@@ -810,12 +810,10 @@ public class GameManager : MonoBehaviour
 	{
 		if(wordManager.checkIfAWordIsPossible(gridCharacters))
 		{
-			print ("Available");
 			wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
 		}
 		else if(gridCharacters.Count > 0)
 		{				
-			print ("not");
 			wordManager.updateGridLettersState (gridCharacters, WordManager.EWordState.NO_WORDS_AVAILABLE);
 		}
 	}
@@ -1261,6 +1259,9 @@ public class GameManager : MonoBehaviour
 			PersistentData.GetInstance ().fromLoose = true;
 			PersistentData.GetInstance ().fromGameToLevels = true;
 			toLevels ();
+			break;
+		case "NoGemsPopUp":
+			activatePopUp ("NoGemsPopUp");
 			break;
 		default:		
 			//print ("quien lo llama?");

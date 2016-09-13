@@ -331,7 +331,7 @@
 		</text>
 		<text id="WinTextPopUpID">
 			<languages>
-				<language id="english" text="Objective completed!"/>
+				<language id="english" text="Goal reached!"/>
 				<language id="spanish" text="¡Objetivo completado!"/>
 				<language id="default" text="¡Objetivo completado!"/>
 			</languages>
@@ -352,9 +352,9 @@
 		</text>
 		<text id="noPiecesPopUpID">
 			<languages>
-				<language id="english" text="You ran out of options!"/>
-				<language id="spanish" text="¡Tablero saturado y sin opciones!"/>
-				<language id="default" text="¡Tablero saturado y sin opciones!"/>
+				<language id="english" text="There isn't a possible move!"/>
+				<language id="spanish" text="¡No hay jugadas posibles!"/>
+				<language id="default" text="¡No hay jugadas posibles!"/>
 			</languages>
 		</text>
 		<!--
@@ -376,9 +376,9 @@
 		</text>
 		<text id="goalByPointsObjectivePopUpA">
 			<languages>
-				<language id="english" text="Get"/>
-				<language id="spanish" text="Haz"/>
-				<language id="default" text="Haz"/>
+				<language id="english" text="GET"/>
+				<language id="spanish" text="HAZ"/>
+				<language id="default" text="HAZ"/>
 			</languages>
 		</text>
 		<text id="goalByPointsObjectivePopUpB">
@@ -390,24 +390,31 @@
 		</text>
 		<text id="goalByLettersObjectivePopUp">
 			<languages>
-				<language id="english" text="Use these letters"/>
-				<language id="spanish" text="Usa estas letras"/>
-				<language id="default" text="Usa estas letras"/>
+				<language id="english" text="USE"/>
+				<language id="spanish" text="USA"/>
+				<language id="default" text="USA"/>
 			</languages>
 		</text>
-		<text id="goalByObstaclesObjectivePopUp">
+		<text id="goalByObstaclesObjectivePopUpA">
 			<languages>
-				<language id="english" text="Use all the black letters"/>
-				<language id="spanish" text="Usa todas las letras negras"/>
-				<language id="default" text="Usa todas las letras negras"/>
+				<language id="english" text="USE"/>
+				<language id="spanish" text="USA"/>
+				<language id="default" text="USA"/>
+			</languages>
+		</text>
+		<text id="goalByObstaclesObjectivePopUpB">
+			<languages>
+				<language id="english" text="{{blackLetters}} black letters"/>
+				<language id="spanish" text="{{blackLetters}} letras negras"/>
+				<language id="default" text="{{blackLetters}} letras negras"/>
 			</languages>
 		</text>
 
 		<text id="goalByWordsObjectivePopUpA">
 			<languages>
-				<language id="english" text="Form"/>
-				<language id="spanish" text="Forma"/>
-				<language id="default" text="Forma"/>
+				<language id="english" text="FORM"/>
+				<language id="spanish" text="FORMA"/>
+				<language id="default" text="FORMA"/>
 			</languages>
 		</text>
 		<text id="goalByWordsObjectivePopUpB">
@@ -419,26 +426,102 @@
 		</text>
 		<text id="goalBy1WordObjectivePopUp">
 			<languages>
-				<language id="english" text="Form this word"/>
-				<language id="spanish" text="Forma esta palabra"/>
-				<language id="default" text="Forma esta palabra"/>
+				<language id="english" text="FORM"/>
+				<language id="spanish" text="FORMA"/>
+				<language id="default" text="FORMA"/>
 			</languages>
 		</text>
 
-		<text id="goalBySynonymousObjectivePopUp">
+
+		<text id="goalBySynonymousObjectivePopUpA">
 			<languages>
-				<language id="english" text="Form a synonym of"/>
-				<language id="spanish" text="Forma un sinónimo de"/>
-				<language id="default" text="Forma un sinónimo de"/>
+				<language id="english" text="FORM"/>
+				<language id="spanish" text="FORMA"/>
+				<language id="default" text="FORMA"/>
 			</languages>
 		</text>
-		<text id="goalByAntonymObjectivePopUp">
+		<text id="goalBySynonymousObjectivePopUpB">
 			<languages>
-				<language id="english" text="Form a antonym of"/>
-				<language id="spanish" text="Forma un antónimo de"/>
-				<language id="default" text="Forma un antónimo de"/>
+				<language id="english" text="synonym of {{word}}"/>
+				<language id="spanish" text="sinónimo de {{word}}"/>
+				<language id="default" text="sinónimo de {{word}}"/>
 			</languages>
 		</text>
+
+		<text id="goalByAntonymObjectivePopUpA">
+			<languages>
+				<language id="english" text="FORM"/>
+				<language id="spanish" text="FORMA"/>
+				<language id="default" text="FORMA"/>
+			</languages>
+		</text>
+		<text id="goalByAntonymObjectivePopUpB">
+			<languages>
+				<language id="english" text="antonym of {{word}}"/>
+				<language id="spanish" text="antónimo de {{word}}"/>
+				<language id="default" text="antónimo de {{word}}"/>
+			</languages>
+		</text>
+		<text id="goalPlay">
+			<languages>
+				<language id="english" text="PLAY"/>
+				<language id="spanish" text="JUGAR"/>
+				<language id="default" text="JUGAR"/>
+			</languages>
+		</text>
+		<text id="goalFacebook">
+			<languages>
+				<language id="english" text="INVITE FRIENDS"/>
+				<language id="spanish" text="INVITAR AMIGOS"/>
+				<language id="default" text="INVITAR AMIGOS"/>
+			</languages>
+		</text>
+
+		<text id="afterGamePoints">
+			<languages>
+				<language id="english" text="antonym of {{word}}"/>
+				<language id="spanish" text="antónimo de {{word}}"/>
+				<language id="default" text="antónimo de {{word}}"/>
+			</languages>
+		</text>
+		<text id="afterGameNext">
+			<languages>
+				<language id="english" text="NEXT"/>
+				<language id="spanish" text="SIGUIENTE"/>
+				<language id="default" text="SIGUIENTE"/>
+			</languages>
+		</text>
+		<text id="afterGameFacebook">
+			<languages>
+				<language id="english" text="INVITE FRIENDS"/>
+				<language id="spanish" text="INVITAR AMIGOS"/>
+				<language id="default" text="INVITAR AMIGOS"/>
+			</languages>
+		</text>
+
+		<text id="looseGameText">
+			<languages>
+				<language id="english" text="You'll get it next time!"/>
+				<language id="spanish" text="¡Seguro lo logras la próxima vez!"/>
+				<language id="default" text="¡Seguro lo logras la próxima vez!"/>
+			</languages>
+		</text>
+		<text id="looseGameNext">
+			<languages>
+				<language id="english" text="TRY AGAIN"/>
+				<language id="spanish" text="REINTENTAR"/>
+				<language id="default" text="REINTENTAR"/>
+			</languages>
+		</text>
+		<text id="looseGameFacebook">
+			<languages>
+				<language id="english" text="INVITE FRIENDS"/>
+				<language id="spanish" text="INVITAR AMIGOS"/>
+				<language id="default" text="INVITAR AMIGOS"/>
+			</languages>
+		</text>
+
+
 		<text id="BossLockedUnlockText">
 			<languages>
 				<language id="english" text="Unlock level {{level}}"/>
@@ -448,30 +531,30 @@
 		</text>
 		<text id="BossLockedOptionText">
 			<languages>
-				<language id="english" text="You have three options"/>
-				<language id="spanish" text="Tienes tres opciones"/>
-				<language id="default" text="Tienes tres opciones"/>
+				<language id="english" text="You have 3 options"/>
+				<language id="spanish" text="Tienes 3 opciones"/>
+				<language id="default" text="Tienes 3 opciones"/>
 			</languages>
 		</text>
 		<text id="BossLockedKeyText">
 			<languages>
-				<language id="english" text="Form a antonym of"/>
+				<language id="english" text="Collect more stars"/>
 				<language id="spanish" text="Junta más estrellas"/>
 				<language id="default" text="Junta más estrellas"/>
 			</languages>
 		</text>
 		<text id="BossLockedGemText">
 			<languages>
-				<language id="english" text="Form a antonym of"/>
-				<language id="spanish" text="Pide {{keyNumber}} keys"/>
-				<language id="default" text="Pide {{keyNumber}} keys"/>
+				<language id="english" text="ASK FOR A KEY"/>
+				<language id="spanish" text="PEDIR LLAVE"/>
+				<language id="default" text="PEDIR LLAVE"/>
 			</languages>
 		</text>
 		<text id="BossLockedStarText">
 			<languages>
-				<language id="english" text="Form a antonym of"/>
-				<language id="spanish" text="Juega ahora"/>
-				<language id="default" text="Juega ahora"/>
+				<language id="english" text="Play now"/>
+				<language id="spanish" text="JUEGA AHORA"/>
+				<language id="default" text="JUEGA AHORA"/>
 			</languages>
 		</text>
 

@@ -15,6 +15,7 @@ public class GoalPopUp : PopUpBase {
 
 	public Text LevelNumber;
 	public Text inviteFriendsText;
+	public Text playText;
 
 	public Transform goalLettersContainer;
 
@@ -73,7 +74,8 @@ public class GoalPopUp : PopUpBase {
 				,goalLettersContainer.GetComponent<RectTransform>().rect.height*.8f);
 		}
 
-
+		inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVE_POPUP_FACEBOOK);
+		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVE_POPUP_PLAY);
 	}
 
 	void Update()
@@ -113,8 +115,6 @@ public class GoalPopUp : PopUpBase {
 
 		topLevelImage.sprite = worldTopBackground [currentWorld-1];
 		topIcon.sprite = worldIcon [currentWorld-1];
-
-		print ("current " + currentWorld);
 
 		objective = aABLetterObjectives;
 		switch (objective) {

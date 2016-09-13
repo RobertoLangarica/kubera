@@ -16,13 +16,13 @@ public class PopUpBase : MonoBehaviour {
 
 	protected void OnComplete(string action ="",bool deActivate = true)
 	{
-		if(OnPopUpCompleted != null)
-		{
-			OnPopUpCompleted(this,action);
-		}	
 		if(deActivate)
 		{
 			popUp.SetActive (false);
 		}
+		if(OnPopUpCompleted != null)
+		{
+			OnPopUpCompleted(this,action);
+		}	
 	}
 }

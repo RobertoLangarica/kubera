@@ -10,7 +10,7 @@ namespace Kubera.Data
 	public class KuberaDataManager : LocalDataManager<MultipleUsers>
 	{
 		public KuberaSyncManger syncManager;
-		public int initialLifes = 1000;
+		public int initialLifes = 5;
 
 		protected Levels levelsList;
 
