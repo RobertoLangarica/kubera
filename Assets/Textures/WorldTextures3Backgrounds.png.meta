@@ -1,0 +1,158 @@
+fileFormatVersion: 2
+guid: f23d654e9f647cc46bc2b700d578c31e
+timeCreated: 1473865896
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: "K-1-MapaM\xFAsica_degradadoMundo1"
+    21300002: K-2-MapaMascotasdelgado_fondo
+    21300004: K-3-MapaRopa_fondo
+    21300006: K-4-MapaLibros_FONDO
+    21300008: K-5-MapaZapatos_fondo
+    21300010: K-7-MapaDeportes_fondoGYM
+    21300012: "K-8-MapaJoyer\xEDa_techo"
+    21300014: K-9-Mapaperfumeria_fondo
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 4096
+  textureSettings:
+    filterMode: 2
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -3
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
+  spriteSheet:
+    sprites:
+    - name: "K-1-MapaM\xFAsica_degradadoMundo1"
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 1227
+        width: 14
+        height: 819
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-2-MapaMascotasdelgado_fondo
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 579
+        width: 16
+        height: 1467
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-3-MapaRopa_fondo
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 21
+        width: 18
+        height: 2025
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-4-MapaLibros_FONDO
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 82
+        width: 23
+        height: 1964
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-5-MapaZapatos_fondo
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 82
+        width: 19
+        height: 1964
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-7-MapaDeportes_fondoGYM
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 82
+        width: 23
+        height: 1964
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: "K-8-MapaJoyer\xEDa_techo"
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 82
+        width: 25
+        height: 1964
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-9-Mapaperfumeria_fondo
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 82
+        width: 19
+        height: 1964
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

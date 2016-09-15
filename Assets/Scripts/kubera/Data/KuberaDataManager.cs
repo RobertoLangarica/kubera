@@ -18,6 +18,7 @@ namespace Kubera.Data
 		{
 			base.Start ();
 			levelsList = PersistentData.GetInstance().levelsData;
+			//UserDataManager.instance.cleanData ();
 		}
 
 		public KuberaUser currentUser{get{return currentData.getUserById(currentUserId);}}

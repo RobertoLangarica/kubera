@@ -834,65 +834,65 @@
 		-->
 		<text id="World1_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Pentatonic"/>
+				<language id="spanish" text="Pentatonica"/>
+				<language id="default" text="Pentatonica"/>
 			</languages>
 		</text>
 		<text id="World2_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Best Pet"/>
+				<language id="spanish" text="Mascota Mascota"/>
+				<language id="default" text="Mascota Mascota"/>
 			</languages>
 		</text>
 		<text id="World3_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Clothes"/>
+				<language id="spanish" text="Las Ropas"/>
+				<language id="default" text="Las Ropas"/>
 			</languages>
 		</text>
 		<text id="World4_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Eye Book"/>
+				<language id="spanish" text="Libroso"/>
+				<language id="default" text="Libroso"/>
 			</languages>
 		</text>
 		<text id="World5_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Shoe Inc"/>
+				<language id="spanish" text="Zapatin"/>
+				<language id="default" text="Zapatin"/>
 			</languages>
 		</text>
 		<text id="World6_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Make Up"/>
+				<language id="spanish" text="Sombra Aqui"/>
+				<language id="default" text="Sombra Aqui"/>
 			</languages>
 		</text>
 		<text id="World7_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Sports"/>
+				<language id="spanish" text="Deportes"/>
+				<language id="default" text="Deportes"/>
 			</languages>
 		</text>
 		<text id="World8_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Blink blink"/>
+				<language id="spanish" text="Blink blink"/>
+				<language id="default" text="Blink blink"/>
 			</languages>
 		</text>
 		<text id="World9_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Smell good"/>
+				<language id="spanish" text="Hueles bien"/>
+				<language id="default" text="Hueles bien"/>
 			</languages>
 		</text>
 		<!--

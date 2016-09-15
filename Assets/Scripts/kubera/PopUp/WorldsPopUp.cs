@@ -18,9 +18,9 @@ public class WorldsPopUp : PopUpBase {
 	{
 		mapManager = FindObjectOfType<MapManager> ();
 
-		grid.cellSize = new Vector2 (Screen.width * 0.8f, Screen.height * 0.8f);
-		grid.padding.left = (int)(Screen.height * 0.08f);
-		grid.padding.right = (int)(Screen.width * 0.08f);
+		grid.cellSize = new Vector2 (Screen.width * 0.9f, Screen.height * 0.8f);
+		grid.padding.left = (int)(Screen.width * 0.06f);
+		grid.padding.right = (int)(Screen.width * 0.06f);
 		grid.spacing = new Vector2(Screen.height * 0.08f,0);
 	}
 
@@ -82,8 +82,7 @@ public class WorldsPopUp : PopUpBase {
 
 	public void checkPosition()
 	{
-		//print (scrollRect.normalizedPosition.x);
-		if(scrollRect.normalizedPosition.x > 0)
+		if(scrollRect.normalizedPosition.x < 0)
 		{
 			leftArrow.SetActive (false);
 		}
@@ -92,7 +91,7 @@ public class WorldsPopUp : PopUpBase {
 			leftArrow.SetActive (true);
 		}
 
-		if(scrollRect.normalizedPosition.x < 1)
+		if(scrollRect.normalizedPosition.x > 1)
 		{
 			rightArrow.SetActive (false);
 		}

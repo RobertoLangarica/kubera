@@ -1,0 +1,21 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:6ec53ad81d9d3caec7e57a8513d176e2:d3acc906ef879b1579803f0e4bb69200:e13318f603ea8de386812d4357b36014$
+#
+:format=40000
+:texture=WorldTextures3Backgrounds.png
+:size=256x2048
+:pivotpoints=enabled
+
+K-1-MapaMúsica_degradadoMundo1;187;1227;14;819;0.5;0.5; 4;14;0;0;0;0;819;14;819; 2;1;2;3;0;1;3
+K-2-MapaMascotasdelgado_fondo;165;579;16;1467;0.5;0.5; 4;16;0;0;0;0;1467;16;1467; 2;1;2;3;0;1;3
+K-3-MapaRopa_fondo;2;21;18;2025;0.5;0.5; 4;18;0;0;0;0;2025;18;2025; 2;1;2;3;0;1;3
+K-4-MapaLibros_FONDO;57;82;23;1964;0.5;0.5; 4;23;0;0;0;0;1964;23;1964; 2;1;2;3;0;1;3
+K-5-MapaZapatos_fondo;115;82;19;1964;0.5;0.5; 4;19;0;0;0;0;1964;19;1964; 2;1;2;3;0;1;3
+K-7-MapaDeportes_fondoGYM;86;82;23;1964;0.5;0.5; 4;23;0;0;0;0;1964;23;1964; 2;1;2;3;0;1;3
+K-8-MapaJoyería_techo;26;82;25;1964;0.5;0.5; 4;25;0;0;0;0;1964;25;1964; 2;1;2;3;0;1;3
+K-9-Mapaperfumeria_fondo;140;82;19;1964;0.5;0.5; 4;19;0;0;0;0;1964;19;1964; 2;1;2;3;0;1;3
