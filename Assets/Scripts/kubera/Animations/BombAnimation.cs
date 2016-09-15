@@ -18,6 +18,9 @@ public class BombAnimation : MonoBehaviour
 	protected List<AnimatedSprite> freeAnimation = new List<AnimatedSprite>();
 	protected List<AnimatedSprite> occupiedAnimation = new List<AnimatedSprite>();
 
+	protected int animationsFinished =0;
+	protected int animationsCount =0;
+
 	void Start () 
 	{
 		cellsManager = FindObjectOfType<CellsManager>();
@@ -56,7 +59,6 @@ public class BombAnimation : MonoBehaviour
 
 	public IEnumerator startSameColorSearchAnimation(Cell cellSelected)
 	{
-		print (cellSelected.contentColor);
 		Cell[] selection =  cellsManager.getCellNeighborsOfSameColor(cellSelected);
 		List<Cell> selectionList = new List<Cell>();
 		for(int i=0; i<selection.Length; i++)
@@ -64,6 +66,8 @@ public class BombAnimation : MonoBehaviour
 			selectionList.Add (selection [i]);
 		}
 
+		animationsFinished = 0;
+		animationsCount = selectionList.Count;
 		while (selectionList.Count >0)
 		{
 			int random = Random.Range (0, selectionList.Count);
@@ -149,14 +153,18 @@ public class BombAnimation : MonoBehaviour
 		letter.enabled = true;
 		//cellsManager.occupyAndConfigureCell(cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
 
-		if (occupiedAnimation.Count == 0 && OnAllAnimationsCompleted != null) 
-		{
-			OnAllAnimationsCompleted ();
-		}
-
 		if (OnCellFlipped != null) 
 		{
 			OnCellFlipped (cell,letter);
 		}
+		animationsFinished ++;
+
+
+		if (animationsFinished == animationsCount && OnAllAnimationsCompleted != null) 
+		{
+			OnAllAnimationsCompleted ();
+		}
+
+
 	}
 }
