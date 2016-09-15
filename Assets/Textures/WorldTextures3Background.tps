@@ -193,6 +193,7 @@
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos/K-3-MapaRopa_fondo.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos/K-4-MapaLibros_FONDO.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos/K-5-MapaZapatos_fondo.png</key>
+            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos/K-6-MapaMaquillaje_fondo.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos/K-7-MapaDeportes_fondoGYM.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos/K-8-MapaJoyería_techo.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos/K-9-Mapaperfumeria_fondo.png</key>

@@ -441,7 +441,15 @@ public class GameManager : MonoBehaviour
 			linesCreated (cells.Count);
 
 			int a = Mathf.RoundToInt(cells.Count *0.5f);
-			pointsMade += linesCreatedPoints[cells.Count];
+
+			if(cells.Count > linesCreatedPoints.Count)
+			{
+				pointsMade += linesCreatedPoints[linesCreatedPoints.Count-1];
+			}
+			else
+			{
+				pointsMade += linesCreatedPoints[cells.Count];
+			}
 
 			convertLinesToLetters (cells);
 		}
@@ -673,7 +681,12 @@ public class GameManager : MonoBehaviour
 				AudioManager.GetInstance().Play("lines3orMore");
 			}
 		}
-
+		print (totalLines);
+		if(totalLines > linesCreatedPoints.Count)
+		{
+			totalLines = linesCreatedPoints.Count-1;
+		}
+		print (totalLines);
 		addPoints(linesCreatedPoints[totalLines]);
 	}
 

@@ -102,6 +102,7 @@ public class BombAnimation : MonoBehaviour
 		animSprite.gameObject.transform.position = cellPosition;
 		animSprite.gameObject.SetActive(true);
 
+
 		yield return new WaitForSeconds (delay);
 
 		animSprite.enabled = true;

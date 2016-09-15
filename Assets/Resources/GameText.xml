@@ -152,9 +152,9 @@
 		</text>
 		<text id="ticketFlavorText">
 			<languages>
-				<language id="english" text="****Thanks for visit****"/>
-				<language id="spanish" text="****Gracias por su visita****"/>
-				<language id="default" text="****Gracias por su visita****"/>
+				<language id="english" text="****Thanks for your visit****"/>
+				<language id="spanish" text="****Gracias por tu visita****"/>
+				<language id="default" text="****Gracias por tu visita****"/>
 			</languages>
 		</text>
 
