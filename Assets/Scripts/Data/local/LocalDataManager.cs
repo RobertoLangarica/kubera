@@ -11,6 +11,7 @@ namespace Data
 		public string currentUserId = "anon_user";
 
 		public string mainDirectoryName = "Data";
+		public string fileName 			= "data.json";
 
 		protected T currentData;
 
@@ -45,10 +46,9 @@ namespace Data
 
 		public string getLocalDataPath()
 		{
-			return getMainFolderPath() + "/data.json";
+			return getMainFolderPath() + "/" + fileName;
 		}
 
-		//HACK: delete
 		public void deleteData()
 		{
 			File.Delete (getLocalDataPath());
@@ -89,41 +89,7 @@ namespace Data
 			string json = File.ReadAllText(getLocalDataPath());
 			currentData = JsonUtility.FromJson<T>(json);
 		}
-
-		protected virtual void syncDataWithServer()
-		{
-			/*HTTPRequest dataRequest = ServerProvider.GetInstance().getDataRequest();
-			dataRequest.Callback = getDataCallback;
-			dataRequest.Send();*/
-		}
-
-		/*private void getDataCallback(HTTPRequest request, HTTPResponse response)
-		{
-			if(ServerProvider.GetInstance ().isValidRequest (request) && response != null )
-			{
-				DataRoot parsedResponse = JsonUtility.FromJson<DataRoot> (response.DataAsText);
-				diffData(parsedResponse);
-			}
-
-		}*/
-
-		private void diffData(T fromServer)
-		{
-			if (currentData.compareAndUpdate(fromServer)) 
-			{
-				if(_mustShowDebugInfo)
-				{
-					Debug.Log ("<color=#f0f0ffff>Actualizando version local</color>");	
-				}
-				saveLocalData();
-
-				//TODO: rutina para subir la informacion sucia al server
-			}
-			else if(_mustShowDebugInfo)
-			{
-				Debug.Log ("<color=#f0f0ffff>Version actualizada!!</color>");	
-			}
-		}
+			
 
 		public T getCurrentData()
 		{
@@ -133,6 +99,11 @@ namespace Data
 		public virtual void changeCurrentuser(string newUserId)
 		{
 			currentUserId = newUserId;
+		}
+
+		public virtual void setUserAsAnonymous()
+		{
+			currentUserId = ANONYMOUS_USER;
 		}
 	}
 }

@@ -53,6 +53,7 @@ public class TutorialLvl1 : TutorialBase
 			if (instructionIndex < currentInstruction.Length) 
 			{
 				changeInstruction = true;
+				foundStringTag = false;
 			}
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
@@ -82,6 +83,7 @@ public class TutorialLvl1 : TutorialBase
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
+				foundStringTag = false;
 			}
 
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE3);
@@ -123,7 +125,7 @@ public class TutorialLvl1 : TutorialBase
 
 	protected void powerUpAnim()
 	{
-		if (!doAnimation) 
+		if (!doAnimation || cellManager.getAllEmptyCells().Length < 11 ) 
 		{
 			DOTween.Kill ("Tutorial1");
 			DestroyImmediate(powerUpDommy);

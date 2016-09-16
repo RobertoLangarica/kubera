@@ -5,13 +5,14 @@ using System.Collections;
 using Facebook.Unity;
 using UnityEngine.UI;
 using Facebook.MiniJSON;
+using Kubera.Data;
+using Kubera.Data.Sync;
 
-public class FacebookManager : MonoBehaviour
+public class FacebookManager : Manager<FacebookManager>
 {
 	protected FBGraph fbGraph;
 	protected FacebookNews facebookNews;
 	protected PlayerInfo playerInfo;
-	protected FBLoggin fbLog;
 	protected MapManager mapManager;
 	public FBFriendsRequestPanel fbRequestPanel;
 
@@ -41,7 +42,6 @@ public class FacebookManager : MonoBehaviour
 	void Awake()
 	{
 		fbGraph = FindObjectOfType<FBGraph> ();
-		fbLog = FBLoggin.GetInstance();
 		facebookNews = FindObjectOfType<FacebookNews> ();
 		playerInfo = FindObjectOfType<PlayerInfo> ();
 		mapManager = FindObjectOfType<MapManager> ();
@@ -49,7 +49,7 @@ public class FacebookManager : MonoBehaviour
 
 	void Start()
 	{
-		fbLog.onLoginComplete += OnLoginComplete;
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.OnLoginSuccessfull += OnLoginComplete;
 
 		fbGraph.OnPlayerInfo += showPlayerInfo;
 		fbGraph.OnGetGameFriends += addGameFriends;
@@ -61,14 +61,12 @@ public class FacebookManager : MonoBehaviour
 
 		fbGraph.onFinishGettingInfo += fillMessageData;
 
-		OnLoginComplete (fbLog.isLoggedIn);
+		OnLoginComplete();
 	}
 
-	protected void OnLoginComplete(bool complete)
+	protected void OnLoginComplete(string message = "")
 	{
-		Debug.Log("OnLoginComplete " + complete);
-
-		if (complete)
+		if (KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 		{
 			if(canRequestMoreFriends())
 			{
@@ -83,22 +81,18 @@ public class FacebookManager : MonoBehaviour
 				DestroyImmediate (conectFacebook);
 			}
 		}
-		else
+		else if(!facebookConectMessageCreated)
 		{
-			if(!facebookConectMessageCreated)
-			{
-				//crear FacebookConectMessage
-				print ("creando mensaje para conectar");
-				conectFacebook = Instantiate (FacebookConectMessage);
-				conectFacebook.transform.SetParent (panelMessages,false);
-				facebookConectMessageCreated = true;
-			}
+			//crear FacebookConectMessage
+			//print ("creando mensaje para conectar");
+			conectFacebook = Instantiate (FacebookConectMessage);
+			conectFacebook.transform.SetParent (panelMessages,false);
+			facebookConectMessageCreated = true;
 		}
 	}
 
 	public bool canRequestMoreFriends()
 	{
-		print (FacebookPersistentData.GetInstance().infoRequested);
 		if(FacebookPersistentData.GetInstance().infoRequested)
 		{
 			return false;
@@ -327,7 +321,7 @@ public class FacebookManager : MonoBehaviour
 					bossReached = splitType [1];
 				}
 
-				if(askedKeys.Count == maxUsersPerMessage || idExistOnList (giftKeys,playerID )|| !(Data.LevelsDataManager.GetInstance () as Data.LevelsDataManager).isLevelLocked(bossReached))
+				if(askedKeys.Count == maxUsersPerMessage || idExistOnList (giftKeys,playerID )|| !(KuberaDataManager.GetInstance () as KuberaDataManager).isLevelLocked(bossReached))
 				{
 					deleteAppRequest (requestID);
 				}
@@ -511,11 +505,12 @@ public class FacebookManager : MonoBehaviour
 
 	protected void actualizeMessageNumber()
 	{
-		facebookNews.actualizeMessageNumber (messageCount.ToString());
+		//facebookNews.actualizeMessageNumber (messageCount.ToString());
 	}
 
-	void OnDestroy() {
-		fbLog.onLoginComplete -= OnLoginComplete;
+	void OnDestroy() 
+	{
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.OnLoginSuccessfull -= OnLoginComplete;
 
 		fbGraph.OnPlayerInfo -= showPlayerInfo;
 		fbGraph.OnGetGameFriends -= addGameFriends;

@@ -2,43 +2,36 @@
 using System.Collections.Generic;
 using System.Collections;
 using VoxelBusters.NativePlugins;
+using villavanilla.Notifications;
 
-public class testLocalNotifications : MonoBehaviour {
+public class testLocalNotifications : MonoBehaviour 
+{
+	protected string lastNotification;
+	public ERegisteredNotification test1;
+	public ERegisteredNotification test2;
 
-	//Create an instance of CrossPlatformNotification and fill with details.
-	private CrossPlatformNotification CreateNotification (long _fireAfterSec, eNotificationRepeatInterval _repeatInterval)
+	public void setNotification1Minute()
 	{
-		// User info
-		IDictionary _userInfo			= new Dictionary<string, string>();
-		_userInfo["data"]				= "add what is required";
-
-		CrossPlatformNotification.iOSSpecificProperties _iosProperties			= new CrossPlatformNotification.iOSSpecificProperties();
-		_iosProperties.HasAction		= true;
-		_iosProperties.AlertAction		= "alert action";
-
-
-		CrossPlatformNotification.AndroidSpecificProperties _androidProperties	= new CrossPlatformNotification.AndroidSpecificProperties();
-		_androidProperties.ContentTitle	= "content title";
-		_androidProperties.TickerText	= "ticker ticks over here";
-		_androidProperties.LargeIcon	= "NativePlugins.png"; //Keep the files in Assets/StreamingAssets/VoxelBusters/NativePlugins/Android folder.
-
-		CrossPlatformNotification _notification	= new CrossPlatformNotification();
-		_notification.AlertBody			= "alert body"; //On Android, this is considered as ContentText
-		_notification.FireDate			= System.DateTime.Now.AddSeconds(_fireAfterSec);
-		_notification.RepeatInterval	= _repeatInterval;
-		_notification.UserInfo			= _userInfo;
-		_notification.SoundName			= "Notification.mp3"; //Keep the files in Assets/StreamingAssets/VoxelBusters/NativePlugins/Android or iOS or Common folder.
-
-		_notification.iOSProperties		= _iosProperties;
-		_notification.AndroidProperties	= _androidProperties;
-
-		return _notification;
+		(LocalNotificationManager.GetInstance () as LocalNotificationManager).scheduleNotificationByName (test1);
 	}
 
-	public void go()
-	{		
-		//Schedule this local notification.
-		CrossPlatformNotification _notification = CreateNotification(5, eNotificationRepeatInterval.MINUTE);
-		NPBinding.NotificationService.ScheduleLocalNotification(_notification);
+	public void setNotification5Minute()
+	{
+		lastNotification = (LocalNotificationManager.GetInstance () as LocalNotificationManager).scheduleNotificationByName (test2);
+	}
+
+	public void cancelLastNotification()
+	{
+		(LocalNotificationManager.GetInstance() as LocalNotificationManager).cancelScheduledNotification(lastNotification);
+	}
+
+	public void cancelAll5MinsNotifications()
+	{
+		(LocalNotificationManager.GetInstance() as LocalNotificationManager).cancelScheduledTypeOfNotifications (test2);
+	}
+
+	public void cancelAllNotifications()
+	{
+		(LocalNotificationManager.GetInstance () as LocalNotificationManager).cancelAllNotificationsForCurrentUser ();
 	}
 }

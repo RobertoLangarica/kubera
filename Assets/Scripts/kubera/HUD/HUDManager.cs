@@ -13,6 +13,7 @@ public class HUDManager : MonoBehaviour
 	public Button Music;
 	public Button Exit;
 	public Button Sounds;
+	public GameObject settingsBackground;
 
 	public Text movementsText;
 	public Text movementsText1;
@@ -36,8 +37,7 @@ public class HUDManager : MonoBehaviour
 
 	public GameObject PointerOnScene;
 
-	public Image[] musicImages;
-	public Image[] soundsImages;
+
 
 	public Text lettersPoints;
 	public Text lettersPointsTitle;
@@ -60,6 +60,8 @@ public class HUDManager : MonoBehaviour
 	public DNotifyEvent OnPiecesScaled;
 	public GameObject wordsHighlight;
 
+	public Button[] powerUps;
+
 	void Start () 
 	{
 		hudStars = FindObjectOfType<HUDMetterAndStars> ();
@@ -71,10 +73,6 @@ public class HUDManager : MonoBehaviour
 
 		setLevelGoFinalPosition ();
 		setText ();
-
-		print ("_________________________");
-		print (Screen.height*.5f);
-		print (Screen.height);
 	}
 
 	protected void setLevelGoFinalPosition()
@@ -339,24 +337,55 @@ public class HUDManager : MonoBehaviour
 	{
 		/*print (activate);
 		print (Sounds.gameObject.activeSelf);*/
-		if (!Sounds.gameObject.activeSelf) 
+		if (!settingsBackground.activeSelf) 
 		{
-			/*points.enabled = false;
-			scoreText.enabled = false;*/
+			DOTween.Kill(settingsBackground,true);
+
+			Exit.enabled = false;
+			Music.enabled = false;
+			Sounds.enabled = false;
+			Exit.transform.localScale = Vector2.zero;
+			Music.transform.localScale = Vector2.zero;
+			Sounds.transform.localScale = Vector2.zero;
+
+			settingsBackground.transform.localScale = Vector3.one;
+			settingsBackground.transform.localRotation = Quaternion.Euler (new Vector3 (0, 0, -180));
+			settingsBackground.SetActive(true);
+
+			settingsBackground.GetComponent<RectTransform> ().pivot = new Vector2(0.5f,0.5f);
+
 			//Activar los otros botones
-			Music.gameObject.SetActive(true);
-			Exit.gameObject.SetActive(true);
-			Sounds.gameObject.SetActive(true);
+			settingsBackground.transform.DOLocalRotate (Vector3.zero,0.3f).SetId(settingsBackground).OnComplete(()=>
+				{
+					
+
+					Exit.enabled = true;
+					Music.enabled = true;
+					Sounds.enabled = true;
+
+					Exit.transform.DOScale(Vector3.one,0.2f).SetEase(Ease.OutBack);
+					Music.transform.DOScale(Vector3.one,0.2f).SetEase(Ease.OutBack);
+					Sounds.transform.DOScale(Vector3.one,0.2f).SetEase(Ease.OutBack);
+				});
 			PointerOnScene.SetActive(true);
 		}
 		else 
 		{
-			/*scoreText.enabled = true;
-			points.enabled = true;*/
-			//Desactivar los otros botones
-			Music.gameObject.SetActive(false);
-			Exit.gameObject.SetActive (false);
-			Sounds.gameObject.SetActive(false);
+			DOTween.Kill(settingsBackground,true);
+
+			Exit.transform.DOScale(Vector3.zero,0.2f).SetEase(Ease.InBack);
+			Music.transform.DOScale(Vector3.zero,0.2f).SetEase(Ease.InBack);
+			Sounds.transform.DOScale(Vector3.zero,0.2f).SetEase(Ease.InBack).OnComplete(()=>
+				{
+					settingsBackground.GetComponent<RectTransform> ().pivot = Vector2.one;
+
+					settingsBackground.transform.DOScale (new Vector3 (0, 0,0),0.3f).SetId(settingsBackground).OnComplete(()=>
+						{
+							settingsBackground.SetActive(false);
+
+						});
+				});
+
 			PointerOnScene.SetActive(false);
 		}
 	}
@@ -427,30 +456,6 @@ public class HUDManager : MonoBehaviour
 		vacum.DOMove (vacumStartPos,0.2f).SetEase (Ease.InBack).SetId(vacum);
 	}
 
-	public void setStateMusic(bool activate)
-	{
-		if (activate) 
-		{
-			Music.image = musicImages [0];
-		}
-		else
-		{
-			Music.image = musicImages [1];
-		}
-	}
-
-	public void setStateSounds(bool activate)
-	{
-		if (activate) 
-		{
-			Sounds.image = soundsImages [0];
-		}
-		else
-		{
-			Sounds.image = soundsImages [1];
-		}
-	}
-
 	public void setLettersPoints(int lettersPoints)
 	{
 		this.lettersPoints.text = lettersPoints.ToString();
@@ -474,5 +479,26 @@ public class HUDManager : MonoBehaviour
 		{
 			modal.SetActive (false);
 		}  
+	}
+
+	public void activatePowerUpButtont(bool activate)
+	{
+		if(activate)
+		{
+			for(int i=0; i<powerUps.Length; i++)
+			{
+				powerUps [i].transition = Selectable.Transition.ColorTint;
+				powerUps [i].interactable = true;
+			}
+		}
+		else
+		{
+			for(int i=0; i<powerUps.Length; i++)
+			{
+				powerUps [i].transition = Selectable.Transition.None;
+				powerUps [i].interactable = false;
+
+			}
+		}
 	}
 }

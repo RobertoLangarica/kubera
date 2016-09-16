@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -25,6 +26,15 @@ public class ScreenManager : Manager<ScreenManager> {
 	protected float timeBeforeNextScreen;
 	protected AsyncOperation waitingScreen = null;
 	protected int framesBeforeSwitch;
+
+	public Image modal;
+
+	public delegate void DOnFinishLoadScene();
+	public DOnFinishLoadScene OnFinish;
+	protected AsyncOperation async;
+
+	protected AsyncOperation testAsync;
+
 	void Awake()
 	{
 		GameObject[] go = GameObject.FindGameObjectsWithTag ("screenManager");
@@ -147,15 +157,48 @@ public class ScreenManager : Manager<ScreenManager> {
 		{
 			backScreens.Add(newScene,SceneManager.GetActiveScene().name);
 		}
-		//StartCoroutine (loadScene (newScene));
-		SceneManager.LoadScene (newScene);
+
+		if(modal != null)
+		{			
+			modal.DOFade (1, 0.25f).SetId(modal).OnComplete(()=>{StartCoroutine (loadScene (newScene));});
+		}
+		else
+		{
+			SceneManager.LoadScene (newScene);
+		}
 	}
 
+	public void testLoading(string level)
+	{
+		testAsync = SceneManager.LoadSceneAsync(level);
+		testAsync.allowSceneActivation = false;
+	}
+
+	public void testContinue()
+	{
+		print (testAsync);
+
+		modal.DOFade (1, 0).SetId(modal).OnComplete(()=>
+			{
+				testAsync.allowSceneActivation = true;
+			});
+
+	}
 
 	IEnumerator loadScene(string level)
 	{
-		AsyncOperation async = SceneManager.LoadSceneAsync(level);
-		yield return async;
+		async = SceneManager.LoadSceneAsync(level,LoadSceneMode.Single);
+
+		async.allowSceneActivation = false;
+
+		yield return async.isDone;
+
+		async.allowSceneActivation = true;
+	}
+
+	public void sceneFinishLoading(float speed = 0.3f)
+	{
+		modal.DOFade (0, speed);
 	}
 
 	public void GoToSceneAsync(string newScene,float waitTime = -1, int waitFrames = 10)

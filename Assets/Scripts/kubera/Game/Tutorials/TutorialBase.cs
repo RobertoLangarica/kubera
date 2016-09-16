@@ -12,7 +12,9 @@ public class TutorialBase : MonoBehaviour
 	public float shakeDuraion = 0.5f;
 	public float shakeStrength = 20;
 
-	public float writingSpeed = 0.1f;
+	public float writingSpeed = 0.05f;
+	protected bool isWriting = false;
+	protected float writingTimer;
 
 	protected bool foundStringTag;
 	protected bool changeInstruction;
@@ -97,6 +99,17 @@ public class TutorialBase : MonoBehaviour
 		{
 			firstAnim ();
 		}
+
+		if (isWriting) 
+		{
+			writingTimer += Time.deltaTime;
+
+			if (writingTimer >= writingSpeed) 
+			{
+				writeLetterByLetter ();
+				writingTimer = 0;
+			}
+		}
 	}
 
 	public virtual bool canMoveToNextPhase()
@@ -128,6 +141,8 @@ public class TutorialBase : MonoBehaviour
 
 	protected void writeLetterByLetter()
 	{
+		isWriting = true;
+
 		if (changeInstruction) 
 		{
 			changeInstruction = false;
@@ -166,9 +181,10 @@ public class TutorialBase : MonoBehaviour
 			instructionIndex++;
 		}
 
-		if (instructionIndex < currentInstruction.Length) 
+		if (instructionIndex == currentInstruction.Length) 
 		{
-			Invoke ("writeLetterByLetter",writingSpeed);
+			isWriting = false;
+			//Invoke ("writeLetterByLetter",writingSpeed);
 		}
 	}
 }

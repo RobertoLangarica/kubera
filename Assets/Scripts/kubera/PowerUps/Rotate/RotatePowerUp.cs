@@ -9,6 +9,7 @@ public class RotatePowerUp : PowerupBase
 	protected InputPowerUpRotate inputPowerUpRotate;
 	protected InputBombAndDestroy inputPowerUp;
 	protected InputWords inputWords;
+	protected GameManager gameManager;
 
 	protected GameObject powerUpGO;
 	protected bool canUse;
@@ -20,7 +21,7 @@ public class RotatePowerUp : PowerupBase
 		inputWords = FindObjectOfType<InputWords> ();
 		inputPowerUpRotate = FindObjectOfType<InputPowerUpRotate> ();
 		inputPowerUp = FindObjectOfType<InputBombAndDestroy> ();
-
+		gameManager = FindObjectOfType<GameManager> ();
 
 		this.gameObject.SetActive( false);
 		inputPowerUpRotate.enabled = false;
@@ -32,7 +33,6 @@ public class RotatePowerUp : PowerupBase
 
 	public override void activate (bool canUse)
 	{
-		print ("activate");
 		this.gameObject.SetActive( true);
 		if (powerUpGO != null) 
 		{
@@ -115,7 +115,14 @@ public class RotatePowerUp : PowerupBase
 			inputPowerUpRotate.startRotate ();
 			inputPowerUpRotate.OnPowerupRotateCompleted += completePowerUp;
 			print ("activate");
+			gameManager.updatePiecesLightAndUpdateLetterState ();
 			Invoke ("rotateImage", 2);
+
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop("startRotate");
+				AudioManager.GetInstance().Play("startRotate");
+			}
 		}
 		else
 		{
@@ -156,7 +163,6 @@ public class RotatePowerUp : PowerupBase
 				{
 					imageToRotate [i].DOScale (new Vector2 (imageToRotate [i].localScale.x - 0.1f, imageToRotate [i].localScale.y - 0.1f), 0.5f).OnComplete(()=>
 						{
-							print("Sssss");
 						}).SetId("imageToRotate");
 				}).SetId("imageToRotate");
 			imageToRotate [i].DOShakeRotation (1.0f).SetId("imageToRotate");

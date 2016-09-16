@@ -27,14 +27,20 @@ public class TutorialLvl8 : TutorialBase
 
 			freeBombs = true;
 
+			firstAnim ();
+
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.BOMB_BUTTON);
 
-			instructions [0].text = MultiLanguageTextManager.instance.multipleReplace (
+			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE1),
 				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+			instructionsText = instructions [0];
+			instructionsText.text = "";
 
 			doAnimation = true;
 			Invoke ("powerUpAnim",1);
+
+			Invoke ("writeLetterByLetter",initialAnim*2);
 
 			phase = 1;
 			return true;
@@ -43,15 +49,27 @@ public class TutorialLvl8 : TutorialBase
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add(ENextPhaseEvent.TAP);
 
+			if (instructionIndex < currentInstruction.Length) {
+				changeInstruction = true;
+				foundStringTag = false;
+			}
+
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_BUTTON);
 
 			freeBombs = true;
 
-			instructions [1].text = MultiLanguageTextManager.instance.multipleReplace (
+			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE2),
 				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+			instructionsText = instructions [1];
+			instructionsText.text = "";
+			instructionIndex = 0;
+
+			shakeToErrase ();
 
 			doAnimation = false;
+
+			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
 			
 			phase = 2;
 			return true;		
@@ -75,7 +93,7 @@ public class TutorialLvl8 : TutorialBase
 	{
 		if (!doAnimation) 
 		{
-			DOTween.Kill ("Tutorial2");
+			DOTween.Kill ("Tutorial8");
 			return;
 		}
 
@@ -85,7 +103,7 @@ public class TutorialLvl8 : TutorialBase
 		powerUpDommy.transform.position = posFrom;
 
 		//Los valores de las animaciones los paso Liloo
-		powerUpDommy.transform.DOScale (new Vector3 (1.4f, 1.4f, 1.4f), 0.5f).SetId("Tutorial2");
+		powerUpDommy.transform.DOScale (new Vector3 (1.4f, 1.4f, 1.4f), 0.5f).SetId("Tutorial8");
 		powerUpDommy.DOColor (new Color(1,1,1,0.5f),0.5f).OnComplete(
 			()=>{
 
@@ -96,17 +114,17 @@ public class TutorialLvl8 : TutorialBase
 						powerUpDommy.transform.DOScale (new Vector3 (1, 1, 1), 1f).OnComplete(
 							()=>{
 
-								powerUpDommy.DOColor (new Color(1,1,1,0),0.5f).SetId("Tutorial2");
+								powerUpDommy.DOColor (new Color(1,1,1,0),0.5f).SetId("Tutorial8");
 							}
 
-						).SetId("Tutorial2");
+						).SetId("Tutorial8");
 
 					}
 
-				).SetId("Tutorial2");
+				).SetId("Tutorial8");
 
 			}
-		).SetId("Tutorial2");
+		).SetId("Tutorial8");
 
 		Invoke ("powerUpAnim",3.5f);
 	}

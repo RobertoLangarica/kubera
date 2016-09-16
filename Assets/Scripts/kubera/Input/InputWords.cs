@@ -80,10 +80,25 @@ public class InputWords : MonoBehaviour
 			{	
 				if(gridLetter != null)
 				{
+					canDeleteLetter = false;
 					onTap(gridLetter,true);
 				}
+				else
+				{
+					canDeleteLetter = true;
+				}
+
+				if(gridLetter && !letter)
+				{
+					if(!allowAnimation)
+					{		
+						animationFingerUp (gridLetter);
+					}
+				}
+
 				if(letter == null)
 				{
+					gridLetter = null;
 					return;
 				}
 
@@ -95,7 +110,6 @@ public class InputWords : MonoBehaviour
 					}
 				}
 
-				canDeleteLetter = false;
 				//letter = gesture.Raycast.Hit2D.transform.gameObject;
 				offset += objectSize.y*0.5f;
 
@@ -120,8 +134,6 @@ public class InputWords : MonoBehaviour
 				if (!letter) 
 				{return;}
 				Vector3 tempV3 = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
-
-
 
 				tempV3.y += objectSize.y*1f;
 				tempV3.z = letter.transform.position.z;
@@ -212,7 +224,7 @@ public class InputWords : MonoBehaviour
 			moveTo(letter,tempV3,letterSpeed);
 			canDeleteLetter = false;
 			onDragStart(letter);
-
+			isOnLettersContainer = true;
 		}
 	}
 
@@ -220,7 +232,6 @@ public class InputWords : MonoBehaviour
 	{
 		if (allowInput && letter) 
 		{
-			
 			onDragFinish(letter,isOnLettersContainer);
 
 			letter.transform.position = new Vector3(letter.transform.position.x,firstPosition.y,0);
@@ -234,7 +245,7 @@ public class InputWords : MonoBehaviour
 				}
 				else
 				{
-					if(canDeleteLetter)
+					//if(canDeleteLetter)
 					{
 						onTapToDelete (letter);
 					}
@@ -245,6 +256,7 @@ public class InputWords : MonoBehaviour
 		}
 		canDeleteLetter = true;
 		drag = false;
+		isOnLettersContainer = false;
 	}
 
 	bool isLetterGridPositionatedCorrectly()
@@ -288,6 +300,14 @@ public class InputWords : MonoBehaviour
 
 			allowPushDownAnimation = true;
 			allowAnimation = false;
+
+			if(!gridLetter.GetComponent<Letter>().isPreviouslySelected())
+			{
+				if(AudioManager.GetInstance())
+				{					
+					AudioManager.GetInstance ().Play ("letterChoosed");
+				}
+			}
 		}
 	}
 

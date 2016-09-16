@@ -1,44 +1,99 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class SettingsButton : MonoBehaviour 
 {
+	public Sprite[] musicImages;
+	public Sprite[] soundsImages;
+	public Image music;
+	public Image fx;
+
+	void Start()
+	{
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance ().Play ("gamePlay");
+		}
+
+		setStateMusic ();
+		setStateSounds ();
+	}
+
 	public void activateMusic()
 	{
-		if (PersistentData.GetInstance().startLevel > 1) 
+		if (AudioManager.GetInstance ()) 
 		{
-			PersistentData.GetInstance().startLevel -= 2;
-			SceneManager.LoadScene ("Game");
-		}
-		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
+			//AudioManager.GetInstance ().Play ("fxButton");
 
-		if(AudioManager.instance.musicActive)
-		{
-			AudioManager.instance.musicActive = false;
-			UserDataManager.instance.isMusicActive = false;
+			if (AudioManager.GetInstance ().activateMusic) 
+			{
+				AudioManager.GetInstance ().activateMusic = false;
+				UserDataManager.instance.isMusicActive = false;
+
+				AudioManager.GetInstance ().Stop ("gamePlay");
+			}
+			else 
+			{
+				AudioManager.GetInstance ().activateMusic = true;
+				UserDataManager.instance.isMusicActive = true;
+
+				AudioManager.GetInstance ().Play ("gamePlay");
+			}
+			setStateMusic ();
 		}
-		else
-		{
-			AudioManager.instance.musicActive = true;
-			UserDataManager.instance.isMusicActive = true;
-		}*/
 	}
 
 	public void activateSounds()
 	{
-		SceneManager.LoadScene ("Game");
-		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
-
-		if(AudioManager.instance.soundEffectsActive)
+		if(AudioManager.GetInstance())
 		{
-			AudioManager.instance.soundEffectsActive = false;
-			UserDataManager.instance.isSoundEffectsActive = false;
+			//AudioManager.GetInstance().Play("fxButton");
+			if(AudioManager.GetInstance().activateSounds)
+			{
+				AudioManager.GetInstance().activateSounds = false;
+				UserDataManager.instance.isSoundEffectsActive = false;
+
+				AudioManager.GetInstance ().StopAllAudiosInCategory ("LOOP FX");
+				AudioManager.GetInstance ().StopAllAudiosInCategory ("FX");
+			}
+			else
+			{
+				AudioManager.GetInstance().activateSounds = true;
+				UserDataManager.instance.isSoundEffectsActive = true;
+			}
+			setStateSounds ();
+		}
+	}
+
+	public void setStateMusic()
+	{
+		if (!AudioManager.GetInstance ()) {
+			return;
+		}
+		if (AudioManager.GetInstance().activateMusic) 
+		{
+			music.sprite = musicImages [0];
 		}
 		else
 		{
-			AudioManager.instance.soundEffectsActive = true;
-			UserDataManager.instance.isSoundEffectsActive = true;
-		}*/
+			music.sprite = musicImages [1];
+		}
+	}
+
+	public void setStateSounds()
+	{
+		if (!AudioManager.GetInstance ()) {
+			return;
+		}
+		if (AudioManager.GetInstance().activateSounds) 
+		{
+			fx.sprite = soundsImages [0];
+		}
+		else
+		{
+			fx.sprite = soundsImages [1];
+		}
 	}
 }

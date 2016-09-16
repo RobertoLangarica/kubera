@@ -65,12 +65,12 @@ public class Square : MonoBehaviour
 		letter.gameObject.transform.position = cellPosition;
 		letter.gameObject.SetActive(true);
 
+		OnCellFlipped (this, cellParent,letter);
 		yield return new WaitUntil (()=> flipAnimation.sequences[0].currentFrame >= 26);
 
 		flipAnimation.enabled = false;
 		flipAnimation.autoUpdate = false;
 
 
-		OnCellFlipped (this, cellParent,letter);
 	}
 }

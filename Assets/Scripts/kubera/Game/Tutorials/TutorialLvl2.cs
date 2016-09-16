@@ -50,6 +50,7 @@ public class TutorialLvl2 : TutorialBase
 			if (instructionIndex < currentInstruction.Length) 
 			{
 				changeInstruction = true;
+				foundStringTag = false;
 			}
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.PIECES_AREA);
@@ -68,7 +69,6 @@ public class TutorialLvl2 : TutorialBase
 			phase = 2;
 			return true;
 		case(2):
-			Debug.Log ("CAso2");
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.EARNED_POINTS);
@@ -78,6 +78,7 @@ public class TutorialLvl2 : TutorialBase
 			if (instructionIndex < currentInstruction.Length) 
 			{
 				changeInstruction = true;
+				foundStringTag = false;
 			}
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.MOVEMENTS);
@@ -105,6 +106,7 @@ public class TutorialLvl2 : TutorialBase
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
+				foundStringTag = false;
 			}
 
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE4);
@@ -129,6 +131,7 @@ public class TutorialLvl2 : TutorialBase
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
+				foundStringTag = false;
 			}
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.MOVEMENTS);

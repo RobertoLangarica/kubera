@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Kubera.Data;
 
 public class NoLifesPopUp : PopUpBase 
 {
@@ -14,13 +15,11 @@ public class NoLifesPopUp : PopUpBase
 	public Text priceText;
 
 	protected int price = 10;
-	protected LifesManager lifesManager;
 
 	public override void activate()
 	{
 		popUp.SetActive (true);
 
-		lifesManager = FindObjectOfType<LifesManager> ();
 
 		title.text = "te quedaste sin vidas";
 
@@ -51,9 +50,10 @@ public class NoLifesPopUp : PopUpBase
 	{
 		if(TransactionManager.GetInstance().tryToUseGems(price))
 		{
-			UserDataManager.instance.giveLifeToPlayer (UserDataManager.instance.maximumLifes);
+			(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (
+				(KuberaDataManager.GetInstance () as KuberaDataManager).currentUser.maximumLifes);
 
-			lifesManager.takeALife ();
+			LifesManager.GetInstance().takeALife ();
 
 			popUp.SetActive (false);
 			OnComplete ("needLifes");

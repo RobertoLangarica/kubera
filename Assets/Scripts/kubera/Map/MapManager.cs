@@ -4,7 +4,8 @@ using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Data;
+using Kubera.Data;
+using Kubera.Data.Sync;
 
 public class MapManager : MonoBehaviour
 {
@@ -16,15 +17,13 @@ public class MapManager : MonoBehaviour
 	public GameObject modal;
 	public BossLocked bossLockedPopUp;
 
-	public int currentWorld;
+	[HideInInspector]public int currentWorld =-1;
 	public Transform worldParent;
 	public List<GameObject> worlds;
 	protected GameObject WorldPrefab;
 
-	protected LifesManager lifesHUDManager;
 	protected PopUpManager popUpManager;
 	protected ParalaxManager paralaxManager;
-	protected DoorsManager doorsManager;
 	protected InvitationToReview invitationToReview;
 	protected FriendsOnWorldManager friendsOnWorldManager;
 	private GoalManager		goalManager;
@@ -34,6 +33,8 @@ public class MapManager : MonoBehaviour
 	protected bool fromLoose;
 	protected bool toDoor;
 	protected bool toNextLevel;
+	protected bool first;
+	protected bool last;
 
 	protected MapLevel currentLevel = null;
 	protected MapLevel lastLevelPlayed = null;
@@ -46,21 +47,33 @@ public class MapManager : MonoBehaviour
 	void Start()
 	{
 		popUpManager = FindObjectOfType<PopUpManager> ();
-		lifesHUDManager = FindObjectOfType<LifesManager> ();
 		paralaxManager = FindObjectOfType<ParalaxManager> ();
-		doorsManager = FindObjectOfType<DoorsManager> ();
 		goalManager = FindObjectOfType<GoalManager> ();
 		invitationToReview = FindObjectOfType<InvitationToReview> ();
 		friendsOnWorldManager = FindObjectOfType<FriendsOnWorldManager> ();
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
-		if(PersistentData.GetInstance().currentWorld == -1)
+		if(PersistentData.GetInstance().currentWorld == -1||!PersistentData.GetInstance().fromGameToLevels)
 		{
-			print (PersistentData.GetInstance ().currentLevel.name);
-			if(LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUserLevels.levels.Count != 0)
+			print (KuberaDataManager.GetCastedInstance<KuberaDataManager>());
+			if(KuberaDataManager.GetCastedInstance<KuberaDataManager>().currentUser.worlds.Count != 0)
 			{
-				currentWorld = PersistentData.GetInstance().currentWorld = (PersistentData.GetInstance().levelsData.levels[LevelsDataManager.GetCastedInstance<LevelsDataManager>().currentUserLevels.levels.Count].world);
-				//print (currentWorld);
+				int worldCount = KuberaDataManager.GetCastedInstance<KuberaDataManager> ().getWorldCount ();
+
+				currentWorld = int.Parse(KuberaDataManager.GetCastedInstance<KuberaDataManager>().currentUser.worlds[KuberaDataManager.GetCastedInstance<KuberaDataManager>().currentUser.worlds.Count-1].id);
+
+				List<WorldData> worldData = KuberaDataManager.GetCastedInstance<KuberaDataManager> ().currentUser.worlds;
+				int currentLevel = worldData [worldData.Count - 1].levels.Count;
+
+				int levelsInWorld = KuberaDataManager.GetCastedInstance<KuberaDataManager> ().getLevelsOfWorld (currentWorld).Length;
+
+				if(currentLevel == levelsInWorld)
+				{
+					if(currentWorld+1 <= worldCount)
+					{
+						currentWorld++;
+					}
+				}
 			}
 		}
 		else
@@ -73,6 +86,7 @@ public class MapManager : MonoBehaviour
 			fromGame = true;
 			fromLoose= PersistentData.GetInstance ().fromLoose;
 			PersistentData.GetInstance ().fromGameToLevels = false;
+			toNextLevel = !PersistentData.GetInstance ().nextLevelIsReached;
 		}
 		PersistentData.GetInstance ().fromLevelsToGame = true;
 
@@ -84,13 +98,16 @@ public class MapManager : MonoBehaviour
 
 		paralaxManager.OnFinish += showNextLevelGoalPopUp;
 		invitationToReview.OnFinish += afterInvitation;
+
+		initializeWorldsPopUpInfo ();
 	}
 
 	void Update()
 	{
 		if (Input.GetKeyDown (KeyCode.A))
 		{
-			changeWorld ();
+			//changeWorld ();
+			Debug.Break ();
 		}
 	}
 
@@ -121,21 +138,30 @@ public class MapManager : MonoBehaviour
 			if(toNextLevel)
 			{
 				paralaxManager.setPosToNextLevel (nextLevel);
+				lastLevelPlayed.moveProgress (nextLevel);
+			
 				toNextLevel = false;
 			}
 			showWorld();
 			break;
 		case "retry":
 		case "playGame":
+			stopInput(true);
 			//TODO probablemente no haga falta mostrar el mundo
 			showWorld();
 			ScreenManager.instance.GoToScene ("Game");
 			break;
 		case "continue":
-			if(toNextLevel)
+			if(toDoor)
+			{
+				showWorld();
+				paralaxManager.setPosLastOrFirst (false);
+			}
+			else if(toNextLevel)
 			{
 				showWorld();
 				paralaxManager.setPosToNextLevel (nextLevel);
+				lastLevelPlayed.moveProgress (nextLevel);
 			}
 			else
 			{
@@ -145,6 +171,12 @@ public class MapManager : MonoBehaviour
 			break;
 		case "closeRetry":
 			showWorld();
+			break;
+		case "toWorldTraveler":
+			openPopUp ("worldsPopUp");
+			break;
+		case "toFacebookMessages":
+			openPopUp ("facebookNews");
 			break;
 		default:
 			break;
@@ -166,80 +198,6 @@ public class MapManager : MonoBehaviour
 		worlds [world].SetActive (false);
 		WorldPrefab = (GameObject)Instantiate (worlds [world]);
 		WorldPrefab.transform.SetParent (worldParent,false);
-
-		doorsManager = FindObjectOfType<DoorsManager> ();
-	}
-
-	protected void initializeLevels()
-	{
-		Debug.Log ((LevelsDataManager.GetInstance() as LevelsDataManager));
-		List<Level> worldsLevels = new List<Level> ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelsOfWorld(currentWorld));
-
-		if(PersistentData.GetInstance().lastLevelReachedName == "")
-		{
-			setLastLevelReached ();
-		}
-		bool isConectedToFacebook = FBLoggin.GetInstance ().isLoggedIn;
-		print (isConectedToFacebook + "isConectedToFacebook");
-		for (int i = 0; i < mapLevels.Count; i++)
-		{
-			settingMapLevelInfo (mapLevels[i],worldsLevels[i]);
-			settingMapLevelStatus (mapLevels[i]);
-			setOnClickDelegates (mapLevels[i]);
-
-			print (mapLevels[i].name);
-			mapLevels [i].updateStatus();
-			mapLevels[i].updateStars();
-			mapLevels [i].updateText ();
-
-			if(isConectedToFacebook)
-			{
-				FriendInfo friendInfo = isThereAnyFriendOnLevel (currentWorld, mapLevels [i].lvlName);
-
-				if(friendInfo != null)
-				{
-					mapLevels [i].updateFacebookFriendPicture (friendInfo);
-				}
-			}
-
-			if(mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_REACHED
-				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_PASSED
-				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_UNLOCKED
-				||  mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED
-				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED)
-			{				
-				currentLevel = mapLevels [i];
-				
-				if(fromGame && PersistentData.GetInstance().currentLevel.name == mapLevels[i].fullLvlName) 
-				{
-					lastLevelPlayed = mapLevels [i];
-					if(i+1 <mapLevels.Count)
-					{
-						nextLevel = mapLevels [i+1];
-						if(mapLevels[i+1].status == MapLevel.EMapLevelsStatus.NORMAL_LOCKED ||mapLevels[i+1].status == MapLevel.EMapLevelsStatus.BOSS_LOCKED)
-						{							
-							toNextLevel = true;
-						}
-					}
-				}
-				else if(nextLevel != null && nextLevel.fullLvlName == mapLevels[i].fullLvlName)
-				{
-					if(fromGame && nextLevel.fullLvlName == PersistentData.GetInstance().lastLevelReachedName)
-					{
-						toNextLevel = false;
-					}
-				}
-
-				/*if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
-				{
-					toDoor = true;
-					if(doorsManager)
-					{						
-						doorsManager.DoorsCanOpen ();
-					}
-				}*/
-			}
-		}
 	}
 
 	protected void settingMapLevelInfo(MapLevel level,Level data)
@@ -259,19 +217,19 @@ public class MapManager : MonoBehaviour
 
 		if (level.isBoss)
 		{
-			if ((LevelsDataManager.GetInstance () as LevelsDataManager).isLevelPassed (level.lvlName))
+			if ((KuberaDataManager.GetInstance () as KuberaDataManager).isLevelPassed (level.lvlName))
 			{
 				level.status = MapLevel.EMapLevelsStatus.BOSS_PASSED;
 			}
 			else
 			{
-				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.lvlName))
+				if ((KuberaDataManager.GetInstance() as KuberaDataManager).isLevelReached (level.lvlName))
 				{
 					level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
 					Debug.Log ("boss reached");
-					Debug.Log (!(LevelsDataManager.GetInstance () as LevelsDataManager).isLevelLocked (level.lvlName));
+					Debug.Log (!(KuberaDataManager.GetInstance () as KuberaDataManager).isLevelLocked (level.lvlName));
 
-					if (!(LevelsDataManager.GetInstance () as LevelsDataManager).isLevelLocked (level.lvlName))
+					if (!(KuberaDataManager.GetInstance () as KuberaDataManager).isLevelLocked (level.lvlName))
 					{
 						level.status = MapLevel.EMapLevelsStatus.BOSS_UNLOCKED;
 					}
@@ -285,13 +243,13 @@ public class MapManager : MonoBehaviour
 		}
 		else
 		{
-			if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelPassed (level.lvlName))
+			if ((KuberaDataManager.GetInstance() as KuberaDataManager).isLevelPassed (level.lvlName))
 			{
 				level.status = MapLevel.EMapLevelsStatus.NORMAL_PASSED;
 			}
 			else
 			{
-				if ((LevelsDataManager.GetInstance() as LevelsDataManager).isLevelReached (level.lvlName))
+				if ((KuberaDataManager.GetInstance() as KuberaDataManager).isLevelReached (level.lvlName))
 				{
 						level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
 				}
@@ -303,7 +261,7 @@ public class MapManager : MonoBehaviour
 		}
 
 		level.stars = MapLevel.EMapLevelStars.NONE;
-		switch ((LevelsDataManager.GetInstance() as LevelsDataManager).getLevelStars (level.lvlName))
+		switch ((KuberaDataManager.GetInstance() as KuberaDataManager).getLevelStars (level.lvlName))
 		{
 		case(1):
 			level.stars = MapLevel.EMapLevelStars.ONE;
@@ -341,11 +299,13 @@ public class MapManager : MonoBehaviour
 
 	public void OnLifesPressed()
 	{
-		if (UserDataManager.instance.playerLifes == UserDataManager.instance.maximumLifes)
+		KuberaUser currentUser = (KuberaDataManager.GetInstance () as KuberaDataManager).currentUser;
+		
+		if (currentUser.playerLifes == currentUser.maximumLifes)
 		{
 			openPopUp (fullLifes_PopUp);
 		}
-		else if (UserDataManager.instance.playerLifes == 0)
+		else if (currentUser.playerLifes == 0)
 		{
 			openPopUp (noLifes_PopUp);
 		}
@@ -358,7 +318,7 @@ public class MapManager : MonoBehaviour
 
 	public void unlockBoss(string lvlName)
 	{
-		(LevelsDataManager.GetInstance () as LevelsDataManager).unlockLevel (lvlName);
+		(KuberaDataManager.GetInstance () as KuberaDataManager).unlockLevel (lvlName);
 
 		for (int i = 0; i < mapLevels.Count; i++)
 		{
@@ -373,7 +333,7 @@ public class MapManager : MonoBehaviour
 
 	protected void OnBossReachedPressed(MapLevel pressed)
 	{
-		if ((LevelsDataManager.GetInstance () as LevelsDataManager).getAllEarnedStars() >= pressed.starsNeeded)
+		if ((KuberaDataManager.GetInstance () as KuberaDataManager).getAllEarnedStars() >= pressed.starsNeeded)
 		{
 			unlockBoss (pressed.lvlName);
 		}
@@ -391,12 +351,15 @@ public class MapManager : MonoBehaviour
 	{
 		PersistentData.GetInstance ().setLevelNumber (int.Parse (pressed.lvlName));
 		PersistentData.GetInstance ().lastLevelPlayedName = pressed.lvlName;
+		PersistentData.GetInstance ().nextLevelIsReached = pressed.nextLevelIsReached;
 
 		goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
-		int starsReached = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
+		int starsReached = (KuberaDataManager.GetInstance () as KuberaDataManager).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
 		
 		setGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters(),PersistentData.GetInstance().currentLevel.name,starsReached);
 
+		//HACK temporal para probar el leaderboard
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().getLevelLeaderboard(pressed.lvlName);
 		//SceneManager.LoadScene ("Game");
 	}
 
@@ -419,17 +382,119 @@ public class MapManager : MonoBehaviour
 		getFriendsOnMap (currentWorld);
 
 		initializeLevels ();
+		setDataFromLevels ();
 		setLastLevelReached ();
-		Invoke ("setParalaxManager",0.05f);
+		Invoke ("setParalaxManager",0.06f);
 
 		if(!fromGame)
 		{
-			Invoke ("showWorld", 0.05f);
+			//showWorld ();
 		}
+		Invoke ("showWorld", 0.05f);
 		//setParalaxManager ();
 		paralaxManager.enabled = true;
 
 		PersistentData.GetInstance ().currentWorld = currentWorld;
+
+		Invoke ("onFinishLoad",0.1f);
+	}
+
+	protected void initializeLevels()
+	{
+		List<Level> worldsLevels = new List<Level> ((KuberaDataManager.GetInstance() as KuberaDataManager).getLevelsOfWorld(currentWorld));
+
+		if(PersistentData.GetInstance().lastLevelReachedName == "")
+		{
+			setLastLevelReached ();
+		}
+
+		for (int i = 0; i < mapLevels.Count; i++)
+		{
+			settingMapLevelInfo (mapLevels[i],worldsLevels[i]);
+			settingMapLevelStatus (mapLevels[i]);
+			setOnClickDelegates (mapLevels[i]);
+
+			mapLevels [i].updateStatus();
+			mapLevels[i].updateStars();
+			mapLevels [i].updateText ();
+
+			if(i != 0)
+			{
+				if (mapLevels [i].status == MapLevel.EMapLevelsStatus.NORMAL_REACHED
+				   || mapLevels [i].status == MapLevel.EMapLevelsStatus.NORMAL_PASSED
+				   || mapLevels [i].status == MapLevel.EMapLevelsStatus.BOSS_UNLOCKED
+				   || mapLevels [i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED
+				   || mapLevels [i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED) 
+				{
+					mapLevels [i - 1].nextLevelIsReached = true;
+				}
+				else
+				{
+					mapLevels [i - 1].nextLevelIsReached = false;
+				}
+			}
+		}
+	}
+
+	protected void setDataFromLevels()
+	{
+		bool isConectedToFacebook = KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn;
+		MapLevel lastLevel = null;
+
+		for(int i=0; i< mapLevels.Count; i++)
+		{
+			if(isConectedToFacebook)
+			{
+				FriendInfo friendInfo = isThereAnyFriendOnLevel (currentWorld, mapLevels [i].lvlName);
+
+				if(friendInfo != null)
+				{
+					mapLevels [i].updateFacebookFriendPicture (friendInfo);
+				}
+				else
+				{
+					mapLevels [i].noFriend ();
+				}
+			}
+			else
+			{
+				mapLevels [i].noFriend ();
+			}
+
+			if(mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_REACHED
+				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_PASSED
+				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_UNLOCKED
+				||  mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED
+				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED)
+			{				
+				currentLevel = mapLevels [i];
+				if(fromGame && PersistentData.GetInstance().currentLevel.name == mapLevels[i].fullLvlName) 
+				{
+					lastLevelPlayed = mapLevels [i];
+					if(i+1 != mapLevels.Count)
+					{
+						nextLevel = mapLevels [i+1];
+					}
+				}
+
+				if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
+				{
+					toDoor = true;
+					toNextLevel = false;
+					//FindObjectOfType<Stairs> ().animateStairs ();
+				}
+			}
+		}
+
+		if(toNextLevel)
+		{
+			lastLevelPlayed.myProgress (isConectedToFacebook);
+		}
+		else
+		{
+			currentLevel.myProgress (isConectedToFacebook);
+		}
+
 	}
 
 	protected void setLastLevelReached()
@@ -454,10 +519,16 @@ public class MapManager : MonoBehaviour
 		{
 			currentLevel = mapLevels [0];
 		}
-
-		if(toDoor)
+		
+		if(first)
 		{
-			paralaxManager.setPosToDoor ();
+			paralaxManager.setPosLastOrFirst(true);
+			first = false;
+		}
+		else if(last)
+		{
+			paralaxManager.setPosLastOrFirst(false);
+			last = false;
 		}
 		else if(fromGame)
 		{			
@@ -468,8 +539,8 @@ public class MapManager : MonoBehaviour
 			}
 			else
 			{
-				int starsReached = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
-				int pointsMade = (LevelsDataManager.GetInstance () as LevelsDataManager).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
+				int starsReached = (KuberaDataManager.GetInstance () as KuberaDataManager).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
+				int pointsMade = (KuberaDataManager.GetInstance () as KuberaDataManager).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
 				goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
 
 				string levelName = PersistentData.GetInstance ().currentLevel.name ;
@@ -492,25 +563,66 @@ public class MapManager : MonoBehaviour
 				stopInput (true);
 			}
 
-			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(lastLevelPlayed));
+			if(toDoor)
+			{
+				paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(mapLevels[mapLevels.Count-1]));
+			}
+			else
+			{
+				paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(lastLevelPlayed));
+			}
 		}
 		else
 		{
-			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel( mapLevels [0]));
-			//paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(currentLevel));
+			//print ("currentLevel " + currentLevel);
+			//paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel( mapLevels [0]));
+			paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(currentLevel));
 		}
 	}
 
-	public void changeCurrentWorld(int world)
+	protected void activateStairs()
 	{
-		currentWorld = world;
+		Stairs stairs = FindObjectOfType<Stairs> ();
+		if(stairs)
+		{
+			stairs.animateStairs ();
+		}
+	}
 
-		changeWorld ();
+	public void changeCurrentWorld(int world,bool isFirst, bool isLast)
+	{
+		toDoor = false;
+		if(isFirst)
+		{
+			first = true;
+		}
+		else if(isLast)
+		{
+			last = true;
+		}
+
+		if(world != currentWorld)
+		{
+			currentWorld = world;
+			changeWorld ();
+		}
 	}
 
 	public void goToScene(string scene)
 	{
 		ScreenManager.instance.GoToScene (scene);
+	}
+
+	protected void onFinishLoad()
+	{
+		if(fromGame)
+		{
+			ScreenManager.instance.sceneFinishLoading(0);
+		}
+		else
+		{
+			ScreenManager.instance.sceneFinishLoading();
+		}
 	}
 
 	public void setGoalPopUp(string goalCondition, System.Object parameters,string levelName,int starsReached)
@@ -654,6 +766,11 @@ public class MapManager : MonoBehaviour
 	{
 		worlds [currentWorld-1].SetActive (true);
 		WorldPrefab.SetActive (true);
+
+		if(toDoor)
+		{
+			Invoke ("activateStairs", 0.5f);
+		}
 	}
 
 	protected void deActivateWorld ()
@@ -664,13 +781,12 @@ public class MapManager : MonoBehaviour
 
 	protected FriendInfo isThereAnyFriendOnLevel(int world, string level)
 	{
-		print ("isThereAnyFriendOnLevel "+level + " "+world);
 		return friendsOnWorldManager.getFriendOnLevel (world, level);
 	}
 
 	protected void getFriendsOnMap(int world)
 	{
-		if(FBLoggin.GetInstance().isLoggedIn)
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 		{
 			FriendsOnWorld friendsOnWorld = friendsOnWorldManager.existFriendsOnWorld (world.ToString ());
 
@@ -684,6 +800,38 @@ public class MapManager : MonoBehaviour
 				}
 				friendsOnWorld = friendsOnWorldManager.getNewFriendsOnWorld (world.ToString(), test.ToArray (), facebokId);
 			}
+		}
+	}
+
+	protected void initializeWorldsPopUpInfo()
+	{
+		WorldsPopUp worldsPopUp = popUpManager.getPopupByName ("worldsPopUp").GetComponent<WorldsPopUp> ();
+
+		List<WorldData> worldData = KuberaDataManager.GetCastedInstance<KuberaDataManager> ().currentUser.worlds;
+		int starsObtained =0;
+
+		int levelsInWorld = KuberaDataManager.GetCastedInstance<KuberaDataManager> ().getLevelsOfWorld (currentWorld).Length;
+
+		for(int i=0; i<KuberaDataManager.GetCastedInstance<KuberaDataManager> ().getWorldCount (); i++)
+		{
+			if(worldData.Count > i)
+			{
+				for(int j=0; j<worldData[i].levels.Count; j++)
+				{
+					starsObtained += worldData [i].levels [j].stars;
+				}
+				worldsPopUp.initializeMiniWorld (i, true, starsObtained, worldData [i].levels.Count * 3);
+				starsObtained = 0;
+			}
+			else if(currentWorld > i)
+			{
+				worldsPopUp.initializeMiniWorld (i, true, 0,KuberaDataManager.GetCastedInstance<KuberaDataManager> ().getLevelsCountByWorld(i)  * 3);
+			}
+			else
+			{
+				worldsPopUp.initializeMiniWorld (i, false, 0,0);
+			}
+
 		}
 	}
 }

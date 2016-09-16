@@ -8,6 +8,7 @@ public class WordHintPowerUp : PowerupBase {
 	protected InputBombAndDestroy powerUpInput;
 	protected GameManager gameManager;
 	protected WordManager wordManager;
+	public AnimatedSprite animatedSprite;
 
 	protected bool canUse;
 	protected bool canActivate;
@@ -19,6 +20,7 @@ public class WordHintPowerUp : PowerupBase {
 		wordManager = FindObjectOfType<WordManager>();
 		cellsManager = FindObjectOfType<CellsManager>();
 		powerUpInput = FindObjectOfType<InputBombAndDestroy>();
+
 	}
 
 	public override void activate(bool canUse)
@@ -38,6 +40,7 @@ public class WordHintPowerUp : PowerupBase {
 		this.canUse = canUse;
 
 		updateDragableObjectImage (powerUpGO);
+
 		if(wordManager.checkIfAWordIsPossible(gameManager.getGridCharacters()))
 		{
 			canActivate = true;
@@ -65,6 +68,11 @@ public class WordHintPowerUp : PowerupBase {
 					powerUpInput.OnDrop -= powerUpPositioned;
 					powerUpInput.enabled = false;
 					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WORD_HINT);
+					if(AudioManager.GetInstance())
+					{
+						AudioManager.GetInstance().Stop("helpPositonated");
+						AudioManager.GetInstance().Play("helpPositonated");
+					}
 					OnComplete ();
 				} 
 				else 

@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class MapLevel : MonoBehaviour 
 {
@@ -52,11 +53,14 @@ public class MapLevel : MonoBehaviour
 	public int starsNeeded;
 
 	public GameObject facebookBackground;
-	public Image facebookFriend;
-	public FriendPicture friend;
+	public RectTransform facebookBackgroundRect;
+	public Image fbImage;
+	public FBPicture fbPicture;
 
 	public delegate void DOnClickNotification(MapLevel pressed);
 	public DOnClickNotification OnClickNotification;
+
+	public bool nextLevelIsReached;
 
 	public void updateText()
 	{
@@ -100,7 +104,6 @@ public class MapLevel : MonoBehaviour
 		{
 			if (i < until) 
 			{
-				print (levelStars[i].name);
 				levelStars [i].gameObject.SetActive (true);
 				levelStars [i].sprite = starsPassed;
 			}
@@ -138,8 +141,8 @@ public class MapLevel : MonoBehaviour
 
 	public void updateFacebookFriendPicture(FriendInfo friendInfo)
 	{
-		friend = facebookBackground.GetComponent < FriendPicture>();
-		friend.fbId = friendInfo.facebookID;
+		fbPicture = facebookBackground.GetComponent <FBPicture>();
+		fbPicture.fbId = friendInfo.facebookID;
 
 		Invoke ("pictureRequest", 0.5f);
 	}
@@ -147,25 +150,62 @@ public class MapLevel : MonoBehaviour
 	protected void pictureRequest()
 	{
 		facebookBackground.SetActive (true);
-		Sprite image = friend.getPicture();
+		Sprite image = fbPicture.getPicture();
 		if(image != null)
 		{
-			facebookFriend.sprite = image;
+			fbImage.sprite = image;
 		}
 		else
 		{
 			//TODO poner imagen de reload
-			friend.OnFound += pictureFound;
+			fbPicture.OnFound += pictureFound;
 		}
 	}
 
 	protected void pictureFound(Sprite picture)
 	{
-		facebookFriend.sprite = picture;
+		fbImage.sprite = picture;
+	}
+
+	public void noFriend()
+	{
+		facebookBackground.SetActive (false);
+	}
+
+	public void myProgress(bool isConectedToFacebook)
+	{
+		facebookBackground.SetActive (true);
+		if(isConectedToFacebook)
+		{
+			fbPicture = facebookBackground.GetComponent <FBPicture>();
+			fbPicture.fbId = Kubera.Data.Sync.KuberaSyncManger.GetCastedInstance<Kubera.Data.Sync.KuberaSyncManger>().facebookUserId;
+
+			Invoke ("pictureRequest", 0.5f);
+		}
+	}
+
+	public void moveProgress(MapLevel nextLevel)
+	{
+		//facebookBackground.transform.DOShakePosition (1000);
+		facebookBackground.transform.SetParent (nextLevel.gameObject.transform,true);
+
+		facebookBackgroundRect.anchorMax = nextLevel.facebookBackgroundRect.anchorMax;
+		facebookBackgroundRect.anchorMin = nextLevel.facebookBackgroundRect.anchorMin;
+
+		facebookBackground.transform.DOLocalMove (nextLevel.facebookBackground.transform.localPosition, 1.5f).OnComplete(()=>
+			{
+				facebookBackground.transform.SetSiblingIndex (0); 
+
+				FindObjectOfType<ParalaxManager>().finish();
+			});
 	}
 
 	public void onClick()
 	{
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Play("fxButton");
+		}
 		if (OnClickNotification != null) 
 		{
 			OnClickNotification (this);

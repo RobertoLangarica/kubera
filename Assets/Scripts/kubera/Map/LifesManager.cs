@@ -3,8 +3,10 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Kubera.Data;
+using Kubera.Data.Sync;
 
-public class LifesManager : MonoBehaviour 
+public class LifesManager : Manager<LifesManager> 
 {
 	public List<Text> lifesCount = new List<Text> ();
 	public List<Text> lifesTimer = new List<Text> ();
@@ -16,12 +18,16 @@ public class LifesManager : MonoBehaviour
 	protected int currentSeconds = 60;
 	protected float updateLifeTimer;
 
+	protected string life1NotificationID;
+	private KuberaDataManager dataManager;
 
 	void Start()
 	{
 		showTimer = false;
 
-		if (UserDataManager.instance.playerLifes < UserDataManager.instance.maximumLifes) 
+		dataManager = (KuberaDataManager.GetInstance () as KuberaDataManager);
+
+		if (currentUser.playerLifes < currentUser.maximumLifes) 
 		{
 			updateLifesSinceLastPlay ();
 		}
@@ -64,16 +70,50 @@ public class LifesManager : MonoBehaviour
 		}*/
 	}
 
+	public KuberaUser currentUser{get{return dataManager.currentUser;}}
+
 	public void takeALife()
 	{
-		if (UserDataManager.instance.playerLifes == UserDataManager.instance.maximumLifes) 
+		KuberaUser tempUsr = currentUser;
+		
+		if (tempUsr.playerLifes == tempUsr.maximumLifes) 
 		{
 			setLifeDate ();
 		}
 
-		UserDataManager.instance.giveLifeToPlayer (-1);
+		(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (-1);
 
 		//setLifeDate ();
+
+		//LocalNotification*******De cuando se queda sin vidas y gana 1 vida
+		if (tempUsr.playerLifes == 0) 
+		{
+			List<WorldData> worldData = tempUsr.worlds;
+			int currentLevel = 1;
+
+
+			if (worldData.Count != 0) 
+			{
+				currentLevel = worldData [worldData.Count - 1].levels.Count;
+				currentLevel++;				
+			}
+
+			life1NotificationID = (LocalNotificationManager.GetInstance () as LocalNotificationManager).modifyAndScheduleNotificationByName (
+				villavanilla.Notifications.ERegisteredNotification.LIFE_1,
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.NOTIFICATION_LIFE1).Replace ("{{level}}", currentLevel.ToString ()),
+				"Kubera", timeForLifeInMinutes * 60.0);
+		}
+	}
+
+	public void giveALife()
+	{
+		gotALife ();
+
+		//CancelLocalNotification*******De cuando se queda sin vidas y gana 1 vida
+		if (currentUser.playerLifes == 1) 
+		{
+			(LocalNotificationManager.GetInstance () as LocalNotificationManager).cancelScheduledNotification(life1NotificationID);
+		}
 	}
 
 	protected void updateLifesSinceLastPlay()
@@ -83,6 +123,7 @@ public class LifesManager : MonoBehaviour
 		double difference = 0;
 		int minutes = 0;
 		int lifesGained = 0;
+		KuberaUser tempUsr = currentUser;
 
 		if (toWait > sinceLastPlay) 
 		{
@@ -96,12 +137,12 @@ public class LifesManager : MonoBehaviour
 			if (lifesGained > 0) 
 			{
 				Debug.Log (lifesGained);
-				UserDataManager.instance.giveLifeToPlayer (lifesGained);
+				(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (lifesGained);
 
 				updateDateOnData (lifesGained);
 			}
 
-			int missingLifes = UserDataManager.instance.maximumLifes - UserDataManager.instance.playerLifes;
+			int missingLifes = tempUsr.maximumLifes - tempUsr.playerLifes;
 
 			difference -= (missingLifes - 1) * (60 * timeForLifeInMinutes);
 
@@ -117,18 +158,38 @@ public class LifesManager : MonoBehaviour
 		} 
 		else 
 		{
-			UserDataManager.instance.giveLifeToPlayer (UserDataManager.instance.maximumLifes);
+			(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (tempUsr.maximumLifes);
+		}
+	}
+
+	public double getTimeToWait()
+	{
+		if (currentUser.playerLifes >= currentUser.maximumLifes) 
+		{
+			return 0;
+		}
+
+		double toWait = calculateTotalWaitingTime ();
+		double sinceLastPlay = lifeDateDifferenceInSecs ();
+
+		if (toWait > sinceLastPlay) 
+		{
+			return (toWait - sinceLastPlay);
+		}
+		else 
+		{
+			return 0;
 		}
 	}
 
 	protected double calculateTotalWaitingTime()
 	{
-		return (double)(timeForLifeInMinutes * (UserDataManager.instance.maximumLifes - UserDataManager.instance.playerLifes) * 60);
+		return (double)(timeForLifeInMinutes * (currentUser.maximumLifes - currentUser.playerLifes) * 60);
 	}
 
 	protected double lifeDateDifferenceInSecs()
 	{
-		DateTime lastDate = DateTime.ParseExact (UserDataManager.instance.lifeTimerDate,"dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+		DateTime lastDate = DateTime.ParseExact (currentUser.lifeTimerDate,"dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
 		TimeSpan? span = DateTime.UtcNow - lastDate;
 
@@ -159,9 +220,9 @@ public class LifesManager : MonoBehaviour
 
 	protected void gotALife()
 	{
-		UserDataManager.instance.giveLifeToPlayer ();
+		(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes ();
 
-		if (UserDataManager.instance.playerLifes == UserDataManager.instance.maximumLifes) 
+		if (currentUser.playerLifes == currentUser.maximumLifes) 
 		{
 			showTimer = false;	
 		} 
@@ -195,7 +256,7 @@ public class LifesManager : MonoBehaviour
 		{
 			for (int i = 0; i < lifesCount.Count; i++) 
 			{
-				lifesCount[i].text = UserDataManager.instance.playerLifes.ToString ();
+				lifesCount[i].text = currentUser.playerLifes.ToString ();
 			}
 		}
 	}
@@ -204,16 +265,16 @@ public class LifesManager : MonoBehaviour
 	{
 		DateTime lastDate = DateTime.UtcNow;
 
-		UserDataManager.instance.lifeTimerDate = lastDate.ToString ("dd-MM-yyyy HH:mm:ss");
+		currentUser.lifeTimerDate = lastDate.ToString ("dd-MM-yyyy HH:mm:ss");
 	}
 
 	protected void updateDateOnData(int lifesRegained)
 	{
-		DateTime lastDate = DateTime.ParseExact (UserDataManager.instance.lifeTimerDate,"dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+		DateTime lastDate = DateTime.ParseExact (currentUser.lifeTimerDate,"dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
 		lastDate = lastDate.AddSeconds (lifesRegained * timeForLifeInMinutes *60);
 
-		UserDataManager.instance.lifeTimerDate = lastDate.ToString ("dd-MM-yyyy HH:mm:ss");
+		currentUser.lifeTimerDate = lastDate.ToString ("dd-MM-yyyy HH:mm:ss");
 	}
 
 	protected string numberToTimeFormat(int number)

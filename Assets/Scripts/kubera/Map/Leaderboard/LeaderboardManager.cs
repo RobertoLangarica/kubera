@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Kubera.Data.Sync;
 
 public class LeaderboardManager : MonoBehaviour {
 
@@ -22,12 +23,12 @@ public class LeaderboardManager : MonoBehaviour {
 
 	void Update()
 	{
-		if(Input.GetKeyDown(KeyCode.C))
+		/*if(Input.GetKeyDown(KeyCode.C))
 		{
 			print (FacebookPersistentData.GetInstance ().getFriendNameById ("10154899709081808"));
 			print (FacebookPersistentData.GetInstance ().getSpritePictureById ("10154899709081808"));
 			
-		}
+		}*/
 	}
 
 	protected LevelLeaderboard existLeaderboard(string id)
@@ -79,7 +80,7 @@ public class LeaderboardManager : MonoBehaviour {
 		leaderboard.parent = parent;
 
 		test[] test = null;
-		if(!FBLoggin.GetInstance().isLoggedIn)
+		if(!KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 		{
 			test = new test[Random.Range(3,6)];
 		}
@@ -148,6 +149,7 @@ public class LeaderboardManager : MonoBehaviour {
 
 	public void moveCurrentLeaderboardSlots(Transform parent)
 	{
-		currentLeaderboard.moveSlots (parent);
+		if(currentLeaderboard!=null)
+		{currentLeaderboard.moveSlots (parent);}
 	}
 }
