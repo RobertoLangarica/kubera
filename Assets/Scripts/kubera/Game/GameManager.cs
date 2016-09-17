@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
 			ScreenManager.instance.testLoading ("Levels");
 		}
 		yield return new WaitForEndOfFrame ();
-		if(ScreenManager.instance)
+		if(ScreenManager.instance && !PersistentData.GetInstance().fromLevelBuilder)
 		{
 			ScreenManager.instance.sceneFinishLoading ();
 		}

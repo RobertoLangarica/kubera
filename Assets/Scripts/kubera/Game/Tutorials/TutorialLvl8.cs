@@ -43,6 +43,11 @@ public class TutorialLvl8 : TutorialBase
 		switch (phase) 
 		{
 		case(0):
+			if(cellManager == null)
+			{
+				cellManager = FindObjectOfType<CellsManager> ();
+			}
+			
 			posFrom = fromPosition.transform.position;
 			posTo = cellManager.getAllShowedCels()[11].transform.position;
 
@@ -69,6 +74,10 @@ public class TutorialLvl8 : TutorialBase
 			phase = 1;
 			return true;
 		case(1):
+			if(inputBomb == null)
+			{
+				inputBomb = FindObjectOfType<InputBombAndDestroy> ();
+			}
 			inputBomb.OnPlayer -= animation;
 
 			phasesPanels [0].SetActive (false);
@@ -117,12 +126,12 @@ public class TutorialLvl8 : TutorialBase
 
 	protected void powerUpAnim()
 	{
+		print ("powerUpAnim");
 		if (!doAnimation) 
 		{
 			DOTween.Kill ("Tutorial8",true);
 			return;
 		}
-
 
 
 		powerUpDommy.transform.position = posFrom;
