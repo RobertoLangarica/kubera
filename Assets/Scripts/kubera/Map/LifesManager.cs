@@ -28,6 +28,11 @@ public class LifesManager : Manager<LifesManager>
 
 		dataManager = (KuberaDataManager.GetInstance () as KuberaDataManager);
 
+		if (PersistentData.GetInstance ().fromLevelBuilder) 
+		{
+			return;
+		}
+
 		if (currentUser.playerLifes < dataManager.initialLifes) 
 		{
 			if (currentUser.lifeTimerDate != "") 
