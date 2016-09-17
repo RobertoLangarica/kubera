@@ -88,7 +88,7 @@
 		</text>
 		<text id="exitText">
 			<languages>
-				<language id="english" text="You click exit button."/>
+				<language id="english" text="You tapped the exit button."/>
 				<language id="spanish" text="Presionaste el boton de salida"/>
 				<language id="default" text="Presionaste el boton de salida"/>
 			</languages>
@@ -102,7 +102,7 @@
 		</text>
 		<text id="Tutorial_lvl1_phase2">
 			<languages>
-				<language id="english" text="Tap letters to form a correct word like {{b}}FELIZ{{/b}}."/>
+				<language id="english" text="Tap letters to form a correct word like {{b}}HAPPY{{/b}}."/>
 				<language id="spanish" text="Toca las letras para formar una palabra correcta, por ejemplo: {{b}}FELIZ{{/b}}."/>
 				<language id="default" text="Toca las letras para formar una palabra correcta, por ejemplo: {{b}}FELIZ{{/b}}."/>
 			</languages>
@@ -123,7 +123,7 @@
 		</text>
 		<text id="Tutorial_lvl2_phase2">
 			<languages>
-				<language id="english" text="You've got {{points}} out of {{neededPoints}} point, get the remaining points to pass the level."/>
+				<language id="english" text="You've got {{points}} out of {{neededPoints}} points, get the remaining points to pass the level."/>
 				<language id="spanish" text="Llevas {{points}} de {{neededPoints}} puntos, haz los puntos restantes para completar el nivel."/>
 				<language id="default" text="Llevas {{points}} de {{neededPoints}} puntos, haz los puntos restantes para completar el nivel."/>
 			</languages>
@@ -144,16 +144,16 @@
 		</text>
 		<text id="Tutorial_lvl2_phase5">
 			<languages>
-				<language id="english" text="{{b}}Remember:{{/b}} /n You get point by placing a piece, making a line and forming words."/>
+				<language id="english" text="{{b}}Remember:{{/b}} /n You get points by placing a piece, making a line or forming words."/>
 				<language id="spanish" text="{{b}}Recuerda:{{/b}} /n Obtienes puntos al colocar una pieza, hacer una línea o formar una palabra."/>
 				<language id="default" text="{{b}}Recuerda:{{/b}} /n Obtienes puntos al colocar una pieza, hacer una línea o formar una palabra."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl3_phase1">
 			<languages>
-				<language id="english" text="Drag {{b}}HELP{{/b}} to the board to find out what word you can form with your letters."/>
-				<language id="spanish" text="Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes formar con tus letras."/>
-				<language id="default" text="Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes formar con tus letras."/>
+				<language id="english" text="Drag {{b}}HELP{{/b}} to the board to find out a word you can form with your letters."/>
+				<language id="spanish" text="Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes hacer con tus letras."/>
+				<language id="default" text="Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes hacer con tus letras."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl3_phase2">
@@ -172,7 +172,7 @@
 		</text>
 		<text id="Tutorial_lvl3_phase4">
 			<languages>
-				<language id="english" text="Remember: /n Drag {{b}}HELP{{/b}} to the board to find out what word you can form with your current letters."/>
+				<language id="english" text="Remember: /n Drag {{b}}HELP{{/b}} to the board to find out a word you can form with your letters."/>
 				<language id="spanish" text="Recuerda: /n Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes hacer con tus letras."/>
 				<language id="default" text="Recuerda: /n Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes hacer con tus letras."/>
 			</languages>

@@ -510,7 +510,10 @@ public class FacebookManager : Manager<FacebookManager>
 
 	void OnDestroy() 
 	{
-		KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.OnLoginSuccessfull -= OnLoginComplete;
+		if (KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ()) 
+		{
+			KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.OnLoginSuccessfull -= OnLoginComplete;
+		}
 
 		fbGraph.OnPlayerInfo -= showPlayerInfo;
 		fbGraph.OnGetGameFriends -= addGameFriends;

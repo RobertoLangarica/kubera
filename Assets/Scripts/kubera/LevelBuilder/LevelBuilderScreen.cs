@@ -100,8 +100,9 @@ namespace LevelBuilder
 			gridEditor.Inititalize();
 
 			//HUD por default
-			//resetEditorToDefaultState(UserDataManager.instance.language);
-			resetEditorToDefaultState("spanish");
+			resetEditorToDefaultState(UserDataManager.instance.language);
+			//resetEditorToDefaultState("english");
+			OnLanguageSelected();
 
 			//Nombre del siguiente nivel (el inmediato siguiente)
 			setcurrentEditingNameToTheLast();
