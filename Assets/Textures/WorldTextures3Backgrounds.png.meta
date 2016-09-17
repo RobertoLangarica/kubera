@@ -13,6 +13,17 @@ TextureImporter:
     21300012: "K-8-MapaJoyer\xEDa_techo"
     21300014: K-9-Mapaperfumeria_fondo
     21300016: K-6-MapaMaquillaje_fondo
+    21300018: 1-fondoGame-Musica
+    21300020: 2-fondoGame-Mascotas
+    21300022: 3-fondoGame-Ropa
+    21300024: 4-fondoGame-libros
+    21300026: 5-fondoGame-Zapatos
+    21300028: 6-fondoGame-Maquillaje
+    21300030: 7-fondoGame-Deportes
+    21300032: 8-fondoGame-joyeria
+    21300034: 9-fondoGame-perfumes
+    21300036: cuadrosFondo
+    21300038: K-magia-del-gamplay
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

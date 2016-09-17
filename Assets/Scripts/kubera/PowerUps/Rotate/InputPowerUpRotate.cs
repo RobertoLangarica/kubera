@@ -140,7 +140,7 @@ public class InputPowerUpRotate : MonoBehaviour
 		if (!currentSelected && allowInput && gesture.Raycast.Hits2D != null) 
 		{
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
-			offsetPositionOverFinger.y = Mathf.Round (gesture.Raycast.Hit2D.collider.bounds.size.y * 20) * .10f;
+			offsetPositionOverFinger.y = Mathf.Round ((gesture.Raycast.Hit2D.collider.bounds.size.y - 0.15f) * 15) * .10f;
 		//currentSelected.transform.DOMove(overFingerPosition,.1f).SetId("Input_SelectedPosition");
 
 		}

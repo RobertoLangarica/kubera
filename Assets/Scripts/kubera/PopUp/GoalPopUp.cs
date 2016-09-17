@@ -63,7 +63,7 @@ public class GoalPopUp : PopUpBase {
 		setStartingPlaces ();
 
 		int maxSize = 5;
-		if(((goalLettersContainer.GetComponent<RectTransform> ().rect.width/maxSize )-gridLayoutGroup.padding.left) < goalLettersContainer.GetComponent<RectTransform> ().rect.height *.8f)
+		if(((goalLettersContainer.GetComponent<RectTransform> ().rect.width/maxSize )-gridLayoutGroup.padding.left) < goalLettersContainer.GetComponent<RectTransform> ().rect.height *.75f)
 		{
 			gridLayoutGroup.cellSize = new Vector2((goalLettersContainer.GetComponent<RectTransform> ().rect.width/maxSize )-5
 				,(goalLettersContainer.GetComponent<RectTransform> ().rect.width/maxSize )-5);

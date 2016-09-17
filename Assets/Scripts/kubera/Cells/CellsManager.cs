@@ -23,6 +23,10 @@ public class CellsManager : MonoBehaviour
 
 	public Color firstCellCollor = new Color (0.39f, 0.79f, 0.81f);
 	public Color secondCellCollor = new Color (0.42f, 0.83f, 0.87f);
+
+	public Color[] firstCollors;
+	public Color[] secondCollors;
+
 	public Frame frame;
 
 	//Todas las celdas del grid
@@ -34,6 +38,12 @@ public class CellsManager : MonoBehaviour
 		{
 			getAvailableVerticalAndHorizontalLines ();
 		}
+	}
+
+	public void setColorIndex(int colorIndex)
+	{
+		firstCellCollor = firstCollors [colorIndex];
+		secondCellCollor = secondCollors [colorIndex];
 	}
 
 	/*

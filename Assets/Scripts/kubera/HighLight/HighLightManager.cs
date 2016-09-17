@@ -29,7 +29,8 @@ public class HighLightManager : Manager<HighLightManager>
 		WORD_HINT_BUTTON,
 		SPECIFIC_CELL,
 		GEMS,
-		POWER_UPS_AREA
+		POWER_UPS_AREA,
+		ALL_POPUPS
 	}
 
 	public enum EHighLightStatus
@@ -203,6 +204,14 @@ public class HighLightManager : Manager<HighLightManager>
 			break;
 		case(EHighLightType.GEMS):
 			turnOnHighLights (hudManager.GemsChargeGO.transform.parent,EHighLightStatus.NORMAL);
+			break;
+		case(EHighLightType.ALL_POPUPS):
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.HINT_WORD).powerUpButton,EHighLightStatus.NORMAL);
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.WILDCARD).powerUpButton,EHighLightStatus.NORMAL);
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.BLOCK).powerUpButton,EHighLightStatus.NORMAL);
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.DESTROY).powerUpButton,EHighLightStatus.NORMAL);
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.BOMB).powerUpButton,EHighLightStatus.NORMAL);
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.ROTATE).powerUpButton,EHighLightStatus.NORMAL);
 			break;
 		}
 	}

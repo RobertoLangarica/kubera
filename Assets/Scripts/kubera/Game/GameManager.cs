@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
 	public List<int> linesCreatedPoints = new List<int> ();
 
 	public InputPowerUpRotate inputRotate;
+	public float checkIfLoseSeconds = 5;
 
 	protected int sizeGridX = 8;
 	protected int sizeGridY = 8;
@@ -136,7 +137,7 @@ public class GameManager : MonoBehaviour
 		{
 			configureLevel(PersistentData.GetInstance().currentLevel);
 		}
-
+		hudManager.setWorldBackground (currentLevel.world-1);
 		populateGridFromLevel(currentLevel);
 		cellManager.createFrame ();
 
@@ -177,7 +178,7 @@ public class GameManager : MonoBehaviour
 		}
 		if (Input.GetKeyUp (KeyCode.Z)) 
 		{
-			onUsersAction (0, 1);
+			onUsersAction (0, 29);
 			//activatePopUp ("noOptionsPopUp");
 			//onUsersAction (0);
 		}
@@ -222,6 +223,7 @@ public class GameManager : MonoBehaviour
 
 		remainingMoves = totalMoves = currentLevel.moves;
 	
+		cellManager.setColorIndex (currentLevel.world-1);
 		cellManager.resizeGrid(sizeGridX,sizeGridY);
 
 		//LetterSize       
@@ -280,7 +282,7 @@ public class GameManager : MonoBehaviour
 			{
 				//Cuadro de color
 				Piece content = pieceManager.getSingleSquarePiece(cellType>>6);
-				content.squares [0].GetComponent<Collider2D> ().enabled = true;
+				content.squares [0].GetComponent<Collider2D> ().enabled = false;
 				cellManager.occupyAndConfigureCell(i,content.gameObject.transform.GetChild (0).gameObject,content.currentType,content.currentColor,true);
 				content.gameObject.transform.SetParent (hudManager.showingPiecesContainer);
 			}
@@ -682,7 +684,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 		print (totalLines);
-		if(totalLines > linesCreatedPoints.Count)
+		if(totalLines > linesCreatedPoints.Count-1)
 		{
 			totalLines = linesCreatedPoints.Count-1;
 		}
@@ -746,7 +748,7 @@ public class GameManager : MonoBehaviour
 
 		if(!gameOver && (remainingMoves <= 0 || !wordManager.checkIfAWordIsPossible(gridCharacters)))
 		{
-			allowGameInput (false);
+			allowGameInput (false,true);
 			Debug.Log ("Perdio de verdad");
 			
 			if(AudioManager.GetInstance())
@@ -1052,7 +1054,10 @@ public class GameManager : MonoBehaviour
 	protected void toLevels()
 	{
 		activateMusic (false);
-		ScreenManager.instance.testContinue();
+		if(ScreenManager.instance)
+		{
+			ScreenManager.instance.testContinue();
+		}
 
 		//ScreenManager.instance.GoToScene ("Levels");
 	}
@@ -1257,7 +1262,7 @@ public class GameManager : MonoBehaviour
 			LifesManager.GetInstance ().takeALife ();
 			break;
 		case "endGame":
-			//toLevels ();
+			toLevels ();
 			break;
 		case "winPopUpEnd":
 			if(cancelBonify)
@@ -1279,6 +1284,12 @@ public class GameManager : MonoBehaviour
 			break;
 		case "NoGemsPopUp":
 			activatePopUp ("NoGemsPopUp");
+			break;
+		case "checkInSeconds":
+			Invoke ("checkIfLose", checkIfLoseSeconds);
+			allowGameInput ();
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.ALL_POPUPS);
+
 			break;
 		default:		
 			//print ("quien lo llama?");
@@ -1303,8 +1314,8 @@ public class GameManager : MonoBehaviour
 		PersistentData.GetInstance().startLevel -= 1;
 		PersistentData.GetInstance ().fromLoose = true;
 		PersistentData.GetInstance ().fromGameToLevels = true;
-		//activatePopUp ("exitGame");
-		toLevels ();
+		activatePopUp ("exitGame");
+		//toLevels ();
 		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		activatePopUp ("exitGame");*/
 	}

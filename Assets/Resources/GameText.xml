@@ -32,16 +32,16 @@
 		</text>
 		<text id="secondChanceTitle">
 			<languages>
-				<language id="english" text="You were so close"/>
-				<language id="spanish" text="Casi lo logras"/>
-				<language id="default" text="Casi lo logras"/>
+				<language id="english" text="You were so close!"/>
+				<language id="spanish" text="¡Casi lo logras!"/>
+				<language id="default" text="¡Casi lo logras!"/>
 			</languages>
 		</text>
 		<text id="noOptionsGameContinue">
 			<languages>
-				<language id="english" text="CONTINUE"/>
-				<language id="spanish" text="CONTINUAR"/>
-				<language id="default" text="CONTINUAR"/>
+				<language id="english" text="USE POWER UP"/>
+				<language id="spanish" text="USAR POWER UP"/>
+				<language id="default" text="USAR POWER UP"/>
 			</languages>
 		</text>
 		<text id="noOptionsGameGiveUp">

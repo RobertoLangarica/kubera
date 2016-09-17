@@ -36,6 +36,7 @@ public class WildCardPowerUp : PowerupBase
 		powerUpGO.name = "WildPowerUp";
 		powerUpGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
 		powerUpGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
+		powerUpGO.transform.localScale = new Vector3 (4, 4, 4);
 
 		inputPowerUp.enabled = true;
 		inputPowerUp.setCurrentSelected(powerUpGO);
