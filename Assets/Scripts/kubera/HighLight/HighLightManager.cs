@@ -29,7 +29,8 @@ public class HighLightManager : Manager<HighLightManager>
 		WORD_HINT_BUTTON,
 		SPECIFIC_CELL,
 		GEMS,
-		POWER_UPS_AREA
+		POWER_UPS_AREA,
+		ALL_POPUPS
 	}
 
 	public enum EHighLightStatus
@@ -143,7 +144,7 @@ public class HighLightManager : Manager<HighLightManager>
 			break;
 		case(EHighLightType.ROTATE_POWERUP):
 		case(EHighLightType.PIECES_AREA):
-			turnOnHighLights (hudManager.rotationImagePositions[0].parent.parent,EHighLightStatus.NORMAL);
+			turnOnHighLights (hudManager.rotationImagePositions[0].parent,EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.SQUARE_POWERUP):
 		case(EHighLightType.EMPTY_CELLS):
@@ -172,7 +173,7 @@ public class HighLightManager : Manager<HighLightManager>
 			turnOnHighLights (wordManager.wordCompleteButton.transform,EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.OBJECTIVE):
-			turnOnHighLights (hudManager.goalText.transform.parent,EHighLightStatus.NORMAL);
+			turnOnHighLights (hudManager.goalText.transform.parent.parent,EHighLightStatus.NORMAL);
 			break;
 		case(EHighLightType.MOVEMENTS):
 			turnOnHighLights (hudManager.movementsText.transform.parent,EHighLightStatus.NORMAL);
@@ -203,6 +204,14 @@ public class HighLightManager : Manager<HighLightManager>
 			break;
 		case(EHighLightType.GEMS):
 			turnOnHighLights (hudManager.GemsChargeGO.transform.parent,EHighLightStatus.NORMAL);
+			break;
+		case(EHighLightType.ALL_POPUPS):
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.HINT_WORD).powerUpButton,EHighLightStatus.NORMAL);
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.WILDCARD).powerUpButton,EHighLightStatus.NORMAL);
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.BLOCK).powerUpButton,EHighLightStatus.NORMAL);
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.DESTROY).powerUpButton,EHighLightStatus.NORMAL);
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.BOMB).powerUpButton,EHighLightStatus.NORMAL);
+			turnOnHighLights (powerUpManager.getPowerupByType(PowerupBase.EType.ROTATE).powerUpButton,EHighLightStatus.NORMAL);
 			break;
 		}
 	}

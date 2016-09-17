@@ -52,15 +52,7 @@ public class KuberaLocalNotifications : MonoBehaviour
 		//86400 sconds per day
 
 		//3 days
-		List<WorldData> worldData = KuberaDataManager.GetCastedInstance<KuberaDataManager> ().currentUser.worlds;
-		int currentLevel = 1;
-
-
-		if (worldData.Count != 0) 
-		{
-			currentLevel = worldData [worldData.Count - 1].levels.Count;
-			currentLevel++;				
-		}
+		int currentLevel = KuberaDataManager.GetCastedInstance<KuberaDataManager> ().currentUser.levels.Count + 1;
 
 		(LocalNotificationManager.GetInstance () as LocalNotificationManager).modifyAndScheduleNotificationByName (
 			villavanilla.Notifications.ERegisteredNotification.NO_PLAYING_GAMES,

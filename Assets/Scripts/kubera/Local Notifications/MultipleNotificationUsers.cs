@@ -16,7 +16,7 @@ namespace Data
 
 		public NotificationUser getUserById(string id)
 		{
-			return users.Find(item=>item.id == id);
+			return users.Find(item=>item._id == id);
 		}
 	}
 }

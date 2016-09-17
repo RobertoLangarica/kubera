@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using Kubera.Data;
 using Kubera.Data.Sync;
 
 public class GoalPopUp : PopUpBase {
@@ -13,8 +14,8 @@ public class GoalPopUp : PopUpBase {
 	public Text goalTextLetters;
 
 	public Text LevelNumber;
-	public Text LevelText;
 	public Text inviteFriendsText;
+	public Text playText;
 
 	public Transform goalLettersContainer;
 
@@ -46,9 +47,14 @@ public class GoalPopUp : PopUpBase {
 
 	public GridLayoutGroup FriendsgridLayoutGroup;
 
+	public Sprite[] worldTopBackground;
+	public Sprite[] worldIcon;
+	public Image topLevelImage;
+	public Image topIcon;
+
 	void Start()
 	{
-		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.10f);
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.225f, Screen.height * 0.1675f);
 
 		//TODO checar login a facebook
 		fbLogin ();
@@ -57,7 +63,7 @@ public class GoalPopUp : PopUpBase {
 		setStartingPlaces ();
 
 		int maxSize = 5;
-		if(((goalLettersContainer.GetComponent<RectTransform> ().rect.width/maxSize )-gridLayoutGroup.padding.left) < goalLettersContainer.GetComponent<RectTransform> ().rect.height *.8f)
+		if(((goalLettersContainer.GetComponent<RectTransform> ().rect.width/maxSize )-gridLayoutGroup.padding.left) < goalLettersContainer.GetComponent<RectTransform> ().rect.height *.75f)
 		{
 			gridLayoutGroup.cellSize = new Vector2((goalLettersContainer.GetComponent<RectTransform> ().rect.width/maxSize )-5
 				,(goalLettersContainer.GetComponent<RectTransform> ().rect.width/maxSize )-5);
@@ -68,7 +74,8 @@ public class GoalPopUp : PopUpBase {
 				,goalLettersContainer.GetComponent<RectTransform>().rect.height*.8f);
 		}
 
-
+		inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVE_POPUP_FACEBOOK);
+		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVE_POPUP_PLAY);
 	}
 
 	void Update()
@@ -98,7 +105,7 @@ public class GoalPopUp : PopUpBase {
 		startAnimation ();
 	}
 
-	public void setGoalPopUpInfo(string textA,string textB,int starsReached, List<string> letters = null, string levelName = "" , int aABLetterObjectives = 0)
+	public void setGoalPopUpInfo(string textA,string textB,int starsReached, List<string> letters = null, string levelName = "" , int aABLetterObjectives = 0,int currentWorld =0)
 	{
 		this.LevelNumber.text = levelName;
 		ABObjective.SetActive (false);
@@ -106,6 +113,8 @@ public class GoalPopUp : PopUpBase {
 		lettersObjective.SetActive (false);
 		resetStars ();
 
+		topLevelImage.sprite = worldTopBackground [currentWorld-1];
+		topIcon.sprite = worldIcon [currentWorld-1];
 
 		objective = aABLetterObjectives;
 		switch (objective) {
@@ -174,7 +183,14 @@ public class GoalPopUp : PopUpBase {
 	public void playGame()
 	{
 		soundButton ();
-		OnComplete ("playGame",false);
+		if ((KuberaDataManager.GetInstance () as KuberaDataManager).currentUser.playerLifes > 0) 
+		{
+			OnComplete ("playGame",false);
+		} 
+		else 
+		{
+			OnComplete ("NoLifes",false);
+		}
 	}
 
 	public void exit ()

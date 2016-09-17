@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <gameText>
 	<texts>
+		<!--
+		Home
+		-->
+		<text id="startGame">
+			<languages>
+				<language id="english" text="Play"/>
+				<language id="spanish" text="Juega"/>
+				<language id="default" text="Juega"/>
+			</languages>
+		</text>
+
+
+		<!--
+		Game	
+		-->
+		<text id="secondChanceGiveUp">
+			<languages>
+				<language id="english" text="GIVE UP"/>
+				<language id="spanish" text="RENDIRSE"/>
+				<language id="default" text="RENDIRSE"/>
+			</languages>
+		</text>
+		<text id="secondChanceRetry">
+			<languages>
+				<language id="english" text="PLAY"/>
+				<language id="spanish" text="JUGAR"/>
+				<language id="default" text="JUGAR"/>
+			</languages>
+		</text>
+		<text id="secondChanceTitle">
+			<languages>
+				<language id="english" text="You were so close!"/>
+				<language id="spanish" text="¡Casi lo logras!"/>
+				<language id="default" text="¡Casi lo logras!"/>
+			</languages>
+		</text>
+		<text id="noOptionsGameContinue">
+			<languages>
+				<language id="english" text="USE POWER UP"/>
+				<language id="spanish" text="USAR POWER UP"/>
+				<language id="default" text="USAR POWER UP"/>
+			</languages>
+		</text>
+		<text id="noOptionsGameGiveUp">
+			<languages>
+				<language id="english" text="GIVE UP"/>
+				<language id="spanish" text="RENDIRSE"/>
+				<language id="default" text="RENDIRSE"/>
+			</languages>
+		</text>
+		<text id="noOptionGameTitle">
+			<languages>
+				<language id="english" text="Use a power up or give up"/>
+				<language id="spanish" text="Usa un power up o rindete"/>
+				<language id="default" text="Usa un power up o rindete"/>
+			</languages>
+		</text>
 		<text id="hudLevel">
 			<languages>
 				<language id="english" text="LVL"/>
@@ -93,6 +150,17 @@
 				<language id="default" text="Presionaste el boton de salida"/>
 			</languages>
 		</text>
+		<text id="ticketFlavorText">
+			<languages>
+				<language id="english" text="****Thanks for your visit****"/>
+				<language id="spanish" text="****Gracias por tu visita****"/>
+				<language id="default" text="****Gracias por tu visita****"/>
+			</languages>
+		</text>
+
+		<!--
+		Game	
+		-->
 		<text id="Tutorial_lvl1_phase1">
 			<languages>
 				<language id="english" text="Drag a piece to make a line."/>
@@ -305,7 +373,7 @@
 		</text>
 		<text id="WinTextPopUpID">
 			<languages>
-				<language id="english" text="Objective completed!"/>
+				<language id="english" text="Goal reached!"/>
 				<language id="spanish" text="¡Objetivo completado!"/>
 				<language id="default" text="¡Objetivo completado!"/>
 			</languages>
@@ -326,9 +394,9 @@
 		</text>
 		<text id="noPiecesPopUpID">
 			<languages>
-				<language id="english" text="You ran out of options!"/>
-				<language id="spanish" text="¡Tablero saturado y sin opciones!"/>
-				<language id="default" text="¡Tablero saturado y sin opciones!"/>
+				<language id="english" text="There isn't a possible move!"/>
+				<language id="spanish" text="¡No hay jugadas posibles!"/>
+				<language id="default" text="¡No hay jugadas posibles!"/>
 			</languages>
 		</text>
 		<!--
@@ -350,9 +418,9 @@
 		</text>
 		<text id="goalByPointsObjectivePopUpA">
 			<languages>
-				<language id="english" text="Get"/>
-				<language id="spanish" text="Haz"/>
-				<language id="default" text="Haz"/>
+				<language id="english" text="GET"/>
+				<language id="spanish" text="HAZ"/>
+				<language id="default" text="HAZ"/>
 			</languages>
 		</text>
 		<text id="goalByPointsObjectivePopUpB">
@@ -364,24 +432,31 @@
 		</text>
 		<text id="goalByLettersObjectivePopUp">
 			<languages>
-				<language id="english" text="Use these letters"/>
-				<language id="spanish" text="Usa estas letras"/>
-				<language id="default" text="Usa estas letras"/>
+				<language id="english" text="USE"/>
+				<language id="spanish" text="USA"/>
+				<language id="default" text="USA"/>
 			</languages>
 		</text>
-		<text id="goalByObstaclesObjectivePopUp">
+		<text id="goalByObstaclesObjectivePopUpA">
 			<languages>
-				<language id="english" text="Use all the black letters"/>
-				<language id="spanish" text="Usa todas las letras negras"/>
-				<language id="default" text="Usa todas las letras negras"/>
+				<language id="english" text="USE"/>
+				<language id="spanish" text="USA"/>
+				<language id="default" text="USA"/>
+			</languages>
+		</text>
+		<text id="goalByObstaclesObjectivePopUpB">
+			<languages>
+				<language id="english" text="{{blackLetters}} black letters"/>
+				<language id="spanish" text="{{blackLetters}} letras negras"/>
+				<language id="default" text="{{blackLetters}} letras negras"/>
 			</languages>
 		</text>
 
 		<text id="goalByWordsObjectivePopUpA">
 			<languages>
-				<language id="english" text="Form"/>
-				<language id="spanish" text="Forma"/>
-				<language id="default" text="Forma"/>
+				<language id="english" text="FORM"/>
+				<language id="spanish" text="FORMA"/>
+				<language id="default" text="FORMA"/>
 			</languages>
 		</text>
 		<text id="goalByWordsObjectivePopUpB">
@@ -393,24 +468,229 @@
 		</text>
 		<text id="goalBy1WordObjectivePopUp">
 			<languages>
-				<language id="english" text="Form this word"/>
-				<language id="spanish" text="Forma esta palabra"/>
-				<language id="default" text="Forma esta palabra"/>
+				<language id="english" text="FORM"/>
+				<language id="spanish" text="FORMA"/>
+				<language id="default" text="FORMA"/>
 			</languages>
 		</text>
 
-		<text id="goalBySynonymousObjectivePopUp">
+
+		<text id="goalBySynonymousObjectivePopUpA">
 			<languages>
-				<language id="english" text="Form a synonym of"/>
-				<language id="spanish" text="Forma un sinónimo de"/>
-				<language id="default" text="Forma un sinónimo de"/>
+				<language id="english" text="FORM"/>
+				<language id="spanish" text="FORMA"/>
+				<language id="default" text="FORMA"/>
 			</languages>
 		</text>
-		<text id="goalByAntonymObjectivePopUp">
+		<text id="goalBySynonymousObjectivePopUpB">
 			<languages>
-				<language id="english" text="Form a antonym of"/>
-				<language id="spanish" text="Forma un antónimo de"/>
-				<language id="default" text="Forma un antónimo de"/>
+				<language id="english" text="synonym of {{word}}"/>
+				<language id="spanish" text="sinónimo de {{word}}"/>
+				<language id="default" text="sinónimo de {{word}}"/>
+			</languages>
+		</text>
+
+		<text id="goalByAntonymObjectivePopUpA">
+			<languages>
+				<language id="english" text="FORM"/>
+				<language id="spanish" text="FORMA"/>
+				<language id="default" text="FORMA"/>
+			</languages>
+		</text>
+		<text id="goalByAntonymObjectivePopUpB">
+			<languages>
+				<language id="english" text="antonym of {{word}}"/>
+				<language id="spanish" text="antónimo de {{word}}"/>
+				<language id="default" text="antónimo de {{word}}"/>
+			</languages>
+		</text>
+		<text id="goalPlay">
+			<languages>
+				<language id="english" text="PLAY"/>
+				<language id="spanish" text="JUGAR"/>
+				<language id="default" text="JUGAR"/>
+			</languages>
+		</text>
+		<text id="goalFacebook">
+			<languages>
+				<language id="english" text="INVITE FRIENDS"/>
+				<language id="spanish" text="INVITAR AMIGOS"/>
+				<language id="default" text="INVITAR AMIGOS"/>
+			</languages>
+		</text>
+
+		<text id="afterGamePoints">
+			<languages>
+				<language id="english" text="Score"/>
+				<language id="spanish" text="Puntuación"/>
+				<language id="default" text="Puntuación"/>
+			</languages>
+		</text>
+		<text id="afterGameNext">
+			<languages>
+				<language id="english" text="NEXT"/>
+				<language id="spanish" text="SIGUIENTE"/>
+				<language id="default" text="SIGUIENTE"/>
+			</languages>
+		</text>
+		<text id="afterGameFacebook">
+			<languages>
+				<language id="english" text="INVITE FRIENDS"/>
+				<language id="spanish" text="INVITAR AMIGOS"/>
+				<language id="default" text="INVITAR AMIGOS"/>
+			</languages>
+		</text>
+
+		<text id="looseGameText">
+			<languages>
+				<language id="english" text="You'll get it next time!"/>
+				<language id="spanish" text="¡Seguro lo logras la próxima vez!"/>
+				<language id="default" text="¡Seguro lo logras la próxima vez!"/>
+			</languages>
+		</text>
+		<text id="looseGameNext">
+			<languages>
+				<language id="english" text="TRY AGAIN"/>
+				<language id="spanish" text="REINTENTAR"/>
+				<language id="default" text="REINTENTAR"/>
+			</languages>
+		</text>
+		<text id="looseGameFacebook">
+			<languages>
+				<language id="english" text="INVITE FRIENDS"/>
+				<language id="spanish" text="INVITAR AMIGOS"/>
+				<language id="default" text="INVITAR AMIGOS"/>
+			</languages>
+		</text>
+
+
+		<text id="BossLockedUnlockText">
+			<languages>
+				<language id="english" text="Unlock level {{level}}"/>
+				<language id="spanish" text="Desbloquea el nivel {{level}}"/>
+				<language id="default" text="Desbloquea el nivel {{level}}"/>
+			</languages>
+		</text>
+		<text id="BossLockedOptionText">
+			<languages>
+				<language id="english" text="You have 3 options"/>
+				<language id="spanish" text="Tienes 3 opciones"/>
+				<language id="default" text="Tienes 3 opciones"/>
+			</languages>
+		</text>
+		<text id="BossLockedKeyText">
+			<languages>
+				<language id="english" text="Collect more stars"/>
+				<language id="spanish" text="Junta más estrellas"/>
+				<language id="default" text="Junta más estrellas"/>
+			</languages>
+		</text>
+		<text id="BossLockedGemText">
+			<languages>
+				<language id="english" text="ASK FOR A KEY"/>
+				<language id="spanish" text="PEDIR LLAVE"/>
+				<language id="default" text="PEDIR LLAVE"/>
+			</languages>
+		</text>
+		<text id="BossLockedStarText">
+			<languages>
+				<language id="english" text="Play now"/>
+				<language id="spanish" text="JUEGA AHORA"/>
+				<language id="default" text="JUEGA AHORA"/>
+			</languages>
+		</text>
+
+		<text id="fullLifesTitle">
+			<languages>
+				<language id="english" text="Get more lives!"/>
+				<language id="spanish" text="¡Obtén más vidas!"/>
+				<language id="default" text="¡Obtén más vidas!"/>
+			</languages>
+		</text>
+		<text id="fullLifesInfo">
+			<languages>
+				<language id="english" text="Ask lives to your friends"/>
+				<language id="spanish" text="Pide más vidas a tus amigos"/>
+				<language id="default" text="Pide más vidas a tus amigos"/>
+			</languages>
+		</text>
+		<text id="fullLifesButton">
+			<languages>
+				<language id="english" text="ASK FOR LIVES"/>
+				<language id="spanish" text="PEDIR VIDAS"/>
+				<language id="default" text="PEDIR VIDAS"/>
+			</languages>
+		</text>
+
+		<text id="missingLifesTitle">
+			<languages>
+				<language id="english" text="Get more lives!"/>
+				<language id="spanish" text="¡Obtén más vidas!"/>
+				<language id="default" text="¡Obtén más vidas!"/>
+			</languages>
+		</text>
+		<text id="missingLifesInfo1">
+			<languages>
+				<language id="english" text="Free life in"/>
+				<language id="spanish" text="Vida gratis en"/>
+				<language id="default" text="Vida gratis en"/>
+			</languages>
+		</text>
+		<text id="missingLifesInfo2">
+			<languages>
+				<language id="english" text="Ask lives to your friends."/>
+				<language id="spanish" text="Pide más vidas a tus amigos"/>
+				<language id="default" text="Pide más vidas a tus amigos"/>
+			</languages>
+		</text>
+		<text id="missingLifesButton">
+			<languages>
+				<language id="english" text="ASK FOR LIVES"/>
+				<language id="spanish" text="PEDIR VIDAS"/>
+				<language id="default" text="PEDIR VIDAS"/>
+			</languages>
+		</text>
+
+		<text id="noLifesTitle">
+			<languages>
+				<language id="english" text="You ran out of lives!"/>
+				<language id="spanish" text="¡Te quedaste sin vidas!"/>
+				<language id="default" text="¡Te quedaste sin vidas!"/>
+			</languages>
+		</text>
+		<text id="noLifesInfo1">
+			<languages>
+				<language id="english" text="Free life in"/>
+				<language id="spanish" text="Vida gratis en"/>
+				<language id="default" text="Vida gratis en"/>
+			</languages>
+		</text>
+		<text id="noLifesInfo2">
+			<languages>
+				<language id="english" text="Refill your lives or ask lives to your friends"/>
+				<language id="spanish" text="Recarga tus vidas opide vidas a tus amigos"/>
+				<language id="default" text="Recarga tus vidas opide vidas a tus amigos"/>
+			</languages>
+		</text>
+		<text id="noLifesButton1">
+			<languages>
+				<language id="english" text="ASK FOR LIVES"/>
+				<language id="spanish" text="PEDIR VIDAS"/>
+				<language id="default" text="PEDIR VIDAS"/>
+			</languages>
+		</text>
+		<text id="noLifesButton2">
+			<languages>
+				<language id="english" text="REFILL LIVES"/>
+				<language id="spanish" text="RECARGAR VIDAS"/>
+				<language id="default" text="RECARGAR VIDAS"/>
+			</languages>
+		</text>
+		<text id="fullLifesText">
+			<languages>
+				<language id="english" text="FULL"/>
+				<language id="spanish" text="LLENO"/>
+				<language id="default" text="LLENO"/>
 			</languages>
 		</text>
 
@@ -554,65 +834,65 @@
 		-->
 		<text id="World1_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Pentatonic"/>
+				<language id="spanish" text="Pentatonica"/>
+				<language id="default" text="Pentatonica"/>
 			</languages>
 		</text>
 		<text id="World2_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Best Pet"/>
+				<language id="spanish" text="Mascota Mascota"/>
+				<language id="default" text="Mascota Mascota"/>
 			</languages>
 		</text>
 		<text id="World3_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Clothes"/>
+				<language id="spanish" text="Las Ropas"/>
+				<language id="default" text="Las Ropas"/>
 			</languages>
 		</text>
 		<text id="World4_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Eye Book"/>
+				<language id="spanish" text="Libroso"/>
+				<language id="default" text="Libroso"/>
 			</languages>
 		</text>
 		<text id="World5_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Shoe Inc"/>
+				<language id="spanish" text="Zapatin"/>
+				<language id="default" text="Zapatin"/>
 			</languages>
 		</text>
 		<text id="World6_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Make Up"/>
+				<language id="spanish" text="Sombra Aqui"/>
+				<language id="default" text="Sombra Aqui"/>
 			</languages>
 		</text>
 		<text id="World7_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Sports"/>
+				<language id="spanish" text="Deportes"/>
+				<language id="default" text="Deportes"/>
 			</languages>
 		</text>
 		<text id="World8_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Blink blink"/>
+				<language id="spanish" text="Blink blink"/>
+				<language id="default" text="Blink blink"/>
 			</languages>
 		</text>
 		<text id="World9_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Smell good"/>
+				<language id="spanish" text="Hueles bien"/>
+				<language id="default" text="Hueles bien"/>
 			</languages>
 		</text>
 		<!--

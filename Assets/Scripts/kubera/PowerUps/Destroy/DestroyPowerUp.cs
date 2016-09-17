@@ -20,6 +20,9 @@ public class DestroyPowerUp : PowerupBase
 
 	protected Cell highLightCell;
 
+	protected int animationsFinished =0;
+	protected int animationsCount =0;
+
 	void Start () 
 	{
 		cellsManager = FindObjectOfType<CellsManager>();
@@ -93,7 +96,6 @@ public class DestroyPowerUp : PowerupBase
 					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_POWERUP);
 					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR);
 
-					gameManager.updatePiecesLightAndUpdateLetterState ();
 					OnComplete ();
 				}
 				else
@@ -139,6 +141,8 @@ public class DestroyPowerUp : PowerupBase
 			selectionList.Add (selection [i]);
 		}
 
+		animationsCount = selectionList.Count;
+
 		while (selectionList.Count >0)
 		{
 			int random = Random.Range (0, selectionList.Count);
@@ -175,14 +179,12 @@ public class DestroyPowerUp : PowerupBase
 		yield return new WaitUntil (()=> animSprite.sequences[0].currentFrame >= 6);
 		square.OnCellFlipped += callbackOnFliped;
 		square.doFlip (cellParent, letter, delay);
-
 		yield return new WaitUntil (()=> animSprite.sequences[0].currentFrame >= 11);
 
 		animSprite.enabled = false;
 		animSprite.autoUpdate = false;
 		animSprite.sequences [0].currentFrame = 0;
 		releaseAnimation (animSprite);
-
 	}
 
 	public AnimatedSprite getFreeAnimation()
@@ -218,8 +220,14 @@ public class DestroyPowerUp : PowerupBase
 	{
 		square.OnCellFlipped -= callbackOnFliped;
 		letter.enabled = true;
+		animationsFinished ++;
 		//cellsManager.occupyAndConfigureCell(cell,letter.gameObject,Piece.EType.LETTER,Piece.EColor.NONE,true);
 		gameManager.OnCellFlipped (cell, letter);
+
+		if(animationsFinished == animationsCount)
+		{
+			gameManager.updatePiecesLightAndUpdateLetterState ();
+		}
 	}
 
 	public void onCompletedNoGems()

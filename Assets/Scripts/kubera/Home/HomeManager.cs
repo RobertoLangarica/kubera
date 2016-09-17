@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using Kubera.Data;
@@ -9,12 +10,14 @@ public class HomeManager : MonoBehaviour {
 	public List<PiecesControllAnimation> pieces;
 	public LettersControllerAnimation[] letters;
 	public AnimatedSprite homeAnimatedSprite;
+	public SettingsButton settingButtons;
 
 	public Transform[] positions;
 	protected float speed = .33f;
 
 	protected List<PiecesControllAnimation> piecesMoved = new List<PiecesControllAnimation>();
 
+	public Text playText;
 	public RectTransform play;
 	public RectTransform config;
 	public RectTransform facebookLogin;
@@ -23,7 +26,6 @@ public class HomeManager : MonoBehaviour {
 
 	void Start()
 	{
-
 		for(int i=0, j=0; i<pieces.Count; j++)
 		{
 			piecesMoved.Add (pieces[Random.Range (0, pieces.Count)]);
@@ -33,6 +35,10 @@ public class HomeManager : MonoBehaviour {
 			piecesMoved [j].startRotate (speed);
 		}
 		Invoke ("startScene",0.3f);
+
+		settingButtons.OnActivateMusic += activateMusic;
+
+		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.START_GAME);
 	}
 
 	void startScene()
@@ -95,5 +101,15 @@ public class HomeManager : MonoBehaviour {
 			
 			AudioManager.GetInstance().Play("fxButton");
 		}
+	}
+
+	public void activateSettings()
+	{
+		settingButtons.activeSettings ();
+	}
+
+	public void activateMusic(bool activate)
+	{
+		
 	}
 }

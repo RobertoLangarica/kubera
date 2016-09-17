@@ -17,6 +17,8 @@ public class ScreenManager : Manager<ScreenManager> {
 	[HideInInspector]
 	public bool backAllowed = true;
 
+	public LoadingScene loading;
+
 	protected float waitTime;
 	protected string waitScreen;
 	private bool destroyed = false;//Indica si el objeto ya se destruyo
@@ -26,8 +28,6 @@ public class ScreenManager : Manager<ScreenManager> {
 	protected float timeBeforeNextScreen;
 	protected AsyncOperation waitingScreen = null;
 	protected int framesBeforeSwitch;
-
-	public Image modal;
 
 	public delegate void DOnFinishLoadScene();
 	public DOnFinishLoadScene OnFinish;
@@ -158,9 +158,9 @@ public class ScreenManager : Manager<ScreenManager> {
 			backScreens.Add(newScene,SceneManager.GetActiveScene().name);
 		}
 
-		if(modal != null)
+		if(loading != null)
 		{			
-			modal.DOFade (1, 0.25f).SetId(modal).OnComplete(()=>{StartCoroutine (loadScene (newScene));});
+			loading.showLoading (0.25f,()=>{StartCoroutine(loadScene(newScene));});
 		}
 		else
 		{
@@ -178,14 +178,10 @@ public class ScreenManager : Manager<ScreenManager> {
 	{
 		print (testAsync);
 
-		modal.DOFade (1, 0).SetId(modal).OnComplete(()=>
-			{
-				testAsync.allowSceneActivation = true;
-			});
-
+		loading.showLoading(0.1f,()=>{testAsync.allowSceneActivation = true;});
 	}
 
-	IEnumerator loadScene(string level)
+	public IEnumerator loadScene(string level)
 	{
 		async = SceneManager.LoadSceneAsync(level,LoadSceneMode.Single);
 
@@ -198,7 +194,10 @@ public class ScreenManager : Manager<ScreenManager> {
 
 	public void sceneFinishLoading(float speed = 0.3f)
 	{
-		modal.DOFade (0, speed);
+		if (loading != null) 
+		{
+			loading.hideLoading (speed);
+		}
 	}
 
 	public void GoToSceneAsync(string newScene,float waitTime = -1, int waitFrames = 10)

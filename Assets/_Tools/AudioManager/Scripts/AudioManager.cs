@@ -68,8 +68,14 @@ public class AudioManager : Manager<AudioManager>
             {
                 //create audio object from this audio Item and play it
                 AudioObject AM_pAOPrefab = (ac.audioObjPrefab == null ? audioObjDefaultPrefab : ac.audioObjPrefab);
+
+				if(parent == null)
+				{
+					parent = CachedTransform;	
+				}
                 AudioObject result = ai.Play(parent, point, ac.GetVolume() * globalVolume, ref AM_pAOPrefab);
-                if (result != null)
+                
+				if (result != null)
                 {
                     if (ac.onlyOneItemAllowed)
                     {
@@ -915,6 +921,16 @@ public class AudioItem
                     }
 
                     float itemVolume = fVolume * volume;
+
+					if(relatedCategory.onlyOneItemAllowed)
+					{
+						if(mustShowDebugInfo)
+						{
+							Debug.Log("Stopping all audios in category["+relatedCategory.categoryId+"] because only one is allowed and will give chance for a new ["+itemId+"] audio.");
+						}
+						relatedCategory.StopAllAudios();
+					}
+
                     //substitute for pool manager function
                     if(AudioManager.GetInstance().usePooledAudioObjects)
                     {

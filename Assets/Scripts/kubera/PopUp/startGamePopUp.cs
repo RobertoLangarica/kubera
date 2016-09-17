@@ -6,12 +6,14 @@ using System.Collections;
 public class startGamePopUp : PopUpBase {
 	
 	public Text text;
+	public Text flavorText;
 	public RectTransform winContent;
 	public float speed =1;
 
 	void Start()
 	{
 		text.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.STARTGAME_TEXT_POPUP_ID);
+		flavorText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FLAVOR_TEXT);
 	}
 
 	public override void activate()

@@ -37,8 +37,6 @@ public class HUDManager : MonoBehaviour
 
 	public GameObject PointerOnScene;
 
-
-
 	public Text lettersPoints;
 	public Text lettersPointsTitle;
 
@@ -61,6 +59,9 @@ public class HUDManager : MonoBehaviour
 	public GameObject wordsHighlight;
 
 	public Button[] powerUps;
+
+	public Image worldBackground;
+	public Sprite[] worldsBackground;
 
 	void Start () 
 	{
@@ -85,6 +86,11 @@ public class HUDManager : MonoBehaviour
 	{
 		scoreText.text = lettersPointsTitle.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SCORE_HUD_TITLE_ID);
 		levelText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.LVL_HUD_TITLE_ID);
+	}
+
+	public void setWorldBackground(int world)
+	{
+		worldBackground.sprite = worldsBackground [world];
 	}
 
 	public int getEarnedStars()
@@ -399,7 +405,7 @@ public class HUDManager : MonoBehaviour
 		poolText.text = "+" + score.ToString();
 
 		scorePosition.z = 0;
-		finish.y += 2;// HACK: poolText.rectTransform.rect.height;
+		finish.y += 1;// HACK: poolText.rectTransform.rect.height;
 
 		//Se inicia la animacion del texto
 		bText.startAnim(scorePosition,finish);

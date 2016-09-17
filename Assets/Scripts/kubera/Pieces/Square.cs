@@ -33,6 +33,7 @@ public class Square : MonoBehaviour
 		letterAfterFlip.gameObject.SetActive(false);
 		this.cellParent = cellParent;
 		letter = letterAfterFlip;
+		flipAnimation.spriteRenderer.sortingLayerName = "Flipping";
 
 		StartCoroutine (startFlipAnimation (delay*0.01f));
 	}

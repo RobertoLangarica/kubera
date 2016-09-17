@@ -10,7 +10,7 @@ namespace Data.Remote
 	{
 		public RequestQueue queue;
 
-		public Action<GameUser> OnUserReceived;//string: Only id's data
+		public Action<RemoteUser> OnUserReceived;//string: Only id's data
 		public Action<string> OnDataReceived;//string: full json
 		public Action<string> OnDataUpdated;//string:  Updated data
 
@@ -26,8 +26,8 @@ namespace Data.Remote
 		/**
 		 * Todos los datos del usuario
 		 **/ 
-		public virtual void getUserData(string id, string extraData){ Debug.LogError("No existe implementación de esta función");}
-		public virtual void getUserData(string id, string extraData, int aboveVersion){Debug.LogError("No existe implementación de esta función");}
+		public virtual void getUserData(string id, bool saveAsMainRequest = false){ Debug.LogError("No existe implementación de esta función");}
+		public virtual void getUserData(string id, int aboveVersion, bool saveAsMainRequest = false){Debug.LogError("No existe implementación de esta función");}
 
 		/**
 		 * Sube el json indicado.
@@ -35,7 +35,7 @@ namespace Data.Remote
 		 * asi usamos menos ancho de banda
 		 **/ 
 		public virtual void updateUserData(string id, string jsonData){Debug.LogError("No existe implementación de esta función");}
-		public virtual void updateUserData<T>(string id, string jsonData, T objectToSave){Debug.LogError("No existe implementación de esta función");}
+		public virtual void updateUserData<T>(string id, T serializableData){Debug.LogError("No existe implementación de esta función");}
 
 		/**
 		 * Sube el json indicado.

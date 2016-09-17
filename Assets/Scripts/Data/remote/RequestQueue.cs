@@ -64,27 +64,31 @@ namespace Data.Remote
 				{
 					BaseRequest request = queue[i];
 
-					if(activeRequestCount >= simultaneousRequests)
+					//Si ya se completo se ignora este ciclo
+					if(!request.isComplete)
 					{
-						//Ya nadie mas puede hacer request
-						break;
-					}
-
-					if(request.isRequesting)
-					{
-						activeRequestCount++;
-					}
-					else
-					{
-						//Necesita esperar para no saturar de llamadas fallidas sin internet
-						if(!request.failed || request.getTimeSinceFailed() >= waitTimeForFailedRequest)
+						if(activeRequestCount >= simultaneousRequests)
 						{
-							//Activamos la request
-							request.OnComplete	+= OnRequestComplete;
-							request.OnFailed	+= OnRequestFailed;
-							request.OnTimeout	+= OnRequestTimeout;
-							request.start();
+							//Ya nadie mas puede hacer request
+							break;
+						}
+
+						if(request.isRequesting)
+						{
 							activeRequestCount++;
+						}
+						else
+						{
+							//Necesita esperar para no saturar de llamadas fallidas sin internet
+							if(!request.failed || request.getTimeSinceFailed() >= waitTimeForFailedRequest)
+							{
+								//Activamos la request
+								request.OnComplete	+= OnRequestComplete;
+								request.OnFailed	+= OnRequestFailed;
+								request.OnTimeout	+= OnRequestTimeout;
+								request.start();
+								activeRequestCount++;
+							}
 						}
 					}
 				}

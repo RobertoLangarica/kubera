@@ -12,6 +12,7 @@ public class LifesManager : Manager<LifesManager>
 	public List<Text> lifesTimer = new List<Text> ();
 
 	public int timeForLifeInMinutes;
+	public int maximumLifes;
 
 	protected bool showTimer;
 	protected int currentMinutes = 0;
@@ -32,9 +33,17 @@ public class LifesManager : Manager<LifesManager>
 			return;
 		}
 
-		if (currentUser.playerLifes < currentUser.maximumLifes) 
+		if (currentUser.playerLifes < dataManager.initialLifes) 
 		{
-			updateLifesSinceLastPlay ();
+			if (currentUser.lifeTimerDate != "") 
+			{
+				updateLifesSinceLastPlay ();
+			} 
+			else 
+			{
+				setLifeDate ();
+				updateLifesSinceLastPlay ();
+			}
 		}
 
 		refreshHUD ();
@@ -81,27 +90,19 @@ public class LifesManager : Manager<LifesManager>
 	{
 		KuberaUser tempUsr = currentUser;
 		
-		if (tempUsr.playerLifes == tempUsr.maximumLifes) 
+		if (tempUsr.playerLifes == dataManager.initialLifes) 
 		{
 			setLifeDate ();
 		}
 
-		(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (-1);
+		giveLifesToUser(-1);
 
 		//setLifeDate ();
 
 		//LocalNotification*******De cuando se queda sin vidas y gana 1 vida
 		if (tempUsr.playerLifes == 0) 
 		{
-			List<WorldData> worldData = tempUsr.worlds;
-			int currentLevel = 1;
-
-
-			if (worldData.Count != 0) 
-			{
-				currentLevel = worldData [worldData.Count - 1].levels.Count;
-				currentLevel++;				
-			}
+			int currentLevel = tempUsr.levels.Count +1;
 
 			life1NotificationID = (LocalNotificationManager.GetInstance () as LocalNotificationManager).modifyAndScheduleNotificationByName (
 				villavanilla.Notifications.ERegisteredNotification.LIFE_1,
@@ -141,13 +142,12 @@ public class LifesManager : Manager<LifesManager>
 			//Se entregan las vidas que se hayan juntado
 			if (lifesGained > 0) 
 			{
-				Debug.Log (lifesGained);
-				(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (lifesGained);
+				giveLifesToUser(lifesGained);
 
 				updateDateOnData (lifesGained);
 			}
 
-			int missingLifes = tempUsr.maximumLifes - tempUsr.playerLifes;
+			int missingLifes = dataManager.initialLifes - tempUsr.playerLifes;
 
 			difference -= (missingLifes - 1) * (60 * timeForLifeInMinutes);
 
@@ -163,13 +163,13 @@ public class LifesManager : Manager<LifesManager>
 		} 
 		else 
 		{
-			(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (tempUsr.maximumLifes);
+			giveLifesToUser(dataManager.initialLifes);
 		}
 	}
 
 	public double getTimeToWait()
 	{
-		if (currentUser.playerLifes >= currentUser.maximumLifes) 
+		if (currentUser.playerLifes >= dataManager.initialLifes) 
 		{
 			return 0;
 		}
@@ -189,7 +189,7 @@ public class LifesManager : Manager<LifesManager>
 
 	protected double calculateTotalWaitingTime()
 	{
-		return (double)(timeForLifeInMinutes * (currentUser.maximumLifes - currentUser.playerLifes) * 60);
+		return (double)(timeForLifeInMinutes * (dataManager.initialLifes - currentUser.playerLifes) * 60);
 	}
 
 	protected double lifeDateDifferenceInSecs()
@@ -225,9 +225,9 @@ public class LifesManager : Manager<LifesManager>
 
 	protected void gotALife()
 	{
-		(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes ();
+		giveLifesToUser();
 
-		if (currentUser.playerLifes == currentUser.maximumLifes) 
+		if (currentUser.playerLifes == dataManager.initialLifes) 
 		{
 			showTimer = false;	
 		} 
@@ -253,7 +253,7 @@ public class LifesManager : Manager<LifesManager>
 		{
 			for (int i = 0; i < lifesTimer.Count; i++) 
 			{
-				lifesTimer[i].text = "Lleno";
+				lifesTimer[i].text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.FULL_LIFES_TEXT);
 			}
 		}
 
@@ -298,5 +298,8 @@ public class LifesManager : Manager<LifesManager>
 		return result;
 	}
 
-
+	public void giveLifesToUser(int amount = 1)
+	{
+		(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (amount);
+	}
 }

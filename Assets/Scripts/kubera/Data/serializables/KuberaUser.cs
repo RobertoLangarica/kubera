@@ -9,65 +9,74 @@ namespace Kubera.Data
 	[Serializable]
 	public class KuberaUser : BasicData 
 	{
-		public int PlayFab_dataVersion;
+		public int remoteDataVersion;
 		public string facebookId;
-
-		public List<WorldData> worlds;
-
-		public int maximumLifes = 2;//Maximo de vida que puede tener el jugador
+		public List<LevelData> levels;
 		public int playerLifes;
-
 		public string lifeTimerDate;
+		public int maxLevelReached;
 
 		public KuberaUser()
 		{
-			worlds = new List<WorldData>();
-			playerLifes = maximumLifes;
+			levels = new List<LevelData>();
 		}
 
 		public KuberaUser(string userId)
 		{
-			id = userId;
-			worlds = new List<WorldData>();
-			playerLifes = maximumLifes;
+			_id = userId;
+			levels = new List<LevelData>();
 		}
 
 		public override void updateFrom (BasicData readOnlyRemote, bool ignoreVersion = false)
 		{
 			base.updateFrom (readOnlyRemote, ignoreVersion);
 
-			WorldData world;
+			LevelData level;
 
-			//Version de playfab
-			PlayFab_dataVersion = ((KuberaUser)readOnlyRemote).PlayFab_dataVersion;
-
+			//-1 es el dato vacio del server y se debe ignorar
+			remoteDataVersion = ((KuberaUser)readOnlyRemote).remoteDataVersion < 0 ? this.remoteDataVersion:((KuberaUser)readOnlyRemote).remoteDataVersion;
+				
 			//Le quitamos lo sucio a los datos
 			isDirty = false;
 
-			//revisamos los niveles
-			foreach(WorldData remoteWorld in ((KuberaUser)readOnlyRemote).worlds)
+			//-1 es el dato vacio del server y se debe ignorar
+			if(((KuberaUser)readOnlyRemote).maxLevelReached >= 0)
 			{
-				world = getWorldById(remoteWorld.id);
-
-				if(world != null)
+				if(!upgradeMaxLevelReached(((KuberaUser)readOnlyRemote).maxLevelReached))
 				{
-					//Actualizamos el mundo existente
-					world.compareAndUpdate(remoteWorld, ignoreVersion);
+					if(maxLevelReached > ((KuberaUser)readOnlyRemote).maxLevelReached)
+					{
+						Debug.Log("DIRTY FOR MAX REACHED: "+((KuberaUser)readOnlyRemote).maxLevelReached);
+						//El local es mayor
+						isDirty = true;
+					}		
+				}
 
-					isDirty = isDirty || world.isDirty;
+			}
+
+			//revisamos los niveles
+			foreach(LevelData remoteLevel in ((KuberaUser)readOnlyRemote).levels )
+			{
+				level = getLevelById(remoteLevel._id);
+
+				if(level != null)
+				{
+					//Actualizamos el nivel existente
+					level.compareAndUpdate(remoteLevel, ignoreVersion);
+
+					isDirty = isDirty || level.isDirty;
 				}
 				else
 				{
 					//nivel nuevo
-					remoteWorld.markAllLevelsAsNoDirty();//nunca se marcan como sucios al llegar
-					worlds.Add(remoteWorld);
-				}		
+					addLevel(remoteLevel);
+				}
 			}
 
-			//Alguno de los mundos sigue sucio
+			//Alguno de los niveles sigue sucio
 			if(!isDirty)
 			{
-				foreach(WorldData item in worlds)
+				foreach(LevelData item in levels)
 				{
 					if(item.isDirty)
 					{
@@ -78,47 +87,60 @@ namespace Kubera.Data
 			}
 		}
 
-
-		public WorldData getWorldById(string id)
+		public bool upgradeMaxLevelReached(int incommingValue)
 		{
-			return worlds.Find(item=>item.id == id);
+			bool updgraded = false;
+
+			if(incommingValue > maxLevelReached)
+			{
+				maxLevelReached = incommingValue;
+				updgraded = true;
+			}
+
+			return updgraded;
 		}
 
-		public bool existWorld(string worldId)
+		public LevelData getLevelById(string id)
 		{
-			return (worlds.Find(item=>item.id == worldId) != null);
+			return levels.Find(item=>item._id == id);
+		}
+
+		public bool existLevel(string id)
+		{
+			return (levels.Find(item=>item._id == id) != null);
 		}
 		
-		public void addWorld(WorldData world)
+		public void addLevel(LevelData item)
 		{
-			worlds.Add(world);
+			levels.Add(item);
 		}
 
-		public void markAllWorldsAsNoDirty()
+		public void markAllLevelsAsNoDirty()
 		{
-			foreach(WorldData item in worlds)
+			foreach(LevelData item in levels)
 			{
-				item.markAllLevelsAsNoDirty();
+				item.isDirty = false;
 			}	
 		}
 
 		public void clear()
 		{
-			worlds.Clear();
-			PlayFab_dataVersion = 0;
+			levels.Clear();
+			maxLevelReached = 0;
+			remoteDataVersion = 0;
 			facebookId = "";
 			isDirty = false;
 		}
 			
-		public List<WorldData> getDirtyWorlds()
+		public List<LevelData> getDirtyLevelsCopy()
 		{
-			List<WorldData> result = new List<WorldData>();
+			List<LevelData> result = new List<LevelData>();
 
-			foreach(WorldData world in worlds)
+			foreach(LevelData level in levels)
 			{
-				if(world.isDirty)
+				if(level.isDirty)
 				{
-					result.Add(world.getOnlyDirtyCopy());
+					result.Add(level.clone());
 				}
 			}
 
@@ -127,36 +149,79 @@ namespace Kubera.Data
 
 		public KuberaUser clone()
 		{
-			KuberaUser result = new KuberaUser(this.id);
+			KuberaUser result = new KuberaUser(this._id);
 			result.isDirty = this.isDirty;
 			result.version = this.version;
-			result.PlayFab_dataVersion = this.PlayFab_dataVersion;
+			result.remoteDataVersion = this.remoteDataVersion;
 			result.facebookId = this.facebookId;
+			result.maxLevelReached = this.maxLevelReached;
 
-			foreach(WorldData world in this.worlds)
+			foreach(LevelData level in this.levels)
 			{
-				result.addWorld(world.clone());
+				result.addLevel(level.clone());
 			}
 
 			return result;
 		}
 
-		public void giveLifeToPlayer(int amount = 1)
+		public int maxWorldReached()
 		{
-			int totalLifes = playerLifes + amount;
+			int result = 0;
 
-			if (totalLifes > maximumLifes) 
+			foreach(LevelData item in levels)
 			{
-				playerLifes = maximumLifes;
-			} 
-			else if (totalLifes < 0) 
-			{
-				playerLifes = 0;
+				if(item.world > result)
+				{
+					result = item.world;
+				}
 			}
-			else 
+
+			return result;
+		}
+			
+		public int countLevelsByWorld(int world)
+		{
+			int result = 0;
+
+			foreach(LevelData item in levels)
 			{
-				playerLifes = totalLifes;
+				if(item.world == world)
+				{
+					result++;
+				}
 			}
+
+			return result;
+		}
+
+		public int countPassedLevelsByWorld(int world)
+		{
+			int result = 0;
+
+			foreach(LevelData item in levels)
+			{
+				if(item.world == world && item.passed == true)
+				{
+					result++;
+				}
+			}
+
+			return result;
+		}
+
+		public List<LevelData> getLevelsByWorld(int world)
+		{
+			List<LevelData> result = new List<LevelData>();
+
+			foreach(LevelData item in levels)
+			{
+				if(item.world == world)
+				{
+					result.Add(item);
+				}
+			}
+
+			return result;
 		}
 	}
 }

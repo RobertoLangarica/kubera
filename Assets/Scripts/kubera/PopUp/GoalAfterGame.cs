@@ -12,6 +12,7 @@ public class GoalAfterGame : PopUpBase {
 	public Text PointsText;
 	public Text Points;
 	public Text inviteFriendsText;
+	public Text playText;
 
 	public GameObject[] stars;
 	public GameObject[] starsGray;
@@ -36,6 +37,11 @@ public class GoalAfterGame : PopUpBase {
 	public Transform goalPopUpSlotsParent;
 	public GridLayoutGroup FriendsgridLayoutGroup;
 
+	public Sprite[] worldTopBackground;
+	public Sprite[] worldIcon;
+	public Image topLevelImage;
+	public Image topIcon;
+
 	void Start()
 	{
 		//TODO checar login a facebook
@@ -43,7 +49,11 @@ public class GoalAfterGame : PopUpBase {
 		//FBLoggin.GetInstance().onLoginComplete += fbLogin;
 
 		setStartingPlaces ();
-		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.16f, Screen.height * 0.15f);
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.225f, Screen.height * 0.1675f);
+
+		inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_FACEBOOK);
+		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_NEXT);
+		PointsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_POINTS);
 	}
 
 	protected void fbLogin()
@@ -65,10 +75,13 @@ public class GoalAfterGame : PopUpBase {
 		startAnimation ();
 	}
 
-	public void setGoalPopUpInfo(int starsReached, string levelName, string points)
+	public void setGoalPopUpInfo(int starsReached, string levelName, string points,int currentWorld =0)
 	{
 		this.LevelName.text = levelName;
 		this.Points.text = points;
+
+		topLevelImage.sprite = worldTopBackground [currentWorld];
+		topIcon.sprite = worldIcon [currentWorld];
 
 		showStars (starsReached);
 	}
@@ -198,6 +211,7 @@ public class GoalAfterGame : PopUpBase {
 	{
 		if(AudioManager.GetInstance())
 		{
+			//TODO: este audio no existe, pero existen star1, star2 y star3, que show?
 			AudioManager.GetInstance().Stop("star");
 			AudioManager.GetInstance().Play("star");
 		}

@@ -8,8 +8,10 @@ public class InputBombAndDestroy : MonoBehaviour
 	public bool allowInput = true;
 
 	public delegate void DOnDragNotification();
+	public delegate void DOnPlayer(bool onPlayer);
 	public delegate void DOnCellNotification(Cell nCell);
 	public DOnDragNotification OnDrop;
+	public DOnPlayer OnPlayer;
 	public DOnCellNotification OnCellSelected;
 
 	protected bool somethingDragged = false;
@@ -51,6 +53,7 @@ public class InputBombAndDestroy : MonoBehaviour
 					posOverFinger.z = currentSelected.transform.position.z;
 					posOverFinger += offsetPositionOverFinger;
 					moveTo(currentSelected,posOverFinger,pieceSpeed);
+					isOnPlayer (true);
 				}
 			}	
 			break;
@@ -142,10 +145,19 @@ public class InputBombAndDestroy : MonoBehaviour
 	{
 		currentSelected = null;
 		somethingDragged = false;
+		isOnPlayer (false);
 	}
 
 	public void setCurrentSelected(GameObject selected)
 	{
 		currentSelected = selected;
+	}
+
+	public void isOnPlayer(bool isOn)
+	{
+		if(OnPlayer != null)
+		{
+			OnPlayer (isOn);
+		}
 	}
 }

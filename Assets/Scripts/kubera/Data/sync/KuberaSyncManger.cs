@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System;
-using System.Text;
 using System.Collections;
 using Data.Sync;
 using Kubera.Data.Remote.PFResponseData;
@@ -20,7 +19,6 @@ namespace Kubera.Data.Sync
 
 
 			((KuberaProvider)server).OnLeaderboardObtained += OnLeaderboardDataObtained;
-
 		}
 
 		/**
@@ -48,16 +46,16 @@ namespace Kubera.Data.Sync
 		/**
 		 * Cuando se recibe el usuario (sin informacion solo sus identificaciones)
 		 **/ 
-		protected override void OnUserReceived (GameUser user)
+		protected override void OnUserReceived (RemoteUser remoteUser)
 		{
-			base.OnUserReceived (user);
+			base.OnUserReceived (remoteUser);
 
 			//Exsitia un usuario creado con id de facebook temporal?
 			KuberaUser kUser = localData.getCurrentData().getUserById(currentUser.facebookId);
 			if(kUser != null)
 			{
 				//Le asignamos su id de verdad
-				kUser.id = currentUser.id;
+				kUser._id = currentUser.id;
 			}
 
 			localData.changeCurrentuser(currentUser.id);
@@ -69,15 +67,12 @@ namespace Kubera.Data.Sync
 				localData.saveLocalData(false);
 			}
 
-			if(user.newlyCreated)
+			if(remoteUser.newlyCreated)
 			{
 				if(_mustShowDebugInfo)
 				{
 					Debug.Log("Creating remote user.");
 				}
-
-				//Datos nuevos DEPRECATED
-				//server.createUserData<KuberaUser>(currentUser.id, userToPlayFabJSON(localData.currentUser), localData.currentUser.clone());
 
 				//Hacemos un update normal del usuario
 				updateData(localData.getUserDirtyData());
@@ -89,7 +84,7 @@ namespace Kubera.Data.Sync
 					Debug.Log("Getting data from remote user.");
 				}
 				//Nos traemos los datos de este usuario
-				server.getUserData(currentUser.id, localData.getCSVKeysToQuery(), localData.currentUser.PlayFab_dataVersion);	
+				server.getUserData(currentUser.id, localData.currentUser.remoteDataVersion, true);
 			}
 		}
 
@@ -101,6 +96,7 @@ namespace Kubera.Data.Sync
 		{
 			base.OnDataReceived (fullData);
 
+			Debug.Log("BEforeDiff:\n"+fullData);
 			localData.diffUser(JsonUtility.FromJson<KuberaUser>(fullData), true);
 
 			if(_mustShowDebugInfo)
@@ -154,13 +150,13 @@ namespace Kubera.Data.Sync
 		{
 			if(_mustShowDebugInfo)
 			{
-				Debug.Log("To update: \n"+userToPlayFabJSON(dirtyUser));
+				Debug.Log("To update: \n"+JsonUtility.ToJson(dirtyUser));
 			}
 
 			//Si no hay usuario remoto entonces no hay nada que actualizar
 			if(existCurrentUser())
 			{
-				server.updateUserData(currentUser.id, userToPlayFabJSON(dirtyUser), dirtyUser);
+				server.updateUserData<KuberaUser>(currentUser.id, dirtyUser);
 			}
 		}
 
@@ -194,39 +190,6 @@ namespace Kubera.Data.Sync
 
 			Debug.Log(result);
 		}
-
-		/**
-		 * Usuario en el formato:
-		 * {
-		 * 	"id":string,
-		 * 	"facebookId":string,
-		 * 	"version":int,
-		 * 	"PlayFab_dataVersion":int,
-		 * 	"world_nn":WorldData (cualquier cantidad de mundos donde nn es igual a su id)
-		 * }
-		 **/ 
-		public string userToPlayFabJSON(KuberaUser user)
-		{
-			StringBuilder builder = new StringBuilder("{");
-			//builder.Append(quotted("id")+":"+quotted(user.id)+","+quotted("facebookId")+":"+quotted(user.facebookId)+","+quotted("version")+":"+user.version.ToString()+","+quotted("PlayFab_dataVersion")+":"+user.PlayFab_dataVersion.ToString());
-			builder.Append(quotted("id")+":"+quotted(user.id)+","+quotted("facebookId")+":"+quotted(user.facebookId)+","+quotted("version")+":"+user.version.ToString());
-
-			//agregamos los mundos
-			foreach(WorldData world in user.worlds)
-			{
-				builder.Append(",");
-				builder.Append(quotted("world_"+world.id)+":");
-				builder.Append(JsonUtility.ToJson(world));
-			}
-
-			//Helper para el servidor
-			builder.Append(","+quotted("world_count")+":"+user.worlds.Count);
-
-			builder.Append("}");
-			return builder.ToString();
-		}
-
-		public string quotted(string target){return "\""+target+"\"";}
 	}
 		
 }

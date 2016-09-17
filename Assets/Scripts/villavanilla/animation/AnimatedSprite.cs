@@ -9,14 +9,14 @@ public class AnimatedSprite: MonoBehaviour
 	public bool autoUpdate = false;
 	public List<SerializedSequence> sequences;
 
-
+	public SpriteRenderer spriteRenderer;
 	[HideInInspector]public TransformInfo transformation;
 
 	void Awake()
 	{
 		this.transformation = GetComponent<TransformInfo>();
 
-		SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
 		//Se convierten en una lista de frames las secuencias
 		for(int i = 0; i < sequences.Count; i++)
 		{
@@ -27,6 +27,7 @@ public class AnimatedSprite: MonoBehaviour
 
 		//Inicializamos la imagen con el primer frame de la primer secuencia
 		this.sequences[currentSequenceIndex].updateImage(this.transformation);
+
 	}
 		
 	public void updateSequence(float time)

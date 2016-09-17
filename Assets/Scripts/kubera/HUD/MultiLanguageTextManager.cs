@@ -6,6 +6,11 @@ using System.Collections;
  */
 public class MultiLanguageTextManager
 {
+	//HOME
+	public const string START_GAME		= "startGame";
+
+
+
 	//GAME
 	public const string GOAL_CONDITION_BY_POINT_UP_ID		= "goalByPointsConditionUP";
 	public const string GOAL_CONDITION_BY_POINT_ID 			= "goalByPointsCondition";
@@ -19,6 +24,12 @@ public class MultiLanguageTextManager
 	public const string GOAL_CONDITION_BY_ANTONYM_ID 		= "goalByAntonymCondition";
 	public const string SCORE_HUD_TITLE_ID 					= "hudScore";
 	public const string LVL_HUD_TITLE_ID 					= "hudLevel";
+	public const string SECONDCHANCE_GIVEUP 				= "secondChanceGiveUp";
+	public const string SECONDCHANCE_RETRY					= "secondChanceRetry";
+	public const string SECONDCHANCE_TITLE 					= "secondChanceTitle";
+	public const string GAME_NO_OPTION_CONTINUE 			= "noOptionsGameContinue";
+	public const string GAME_NO_OPTION_GIVEUP				= "noOptionsGameGiveUp";
+	public const string GAME_NO_OPTION_TITLE				= "noOptionGameTitle";
 
 	//MAP
 	public const string OBJECTIVE_POPUP_LVL_TEXT_ID 		= "lvlTextObjectivePopUp";
@@ -32,12 +43,53 @@ public class MultiLanguageTextManager
 	public const string OBJECTIVE_POPUP_BY_1_WORD_ID 		= "goalBy1WordObjectivePopUp";
 	public const string OBJECTIVE_POPUP_BY_SYNONYMOUS_ID 	= "goalBySynonymousObjectivePopUp";
 	public const string OBJECTIVE_POPUP_BY_ANTONYM_ID 		= "goalByAntonymObjectivePopUp";
+	public const string OBJECTIVE_POPUP_PLAY		 		= "goalPlay";
+	public const string OBJECTIVE_POPUP_FACEBOOK	 		= "goalFacebook";
 
+	public const string AFTERGAME_POPUP_POINTS		 		= "afterGamePoints";
+	public const string AFTERGAME_POPUP_NEXT		 		= "afterGameNext";
+	public const string AFTERGAME_POPUP_FACEBOOK	 		= "afterGameFacebook";
+
+	public const string LOOSEGAME_POPUP_TEXT		 		= "looseGameText";
+	public const string LOOSEGAME_POPUP_NEXT		 		= "looseGameNext";
+	public const string LOOSEGAME_POPUP_FACEBOOK	 		= "looseGameFacebook";
+
+	public const string NO_GEMS_POPUP_TITLE					= "NoGemsPopUpTitle";
+	public const string NO_GEMS_POPUP_INFO					= "NoGemsPopUpInfo";
+	public const string NO_GEMS_POPUP_BUTTON				= "NoGemsPopUpButton";
+
+	public const string BOSS_LOCKED_UNLOCK_TEXT 			= "BossLockedUnlockText";
+	public const string BOSS_LOCKED_OPTION_TEXT 			= "BossLockedOptionText";
+	public const string BOSS_LOCKED_KEY_TEXT 				= "BossLockedKeyText";
+	public const string BOSS_LOCKED_GEM_TEXT 				= "BossLockedGemText";
+	public const string BOSS_LOCKED_STAR_TEXT 				= "BossLockedStarText";
+
+	public const string FULL_LIFES_POPUP_TITLE				= "fullLifesTitle";
+	public const string FULL_LIFES_POPUP_INFO				= "fullLifesInfo";
+	public const string FULL_LIFES_POPUP_BUTTON				= "fullLifesButton";
+
+	public const string MISSING_LIFES_POPUP_TITLE			= "missingLifesTitle";
+	public const string MISSING_LIFES_POPUP_INFO1			= "missingLifesInfo1";
+	public const string MISSING_LIFES_POPUP_INFO2			= "missingLifesInfo2";
+	public const string MISSING_LIFES_POPUP_BUTTON			= "missingLifesButton";
+
+	public const string NO_LIFES_POPUP_TITLE				= "noLifesTitle";
+	public const string NO_LIFES_POPUP_INFO1				= "noLifesInfo1";
+	public const string NO_LIFES_POPUP_INFO2				= "noLifesInfo2";
+	public const string NO_LIFES_POPUP_BUTTON1				= "noLifesButton1";
+	public const string NO_LIFES_POPUP_BUTTON2				= "noLifesButton2";
+
+	public const string FULL_LIFES_TEXT						= "fullLifesText";
+	//GAME
+	public const string FLAVOR_TEXT							= "ticketFlavorText";
 	public const string EXIT_POPUP_ID 						= "exitText";
 	public const string WIN_TEXT_POPUP_ID					= "WinTextPopUpID";
 	public const string STARTGAME_TEXT_POPUP_ID				= "StartTextPopUpID";
 	public const string NO_MOVEMENTS_POPUP_ID				= "noMovementsPopUpID";
 	public const string NO_PIECES_POPUP_ID					= "noPiecesPopUpID";
+	public const string NO_OPTIONS_FIRST					= "noOptionsFirst";
+	public const string NO_OPTIONS_GIVEUP					= "noOptionsGiveUp";
+	public const string NO_OPTIONS_USEPOWER					= "noOptionsUsePower";
 
 	public const string TUTORIAL_LV1_PHASE1					= "Tutorial_lvl1_phase1";
 	public const string TUTORIAL_LV1_PHASE2					= "Tutorial_lvl1_phase2";
@@ -75,12 +127,8 @@ public class MultiLanguageTextManager
 	public const string TUTORIAL_LV64_PHASE3				= "Tutorial_lvl64_phase3";
 	public const string TUTORIAL_LV64_PHASE4				= "Tutorial_lvl64_phase4";
 
-	public const string NO_GEMS_POPUP_TITLE					= "NoGemsPopUpTitle";
-	public const string NO_GEMS_POPUP_INFO					= "NoGemsPopUpInfo";
-	public const string NO_GEMS_POPUP_BUTTON				= "NoGemsPopUpButton";
 
 	//Invitation to review
-
 	public const string INVITATION_11_TEXT1 				="Invitation_11_text1";
 
 	public const string INVITATION_21_TEXT1 				="Invitation_21_text1";
