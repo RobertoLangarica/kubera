@@ -9,12 +9,36 @@ public class TutorialLvl64 : TutorialBase
 
 	public Image powerUpDommy;
 	public GameObject fromPosition;
+	protected InputBombAndDestroy inputBomb;
 
 	protected bool doAnimation;
 
 	protected override void Start()
 	{
+		inputBomb = FindObjectOfType<InputBombAndDestroy> ();
+		inputBomb.OnPlayer += animation;
+
 		base.Start ();
+	}
+
+	protected void animation(bool stop)
+	{
+		if(stop)
+		{
+			DOTween.Kill ("Tutorial64");
+			CancelInvoke ("powerUpAnim");
+			powerUpDommy.transform.localScale = new Vector3 (1, 1, 1);
+			powerUpDommy.color =new Color(1,1,1,0);
+			doAnimation = false;
+		}
+		else
+		{
+			if(!doAnimation)
+			{
+				doAnimation = true;
+				powerUpAnim ();
+			}
+		}
 	}
 
 	public override bool canMoveToNextPhase ()
@@ -48,6 +72,7 @@ public class TutorialLvl64 : TutorialBase
 			phase = 1;
 			return true;
 		case(1):
+			inputBomb.OnPlayer -= animation;
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 

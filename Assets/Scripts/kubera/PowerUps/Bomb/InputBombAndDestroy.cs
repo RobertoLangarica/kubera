@@ -153,7 +153,7 @@ public class InputBombAndDestroy : MonoBehaviour
 		currentSelected = selected;
 	}
 
-	public void isOnPlayer(bool isOn)
+	protected void isOnPlayer(bool isOn)
 	{
 		if(OnPlayer != null)
 		{

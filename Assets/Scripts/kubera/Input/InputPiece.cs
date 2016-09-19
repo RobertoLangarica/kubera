@@ -9,8 +9,10 @@ public class InputPiece : MonoBehaviour
 	public bool allowInput = true;
 
 	public delegate void DOnDragNotification(GameObject target);
+	public delegate void DOnPlayer(bool onPlayer);
 	public DOnDragNotification OnDrop;
 	public DOnDragNotification OnDragStart;
+	public DOnPlayer OnPlayer;
 
 	public delegate void DOnSelectedNotification(GameObject target,bool selected);
 	public DOnSelectedNotification OnSelected;
@@ -57,6 +59,7 @@ public class InputPiece : MonoBehaviour
 
 					currentSelected.transform.DOScale(selectedScale,.1f).SetId("Input_SelectedScale");
 					OnSelected (currentSelected,true);
+					isOnPlayer (true);
 				}
 			}	
 			break;
@@ -187,12 +190,20 @@ public class InputPiece : MonoBehaviour
 	{
 		currentSelected = null;
 		somethingDragged = false;
+		isOnPlayer (false);
 	}
 
 	public void moveTo(GameObject target, Vector3 to, float delay = 0.1f)
 	{
 		DOTween.Kill("Input_Dragging",false);
 		target.transform.DOMove (to, delay).SetId("Input_Dragging");
+	}
 
+	protected void isOnPlayer(bool isOn)
+	{
+		if(OnPlayer != null)
+		{
+			OnPlayer (isOn);
+		}
 	}
 }

@@ -330,7 +330,8 @@ public class GameManager : MonoBehaviour
 	private void OnPieceDropped(GameObject obj)
 	{
 		Piece piece = obj.GetComponent<Piece>();
-		allowGameInput (false);
+		//TODO checar que el flujo funcione correctamente
+		//allowGameInput (false);
 
 		if(!dropOnGrid(piece))
 		{
@@ -683,12 +684,12 @@ public class GameManager : MonoBehaviour
 				AudioManager.GetInstance().Play("lines3orMore");
 			}
 		}
-		print (totalLines);
+		
 		if(totalLines > linesCreatedPoints.Count-1)
 		{
 			totalLines = linesCreatedPoints.Count-1;
 		}
-		print (totalLines);
+		print ("totalLines" +totalLines);
 		addPoints(linesCreatedPoints[totalLines]);
 	}
 
@@ -883,7 +884,7 @@ public class GameManager : MonoBehaviour
 
 		bombAnimation.OnAllAnimationsCompleted += destroyAndCountAllLetters;
 
-		allowGameInput (false);
+		allowGameInput (false,true);
 
 		cellToLetter = new List<Cell> ();
 

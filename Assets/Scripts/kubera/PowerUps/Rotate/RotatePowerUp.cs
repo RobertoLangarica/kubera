@@ -165,7 +165,8 @@ public class RotatePowerUp : PowerupBase
 						{
 						}).SetId("imageToRotate");
 				}).SetId("imageToRotate");
-			imageToRotate [i].DOShakeRotation (1.0f).SetId("imageToRotate");
+			
+			imageToRotate [i].DOLocalRotate (new Vector3 (0, 0, imageToRotate [i].localRotation.z - 90), 1.0f,RotateMode.LocalAxisAdd).SetId ("imageToRotate");
 		}
 		Invoke ("scaleRotateImage", 0.5f);
 	}

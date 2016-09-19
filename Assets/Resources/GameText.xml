@@ -331,7 +331,7 @@
 		</text>
 		<text id="Tutorial_lvl64_phase2">
 			<languages>
-				<language id="english" text="Tsp the letter {{b}}Z{{/b}} do the {{b}}WILD CARD{{/b}} becomes a {{b}}Z{{/b}}."/>
+				<language id="english" text="Tap the letter {{b}}Z{{/b}} do the {{b}}WILD CARD{{/b}} becomes a {{b}}Z{{/b}}."/>
 				<language id="spanish" text="Toca la letra {{b}}Z{{/b}} para que el {{b}}COMODIN{{/b}} se convierta en una {{b}}Z{{/b}}."/>
 				<language id="default" text="Toca la letra {{b}}Z{{/b}} para que el {{b}}COMODIN{{/b}} se convierta en una {{b}}Z{{/b}}."/>
 			</languages>

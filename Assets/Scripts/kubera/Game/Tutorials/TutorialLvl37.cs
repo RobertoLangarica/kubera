@@ -9,10 +9,33 @@ public class TutorialLvl37 : TutorialBase
 	public GameObject fromPosition;
 
 	protected bool doAnimation;
+	protected InputBombAndDestroy inputBomb;
 
 	protected override void Start()
 	{
+		inputBomb = FindObjectOfType<InputBombAndDestroy> ();
+		inputBomb.OnPlayer += animation;
 		base.Start ();
+	}
+
+	protected void animation(bool stop)
+	{
+		if(stop)
+		{
+			DOTween.Kill ("Tutorial37");
+			CancelInvoke ("powerUpAnim");
+			powerUpDommy.transform.localScale = new Vector3 (1, 1, 1);
+			powerUpDommy.color =new Color(1,1,1,0);
+			doAnimation = false;
+		}
+		else
+		{
+			if(!doAnimation)
+			{
+				doAnimation = true;
+				powerUpAnim ();
+			}
+		}
 	}
 
 	public override bool canMoveToNextPhase ()
@@ -44,6 +67,7 @@ public class TutorialLvl37 : TutorialBase
 			phase = 1;
 			return true;
 		case(1):
+			inputBomb.OnPlayer -= animation;
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add(ENextPhaseEvent.TAP);
@@ -99,6 +123,7 @@ public class TutorialLvl37 : TutorialBase
 		Vector3 posFrom = fromPosition.transform.position;
 		Vector3 posTo = hudManager.rotationImagePositions[1].transform.position;
 
+		print (hudManager.rotationImagePositions [1].transform.position);
 		powerUpDommy.transform.position = posFrom;
 
 		//Los valores de las animaciones los paso Liloo

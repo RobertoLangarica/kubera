@@ -25,14 +25,18 @@ public class TutorialLvl8 : TutorialBase
 		if(stop)
 		{
 			DOTween.Kill ("Tutorial8");
+			CancelInvoke ("powerUpAnim");
 			powerUpDommy.transform.localScale = new Vector3 (1, 1, 1);
 			powerUpDommy.color =new Color(1,1,1,0);
 			doAnimation = false;
 		}
 		else
 		{
-			doAnimation = true;
-			powerUpAnim ();
+			if(!doAnimation)
+			{
+				doAnimation = true;
+				powerUpAnim ();
+			}
 		}
 	}
 
