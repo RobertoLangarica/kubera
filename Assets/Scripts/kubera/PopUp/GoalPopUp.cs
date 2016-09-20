@@ -14,6 +14,10 @@ public class GoalPopUp : PopUpBase {
 	public Text goalTextLetters;
 
 	public Text LevelNumber;
+	public Text LevelNumberShadow;
+	public Text LevelText;
+	public Text LevelTextShadow;
+
 	public Text inviteFriendsText;
 	public Text playText;
 
@@ -51,10 +55,11 @@ public class GoalPopUp : PopUpBase {
 	public Sprite[] worldIcon;
 	public Image topLevelImage;
 	public Image topIcon;
+	public Image topIconShadow;
 
 	void Start()
 	{
-		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.225f, Screen.height * 0.1675f);
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.225f, Screen.height * 0.15f);
 
 		//TODO checar login a facebook
 		fbLogin ();
@@ -63,19 +68,20 @@ public class GoalPopUp : PopUpBase {
 		setStartingPlaces ();
 
 		int maxSize = 5;
-		if(((goalLettersContainer.GetComponent<RectTransform> ().rect.width/maxSize )-gridLayoutGroup.padding.left) < goalLettersContainer.GetComponent<RectTransform> ().rect.height *.75f)
+		if(((goalLettersContainer.GetComponent<RectTransform> ().rect.width/maxSize )-gridLayoutGroup.padding.left) < goalLettersContainer.GetComponent<RectTransform> ().rect.height *.5f)
 		{
 			gridLayoutGroup.cellSize = new Vector2((goalLettersContainer.GetComponent<RectTransform> ().rect.width/maxSize )-5
 				,(goalLettersContainer.GetComponent<RectTransform> ().rect.width/maxSize )-5);
 		}
 		else
 		{
-			gridLayoutGroup.cellSize = new Vector2(goalLettersContainer.GetComponent<RectTransform>().rect.height*.8f
-				,goalLettersContainer.GetComponent<RectTransform>().rect.height*.8f);
+			gridLayoutGroup.cellSize = new Vector2(goalLettersContainer.GetComponent<RectTransform> ().rect.height *.5f,goalLettersContainer.GetComponent<RectTransform> ().rect.height *.5f);
+
 		}
 
 		inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVE_POPUP_FACEBOOK);
 		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVE_POPUP_PLAY);
+		LevelText.text = LevelTextShadow.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVES_NAME_TEXT_ID);
 	}
 
 	void Update()
@@ -107,14 +113,14 @@ public class GoalPopUp : PopUpBase {
 
 	public void setGoalPopUpInfo(string textA,string textB,int starsReached, List<string> letters = null, string levelName = "" , int aABLetterObjectives = 0,int currentWorld =0)
 	{
-		this.LevelNumber.text = levelName;
+		this.LevelNumber.text = LevelNumberShadow.text = levelName;
 		ABObjective.SetActive (false);
 		AObjective.SetActive (false);
 		lettersObjective.SetActive (false);
 		resetStars ();
 
 		topLevelImage.sprite = worldTopBackground [currentWorld-1];
-		topIcon.sprite = worldIcon [currentWorld-1];
+		topIcon.sprite = topIconShadow.sprite = worldIcon [currentWorld-1];
 
 		objective = aABLetterObjectives;
 		switch (objective) {

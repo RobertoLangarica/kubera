@@ -1095,9 +1095,12 @@ public class WordManager : MonoBehaviour
 			if(!cancelHint)
 			{
 				cellSelected = cellManager.getCellUnderPoint (gridLetter [i].transform.position);
-				HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SPECIFIC_CELL,cellSelected.transform);
+				//gridLetter [i].updateState (Letter.EState.NORMAL);
+
+				//HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SPECIFIC_CELL,cellSelected.transform);
 				cellSelected.content.transform.DOShakePosition (0.5f);
-				//gridLetter [i].updateState (Letter.EState.HINTED);
+				gridLetter [i].hinted = true;
+				gridLetter [i].updateState (Letter.EState.HINTED);
 				if(AudioManager.GetInstance())
 				{
 					AudioManager.GetInstance().Stop("helpLetterSuggested");
@@ -1114,7 +1117,12 @@ public class WordManager : MonoBehaviour
 		{
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SPECIFIC_CELL);
 			currentWordPosibleState = EWordState.HINTED_WORDS;
+			for (int i = 0; i < gridLetter.Count; i++) 
+			{
+				gridLetter [i].hinted = false;
+			}
 			updateGridLettersState (gridLetter, EWordState.WORDS_AVAILABLE);
+
 			updateGridLettersState (gridLetter, EWordState.HINTED_WORDS);	
 		}
 	}
@@ -1124,6 +1132,11 @@ public class WordManager : MonoBehaviour
 		cancelHint = true;
 		updateGridLettersState (gridLetter, EWordState.WORDS_AVAILABLE);
 		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SPECIFIC_CELL);
+
+		for (int i = 0; i < gridLetter.Count; i++) 
+		{
+			gridLetter [i].hinted = false;
+		}
 	}
 
 	public IEnumerator animateWordRetrieved(Letter letter,float waitSpeed,float fullTime)

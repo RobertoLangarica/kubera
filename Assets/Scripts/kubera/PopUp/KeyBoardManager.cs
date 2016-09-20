@@ -161,6 +161,6 @@ public class KeyBoardManager : MonoBehaviour
 		rectT.anchorMax = new Vector2 (rectT.anchorMax.x,1);
 		rectT.anchorMin = new Vector2 (rectT.anchorMin.x,0);
 
-		Debug.Log ("Debi moverme a 0");
+		//Debug.Log ("Debi moverme a 0");
 	}
 }

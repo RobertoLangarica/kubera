@@ -9,6 +9,10 @@ using Kubera.Data.Sync;
 public class RetryPopUp : PopUpBase
 {
 	public Text LevelNumber;
+	public Text LevelNumberShadow;
+	public Text LevelText;
+	public Text LevelTextShadow;
+
 	public Text inviteFriendsText;
 	public Text playText;
 
@@ -35,6 +39,7 @@ public class RetryPopUp : PopUpBase
 	public Sprite[] worldIcon;
 	public Image topLevelImage;
 	public Image topIcon;
+	public Image topIconShadow;
 
 	void Start()
 	{
@@ -43,11 +48,12 @@ public class RetryPopUp : PopUpBase
 		//FBLoggin.GetInstance().onLoginComplete += fbLogin;
 
 		setStartingPlaces ();
-		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.225f, Screen.height * 0.1675f);
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.225f, Screen.height * 0.15f);
 
 		inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.LOOSEGAME_POPUP_FACEBOOK);
 		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.LOOSEGAME_POPUP_NEXT);
 		content.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.LOOSEGAME_POPUP_TEXT);
+		LevelText.text = LevelTextShadow.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVES_NAME_TEXT_ID);
 	}
 
 	protected void fbLogin()
@@ -68,7 +74,10 @@ public class RetryPopUp : PopUpBase
 		popUp.SetActive (true);
 
 		PersistentData.GetInstance().startLevel--;
-		LevelNumber.text = PersistentData.GetInstance().lastLevelPlayedName;
+		LevelNumber.text = LevelNumberShadow.text = PersistentData.GetInstance().lastLevelPlayedName;
+
+		topLevelImage.sprite = worldTopBackground [PersistentData.GetInstance().currentWorld-1];
+		topIcon.sprite = topIconShadow.sprite = worldIcon [PersistentData.GetInstance().currentWorld-1];
 
 		startAnimation ();
 	}

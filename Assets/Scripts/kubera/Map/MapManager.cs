@@ -565,7 +565,7 @@ public class MapManager : MonoBehaviour
 				}
 
 
-				popUpManager.getPopupByName ("goalAfterGame").GetComponent<GoalAfterGame>().setGoalPopUpInfo (starsReached,levelName , pointsMade.ToString());
+				popUpManager.getPopupByName ("goalAfterGame").GetComponent<GoalAfterGame>().setGoalPopUpInfo (starsReached,levelName , pointsMade.ToString(),PersistentData.GetInstance ().currentWorld);
 				popUpManager.activatePopUp ("goalAfterGame");
 				stopInput (true);
 			}

@@ -19,6 +19,8 @@ public class Letter : MonoBehaviour
 	public Sprite normalSprite;
 	public Sprite normalSelectedSprite;
 	public Sprite normalWrongSprite;
+	public Sprite hintSprite;
+	public Sprite hintSelectedSprite;
 	public Sprite obstacleSprite;
 	public Sprite obstacleSelectedSprite;
 	public Sprite obstacleWrongSprite;
@@ -27,10 +29,11 @@ public class Letter : MonoBehaviour
 	public Text txtLetter;
 	public Text txtPoints;
 	[HideInInspector] public Letter letterReference;
-	[HideInInspector] public bool isFromGrid;
+	public bool isFromGrid;
 	[HideInInspector] public EType type;
 	[HideInInspector] public EState state;
 	[HideInInspector] public bool selected;
+	[HideInInspector] public bool hinted;
 	[HideInInspector]public int index;//Indice del caracter en WordManager
 	[HideInInspector]public bool wildCard;
 	protected bool textActualized; //texto actualizado
@@ -74,6 +77,21 @@ public class Letter : MonoBehaviour
 
 	public void setColorsBasedOnType(EType type,EState state)
 	{
+		if(state == EState.HINTED)
+		{
+			if (!selected) 
+			{
+				txtLetter.color = Color.black;
+				txtPoints.color = Color.white;
+			}
+			else
+			{
+				txtLetter.color = Color.black;
+				txtPoints.color = Color.black;
+			}
+			return;
+		}
+		
 		switch(type)
 		{
 		case EType.OBSTACLE:
@@ -123,6 +141,10 @@ public class Letter : MonoBehaviour
 
 	public Sprite getSpriteBasedOnType(EType type)
 	{
+		if(hinted)
+		{
+			return hintSprite;
+		}
 		switch(type)
 		{
 		case EType.OBSTACLE:
@@ -149,6 +171,7 @@ public class Letter : MonoBehaviour
 
 		this.state = state;
 		setColorsBasedOnType (type,state);
+
 		switch(state)
 		{
 		case EState.NORMAL:
@@ -200,8 +223,15 @@ public class Letter : MonoBehaviour
 			}
 			break;
 		case EState.HINTED:
-			//txtLetter.color = hintedWordsColor;
-			//txtPoints.color = stateColor;
+			if(selected)
+			{
+				myImage.sprite = hintSelectedSprite;
+			}
+			else
+			{					
+				myImage.sprite = hintSprite;
+
+			}
 			break;
 		}
 	}
@@ -227,6 +257,12 @@ public class Letter : MonoBehaviour
 	protected void updateSpriteToSelectedBasedOnType()
 	{
 		if(myImage == null){return;}
+
+		if(hinted)
+		{				
+			myImage.sprite = hintSelectedSprite;
+			return;
+		}
 
 		switch(type)
 		{
@@ -266,6 +302,7 @@ public class Letter : MonoBehaviour
 		if(letterReference != null)
 		{
 			//setColorsBasedOnType (type,state);
+			letterReference.letterReference.isFromGrid = true;
 			letterReference.markAsSelected();
 		}
 	}

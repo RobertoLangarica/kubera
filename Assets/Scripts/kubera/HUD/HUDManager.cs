@@ -307,7 +307,7 @@ public class HUDManager : MonoBehaviour
 
 		textId = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_OBSTACLES_ID);
 		goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
-			new string[2]{ "{{pointsMade}}", "{{pointsNeed}}" }, new string[2]{ obstacleLettersMade, obstacleLettersNeed });
+			new string[2]{ "{{lettersUsed}}", "{{lettersNeed}}" }, new string[2]{ obstacleLettersMade, obstacleLettersNeed });
 	}
 
 	protected void setSizeOfContainer(int maxSize = 5)

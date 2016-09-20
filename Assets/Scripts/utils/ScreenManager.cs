@@ -33,7 +33,7 @@ public class ScreenManager : Manager<ScreenManager> {
 	public DOnFinishLoadScene OnFinish;
 	protected AsyncOperation async;
 
-	protected AsyncOperation testAsync;
+	public AsyncOperation preloadSceneAsync;
 
 	void Awake()
 	{
@@ -170,15 +170,15 @@ public class ScreenManager : Manager<ScreenManager> {
 
 	public void testLoading(string level)
 	{
-		testAsync = SceneManager.LoadSceneAsync(level);
-		testAsync.allowSceneActivation = false;
+		preloadSceneAsync = SceneManager.LoadSceneAsync(level);
+		preloadSceneAsync.allowSceneActivation = false;
 	}
 
 	public void testContinue()
 	{
-		print (testAsync);
+		print (preloadSceneAsync);
 
-		loading.showLoading(0.1f,()=>{testAsync.allowSceneActivation = true;});
+		loading.showLoading(0.1f,()=>{preloadSceneAsync.allowSceneActivation = true;});
 	}
 
 	public IEnumerator loadScene(string level)

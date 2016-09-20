@@ -31,7 +31,17 @@ public class MultiLanguageTextManager
 	public const string GAME_NO_OPTION_GIVEUP				= "noOptionsGameGiveUp";
 	public const string GAME_NO_OPTION_TITLE				= "noOptionGameTitle";
 
+	public const string START_GAME_OBJECTIVE_POINTS_TEXT	= "startGameObjectivePointsText";
+	public const string START_GAME_OBJECTIVE_LETTERS_TEXT	= "startGameObjectiveLettersText";
+	public const string START_GAME_OBJECTIVE_BLACK_TEXT		= "startGameObjectiveBlackText";
+	public const string START_GAME_OBJECTIVE_WORD_TEXT		= "startGameObjectiveWordText";
+	public const string START_GAME_OBJECTIVE_WORDS_TEXT		= "startGameObjectiveWordsText";
+	public const string START_GAME_OBJECTIVE_SYNONYM_TEXT	= "startGameObjectiveSynonymText";
+	public const string START_GAME_OBJECTIVE_ANTONYM_TEXT	= "startGameObjectiveAntonymText";
+
 	//MAP
+	public const string OBJECTIVES_NAME_TEXT_ID 			= "levlTextName";
+
 	public const string OBJECTIVE_POPUP_LVL_TEXT_ID 		= "lvlTextObjectivePopUp";
 	public const string OBJECTIVE_POPUP_GOAL_TEXT_ID 		= "goalTextObjectivePopUp";
 	public const string OBJECTIVE_POPUP_BY_POINTS_ID_A 		= "goalByPointsObjectivePopUpA";
@@ -48,6 +58,7 @@ public class MultiLanguageTextManager
 
 	public const string AFTERGAME_POPUP_POINTS		 		= "afterGamePoints";
 	public const string AFTERGAME_POPUP_NEXT		 		= "afterGameNext";
+	public const string AFTERGAME_POPUP_RETRY		 		= "afterGameRetry";
 	public const string AFTERGAME_POPUP_FACEBOOK	 		= "afterGameFacebook";
 
 	public const string LOOSEGAME_POPUP_TEXT		 		= "looseGameText";

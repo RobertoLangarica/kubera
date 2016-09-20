@@ -234,7 +234,6 @@
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_monito2.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_objetiveBase.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_playBTN.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_roof.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_rug.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_socialBTN.png</key>
             <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_socialBase.png</key>

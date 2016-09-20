@@ -104,6 +104,7 @@ public class GameManager : MonoBehaviour
 
 		goalManager.OnGoalAchieved += OnLevelGoalAchieved;
 		goalManager.OnLetterFound += hudManager.destroyLetterFound;
+		goalManager.OnBlackLetter += hudManager.destroyLetterFound;
 
 		hudManager.OnPopUpCompleted += popUpCompleted;
 		hudManager.OnPiecesScaled += checkIfLose;
@@ -151,6 +152,7 @@ public class GameManager : MonoBehaviour
 		if(PersistentData.GetInstance().fromLevelsToGame)
 		{
 			yield return new WaitForEndOfFrame ();
+			yield return new WaitUntil (()=> ScreenManager.instance.preloadSceneAsync.isDone);
 			ScreenManager.instance.testLoading ("Levels");
 		}
 		yield return new WaitForEndOfFrame ();
@@ -711,7 +713,9 @@ public class GameManager : MonoBehaviour
 		//Se muestra el objetivo al inicio del nivel
 		hudManager.showGoalAsLetters((goalManager.currentCondition == GoalManager.LETTERS));
 		hudManager.setWinCondition (goalManager.currentCondition, goalManager.getGoalConditionParameters());
+
 		activatePopUp ("startGamePopUp");
+		FindObjectOfType<startGamePopUp> ().initText (goalManager.currentCondition);
 
 	}
 
@@ -1341,6 +1345,9 @@ public class GameManager : MonoBehaviour
 			break;
 		case GoalManager.WORDS_COUNT:
 			hudManager.actualizeWordsMadeOnWinCondition (goalManager.wordsCount.ToString(),goalManager.goalWordsCount.ToString());
+			break;
+		case GoalManager.OBSTACLES:
+			hudManager.actualizePointsOnObstacleLetters (goalManager.obstaclesCount.ToString(),goalManager.goalObstacles.ToString());
 			break;
 		}
 	}

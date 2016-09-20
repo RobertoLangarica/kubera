@@ -161,6 +161,58 @@
 		<!--
 		Game	
 		-->
+
+     	<text id="startGameObjectivePointsText">
+			<languages>
+				<language id="english" text="Get points"/>
+				<language id="spanish" text="Haz puntos"/>
+				<language id="default" text="Haz puntos"/>
+			</languages>
+		</text>
+		<text id="startGameObjectiveLettersText">
+			<languages>
+				<language id="english" text="Use Letters"/>
+				<language id="spanish" text="Usa letras"/>
+				<language id="default" text="Usa letras"/>
+			</languages>
+		</text>
+		<text id="startGameObjectiveBlackText">
+			<languages>
+				<language id="english" text="Use black letters"/>
+				<language id="spanish" text="Usa letras negras"/>
+				<language id="default" text="Usa letras negras"/>
+			</languages>
+		</text>
+		<text id="startGameObjectiveWordText">
+			<languages>
+				<language id="english" text="Form a Word"/>
+				<language id="spanish" text="Haz una palabra"/>
+				<language id="default" text="Haz una palabra"/>
+			</languages>
+		</text>
+		<text id="startGameObjectiveWordsText">
+			<languages>
+				<language id="english" text="Form words"/>
+				<language id="spanish" text="Haz palabras"/>
+				<language id="default" text="Haz palabras"/>
+			</languages>
+		</text>
+		<text id="startGameObjectiveSynonymText">
+			<languages>
+				<language id="english" text="Form an synonym"/>
+				<language id="spanish" text="Haz un sinónimo"/>
+				<language id="default" text="Haz un sinónimo"/>
+			</languages>
+		</text>
+		<text id="startGameObjectiveAntonymText">
+			<languages>
+				<language id="english" text="Form an antonym"/>
+				<language id="spanish" text="Haz un antónimo"/>
+				<language id="default" text="Haz un antónimo"/>
+			</languages>
+		</text>
+
+
 		<text id="Tutorial_lvl1_phase1">
 			<languages>
 				<language id="english" text="Drag a piece to make a line."/>
@@ -533,6 +585,13 @@
 				<language id="default" text="SIGUIENTE"/>
 			</languages>
 		</text>
+		<text id="afterGameNext">
+			<languages>
+				<language id="english" text="RETRY"/>
+				<language id="spanish" text="REINTENTA"/>
+				<language id="default" text="REINTENTA"/>
+			</languages>
+		</text>
 		<text id="afterGameFacebook">
 			<languages>
 				<language id="english" text="INVITE FRIENDS"/>
@@ -541,6 +600,13 @@
 			</languages>
 		</text>
 
+		<text id="levlTextName">
+			<languages>
+				<language id="english" text="LEVEL"/>
+				<language id="spanish" text="NIVEL"/>
+				<language id="default" text="NIVEL"/>
+			</languages>
+		</text>
 		<text id="looseGameText">
 			<languages>
 				<language id="english" text="You'll get it next time!"/>
