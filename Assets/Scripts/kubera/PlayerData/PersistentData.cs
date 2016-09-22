@@ -228,6 +228,11 @@ public class PersistentData : Manager<PersistentData>
 		return levelsData.levels[Random.Range(0,levelsData.levels.Length-1)];
 	}
 
+	public Level getFirstLevel()
+	{
+		return levelsData.levels[0];
+	}
+
 	public Level getNextLevel()
 	{
 		setLevelNumber (startLevel);

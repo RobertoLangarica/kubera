@@ -138,6 +138,9 @@ public class GameManager : MonoBehaviour
 		{
 			configureLevel(PersistentData.GetInstance().currentLevel);
 		}
+		hudManager.enablePowerUps ();
+		unBlockPowerUpForThisLevel ();
+
 		hudManager.setWorldBackground (currentLevel.world-1);
 		populateGridFromLevel(currentLevel);
 		cellManager.createFrame ();
@@ -627,14 +630,7 @@ public class GameManager : MonoBehaviour
 		{
 			if(useReferenceInstead)
 			{
-				if(letters[i].wildCard)
-				{
-					letter = letters [i];
-				}
-				else
-				{
-					letter = letters[i].letterReference;
-				}
+				letter = letters[i].letterReference;
 			}
 			else
 			{
@@ -643,19 +639,11 @@ public class GameManager : MonoBehaviour
 			
 			if(letter != null)
 			{
-				if(letter.wildCard)
-				{
-					StartCoroutine(wordManager.animateWordRetrieved (letter,wait,fulltime));
-					gridCharacters.Remove(letter);
-				}
-				else
-				{
-					cellManager.getCellUnderPoint(letter.transform.position).clearCell();
-					gridCharacters.Remove(letter);
+				cellManager.getCellUnderPoint(letter.transform.position).clearCell();
+				gridCharacters.Remove(letter);
 
-					StartCoroutine(wordManager.animateWordRetrieved (letter.letterReference,wait,fulltime));
-					GameObject.DestroyImmediate(letter.gameObject);
-				}
+				StartCoroutine(wordManager.animateWordRetrieved (letter.letterReference,wait,fulltime));
+				GameObject.DestroyImmediate(letter.gameObject);
 			}
 		}
 
@@ -1102,17 +1090,17 @@ public class GameManager : MonoBehaviour
 		
 	protected void unlockPowerUp()
 	{
-		if(currentLevel.unblockBlock)
+		if(currentLevel.unblockWordHint)
 		{
-			UserDataManager.instance.isOnePiecePowerUpUnlocked = true;
+			UserDataManager.instance.isWordHintPowerUpUnlocked = true;
 		}
 		if(currentLevel.unblockBomb)
 		{
 			UserDataManager.instance.isDestroyNeighborsPowerUpUnlocked = true;
 		}
-		if(currentLevel.unblockDestroy)
+		if(currentLevel.unblockBlock)
 		{
-			UserDataManager.instance.isDestroyPowerUpUnlocked = true;
+			UserDataManager.instance.isOnePiecePowerUpUnlocked = true;
 		}
 		if(currentLevel.unblockRotate)
 		{
@@ -1122,9 +1110,37 @@ public class GameManager : MonoBehaviour
 		{
 			UserDataManager.instance.isWildCardPowerUpUnlocked = true;
 		}
+		if(currentLevel.unblockDestroy)
+		{
+			UserDataManager.instance.isDestroyPowerUpUnlocked = true;
+		}
+	}
+
+	protected void unBlockPowerUpForThisLevel()
+	{
 		if(currentLevel.unblockWordHint)
 		{
-			UserDataManager.instance.isWordHintPowerUpUnlocked = true;
+			hudManager.powerUps [0].gameObject.SetActive(true);
+		}
+		if(currentLevel.unblockBomb)
+		{
+			hudManager.powerUps [1].gameObject.SetActive(true);
+		}
+		if(currentLevel.unblockBlock)
+		{
+			hudManager.powerUps [2].gameObject.SetActive(true);
+		}
+		if(currentLevel.unblockRotate)
+		{
+			hudManager.powerUps [3].gameObject.SetActive(true);
+		}
+		if(currentLevel.unblockWildcard)
+		{
+			hudManager.powerUps [4].gameObject.SetActive(true);
+		}
+		if(currentLevel.unblockDestroy)
+		{
+			hudManager.powerUps [5].gameObject.SetActive(true);
 		}
 	}
 

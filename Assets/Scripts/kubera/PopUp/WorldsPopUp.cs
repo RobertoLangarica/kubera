@@ -43,6 +43,11 @@ public class WorldsPopUp : PopUpBase {
 
 	public void initializeMiniWorld(int world, bool unLocked, int starsObtained, int worldStars)
 	{
+		if(world >= worlds.Length)
+		{
+			return;
+		}
+
 		worlds [world].worldPopUp = this;
 		if(unLocked)
 		{

@@ -41,13 +41,13 @@ public class WildCardPowerUp : PowerupBase
 
 		updateDragableObjectImage (powerUpInput.getCurrentSelected());
 
-		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SQUARE_POWERUP);
+		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 	}
 
 	protected void completePowerUp()
 	{
 		powerUpInput.enabled = false;
-		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SQUARE_POWERUP);
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 		
 		gameManager.updatePiecesLightAndUpdateLetterState ();
 		OnComplete ();
@@ -56,14 +56,14 @@ public class WildCardPowerUp : PowerupBase
 	protected void completePowerUpNoGems()
 	{
 		powerUpInput.enabled = false;
-		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SQUARE_POWERUP);
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 		OnCompletedNoGems ();
 	}
 
 	public override void cancel()
 	{
 		powerUpInput.enabled = false;
-		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SQUARE_POWERUP);
+		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 		OnCancel ();
 	}
 }

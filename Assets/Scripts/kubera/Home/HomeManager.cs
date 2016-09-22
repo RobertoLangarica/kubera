@@ -85,11 +85,29 @@ public class HomeManager : MonoBehaviour {
 	{
 		if(AudioManager.GetInstance())
 		{
-			
 			AudioManager.GetInstance().Play("fxButton");
 		}
 
 		ScreenManager.instance.GoToScene (scene);
+	}
+
+	public void goToPlay()
+	{
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Play("fxButton");
+		}
+
+		if(KuberaDataManager.GetCastedInstance<KuberaDataManager> ().currentUser.levels.Count != 0)
+		{
+			ScreenManager.instance.GoToScene ("Levels");
+		}
+		else
+		{
+			PersistentData.GetInstance ().fromLevelsToGame = true;
+			PersistentData.GetInstance ().currentLevel = PersistentData.GetInstance ().getFirstLevel ();
+			ScreenManager.instance.GoToScene ("Game");
+		}
 	}
 
 	//HACK

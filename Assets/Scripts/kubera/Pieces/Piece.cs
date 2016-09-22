@@ -16,6 +16,7 @@ public class Piece : MonoBehaviour
 		PURPLE,
 		YELLOW,
 		GREY,
+		RED,
 		LETTER_OBSTACLE
 	}
 
@@ -34,6 +35,7 @@ public class Piece : MonoBehaviour
 	public Sprite SPRITE_PURPLE;
 	public Sprite SPRITE_YELLOW;
 	public Sprite SPRITE_GREY;
+	public Sprite SPRITE_RED;
 
 	public GameObject[] squares;
 	public SpriteRenderer[] squaresSprite;
@@ -117,6 +119,8 @@ public class Piece : MonoBehaviour
 			return SPRITE_PINK;
 		case EColor.GREY:
 			return SPRITE_GREY;
+		case EColor.RED:
+			return SPRITE_RED;
 		}
 		return null;
 	}

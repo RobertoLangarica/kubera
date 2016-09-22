@@ -55,7 +55,7 @@ public class InputBlockPowerUp : MonoBehaviour
 
 	public void setPieceColor()
 	{
-		currentSelected.GetComponent<Piece> ().currentColor = Piece.EColor.PURPLE;
+		currentSelected.GetComponent<Piece> ().currentColor = Piece.EColor.RED;
 	}
 
 	public GameObject getCurrentSelected()

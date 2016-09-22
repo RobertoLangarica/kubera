@@ -6,9 +6,9 @@
 		-->
 		<text id="startGame">
 			<languages>
-				<language id="english" text="Play"/>
-				<language id="spanish" text="Juega"/>
-				<language id="default" text="Juega"/>
+				<language id="english" text="PLAY"/>
+				<language id="spanish" text="JUGAR"/>
+				<language id="default" text="JUGAR"/>
 			</languages>
 		</text>
 
@@ -587,9 +587,9 @@
 		</text>
 		<text id="afterGameRetry">
 			<languages>
-				<language id="english" text="RETRY"/>
-				<language id="spanish" text="REINTENTA"/>
-				<language id="default" text="REINTENTA"/>
+				<language id="english" text="TRY AGAIN"/>
+				<language id="spanish" text="REINTENTAR"/>
+				<language id="default" text="REINTENTAR"/>
 			</languages>
 		</text>
 		<text id="afterGameFacebook">

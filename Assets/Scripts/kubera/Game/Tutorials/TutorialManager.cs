@@ -72,8 +72,6 @@ public class TutorialManager : Manager<TutorialManager>
 					currentTutorial = allTutorials [i];
 					currentTutorial.gameObject.SetActive (true);
 				}
-
-
 			}
 		}
 	

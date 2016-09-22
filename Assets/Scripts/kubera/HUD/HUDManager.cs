@@ -507,4 +507,15 @@ public class HUDManager : MonoBehaviour
 			}
 		}
 	}
+
+	public void enablePowerUps()
+	{
+		print ( UserDataManager.instance.isWordHintPowerUpUnlocked);
+		powerUps [0].gameObject.SetActive(UserDataManager.instance.isWordHintPowerUpUnlocked);
+		powerUps [1].gameObject.SetActive(UserDataManager.instance.isDestroyNeighborsPowerUpUnlocked);
+		powerUps [2].gameObject.SetActive(UserDataManager.instance.isOnePiecePowerUpUnlocked);
+		powerUps [3].gameObject.SetActive(UserDataManager.instance.isRotatePowerUpUnlocked);
+		powerUps [4].gameObject.SetActive(UserDataManager.instance.isWildCardPowerUpUnlocked);
+		powerUps [5].gameObject.SetActive(UserDataManager.instance.isDestroyPowerUpUnlocked);
+	}
 }
