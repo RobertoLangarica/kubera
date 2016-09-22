@@ -487,6 +487,7 @@ namespace ABC.Tree
 			List<ABCChar> result = new List<ABCChar>();
 			Dictionary<int,bool> validated = new Dictionary<int, bool>();//La letra con la que ya se inicio una busqueda
 			ABCNode tmp;
+
 			int i,l;
 
 			if(sortedChars != null)

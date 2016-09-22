@@ -82,6 +82,9 @@ public class WordManager : MonoBehaviour
 	protected float centerVacuum;
 	protected RectTransform wordCompleteButtonRectTransform;
 	protected RectTransform wordDeleteButtonRectTransform;
+	public List<Letter> hintedLetters;
+
+
 	void Awake()
 	{
 		letters = new List<Letter>(maxLetters);
@@ -178,15 +181,24 @@ public class WordManager : MonoBehaviour
 			//Se va agregar
 			if (isAddLetterAllowed ()) 
 			{
-				if(!byDrag)
+				if(!letter.wildCard)
 				{
-					StartCoroutine( correctTweens ());
-					addLetterFromGrid (letter);		
+					if(!byDrag)
+					{
+						StartCoroutine( correctTweens ());
+						addLetterFromGrid (letter);		
+					}
+					else
+					{
+						addLetterFromGrid (letter,byDrag);
+					}
 				}
 				else
 				{
-					addLetterFromGrid (letter,byDrag);
+					keyBoard.setSelectedWildCard (letter);
+					keyBoard.showKeyBoardForWildCard ();
 				}
+
 			}
 		}
 	}
@@ -1008,7 +1020,7 @@ public class WordManager : MonoBehaviour
 		return letter;
 	}
 
-	private Letter getNewEmptyGridLetter()
+	public Letter getNewEmptyGridLetter()
 	{
 		GameObject go = Instantiate(gridLetterPrefab)as GameObject;
 		RectTransform rectT = go.GetComponent<RectTransform> ();
@@ -1073,6 +1085,7 @@ public class WordManager : MonoBehaviour
 		case EWordState.HINTED_WORDS:
 			if (currentWordPosibleState != EWordState.HINTED_WORDS && !cancelHint) 
 			{
+				hintedLetters = gridLetter;
 				currentWordPosibleState = EWordState.HINTED_WORDS;
 				StartCoroutine (updateLetterHintState (gridLetter));
 			}
@@ -1127,15 +1140,15 @@ public class WordManager : MonoBehaviour
 		}
 	}
 
-	public void cancelHinting(List<Letter> gridLetter)
+	public void cancelHinting()
 	{
 		cancelHint = true;
-		updateGridLettersState (gridLetter, EWordState.WORDS_AVAILABLE);
+		updateGridLettersState (hintedLetters, EWordState.WORDS_AVAILABLE);
 		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SPECIFIC_CELL);
 
-		for (int i = 0; i < gridLetter.Count; i++) 
+		for (int i = 0; i < hintedLetters.Count; i++) 
 		{
-			gridLetter [i].hinted = false;
+			hintedLetters [i].hinted = false;
 		}
 	}
 

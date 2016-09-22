@@ -145,6 +145,16 @@ TextureImporter:
     21300276: techos-K-techosMundos_8Adorno
     21300278: techos-K-techosMundos_9
     21300280: techos-K-techosMundos_9Adorno
+    21300282: K-_estrella1
+    21300284: K-_estrella2
+    21300286: K-_luz1
+    21300288: K-_luz2
+    21300290: K-_luz3
+    21300292: K-_luz4
+    21300294: K-_luz5
+    21300296: K-_luz6
+    21300298: K-_luz7-22
+    21300300: K-_luz7-24
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -194,13 +204,198 @@ TextureImporter:
     textureFormat: -3
     compressionQuality: 50
     allowsAlphaSplitting: 0
+  - buildTarget: Android
+    maxTextureSize: 4096
+    textureFormat: -3
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
   spriteSheet:
     sprites:
+    - name: K-_estrella1
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 783
+        width: 21
+        height: 20
+      alignment: 9
+      pivot: {x: 0.45238096, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-_estrella2
+      rect:
+        serializedVersion: 2
+        x: 1754
+        y: 141
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-_luz1
+      rect:
+        serializedVersion: 2
+        x: 1996
+        y: 928
+        width: 49
+        height: 201
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -24.5, y: 100.5}
+        - {x: -24.5, y: -89.5}
+        - {x: -20.5, y: -93.5}
+        - {x: 9.5, y: -100.5}
+        - {x: 24.5, y: -100.5}
+        - {x: 24.5, y: -79.5}
+        - {x: -16.5, y: 100.5}
+    - name: K-_luz2
+      rect:
+        serializedVersion: 2
+        x: 1182
+        y: 118
+        width: 87
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -35.5, y: 98}
+        - {x: -43.5, y: 98}
+        - {x: -43.5, y: 75}
+        - {x: 5.5, y: -93}
+        - {x: 26.5, y: -98}
+        - {x: 43.5, y: -98}
+        - {x: 43.5, y: -91}
+        - {x: 41.5, y: -86}
+        - {x: -9.5, y: 37}
+        - {x: -32.5, y: 92}
+    - name: K-_luz3
+      rect:
+        serializedVersion: 2
+        x: 1769
+        y: 248
+        width: 64
+        height: 230
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 32, y: 115}
+        - {x: 23, y: 115}
+        - {x: -32, y: -96}
+        - {x: -32, y: -115}
+        - {x: -18, y: -115}
+        - {x: 17, y: -108}
+        - {x: 23, y: -103}
+        - {x: 32, y: 69}
+    - name: K-_luz4
+      rect:
+        serializedVersion: 2
+        x: 1839
+        y: 282
+        width: 87
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 34.5, y: 98}
+        - {x: -43.5, y: -82}
+        - {x: -43.5, y: -98}
+        - {x: -28.5, y: -98}
+        - {x: -4.5, y: -92}
+        - {x: 7.5, y: -70}
+        - {x: 43.5, y: 82}
+        - {x: 43.5, y: 98}
+    - name: K-_luz5
+      rect:
+        serializedVersion: 2
+        x: 1934
+        y: 1135
+        width: 80
+        height: 407
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 23, y: 203.5}
+        - {x: -5, y: 199.5}
+        - {x: -13, y: 186.5}
+        - {x: -40, y: -160.5}
+        - {x: -40, y: -203.5}
+        - {x: -33, y: -203.5}
+        - {x: -31, y: -201.5}
+        - {x: 40, y: 178.5}
+        - {x: 40, y: 203.5}
+    - name: K-_luz6
+      rect:
+        serializedVersion: 2
+        x: 1112
+        y: 810
+        width: 83
+        height: 337
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -13.5, y: 168.5}
+        - {x: -37.5, y: 161.5}
+        - {x: -41.5, y: 160.5}
+        - {x: -41.5, y: 144.5}
+        - {x: -40.5, y: 138.5}
+        - {x: 35.5, y: -161.5}
+        - {x: 37.5, y: -168.5}
+        - {x: 41.5, y: -168.5}
+        - {x: 41.5, y: -59.5}
+        - {x: 10.5, y: 168.5}
+    - name: K-_luz7-22
+      rect:
+        serializedVersion: 2
+        x: 1529
+        y: 1149
+        width: 101
+        height: 405
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 14.5, y: 202.5}
+        - {x: -4.5, y: 198.5}
+        - {x: -50.5, y: -157.5}
+        - {x: -50.5, y: -202.5}
+        - {x: -41.5, y: -202.5}
+        - {x: 50.5, y: 182.5}
+        - {x: 50.5, y: 202.5}
+    - name: K-_luz7-24
+      rect:
+        serializedVersion: 2
+        x: 1070
+        y: 1153
+        width: 102
+        height: 411
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -26, y: 205.5}
+        - {x: -51, y: 197.5}
+        - {x: -51, y: 183.5}
+        - {x: -48, y: 166.5}
+        - {x: 19, y: -111.5}
+        - {x: 39, y: -193.5}
+        - {x: 43, y: -205.5}
+        - {x: 51, y: -205.5}
+        - {x: 51, y: -166.5}
+        - {x: 47, y: -106.5}
+        - {x: 1, y: 205.5}
     - name: K-Mapa_1caminoAzul
       rect:
         serializedVersion: 2
-        x: 1189
-        y: 14
+        x: 1909
+        y: 823
         width: 81
         height: 278
       alignment: 9
@@ -219,8 +414,8 @@ TextureImporter:
     - name: K-Mapa_1caminoBlanco
       rect:
         serializedVersion: 2
-        x: 1088
-        y: 1
+        x: 1019
+        y: 456
         width: 95
         height: 291
       alignment: 9
@@ -239,8 +434,8 @@ TextureImporter:
     - name: K-Mapa_2caminoAzul
       rect:
         serializedVersion: 2
-        x: 1756
-        y: 1005
+        x: 1201
+        y: 824
         width: 278
         height: 327
       alignment: 9
@@ -266,8 +461,8 @@ TextureImporter:
     - name: K-Mapa_2caminoBlanco
       rect:
         serializedVersion: 2
-        x: 929
-        y: 298
+        x: 1636
+        y: 1201
         width: 292
         height: 341
       alignment: 9
@@ -294,8 +489,8 @@ TextureImporter:
     - name: K-Mapa_3caminoAzul
       rect:
         serializedVersion: 2
-        x: 1276
-        y: 1149
+        x: 632
+        y: 753
         width: 474
         height: 327
       alignment: 9
@@ -326,8 +521,8 @@ TextureImporter:
     - name: K-Mapa_3caminoBlanco
       rect:
         serializedVersion: 2
-        x: 1276
-        y: 1482
+        x: 1264
+        y: 1560
         width: 488
         height: 339
       alignment: 9
@@ -361,8 +556,8 @@ TextureImporter:
     - name: K-Mapa_base-escalera
       rect:
         serializedVersion: 2
-        x: 538
-        y: 1
+        x: 1120
+        y: 628
         width: 293
         height: 120
       alignment: 9
@@ -377,8 +572,8 @@ TextureImporter:
     - name: K-Mapa_bloqued
       rect:
         serializedVersion: 2
-        x: 964
-        y: 10
+        x: 1837
+        y: 13
         width: 118
         height: 121
       alignment: 0
@@ -396,8 +591,8 @@ TextureImporter:
     - name: K-Mapa_bossbloqued
       rect:
         serializedVersion: 2
-        x: 632
-        y: 1460
+        x: 1600
+        y: 473
         width: 140
         height: 198
       alignment: 9
@@ -417,8 +612,8 @@ TextureImporter:
     - name: K-Mapa_bossplay
       rect:
         serializedVersion: 2
-        x: 778
-        y: 1460
+        x: 1746
+        y: 484
         width: 139
         height: 198
       alignment: 9
@@ -440,8 +635,8 @@ TextureImporter:
     - name: K-Mapa_bosswin
       rect:
         serializedVersion: 2
-        x: 1728
-        y: 535
+        x: 1448
+        y: 298
         width: 139
         height: 198
       alignment: 9
@@ -462,8 +657,8 @@ TextureImporter:
     - name: K-Mapa_brilloAvatar
       rect:
         serializedVersion: 2
-        x: 340
-        y: 631
+        x: 374
+        y: 49
         width: 49
         height: 8
       alignment: 9
@@ -473,8 +668,8 @@ TextureImporter:
     - name: K-Mapa_escalera
       rect:
         serializedVersion: 2
-        x: 557
-        y: 130
+        x: 1
+        y: 8
         width: 367
         height: 49
       alignment: 9
@@ -492,8 +687,8 @@ TextureImporter:
     - name: K-Mapa_MarcoAvatardorado
       rect:
         serializedVersion: 2
-        x: 1873
-        y: 664
+        x: 1962
+        y: 748
         width: 69
         height: 69
       alignment: 0
@@ -513,8 +708,8 @@ TextureImporter:
     - name: K-Mapa_MarcoAvatargris
       rect:
         serializedVersion: 2
-        x: 1873
-        y: 589
+        x: 1891
+        y: 671
         width: 69
         height: 69
       alignment: 0
@@ -535,8 +730,8 @@ TextureImporter:
     - name: K-Mapa_play
       rect:
         serializedVersion: 2
-        x: 837
-        y: 1
+        x: 1627
+        y: 27
         width: 121
         height: 123
       alignment: 9
@@ -554,8 +749,8 @@ TextureImporter:
     - name: K-Mapa_Puertas
       rect:
         serializedVersion: 2
-        x: 1073
-        y: 1308
+        x: 1456
+        y: 153
         width: 165
         height: 139
       alignment: 9
@@ -703,8 +898,8 @@ TextureImporter:
     - name: K-Mapa_stargray
       rect:
         serializedVersion: 2
-        x: 439
-        y: 126
+        x: 1397
+        y: 60
         width: 53
         height: 53
       alignment: 0
@@ -724,8 +919,8 @@ TextureImporter:
     - name: K-Mapa_starwin
       rect:
         serializedVersion: 2
-        x: 498
-        y: 127
+        x: 1419
+        y: 696
         width: 53
         height: 52
       alignment: 9
@@ -744,8 +939,8 @@ TextureImporter:
     - name: K-MapaGeneral-31
       rect:
         serializedVersion: 2
-        x: 1276
-        y: 1044
+        x: 578
+        y: 328
         width: 465
         height: 99
       alignment: 9
@@ -770,8 +965,8 @@ TextureImporter:
     - name: K-MapaGeneral_1camonoFondo
       rect:
         serializedVersion: 2
-        x: 439
-        y: 185
+        x: 340
+        y: 374
         width: 232
         height: 429
       alignment: 9
@@ -814,8 +1009,8 @@ TextureImporter:
     - name: K-MapaGeneral_2caminoFondo
       rect:
         serializedVersion: 2
-        x: 1
-        y: 121
+        x: 632
+        y: 1086
         width: 432
         height: 478
       alignment: 9
@@ -875,8 +1070,8 @@ TextureImporter:
     - name: K-MapaGeneral_3caminoFondo
       rect:
         serializedVersion: 2
-        x: 340
-        y: 645
+        x: 632
+        y: 1570
         width: 626
         height: 477
       alignment: 9
@@ -953,8 +1148,8 @@ TextureImporter:
     - name: K-MapaGeneral_HUDbaseAbajo
       rect:
         serializedVersion: 2
-        x: 1227
-        y: 299
+        x: 846
+        y: 31
         width: 105
         height: 99
       alignment: 9
@@ -970,8 +1165,8 @@ TextureImporter:
     - name: K-MapaGeneral_HUDbaseGem-Cor
       rect:
         serializedVersion: 2
-        x: 930
-        y: 137
+        x: 1456
+        y: 98
         width: 135
         height: 49
       alignment: 9
@@ -986,8 +1181,8 @@ TextureImporter:
     - name: K-MapaGeneral_HUDgemas
       rect:
         serializedVersion: 2
-        x: 1946
-        y: 1338
+        x: 1769
+        y: 141
         width: 101
         height: 101
       alignment: 9
@@ -1006,8 +1201,8 @@ TextureImporter:
     - name: K-MapaGeneral_HUDvidas
       rect:
         serializedVersion: 2
-        x: 1276
-        y: 192
+        x: 1290
+        y: 12
         width: 101
         height: 101
       alignment: 9
@@ -1025,8 +1220,8 @@ TextureImporter:
     - name: K-MapaGeneral_HUDvidas_barandal-escalera
       rect:
         serializedVersion: 2
-        x: 1073
-        y: 1161
+        x: 1284
+        y: 294
         width: 158
         height: 141
       alignment: 9
@@ -1044,8 +1239,8 @@ TextureImporter:
     - name: K-MapaGeneral_HUDvidas_base-escalera2
       rect:
         serializedVersion: 2
-        x: 1747
-        y: 739
+        x: 978
+        y: 175
         width: 198
         height: 139
       alignment: 0
@@ -1063,8 +1258,8 @@ TextureImporter:
     - name: K-MapaGeneral_interaccionFB
       rect:
         serializedVersion: 2
-        x: 1966
-        y: 1713
+        x: 340
+        y: 288
         width: 78
         height: 80
       alignment: 9
@@ -1083,8 +1278,8 @@ TextureImporter:
     - name: K-MapaGeneral_Navegacion
       rect:
         serializedVersion: 2
-        x: 1966
-        y: 1799
+        x: 1958
+        y: 1967
         width: 79
         height: 80
       alignment: 9
@@ -1101,8 +1296,8 @@ TextureImporter:
     - name: K-MapaGeneral_settings
       rect:
         serializedVersion: 2
-        x: 1970
-        y: 1969
+        x: 1100
+        y: 8
         width: 77
         height: 78
       alignment: 9
@@ -1120,8 +1315,8 @@ TextureImporter:
     - name: K-popups-pq_adornoBoss
       rect:
         serializedVersion: 2
-        x: 677
-        y: 288
+        x: 1758
+        y: 1548
         width: 246
         height: 351
       alignment: 9
@@ -1155,8 +1350,8 @@ TextureImporter:
     - name: K-popups-pq_baseGris
       rect:
         serializedVersion: 2
-        x: 1
-        y: 7
+        x: 441
+        y: 214
         width: 531
         height: 108
       alignment: 9
@@ -1182,8 +1377,8 @@ TextureImporter:
     - name: K-popups-pq_btnAzul
       rect:
         serializedVersion: 2
-        x: 972
-        y: 1640
+        x: 1636
+        y: 1107
         width: 281
         height: 88
       alignment: 9
@@ -1202,8 +1397,8 @@ TextureImporter:
     - name: K-popups-pq_btnRojo
       rect:
         serializedVersion: 2
-        x: 972
-        y: 1546
+        x: 1120
+        y: 534
         width: 280
         height: 88
       alignment: 9
@@ -1221,8 +1416,8 @@ TextureImporter:
     - name: K-popups-pq_btnVerde
       rect:
         serializedVersion: 2
-        x: 972
-        y: 1453
+        x: 1120
+        y: 441
         width: 280
         height: 87
       alignment: 9
@@ -1241,8 +1436,8 @@ TextureImporter:
     - name: K-popups-pq_candado
       rect:
         serializedVersion: 2
-        x: 1858
-        y: 305
+        x: 1876
+        y: 140
         width: 104
         height: 136
       alignment: 9
@@ -1267,8 +1462,8 @@ TextureImporter:
     - name: K-popups-pq_gemaLibre
       rect:
         serializedVersion: 2
-        x: 1951
-        y: 1630
+        x: 1100
+        y: 92
         width: 75
         height: 77
       alignment: 9
@@ -1296,8 +1491,8 @@ TextureImporter:
     - name: K-popUps_Avatar1
       rect:
         serializedVersion: 2
-        x: 1951
-        y: 1553
+        x: 1456
+        y: 21
         width: 73
         height: 71
       alignment: 9
@@ -1311,8 +1506,8 @@ TextureImporter:
     - name: K-popUps_Avatar2
       rect:
         serializedVersion: 2
-        x: 1951
-        y: 807
+        x: 1535
+        y: 21
         width: 73
         height: 71
       alignment: 9
@@ -1329,8 +1524,8 @@ TextureImporter:
     - name: K-popUps_Avatar3
       rect:
         serializedVersion: 2
-        x: 1951
-        y: 730
+        x: 1961
+        y: 63
         width: 73
         height: 71
       alignment: 9
@@ -1344,8 +1539,8 @@ TextureImporter:
     - name: K-popUps_Avatar4
       rect:
         serializedVersion: 2
-        x: 1948
-        y: 653
+        x: 1883
+        y: 746
         width: 73
         height: 71
       alignment: 9
@@ -1359,8 +1554,8 @@ TextureImporter:
     - name: K-popUps_baseGrande
       rect:
         serializedVersion: 2
-        x: 632
-        y: 1734
+        x: 1
+        y: 809
         width: 625
         height: 313
       alignment: 9
@@ -1432,8 +1627,8 @@ TextureImporter:
     - name: K-popUps_close
       rect:
         serializedVersion: 2
-        x: 1970
-        y: 1885
+        x: 1754
+        y: 57
         width: 77
         height: 78
       alignment: 9
@@ -1450,8 +1645,8 @@ TextureImporter:
     - name: K-popUps_corazonRoto
       rect:
         serializedVersion: 2
-        x: 972
-        y: 672
+        x: 1178
+        y: 1227
         width: 345
         height: 327
       alignment: 9
@@ -1492,8 +1687,8 @@ TextureImporter:
     - name: K-popUps_grayStar
       rect:
         serializedVersion: 2
-        x: 1785
-        y: 1730
+        x: 1275
+        y: 119
         width: 175
         height: 169
       alignment: 0
@@ -1516,8 +1711,8 @@ TextureImporter:
     - name: K-popUps_level
       rect:
         serializedVersion: 2
-        x: 1323
-        y: 832
+        x: 1485
+        y: 895
         width: 418
         height: 206
       alignment: 9
@@ -1546,8 +1741,8 @@ TextureImporter:
     - name: K-popUps_monito
       rect:
         serializedVersion: 2
-        x: 1716
-        y: 393
+        x: 1627
+        y: 156
         width: 136
         height: 136
       alignment: 9
@@ -1564,8 +1759,8 @@ TextureImporter:
     - name: K-popUps_monito2
       rect:
         serializedVersion: 2
-        x: 1873
-        y: 447
+        x: 957
+        y: 33
         width: 137
         height: 136
       alignment: 9
@@ -1583,8 +1778,8 @@ TextureImporter:
     - name: K-popUps_objetiveBase
       rect:
         serializedVersion: 2
-        x: 1276
-        y: 404
+        x: 1
+        y: 63
         width: 434
         height: 217
       alignment: 9
@@ -1622,8 +1817,8 @@ TextureImporter:
     - name: K-popUps_playBTN
       rect:
         serializedVersion: 2
-        x: 1747
-        y: 884
+        x: 1049
+        y: 320
         width: 229
         height: 115
       alignment: 9
@@ -1642,7 +1837,7 @@ TextureImporter:
     - name: K-popUps_rug
       rect:
         serializedVersion: 2
-        x: 1276
+        x: 1264
         y: 1905
         width: 688
         height: 142
@@ -1657,8 +1852,8 @@ TextureImporter:
     - name: K-popUps_socialBase
       rect:
         serializedVersion: 2
-        x: 1276
-        y: 1827
+        x: 441
+        y: 136
         width: 503
         height: 72
       alignment: 9
@@ -1680,8 +1875,8 @@ TextureImporter:
     - name: K-popUps_socialBasepick
       rect:
         serializedVersion: 2
-        x: 1946
-        y: 1445
+        x: 1183
+        y: 10
         width: 101
         height: 102
       alignment: 0
@@ -1697,8 +1892,8 @@ TextureImporter:
     - name: K-popUps_socialBTN
       rect:
         serializedVersion: 2
-        x: 1323
-        y: 738
+        x: 441
+        y: 42
         width: 399
         height: 88
       alignment: 9
@@ -1722,8 +1917,8 @@ TextureImporter:
     - name: K-popUps_stars-base
       rect:
         serializedVersion: 2
-        x: 632
-        y: 1133
+        x: 578
+        y: 433
         width: 435
         height: 314
       alignment: 9
@@ -1760,8 +1955,8 @@ TextureImporter:
     - name: K-popUps_winStar
       rect:
         serializedVersion: 2
-        x: 1770
-        y: 1555
+        x: 1419
+        y: 502
         width: 175
         height: 169
       alignment: 0
@@ -1784,8 +1979,8 @@ TextureImporter:
     - name: "popups peque\xF1os-K-popups-pq_adornoBoss"
       rect:
         serializedVersion: 2
-        x: 677
-        y: 288
+        x: 1758
+        y: 1548
         width: 246
         height: 351
       alignment: 9
@@ -1819,8 +2014,8 @@ TextureImporter:
     - name: "popups peque\xF1os-K-popups-pq_baseGris"
       rect:
         serializedVersion: 2
-        x: 1
-        y: 7
+        x: 441
+        y: 214
         width: 531
         height: 108
       alignment: 9
@@ -1846,8 +2041,8 @@ TextureImporter:
     - name: "popups peque\xF1os-K-popups-pq_bolsaAtras"
       rect:
         serializedVersion: 2
-        x: 632
-        y: 1664
+        x: 1178
+        y: 1157
         width: 313
         height: 64
       alignment: 9
@@ -1864,8 +2059,8 @@ TextureImporter:
     - name: "popups peque\xF1os-K-popups-pq_btnVerde"
       rect:
         serializedVersion: 2
-        x: 972
-        y: 1453
+        x: 1120
+        y: 441
         width: 280
         height: 87
       alignment: 9
@@ -1884,8 +2079,8 @@ TextureImporter:
     - name: "popups peque\xF1os-K-popups-pq_candado"
       rect:
         serializedVersion: 2
-        x: 1858
-        y: 305
+        x: 1876
+        y: 140
         width: 104
         height: 136
       alignment: 9
@@ -1910,8 +2105,8 @@ TextureImporter:
     - name: "popups peque\xF1os-K-popups-pq_gemaLibre"
       rect:
         serializedVersion: 2
-        x: 1951
-        y: 1630
+        x: 1100
+        y: 92
         width: 75
         height: 77
       alignment: 9
@@ -1939,8 +2134,8 @@ TextureImporter:
     - name: "popups peque\xF1os-K-popups-pq_lineapunteada"
       rect:
         serializedVersion: 2
-        x: 340
-        y: 620
+        x: 1448
+        y: 677
         width: 273
         height: 5
       alignment: 9
@@ -1950,8 +2145,8 @@ TextureImporter:
     - name: "popups peque\xF1os-K-popups-pq_oferta"
       rect:
         serializedVersion: 2
-        x: 1770
-        y: 1380
+        x: 1593
+        y: 298
         width: 170
         height: 169
       alignment: 9
@@ -1972,7 +2167,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 605
+        y: 286
         width: 333
         height: 517
       alignment: 9
@@ -2064,8 +2259,8 @@ TextureImporter:
     - name: popups vidas-K-popupsVidas_kindBTN
       rect:
         serializedVersion: 2
-        x: 972
-        y: 1063
+        x: 1201
+        y: 754
         width: 278
         height: 64
       alignment: 9
@@ -2080,8 +2275,8 @@ TextureImporter:
     - name: popups vidas-K-popupsVidas_NOselectBTN
       rect:
         serializedVersion: 2
-        x: 677
-        y: 192
+        x: 1485
+        y: 688
         width: 379
         height: 90
       alignment: 9
@@ -2102,8 +2297,8 @@ TextureImporter:
     - name: popups vidas-K-popupsVidas_SelectBTN
       rect:
         serializedVersion: 2
-        x: 1323
-        y: 627
+        x: 1485
+        y: 784
         width: 392
         height: 105
       alignment: 9

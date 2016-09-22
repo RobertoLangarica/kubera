@@ -25,6 +25,7 @@ public class Letter : MonoBehaviour
 	public Sprite obstacleSelectedSprite;
 	public Sprite obstacleWrongSprite;
 	public Sprite wildCardSprite;
+	public Sprite wildCardSelectedSprite;
 
 	public Text txtLetter;
 	public Text txtPoints;
@@ -35,7 +36,7 @@ public class Letter : MonoBehaviour
 	[HideInInspector] public bool selected;
 	[HideInInspector] public bool hinted;
 	[HideInInspector]public int index;//Indice del caracter en WordManager
-	[HideInInspector]public bool wildCard;
+	public bool wildCard;
 	protected bool textActualized; //texto actualizado
 
 	public ABCChar abcChar;
@@ -186,6 +187,17 @@ public class Letter : MonoBehaviour
 					myImage.sprite = normalSprite;
 				}
 			}
+			else if(type == EType.WILD_CARD)
+			{
+				if(selected)
+				{
+					myImage.sprite = wildCardSelectedSprite; 
+				}
+				else
+				{					
+					myImage.sprite = wildCardSprite;
+				}
+			}
 			else
 			{
 				if(selected)
@@ -208,6 +220,17 @@ public class Letter : MonoBehaviour
 				else
 				{					
 					myImage.sprite = normalWrongSprite;
+				}
+			}
+			else if(type == EType.WILD_CARD)
+			{
+				if(selected)
+				{
+					myImage.sprite = wildCardSelectedSprite; 
+				}
+				else
+				{					
+					myImage.sprite = wildCardSprite;
 				}
 			}
 			else
@@ -271,6 +294,9 @@ public class Letter : MonoBehaviour
 			break;
 		case EType.NORMAL:
 			myImage.sprite = normalSelectedSprite;
+			break;
+		case EType.WILD_CARD:
+			myImage.sprite = wildCardSelectedSprite;
 			break;
 		}
 
@@ -338,7 +364,7 @@ public class Letter : MonoBehaviour
 
 		if(abcChar.character == ".")
 		{
-			abcChar.wildcard = true;
+			//abcChar.wildcard = true;
 		}
 	}
 

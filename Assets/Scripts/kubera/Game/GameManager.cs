@@ -1235,7 +1235,7 @@ public class GameManager : MonoBehaviour
 		{
 			if(!wordManager.cancelHint)
 			{				
-				wordManager.cancelHinting(hintLetters);
+				wordManager.cancelHinting();
 			}
 		}
 	}
