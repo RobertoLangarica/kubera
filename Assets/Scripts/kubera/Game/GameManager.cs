@@ -152,8 +152,8 @@ public class GameManager : MonoBehaviour
 		if(PersistentData.GetInstance().fromLevelsToGame)
 		{
 			yield return new WaitForEndOfFrame ();
-			yield return new WaitUntil (()=> ScreenManager.instance.preloadSceneAsync.isDone);
 			ScreenManager.instance.testLoading ("Levels");
+			//yield return new WaitUntil (()=> ScreenManager.instance.preloadSceneAsync.isDone);
 		}
 		yield return new WaitForEndOfFrame ();
 		if(ScreenManager.instance && !PersistentData.GetInstance().fromLevelBuilder)
