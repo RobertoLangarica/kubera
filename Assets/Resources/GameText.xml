@@ -585,7 +585,7 @@
 				<language id="default" text="SIGUIENTE"/>
 			</languages>
 		</text>
-		<text id="afterGameNext">
+		<text id="afterGameRetry">
 			<languages>
 				<language id="english" text="RETRY"/>
 				<language id="spanish" text="REINTENTA"/>
