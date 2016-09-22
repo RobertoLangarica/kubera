@@ -152,8 +152,8 @@ public class GameManager : MonoBehaviour
 		if(PersistentData.GetInstance().fromLevelsToGame)
 		{
 			yield return new WaitForEndOfFrame ();
-			yield return new WaitUntil (()=> ScreenManager.instance.preloadSceneAsync.isDone);
 			ScreenManager.instance.testLoading ("Levels");
+			//yield return new WaitUntil (()=> ScreenManager.instance.preloadSceneAsync.isDone);
 		}
 		yield return new WaitForEndOfFrame ();
 		if(ScreenManager.instance && !PersistentData.GetInstance().fromLevelBuilder)
@@ -1235,7 +1235,7 @@ public class GameManager : MonoBehaviour
 		{
 			if(!wordManager.cancelHint)
 			{				
-				wordManager.cancelHinting(hintLetters);
+				wordManager.cancelHinting();
 			}
 		}
 	}
@@ -1264,7 +1264,11 @@ public class GameManager : MonoBehaviour
 			updatePiecesLightAndUpdateLetterState ();
 			hudManager.animateLvlGo ();
 			TutorialManager.GetInstance ().init ();
-			LifesManager.GetInstance ().takeALife ();
+
+			if(!PersistentData.GetInstance().fromLevelBuilder)
+			{
+				LifesManager.GetInstance ().takeALife ();
+			}
 			break;
 		case "endGame":
 			toLevels ();

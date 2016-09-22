@@ -149,9 +149,15 @@ public class KeyBoardManager : MonoBehaviour
 
 	public void setLetterToWildCard(string character)
 	{
+		if(wildCardSelected.abcChar.character != "A" && wildCardSelected.abcChar.character != character)
+		{
+			gameManager.useHintWord ();
+		}
 		wordManager.setValuesToWildCard (wildCardSelected, character);
-
 		hideKeyBoard ();
+
+		wordManager.addLetterFromGrid (wildCardSelected);
+		gameManager.updatePiecesLightAndUpdateLetterState ();
 	}
 
 	protected void moveAnchorsTo0()
