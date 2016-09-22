@@ -30,13 +30,13 @@ public class Letter : MonoBehaviour
 	public Text txtLetter;
 	public Text txtPoints;
 	[HideInInspector] public Letter letterReference;
-	public bool isFromGrid;
+	[HideInInspector] public bool isFromGrid;
 	[HideInInspector] public EType type;
 	[HideInInspector] public EState state;
 	[HideInInspector] public bool selected;
 	[HideInInspector] public bool hinted;
-	[HideInInspector]public int index;//Indice del caracter en WordManager
-	public bool wildCard;
+	[HideInInspector] public int index;//Indice del caracter en WordManager
+	[HideInInspector] public bool wildCard;
 	protected bool textActualized; //texto actualizado
 
 	public ABCChar abcChar;
