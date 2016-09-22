@@ -1264,7 +1264,11 @@ public class GameManager : MonoBehaviour
 			updatePiecesLightAndUpdateLetterState ();
 			hudManager.animateLvlGo ();
 			TutorialManager.GetInstance ().init ();
-			LifesManager.GetInstance ().takeALife ();
+
+			if(!PersistentData.GetInstance().fromLevelBuilder)
+			{
+				LifesManager.GetInstance ().takeALife ();
+			}
 			break;
 		case "endGame":
 			toLevels ();
