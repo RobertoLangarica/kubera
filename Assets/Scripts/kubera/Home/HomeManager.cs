@@ -134,6 +134,13 @@ public class HomeManager : MonoBehaviour {
 
 	public void activateMusic(bool activate)
 	{
-		
+		if(activate)
+		{
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance ().Stop ("gamePlay",false);
+				AudioManager.GetInstance ().Play ("menuMusic");
+			}
+		}
 	}
 }
