@@ -36,7 +36,7 @@ public class BossLocked : PopUpBase {
 	public void initializeValues(int friendsNeeded,int gems,int starsNeeded, string levelNumber)
 	{
 		bossLockedUnlockText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.BOSS_LOCKED_UNLOCK_TEXT).Replace ("{{level}}",levelNumber);
-		starsNumber.text = (KuberaDataManager.GetInstance () as KuberaDataManager).getAllEarnedStars ().ToString() + " / " + starsNeeded.ToString();
+		starsNumber.text = (DataManagerKubera.GetInstance () as DataManagerKubera).getAllEarnedStars ().ToString() + " / " + starsNeeded.ToString();
 		gemsNumber.text = gems.ToString ();
 
 		friendsText.text =MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.BOSS_LOCKED_KEY_TEXT).Replace ("{{keyNumber}}",friendsNeeded.ToString ());

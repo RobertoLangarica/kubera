@@ -51,20 +51,21 @@ public class GameManager : MonoBehaviour
 
 	protected int currentWildCardsActivated;
 
-	private WordManager		wordManager;
-	private CellsManager	cellManager;
-	private PowerUpManager	powerupManager;
-	private PieceManager 	pieceManager;
-	private HUDManager 	 	hudManager;
-	private InputPiece 		inputPiece;
-	private InputWords 		inputWords;
-	private GoalManager		goalManager;
-
-	private SettingsButton settingsButton;
-	private LinesCreatedAnimation linesAnimation;
-	private BombAnimation bombAnimation;
+	//TODO hacerlos publicos y ponerlos en el editor
+	public WordManager		wordManager;
+	public CellsManager		cellManager;
+	public PowerUpManager	powerupManager;
+	public PieceManager 	pieceManager;
+	public HUDManager 	 	hudManager;
+	public InputPiece 		inputPiece;
+	public InputWords 		inputWords;
+	public GoalManager		goalManager;
+	public SettingsButton settingsButton;
+	public BombAnimation bombAnimation;
 	public SecondChancePopUp secondChance;
-	private SecondChanceFreeBombs SecondChanceFreeBombs;
+	public SecondChanceFreeBombs SecondChanceFreeBombs;
+	public LinesCreatedAnimation linesAnimation;
+	public startGamePopUp startGameReference;
 
 	private Level currentLevel;
 	private List<Letter> gridCharacters = new List<Letter>();
@@ -73,18 +74,7 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
-		wordManager			= FindObjectOfType<WordManager>();
-		cellManager			= FindObjectOfType<CellsManager>();
-		powerupManager		= FindObjectOfType<PowerUpManager>();
-		hudManager			= FindObjectOfType<HUDManager> ();
-		pieceManager		= FindObjectOfType<PieceManager>();
-		inputPiece			= FindObjectOfType<InputPiece>();
-		inputWords			= FindObjectOfType<InputWords>();
-		goalManager			= FindObjectOfType<GoalManager>();
-		linesAnimation 		= FindObjectOfType<LinesCreatedAnimation> ();
-		bombAnimation 		= FindObjectOfType<BombAnimation> ();
-		SecondChanceFreeBombs 	= FindObjectOfType<SecondChanceFreeBombs> ();
-		settingsButton 		= FindObjectOfType<SettingsButton> ();
+		isAnObjectMissing ();
 
 		secondChance.OnSecondChanceAquired += secondChanceBought;
 		secondChance.gameObject.SetActive (false);
@@ -132,7 +122,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(!PersistentData.GetInstance().fromLevelsToGame && !PersistentData.GetInstance().fromLevelBuilder)
 		{
-			configureLevel(PersistentData.GetInstance().getLevelByIndex(2));
+			configureLevel(PersistentData.GetInstance().getLevelByIndex(7));
 		}
 		else
 		{
@@ -711,7 +701,7 @@ public class GameManager : MonoBehaviour
 		hudManager.setWinCondition (goalManager.currentCondition, goalManager.getGoalConditionParameters());
 
 		activatePopUp ("startGamePopUp");
-		FindObjectOfType<startGamePopUp> ().initText (goalManager.currentCondition);
+		startGameReference.initText (goalManager.currentCondition);
 
 	}
 
@@ -1008,7 +998,7 @@ public class GameManager : MonoBehaviour
 	protected void afterBonification()
 	{
 		#if UNITY_EDITOR
-		if(!KuberaDataManager.GetInstance())
+		if(!DataManagerKubera.GetInstance())
 		{
 
 		}
@@ -1023,7 +1013,7 @@ public class GameManager : MonoBehaviour
 			if(cancelBonify)
 			{
 				//Se guarda en sus datos que ha pasado el nivel
-				(KuberaDataManager.GetInstance() as KuberaDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
+				(DataManagerKubera.GetInstance() as DataManagerKubera).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
 					3,Random.Range(70,200));
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
@@ -1035,7 +1025,7 @@ public class GameManager : MonoBehaviour
 			#endif	
 			{
 				//Se guarda en sus datos que ha pasado el nivel
-				(KuberaDataManager.GetInstance() as KuberaDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
+				(DataManagerKubera.GetInstance() as DataManagerKubera).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
 					hudManager.getEarnedStars(),pointsCount);
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
@@ -1415,6 +1405,66 @@ public class GameManager : MonoBehaviour
 				AudioManager.GetInstance ().Stop ("gamePlay");
 			}
 
+		}
+	}
+
+	protected void isAnObjectMissing()
+	{
+		if(wordManager == null)
+		{
+			Debug.LogError ("misingObject: wordManager");
+		}
+		if(cellManager == null)
+		{
+			Debug.LogError ("misingObject: cellManager");
+		}
+		if(powerupManager == null)
+		{
+			Debug.LogError ("misingObject: powerupManager");
+		}
+		if(hudManager == null)
+		{
+			Debug.LogError ("misingObject: hudManager");
+		}
+		if(pieceManager == null)
+		{
+			Debug.LogError ("misingObject: pieceManager");
+		}
+		if(wordManager == null)
+		{
+			Debug.LogError ("misingObject: wordManager");
+		}
+		if(inputPiece == null)
+		{
+			Debug.LogError ("misingObject: inputPiece");
+		}
+		if(inputWords == null)
+		{
+			Debug.LogError ("misingObject: inputWords");
+		}
+		if(goalManager == null)
+		{
+			Debug.LogError ("misingObject: goalManager");
+		}
+		if(bombAnimation == null)
+		{
+			Debug.LogError ("misingObject: bombAnimation");
+		}
+		if(settingsButton == null)
+		{
+			Debug.LogError ("misingObject: settingsButton");
+		}
+		if(SecondChanceFreeBombs == null)
+		{
+			Debug.LogError ("misingObject: SecondChanceFreeBombs");
+		}
+		if(linesAnimation == null)
+		{
+			Debug.LogError ("misingObject: linesAnimation");
+		}
+		if(startGameReference == null)
+		{
+			Debug.LogError ("misingObject: startGameReference");
 		}
 	}
 }

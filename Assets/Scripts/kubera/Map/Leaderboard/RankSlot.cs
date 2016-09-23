@@ -9,7 +9,7 @@ public class RankSlot : MonoBehaviour {
 	public Text scoreText;
 	public Text rankText;
 
-	public string name;
+	public string slotName;
 	public int score;
 	public int rank;
 
@@ -20,7 +20,7 @@ public class RankSlot : MonoBehaviour {
 
 	public void setName(string userName)
 	{
-		name = userName;
+		slotName = userName;
 		nameText.text = userName;
 	}
 
