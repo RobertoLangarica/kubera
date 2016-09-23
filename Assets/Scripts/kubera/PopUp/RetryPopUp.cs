@@ -40,6 +40,7 @@ public class RetryPopUp : PopUpBase
 	public Image topLevelImage;
 	public Image topIcon;
 	public Image topIconShadow;
+	protected bool pressed;
 
 	void Start()
 	{
@@ -92,6 +93,12 @@ public class RetryPopUp : PopUpBase
 
 	public void retryLevel()
 	{
+		if(pressed)
+		{
+			return;
+		}
+		pressed = true;
+
 		soundButton ();
 		if ((KuberaDataManager.GetInstance () as KuberaDataManager).currentUser.playerLifes > 0) 
 		{

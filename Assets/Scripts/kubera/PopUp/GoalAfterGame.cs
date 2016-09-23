@@ -47,6 +47,7 @@ public class GoalAfterGame : PopUpBase {
 	public Image topLevelImage;
 	public Image topIcon;
 	public Image topIconShadow;
+	protected bool pressed;
 
 	void Start()
 	{
@@ -132,6 +133,12 @@ public class GoalAfterGame : PopUpBase {
 
 	public void playGame()
 	{
+		if(pressed)
+		{
+			return;
+		}
+		pressed = true;
+
 		soundButton ();
 
 		setStartingPlaces ();
@@ -141,6 +148,12 @@ public class GoalAfterGame : PopUpBase {
 
 	public void retryGame()
 	{
+		if(pressed)
+		{
+			return;
+		}
+		pressed = true;
+
 		soundButton ();
 
 		OnComplete ("retry");

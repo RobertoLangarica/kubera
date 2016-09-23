@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
 		bombAnimation 		= FindObjectOfType<BombAnimation> ();
 		SecondChanceFreeBombs 	= FindObjectOfType<SecondChanceFreeBombs> ();
 		settingsButton 		= FindObjectOfType<SettingsButton> ();
-
+		UserDataManager.instance.cleanData ();
 		secondChance.OnSecondChanceAquired += secondChanceBought;
 		secondChance.gameObject.SetActive (false);
 
@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(!PersistentData.GetInstance().fromLevelsToGame && !PersistentData.GetInstance().fromLevelBuilder)
 		{
-			configureLevel(PersistentData.GetInstance().getRandomLevel());
+			configureLevel(PersistentData.GetInstance().getLevelByIndex(2));
 		}
 		else
 		{
@@ -163,6 +163,7 @@ public class GameManager : MonoBehaviour
 		{
 			yield return new WaitForEndOfFrame ();
 			ScreenManager.instance.testLoading ("Levels");
+			yield return new WaitForEndOfFrame ();
 			//yield return new WaitUntil (()=> ScreenManager.instance.preloadSceneAsync.isDone);
 		}
 		yield return new WaitForEndOfFrame ();
@@ -1294,7 +1295,7 @@ public class GameManager : MonoBehaviour
 			hudManager.animateLvlGo ();
 			TutorialManager.GetInstance ().init ();
 
-			if(!PersistentData.GetInstance().fromLevelBuilder)
+			if(PersistentData.GetInstance().fromLevelsToGame)
 			{
 				LifesManager.GetInstance ().takeALife ();
 			}
