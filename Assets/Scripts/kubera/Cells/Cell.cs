@@ -15,6 +15,7 @@ public class Cell : MonoBehaviour
 	public bool occupied;
 	public GameObject content;
 	public Transform frameParent;
+	public SpriteRenderer sprite_renderer;
 	/*
 	 * Valores en el XML para cada tipo de celda
 	 * 0x0000
@@ -100,7 +101,7 @@ public class Cell : MonoBehaviour
 			available = false;
 			content = null;
 
-			GetComponent<SpriteRenderer>().enabled = false;
+			sprite_renderer.enabled = false;
 		}
 		if((type & 0x8) == 0x8)
 		{

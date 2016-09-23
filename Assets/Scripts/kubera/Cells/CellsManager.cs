@@ -32,6 +32,14 @@ public class CellsManager : MonoBehaviour
 	//Todas las celdas del grid
 	protected List<Cell> cells;
 
+	//TODO ver como referenciar mejor a CellsManager (que herede de Manager ser??
+	public static CellsManager instance;
+
+	void Awake()
+	{
+		instance = this;
+	}
+
 	void Update()
 	{
 		if (Input.GetKeyDown (KeyCode.K)) 

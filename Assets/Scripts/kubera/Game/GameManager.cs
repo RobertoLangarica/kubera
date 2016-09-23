@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
 		bombAnimation 		= FindObjectOfType<BombAnimation> ();
 		SecondChanceFreeBombs 	= FindObjectOfType<SecondChanceFreeBombs> ();
 		settingsButton 		= FindObjectOfType<SettingsButton> ();
-		UserDataManager.instance.cleanData ();
+
 		secondChance.OnSecondChanceAquired += secondChanceBought;
 		secondChance.gameObject.SetActive (false);
 
