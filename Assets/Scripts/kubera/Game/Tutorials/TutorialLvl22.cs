@@ -13,11 +13,11 @@ public class TutorialLvl22 : TutorialBase
 
 	protected override void Start()
 	{
-		inputBlock.OnPlayer += animation;
+		inputBlock.OnPlayer += animationController;
 		base.Start ();
 	}
 
-	protected void animation(bool stop)
+	protected void animationController(bool stop)
 	{
 		if(stop)
 		{
@@ -66,7 +66,7 @@ public class TutorialLvl22 : TutorialBase
 			phase = 1;
 			return true;
 		case(1):
-			inputBlock.OnPlayer -= animation;
+			inputBlock.OnPlayer -= animationController;
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add(ENextPhaseEvent.TAP);

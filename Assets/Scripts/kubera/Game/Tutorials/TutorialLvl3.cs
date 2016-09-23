@@ -14,11 +14,11 @@ public class TutorialLvl3 : TutorialBase
 	protected override void Start()
 	{
 		inputBomb = FindObjectOfType<InputBombAndDestroy> ();
-		inputBomb.OnPlayer += animation;
+		inputBomb.OnPlayer += animationController;
 		base.Start ();
 	}
 
-	protected void animation(bool stop)
+	protected void animationController(bool stop)
 	{
 		if(stop)
 		{
@@ -69,7 +69,7 @@ public class TutorialLvl3 : TutorialBase
 			phase = 1;
 			return true;
 		case(1):
-			inputBomb.OnPlayer -= animation;
+			inputBomb.OnPlayer -= animationController;
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
