@@ -41,7 +41,7 @@ public class HighLight : MonoBehaviour
 	void Start()
 	{
 		particles = borderStars.GetComponent<ParticleSystem> ();
-		borderStars.SetActive (true);
+		//borderStars.SetActive (true);
 	}
 
 	void Update()
@@ -101,11 +101,12 @@ public class HighLight : MonoBehaviour
 		Image tempImg = null;
 		SpriteRenderer tempSpt = null;
 
-		if (particles != null) 
+		//HACK revisar
+		/*if (particles != null) 
 		{
 			//borderStars.SetActive (true);
 			particles.Play();
-		}
+		}*/
 
 		switch (suscribedStatus[suscribedStatus.Count -1]) 
 		{
@@ -114,13 +115,13 @@ public class HighLight : MonoBehaviour
 			break;
 		case(HighLightManager.EHighLightStatus.WRONG):
 			temp = HighLightManager.GetInstance().wrongHighLight;
-
-			if (particles != null) 
+			//HACK revisar
+			/*if (particles != null) 
 			{
 				//borderStars.SetActive (false);
 				particles.Clear();
 				particles.Stop();
-			}
+			}*/
 
 			break;
 		case(HighLightManager.EHighLightStatus.HINT):
@@ -208,12 +209,15 @@ public class HighLight : MonoBehaviour
 			if (suscribedTypes.Count == 0) 
 			{
 				gameObject.SetActive (false);
+
+				//HACK revisar
+				/*
 				if (particles != null) 
 				{
 					particles.Clear();
 					particles.Stop ();
 					//borderStars.SetActive (false);
-				}
+				}*/
 
 				finishAnim ();
 
@@ -240,12 +244,13 @@ public class HighLight : MonoBehaviour
 		suscribedStatus.Clear ();
 
 		gameObject.SetActive (false);
-		if (particles != null) 
+		//HACK revisar
+		/*if (particles != null) 
 		{
 			particles.Clear();
 			particles.Stop ();
 			//borderStars.SetActive (false);
-		}
+		}*/
 
 		finishAnim ();
 	}
