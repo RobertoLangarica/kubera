@@ -82,6 +82,9 @@ public class WordManager : MonoBehaviour
 	protected float centerVacuum;
 	protected RectTransform wordCompleteButtonRectTransform;
 	protected RectTransform wordDeleteButtonRectTransform;
+	public List<Letter> hintedLetters;
+
+
 	void Awake()
 	{
 		letters = new List<Letter>(maxLetters);
@@ -178,15 +181,24 @@ public class WordManager : MonoBehaviour
 			//Se va agregar
 			if (isAddLetterAllowed ()) 
 			{
-				if(!byDrag)
+				if(!letter.wildCard)
 				{
-					StartCoroutine( correctTweens ());
-					addLetterFromGrid (letter);		
+					if(!byDrag)
+					{
+						StartCoroutine( correctTweens ());
+						addLetterFromGrid (letter);		
+					}
+					else
+					{
+						addLetterFromGrid (letter,byDrag);
+					}
 				}
 				else
 				{
-					addLetterFromGrid (letter,byDrag);
+					keyBoard.setSelectedWildCard (letter);
+					keyBoard.showKeyBoardForWildCard ();
 				}
+
 			}
 		}
 	}
@@ -1008,7 +1020,7 @@ public class WordManager : MonoBehaviour
 		return letter;
 	}
 
-	private Letter getNewEmptyGridLetter()
+	public Letter getNewEmptyGridLetter()
 	{
 		GameObject go = Instantiate(gridLetterPrefab)as GameObject;
 		RectTransform rectT = go.GetComponent<RectTransform> ();
@@ -1073,6 +1085,7 @@ public class WordManager : MonoBehaviour
 		case EWordState.HINTED_WORDS:
 			if (currentWordPosibleState != EWordState.HINTED_WORDS && !cancelHint) 
 			{
+				hintedLetters = gridLetter;
 				currentWordPosibleState = EWordState.HINTED_WORDS;
 				StartCoroutine (updateLetterHintState (gridLetter));
 			}
@@ -1095,9 +1108,12 @@ public class WordManager : MonoBehaviour
 			if(!cancelHint)
 			{
 				cellSelected = cellManager.getCellUnderPoint (gridLetter [i].transform.position);
-				HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SPECIFIC_CELL,cellSelected.transform);
+				//gridLetter [i].updateState (Letter.EState.NORMAL);
+
+				//HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SPECIFIC_CELL,cellSelected.transform);
 				cellSelected.content.transform.DOShakePosition (0.5f);
-				//gridLetter [i].updateState (Letter.EState.HINTED);
+				gridLetter [i].hinted = true;
+				gridLetter [i].updateState (Letter.EState.HINTED);
 				if(AudioManager.GetInstance())
 				{
 					AudioManager.GetInstance().Stop("helpLetterSuggested");
@@ -1114,16 +1130,26 @@ public class WordManager : MonoBehaviour
 		{
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SPECIFIC_CELL);
 			currentWordPosibleState = EWordState.HINTED_WORDS;
+			for (int i = 0; i < gridLetter.Count; i++) 
+			{
+				gridLetter [i].hinted = false;
+			}
 			updateGridLettersState (gridLetter, EWordState.WORDS_AVAILABLE);
+
 			updateGridLettersState (gridLetter, EWordState.HINTED_WORDS);	
 		}
 	}
 
-	public void cancelHinting(List<Letter> gridLetter)
+	public void cancelHinting()
 	{
 		cancelHint = true;
-		updateGridLettersState (gridLetter, EWordState.WORDS_AVAILABLE);
+		updateGridLettersState (hintedLetters, EWordState.WORDS_AVAILABLE);
 		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SPECIFIC_CELL);
+
+		for (int i = 0; i < hintedLetters.Count; i++) 
+		{
+			hintedLetters [i].hinted = false;
+		}
 	}
 
 	public IEnumerator animateWordRetrieved(Letter letter,float waitSpeed,float fullTime)

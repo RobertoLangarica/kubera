@@ -7,12 +7,16 @@ using Kubera.Data.Sync;
 
 public class GoalAfterGame : PopUpBase {
 
-	public Text LevelName;
+	public Text LevelNumber;
+	public Text LevelNumberShadow;
+	public Text LevelText;
+	public Text LevelTextShadow;
 
 	public Text PointsText;
 	public Text Points;
 	public Text inviteFriendsText;
 	public Text playText;
+	public Text retryText;
 
 	public GameObject[] stars;
 	public GameObject[] starsGray;
@@ -25,6 +29,7 @@ public class GoalAfterGame : PopUpBase {
 	public RectTransform starPanel;
 	public RectTransform objetives;
 	public RectTransform play;
+	public RectTransform retry;
 	public RectTransform close;
 	public RectTransform facebookFriends;
 	public RectTransform facebookInvite;
@@ -41,6 +46,7 @@ public class GoalAfterGame : PopUpBase {
 	public Sprite[] worldIcon;
 	public Image topLevelImage;
 	public Image topIcon;
+	public Image topIconShadow;
 
 	void Start()
 	{
@@ -49,11 +55,14 @@ public class GoalAfterGame : PopUpBase {
 		//FBLoggin.GetInstance().onLoginComplete += fbLogin;
 
 		setStartingPlaces ();
-		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.225f, Screen.height * 0.1675f);
+		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.225f, Screen.height * 0.15f);
 
 		inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_FACEBOOK);
 		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_NEXT);
+		retryText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_RETRY);
 		PointsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_POINTS);
+
+		LevelText.text = LevelTextShadow.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVES_NAME_TEXT_ID);
 	}
 
 	protected void fbLogin()
@@ -77,11 +86,12 @@ public class GoalAfterGame : PopUpBase {
 
 	public void setGoalPopUpInfo(int starsReached, string levelName, string points,int currentWorld =0)
 	{
-		this.LevelName.text = levelName;
+		this.LevelNumber.text =	this.LevelNumberShadow.text  = levelName;
 		this.Points.text = points;
 
-		topLevelImage.sprite = worldTopBackground [currentWorld];
-		topIcon.sprite = worldIcon [currentWorld];
+		print ("S"+ currentWorld);
+		topLevelImage.sprite = worldTopBackground [currentWorld-1];
+		topIcon.sprite = topIconShadow.sprite = worldIcon [currentWorld-1];
 
 		showStars (starsReached);
 	}
@@ -129,6 +139,13 @@ public class GoalAfterGame : PopUpBase {
 		leaderboardManager.moveCurrentLeaderboardSlots (goalPopUpSlotsParent);
 	}
 
+	public void retryGame()
+	{
+		soundButton ();
+
+		OnComplete ("retry");
+	}
+
 	public void exit ()
 	{
 		soundButton ();
@@ -149,6 +166,7 @@ public class GoalAfterGame : PopUpBase {
 		starPanel.localScale = Vector2.zero;
 		objetives.localScale = Vector2.zero;
 		play.localScale = Vector2.zero;
+		retry.localScale = Vector2.zero;
 		close.localScale = Vector2.zero;
 		facebookFriends.localScale = Vector2.zero;
 		facebookInvite.localScale = Vector2.zero;
@@ -176,11 +194,12 @@ public class GoalAfterGame : PopUpBase {
 							{
 								objetives.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 									{
+										retry.DOScale(new Vector2(1,1),tenth);
 										play.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 											{
 												facebookFriends.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 													{
-														LevelLeaderboard leaderboard = leaderboardManager.getLeaderboard(this.LevelName.text,slotParent);
+														LevelLeaderboard leaderboard = leaderboardManager.getLeaderboard(this.LevelText.text,slotParent);
 														leaderboard.showSlots(true);
 
 														scrollRect.horizontalNormalizedPosition = 0;
@@ -202,7 +221,6 @@ public class GoalAfterGame : PopUpBase {
 	{
 		if(AudioManager.GetInstance())
 		{
-			
 			AudioManager.GetInstance().Play("fxButton");
 		}
 	}

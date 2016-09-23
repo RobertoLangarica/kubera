@@ -7,12 +7,33 @@ public class TutorialLvl22 : TutorialBase
 {
 	public Image powerUpDommy;
 	public GameObject fromPosition;
+	public InputBlockPowerUp inputBlock;
 
 	protected bool doAnimation;
 
 	protected override void Start()
 	{
+		inputBlock.OnPlayer += animation;
 		base.Start ();
+	}
+
+	protected void animation(bool stop)
+	{
+		if(stop)
+		{
+			DOTween.Kill ("Tutorial22");
+			CancelInvoke ("powerUpAnim");
+			powerUpDommy.color = new Color(1,1,1,0);
+			doAnimation = false;
+		}
+		else
+		{
+			if(!doAnimation)
+			{
+				doAnimation = true;
+				powerUpAnim ();
+			}
+		}
 	}
 
 	public override bool canMoveToNextPhase ()
@@ -45,6 +66,7 @@ public class TutorialLvl22 : TutorialBase
 			phase = 1;
 			return true;
 		case(1):
+			inputBlock.OnPlayer -= animation;
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add(ENextPhaseEvent.TAP);
@@ -103,7 +125,7 @@ public class TutorialLvl22 : TutorialBase
 		powerUpDommy.transform.position = posFrom;
 
 		//Los valores de las animaciones los paso Liloo
-		powerUpDommy.transform.DOScale (new Vector3 (1f, 1f, 1f), 0.5f).SetId("Tutorial22");
+		powerUpDommy.transform.DOScale (new Vector3 (1.4f, 1.4f, 1.4f), 0.5f).SetId("Tutorial22");
 		powerUpDommy.DOColor (new Color(1,1,1,0.5f),0.5f).OnComplete(
 			()=>{
 
@@ -111,7 +133,7 @@ public class TutorialLvl22 : TutorialBase
 				powerUpDommy.transform.DOMove (posTo,1).OnComplete(
 					()=>{
 
-						powerUpDommy.transform.DOScale (new Vector3 (0.6f, 0.6f, 0.6f), 1f).OnComplete(
+						powerUpDommy.transform.DOScale (new Vector3 (1, 1, 1), 1f).OnComplete(
 							()=>{
 
 								powerUpDommy.DOColor (new Color(1,1,1,0),0.5f).SetId("Tutorial22");

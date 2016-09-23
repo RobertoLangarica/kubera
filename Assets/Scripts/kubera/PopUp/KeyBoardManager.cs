@@ -149,9 +149,15 @@ public class KeyBoardManager : MonoBehaviour
 
 	public void setLetterToWildCard(string character)
 	{
+		if(wildCardSelected.abcChar.character != "A" && wildCardSelected.abcChar.character != character)
+		{
+			gameManager.useHintWord ();
+		}
 		wordManager.setValuesToWildCard (wildCardSelected, character);
-
 		hideKeyBoard ();
+
+		wordManager.addLetterFromGrid (wildCardSelected);
+		gameManager.updatePiecesLightAndUpdateLetterState ();
 	}
 
 	protected void moveAnchorsTo0()
@@ -161,6 +167,6 @@ public class KeyBoardManager : MonoBehaviour
 		rectT.anchorMax = new Vector2 (rectT.anchorMax.x,1);
 		rectT.anchorMin = new Vector2 (rectT.anchorMin.x,0);
 
-		Debug.Log ("Debi moverme a 0");
+		//Debug.Log ("Debi moverme a 0");
 	}
 }

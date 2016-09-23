@@ -10,113 +10,60 @@ public class WildCardPowerUp : PowerupBase
 
 	public KeyBoardManager keyBoard;
 
-	protected InputBombAndDestroy inputPowerUp;
-
-	protected GameObject powerUpGO;
-
+	protected CellsManager cellsManager;
+	protected InputWildcardPowerUp powerUpInput;
+	protected GameManager gameManager;
 	protected WordManager wordManager;
+	public AnimatedSprite animatedSprite;
+
 	protected bool canUse;
+	protected bool canActivate;
+	protected GameObject powerUpGO;
 	void Start()
 	{
 		wordManager = FindObjectOfType<WordManager> ();
+		gameManager = FindObjectOfType<GameManager> ();
 
-		inputPowerUp = FindObjectOfType<InputBombAndDestroy> ();
+		powerUpInput = FindObjectOfType<InputWildcardPowerUp> ();
+		powerUpInput.OnPowerupCanceled += cancel;
+		powerUpInput.OnPowerupCompleted += completePowerUp;
+		powerUpInput.OnPowerupCompletedNoGems += completePowerUpNoGems;
 
-		this.gameObject.SetActive( false);
+		powerUpInput.enabled = false;
+		gameManager = FindObjectOfType<GameManager> ();
 	}
 
 	public override void activate (bool canUse)
 	{
-		this.gameObject.SetActive( true);
-		if (powerUpGO != null) 
-		{
-			DestroyImmediate (powerUpGO);
-		}
-		powerUpGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
-		powerUpGO.name = "WildPowerUp";
-		powerUpGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
-		powerUpGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
+		powerUpInput.enabled = true;
 
-		inputPowerUp.enabled = true;
-		inputPowerUp.setCurrentSelected(powerUpGO);
-		inputPowerUp.OnDrop += powerUpPositioned;
-		this.canUse = canUse;
+		powerUpInput.createBlock (powerUpBlock,powerUpButton.position,canUse);
 
-		updateDragableObjectImage (powerUpGO);
+		updateDragableObjectImage (powerUpInput.getCurrentSelected());
 
 		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 	}
 
-	public void powerUpPositioned()
-	{
-		bool activated = false;
-		Vector3 v3;
-
-		v3 = powerUpGO.transform.position;
-		v3 = Camera.main.WorldToScreenPoint (v3);
-
-		v3.x = v3.x/Screen.width;
-
-		if (v3.x > wordsContainer.anchorMin.x && v3.x < wordsContainer.anchorMax.x) 
-		{
-			v3.y = v3.y/Screen.height;
-			if (v3.y > wordsContainer.anchorMin.y && v3.y < wordsContainer.anchorMax.y) 
-			{
-				activated = true;
-				addWildcard ();
-			}
-		}
-
-		inputPowerUp.OnDrop -= powerUpPositioned;
-		if (!activated) 
-		{
-			powerUpGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("WildCardPowerUP_Move");
-			cancel ();
-		}
-		powerUpGO.transform.DOScale (new Vector3 (0, 0, 0), .2f).SetId ("WildCardPowerUP_Scale").OnComplete (() => {
-
-			DestroyImmediate(powerUpGO);
-		});
-	}
-
-	public void addWildcard()
-	{
-		if(!canUse)
-		{
-			completePowerUpNoGems ();
-			return;
-		}
-		if (wordManager.isAddLetterAllowed ()) 
-		{
-			wordManager.addLetter (wordManager.getWildcard (powerUpScore),false,true);
-			completePowerUp ();
-		}
-		else
-		{
-			cancel ();
-		}
-	}
-
 	protected void completePowerUp()
 	{
+		powerUpInput.enabled = false;
 		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_POWERUP);
+		
+		gameManager.updatePiecesLightAndUpdateLetterState ();
 		OnComplete ();
-		this.gameObject.SetActive( false);
 	}
 
 	protected void completePowerUpNoGems()
 	{
-		powerUpGO.transform.DOMove (new Vector3 (powerUpButton.position.x, powerUpButton.position.y, 1), .2f).SetId("WildCardPowerUP_Move");
+		powerUpInput.enabled = false;
 		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 		OnCompletedNoGems ();
-		this.gameObject.SetActive( false);
 	}
 
-	public override void cancel ()
+	public override void cancel()
 	{
+		powerUpInput.enabled = false;
 		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_POWERUP);
 		OnCancel ();
-		this.gameObject.SetActive( false);
 	}
-
 }

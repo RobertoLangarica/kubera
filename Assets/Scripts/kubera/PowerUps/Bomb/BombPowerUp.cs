@@ -21,6 +21,7 @@ public class BombPowerUp : PowerupBase
 		bombAnimation = FindObjectOfType<BombAnimation> ();
 		gameManager = FindObjectOfType<GameManager> ();
 		bombAnimation.OnCellFlipped += gameManager.OnCellFlipped;
+		bombAnimation.OnAllAnimationsCompleted += gameManager.updatePiecesLightAndUpdateLetterState;
 	}
 
 	public override void activate(bool canUse)
@@ -73,8 +74,6 @@ public class BombPowerUp : PowerupBase
 
 					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_POWERUP);
 					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_SPECIFIC_COLOR);
-
-					gameManager.updatePiecesLightAndUpdateLetterState ();
 
 					OnComplete ();
 				}

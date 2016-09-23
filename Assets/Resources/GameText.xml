@@ -6,9 +6,9 @@
 		-->
 		<text id="startGame">
 			<languages>
-				<language id="english" text="Play"/>
-				<language id="spanish" text="Juega"/>
-				<language id="default" text="Juega"/>
+				<language id="english" text="PLAY"/>
+				<language id="spanish" text="JUGAR"/>
+				<language id="default" text="JUGAR"/>
 			</languages>
 		</text>
 
@@ -32,16 +32,16 @@
 		</text>
 		<text id="secondChanceTitle">
 			<languages>
-				<language id="english" text="You were so close"/>
-				<language id="spanish" text="Casi lo logras"/>
-				<language id="default" text="Casi lo logras"/>
+				<language id="english" text="You were so close!"/>
+				<language id="spanish" text="¡Casi lo logras!"/>
+				<language id="default" text="¡Casi lo logras!"/>
 			</languages>
 		</text>
 		<text id="noOptionsGameContinue">
 			<languages>
-				<language id="english" text="CONTINUE"/>
-				<language id="spanish" text="CONTINUAR"/>
-				<language id="default" text="CONTINUAR"/>
+				<language id="english" text="USE POWER UP"/>
+				<language id="spanish" text="USAR POWER UP"/>
+				<language id="default" text="USAR POWER UP"/>
 			</languages>
 		</text>
 		<text id="noOptionsGameGiveUp">
@@ -145,22 +145,74 @@
 		</text>
 		<text id="exitText">
 			<languages>
-				<language id="english" text="You click exit button."/>
+				<language id="english" text="You tapped the exit button."/>
 				<language id="spanish" text="Presionaste el boton de salida"/>
 				<language id="default" text="Presionaste el boton de salida"/>
 			</languages>
 		</text>
 		<text id="ticketFlavorText">
 			<languages>
-				<language id="english" text="****Thanks for visit****"/>
-				<language id="spanish" text="****Gracias por su visita****"/>
-				<language id="default" text="****Gracias por su visita****"/>
+				<language id="english" text="****Thanks for your visit****"/>
+				<language id="spanish" text="****Gracias por tu visita****"/>
+				<language id="default" text="****Gracias por tu visita****"/>
 			</languages>
 		</text>
 
 		<!--
 		Game	
 		-->
+
+     	<text id="startGameObjectivePointsText">
+			<languages>
+				<language id="english" text="Get points"/>
+				<language id="spanish" text="Haz puntos"/>
+				<language id="default" text="Haz puntos"/>
+			</languages>
+		</text>
+		<text id="startGameObjectiveLettersText">
+			<languages>
+				<language id="english" text="Use Letters"/>
+				<language id="spanish" text="Usa letras"/>
+				<language id="default" text="Usa letras"/>
+			</languages>
+		</text>
+		<text id="startGameObjectiveBlackText">
+			<languages>
+				<language id="english" text="Use black letters"/>
+				<language id="spanish" text="Usa letras negras"/>
+				<language id="default" text="Usa letras negras"/>
+			</languages>
+		</text>
+		<text id="startGameObjectiveWordText">
+			<languages>
+				<language id="english" text="Form a Word"/>
+				<language id="spanish" text="Haz una palabra"/>
+				<language id="default" text="Haz una palabra"/>
+			</languages>
+		</text>
+		<text id="startGameObjectiveWordsText">
+			<languages>
+				<language id="english" text="Form words"/>
+				<language id="spanish" text="Haz palabras"/>
+				<language id="default" text="Haz palabras"/>
+			</languages>
+		</text>
+		<text id="startGameObjectiveSynonymText">
+			<languages>
+				<language id="english" text="Form an synonym"/>
+				<language id="spanish" text="Haz un sinónimo"/>
+				<language id="default" text="Haz un sinónimo"/>
+			</languages>
+		</text>
+		<text id="startGameObjectiveAntonymText">
+			<languages>
+				<language id="english" text="Form an antonym"/>
+				<language id="spanish" text="Haz un antónimo"/>
+				<language id="default" text="Haz un antónimo"/>
+			</languages>
+		</text>
+
+
 		<text id="Tutorial_lvl1_phase1">
 			<languages>
 				<language id="english" text="Drag a piece to make a line."/>
@@ -191,7 +243,7 @@
 		</text>
 		<text id="Tutorial_lvl2_phase2">
 			<languages>
-				<language id="english" text="You've got {{points}} out of {{neededPoints}} point, get the remaining points to pass the level."/>
+				<language id="english" text="You've got {{points}} out of {{neededPoints}} points, get the remaining points to pass the level."/>
 				<language id="spanish" text="Llevas {{points}} de {{neededPoints}} puntos, haz los puntos restantes para completar el nivel."/>
 				<language id="default" text="Llevas {{points}} de {{neededPoints}} puntos, haz los puntos restantes para completar el nivel."/>
 			</languages>
@@ -212,16 +264,16 @@
 		</text>
 		<text id="Tutorial_lvl2_phase5">
 			<languages>
-				<language id="english" text="{{b}}Remember:{{/b}} /n You get point by placing a piece, making a line and forming words."/>
+				<language id="english" text="{{b}}Remember:{{/b}} /n You get points by placing a piece, making a line or forming words."/>
 				<language id="spanish" text="{{b}}Recuerda:{{/b}} /n Obtienes puntos al colocar una pieza, hacer una línea o formar una palabra."/>
 				<language id="default" text="{{b}}Recuerda:{{/b}} /n Obtienes puntos al colocar una pieza, hacer una línea o formar una palabra."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl3_phase1">
 			<languages>
-				<language id="english" text="Drag {{b}}HELP{{/b}} to the board to find out what word you can form with your letters."/>
-				<language id="spanish" text="Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes formar con tus letras."/>
-				<language id="default" text="Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes formar con tus letras."/>
+				<language id="english" text="Drag {{b}}HELP{{/b}} to the board to find out a word you can form with your letters."/>
+				<language id="spanish" text="Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes hacer con tus letras."/>
+				<language id="default" text="Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes hacer con tus letras."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl3_phase2">
@@ -240,7 +292,7 @@
 		</text>
 		<text id="Tutorial_lvl3_phase4">
 			<languages>
-				<language id="english" text="Remember: /n Drag {{b}}HELP{{/b}} to the board to find out what word you can form with your current letters."/>
+				<language id="english" text="Remember: /n Drag {{b}}HELP{{/b}} to the board to find out a word you can form with your letters."/>
 				<language id="spanish" text="Recuerda: /n Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes hacer con tus letras."/>
 				<language id="default" text="Recuerda: /n Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes hacer con tus letras."/>
 			</languages>
@@ -331,7 +383,7 @@
 		</text>
 		<text id="Tutorial_lvl64_phase2">
 			<languages>
-				<language id="english" text="Tsp the letter {{b}}Z{{/b}} do the {{b}}WILD CARD{{/b}} becomes a {{b}}Z{{/b}}."/>
+				<language id="english" text="Tap the letter {{b}}Z{{/b}} do the {{b}}WILD CARD{{/b}} becomes a {{b}}Z{{/b}}."/>
 				<language id="spanish" text="Toca la letra {{b}}Z{{/b}} para que el {{b}}COMODIN{{/b}} se convierta en una {{b}}Z{{/b}}."/>
 				<language id="default" text="Toca la letra {{b}}Z{{/b}} para que el {{b}}COMODIN{{/b}} se convierta en una {{b}}Z{{/b}}."/>
 			</languages>
@@ -533,6 +585,13 @@
 				<language id="default" text="SIGUIENTE"/>
 			</languages>
 		</text>
+		<text id="afterGameRetry">
+			<languages>
+				<language id="english" text="TRY AGAIN"/>
+				<language id="spanish" text="REINTENTAR"/>
+				<language id="default" text="REINTENTAR"/>
+			</languages>
+		</text>
 		<text id="afterGameFacebook">
 			<languages>
 				<language id="english" text="INVITE FRIENDS"/>
@@ -541,6 +600,13 @@
 			</languages>
 		</text>
 
+		<text id="levlTextName">
+			<languages>
+				<language id="english" text="LEVEL"/>
+				<language id="spanish" text="NIVEL"/>
+				<language id="default" text="NIVEL"/>
+			</languages>
+		</text>
 		<text id="looseGameText">
 			<languages>
 				<language id="english" text="You'll get it next time!"/>
@@ -834,65 +900,65 @@
 		-->
 		<text id="World1_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Pentatonic"/>
+				<language id="spanish" text="Pentatonica"/>
+				<language id="default" text="Pentatonica"/>
 			</languages>
 		</text>
 		<text id="World2_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Best Pet"/>
+				<language id="spanish" text="Mascota Mascota"/>
+				<language id="default" text="Mascota Mascota"/>
 			</languages>
 		</text>
 		<text id="World3_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Clothes"/>
+				<language id="spanish" text="Las Ropas"/>
+				<language id="default" text="Las Ropas"/>
 			</languages>
 		</text>
 		<text id="World4_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Eye Book"/>
+				<language id="spanish" text="Libroso"/>
+				<language id="default" text="Libroso"/>
 			</languages>
 		</text>
 		<text id="World5_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Shoe Inc"/>
+				<language id="spanish" text="Zapatin"/>
+				<language id="default" text="Zapatin"/>
 			</languages>
 		</text>
 		<text id="World6_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Make Up"/>
+				<language id="spanish" text="Sombra Aqui"/>
+				<language id="default" text="Sombra Aqui"/>
 			</languages>
 		</text>
 		<text id="World7_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Sports"/>
+				<language id="spanish" text="Deportes"/>
+				<language id="default" text="Deportes"/>
 			</languages>
 		</text>
 		<text id="World8_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Blink blink"/>
+				<language id="spanish" text="Blink blink"/>
+				<language id="default" text="Blink blink"/>
 			</languages>
 		</text>
 		<text id="World9_name">
 			<languages>
-				<language id="english" text="PENTATONIC"/>
-				<language id="spanish" text="PENTATONICA"/>
-				<language id="default" text="PENTATONICA"/>
+				<language id="english" text="Smell good"/>
+				<language id="spanish" text="Hueles bien"/>
+				<language id="default" text="Hueles bien"/>
 			</languages>
 		</text>
 		<!--

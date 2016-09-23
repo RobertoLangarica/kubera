@@ -14,9 +14,34 @@ public class TutorialLvl1 : TutorialBase
 	protected GameObject powerUpDommy;
 	protected List<Cell> cells;
 
+	protected Vector3 posFrom;
+	protected Vector3 posTo;
+
 	protected override void Start()
 	{
+		inputPiece.OnPlayer += animation;
+
 		base.Start ();
+	}
+
+	protected void animation(bool stop)
+	{
+		if(stop)
+		{
+			DOTween.Kill ("Tutorial1");
+			DestroyImmediate(powerUpDommy);
+			CancelInvoke ("powerUpAnim");
+
+			doAnimation = false;
+		}
+		else
+		{
+			if(!doAnimation)
+			{
+				doAnimation = true;
+				Invoke ("powerUpAnim", 0.2f);
+			}
+		}
 	}
 
 	public override bool canMoveToNextPhase ()
@@ -46,6 +71,7 @@ public class TutorialLvl1 : TutorialBase
 			phase = 1;
 			return true;
 		case(1):
+			inputPiece.OnPlayer -= animation;
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.CREATE_WORD);
@@ -132,8 +158,9 @@ public class TutorialLvl1 : TutorialBase
 			return;
 		}
 
-		Vector3 posFrom = pieceManager.getShowingPieces () [0].transform.position;
-		Vector3 posTo = cellManager.getAllEmptyCells()[8].transform.position;
+
+		posFrom = pieceManager.getShowingPieces () [0].transform.position;
+		posTo = cellManager.getAllEmptyCells()[8].transform.position;
 		posTo.x += cellManager.cellSize * 0.5f;
 
 		changeDommy ();

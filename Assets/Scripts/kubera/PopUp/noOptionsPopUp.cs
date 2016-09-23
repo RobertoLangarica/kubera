@@ -61,14 +61,13 @@ public class noOptionsPopUp : PopUpBase {
 	{
 		winContent.DOLocalMoveY(startPosition.y,speed).SetEase(Ease.InBack).OnComplete(()=>
 			{
-				popUpCompleted();
+				popUpCompleted("checkInSeconds");
 			});
 		
 	}
 
 	public void exitPlaying()
 	{
-		print ("SSSS");
 		popUpCompleted("loose");
 	}
 

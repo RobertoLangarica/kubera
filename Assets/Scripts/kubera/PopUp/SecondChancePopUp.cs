@@ -28,6 +28,7 @@ public class SecondChancePopUp : PopUpBase
 
 	protected int secondChanceTimes = 0;
 	protected int price;
+	protected bool pressed;
 
 	public override void activate()
 	{
@@ -81,28 +82,31 @@ public class SecondChancePopUp : PopUpBase
 
 	public void buyASecondChance()
 	{
+		if(pressed)
+		{
+			return;
+		}
+		pressed = true;
 		if(TransactionManager.GetInstance().tryToUseGems(price))
 		{
 			secondChanceTimes++;
 
-			thisObject.DOAnchorPos (new Vector3(thisObject.anchoredPosition.x,0), speed).OnComplete(()=>
+			thisObject.DOAnchorPos (-v3, speed).SetEase(Ease.InBack).OnComplete(()=>
 				{
-					thisObject.DOAnchorPos (-v3, speed).SetEase(Ease.InBack).OnComplete(()=>
-						{
-							//TODO: salirnos del nivel
-							//print("gano");
-							if (OnSecondChanceAquired != null) 
-							{
-								OnSecondChanceAquired ();
-							}
-							popUp.SetActive (false);
-							OnComplete ();
-						});
+					//TODO: salirnos del nivel
+					//print("gano");
+					if (OnSecondChanceAquired != null) 
+					{
+						OnSecondChanceAquired ();
+					}
+					popUp.SetActive (false);
+					OnComplete ();
+					pressed = false;
 				});
 		}
 		else
 		{
-			OnComplete ("NoGemsPopUp");
+			OnComplete ("NoGemsPopUp",false);
 		}
 
 		Debug.Log("Fondos insuficientes");
@@ -110,6 +114,11 @@ public class SecondChancePopUp : PopUpBase
 
 	public void giveUp()
 	{
+		if(pressed)
+		{
+			return;
+		}
+		pressed = true;
 		thisObject.DOAnchorPos (new Vector3(thisObject.anchoredPosition.x,0), speed).OnComplete(()=>
 			{
 				thisObject.DOAnchorPos (-v3, speed).SetEase(Ease.InBack).OnComplete(()=>
@@ -121,6 +130,7 @@ public class SecondChancePopUp : PopUpBase
 							OnGiveUp ();
 						}
 
+						pressed = false;
 						OnComplete ("loose");
 						popUp.SetActive (false);
 					});

@@ -47,6 +47,9 @@ public class GoalManager : MonoBehaviour
 	public delegate void DOnLetterFound(string letter);
 	public DOnLetterFound OnLetterFound;
 
+	public delegate void DOnBlackLetter(int howMany);
+	public DOnLetterFound OnBlackLetter;
+
 	public void initializeFromString(string goal)
 	{
 		string[] data = goal.Split('-');

@@ -43,6 +43,7 @@ public class NoLifesPopUp : PopUpBase
 	public void askForLifes()
 	{
 		//TODO:Hacer stuff de facebook
+		OnComplete ("needLifes");
 	}
 
 	public void rechargeLifes()
@@ -52,7 +53,7 @@ public class NoLifesPopUp : PopUpBase
 			LifesManager.GetInstance ().giveLifesToUser ((KuberaDataManager.GetInstance () as KuberaDataManager).initialLifes);
 
 			popUp.SetActive (false);
-			OnComplete ("needLifes");
+			OnComplete ();
 		} 
 		else 
 		{

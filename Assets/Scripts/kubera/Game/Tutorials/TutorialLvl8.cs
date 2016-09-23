@@ -9,10 +9,35 @@ public class TutorialLvl8 : TutorialBase
 	public GameObject fromPosition;
 
 	protected bool doAnimation;
-
+	protected InputBombAndDestroy inputBomb;
+	protected Vector3 posFrom;
+	protected Vector3 posTo;  
 	protected override void Start()
 	{
+		inputBomb = FindObjectOfType<InputBombAndDestroy> ();
+		inputBomb.OnPlayer += animation;
+
 		base.Start ();
+	}
+
+	protected void animation(bool stop)
+	{
+		if(stop)
+		{
+			DOTween.Kill ("Tutorial8");
+			CancelInvoke ("powerUpAnim");
+			powerUpDommy.transform.localScale = new Vector3 (1, 1, 1);
+			powerUpDommy.color =new Color(1,1,1,0);
+			doAnimation = false;
+		}
+		else
+		{
+			if(!doAnimation)
+			{
+				doAnimation = true;
+				powerUpAnim ();
+			}
+		}
 	}
 
 	public override bool canMoveToNextPhase ()
@@ -22,8 +47,16 @@ public class TutorialLvl8 : TutorialBase
 		switch (phase) 
 		{
 		case(0):
+			if(cellManager == null)
+			{
+				cellManager = FindObjectOfType<CellsManager> ();
+			}
+			
+			posFrom = fromPosition.transform.position;
+			posTo = cellManager.getAllShowedCels()[11].transform.position;
+
 			phasesPanels [0].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.BOMB_USED);
+			phaseEvent.Add (ENextPhaseEvent.BOMB_USED);
 
 			freeBombs = true;
 
@@ -33,18 +66,24 @@ public class TutorialLvl8 : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE1),
-				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [0];
 			instructionsText.text = "";
 
 			doAnimation = true;
-			Invoke ("powerUpAnim",1);
+			Invoke ("powerUpAnim", 1);
 
-			Invoke ("writeLetterByLetter",initialAnim*2);
+			Invoke ("writeLetterByLetter", initialAnim * 2);
 
 			phase = 1;
 			return true;
 		case(1):
+			if(inputBomb == null)
+			{
+				inputBomb = FindObjectOfType<InputBombAndDestroy> ();
+			}
+			inputBomb.OnPlayer -= animation;
+
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add(ENextPhaseEvent.TAP);
@@ -91,14 +130,13 @@ public class TutorialLvl8 : TutorialBase
 
 	protected void powerUpAnim()
 	{
+		print ("powerUpAnim");
 		if (!doAnimation) 
 		{
-			DOTween.Kill ("Tutorial8");
+			DOTween.Kill ("Tutorial8",true);
 			return;
 		}
 
-		Vector3 posFrom = fromPosition.transform.position;
-		Vector3 posTo = cellManager.getAllShowedCels()[11].transform.position;
 
 		powerUpDommy.transform.position = posFrom;
 
@@ -125,7 +163,6 @@ public class TutorialLvl8 : TutorialBase
 
 			}
 		).SetId("Tutorial8");
-
 		Invoke ("powerUpAnim",3.5f);
 	}
 }

@@ -19,10 +19,13 @@ public class Letter : MonoBehaviour
 	public Sprite normalSprite;
 	public Sprite normalSelectedSprite;
 	public Sprite normalWrongSprite;
+	public Sprite hintSprite;
+	public Sprite hintSelectedSprite;
 	public Sprite obstacleSprite;
 	public Sprite obstacleSelectedSprite;
 	public Sprite obstacleWrongSprite;
 	public Sprite wildCardSprite;
+	public Sprite wildCardSelectedSprite;
 
 	public Text txtLetter;
 	public Text txtPoints;
@@ -31,8 +34,9 @@ public class Letter : MonoBehaviour
 	[HideInInspector] public EType type;
 	[HideInInspector] public EState state;
 	[HideInInspector] public bool selected;
-	[HideInInspector]public int index;//Indice del caracter en WordManager
-	[HideInInspector]public bool wildCard;
+	[HideInInspector] public bool hinted;
+	[HideInInspector] public int index;//Indice del caracter en WordManager
+	[HideInInspector] public bool wildCard;
 	protected bool textActualized; //texto actualizado
 
 	public ABCChar abcChar;
@@ -74,6 +78,21 @@ public class Letter : MonoBehaviour
 
 	public void setColorsBasedOnType(EType type,EState state)
 	{
+		if(state == EState.HINTED)
+		{
+			if (!selected) 
+			{
+				txtLetter.color = Color.black;
+				txtPoints.color = Color.white;
+			}
+			else
+			{
+				txtLetter.color = Color.black;
+				txtPoints.color = Color.black;
+			}
+			return;
+		}
+		
 		switch(type)
 		{
 		case EType.OBSTACLE:
@@ -123,6 +142,10 @@ public class Letter : MonoBehaviour
 
 	public Sprite getSpriteBasedOnType(EType type)
 	{
+		if(hinted)
+		{
+			return hintSprite;
+		}
 		switch(type)
 		{
 		case EType.OBSTACLE:
@@ -149,6 +172,7 @@ public class Letter : MonoBehaviour
 
 		this.state = state;
 		setColorsBasedOnType (type,state);
+
 		switch(state)
 		{
 		case EState.NORMAL:
@@ -161,6 +185,17 @@ public class Letter : MonoBehaviour
 				else
 				{					
 					myImage.sprite = normalSprite;
+				}
+			}
+			else if(type == EType.WILD_CARD)
+			{
+				if(selected)
+				{
+					myImage.sprite = wildCardSelectedSprite; 
+				}
+				else
+				{					
+					myImage.sprite = wildCardSprite;
 				}
 			}
 			else
@@ -187,6 +222,17 @@ public class Letter : MonoBehaviour
 					myImage.sprite = normalWrongSprite;
 				}
 			}
+			else if(type == EType.WILD_CARD)
+			{
+				if(selected)
+				{
+					myImage.sprite = wildCardSelectedSprite; 
+				}
+				else
+				{					
+					myImage.sprite = wildCardSprite;
+				}
+			}
 			else
 			{
 				if(selected)
@@ -200,8 +246,15 @@ public class Letter : MonoBehaviour
 			}
 			break;
 		case EState.HINTED:
-			//txtLetter.color = hintedWordsColor;
-			//txtPoints.color = stateColor;
+			if(selected)
+			{
+				myImage.sprite = hintSelectedSprite;
+			}
+			else
+			{					
+				myImage.sprite = hintSprite;
+
+			}
 			break;
 		}
 	}
@@ -228,6 +281,12 @@ public class Letter : MonoBehaviour
 	{
 		if(myImage == null){return;}
 
+		if(hinted)
+		{				
+			myImage.sprite = hintSelectedSprite;
+			return;
+		}
+
 		switch(type)
 		{
 		case EType.OBSTACLE:
@@ -235,6 +294,9 @@ public class Letter : MonoBehaviour
 			break;
 		case EType.NORMAL:
 			myImage.sprite = normalSelectedSprite;
+			break;
+		case EType.WILD_CARD:
+			myImage.sprite = wildCardSelectedSprite;
 			break;
 		}
 
@@ -266,6 +328,7 @@ public class Letter : MonoBehaviour
 		if(letterReference != null)
 		{
 			//setColorsBasedOnType (type,state);
+			letterReference.letterReference.isFromGrid = true;
 			letterReference.markAsSelected();
 		}
 	}
@@ -301,7 +364,7 @@ public class Letter : MonoBehaviour
 
 		if(abcChar.character == ".")
 		{
-			abcChar.wildcard = true;
+			//abcChar.wildcard = true;
 		}
 	}
 

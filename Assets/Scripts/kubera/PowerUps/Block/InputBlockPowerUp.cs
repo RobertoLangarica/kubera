@@ -20,6 +20,9 @@ public class InputBlockPowerUp : MonoBehaviour
 	public DPowerUpBlockNotification OnPowerupCanceled;
 	public DPowerUpBlockNotification OnPowerupCompleted;
 	public DPowerUpBlockNotification OnPowerupCompletedNoGems;
+	public delegate void DOnPlayer(bool onPlayer);
+	public DOnPlayer OnPlayer;
+
 	protected bool canUse;
 	public Transform parent;
 
@@ -52,7 +55,7 @@ public class InputBlockPowerUp : MonoBehaviour
 
 	public void setPieceColor()
 	{
-		currentSelected.GetComponent<Piece> ().currentColor = Piece.EColor.PURPLE;
+		currentSelected.GetComponent<Piece> ().currentColor = Piece.EColor.RED;
 	}
 
 	public GameObject getCurrentSelected()
@@ -83,6 +86,7 @@ public class InputBlockPowerUp : MonoBehaviour
 					posOverFinger += offsetPositionOverFinger;
 					moveTo(currentSelected,posOverFinger,pieceSpeed);
 					//currentSelected.transform.DOScale(selectedScale,.1f).SetId("InputBlock_SelectedScale");
+					isOnPlayer (true);
 				}
 			}	
 			break;
@@ -147,6 +151,7 @@ public class InputBlockPowerUp : MonoBehaviour
 	public void reset()
 	{
 		currentSelected = null;
+		isOnPlayer (false);
 	}
 
 	public void returnSelectedToInitialState(float delay = 0)
@@ -183,6 +188,14 @@ public class InputBlockPowerUp : MonoBehaviour
 	protected void completePowerUpNoGems()
 	{
 		OnPowerupCompletedNoGems ();
+	}
+
+	protected void isOnPlayer(bool isOn)
+	{
+		if(OnPlayer != null)
+		{
+			OnPlayer (isOn);
+		}
 	}
 }
 

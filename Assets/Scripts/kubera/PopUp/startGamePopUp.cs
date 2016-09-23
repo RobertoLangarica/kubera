@@ -12,8 +12,36 @@ public class startGamePopUp : PopUpBase {
 
 	void Start()
 	{
-		text.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.STARTGAME_TEXT_POPUP_ID);
 		flavorText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FLAVOR_TEXT);
+	}
+
+	public void initText(string goal)
+	{
+		switch (goal) {
+		case "points":
+			text.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.START_GAME_OBJECTIVE_POINTS_TEXT);
+			break;
+		case "letters":
+			text.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.START_GAME_OBJECTIVE_LETTERS_TEXT);
+			break;
+		case "obstacles":
+			text.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.START_GAME_OBJECTIVE_BLACK_TEXT);
+			break;
+		case "word":
+			text.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.START_GAME_OBJECTIVE_WORD_TEXT);
+			break;
+		case "words":
+			text.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.START_GAME_OBJECTIVE_WORDS_TEXT);
+			break;
+		case "ant":
+			text.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.START_GAME_OBJECTIVE_ANTONYM_TEXT);
+			break;
+		case "sin":
+			text.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.START_GAME_OBJECTIVE_SYNONYM_TEXT);
+			break;
+		default:
+			break;
+		}
 	}
 
 	public override void activate()

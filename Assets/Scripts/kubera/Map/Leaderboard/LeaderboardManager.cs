@@ -57,7 +57,6 @@ public class LeaderboardManager : MonoBehaviour {
 		}
 
 		leaderboard = existLeaderboard (id);
-
 		if(leaderboard != null)
 		{
 			currentLeaderboard = leaderboard;

@@ -37,8 +37,6 @@ public class HUDManager : MonoBehaviour
 
 	public GameObject PointerOnScene;
 
-
-
 	public Text lettersPoints;
 	public Text lettersPointsTitle;
 
@@ -61,6 +59,9 @@ public class HUDManager : MonoBehaviour
 	public GameObject wordsHighlight;
 
 	public Button[] powerUps;
+
+	public Image worldBackground;
+	public Sprite[] worldsBackground;
 
 	void Start () 
 	{
@@ -85,6 +86,11 @@ public class HUDManager : MonoBehaviour
 	{
 		scoreText.text = lettersPointsTitle.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SCORE_HUD_TITLE_ID);
 		levelText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.LVL_HUD_TITLE_ID);
+	}
+
+	public void setWorldBackground(int world)
+	{
+		worldBackground.sprite = worldsBackground [world];
 	}
 
 	public int getEarnedStars()
@@ -301,7 +307,7 @@ public class HUDManager : MonoBehaviour
 
 		textId = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.GOAL_CONDITION_BY_OBSTACLES_ID);
 		goalText.text = MultiLanguageTextManager.instance.multipleReplace (textId,
-			new string[2]{ "{{pointsMade}}", "{{pointsNeed}}" }, new string[2]{ obstacleLettersMade, obstacleLettersNeed });
+			new string[2]{ "{{lettersUsed}}", "{{lettersNeed}}" }, new string[2]{ obstacleLettersMade, obstacleLettersNeed });
 	}
 
 	protected void setSizeOfContainer(int maxSize = 5)
@@ -500,5 +506,16 @@ public class HUDManager : MonoBehaviour
 
 			}
 		}
+	}
+
+	public void enablePowerUps()
+	{
+		print ( UserDataManager.instance.isWordHintPowerUpUnlocked);
+		powerUps [0].gameObject.SetActive(UserDataManager.instance.isWordHintPowerUpUnlocked);
+		powerUps [1].gameObject.SetActive(UserDataManager.instance.isDestroyNeighborsPowerUpUnlocked);
+		powerUps [2].gameObject.SetActive(UserDataManager.instance.isOnePiecePowerUpUnlocked);
+		powerUps [3].gameObject.SetActive(UserDataManager.instance.isRotatePowerUpUnlocked);
+		powerUps [4].gameObject.SetActive(UserDataManager.instance.isWildCardPowerUpUnlocked);
+		powerUps [5].gameObject.SetActive(UserDataManager.instance.isDestroyPowerUpUnlocked);
 	}
 }

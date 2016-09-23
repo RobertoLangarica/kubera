@@ -23,7 +23,7 @@ public class WinGamePopUp : PopUpBase {
 
 		winContent.DOAnchorPos (new Vector3(winContent.anchoredPosition.x,0), speed).SetEase(Ease.OutBack).OnComplete(()=>
 			{
-				winContent.DOAnchorPos (new Vector3(winContent.anchoredPosition.x,0), speed).OnComplete(()=>
+				winContent.DOAnchorPos (new Vector3(winContent.anchoredPosition.x,0), speed*0.5f).OnComplete(()=>
 					{
 						winContent.DOAnchorPos (-v3, speed).SetEase(Ease.InBack).OnComplete(()=>
 							{

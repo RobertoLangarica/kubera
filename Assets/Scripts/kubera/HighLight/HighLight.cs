@@ -220,7 +220,7 @@ public class HighLight : MonoBehaviour
 				if (hasBeat) 
 				{
 					transform.localScale = previousScale;
-					DOTween.Kill ("HighLightBeat");	
+					DOTween.Kill ("HighLightBeat",true);	
 				}
 
 				return true;
