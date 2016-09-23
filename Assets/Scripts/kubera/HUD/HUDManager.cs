@@ -510,7 +510,6 @@ public class HUDManager : MonoBehaviour
 
 	public void enablePowerUps()
 	{
-		print ( UserDataManager.instance.isWordHintPowerUpUnlocked);
 		powerUps [0].gameObject.SetActive(UserDataManager.instance.isWordHintPowerUpUnlocked);
 		powerUps [1].gameObject.SetActive(UserDataManager.instance.isDestroyNeighborsPowerUpUnlocked);
 		powerUps [2].gameObject.SetActive(UserDataManager.instance.isOnePiecePowerUpUnlocked);

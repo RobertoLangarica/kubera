@@ -138,6 +138,13 @@ public class GameManager : MonoBehaviour
 		{
 			configureLevel(PersistentData.GetInstance().currentLevel);
 		}
+
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance ().Stop ("menuMusic",false);
+			AudioManager.GetInstance ().Play ("gamePlay");
+		}
+
 		hudManager.enablePowerUps ();
 		unBlockPowerUpForThisLevel ();
 
@@ -1046,7 +1053,13 @@ public class GameManager : MonoBehaviour
 
 	protected void toLevels()
 	{
-		activateMusic (false);
+		//activateMusic (false);
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance ().Stop ("gamePlay",false);
+			AudioManager.GetInstance ().Play ("menuMusic");
+		}
+
 		if(ScreenManager.instance)
 		{
 			ScreenManager.instance.testContinue();

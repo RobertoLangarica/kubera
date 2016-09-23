@@ -22,11 +22,6 @@ public class SettingsButton : MonoBehaviour
 
 	void Start()
 	{
-		if(AudioManager.GetInstance())
-		{
-			AudioManager.GetInstance ().Play ("gamePlay");
-		}
-
 		setStateMusic ();
 		setStateSounds ();
 	}

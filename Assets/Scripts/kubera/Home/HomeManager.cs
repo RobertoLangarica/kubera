@@ -39,6 +39,12 @@ public class HomeManager : MonoBehaviour {
 		settingButtons.OnActivateMusic += activateMusic;
 
 		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.START_GAME);
+
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance ().Stop ("gamePlay",false);
+			AudioManager.GetInstance ().Play ("menuMusic");
+		}
 	}
 
 	void startScene()
