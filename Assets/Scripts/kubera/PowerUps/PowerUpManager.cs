@@ -98,6 +98,8 @@ public class PowerUpManager : MonoBehaviour
 	public int getPowerUpPrice(PowerupBase.EType powerUptype)
 	{
 		switch (powerUptype) {
+		case PowerupBase.EType.HINT_WORD:
+			return 	5;
 			case PowerupBase.EType.BLOCK:
 			return 	30;
 			case PowerupBase.EType.BOMB: 
