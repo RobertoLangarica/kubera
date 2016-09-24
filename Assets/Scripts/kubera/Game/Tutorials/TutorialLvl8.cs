@@ -130,7 +130,6 @@ public class TutorialLvl8 : TutorialBase
 
 	protected void powerUpAnim()
 	{
-		print ("powerUpAnim");
 		if (!doAnimation) 
 		{
 			DOTween.Kill ("Tutorial8",true);

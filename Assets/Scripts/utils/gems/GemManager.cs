@@ -3,12 +3,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Data;
+using Kubera.Data;
+using Kubera.Data.Sync;
 
 namespace utils.gems
 {
 	public class GemManager : LocalDataManager<MultipleUserGem>
 	{
-		public KuberaSyncManger syncManager;
+		/*public KuberaSyncManger syncManager;
 		public int initialLifes = 5;
 
 		protected Levels levelsList;
@@ -382,7 +384,7 @@ namespace utils.gems
 		/**
 		 * Los datos de este usuario que necesiten subirse
 		 **/ 
-		public KuberaUser getUserDirtyData()
+		/*public KuberaUser getUserDirtyData()
 		{
 			KuberaUser user = currentUser;
 			KuberaUser result = new KuberaUser(user._id);
@@ -395,6 +397,6 @@ namespace utils.gems
 			result.markAllLevelsAsNoDirty();
 
 			return result;
-		}
+		}*/
 	}
 }

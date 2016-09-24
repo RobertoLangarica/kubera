@@ -160,7 +160,7 @@ public class ScreenManager : Manager<ScreenManager> {
 
 		if(loading != null)
 		{			
-			loading.showLoading (0.25f,()=>{StartCoroutine(loadScene(newScene));});
+			loading.showLoading (0,()=>{StartCoroutine(loadScene(newScene));});
 		}
 		else
 		{

@@ -22,12 +22,7 @@ public class MapManager : MonoBehaviour
 	public List<GameObject> worlds;
 	protected GameObject WorldPrefab;
 
-	protected PopUpManager popUpManager;
-	protected ParalaxManager paralaxManager;
-	protected InvitationToReview invitationToReview;
-	protected FriendsOnWorldManager friendsOnWorldManager;
-	private GoalManager		goalManager;
-	public SettingsButton settingButtons;
+
 
 	protected List<MapLevel> mapLevels;
 	protected bool fromGame;
@@ -41,18 +36,19 @@ public class MapManager : MonoBehaviour
 	protected MapLevel lastLevelPlayed = null;
 	protected MapLevel nextLevel = null;
 
-	public FBFriendsRequestPanel fbFriendsRequestPanel;
+	protected string nameOfLastLevelPlayed;
 
 	public List<string> test;
 
+	public FBFriendsRequestPanel fbFriendsRequestPanel;
+	public PopUpManager popUpManager;
+	public ParalaxManager paralaxManager;
+	public InvitationToReview invitationToReview;
+	public FriendsOnWorldManager friendsOnWorldManager;
+	public GoalManager		goalManager;
+	public SettingsButton settingButtons;
 	void Start()
 	{
-		popUpManager = FindObjectOfType<PopUpManager> ();
-		paralaxManager = FindObjectOfType<ParalaxManager> ();
-		goalManager = FindObjectOfType<GoalManager> ();
-		invitationToReview = FindObjectOfType<InvitationToReview> ();
-		friendsOnWorldManager = FindObjectOfType<FriendsOnWorldManager> ();
-
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 
 		if(PersistentData.GetInstance().currentWorld == -1 || !PersistentData.GetInstance().fromGameToLevels)
@@ -86,6 +82,7 @@ public class MapManager : MonoBehaviour
 			fromLoose= PersistentData.GetInstance ().fromLoose;
 			PersistentData.GetInstance ().fromGameToLevels = false;
 			toNextLevel = !PersistentData.GetInstance ().nextLevelIsReached;
+			nameOfLastLevelPlayed = PersistentData.GetInstance ().lastLevelPlayedName;
 		}
 		PersistentData.GetInstance ().fromLevelsToGame = true;
 
@@ -514,7 +511,7 @@ public class MapManager : MonoBehaviour
 				||  mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED
 				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED)
 			{	
-				PersistentData.GetInstance ().lastLevelReachedName = mapLevels [i].fullLvlName;
+				PersistentData.GetInstance ().lastLevelReachedName = mapLevels [i].lvlName;
 				break;
 			}
 		}
@@ -741,23 +738,27 @@ public class MapManager : MonoBehaviour
 		
 	protected void showNextLevelGoalPopUp ()
 	{
+		print ("he");
+
+		int level = int.Parse (nameOfLastLevelPlayed);
+
 		if (toNextLevel)
 		{
-			if(!invitationToReview.isHappeningAReview (int.Parse (PersistentData.GetInstance ().lastLevelReachedName)))
+			if(!invitationToReview.isHappeningAReview (level))
 			{
 				OnLevelUnlockedPressed (nextLevel);
 			}
 			else
 			{
-				invitationToReview.showInvitationProcessByLevelNumber(int.Parse (PersistentData.GetInstance().lastLevelReachedName));
+				invitationToReview.showInvitationProcessByLevelNumber(level);
 			}
 
 		}
 		else
 		{
-			if(invitationToReview.isHappeningAReview (int.Parse (PersistentData.GetInstance ().lastLevelReachedName)))
+			if(invitationToReview.isHappeningAReview (level))
 			{
-				invitationToReview.showInvitationProcessByLevelNumber(int.Parse (PersistentData.GetInstance().lastLevelReachedName));
+				invitationToReview.showInvitationProcessByLevelNumber(level);
 			}
 		}
 	}

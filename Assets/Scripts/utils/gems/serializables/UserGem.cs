@@ -7,7 +7,7 @@ namespace utils.gems
 {
 	public class UserGem:BasicData
 	{
-		public int gems;
+		/*public int gems;
 
 		public override bool compareAndUpdate (BasicData remote, bool ignoreVersion = false)
 		{
@@ -24,6 +24,6 @@ namespace utils.gems
 		public override void updateFrom (BasicData readOnlyRemote, bool ignoreVersion = false)
 		{
 			gems = ((UserGem)readOnlyRemote).gems;
-		}
+		}*/
 	}	
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Data;
+using Kubera.Data;
 
 namespace utils.gems
 {
@@ -26,7 +27,7 @@ namespace utils.gems
 			isDirty = false;
 
 			//revisamos los usuarios
-			foreach(UserGem remoteUser in ((MultipleUsers)readOnlyRemote).users )
+			/*foreach(UserGem remoteUser in ((MultipleUsers)readOnlyRemote).users )
 			{
 				user = getUserById(remoteUser._id);
 				if(user != null)
@@ -41,7 +42,7 @@ namespace utils.gems
 					//nivel nuevo
 					users.Add(remoteUser);
 				}
-			}
+			}*/
 		}
 
 		public UserGem getUserById(string id)

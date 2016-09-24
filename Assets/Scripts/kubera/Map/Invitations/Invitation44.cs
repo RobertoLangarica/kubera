@@ -12,14 +12,16 @@ public class Invitation44 : MonoBehaviour {
 	public Button option2;
 	public Text option1Text;
 	public Text option2Text;
+	public Text atention;
 
 	void Start()
 	{
 		invitationManager = FindObjectOfType<InvitationToReview> ();
-		firstText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_44_TEXT1);
+		firstText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_44_TEXT1).Replace ("{{n}}", System.Environment.NewLine);
 		secondText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_44_TEXT2);
 		option1Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_44_OPTION1);
 		option2Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_44_OPTION2);
+		atention.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_TITLE_TEXT1);
 	}
 
 	public void optionChoosed(int option)
@@ -30,6 +32,7 @@ public class Invitation44 : MonoBehaviour {
 			break;
 		case 1:
 			//TODO mandarlo a la tienda para hacer la reseña
+			NPBinding.Utility.OpenStoreLink ();
 			break;
 		}
 	}

@@ -140,6 +140,7 @@ public class MultiLanguageTextManager
 
 
 	//Invitation to review
+	public const string INVITATION_TITLE_TEXT1 				="Invitation_title_text1";
 	public const string INVITATION_11_TEXT1 				="Invitation_11_text1";
 
 	public const string INVITATION_21_TEXT1 				="Invitation_21_text1";
