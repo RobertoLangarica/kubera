@@ -43,7 +43,7 @@ public class FacebookConnectButton : MonoBehaviour {
 		}
 		else
 		{
-			fbText.text = "Conectate";
+			fbText.text = "Facebook";
 		}
 	}
 
