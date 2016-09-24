@@ -26,7 +26,7 @@ namespace utils.gems
 			isDirty = false;
 
 			//revisamos los usuarios
-			foreach(UserGem remoteUser in ((MultipleUsers)readOnlyRemote).users )
+			foreach(UserGem remoteUser in ((MultipleUserGem)readOnlyRemote).users )
 			{
 				user = getUserById(remoteUser._id);
 				if(user != null)
