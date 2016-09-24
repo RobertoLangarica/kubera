@@ -8,6 +8,8 @@ public class NoGemsPopUp : PopUpBase {
 	public Text Info;
 	public Text buttonText;
 
+	public KuberaWebView shopikaWebView;
+
 	void Start()
 	{
 		Title.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.NO_GEMS_POPUP_TITLE);
@@ -24,5 +26,6 @@ public class NoGemsPopUp : PopUpBase {
 	{
 		OnComplete ();
 		//TODO: abrir webView shopika
+		shopikaWebView.showShopikaAndRegisterForEvents();
 	}
 }
