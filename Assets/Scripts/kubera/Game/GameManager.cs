@@ -1206,8 +1206,9 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(powerupManager.getPowerUpPrice(type));
 
+			if(!powerupManager.getPowerupByType(type).isFree)
+			{GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(powerupManager.getPowerUpPrice(type));}
 		}
 
 		allowGameInput(true);
