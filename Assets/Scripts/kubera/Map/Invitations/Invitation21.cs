@@ -15,6 +15,8 @@ public class Invitation21 : MonoBehaviour {
 	public Button option2;
 	public Text option1Text;
 	public Text option2Text;
+	public Text atention;
+	public Text atention1;
 
 	void Start()
 	{
@@ -23,11 +25,12 @@ public class Invitation21 : MonoBehaviour {
 		first.SetActive (true);
 		second.SetActive (false);
 
-		firstText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_21_TEXT1);
+		firstText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_21_TEXT1).Replace ("{{n}}", System.Environment.NewLine);
 		answerText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_21_ANSWER1);
 
 		option1Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_21_OPTION1);
 		option2Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_21_OPTION2);
+		atention.text = atention1.text =  MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_TITLE_TEXT1);
 	}
 
 	public void optionChoosed()

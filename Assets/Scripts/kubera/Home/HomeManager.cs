@@ -104,7 +104,7 @@ public class HomeManager : MonoBehaviour {
 			AudioManager.GetInstance().Play("fxButton");
 		}
 
-		if(KuberaDataManager.GetCastedInstance<KuberaDataManager> ().currentUser.levels.Count != 0)
+		if(DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser.levels.Count != 0)
 		{
 			ScreenManager.instance.GoToScene ("Levels");
 		}
@@ -119,7 +119,7 @@ public class HomeManager : MonoBehaviour {
 	//HACK
 	public void ereaseData()
 	{
-		KuberaDataManager.GetInstance ().deleteData ();
+		DataManagerKubera.GetInstance ().deleteData ();
 		if(AudioManager.GetInstance())
 		{
 			

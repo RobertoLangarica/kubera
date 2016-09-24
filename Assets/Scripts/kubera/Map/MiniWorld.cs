@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class MiniWorld : MonoBehaviour {
 
-	public Text name;
+	public Text miniWorldName;
 	public Text starsCount;
 	public GameObject obtained;
 	public GameObject imageBloqued;
@@ -20,15 +20,11 @@ public class MiniWorld : MonoBehaviour {
 
 	public Transform[] lights;
 
-	void Start()
-	{
-	}
-
 	public void setStars(int obtainedStars, int worldStars)
 	{
 		starsCount.text = obtainedStars.ToString () + "/" + worldStars.ToString ();
 
-		name.text = MultiLanguageTextManager.instance.getTextByID ("World" + world + "_name");
+		miniWorldName.text = MultiLanguageTextManager.instance.getTextByID ("World" + world + "_name");
 	}
 
 	public void toWorld()
@@ -39,7 +35,7 @@ public class MiniWorld : MonoBehaviour {
 	public void blocked()
 	{
 		starsCount.text = "";
-		name.text = "???";
+		miniWorldName.text = "???";
 		obtained.SetActive (false);
 		imageBloqued.SetActive (true);
 		starImage.enabled = false;

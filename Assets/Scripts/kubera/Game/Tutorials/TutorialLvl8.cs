@@ -15,12 +15,12 @@ public class TutorialLvl8 : TutorialBase
 	protected override void Start()
 	{
 		inputBomb = FindObjectOfType<InputBombAndDestroy> ();
-		inputBomb.OnPlayer += animation;
+		inputBomb.OnPlayer += animationController;
 
 		base.Start ();
 	}
 
-	protected void animation(bool stop)
+	protected void animationController(bool stop)
 	{
 		if(stop)
 		{
@@ -82,7 +82,7 @@ public class TutorialLvl8 : TutorialBase
 			{
 				inputBomb = FindObjectOfType<InputBombAndDestroy> ();
 			}
-			inputBomb.OnPlayer -= animation;
+			inputBomb.OnPlayer -= animationController;
 
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
@@ -130,7 +130,6 @@ public class TutorialLvl8 : TutorialBase
 
 	protected void powerUpAnim()
 	{
-		print ("powerUpAnim");
 		if (!doAnimation) 
 		{
 			DOTween.Kill ("Tutorial8",true);

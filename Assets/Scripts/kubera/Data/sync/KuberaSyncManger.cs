@@ -11,7 +11,7 @@ namespace Kubera.Data.Sync
 	{
 		public Action<PFLeaderboardData> OnLeaderboardObtained;
 
-		public KuberaDataManager localData;
+		public DataManagerKubera localData;
 
 		protected override void Awake()
 		{

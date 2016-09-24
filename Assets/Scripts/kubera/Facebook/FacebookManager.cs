@@ -321,7 +321,7 @@ public class FacebookManager : Manager<FacebookManager>
 					bossReached = splitType [1];
 				}
 
-				if(askedKeys.Count == maxUsersPerMessage || idExistOnList (giftKeys,playerID )|| !(KuberaDataManager.GetInstance () as KuberaDataManager).isLevelLocked(bossReached))
+				if(askedKeys.Count == maxUsersPerMessage || idExistOnList (giftKeys,playerID )|| !(DataManagerKubera.GetInstance () as DataManagerKubera).isLevelLocked(bossReached))
 				{
 					deleteAppRequest (requestID);
 				}

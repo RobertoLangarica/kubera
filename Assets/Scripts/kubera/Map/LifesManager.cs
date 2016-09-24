@@ -20,13 +20,13 @@ public class LifesManager : Manager<LifesManager>
 	protected float updateLifeTimer;
 
 	protected string life1NotificationID;
-	private KuberaDataManager dataManager;
+	private DataManagerKubera dataManager;
 
 	void Start()
 	{
 		showTimer = false;
 
-		dataManager = (KuberaDataManager.GetInstance () as KuberaDataManager);
+		dataManager = (DataManagerKubera.GetInstance () as DataManagerKubera);
 
 		if (PersistentData.GetInstance ().fromLevelBuilder) 
 		{
@@ -300,6 +300,6 @@ public class LifesManager : Manager<LifesManager>
 
 	public void giveLifesToUser(int amount = 1)
 	{
-		(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (amount);
+		(DataManagerKubera.GetInstance () as DataManagerKubera).giveUserLifes (amount);
 	}
 }

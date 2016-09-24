@@ -90,7 +90,6 @@ public class GoalAfterGame : PopUpBase {
 		this.LevelNumber.text =	this.LevelNumberShadow.text  = levelName;
 		this.Points.text = points;
 
-		print ("S"+ currentWorld);
 		topLevelImage.sprite = worldTopBackground [currentWorld-1];
 		topIcon.sprite = topIconShadow.sprite = worldIcon [currentWorld-1];
 

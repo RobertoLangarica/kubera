@@ -17,6 +17,9 @@ public class Invitation28 : MonoBehaviour {
 	public Button option2;
 	public Text option1Text;
 	public Text option2Text;
+	public Text atention;
+	public Text atention1;
+	public Text atention2;
 
 	void Start()
 	{
@@ -27,11 +30,12 @@ public class Invitation28 : MonoBehaviour {
 		secondOption2.SetActive (false);
 
 		firstText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_28_TEXT1);
-		answerOption1Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_28_ANSWER1);
-		answerOption2Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_28_ANSWER2);
+		option1Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_28_ANSWER1);
+		option2Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_28_ANSWER2);
 
-		option1Text.text =MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_28_OPTION1);
-		option2Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_28_OPTION2);
+		answerOption1Text.text =MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_28_OPTION1).Replace ("{{n}}", System.Environment.NewLine);;
+		answerOption2Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_28_OPTION2).Replace ("{{n}}", System.Environment.NewLine);;
+		atention.text = atention1.text = atention2.text =  MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_TITLE_TEXT1);
 	}
 
 	public void optionChoosed(int option)

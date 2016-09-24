@@ -196,7 +196,7 @@ public class GoalPopUp : PopUpBase {
 		pressed = true;
 
 		soundButton ();
-		if ((KuberaDataManager.GetInstance () as KuberaDataManager).currentUser.playerLifes > 0) 
+		if ((DataManagerKubera.GetInstance () as DataManagerKubera).currentUser.playerLifes > 0) 
 		{
 			OnComplete ("playGame",false);
 		} 
