@@ -62,6 +62,13 @@ namespace utils.gems
 
 			//remoto
 			syncManager.consumeGems(amount);
+
+			afterGemsModified();
+		}
+
+		public int currentGems
+		{
+			get{return currentUser.gems;}
 		}
 
 		public override void changeCurrentuser (string newUserId)

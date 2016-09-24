@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 using Kubera.Data;
+using utils.gems;
 
 public class GameManager : MonoBehaviour 
 {
@@ -98,11 +99,14 @@ public class GameManager : MonoBehaviour
 
 		hudManager.OnPopUpCompleted += popUpCompleted;
 		hudManager.OnPiecesScaled += checkIfLose;
+		//actualizamos gemas
+		GemsManager.GetCastedInstance<GemsManager>().OnGemsUpdated += hudManager.updateTextGems;
 
 		wordManager.onWordChange += refreshCurrentWordScoreOnHUD;
 		settingsButton.OnActivateMusic += activateMusic;
 
 		powerupManager.getPowerupByType (PowerupBase.EType.ROTATE).OnPowerupCompleted += rotationDeactivated;
+
 		inputRotate.OnRotateArrowsActivated += rotationActivated;
 	
 		if (PersistentData.GetInstance().abcDictionary.getAlfabet () == null) 
@@ -113,9 +117,15 @@ public class GameManager : MonoBehaviour
 		{
 			startGame ();
 		}
+
 		//TODO: hardcoding
 		bonificationPiecePrefab.SetActive (true);
 		//TODO: Control de flujo de juego con un init
+	}
+
+	void OnDestroy()
+	{
+		GemsManager.GetCastedInstance<GemsManager>().OnGemsUpdated -= hudManager.updateTextGems;
 	}
 
 	protected void startGame()
@@ -692,7 +702,7 @@ public class GameManager : MonoBehaviour
 
 		hudManager.updateTextPoints(0);
 		hudManager.showPieces (pieceManager.getShowingPieces ());
-		hudManager.updateTextGems(UserDataManager.instance.playerGems);
+		hudManager.updateTextGems(GemsManager.GetCastedInstance<GemsManager>().currentGems);
 		hudManager.setLevelName (currentLevel.name);
 		hudManager.setSecondChanceLock (false);
 
@@ -1172,16 +1182,7 @@ public class GameManager : MonoBehaviour
 	protected bool canActivatePowerUp(PowerupBase.EType type)
 	{
 		//Checa si tiene dinero para usar el poder
-		//transaction manager
-		//print (powerupManager.getPowerupByType(type).isFree);
-		if(powerupManager.getPowerupByType(type).isFree || TransactionManager.GetInstance().tryToUseGems(TransactionManager.GetInstance().powerUpPrices(type)))
-		{			
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return powerupManager.getPowerupByType(type).isFree || GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(powerupManager.getPowerUpPrice(type));
 	}
 
 	private void OnPowerupCanceled(PowerupBase.EType type)
@@ -1205,7 +1206,7 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			//TODO: consumimos gemas
+			GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(powerupManager.getPowerUpPrice(type));
 
 		}
 

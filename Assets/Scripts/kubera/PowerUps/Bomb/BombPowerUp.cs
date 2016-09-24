@@ -79,7 +79,7 @@ public class BombPowerUp : PowerupBase
 				}
 				else
 				{
-					onCompletedNoGems ();
+					onCompletedNoGems();
 				}
 			}
 			else 

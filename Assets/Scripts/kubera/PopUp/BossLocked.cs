@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using Kubera.Data;
+using utils.gems;
 
 public class BossLocked : PopUpBase {
 
@@ -50,11 +51,16 @@ public class BossLocked : PopUpBase {
 
 	public void gemsCharge()
 	{
-		//TODO: abrir popUp de enviar a shopika
-		if (TransactionManager.GetInstance().tryToUseGems (gemsNeeded)) 
+		
+		if(GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(gemsNeeded))
 		{
+			GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(gemsNeeded);
 			FindObjectOfType<MapManager> ().unlockBoss (lvlName);
-			closePressed ();
+			closePressed ();	
+		}
+		else
+		{
+			//TODO: abrir popUp de enviar a shopika
 		}
 	}
 

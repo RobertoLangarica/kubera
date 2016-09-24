@@ -228,29 +228,5 @@ public class UserDataManager
 			PlayerPrefs.SetInt("musicSetting",value == false ? 0 : 1);
 		}
 	}
-
-	public int playerGems
-	{
-		get
-		{
-			return PlayerPrefs.GetInt("playerGems");
-		}		
-		protected set
-		{
-			PlayerPrefs.SetInt("playerGems",value);
-		}
-	}
-
-	public void giveGemsToPlayer(int amount = 1)
-	{
-		int totalLifes = playerGems + amount;
-			
-		playerGems = totalLifes;
-	}
-
-	public void setGems(int newAmount)
-	{
-		playerGems = newAmount;
-	}
 }
 
