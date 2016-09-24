@@ -7,7 +7,7 @@ using Kubera.Data.Remote;
 
 namespace Kubera.Data.Sync
 {
-	public class KuberaSyncManger : SyncManager
+	public class KuberaSyncManger : SyncManager<KuberaSyncManger>
 	{
 		public Action<PFLeaderboardData> OnLeaderboardObtained;
 

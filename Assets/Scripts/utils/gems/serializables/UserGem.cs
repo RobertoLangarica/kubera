@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using Data;
 
 
 namespace utils.gems
 {
+	[Serializable]
 	public class UserGem:BasicData
 	{
 		//TODO el usuario debe de guardar sus consumos que el server no responda como terminados (hay que ver como)

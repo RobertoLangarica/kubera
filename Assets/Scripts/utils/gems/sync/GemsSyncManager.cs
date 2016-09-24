@@ -2,9 +2,11 @@
 using System.Collections;
 using Data.Sync;
 
+using utils.gems.remote;
+
 namespace utils.gems.sync
 {
-	public class GemsSyncManager : SyncManager
+	public class GemsSyncManager : SyncManager<GemsSyncManager>
 	{
 
 		/**
@@ -15,7 +17,7 @@ namespace utils.gems.sync
 		private string accesToken;
 
 
-		public GemManager localData;
+		public GemsManager localData;
 
 
 
@@ -30,6 +32,9 @@ namespace utils.gems.sync
 			accesToken = token;
 			currentUser = new RemoteUser();
 			currentUser.id = id;
+
+			((ShopikaProvider)server).userId = id;
+			((ShopikaProvider)server).token = token;
 
 			//Cambio de usuario
 			server.stopAndRemoveCurrentRequests();

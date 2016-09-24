@@ -5,15 +5,14 @@ using Data.Remote;
 
 namespace Data.Sync
 {
-	public class SyncManager : Manager<SyncManager>
+	
+	public class SyncManager<T> : Manager<T> where T:Manager
 	{
 		public LoginProvider customProvider;
 		public LoginProvider facebookProvider;
 		public ServerProvider server;
 
 		protected RemoteUser currentUser;
-		 
-
 
 		protected override void Awake()
 		{

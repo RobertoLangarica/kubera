@@ -17,7 +17,15 @@ namespace Kubera.Data
 		protected override void Start ()
 		{
 			base.Start ();
+
+			#if UNITY_EDITOR
+			if(PersistentData.GetInstance() != null)
+			{
+				levelsList = PersistentData.GetInstance().levelsData;
+			}
+			#else
 			levelsList = PersistentData.GetInstance().levelsData;
+			#endif
 		}
 
 		public KuberaUser currentUser{get{return currentData.getUserById(currentUserId);}}

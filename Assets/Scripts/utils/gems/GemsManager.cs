@@ -7,20 +7,11 @@ using utils.gems.sync;
 
 namespace utils.gems
 {
-	public class GemManager : LocalDataManager<MultipleUserGem>
+	public class GemsManager : LocalDataManager<MultipleUserGem>
 	{
 		public Action<int> OnGemsUpdated;
-
 		public GemsSyncManager syncManager;
-		public int initialLifes = 5;
 
-		protected Levels levelsList;
-
-		protected override void Start ()
-		{
-			base.Start ();
-			levelsList = PersistentData.GetInstance().levelsData;
-		}
 
 		public UserGem currentUser{get{return currentData.getUserById(currentUserId);}}
 
@@ -29,9 +20,9 @@ namespace utils.gems
 			base.fillDefaultData ();
 
 			//Usuario anonimo
-			UserGem anonymous = new UserGem(ANONYMOUS_USER);
-			cleanToAnonymousData(anonymous);
-			currentData.users.Add(anonymous);
+			UserGem anon = new UserGem(ANONYMOUS_USER);
+			cleanToAnonymousData(anon);
+			currentData.users.Add(anon);
 		}
 			
 		/**
@@ -114,6 +105,9 @@ namespace utils.gems
 
 			base.changeCurrentuser (newUserId);
 
+			//El existente sin gemas porque las queremos remotas todo el tiempo
+			currentUser.gems = 0;
+
 			saveLocalData(false);
 		}
 
@@ -135,9 +129,14 @@ namespace utils.gems
 				Debug.Log("Se recibieron datos de otro usuario: "+currentUserId+","+ remoteUser._id);	
 				return;
 			}
-
+				
 			bool modified = currentUser.compareAndUpdate(remoteUser, ignoreVersion);
 			saveLocalData(false);
+
+			if(_mustShowDebugInfo)
+			{
+				Debug.Log("Sincronizadas: "+currentUser.gems + " para: "+currentUser._id);
+			}
 
 			if(modified)
 			{
