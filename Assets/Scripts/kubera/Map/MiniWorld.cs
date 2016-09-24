@@ -20,10 +20,6 @@ public class MiniWorld : MonoBehaviour {
 
 	public Transform[] lights;
 
-	void Start()
-	{
-	}
-
 	public void setStars(int obtainedStars, int worldStars)
 	{
 		starsCount.text = obtainedStars.ToString () + "/" + worldStars.ToString ();

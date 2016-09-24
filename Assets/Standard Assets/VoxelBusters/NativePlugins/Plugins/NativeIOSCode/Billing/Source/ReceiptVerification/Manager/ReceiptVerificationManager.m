@@ -12,7 +12,7 @@
 #import "RMStoreTransactionReceiptVerificator.h"
 
 // Constants
-const NSString *bundleIdentifier	= @"com.villavanilla.tdb.kubera";
+const NSString *bundleIdentifier	= @"com.villavanilla.tnb.kubera";
 const NSString *bundleVersion		= @"0";
 
 @interface ReceiptVerificationManager ()
