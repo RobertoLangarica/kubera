@@ -6,8 +6,9 @@ using utils.gems;
 
 public class BossLocked : PopUpBase {
 
-	protected PopUpManager popUpManager;
+	public PopUpManager popUpManager;
 
+	public MapManager mapManager;
 	public Text bossLockedUnlockText;
 	public Text bossLockedOptionText;
 	public Text starsText;
@@ -22,8 +23,6 @@ public class BossLocked : PopUpBase {
 
 	void Start()
 	{
-		popUpManager = FindObjectOfType<PopUpManager> ();
-
 		bossLockedOptionText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.BOSS_LOCKED_OPTION_TEXT);
 		starsText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.BOSS_LOCKED_STAR_TEXT);
 		gemsText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.BOSS_LOCKED_GEM_TEXT);
@@ -55,7 +54,7 @@ public class BossLocked : PopUpBase {
 		if(GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(gemsNeeded))
 		{
 			GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(gemsNeeded);
-			FindObjectOfType<MapManager> ().unlockBoss (lvlName);
+			mapManager.unlockBoss (lvlName);
 			closePressed ();	
 		}
 		else

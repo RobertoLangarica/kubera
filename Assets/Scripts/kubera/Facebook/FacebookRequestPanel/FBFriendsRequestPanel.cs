@@ -30,12 +30,10 @@ public class FBFriendsRequestPanel : PopUpBase {
 
 	protected bool allFriendsSelected;
 	protected bool friendsInitialized;
-	protected FacebookManager facebookManager;
+	public FacebookManager facebookManager;
 
 	void Start()
 	{
-		facebookManager = FindObjectOfType<FacebookManager>();
-
 		changeBetweenFriends (true);
 		invitableFriends.OnActivated = activateAllSelected;
 		gameFriends.OnActivated = activateAllSelected;

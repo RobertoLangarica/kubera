@@ -10,10 +10,9 @@ using Kubera.Data.Sync;
 
 public class FacebookManager : Manager<FacebookManager>
 {
-	protected FBGraph fbGraph;
-	protected FacebookNews facebookNews;
-	protected PlayerInfo playerInfo;
-	protected MapManager mapManager;
+	public FBGraph fbGraph;
+	public FacebookNews facebookNews;
+	public MapManager mapManager;
 	public FBFriendsRequestPanel fbRequestPanel;
 
 	public Transform panelMessages;
@@ -42,9 +41,9 @@ public class FacebookManager : Manager<FacebookManager>
 	void Awake()
 	{
 		fbGraph = FindObjectOfType<FBGraph> ();
-		facebookNews = FindObjectOfType<FacebookNews> ();
-		playerInfo = FindObjectOfType<PlayerInfo> ();
-		mapManager = FindObjectOfType<MapManager> ();
+
+		fbRequestPanel.facebookManager = this;
+
 	}
 
 	void Start()

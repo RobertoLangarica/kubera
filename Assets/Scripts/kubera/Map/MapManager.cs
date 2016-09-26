@@ -22,8 +22,6 @@ public class MapManager : MonoBehaviour
 	public List<GameObject> worlds;
 	protected GameObject WorldPrefab;
 
-
-
 	protected List<MapLevel> mapLevels;
 	protected bool fromGame;
 	protected bool fromLoose;
@@ -47,6 +45,10 @@ public class MapManager : MonoBehaviour
 	public FriendsOnWorldManager friendsOnWorldManager;
 	public GoalManager		goalManager;
 	public SettingsButton settingButtons;
+	public GoalAfterGame goalAfterGame;
+	public GoalPopUp goalPopUp;
+	public WorldsPopUp worldsPopUp;
+
 	void Start()
 	{
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
@@ -421,6 +423,7 @@ public class MapManager : MonoBehaviour
 			mapLevels [i].updateStatus();
 			mapLevels[i].updateStars();
 			mapLevels [i].updateText ();
+			mapLevels [i].setParalaxManager (paralaxManager);
 
 			if(i != 0)
 			{
@@ -485,7 +488,6 @@ public class MapManager : MonoBehaviour
 				{
 					toDoor = true;
 					toNextLevel = false;
-					//FindObjectOfType<Stairs> ().animateStairs ();
 				}
 			}
 		}
@@ -562,7 +564,7 @@ public class MapManager : MonoBehaviour
 				}
 
 
-				popUpManager.getPopupByName ("goalAfterGame").GetComponent<GoalAfterGame>().setGoalPopUpInfo (starsReached,levelName , pointsMade.ToString(),PersistentData.GetInstance ().currentWorld);
+				goalAfterGame.setGoalPopUpInfo (starsReached,levelName , pointsMade.ToString(),PersistentData.GetInstance ().currentWorld);
 				popUpManager.activatePopUp ("goalAfterGame");
 				stopInput (true);
 			}
@@ -586,9 +588,11 @@ public class MapManager : MonoBehaviour
 
 	protected void activateStairs()
 	{
-		Stairs stairs = FindObjectOfType<Stairs> ();
+		Stairs stairs = WorldPrefab.GetComponentInChildren<Stairs>();
+		print (stairs);
 		if(stairs)
 		{
+			stairs.mapManager = this;
 			stairs.animateStairs ();
 		}
 	}
@@ -726,7 +730,7 @@ public class MapManager : MonoBehaviour
 			break;
 		}
 			
-		popUpManager.getPopupByName ("goalPopUp").GetComponent<GoalPopUp>().setGoalPopUpInfo (textA,textB,starsReached, letter, levelName,aABLetterObjectives,currentWorld);
+		goalPopUp.setGoalPopUpInfo (textA,textB,starsReached, letter, levelName,aABLetterObjectives,currentWorld);
 		popUpManager.activatePopUp ("goalPopUp");
 
 		stopInput (true);
@@ -814,8 +818,6 @@ public class MapManager : MonoBehaviour
 
 	protected void initializeWorldsPopUpInfo()
 	{
-		WorldsPopUp worldsPopUp = popUpManager.getPopupByName ("worldsPopUp").GetComponent<WorldsPopUp> ();
-
 		KuberaUser user = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser;
 		int maxWorldReached = user.maxWorldReached();
 		if(maxWorldReached == 0)
