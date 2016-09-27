@@ -311,10 +311,19 @@ public class FBGraph : MonoBehaviour
 
 	protected void AllinfoGathered()
 	{
-		
 		if(gameFriendsReady&& invitableFriendsReady && appRequestReady && playerInfoReady && texturesFriendReady)
 		{
 			onFinishGettingInfo ();
 		}
 	}   
+
+	public void setActive()
+	{
+		gameFriendsReady = true;
+		invitableFriendsReady = true;
+		appRequestReady = true;
+		playerInfoReady = true;
+		texturesFriendReady = true;
+
+	}
 }        

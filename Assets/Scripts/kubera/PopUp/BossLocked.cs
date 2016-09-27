@@ -20,6 +20,7 @@ public class BossLocked : PopUpBase {
 
 	[HideInInspector]public int gemsNeeded;
 	[HideInInspector]public string lvlName;
+	[HideInInspector]public string fullLvlName;
 
 	void Start()
 	{
@@ -39,18 +40,18 @@ public class BossLocked : PopUpBase {
 		starsNumber.text = (DataManagerKubera.GetInstance () as DataManagerKubera).getAllEarnedStars ().ToString() + " / " + starsNeeded.ToString();
 		gemsNumber.text = gems.ToString ();
 
-		friendsText.text =MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.BOSS_LOCKED_KEY_TEXT).Replace ("{{keyNumber}}",friendsNeeded.ToString ());
+		friendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.BOSS_LOCKED_KEY_TEXT).Replace ("{{keyNumber}}",friendsNeeded.ToString ());
 		gemsNeeded = gems;
 	}
 
 	public void facebookHelp()
 	{
-		popUpManager.activatePopUp ("fbFriendsRequestPanel");
+		OnComplete ("askKeys");
 	}
 
 	public void gemsCharge()
 	{
-		
+		print (lvlName);
 		if(GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(gemsNeeded))
 		{
 			GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(gemsNeeded);
