@@ -9,6 +9,8 @@ namespace utils.gems
 	[Serializable]
 	public class MultipleUserGem : BasicData 
 	{
+		public string lastUsedId;
+
 		public List<UserGem> users;
 
 		public MultipleUserGem()

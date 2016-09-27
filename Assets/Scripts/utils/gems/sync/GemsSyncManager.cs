@@ -59,41 +59,7 @@ namespace utils.gems.sync
 		{
 			server.getUserData(currentUser.id, false);
 		}
-
-		/**
-		 * Cuando se recibe el usuario (sin informacion solo sus identificaciones)
-		 **/ 
-		/*protected override void OnUserReceived (RemoteUser remoteUser)
-		{
-			base.OnUserReceived (remoteUser);
-
-
-			localData.changeCurrentuser(currentUser.id);
-
-			//TODO identificar cuando el usuario apenas se registro
-			if(remoteUser.newlyCreated)
-			{
-				if(_mustShowDebugInfo)
-				{
-					Debug.Log("Creating remote user.");
-				}
-
-				//TODO las gemas no se suben
-			}
-			else
-			{
-				if(_mustShowDebugInfo)
-				{
-					Debug.Log("Getting data from remote user.");
-				}
-
-				//Nos traemos las gemas del usuario
-				//Las gemas no se sincronizan y la version es solo por compatibilidad con el codigo
-				server.getUserData(currentUser.id, localData.currentUser.version, false);
-			}
-		}*/
-
-
+			
 		/**
 		 * Recibiendo la data del usuario
 		 **/
@@ -108,17 +74,6 @@ namespace utils.gems.sync
 			{
 				Debug.Log("Usuario sincronizado.");
 			}
-
-			//TODO hay cosas que subir??
-			//Necesita subirse?
-			/*if(localData.currentUser.isDirty)
-			{
-				if(_mustShowDebugInfo)
-				{
-					Debug.Log("Subiendo datos sucios del usuario.");
-				}
-				updateData(localData.getUserDirtyData());
-			}*/
 		}
 
 

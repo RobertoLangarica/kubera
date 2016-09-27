@@ -34,6 +34,7 @@ namespace utils.gems.remote
 			request.showDebugInfo = _mustShowDebugInfo;
 			request.initialize(SP_API);
 			request.OnComplete += OnUserDataObtained;
+			request.OnFailed += OnRequestFailed;
 
 
 			addDependantRequest(request,true);
@@ -56,6 +57,16 @@ namespace utils.gems.remote
 				remoteUser.gems = request.data.gemBalance;
 
 				OnDataReceived(JsonUtility.ToJson(remoteUser));
+			}
+		}
+
+		protected void OnRequestFailed(string requestId)
+		{
+			RemoteRequest<SPBaseResponse> request = getRequestById(requestId) as RemoteRequest<SPBaseResponse>;
+
+			if(request.data.error != null && request.data.error.isBadTokenError())
+			{
+				Debug.Log("BAAAAAD TOKEN");
 			}
 		}
 
