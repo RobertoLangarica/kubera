@@ -202,6 +202,7 @@ public class GoalPopUp : PopUpBase {
 		} 
 		else 
 		{
+			pressed = false;
 			OnComplete ("NoLifes",false);
 		}
 	}

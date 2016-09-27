@@ -6,8 +6,9 @@ using utils.gems;
 
 public class BossLocked : PopUpBase {
 
-	protected PopUpManager popUpManager;
+	public PopUpManager popUpManager;
 
+	public MapManager mapManager;
 	public Text bossLockedUnlockText;
 	public Text bossLockedOptionText;
 	public Text starsText;
@@ -19,11 +20,10 @@ public class BossLocked : PopUpBase {
 
 	[HideInInspector]public int gemsNeeded;
 	[HideInInspector]public string lvlName;
+	[HideInInspector]public string fullLvlName;
 
 	void Start()
 	{
-		popUpManager = FindObjectOfType<PopUpManager> ();
-
 		bossLockedOptionText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.BOSS_LOCKED_OPTION_TEXT);
 		starsText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.BOSS_LOCKED_STAR_TEXT);
 		gemsText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.BOSS_LOCKED_GEM_TEXT);
@@ -40,22 +40,22 @@ public class BossLocked : PopUpBase {
 		starsNumber.text = (DataManagerKubera.GetInstance () as DataManagerKubera).getAllEarnedStars ().ToString() + " / " + starsNeeded.ToString();
 		gemsNumber.text = gems.ToString ();
 
-		friendsText.text =MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.BOSS_LOCKED_KEY_TEXT).Replace ("{{keyNumber}}",friendsNeeded.ToString ());
+		friendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.BOSS_LOCKED_KEY_TEXT).Replace ("{{keyNumber}}",friendsNeeded.ToString ());
 		gemsNeeded = gems;
 	}
 
 	public void facebookHelp()
 	{
-		popUpManager.activatePopUp ("fbFriendsRequestPanel");
+		OnComplete ("askKeys");
 	}
 
 	public void gemsCharge()
 	{
-		
+		print (lvlName);
 		if(GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(gemsNeeded))
 		{
 			GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(gemsNeeded);
-			FindObjectOfType<MapManager> ().unlockBoss (lvlName);
+			mapManager.unlockBoss (lvlName);
 			closePressed ();	
 		}
 		else

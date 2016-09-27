@@ -61,17 +61,19 @@ public class LifesManager : Manager<LifesManager>
 			updateLifeTimer += Time.deltaTime;
 		}
 
+		if (Input.GetKeyUp (KeyCode.B)) 
+		{
+			takeALife ();
+			Debug.Log ("Se quitan las vidas");
+		}
+
 		//Prueba para las vidas
 		/*if (Input.GetKeyUp (KeyCode.A)) 
 		{
 			setLifeDate ();
 			Debug.Log ("Se setea la fecha de la ultima vez que se sale del mapa");
 		}
-		if (Input.GetKeyUp (KeyCode.B)) 
-		{
-			UserDataManager.instance.giveLifeToPlayer (-3);
-			Debug.Log ("Se quitan las vidas");
-		}
+
 		if (Input.GetKeyUp (KeyCode.C))
 		{
 			UserDataManager.instance.giveLifeToPlayer (UserDataManager.instance.maximumLifes);

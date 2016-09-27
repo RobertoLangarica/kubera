@@ -215,27 +215,29 @@ public class PanelAppRequest : MonoBehaviour {
 		else if(actionChosed == EAction.SEND)
 		{
 			List<string> friendsIDs = new List<string> ();
+			List<string> requestIDs = new List<string> ();
 
 			for(int i=0; i<friendInfo.Count; i++)
 			{
 				friendsIDs.Add (friendInfo [i].Split ('-') [1]);
+				requestIDs.Add (friendInfo [i].Split ('-') [2]);
 			}
 
 			if(stateRequested == ERequestState.KEY)
 			{				
-				facebookManager.sendGift (false, friendsIDs,this.gameObject,friendInfo [0].Split ('-') [3]);
+				facebookManager.sendGift (false, friendsIDs,this.gameObject,requestIDs,friendInfo [0].Split ('-') [3]);
 			}
 			else
 			{
-				facebookManager.sendGift (true, friendsIDs,this.gameObject);
+				facebookManager.sendGift (true, friendsIDs,this.gameObject,requestIDs);
 			}
 		}
 
 		//TODO: checar si se enviaron
 		for(int i=0; i<friendInfo.Count; i++)
 		{
-			print (friendInfo [i].Split ('-') [2]);
-			facebookManager.deleteAppRequest (friendInfo [i].Split ('-') [2]);
+			//print (friendInfo [i].Split ('-') [2]);
+			//facebookManager.deleteAppRequest (friendInfo [i].Split ('-') [2]);
 		}
 	}
 }

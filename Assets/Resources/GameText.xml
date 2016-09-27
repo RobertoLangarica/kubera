@@ -644,21 +644,21 @@
 				<language id="default" text="Tienes 3 opciones"/>
 			</languages>
 		</text>
-		<text id="BossLockedKeyText">
+		<text id="BossLockedStarText">
 			<languages>
 				<language id="english" text="Collect more stars"/>
 				<language id="spanish" text="Junta más estrellas"/>
 				<language id="default" text="Junta más estrellas"/>
 			</languages>
 		</text>
-		<text id="BossLockedGemText">
+		<text id="BossLockedKeyText">
 			<languages>
 				<language id="english" text="ASK FOR A KEY"/>
 				<language id="spanish" text="PEDIR LLAVE"/>
 				<language id="default" text="PEDIR LLAVE"/>
 			</languages>
 		</text>
-		<text id="BossLockedStarText">
+		<text id="BossLockedGemText">
 			<languages>
 				<language id="english" text="Play now"/>
 				<language id="spanish" text="JUEGA AHORA"/>
@@ -758,6 +758,43 @@
 				<language id="spanish" text="LLENO"/>
 				<language id="default" text="LLENO"/>
 			</languages>
+		</text>
+
+		<text id="fbConectTitle">
+			<languages>
+				<language id="english" text="Conect to Facebook!"/>
+				<language id="spanish" text="¡Conectate a Facebook!"/>
+				<language id="default" text="¡Conectate a Facebook!"/>
+			</languages>
+		</text>
+		<text id="fbConectInfo1">
+			<languages>
+				<language id="english" text="Interact with your friends"/>
+				<language id="spanish" text="Interactua con tus amigos"/>
+				<language id="default" text="Interactua con tus amigos"/>
+			</languages>
+		</text>
+		<text id="fbConectButton">
+			<languages>
+				<language id="english" text="LogIn Faceebok"/>
+				<language id="spanish" text="Conectar Facebook"/>
+				<language id="default" text="Conectar Facebook"/>
+			</languages>
+		</text>
+
+		<text id="fbLogInText">
+			<languages>
+				<language id="english" text="LogIn Faceebok"/>
+				<language id="spanish" text="Conectar Facebook"/>
+				<language id="default" text="Conectar Facebook"/>
+			</languages>
+		</text>
+		<text id="fbLogOutText">
+			<languages>
+				<language id="english" text="LogOut Faceebok"/>
+				<language id="spanish" text="Desconectar Facebook"/>
+				<language id="default" text="Desconectar Facebook"/>
+			</languages>                    
 		</text>
 
 		<!--

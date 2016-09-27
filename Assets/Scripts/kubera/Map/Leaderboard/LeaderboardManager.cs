@@ -18,7 +18,7 @@ public class LeaderboardManager : MonoBehaviour {
 
 	void Start()
 	{
-		facebook = FindObjectOfType<FacebookPersistentData> ();
+		facebook = FacebookPersistentData.GetInstance ();
 	}
 
 	void Update()
@@ -94,8 +94,8 @@ public class LeaderboardManager : MonoBehaviour {
 
 		for(int i=0; i<test.Length; i++)
 		{
-			Sprite sprite = FacebookPersistentData.GetInstance ().getSpritePictureById (test [i].idFacebook);
-			string name = FacebookPersistentData.GetInstance ().getFriendNameById (test [i].idFacebook);
+			Sprite sprite = facebook.getSpritePictureById (test [i].idFacebook);
+			string name = facebook.getFriendNameById (test [i].idFacebook);
 			int score = test[i].score;
 			int rank = test[i].rank;
 

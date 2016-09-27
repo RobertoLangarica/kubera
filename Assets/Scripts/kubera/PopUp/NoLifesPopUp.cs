@@ -34,7 +34,7 @@ public class NoLifesPopUp : PopUpBase
 	public void closePressed()
 	{
 		popUp.SetActive (false);
-		OnPopUpCompleted (this);
+		OnComplete ("noLifesClose");
 		if (SceneManager.GetActiveScene ().name != "Levels") 
 		{
 			SceneManager.LoadScene ("Levels");

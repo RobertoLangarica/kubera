@@ -107,8 +107,8 @@ public class RetryPopUp : PopUpBase
 		} 
 		else 
 		{
-			setStartingPlaces ();
-			OnComplete ("NoLifesPopUp");
+			pressed = false;
+			OnComplete ("NoLifes",false);
 		}
 	}
 

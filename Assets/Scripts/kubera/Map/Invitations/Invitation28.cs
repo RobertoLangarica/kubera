@@ -23,8 +23,6 @@ public class Invitation28 : MonoBehaviour {
 
 	void Start()
 	{
-		invitationManager = FindObjectOfType<InvitationToReview> ();
-
 		first.SetActive (true);
 		secondOption1.SetActive (false);
 		secondOption2.SetActive (false);

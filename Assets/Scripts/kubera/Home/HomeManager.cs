@@ -112,7 +112,11 @@ public class HomeManager : MonoBehaviour {
 		{
 			PersistentData.GetInstance ().fromLevelsToGame = true;
 			PersistentData.GetInstance ().currentLevel = PersistentData.GetInstance ().getFirstLevel ();
-			ScreenManager.instance.GoToScene ("Game");
+
+			//HACK facebook
+			ScreenManager.instance.GoToScene ("Levels");
+
+			//ScreenManager.instance.GoToScene ("Game");
 		}
 	}
 

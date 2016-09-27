@@ -6,15 +6,13 @@ using DG.Tweening;
 public class Stairs : MonoBehaviour {
 
 	protected bool active;
-	protected MapManager mapManager;
+	public MapManager mapManager;
 	public int toWorld;
 
 	public Image[] stairs;
 	public float lastPosition;
 	void Start()
 	{
-		mapManager = FindObjectOfType<MapManager> ();
-
 		lastPosition = stairs [stairs.Length - 1].rectTransform.anchoredPosition.x;
 	}
 

@@ -62,6 +62,8 @@ public class MapLevel : MonoBehaviour
 
 	public bool nextLevelIsReached;
 
+	protected ParalaxManager paralaxManager;
+
 	public void updateText()
 	{
 		for (int i = 0; i < lvlName.Length; i++) 
@@ -196,8 +198,13 @@ public class MapLevel : MonoBehaviour
 			{
 				facebookBackground.transform.SetSiblingIndex (0); 
 
-				FindObjectOfType<ParalaxManager>().finish();
+				paralaxManager.finish();
 			});
+	}
+
+	public void setParalaxManager(ParalaxManager paralaxManager)
+	{
+		this.paralaxManager = paralaxManager;
 	}
 
 	public void onClick()

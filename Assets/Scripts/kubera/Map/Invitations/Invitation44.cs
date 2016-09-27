@@ -16,7 +16,6 @@ public class Invitation44 : MonoBehaviour {
 
 	void Start()
 	{
-		invitationManager = FindObjectOfType<InvitationToReview> ();
 		firstText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_44_TEXT1).Replace ("{{n}}", System.Environment.NewLine);
 		secondText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_44_TEXT2);
 		option1Text.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.INVITATION_44_OPTION1);

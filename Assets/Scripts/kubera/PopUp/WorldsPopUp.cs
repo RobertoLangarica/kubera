@@ -6,7 +6,7 @@ public class WorldsPopUp : PopUpBase {
 
 	public GridLayoutGroup grid;
 
-	protected MapManager mapManager;
+	public MapManager mapManager;
 
 	public GameObject rightArrow;
 	public GameObject leftArrow;
@@ -16,8 +16,6 @@ public class WorldsPopUp : PopUpBase {
 	public MiniWorld[] worlds;
 	void Start()
 	{
-		mapManager = FindObjectOfType<MapManager> ();
-
 		grid.cellSize = new Vector2 (Screen.width * 0.9f, Screen.height * 0.8f);
 		grid.padding.left = (int)(Screen.width * 0.06f);
 		grid.padding.right = (int)(Screen.width * 0.06f);
