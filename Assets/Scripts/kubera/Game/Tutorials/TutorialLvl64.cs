@@ -175,17 +175,12 @@ public class TutorialLvl64 : TutorialBase
 		case(1):
 			return true;
 		case(2):
-			Debug.Log (keyBoard.getSelectedWildCard ().abcChar.character);
 			if (keyBoard.getSelectedWildCard ().abcChar.character == "Z") 
 			{
 				phase = 3;
 				return true;
 			} 
-			else 
-			{
-				return true;
-			}
-			return false;
+			return true;
 		case(3):
 			return true;
 		}

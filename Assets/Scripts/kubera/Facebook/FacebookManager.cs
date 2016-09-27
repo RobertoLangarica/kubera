@@ -38,12 +38,11 @@ public class FacebookManager : Manager<FacebookManager>
 
 	protected GameObject conectFacebook;
 
-	void Awake()
+	protected override void Awake ()
 	{
+		base.Awake ();
 		fbGraph = FindObjectOfType<FBGraph> ();
-
 		fbRequestPanel.facebookManager = this;
-
 	}
 
 	void Start()

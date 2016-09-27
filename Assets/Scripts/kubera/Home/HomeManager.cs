@@ -50,7 +50,7 @@ public class HomeManager : MonoBehaviour {
 	void startScene()
 	{
 		StartCoroutine (showLetters ());
-		ScreenManager.instance.sceneFinishLoading ();
+		ScreenManager.GetInstance().sceneFinishLoading ();
 	}
 
 	IEnumerator showLetters()
@@ -94,7 +94,7 @@ public class HomeManager : MonoBehaviour {
 			AudioManager.GetInstance().Play("fxButton");
 		}
 
-		ScreenManager.instance.GoToScene (scene);
+		ScreenManager.GetInstance().GoToScene (scene);
 	}
 
 	public void goToPlay()
@@ -106,7 +106,7 @@ public class HomeManager : MonoBehaviour {
 
 		if(DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser.levels.Count != 0)
 		{
-			ScreenManager.instance.GoToScene ("Levels");
+			ScreenManager.GetInstance().GoToScene ("Levels");
 		}
 		else
 		{
@@ -114,7 +114,7 @@ public class HomeManager : MonoBehaviour {
 			PersistentData.GetInstance ().currentLevel = PersistentData.GetInstance ().getFirstLevel ();
 
 			//HACK facebook
-			ScreenManager.instance.GoToScene ("Levels");
+			ScreenManager.GetInstance().GoToScene ("Levels");
 
 			//ScreenManager.instance.GoToScene ("Game");
 		}

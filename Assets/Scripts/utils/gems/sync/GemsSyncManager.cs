@@ -13,13 +13,7 @@ namespace utils.gems.sync
 		 * NOTA: Este manager no hace login solo recibe las credenciales
 		 * el login es web.
 		 **/
-		//Credenciales
-		private string accesToken;
-
-
 		public GemsManager localData;
-
-
 
 		protected override void Awake()
 		{
@@ -29,7 +23,6 @@ namespace utils.gems.sync
 
 		public void SetCredentials(string id, string token)
 		{
-			accesToken = token;
 			currentUser = new RemoteUser();
 			currentUser.id = id;
 

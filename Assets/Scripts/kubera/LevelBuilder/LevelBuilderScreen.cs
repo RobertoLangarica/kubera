@@ -628,7 +628,7 @@ namespace LevelBuilder
 
 			PersistentData.GetInstance().setLevelNumber(int.Parse(currentEditingLevelName),true);
 
-			ScreenManager.instance.GoToScene("Game");
+			ScreenManager.GetInstance().GoToScene("Game");
 		}
 
 		private void hideLoadingIndicator()
