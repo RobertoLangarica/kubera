@@ -35,6 +35,7 @@ public class FacebookPersistentData : Manager<FacebookPersistentData>
 
 	public void addFriendImage(string id, Texture texture)
 	{
+		//print ("addFriendImage");
 		if(!containTextureByID(id))
 		{
 			friendsImage.Add (id, texture);

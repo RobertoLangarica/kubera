@@ -91,6 +91,15 @@ public class MultiLanguageTextManager
 	public const string NO_LIFES_POPUP_BUTTON2				= "noLifesButton2";
 
 	public const string FULL_LIFES_TEXT						= "fullLifesText";
+
+	public const string FB_CONNECT_POPUP_TITLE				= "fbConectTitle";
+	public const string FB_CONNECT_POPUP_INFO1				= "fbConectInfo1";
+	public const string FB_CONNECT_POPUP_BUTTON				= "fbConectButton";
+
+	public const string FB_LOG_IN_TEXT						= "fbLogInText";
+	public const string FB_LOG_OUT_TEXT						= "fbLogOutText";
+
+
 	//GAME
 	public const string FLAVOR_TEXT							= "ticketFlavorText";
 	public const string EXIT_POPUP_ID 						= "exitText";

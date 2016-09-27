@@ -126,14 +126,6 @@ public class MapManager : MonoBehaviour
 	{
 		stopInput(false);
 		switch (action) {
-		case "needLifes":
-			openPopUp ("fbFriendsRequestPanel");
-			fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_LIFES);
-			break;
-		case "needKeys":
-			popUpManager.activatePopUp ("fbFriendsRequestPanel");
-			fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_KEYS);
-			break;
 		case "closeObjective":
 			if(toNextLevel)
 			{
@@ -181,6 +173,40 @@ public class MapManager : MonoBehaviour
 		case "NoLifes":
 			stopInput(true);
 			openPopUp ("NoLifes");
+			break;
+		case "noLifesClose":
+			if(popUpManager.isPopUpOpen("goalPopUp") || popUpManager.isPopUpOpen("retryPopUp"))
+			{
+				stopInput(false);
+			}
+			else
+			{
+				stopInput(true);
+			}
+			break;
+		case "askKeys":
+			stopInput(true);
+			if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+			{
+				openPopUp ("fbFriendsRequestPanel");
+				fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_KEYS);
+			}
+			else
+			{
+				popUpManager.activatePopUp ("fbConnectPopUp");
+			}
+			break;
+		case "needLifes":
+			stopInput(true);
+			if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+			{
+				openPopUp ("fbFriendsRequestPanel");
+				fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_LIFES);
+			}
+			else
+			{
+				popUpManager.activatePopUp ("fbConnectPopUp");
+			}
 			break;
 		default:
 			break;
@@ -241,7 +267,9 @@ public class MapManager : MonoBehaviour
 				}
 				else
 				{
-					level.status = MapLevel.EMapLevelsStatus.BOSS_LOCKED;
+					//HACK para facebook 
+					level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
+					//level.status = MapLevel.EMapLevelsStatus.BOSS_UNLOCKED;
 				}
 			}
 		}
@@ -259,7 +287,10 @@ public class MapManager : MonoBehaviour
 				}
 				else
 				{
-					level.status = MapLevel.EMapLevelsStatus.NORMAL_LOCKED;
+					//HACK para facebook 
+					level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
+
+					//level.status = MapLevel.EMapLevelsStatus.NORMAL_LOCKED;
 				}
 			}
 		}
@@ -322,6 +353,7 @@ public class MapManager : MonoBehaviour
 
 	public void unlockBoss(string lvlName)
 	{
+		print (lvlName);
 		(DataManagerKubera.GetInstance () as DataManagerKubera).unlockLevel (lvlName);
 
 		//TODO Hacer animacion
@@ -346,6 +378,7 @@ public class MapManager : MonoBehaviour
 		else
 		{
 			bossLockedPopUp.lvlName = pressed.lvlName;
+			bossLockedPopUp.fullLvlName = pressed.fullLvlName;
 
 			bossLockedPopUp.initializeValues (pressed.friendsNeeded,pressed.gemsNeeded,pressed.starsNeeded,pressed.lvlName);
 
@@ -684,7 +717,6 @@ public class MapManager : MonoBehaviour
 			aABLetterObjectives = 1;
 			break;
 		case GoalManager.POINTS:
-			print (MultiLanguageTextManager.instance.gameLanguage);
 			textToReplace = "{{goalPoints}}";
 			replacement = (Convert.ToInt32 (parameters)).ToString ();
 
@@ -742,8 +774,6 @@ public class MapManager : MonoBehaviour
 		
 	protected void showNextLevelGoalPopUp ()
 	{
-		print ("he");
-
 		int level = int.Parse (nameOfLastLevelPlayed);
 
 		if (toNextLevel)

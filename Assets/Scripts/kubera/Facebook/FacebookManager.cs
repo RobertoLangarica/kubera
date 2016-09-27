@@ -67,14 +67,23 @@ public class FacebookManager : Manager<FacebookManager>
 	{
 		if (KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 		{
+			//print ("is loggedIn--------------------------");
 			if(canRequestMoreFriends())
 			{
+				//print ("canRequestMoreFriends--------------------------");
 				fbGraph.GetPlayerInfo();
 				fbGraph.GetFriends();
 				fbGraph.GetInvitableFriends();
+
+				FacebookPersistentData.GetInstance ().infoRequested = true;
+			}
+			else
+			{
+				fbGraph.setActive ();
 			}
 
 			fbGraph.getFriendsAppRequests ();
+			//print ("getFriendsAppRequests--------------------------");
 			if(conectFacebook != null)
 			{
 				DestroyImmediate (conectFacebook);
@@ -135,17 +144,18 @@ public class FacebookManager : Manager<FacebookManager>
 		//TODO: 
 		if(life)
 		{
-			print("recibi " + giftCount + ": vidas");	
+			//print("recibi " + giftCount + ": vidas");	
+			LifesManager.GetInstance ().giveALife ();
 		}
 		else
 		{
-			print("recibi " + giftCount + ": llaves");
+			//print("recibi " + giftCount + ": llaves");
 			mapManager.unlockBoss (bossReached);
 		}
 		DestroyImmediate (requestToDelete);
 	}
 
-	public void sendGift (bool life, List<string> friendsIDs,GameObject requestToDelete, string bossReached = "0")
+	public void sendGift (bool life, List<string> friendsIDs,GameObject requestToDelete,List<string> requestId, string bossReached = "0")
 	{
 		if(life)
 		{
@@ -199,6 +209,8 @@ public class FacebookManager : Manager<FacebookManager>
 			return;
 		}
 
+		print (bossReached);
+
 		FB.AppRequest ("Here, take this key!", // A message for the user
 			OGActionType.SEND, // Can be .Send or .AskFor depending on what you want to do with the object.
 			"795229890609809", // Here we put the object id we got as a result before.		             
@@ -214,11 +226,11 @@ public class FacebookManager : Manager<FacebookManager>
 
 	public void askKey(List<string> idsFriends)
 	{
-		if(idsFriends.Count<50)
+		if(idsFriends.Count>50)
 		{
 			return;
 		}
-		FB.AppRequest ("Give me a key!", OGActionType.ASKFOR, "795229890609809", idsFriends, "askKey,"+ mapManager.bossLockedPopUp.lvlName, // Here you can put in any data you want
+		FB.AppRequest ("Give me a key!", OGActionType.ASKFOR, "795229890609809", idsFriends, "askKey,"+ mapManager.bossLockedPopUp.fullLvlName, // Here you can put in any data you want
 			"Ask a life to your friend", // A title
 			delegate (IAppRequestResult result) {
 				Debug.Log (result.RawResult);
@@ -387,6 +399,7 @@ public class FacebookManager : Manager<FacebookManager>
 
 	protected void fillMessageData ()
 	{
+		print ("SSSSSSSSSSSSSSSSSSS");
 		sortData (askedKeys);
 		fillData (askedKeys, PanelAppRequest.ERequestState.KEY, PanelAppRequest.EAction.SEND,true);
 		fillData (giftKeys, PanelAppRequest.ERequestState.KEY, PanelAppRequest.EAction.ACCEPT);
@@ -455,7 +468,7 @@ public class FacebookManager : Manager<FacebookManager>
 					pR.selectText ();
 				}
 
-				if (j == maxUsersPerMessage || requested[i].Split(',')[3] != requested[i+1].Split(',')[3] ) 
+				if (requested.Count == 1 ||j == maxUsersPerMessage || requested[i].Split(',')[3] != requested[i+1].Split(',')[3] ) 
 				{
 					j = 0;
 				}

@@ -30,14 +30,21 @@ public class FBFriendsRequestPanel : PopUpBase {
 
 	protected bool allFriendsSelected;
 	protected bool friendsInitialized;
+
+	public RectTransform allFriendRT;
+	public RectTransform kuberaFriendsRT;
+
 	public FacebookManager facebookManager;
 
+	protected Vector2 initialPosRT;
 	void Start()
 	{
+		initialPosRT = allFriendRT.anchoredPosition;
+
+
 		changeBetweenFriends (true);
 		invitableFriends.OnActivated = activateAllSelected;
 		gameFriends.OnActivated = activateAllSelected;
-
 	}
 
 	public override void activate()
@@ -54,8 +61,17 @@ public class FBFriendsRequestPanel : PopUpBase {
 
 	public void openFriendsRequestPanel(ERequestType requestType,EFriendsType friendsType = EFriendsType.ALL)
 	{
-		currentRequestType = requestType;
-		currentFriendType = friendsType;
+		switch (requestType) {
+
+		case ERequestType.ASK_KEYS:
+			requestText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.BOSS_LOCKED_KEY_TEXT);
+			currentRequestType = requestType;
+			break;
+		case ERequestType.ASK_LIFES:
+			requestText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FULL_LIFES_POPUP_BUTTON);
+			currentRequestType = requestType;
+			break;
+		}
 	}
 
 	public void changeBetweenFriends(bool invitableFriends)
@@ -67,6 +83,9 @@ public class FBFriendsRequestPanel : PopUpBase {
 			allFriendsSelected = true;
 			activateAllSelected (true);
 			currentFriendType = EFriendsType.ALL;
+
+			kuberaFriendsRT.anchoredPosition = initialPosRT;
+			allFriendRT.anchoredPosition = Vector2.zero;
 		}
 		else
 		{
@@ -75,6 +94,9 @@ public class FBFriendsRequestPanel : PopUpBase {
 			allFriendsSelected = false;
 			activateAllSelected (true);
 			currentFriendType = EFriendsType.GAME;
+
+			allFriendRT.anchoredPosition = initialPosRT;
+			kuberaFriendsRT.anchoredPosition = Vector2.zero;
 		}
 	}
 
@@ -94,6 +116,8 @@ public class FBFriendsRequestPanel : PopUpBase {
 	{
 		if(allFriendsSelected)
 		{			
+			
+
 			return invitableFriends;
 		}
 
@@ -129,12 +153,10 @@ public class FBFriendsRequestPanel : PopUpBase {
 		switch (requestType) {
 
 		case ERequestType.ASK_KEYS:
-			requestText.text = "pide llave";
 			initializeFriendsController (gameFriends, friendType);
 			currentRequestType = requestType;
 			break;
 		case ERequestType.ASK_LIFES:
-			requestText.text = "pide vidas";
 			initializeFriendsController (gameFriends,friendType);
 			currentRequestType = requestType;
 			break;
@@ -187,7 +209,7 @@ public class FBFriendsRequestPanel : PopUpBase {
 		List<List<string>> friIDs = new  List<List<string>>();
 		friendsIds = getFriendsActivatedIDByFriendsType (currentFriendType);
 		int friendGroups = (int)Mathf.Floor(friendsIds.Count / 30.0f);
-
+	
 		switch (currentRequestType) {
 		case ERequestType.ASK_KEYS:
 

@@ -71,4 +71,24 @@ public class PopUpManager : MonoBehaviour {
 			OnPopUpCompleted(action);
 		}
 	}
+
+	public bool isPopUpOpen(string name)
+	{
+		PopUpBase popUp = getPopupByName (name);
+		if(popUp != null)
+		{
+			for(int i=0; i<openPopUps.Count; i++)
+			{
+				if(openPopUps[i] == popUp)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
