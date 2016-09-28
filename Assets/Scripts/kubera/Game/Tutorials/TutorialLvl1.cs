@@ -166,7 +166,6 @@ public class TutorialLvl1 : TutorialBase
 		changeDommy ();
 
 		Vector3 originalScale = inputPiece.selectedScale;
-		SpriteRenderer tempSpt = powerUpDommy.GetComponent<SpriteRenderer> ();
 
 		powerUpDommy.transform.position = posFrom;
 

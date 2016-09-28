@@ -43,7 +43,8 @@ public class AnimatedSpriteEditor : Editor
 		for(int i = 0; i < seqs.arraySize; i++)
 		{
 			//FPS
-			SerializedProperty sequence = seqs.GetArrayElementAtIndex(i);
+			//SerializedProperty sequence = seqs.GetArrayElementAtIndex(i);
+
 			/*int fps = sequence.FindPropertyRelative("FPS").intValue;
 			int calculatedFPS = sequence.FindPropertyRelative("_currentFPSCalculated").intValue;
 

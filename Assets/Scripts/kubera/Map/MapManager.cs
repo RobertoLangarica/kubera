@@ -141,7 +141,7 @@ public class MapManager : MonoBehaviour
 			stopInput(true);
 			//TODO probablemente no haga falta mostrar el mundo
 			showWorld();
-			ScreenManager.instance.GoToScene ("Game");
+				ScreenManager.GetInstance().GoToScene ("Game");
 			break;
 		case "continue":
 			if(toDoor)
@@ -479,7 +479,6 @@ public class MapManager : MonoBehaviour
 	protected void setDataFromLevels()
 	{
 		bool isConectedToFacebook = KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn;
-		MapLevel lastLevel = null;
 
 		for(int i=0; i< mapLevels.Count; i++)
 		{
@@ -511,6 +510,7 @@ public class MapManager : MonoBehaviour
 				if(fromGame && PersistentData.GetInstance().currentLevel.name == mapLevels[i].fullLvlName) 
 				{
 					lastLevelPlayed = mapLevels [i];
+
 					if(i+1 != mapLevels.Count)
 					{
 						nextLevel = mapLevels [i+1];
@@ -651,18 +651,18 @@ public class MapManager : MonoBehaviour
 
 	public void goToScene(string scene)
 	{
-		ScreenManager.instance.GoToScene (scene);
+		ScreenManager.GetInstance().GoToScene (scene);
 	}
 
 	protected void onFinishLoad()
 	{
 		if(fromGame)
 		{
-			ScreenManager.instance.sceneFinishLoading(0);
+			ScreenManager.GetInstance().sceneFinishLoading(0);
 		}
 		else
 		{
-			ScreenManager.instance.sceneFinishLoading();
+			ScreenManager.GetInstance().sceneFinishLoading();
 		}
 	}
 
@@ -858,8 +858,6 @@ public class MapManager : MonoBehaviour
 		List<LevelData> worldLevels;
 
 		int starsObtained =0;
-
-		int levelsInWorld = PersistentData.GetInstance().levelsData.getLevelsByWorld(currentWorld).Length;
 		int worldCount = PersistentData.GetInstance().levelsData.getWorldCount();
 
 		for(int i=0; i < worldCount; i++)

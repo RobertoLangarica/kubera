@@ -162,14 +162,14 @@ public class GameManager : MonoBehaviour
 		if(PersistentData.GetInstance().fromLevelsToGame)
 		{
 			yield return new WaitForEndOfFrame ();
-			ScreenManager.instance.testLoading ("Levels");
+			ScreenManager.GetInstance().testLoading ("Levels");
 			yield return new WaitForEndOfFrame ();
 			//yield return new WaitUntil (()=> ScreenManager.instance.preloadSceneAsync.isDone);
 		}
 		yield return new WaitForEndOfFrame ();
-		if(ScreenManager.instance && !PersistentData.GetInstance().fromLevelBuilder)
+		if(ScreenManager.GetInstance() && !PersistentData.GetInstance().fromLevelBuilder)
 		{
-			ScreenManager.instance.sceneFinishLoading ();
+			ScreenManager.GetInstance().sceneFinishLoading ();
 		}
 	}
 
@@ -178,16 +178,16 @@ public class GameManager : MonoBehaviour
 		if (Input.GetKeyUp (KeyCode.R)) 
 		{
 			PersistentData.GetInstance().startLevel -= 1;
-			ScreenManager.instance.GoToScene ("Game");
+			ScreenManager.GetInstance().GoToScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.N)) 
 		{
-			ScreenManager.instance.GoToScene ("Game");
+			ScreenManager.GetInstance().GoToScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.B) && PersistentData.GetInstance().startLevel > 1) 
 		{
 			PersistentData.GetInstance().startLevel -= 2;
-			ScreenManager.instance.GoToScene ("Game");
+			ScreenManager.GetInstance().GoToScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.Z)) 
 		{
@@ -455,8 +455,6 @@ public class GameManager : MonoBehaviour
 		{
 			//Puntos por las lineas creadas
 			linesCreated (cells.Count);
-
-			int a = Mathf.RoundToInt(cells.Count *0.5f);
 
 			if(cells.Count > linesCreatedPoints.Count)
 			{
@@ -1062,9 +1060,9 @@ public class GameManager : MonoBehaviour
 			AudioManager.GetInstance ().Play ("menuMusic");
 		}
 
-		if(ScreenManager.instance)
+		if(ScreenManager.GetInstance())
 		{
-			ScreenManager.instance.testContinue();
+			ScreenManager.GetInstance().testContinue();
 		}
 
 		//ScreenManager.instance.GoToScene ("Levels");

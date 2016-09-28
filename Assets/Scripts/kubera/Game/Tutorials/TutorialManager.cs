@@ -14,9 +14,9 @@ public class TutorialManager : Manager<TutorialManager>
 
 	protected TutorialBase currentTutorial;
 
-	private InputBlockPowerUp inputBlock;
-	private InputPiece inputPiece;
-	private InputBombAndDestroy inputBomb;
+	//private InputBlockPowerUp inputBlock;
+	//private InputPiece inputPiece;
+	//private InputBombAndDestroy inputBomb;
 	private InputWords inputWords;
 
 	private WordManager wordManager;
@@ -26,9 +26,9 @@ public class TutorialManager : Manager<TutorialManager>
 
 	public void init()
 	{
-		inputBlock = FindObjectOfType<InputBlockPowerUp> ();
-		inputPiece = FindObjectOfType<InputPiece> ();
-		inputBomb = FindObjectOfType<InputBombAndDestroy> ();
+		//inputBlock = FindObjectOfType<InputBlockPowerUp> ();
+		//inputPiece = FindObjectOfType<InputPiece> ();
+		//inputBomb = FindObjectOfType<InputBombAndDestroy> ();
 		inputWords = FindObjectOfType<InputWords> ();
 
 		wordManager = FindObjectOfType<WordManager> ();

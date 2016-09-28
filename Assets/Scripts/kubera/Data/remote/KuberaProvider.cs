@@ -32,8 +32,6 @@ namespace Kubera.Data.Remote
 		private GSLoginRequest loginRequest;
 		private GSGetUserRequest mainUpdateRequest;
 		private string currentFacebookId;
-		private string sessionToken;
-
 
 		public string getPath()
 		{
@@ -70,7 +68,6 @@ namespace Kubera.Data.Remote
 		private void OnRemoteLoginComplete(string request_id)
 		{
 			isLogged = true;
-			sessionToken = loginRequest.data.authToken;
 				
 			if(OnUserReceived != null)
 			{
