@@ -205,6 +205,13 @@ public class LifesManager : Manager<LifesManager>
 
 	protected void decreaseLifeTimer(int seconds = 1)
 	{
+		if (currentUser.playerLifes == dataManager.initialLifes) 
+		{
+			showTimer = false;
+			refreshHUD ();
+			return;
+		} 
+
 		currentSeconds--;
 
 		if (currentSeconds < 0) 
