@@ -507,6 +507,7 @@ public class GameManager : MonoBehaviour
 						cellsToAnimate.Add(cells[i][j]);
 
 						cellManager.setCellContentType (cells[i][j], Piece.EType.LETTER);
+						cellManager.setCellContentColor (cells [i] [j], Piece.EColor.NONE);
 
 						letters.Add(wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL));						
 					}
