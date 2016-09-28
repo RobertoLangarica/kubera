@@ -18,6 +18,8 @@ namespace utils.gems.sync
 		protected override void Awake()
 		{
 			base.Awake();
+
+			((ShopikaProvider)server).OnBadToken = OnBadCredentials;
 		}
 
 
@@ -33,13 +35,25 @@ namespace utils.gems.sync
 			server.stopAndRemoveCurrentRequests();
 		}
 
-		//TODO como se va manejar el logout
+		private void OnBadCredentials()
+		{
+			logout();
+		}
+			
 		/**
 		 * Cuando se hace logout en local hay responder a ese cambio y hay que hacer logout remoto
 		 **/ 
 		protected override void logout ()
 		{
+			//Olvidamos las credenciales y limpiamos el usuairo con malas credenciales
+			localData.currentUser.clear();
+			localData.getCurrentData().lastUsedId = "";
+			localData.saveLocalData(false);
+
+			//Detenemos lo que este haciendo el server provider y quitamos el currentUser
 			base.logout ();
+
+			//La local data se va en modo anonimo
 			localData.setUserAsAnonymous();
 
 			if(_mustShowDebugInfo)
@@ -73,31 +87,17 @@ namespace utils.gems.sync
 		/**
 		 * Se recibe despues de mandar consumir gemas
 		 **/ 
-		protected override void OnDataUpdated (string updatedData)
+		protected override void OnDataUpdated (string fullData)
 		{
-			base.OnDataUpdated (updatedData);
-
-			UserGem updatedUser = JsonUtility.FromJson<UserGem>(updatedData);
+			base.OnDataUpdated (fullData);
 
 			//Se actualizo algo en el server
-			localData.diffUser(updatedUser, true);//Ignoramos la version
+			localData.diffUser(JsonUtility.FromJson<UserGem>(fullData), true);//Ignoramos la version
 
 			if(_mustShowDebugInfo)
 			{
 				Debug.Log("Usuario sincronizado.");
 			}
-
-			//TODO nada se sube??
-			/*
-			//Necesita subirse?
-			if(localData.currentUser.isDirty)
-			{
-				if(_mustShowDebugInfo)
-				{
-					Debug.Log("Subiendo datos sucios del usuario.");
-				}
-				updateData(localData.getUserDirtyData());
-			}*/
 		}
 
 		/**
@@ -114,7 +114,7 @@ namespace utils.gems.sync
 			if(existCurrentUser())
 			{
 				//TODO mandar consumir gemmas en un update al server
-				//server.updateUserData<KuberaUser>(currentUser.id, dirtyUser);
+				server.updateUserData(currentUser.id, gemsToConsume.ToString());
 			}
 		}
 	}
