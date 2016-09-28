@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
 
 		if (Input.GetKeyUp (KeyCode.X)) 
 		{
-			onUsersAction (1, 0);
+			onUsersAction (50, 0);
 			//activatePopUp ("noOptionsPopUp");
 			//onUsersAction (0);
 		}
@@ -1023,10 +1023,12 @@ public class GameManager : MonoBehaviour
 			{
 				//Se guarda en sus datos que ha pasado el nivel
 				(DataManagerKubera.GetInstance() as DataManagerKubera).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
-					3,Random.Range(70,200));
+					hudManager.getEarnedStars(),pointsCount);
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
+				PersistentData.GetInstance ().lastLevelStars = hudManager.getEarnedStars();
+				PersistentData.GetInstance ().lastLevelPoints = pointsCount;
 
 				Invoke ("toLevels", 0.75f);
 			}
@@ -1039,6 +1041,8 @@ public class GameManager : MonoBehaviour
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
+				PersistentData.GetInstance ().lastLevelStars = hudManager.getEarnedStars();
+				PersistentData.GetInstance ().lastLevelPoints = pointsCount;
 
 				LifesManager.GetInstance ().giveALife();
 

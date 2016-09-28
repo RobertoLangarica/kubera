@@ -37,7 +37,6 @@ public class KuberaWebView : MonoBehaviour
 
 	protected void registerForMessages()
 	{
-		Debug.Log ("Registrado!!!!");
 		WebViewManager.GetInstance ().registerToReceiveMessageFromWebView (WEBVIEW_SCHEME, messageCallBack);
 	}
 
@@ -71,8 +70,6 @@ public class KuberaWebView : MonoBehaviour
 
 		tempHtml = tempHtml.Replace ("{{TokenID}}",tokenID);
 		tempHtml = tempHtml.Replace ("{{UserID}}",userID);
-
-		Debug.Log (tempHtml);
 
 		WebViewManager.GetInstance ().createWebView (tempHtml, true);
 	}

@@ -578,8 +578,8 @@ public class MapManager : MonoBehaviour
 			}
 			else
 			{
-				int starsReached = (DataManagerKubera.GetInstance () as DataManagerKubera).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
-				int pointsMade = (DataManagerKubera.GetInstance () as DataManagerKubera).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
+				int starsReached = PersistentData.GetInstance ().lastLevelStars;//;(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
+				int pointsMade = PersistentData.GetInstance ().lastLevelPoints;//(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
 				goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
 
 				string levelName = PersistentData.GetInstance ().currentLevel.name ;
@@ -595,7 +595,6 @@ public class MapManager : MonoBehaviour
 						break;
 					}
 				}
-
 
 				goalAfterGame.setGoalPopUpInfo (starsReached,levelName , pointsMade.ToString(),PersistentData.GetInstance ().currentWorld);
 				popUpManager.activatePopUp ("goalAfterGame");
