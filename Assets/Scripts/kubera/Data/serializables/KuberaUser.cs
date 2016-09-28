@@ -9,22 +9,25 @@ namespace Kubera.Data
 	[Serializable]
 	public class KuberaUser : BasicData 
 	{
-		public int remoteDataVersion;
-		public string facebookId;
-		public List<LevelData> levels;
-		public int playerLifes;
-		public string lifeTimerDate;
-		public int maxLevelReached;
+		public int remoteDataVersion;//version de los datos del server
+		public string facebookId;//Id de facebook del usuario
+		public List<LevelData> levels;//niveles ya pasados
+		public int playerLifes;//Vidas del usuario
+		public string lifeTimerDate;//Para dar vidas por tiempo
+		public int maxLevelReached;//Para avance de mapa
+		public bool firstTimeShopping;//Para emebeber video de shopika
 
 		public KuberaUser()
 		{
 			levels = new List<LevelData>();
+			firstTimeShopping = false;
 		}
 
 		public KuberaUser(string userId)
 		{
 			_id = userId;
 			levels = new List<LevelData>();
+			firstTimeShopping = false;
 		}
 
 		public override void updateFrom (BasicData readOnlyRemote, bool ignoreVersion = false)

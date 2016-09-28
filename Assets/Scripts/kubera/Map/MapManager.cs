@@ -13,6 +13,8 @@ public class MapManager : MonoBehaviour
 	public const string missingLifes_PopUp 	= "MissingLifes";
 	public const string noLifes_PopUp 		= "NoLifes";
 
+	public bool AllLevelsUnlocked = false;
+
 	public ScrollRect scrollRect;
 	public GameObject modal;
 	public BossLocked bossLockedPopUp;
@@ -51,6 +53,11 @@ public class MapManager : MonoBehaviour
 
 	void Start()
 	{
+		if(AllLevelsUnlocked)
+		{
+			Debug.Log("<color=red>Modo test: NIVELES DESBLOQUEADOS</color>");
+		}
+
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 
 		if(PersistentData.GetInstance().currentWorld == -1 || !PersistentData.GetInstance().fromGameToLevels)
@@ -256,8 +263,7 @@ public class MapManager : MonoBehaviour
 				if ((DataManagerKubera.GetInstance() as DataManagerKubera).isLevelReached (level.lvlName))
 				{
 					level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
-					Debug.Log ("boss reached");
-					Debug.Log (!(DataManagerKubera.GetInstance () as DataManagerKubera).isLevelLocked (level.lvlName));
+					//Debug.Log (!(DataManagerKubera.GetInstance () as DataManagerKubera).isLevelLocked (level.lvlName));
 
 					if (!(DataManagerKubera.GetInstance () as DataManagerKubera).isLevelLocked (level.lvlName))
 					{
@@ -267,9 +273,14 @@ public class MapManager : MonoBehaviour
 				}
 				else
 				{
-					//HACK para facebook 
-					level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
-					//level.status = MapLevel.EMapLevelsStatus.BOSS_UNLOCKED;
+					if(AllLevelsUnlocked)
+					{
+						level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
+					}
+					else
+					{
+						level.status = MapLevel.EMapLevelsStatus.BOSS_LOCKED;	
+					}
 				}
 			}
 		}
@@ -287,10 +298,14 @@ public class MapManager : MonoBehaviour
 				}
 				else
 				{
-					//HACK para facebook 
-					level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
-
-					//level.status = MapLevel.EMapLevelsStatus.NORMAL_LOCKED;
+					if(AllLevelsUnlocked)
+					{
+						level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
+					}
+					else
+					{
+						level.status = MapLevel.EMapLevelsStatus.NORMAL_LOCKED;
+					}
 				}
 			}
 		}
@@ -399,6 +414,7 @@ public class MapManager : MonoBehaviour
 
 		//HACK temporal para probar el leaderboard
 		KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().getLevelLeaderboard(PersistentData.GetInstance().currentLevel.name);
+
 		//SceneManager.LoadScene ("Game");
 	}
 

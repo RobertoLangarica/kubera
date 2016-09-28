@@ -5,7 +5,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Kubera.Data;
 
-public class HomeManager : MonoBehaviour {
+public class HomeManager : MonoBehaviour 
+{
+
+	public bool DirectlyToPlayOnTheFirstTime = true;
 
 	public List<PiecesControllAnimation> pieces;
 	public LettersControllerAnimation[] letters;
@@ -26,6 +29,11 @@ public class HomeManager : MonoBehaviour {
 
 	void Start()
 	{
+		if(!DirectlyToPlayOnTheFirstTime)
+		{
+			Debug.Log("<color=red>Modo test: Se desactivo el poder ir directamente a jugar en el primer uso del juego.</color>");	
+		}
+
 		for(int i=0, j=0; i<pieces.Count; j++)
 		{
 			piecesMoved.Add (pieces[Random.Range (0, pieces.Count)]);
@@ -113,14 +121,19 @@ public class HomeManager : MonoBehaviour {
 			PersistentData.GetInstance ().fromLevelsToGame = true;
 			PersistentData.GetInstance ().currentLevel = PersistentData.GetInstance ().getFirstLevel ();
 
-			//HACK facebook
-			ScreenManager.GetInstance().GoToScene ("Levels");
+			if(!DirectlyToPlayOnTheFirstTime)
+			{
+				ScreenManager.GetInstance().GoToScene ("Levels");	
+			}
+			else
+			{
+				ScreenManager.GetInstance().GoToScene ("Game");	
+			}
 
-			//ScreenManager.instance.GoToScene ("Game");
+
 		}
 	}
-
-	//HACK
+		
 	public void ereaseData()
 	{
 		DataManagerKubera.GetInstance ().deleteData ();

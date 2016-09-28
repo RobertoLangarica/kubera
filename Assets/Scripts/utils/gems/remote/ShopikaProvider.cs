@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 using Data.Remote;
@@ -13,6 +14,8 @@ namespace utils.gems.remote
 		public bool _mustShowDebugInfo = false;
 		[HideInInspector]public string userId;
 		[HideInInspector]public string token;
+
+		public Action OnBadToken;
 
 		private SPGetGemsRequest mainUpdateRequest;
 
@@ -60,13 +63,49 @@ namespace utils.gems.remote
 			}
 		}
 
+		public override void updateUserData(string id, string gemsToConsume)
+		{
+			SPConsumeGemsRequest request = queue.getComponentAttachedToGameObject<SPConsumeGemsRequest>("GS_GetUserData");
+
+			request.id = "consume_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
+			request.playerId = id;
+			request.acces_token = token;
+			request.gemsToConsume = gemsToConsume;
+			request.persistAfterFailed = true;
+			request.showDebugInfo = _mustShowDebugInfo;
+
+			request.initialize(SP_API);
+			request.OnComplete += OnUserDataUpdated;
+			request.OnFailed += OnRequestFailed;
+
+			addDependantRequest(request,true);
+		}
+
+		private void OnUserDataUpdated(string request_id)
+		{
+			if(OnDataUpdated != null)
+			{
+				SPConsumeGemsRequest request = (SPConsumeGemsRequest)getRequestById(request_id);
+
+
+				//Hacemos un usuario para el diff
+				UserGem remoteUser = new UserGem(userId);
+				remoteUser.gems = request.data.gemBalance;
+
+				OnDataUpdated(JsonUtility.ToJson(remoteUser));
+			}
+		}
+
 		protected void OnRequestFailed(string requestId)
 		{
 			RemoteRequest<SPBaseResponse> request = getRequestById(requestId) as RemoteRequest<SPBaseResponse>;
 
 			if(request.data.error != null && request.data.error.isBadTokenError())
 			{
-				Debug.Log("BAAAAAD TOKEN");
+				if(OnBadToken != null)
+				{
+					OnBadToken();
+				}
 			}
 		}
 
