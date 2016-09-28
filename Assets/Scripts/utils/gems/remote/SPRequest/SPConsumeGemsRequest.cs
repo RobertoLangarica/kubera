@@ -30,7 +30,7 @@ namespace utils.gems.remote.request
 			request.AddField(quotedString("gameId"),quotedString("kubera"));
 
 			request._showDebugInfo = showDebugInfo;
-			request.FormUsage = BestHTTP.Forms.HTTPFormUsage.UrlEncoded;
+			request.FormUsage = BestHTTP.Forms.HTTPFormUsage.App_JSON;
 		}
 
 		public override bool hasError ()
