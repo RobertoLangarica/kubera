@@ -191,7 +191,7 @@ public class GameManager : MonoBehaviour
 		}
 		if (Input.GetKeyUp (KeyCode.Z)) 
 		{
-			onUsersAction (0, 29);
+			onUsersAction (0, 5);
 			//activatePopUp ("noOptionsPopUp");
 			//onUsersAction (0);
 		}
@@ -898,6 +898,10 @@ public class GameManager : MonoBehaviour
 		if(cellManager.getAllEmptyCells().Length > 0 && remainingMoves > 0 )
 		{
 			add1x1Block ();
+			if (cellManager.getAllEmptyCells ().Length > 0) 
+			{
+				add1x1Block ();
+			}
 			if(AudioManager.GetInstance())
 			{
 				AudioManager.GetInstance().Stop("addBlock");
@@ -908,6 +912,7 @@ public class GameManager : MonoBehaviour
 		{
 			if (remainingMoves > 0) 
 			{
+				addMovementPoint ();
 				addMovementPoint ();
 				if(AudioManager.GetInstance())
 				{
@@ -932,12 +937,22 @@ public class GameManager : MonoBehaviour
 
 	protected void addMovementPoint()
 	{
+		if (remainingMoves == 0) 
+		{
+			return;
+		}
+
 		addPoints (1);
 		substractMoves (1);
 	}
 
 	protected void add1x1Block()
 	{
+		if (remainingMoves == 0) 
+		{
+			return;
+		}
+
 		Cell[] emptyCells = cellManager.getAllEmptyCells();
 		Cell cell;
 
@@ -964,11 +979,18 @@ public class GameManager : MonoBehaviour
 			StartCoroutine (bombAnimation.startSinglePieceAnimation (cellToLetter [random]));
 			cellToLetter.RemoveAt (random);
 
-			Invoke ("addWinLetterAfterActions", 0.2f);
+			if (cellToLetter.Count > 0) 
+			{
+				random = Random.Range (0, cellToLetter.Count);
+				StartCoroutine (bombAnimation.startSinglePieceAnimation (cellToLetter [random]));
+				cellToLetter.RemoveAt (random);
+			}
+
+			Invoke ("addWinLetterAfterActions", 0.1f);
 		}
 		else
 		{
-			Invoke ("destroyAndCountAllLetters", 1.2f);
+			Invoke ("destroyAndCountAllLetters", 1);
 		}
 	}
 
@@ -990,13 +1012,21 @@ public class GameManager : MonoBehaviour
 			cellToLetter [random].destroyCell ();
 			cellToLetter.RemoveAt (random);
 
+			if (cellToLetter.Count > 0) 
+			{
+				random = Random.Range (0, cellToLetter.Count);
+				showDestroyedLetterScore (cellToLetter [random]);
+				cellToLetter [random].destroyCell ();
+				cellToLetter.RemoveAt (random);
+			}
+
 			if(AudioManager.GetInstance())
 			{
 				AudioManager.GetInstance().Stop("letterPoint");
 				AudioManager.GetInstance().Play("letterPoint");
 			}
 
-			Invoke ("destroyLetter", 0.2f);
+			Invoke ("destroyLetter", 0.1f);
 		} 
 		else 
 		{

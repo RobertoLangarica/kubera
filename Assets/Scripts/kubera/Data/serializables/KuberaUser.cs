@@ -20,14 +20,14 @@ namespace Kubera.Data
 		public KuberaUser()
 		{
 			levels = new List<LevelData>();
-			firstTimeShopping = false;
+			firstTimeShopping = true;
 		}
 
 		public KuberaUser(string userId)
 		{
 			_id = userId;
 			levels = new List<LevelData>();
-			firstTimeShopping = false;
+			firstTimeShopping = true;
 		}
 
 		public override void updateFrom (BasicData readOnlyRemote, bool ignoreVersion = false)

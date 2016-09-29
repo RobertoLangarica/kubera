@@ -20,7 +20,7 @@ public class URLVideoManager : Manager<URLVideoManager>
 
 	private void PlayVideoFinished (ePlayVideoFinishReason reason)
 	{
-		Debug.Log("Request to play video finished. Reason for finish is " + reason + ".");
+		//Debug.Log("Request to play video finished. Reason for finish is " + reason + ".");
 
 		if (OnVideoFinished != null) 
 		{

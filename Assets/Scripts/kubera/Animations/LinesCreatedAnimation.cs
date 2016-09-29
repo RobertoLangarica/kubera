@@ -58,7 +58,7 @@ public class LinesCreatedAnimation : MonoBehaviour
 
 		OnCellFlipped (cellParent,letterContent);
 		animationsFinished++;
-		if (animationsFinished == (cellsToAnimate.Count - 1)) 
+		if (animationsFinished == cellsToAnimate.Count) 
 		{
 			isOnAnimation = false;
 			OnAllCellsFlipped ();
