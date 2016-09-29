@@ -14,6 +14,7 @@ public class WorldsPopUp : PopUpBase {
 	public ScrollRect scrollRect;
 
 	public MiniWorld[] worlds;
+
 	void Start()
 	{
 		grid.cellSize = new Vector2 (Screen.width * 0.9f, Screen.height * 0.8f);

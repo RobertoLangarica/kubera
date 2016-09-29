@@ -63,8 +63,15 @@ public class HUDManager : MonoBehaviour
 	public Image worldBackground;
 	public Sprite[] worldsBackground;
 
+	public bool enableAllPowerUps = false;
+
 	void Start () 
 	{
+		if(enableAllPowerUps)
+		{
+			Debug.Log("<color=red>Modo test: POWER-UPS Activados</color>");	
+		}
+
 		hudStars = FindObjectOfType<HUDMetterAndStars> ();
 		scorePool = FindObjectOfType<FloatingTextPool>();
 		popUpManager = FindObjectOfType <PopUpManager> ();
@@ -510,11 +517,11 @@ public class HUDManager : MonoBehaviour
 
 	public void enablePowerUps()
 	{
-		powerUps [0].gameObject.SetActive(UserDataManager.instance.isWordHintPowerUpUnlocked);
-		powerUps [1].gameObject.SetActive(UserDataManager.instance.isDestroyNeighborsPowerUpUnlocked);
-		powerUps [2].gameObject.SetActive(UserDataManager.instance.isOnePiecePowerUpUnlocked);
-		powerUps [3].gameObject.SetActive(UserDataManager.instance.isRotatePowerUpUnlocked);
-		powerUps [4].gameObject.SetActive(UserDataManager.instance.isWildCardPowerUpUnlocked);
-		powerUps [5].gameObject.SetActive(UserDataManager.instance.isDestroyPowerUpUnlocked);
+		powerUps [0].gameObject.SetActive(UserDataManager.instance.isWordHintPowerUpUnlocked || enableAllPowerUps);
+		powerUps [1].gameObject.SetActive(UserDataManager.instance.isDestroyNeighborsPowerUpUnlocked || enableAllPowerUps);
+		powerUps [2].gameObject.SetActive(UserDataManager.instance.isOnePiecePowerUpUnlocked || enableAllPowerUps);
+		powerUps [3].gameObject.SetActive(UserDataManager.instance.isRotatePowerUpUnlocked || enableAllPowerUps);
+		powerUps [4].gameObject.SetActive(UserDataManager.instance.isWildCardPowerUpUnlocked || enableAllPowerUps);
+		powerUps [5].gameObject.SetActive(UserDataManager.instance.isDestroyPowerUpUnlocked || enableAllPowerUps);
 	}
 }
