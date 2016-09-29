@@ -3,6 +3,7 @@ using System.Collections;
 using VoxelBusters.Utility;
 using VoxelBusters.NativePlugins;
 using utils.gems;
+using Kubera.Data;
 
 public class KuberaWebView : MonoBehaviour 
 {
@@ -12,6 +13,8 @@ public class KuberaWebView : MonoBehaviour
 	protected const string WEBVIEW_GEMS 	= "gemsUpdated";
 	protected const string WEBVIEW_FINISH	= "purchaseFinished";
 
+	protected const string VIDEO_URL = "https://s3-us-west-1.amazonaws.com/4mstatic/home_video.mp4";
+
 	public Camera webViewRectCanvasCamera;
 	public RectTransform webViewSize;
 
@@ -19,7 +22,19 @@ public class KuberaWebView : MonoBehaviour
 	{
 		if (GemsManager.GetCastedInstance<GemsManager> ().currentUserId == GemsManager.GetCastedInstance<GemsManager> ().ANONYMOUS_USER) 
 		{
-			showShopikaLogin ();
+			if (((DataManagerKubera)DataManagerKubera.GetInstance ()).currentUser.firstTimeShopping) 
+			{
+				((DataManagerKubera)DataManagerKubera.GetInstance ()).currentUser.firstTimeShopping = false;
+
+				URLVideoManager videoM = gameObject.AddComponent<URLVideoManager> ();
+
+				videoM.OnVideoFinished += showShopikaFromVideo;
+				videoM.playVideoFromURL (VIDEO_URL);
+			} 
+			else 
+			{
+				showShopikaLogin ();
+			}
 		} 
 		else 
 		{
@@ -35,9 +50,13 @@ public class KuberaWebView : MonoBehaviour
 		WebViewManager.GetInstance ().createWebView ("http://shopika-store.cuatromedios.net/standalone-login",webViewSize,webViewRectCanvasCamera,false);
 	}
 
+	protected void showShopikaFromVideo(ePlayVideoFinishReason reason)
+	{
+		showShopikaLogin ();
+	}
+
 	protected void registerForMessages()
 	{
-		Debug.Log ("Registrado!!!!");
 		WebViewManager.GetInstance ().registerToReceiveMessageFromWebView (WEBVIEW_SCHEME, messageCallBack);
 	}
 
@@ -71,8 +90,6 @@ public class KuberaWebView : MonoBehaviour
 
 		tempHtml = tempHtml.Replace ("{{TokenID}}",tokenID);
 		tempHtml = tempHtml.Replace ("{{UserID}}",userID);
-
-		Debug.Log (tempHtml);
 
 		WebViewManager.GetInstance ().createWebView (tempHtml, true);
 	}

@@ -95,7 +95,6 @@ public class WebViewManager : Manager<WebViewManager>
 	{
 		if (isHtmlText) 
 		{
-			Debug.Log ("Cargando HYTML");
 			displayWebView.LoadHTMLString(nURL);
 		} 
 		else 
@@ -160,9 +159,6 @@ public class WebViewManager : Manager<WebViewManager>
 
 	protected void startLoadingEvent(WebView webview)
 	{
-		Debug.Log("Started loading webpage contents.");
-		Debug.Log(string.Format("URL: {0}.", webview.URL));
-
 		if (OnStartLoading != null) 
 		{
 			OnStartLoading (webview);
@@ -171,8 +167,6 @@ public class WebViewManager : Manager<WebViewManager>
 
 	protected void finishLoadingEvent (WebView webview)
 	{
-		Debug.Log("Finished loading webpage contents.");
-
 		if (OnFinishLoading != null) 
 		{
 			OnFinishLoading (webview);
@@ -181,9 +175,6 @@ public class WebViewManager : Manager<WebViewManager>
 
 	protected void failLoadingEvent (WebView webview, string error)
 	{
-		Debug.Log("Failed to load requested contents.");
-		Debug.Log(string.Format("Error: {0}.", error));
-
 		if (OnFailLoading != null) 
 		{
 			OnFailLoading (webview,error);
@@ -192,8 +183,6 @@ public class WebViewManager : Manager<WebViewManager>
 
 	protected void showEvent (WebView webview)
 	{
-		Debug.Log("Displaying web view on screen.");
-
 		if (OnShow != null) 
 		{
 			OnShow (webview);
@@ -202,8 +191,6 @@ public class WebViewManager : Manager<WebViewManager>
 
 	protected void hideEvent (WebView webview)
 	{
-		Debug.Log("Dismissed web view from the screen.");
-
 		if (OnHide != null) 
 		{
 			OnHide (webview);
@@ -212,8 +199,6 @@ public class WebViewManager : Manager<WebViewManager>
 
 	protected void destroyEvent (WebView webview)
 	{
-		Debug.Log("Released web view instance.");
-
 		if (OnDestroy != null) 
 		{
 			OnDestroy (webview);

@@ -350,8 +350,8 @@ public class MapManager : MonoBehaviour
 			}
 			else
 			{
-				int starsReached = (DataManagerKubera.GetInstance () as DataManagerKubera).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
-				int pointsMade = (DataManagerKubera.GetInstance () as DataManagerKubera).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
+				int starsReached = PersistentData.GetInstance ().lastLevelStars;//;(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
+				int pointsMade = PersistentData.GetInstance ().lastLevelPoints;//(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
 
 				goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
 
@@ -518,16 +518,13 @@ public class MapManager : MonoBehaviour
 		{
 			openPopUp (missingLifes_PopUp);
 		}
-
 	}
-
+		
 	public void unlockBoss(string lvlName)
 	{
-		print (lvlName);
 		(DataManagerKubera.GetInstance () as DataManagerKubera).unlockLevel (lvlName);
 
 		//TODO Hacer animacion
-
 		for (int i = 0; i < mapLevels.Count; i++)
 		{
 			if (mapLevels [i].fullLvlName == lvlName)
