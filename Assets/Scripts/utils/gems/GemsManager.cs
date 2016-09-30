@@ -9,11 +9,23 @@ namespace utils.gems
 {
 	public class GemsManager : LocalDataManager<MultipleUserGem>
 	{
+		public bool _freeTestMode = false;
+
 		public Action<int> OnGemsUpdated;
 		public GemsSyncManager syncManager;
 
 
 		public UserGem currentUser{get{return currentData.getUserById(currentUserId);}}
+
+		protected override void Start ()
+		{
+			base.Start ();
+
+			if(_freeTestMode)
+			{
+				Debug.Log("<color=red>Modo test: GEMAS GRATIS</color>");
+			}
+		}
 
 		protected override void fillDefaultData ()
 		{
@@ -25,6 +37,21 @@ namespace utils.gems
 			currentData.users.Add(anon);
 		}
 			
+		protected override void afterFirstRead ()
+		{
+			base.afterFirstRead ();
+
+			if(!string.IsNullOrEmpty(currentData.lastUsedId))
+			{
+				UserGem prevUser = currentData.getUserById(currentData.lastUsedId);
+
+				if(prevUser != null && !string.IsNullOrEmpty(prevUser.accesToken) && !string.IsNullOrEmpty(prevUser._id))
+				{
+					OnUserLoggedIn(prevUser._id, prevUser.accesToken);
+				}
+			}
+		}
+
 		/**
 		 * Cuando se recibe la data desde el web-component
 		 **/ 
@@ -50,11 +77,21 @@ namespace utils.gems
 
 		public bool isPossibleToConsumeGems(int amount)
 		{
+			if(_freeTestMode)
+			{
+				return true;
+			}
+
 			return currentUser.gems >= amount;
 		}
 
 		public void tryToConsumeGems(int amount)
 		{
+			if(_freeTestMode)
+			{
+				return;	
+			}
+
 			//En local
 			currentUser.gems -= amount;
 
@@ -85,6 +122,7 @@ namespace utils.gems
 				//El nuevo usuario existe?
 				if(currentData.getUserById(newUserId) == null)
 				{
+					//No existe
 					//Creamos un nuevo usuario y lo agregamos
 					currentData.users.Add(new UserGem(newUserId));
 				}
@@ -98,6 +136,7 @@ namespace utils.gems
 				//El nuevo usuario existe?
 				if(currentData.getUserById(newUserId) == null)
 				{
+					//No existe
 					//Creamos un nuevo usuario y lo agregamos
 					currentData.users.Add(new UserGem(newUserId));
 				}
@@ -115,6 +154,9 @@ namespace utils.gems
 			//El existente sin gemas porque las queremos remotas todo el tiempo
 			currentUser.gems = 0;
 
+			//Guardamos este como el ultimo usuario
+			currentData.lastUsedId = newUserId;
+
 			saveLocalData(false);
 		}
 
@@ -122,11 +164,6 @@ namespace utils.gems
 		{
 			user.clear();
 			user._id = ANONYMOUS_USER;
-		}
-
-		public override void setUserAsAnonymous ()
-		{
-			base.setUserAsAnonymous ();
 		}
 
 		public void diffUser(UserGem remoteUser, bool ignoreVersion = false)

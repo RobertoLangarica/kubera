@@ -130,7 +130,6 @@ namespace Kubera.Data
 
 		public bool isLevelLocked(string levelName)
 		{
-			Level lvl = levelsList.getLevelByName(levelName);
 			LevelData level =  currentUser.getLevelById(levelName);
 
 			if(level != null)

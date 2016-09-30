@@ -162,14 +162,14 @@ public class GameManager : MonoBehaviour
 		if(PersistentData.GetInstance().fromLevelsToGame)
 		{
 			yield return new WaitForEndOfFrame ();
-			ScreenManager.instance.testLoading ("Levels");
+			ScreenManager.GetInstance().testLoading ("Levels");
 			yield return new WaitForEndOfFrame ();
 			//yield return new WaitUntil (()=> ScreenManager.instance.preloadSceneAsync.isDone);
 		}
 		yield return new WaitForEndOfFrame ();
-		if(ScreenManager.instance && !PersistentData.GetInstance().fromLevelBuilder)
+		if(ScreenManager.GetInstance() && !PersistentData.GetInstance().fromLevelBuilder)
 		{
-			ScreenManager.instance.sceneFinishLoading ();
+			ScreenManager.GetInstance().sceneFinishLoading ();
 		}
 	}
 
@@ -178,27 +178,27 @@ public class GameManager : MonoBehaviour
 		if (Input.GetKeyUp (KeyCode.R)) 
 		{
 			PersistentData.GetInstance().startLevel -= 1;
-			ScreenManager.instance.GoToScene ("Game");
+			ScreenManager.GetInstance().GoToScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.N)) 
 		{
-			ScreenManager.instance.GoToScene ("Game");
+			ScreenManager.GetInstance().GoToScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.B) && PersistentData.GetInstance().startLevel > 1) 
 		{
 			PersistentData.GetInstance().startLevel -= 2;
-			ScreenManager.instance.GoToScene ("Game");
+			ScreenManager.GetInstance().GoToScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.Z)) 
 		{
-			onUsersAction (0, 29);
+			onUsersAction (0, 5);
 			//activatePopUp ("noOptionsPopUp");
 			//onUsersAction (0);
 		}
 
 		if (Input.GetKeyUp (KeyCode.X)) 
 		{
-			onUsersAction (1, 0);
+			onUsersAction (50, 0);
 			//activatePopUp ("noOptionsPopUp");
 			//onUsersAction (0);
 		}
@@ -456,8 +456,6 @@ public class GameManager : MonoBehaviour
 			//Puntos por las lineas creadas
 			linesCreated (cells.Count);
 
-			int a = Mathf.RoundToInt(cells.Count *0.5f);
-
 			if(cells.Count > linesCreatedPoints.Count)
 			{
 				pointsMade += linesCreatedPoints[linesCreatedPoints.Count-1];
@@ -507,6 +505,7 @@ public class GameManager : MonoBehaviour
 						cellsToAnimate.Add(cells[i][j]);
 
 						cellManager.setCellContentType (cells[i][j], Piece.EType.LETTER);
+						cellManager.setCellContentColor (cells [i] [j], Piece.EColor.NONE);
 
 						letters.Add(wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL));						
 					}
@@ -899,6 +898,10 @@ public class GameManager : MonoBehaviour
 		if(cellManager.getAllEmptyCells().Length > 0 && remainingMoves > 0 )
 		{
 			add1x1Block ();
+			if (cellManager.getAllEmptyCells ().Length > 0) 
+			{
+				add1x1Block ();
+			}
 			if(AudioManager.GetInstance())
 			{
 				AudioManager.GetInstance().Stop("addBlock");
@@ -909,6 +912,7 @@ public class GameManager : MonoBehaviour
 		{
 			if (remainingMoves > 0) 
 			{
+				addMovementPoint ();
 				addMovementPoint ();
 				if(AudioManager.GetInstance())
 				{
@@ -933,12 +937,22 @@ public class GameManager : MonoBehaviour
 
 	protected void addMovementPoint()
 	{
+		if (remainingMoves == 0) 
+		{
+			return;
+		}
+
 		addPoints (1);
 		substractMoves (1);
 	}
 
 	protected void add1x1Block()
 	{
+		if (remainingMoves == 0) 
+		{
+			return;
+		}
+
 		Cell[] emptyCells = cellManager.getAllEmptyCells();
 		Cell cell;
 
@@ -965,11 +979,18 @@ public class GameManager : MonoBehaviour
 			StartCoroutine (bombAnimation.startSinglePieceAnimation (cellToLetter [random]));
 			cellToLetter.RemoveAt (random);
 
-			Invoke ("addWinLetterAfterActions", 0.2f);
+			if (cellToLetter.Count > 0) 
+			{
+				random = Random.Range (0, cellToLetter.Count);
+				StartCoroutine (bombAnimation.startSinglePieceAnimation (cellToLetter [random]));
+				cellToLetter.RemoveAt (random);
+			}
+
+			Invoke ("addWinLetterAfterActions", 0.1f);
 		}
 		else
 		{
-			Invoke ("destroyAndCountAllLetters", 1.2f);
+			Invoke ("destroyAndCountAllLetters", 1);
 		}
 	}
 
@@ -991,13 +1012,21 @@ public class GameManager : MonoBehaviour
 			cellToLetter [random].destroyCell ();
 			cellToLetter.RemoveAt (random);
 
+			if (cellToLetter.Count > 0) 
+			{
+				random = Random.Range (0, cellToLetter.Count);
+				showDestroyedLetterScore (cellToLetter [random]);
+				cellToLetter [random].destroyCell ();
+				cellToLetter.RemoveAt (random);
+			}
+
 			if(AudioManager.GetInstance())
 			{
 				AudioManager.GetInstance().Stop("letterPoint");
 				AudioManager.GetInstance().Play("letterPoint");
 			}
 
-			Invoke ("destroyLetter", 0.2f);
+			Invoke ("destroyLetter", 0.1f);
 		} 
 		else 
 		{
@@ -1024,10 +1053,12 @@ public class GameManager : MonoBehaviour
 			{
 				//Se guarda en sus datos que ha pasado el nivel
 				(DataManagerKubera.GetInstance() as DataManagerKubera).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
-					3,Random.Range(70,200));
+					hudManager.getEarnedStars(),pointsCount);
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
+				PersistentData.GetInstance ().lastLevelStars = hudManager.getEarnedStars();
+				PersistentData.GetInstance ().lastLevelPoints = pointsCount;
 
 				Invoke ("toLevels", 0.75f);
 			}
@@ -1040,6 +1071,8 @@ public class GameManager : MonoBehaviour
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
+				PersistentData.GetInstance ().lastLevelStars = hudManager.getEarnedStars();
+				PersistentData.GetInstance ().lastLevelPoints = pointsCount;
 
 				LifesManager.GetInstance ().giveALife();
 
@@ -1061,9 +1094,9 @@ public class GameManager : MonoBehaviour
 			AudioManager.GetInstance ().Play ("menuMusic");
 		}
 
-		if(ScreenManager.instance)
+		if(ScreenManager.GetInstance())
 		{
-			ScreenManager.instance.testContinue();
+			ScreenManager.GetInstance().testContinue();
 		}
 
 		//ScreenManager.instance.GoToScene ("Levels");

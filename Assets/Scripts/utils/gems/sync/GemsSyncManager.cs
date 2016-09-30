@@ -13,23 +13,18 @@ namespace utils.gems.sync
 		 * NOTA: Este manager no hace login solo recibe las credenciales
 		 * el login es web.
 		 **/
-		//Credenciales
-		private string accesToken;
-
-
 		public GemsManager localData;
-
-
 
 		protected override void Awake()
 		{
 			base.Awake();
+
+			((ShopikaProvider)server).OnBadToken = OnBadCredentials;
 		}
 
 
 		public void SetCredentials(string id, string token)
 		{
-			accesToken = token;
 			currentUser = new RemoteUser();
 			currentUser.id = id;
 
@@ -40,13 +35,25 @@ namespace utils.gems.sync
 			server.stopAndRemoveCurrentRequests();
 		}
 
-		//TODO como se va manejar el logout
+		private void OnBadCredentials()
+		{
+			logout();
+		}
+			
 		/**
 		 * Cuando se hace logout en local hay responder a ese cambio y hay que hacer logout remoto
 		 **/ 
 		protected override void logout ()
 		{
+			//Olvidamos las credenciales y limpiamos el usuairo con malas credenciales
+			localData.currentUser.clear();
+			localData.getCurrentData().lastUsedId = "";
+			localData.saveLocalData(false);
+
+			//Detenemos lo que este haciendo el server provider y quitamos el currentUser
 			base.logout ();
+
+			//La local data se va en modo anonimo
 			localData.setUserAsAnonymous();
 
 			if(_mustShowDebugInfo)
@@ -59,41 +66,7 @@ namespace utils.gems.sync
 		{
 			server.getUserData(currentUser.id, false);
 		}
-
-		/**
-		 * Cuando se recibe el usuario (sin informacion solo sus identificaciones)
-		 **/ 
-		/*protected override void OnUserReceived (RemoteUser remoteUser)
-		{
-			base.OnUserReceived (remoteUser);
-
-
-			localData.changeCurrentuser(currentUser.id);
-
-			//TODO identificar cuando el usuario apenas se registro
-			if(remoteUser.newlyCreated)
-			{
-				if(_mustShowDebugInfo)
-				{
-					Debug.Log("Creating remote user.");
-				}
-
-				//TODO las gemas no se suben
-			}
-			else
-			{
-				if(_mustShowDebugInfo)
-				{
-					Debug.Log("Getting data from remote user.");
-				}
-
-				//Nos traemos las gemas del usuario
-				//Las gemas no se sincronizan y la version es solo por compatibilidad con el codigo
-				server.getUserData(currentUser.id, localData.currentUser.version, false);
-			}
-		}*/
-
-
+			
 		/**
 		 * Recibiendo la data del usuario
 		 **/
@@ -108,48 +81,23 @@ namespace utils.gems.sync
 			{
 				Debug.Log("Usuario sincronizado.");
 			}
-
-			//TODO hay cosas que subir??
-			//Necesita subirse?
-			/*if(localData.currentUser.isDirty)
-			{
-				if(_mustShowDebugInfo)
-				{
-					Debug.Log("Subiendo datos sucios del usuario.");
-				}
-				updateData(localData.getUserDirtyData());
-			}*/
 		}
 
 
 		/**
 		 * Se recibe despues de mandar consumir gemas
 		 **/ 
-		protected override void OnDataUpdated (string updatedData)
+		protected override void OnDataUpdated (string fullData)
 		{
-			base.OnDataUpdated (updatedData);
-
-			UserGem updatedUser = JsonUtility.FromJson<UserGem>(updatedData);
+			base.OnDataUpdated (fullData);
 
 			//Se actualizo algo en el server
-			localData.diffUser(updatedUser, true);//Ignoramos la version
+			localData.diffUser(JsonUtility.FromJson<UserGem>(fullData), true);//Ignoramos la version
 
 			if(_mustShowDebugInfo)
 			{
 				Debug.Log("Usuario sincronizado.");
 			}
-
-			//TODO nada se sube??
-			/*
-			//Necesita subirse?
-			if(localData.currentUser.isDirty)
-			{
-				if(_mustShowDebugInfo)
-				{
-					Debug.Log("Subiendo datos sucios del usuario.");
-				}
-				updateData(localData.getUserDirtyData());
-			}*/
 		}
 
 		/**
@@ -166,7 +114,7 @@ namespace utils.gems.sync
 			if(existCurrentUser())
 			{
 				//TODO mandar consumir gemmas en un update al server
-				//server.updateUserData<KuberaUser>(currentUser.id, dirtyUser);
+				server.updateUserData(currentUser.id, gemsToConsume.ToString());
 			}
 		}
 	}

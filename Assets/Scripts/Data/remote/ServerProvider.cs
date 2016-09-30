@@ -34,8 +34,8 @@ namespace Data.Remote
 		 * El json debe tener la estructura adecuada pero solo contener los datos a subir,
 		 * asi usamos menos ancho de banda
 		 **/ 
-		public virtual void updateUserData(string id, string jsonData){Debug.LogError("No existe implementación de esta función");}
-		public virtual void updateUserData<T>(string id, T serializableData){Debug.LogError("No existe implementación de esta función");}
+		public virtual void updateUserData(string id, string data){Debug.LogError("No existe implementación de esta función");}
+		public virtual void updateUserData<T>(string id, T data){Debug.LogError("No existe implementación de esta función");}
 
 		/**
 		 * Sube el json indicado.

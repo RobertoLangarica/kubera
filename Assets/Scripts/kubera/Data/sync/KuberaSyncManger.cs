@@ -165,6 +165,8 @@ namespace Kubera.Data.Sync
 		 **/ 
 		public void getLevelLeaderboard(string levelId, int maxResultsCount = 10)
 		{
+			return;
+
 			//Si no hay usuario remoto entonces no hay nada que actualizar
 			if(existCurrentUser())
 			{

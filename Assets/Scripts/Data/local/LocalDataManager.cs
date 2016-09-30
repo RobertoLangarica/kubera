@@ -87,7 +87,10 @@ namespace Data
 		{
 			string json = File.ReadAllText(getLocalDataPath());
 			currentData = JsonUtility.FromJson<T>(json);
+			afterFirstRead();
 		}
+
+		protected virtual void afterFirstRead(){}
 			
 
 		public T getCurrentData()

@@ -5,15 +5,21 @@ using System.Collections;
 namespace utils.gems.remote.response
 {
 	[Serializable]
-	public class SPGetGemsResponse 
+	public class SPBaseResponse
+	{
+		public ShopikaError error;
+	}
+
+	[Serializable]
+	public class SPGetGemsResponse:SPBaseResponse
 	{
 		/*
 		{
-			"gemBalance":int,
-			"error":ShopikaError
+			"error":ShopikaError,
+			"gemBalance":int
 		}*/
 		public int gemBalance;
-		public ShopikaError error;
+
 
 		public SPGetGemsResponse()
 		{
@@ -47,6 +53,11 @@ namespace utils.gems.remote.response
 		{
 			return (name=="" || name == null) && (message=="" || message == null)
 				&& (code=="" || code == null) && (stack=="" || stack == null) && status==0 && statusCode==0;
+		}
+
+		public bool isBadTokenError()
+		{
+			return (status == 401 || statusCode == 401 || code == "INVALID_TOKEN");
 		}
 	}
 }

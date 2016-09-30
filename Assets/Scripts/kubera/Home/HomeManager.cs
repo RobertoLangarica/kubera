@@ -5,7 +5,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Kubera.Data;
 
-public class HomeManager : MonoBehaviour {
+public class HomeManager : MonoBehaviour 
+{
+
+	public bool DirectlyToPlayOnTheFirstTime = true;
 
 	public List<PiecesControllAnimation> pieces;
 	public LettersControllerAnimation[] letters;
@@ -26,6 +29,11 @@ public class HomeManager : MonoBehaviour {
 
 	void Start()
 	{
+		if(!DirectlyToPlayOnTheFirstTime)
+		{
+			Debug.Log("<color=red>Modo test: Se desactivo el poder ir directamente a jugar en el primer uso del juego.</color>");	
+		}
+
 		for(int i=0, j=0; i<pieces.Count; j++)
 		{
 			piecesMoved.Add (pieces[Random.Range (0, pieces.Count)]);
@@ -50,7 +58,7 @@ public class HomeManager : MonoBehaviour {
 	void startScene()
 	{
 		StartCoroutine (showLetters ());
-		ScreenManager.instance.sceneFinishLoading ();
+		ScreenManager.GetInstance().sceneFinishLoading ();
 	}
 
 	IEnumerator showLetters()
@@ -94,7 +102,7 @@ public class HomeManager : MonoBehaviour {
 			AudioManager.GetInstance().Play("fxButton");
 		}
 
-		ScreenManager.instance.GoToScene (scene);
+		ScreenManager.GetInstance().GoToScene (scene);
 	}
 
 	public void goToPlay()
@@ -106,21 +114,26 @@ public class HomeManager : MonoBehaviour {
 
 		if(DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser.levels.Count != 0)
 		{
-			ScreenManager.instance.GoToScene ("Levels");
+			ScreenManager.GetInstance().GoToScene ("Levels");
 		}
 		else
 		{
 			PersistentData.GetInstance ().fromLevelsToGame = true;
 			PersistentData.GetInstance ().currentLevel = PersistentData.GetInstance ().getFirstLevel ();
 
-			//HACK facebook
-			ScreenManager.instance.GoToScene ("Levels");
+			if(!DirectlyToPlayOnTheFirstTime)
+			{
+				ScreenManager.GetInstance().GoToScene ("Levels");	
+			}
+			else
+			{
+				ScreenManager.GetInstance().GoToScene ("Game");	
+			}
 
-			//ScreenManager.instance.GoToScene ("Game");
+
 		}
 	}
-
-	//HACK
+		
 	public void ereaseData()
 	{
 		DataManagerKubera.GetInstance ().deleteData ();

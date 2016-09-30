@@ -13,6 +13,8 @@ public class MapManager : MonoBehaviour
 	public const string missingLifes_PopUp 	= "MissingLifes";
 	public const string noLifes_PopUp 		= "NoLifes";
 
+	public bool AllLevelsUnlocked = false;
+
 	public ScrollRect scrollRect;
 	public GameObject modal;
 	public BossLocked bossLockedPopUp;
@@ -51,8 +53,12 @@ public class MapManager : MonoBehaviour
 
 	void Start()
 	{
-		popUpManager.OnPopUpCompleted = OnPopupCompleted;
+		if(AllLevelsUnlocked)
+		{
+			Debug.Log("<color=red>Modo test: NIVELES DESBLOQUEADOS</color>");
+		}
 
+		//determinamos el mundo a cargar
 		if(PersistentData.GetInstance().currentWorld == -1 || !PersistentData.GetInstance().fromGameToLevels)
 		{
 			if(DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count != 0)
@@ -77,7 +83,8 @@ public class MapManager : MonoBehaviour
 		{
 			currentWorld = PersistentData.GetInstance ().currentWorld;
 		}
-
+			
+		//Flujo entre game y levels
 		if(PersistentData.GetInstance ().fromGameToLevels)
 		{
 			fromGame = true;
@@ -88,323 +95,60 @@ public class MapManager : MonoBehaviour
 		}
 		PersistentData.GetInstance ().fromLevelsToGame = true;
 
-		//selectLevel (currentWorld);
-
-		//initializeLevels ();
-		//print (currentWorld);
-		changeWorld ();
-
+		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 		paralaxManager.OnFinish += showNextLevelGoalPopUp;
 		invitationToReview.OnFinish += afterInvitation;
-
-		initializeWorldsPopUpInfo ();
-
 		settingButtons.OnActivateMusic += activateMusic;
+
+		//Menu de acceso rapido
+		initializeWorldsQuickMenuInfo ();
+
+		//Cambiando al mundo adecuado
+		changeWorld();
 	}
 
+	#if UNITY_EDITOR
 	void Update()
 	{
 		if (Input.GetKeyDown (KeyCode.A))
 		{
-			//changeWorld ();
-			Debug.Break ();
+			Debug.Break();
 		}
 	}
+	#endif
 
-	protected void stopInput(bool stopInput)
+	protected void initializeWorldsQuickMenuInfo()
 	{
-		modal.SetActive (stopInput);
-	}
+		KuberaUser user = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser;
+		int worldCount = PersistentData.GetInstance().levelsData.getWorldCount();
+		int maxWorldReached = user.maxWorldReached();
+		int starsObtained =0;
+		List<LevelData> worldLevels;
 
-	public void openPopUp(string popUpName)
-	{
-		popUpManager.activatePopUp (popUpName);
-		stopInput (true);
-	}
-
-	private void OnPopupCompleted(string action ="")
-	{
-		stopInput(false);
-		switch (action) {
-		case "closeObjective":
-			if(toNextLevel)
-			{
-				paralaxManager.setPosToNextLevel (nextLevel);
-				lastLevelPlayed.moveProgress (nextLevel);
-			
-				toNextLevel = false;
-			}
-			showWorld();
-			break;
-		case "retry":
-		case "playGame":
-			stopInput(true);
-			//TODO probablemente no haga falta mostrar el mundo
-			showWorld();
-			ScreenManager.instance.GoToScene ("Game");
-			break;
-		case "continue":
-			if(toDoor)
-			{
-				showWorld();
-				paralaxManager.setPosLastOrFirst (false);
-			}
-			else if(toNextLevel)
-			{
-				showWorld();
-				paralaxManager.setPosToNextLevel (nextLevel);
-				lastLevelPlayed.moveProgress (nextLevel);
-			}
-			else
-			{
-				toNextLevel = true;
-				showNextLevelGoalPopUp ();
-			}
-			break;
-		case "closeRetry":
-			showWorld();
-			break;
-		case "toWorldTraveler":
-			openPopUp ("worldsPopUp");
-			break;
-		case "toFacebookMessages":
-			openPopUp ("facebookNews");
-			break;
-		case "NoLifes":
-			stopInput(true);
-			openPopUp ("NoLifes");
-			break;
-		case "noLifesClose":
-			if(popUpManager.isPopUpOpen("goalPopUp") || popUpManager.isPopUpOpen("retryPopUp"))
-			{
-				stopInput(false);
-			}
-			else
-			{
-				stopInput(true);
-			}
-			break;
-		case "askKeys":
-			stopInput(true);
-			if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
-			{
-				openPopUp ("fbFriendsRequestPanel");
-				fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_KEYS);
-			}
-			else
-			{
-				popUpManager.activatePopUp ("fbConnectPopUp");
-			}
-			break;
-		case "needLifes":
-			stopInput(true);
-			if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
-			{
-				openPopUp ("fbFriendsRequestPanel");
-				fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_LIFES);
-			}
-			else
-			{
-				popUpManager.activatePopUp ("fbConnectPopUp");
-			}
-			break;
-		default:
-			break;
-		}
-	}
-
-	protected void selectLevel(int world)
-	{
-		currentWorld = world;
-
-		setWorldOnScene (currentWorld-1);
-
-		mapLevels = new List<MapLevel>(WorldPrefab.GetComponentsInChildren<MapLevel> ());
-		paralaxManager.setRectTransform (WorldPrefab.GetComponent<RectTransform> ());
-	}
-
-	protected void setWorldOnScene(int world)
-	{
-		worlds [world].SetActive (false);
-		WorldPrefab = (GameObject)Instantiate (worlds [world]);
-		WorldPrefab.transform.SetParent (worldParent,false);
-	}
-
-	protected void settingMapLevelInfo(MapLevel level,Level data)
-	{
-		level.lvlName = data.name;
-		level.fullLvlName = data.name;
-		level.isBoss = data.isBoss;
-		level.starsNeeded = data.starsNeeded;
-		level.friendsNeeded = data.friendsNeeded;
-		level.gemsNeeded = data.gemsNeeded;
-	}
-
-	protected void settingMapLevelStatus(MapLevel level)
-	{
-		//level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
-		//return;
-
-		if (level.isBoss)
+		if(maxWorldReached == 0)
 		{
-			if ((DataManagerKubera.GetInstance () as DataManagerKubera).isLevelPassed (level.lvlName))
+			maxWorldReached++;
+		}
+
+		for(int i=0; i < worldCount; i++)
+		{
+			if(maxWorldReached > i)
 			{
-				level.status = MapLevel.EMapLevelsStatus.BOSS_PASSED;
-			}
-			else
-			{
-				if ((DataManagerKubera.GetInstance() as DataManagerKubera).isLevelReached (level.lvlName))
+				worldLevels = user.getLevelsByWorld(i+1);
+
+				for(int j=0; j<worldLevels.Count; j++)
 				{
-					level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
-					Debug.Log ("boss reached");
-					Debug.Log (!(DataManagerKubera.GetInstance () as DataManagerKubera).isLevelLocked (level.lvlName));
-
-					if (!(DataManagerKubera.GetInstance () as DataManagerKubera).isLevelLocked (level.lvlName))
-					{
-						level.status = MapLevel.EMapLevelsStatus.BOSS_UNLOCKED;
-					}
-
+					starsObtained += worldLevels[j].stars;
 				}
-				else
-				{
-					//HACK para facebook 
-					level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
-					//level.status = MapLevel.EMapLevelsStatus.BOSS_UNLOCKED;
-				}
-			}
-		}
-		else
-		{
-			if ((DataManagerKubera.GetInstance() as DataManagerKubera).isLevelPassed (level.lvlName))
-			{
-				level.status = MapLevel.EMapLevelsStatus.NORMAL_PASSED;
+				worldsPopUp.initializeMiniWorld (i, true, starsObtained, PersistentData.GetInstance().levelsData.getLevelsCountByWorld(i+1) * 3);
+				starsObtained = 0;
 			}
 			else
 			{
-				if ((DataManagerKubera.GetInstance() as DataManagerKubera).isLevelReached (level.lvlName))
-				{
-						level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
-				}
-				else
-				{
-					//HACK para facebook 
-					level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
-
-					//level.status = MapLevel.EMapLevelsStatus.NORMAL_LOCKED;
-				}
+				worldsPopUp.initializeMiniWorld (i, false, 0,0);
 			}
+
 		}
-
-		level.stars = MapLevel.EMapLevelStars.NONE;
-		switch ((DataManagerKubera.GetInstance() as DataManagerKubera).getLevelStars (level.lvlName))
-		{
-		case(1):
-			level.stars = MapLevel.EMapLevelStars.ONE;
-			break;
-		case(2):
-			level.stars = MapLevel.EMapLevelStars.TWO;
-			break;
-		case(3):
-			level.stars = MapLevel.EMapLevelStars.THREE;
-			break;
-		}
-	}
-
-	protected void setOnClickDelegates(MapLevel level)
-	{
-
-		switch (level.status)
-		{
-		case(MapLevel.EMapLevelsStatus.BOSS_LOCKED):
-		case(MapLevel.EMapLevelsStatus.NORMAL_LOCKED):
-			level.OnClickNotification += OnLevelLockedPressed;
-			break;
-		case(MapLevel.EMapLevelsStatus.BOSS_PASSED):
-		case(MapLevel.EMapLevelsStatus.NORMAL_PASSED):
-		case(MapLevel.EMapLevelsStatus.BOSS_UNLOCKED):
-		//case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
-		case(MapLevel.EMapLevelsStatus.NORMAL_REACHED):
-			level.OnClickNotification += OnLevelUnlockedPressed;
-			break;
-		case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
-			level.OnClickNotification += OnBossReachedPressed;
-			break;
-		}
-	}
-
-	public void OnLifesPressed()
-	{
-		KuberaUser currentUser = (DataManagerKubera.GetInstance () as DataManagerKubera).currentUser;
-		
-		if (currentUser.playerLifes == (DataManagerKubera.GetInstance () as DataManagerKubera).initialLifes)
-		{
-			openPopUp (fullLifes_PopUp);
-		}
-		else if (currentUser.playerLifes == 0)
-		{
-			openPopUp (noLifes_PopUp);
-		}
-		else
-		{
-			openPopUp (missingLifes_PopUp);
-		}
-
-	}
-
-	public void unlockBoss(string lvlName)
-	{
-		print (lvlName);
-		(DataManagerKubera.GetInstance () as DataManagerKubera).unlockLevel (lvlName);
-
-		//TODO Hacer animacion
-
-		for (int i = 0; i < mapLevels.Count; i++)
-		{
-			if (mapLevels [i].fullLvlName == lvlName)
-			{
-				mapLevels [i].status = MapLevel.EMapLevelsStatus.BOSS_UNLOCKED;
-				mapLevels [i].OnClickNotification -= OnBossReachedPressed;
-				mapLevels [i].OnClickNotification += OnLevelUnlockedPressed;
-			}
-		}
-	}
-
-	protected void OnBossReachedPressed(MapLevel pressed)
-	{
-		if ((DataManagerKubera.GetInstance () as DataManagerKubera).getAllEarnedStars() >= pressed.starsNeeded)
-		{
-			unlockBoss (pressed.fullLvlName);
-		}
-		else
-		{
-			bossLockedPopUp.lvlName = pressed.lvlName;
-			bossLockedPopUp.fullLvlName = pressed.fullLvlName;
-
-			bossLockedPopUp.initializeValues (pressed.friendsNeeded,pressed.gemsNeeded,pressed.starsNeeded,pressed.lvlName);
-
-			openPopUp ("bossLocked");
-		}
-	}
-
-	protected void OnLevelUnlockedPressed(MapLevel pressed)
-	{
-		PersistentData.GetInstance ().setLevelNumber (int.Parse (pressed.lvlName));
-		PersistentData.GetInstance ().lastLevelPlayedName = pressed.lvlName;
-		PersistentData.GetInstance ().nextLevelIsReached = pressed.nextLevelIsReached;
-
-		goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
-		int starsReached = (DataManagerKubera.GetInstance () as DataManagerKubera).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
-		
-		setGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters(),PersistentData.GetInstance().currentLevel.name,starsReached);
-
-		//HACK temporal para probar el leaderboard
-		KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().getLevelLeaderboard(PersistentData.GetInstance().currentLevel.name);
-		//SceneManager.LoadScene ("Game");
-	}
-
-	protected void OnLevelLockedPressed(MapLevel pressed)
-	{
-		Debug.LogWarning ("NIVEL BLOQUEADO");
 	}
 
 	protected void changeWorld()
@@ -416,26 +160,54 @@ public class MapManager : MonoBehaviour
 			Destroy (WorldPrefab);
 		}
 
-		selectLevel (currentWorld);
-
-		getFriendsOnMap (currentWorld);
-
+		configureWorldOnScene (currentWorld);
+		//getFriendsOnMap (currentWorld);
 		initializeLevels ();
-		setDataFromLevels ();
+		setLevelsData ();
 		setLastLevelReached ();
 		Invoke ("setParalaxManager",0.06f);
-
-		if(!fromGame)
-		{
-			//showWorld ();
-		}
 		Invoke ("showWorld", 0.05f);
-		//setParalaxManager ();
-		paralaxManager.enabled = true;
 
+		paralaxManager.enabled = true;
 		PersistentData.GetInstance ().currentWorld = currentWorld;
 
 		Invoke ("onFinishLoad",0.1f);
+	}
+
+	protected void configureWorldOnScene(int world)
+	{
+		currentWorld = world;
+
+		InstantitateWorldByIndex (currentWorld-1);
+
+		mapLevels = new List<MapLevel>(WorldPrefab.GetComponentsInChildren<MapLevel> ());
+		paralaxManager.setRectTransform (WorldPrefab.GetComponent<RectTransform> ());
+	}
+
+	protected void InstantitateWorldByIndex(int worldIndex)
+	{
+		worlds [worldIndex].SetActive (false);
+		WorldPrefab = (GameObject)Instantiate (worlds [worldIndex]);
+		WorldPrefab.transform.SetParent (worldParent,false);
+	}
+
+	protected void getFriendsOnMap(int world)
+	{
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+		{
+			FriendsOnWorld friendsOnWorld = friendsOnWorldManager.existFriendsOnWorld (world.ToString ());
+
+			if(friendsOnWorld == null)
+			{
+				//TODO info del server
+				string[] facebokId = new string[test.Count];
+				for(int i=0; i<test.Count; i++)
+				{
+					facebokId [i] = "10154899709081808";//UnityEngine.Random.Range (123, 1230123).ToString ();
+				}
+				friendsOnWorld = friendsOnWorldManager.getNewFriendsOnWorld (world.ToString(), test.ToArray (), facebokId);
+			}
+		}
 	}
 
 	protected void initializeLevels()
@@ -461,10 +233,10 @@ public class MapManager : MonoBehaviour
 			if(i != 0)
 			{
 				if (mapLevels [i].status == MapLevel.EMapLevelsStatus.NORMAL_REACHED
-				   || mapLevels [i].status == MapLevel.EMapLevelsStatus.NORMAL_PASSED
-				   || mapLevels [i].status == MapLevel.EMapLevelsStatus.BOSS_UNLOCKED
-				   || mapLevels [i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED
-				   || mapLevels [i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED) 
+					|| mapLevels [i].status == MapLevel.EMapLevelsStatus.NORMAL_PASSED
+					|| mapLevels [i].status == MapLevel.EMapLevelsStatus.BOSS_UNLOCKED
+					|| mapLevels [i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED
+					|| mapLevels [i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED) 
 				{
 					mapLevels [i - 1].nextLevelIsReached = true;
 				}
@@ -476,10 +248,9 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
-	protected void setDataFromLevels()
+	protected void setLevelsData()
 	{
 		bool isConectedToFacebook = KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn;
-		MapLevel lastLevel = null;
 
 		for(int i=0; i< mapLevels.Count; i++)
 		{
@@ -511,6 +282,7 @@ public class MapManager : MonoBehaviour
 				if(fromGame && PersistentData.GetInstance().currentLevel.name == mapLevels[i].fullLvlName) 
 				{
 					lastLevelPlayed = mapLevels [i];
+
 					if(i+1 != mapLevels.Count)
 					{
 						nextLevel = mapLevels [i+1];
@@ -558,7 +330,7 @@ public class MapManager : MonoBehaviour
 		{
 			currentLevel = mapLevels [0];
 		}
-		
+
 		if(first)
 		{
 			paralaxManager.setPosLastOrFirst(true);
@@ -578,8 +350,9 @@ public class MapManager : MonoBehaviour
 			}
 			else
 			{
-				int starsReached = (DataManagerKubera.GetInstance () as DataManagerKubera).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
-				int pointsMade = (DataManagerKubera.GetInstance () as DataManagerKubera).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
+				int starsReached = PersistentData.GetInstance ().lastLevelStars;//;(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
+				int pointsMade = PersistentData.GetInstance ().lastLevelPoints;//(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
+
 				goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
 
 				string levelName = PersistentData.GetInstance ().currentLevel.name ;
@@ -619,6 +392,200 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
+	protected void settingMapLevelInfo(MapLevel level,Level data)
+	{
+		level.lvlName = data.name;
+		level.fullLvlName = data.name;
+		level.isBoss = data.isBoss;
+		level.starsNeeded = data.starsNeeded;
+		level.friendsNeeded = data.friendsNeeded;
+		level.gemsNeeded = data.gemsNeeded;
+	}
+
+	protected void settingMapLevelStatus(MapLevel level)
+	{
+		DataManagerKubera DataManager = (DataManagerKubera.GetInstance() as DataManagerKubera);
+
+		if (level.isBoss)
+		{
+			if (DataManager.isLevelPassed (level.lvlName))
+			{
+				level.status = MapLevel.EMapLevelsStatus.BOSS_PASSED;
+			}
+			else
+			{
+				if (DataManager.isLevelReached (level.lvlName))
+				{
+					if (!DataManager.isLevelLocked (level.lvlName))
+					{
+						level.status = MapLevel.EMapLevelsStatus.BOSS_UNLOCKED;
+					}
+					else
+					{
+						level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
+					}
+				}
+				else
+				{
+					if(AllLevelsUnlocked)
+					{
+						level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
+					}
+					else
+					{
+						level.status = MapLevel.EMapLevelsStatus.BOSS_LOCKED;	
+					}
+				}
+			}
+		}
+		else
+		{
+			if (DataManager.isLevelPassed (level.lvlName))
+			{
+				level.status = MapLevel.EMapLevelsStatus.NORMAL_PASSED;
+			}
+			else
+			{
+				if (DataManager.isLevelReached (level.lvlName))
+				{
+						level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
+				}
+				else
+				{
+					if(AllLevelsUnlocked)
+					{
+						level.status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
+					}
+					else
+					{
+						level.status = MapLevel.EMapLevelsStatus.NORMAL_LOCKED;
+					}
+				}
+			}
+		}
+			
+		switch (DataManager.getLevelStars (level.lvlName))
+		{
+		case 1:
+			level.stars = MapLevel.EMapLevelStars.ONE;
+			break;
+		case 2:
+			level.stars = MapLevel.EMapLevelStars.TWO;
+			break;
+		case 3:
+			level.stars = MapLevel.EMapLevelStars.THREE;
+			break;
+		default:
+			level.stars = MapLevel.EMapLevelStars.NONE;
+			break;
+		}
+	}
+
+	protected void setOnClickDelegates(MapLevel level)
+	{
+
+		switch (level.status)
+		{
+		case(MapLevel.EMapLevelsStatus.BOSS_LOCKED):
+		case(MapLevel.EMapLevelsStatus.NORMAL_LOCKED):
+			level.OnClickNotification += OnLevelLockedPressed;
+			break;
+		case(MapLevel.EMapLevelsStatus.BOSS_PASSED):
+		case(MapLevel.EMapLevelsStatus.NORMAL_PASSED):
+		case(MapLevel.EMapLevelsStatus.BOSS_UNLOCKED):
+		case(MapLevel.EMapLevelsStatus.NORMAL_REACHED):
+			level.OnClickNotification += OnLevelUnlockedPressed;
+			break;
+		case(MapLevel.EMapLevelsStatus.BOSS_REACHED):
+			level.OnClickNotification += OnBossReachedPressed;
+			break;
+		}
+	}
+
+	public void OnLifesPressed()
+	{
+		KuberaUser currentUser = (DataManagerKubera.GetInstance () as DataManagerKubera).currentUser;
+		
+		if (currentUser.playerLifes == (DataManagerKubera.GetInstance () as DataManagerKubera).initialLifes)
+		{
+			openPopUp (fullLifes_PopUp);
+		}
+		else if (currentUser.playerLifes == 0)
+		{
+			openPopUp (noLifes_PopUp);
+		}
+		else
+		{
+			openPopUp (missingLifes_PopUp);
+		}
+	}
+		
+	public void unlockBoss(string lvlName)
+	{
+		(DataManagerKubera.GetInstance () as DataManagerKubera).unlockLevel (lvlName);
+
+		//TODO Hacer animacion
+		for (int i = 0; i < mapLevels.Count; i++)
+		{
+			if (mapLevels [i].fullLvlName == lvlName)
+			{
+				mapLevels [i].status = MapLevel.EMapLevelsStatus.BOSS_UNLOCKED;
+				mapLevels [i].OnClickNotification -= OnBossReachedPressed;
+				mapLevels [i].OnClickNotification += OnLevelUnlockedPressed;
+			}
+		}
+	}
+
+	protected void OnBossReachedPressed(MapLevel pressed)
+	{
+		if ((DataManagerKubera.GetInstance () as DataManagerKubera).getAllEarnedStars() >= pressed.starsNeeded)
+		{
+			unlockBoss (pressed.fullLvlName);
+		}
+		else
+		{
+			bossLockedPopUp.lvlName = pressed.lvlName;
+			bossLockedPopUp.fullLvlName = pressed.fullLvlName;
+
+			bossLockedPopUp.initializeValues (pressed.friendsNeeded,pressed.gemsNeeded,pressed.starsNeeded,pressed.lvlName);
+
+			openPopUp ("bossLocked");
+		}
+	}
+
+	protected void stopInput(bool stopInput)
+	{
+		modal.SetActive (stopInput);
+	}
+
+	public void openPopUp(string popUpName)
+	{
+		popUpManager.activatePopUp (popUpName);
+		stopInput (true);
+	}
+
+	protected void OnLevelUnlockedPressed(MapLevel pressed)
+	{
+		PersistentData.GetInstance ().setLevelNumber (int.Parse (pressed.lvlName));
+		PersistentData.GetInstance ().lastLevelPlayedName = pressed.lvlName;
+		PersistentData.GetInstance ().nextLevelIsReached = pressed.nextLevelIsReached;
+
+		goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
+		int starsReached = (DataManagerKubera.GetInstance () as DataManagerKubera).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
+		
+		setGoalPopUp(goalManager.currentCondition,goalManager.getGoalConditionParameters(),PersistentData.GetInstance().currentLevel.name,starsReached);
+
+		//HACK temporal para probar el leaderboard
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().getLevelLeaderboard(PersistentData.GetInstance().currentLevel.name);
+
+		//SceneManager.LoadScene ("Game");
+	}
+
+	protected void OnLevelLockedPressed(MapLevel pressed)
+	{
+		Debug.LogWarning ("NIVEL BLOQUEADO");
+	}
+
 	protected void activateStairs()
 	{
 		Stairs stairs = WorldPrefab.GetComponentInChildren<Stairs>();
@@ -651,18 +618,18 @@ public class MapManager : MonoBehaviour
 
 	public void goToScene(string scene)
 	{
-		ScreenManager.instance.GoToScene (scene);
+		ScreenManager.GetInstance().GoToScene (scene);
 	}
 
 	protected void onFinishLoad()
 	{
 		if(fromGame)
 		{
-			ScreenManager.instance.sceneFinishLoading(0);
+			ScreenManager.GetInstance().sceneFinishLoading(0);
 		}
 		else
 		{
-			ScreenManager.instance.sceneFinishLoading();
+			ScreenManager.GetInstance().sceneFinishLoading();
 		}
 	}
 
@@ -827,59 +794,94 @@ public class MapManager : MonoBehaviour
 		return friendsOnWorldManager.getFriendOnLevel (world, level);
 	}
 
-	protected void getFriendsOnMap(int world)
+	private void OnPopupCompleted(string action ="")
 	{
-		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
-		{
-			FriendsOnWorld friendsOnWorld = friendsOnWorldManager.existFriendsOnWorld (world.ToString ());
-
-			if(friendsOnWorld == null)
-			{
-				//TODO info del server
-				string[] facebokId = new string[test.Count];
-				for(int i=0; i<test.Count; i++)
+		stopInput(false);
+		switch (action) {
+			case "closeObjective":
+				if(toNextLevel)
 				{
-					facebokId [i] = "10154899709081808";//UnityEngine.Random.Range (123, 1230123).ToString ();
+					paralaxManager.setPosToNextLevel (nextLevel);
+					lastLevelPlayed.moveProgress (nextLevel);
+
+					toNextLevel = false;
 				}
-				friendsOnWorld = friendsOnWorldManager.getNewFriendsOnWorld (world.ToString(), test.ToArray (), facebokId);
-			}
-		}
-	}
-
-	protected void initializeWorldsPopUpInfo()
-	{
-		KuberaUser user = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser;
-		int maxWorldReached = user.maxWorldReached();
-		if(maxWorldReached == 0)
-		{
-			maxWorldReached++;
-		}
-
-		List<LevelData> worldLevels;
-
-		int starsObtained =0;
-
-		int levelsInWorld = PersistentData.GetInstance().levelsData.getLevelsByWorld(currentWorld).Length;
-		int worldCount = PersistentData.GetInstance().levelsData.getWorldCount();
-
-		for(int i=0; i < worldCount; i++)
-		{
-			if(maxWorldReached > i)
-			{
-				worldLevels = user.getLevelsByWorld(i+1);
-
-				for(int j=0; j<worldLevels.Count; j++)
+				showWorld();
+			break;
+			case "retry":
+			case "playGame":
+				stopInput(true);
+				//TODO probablemente no haga falta mostrar el mundo
+				showWorld();
+				ScreenManager.GetInstance().GoToScene ("Game");
+			break;
+			case "continue":
+				if(toDoor)
 				{
-					starsObtained += worldLevels[j].stars;
+					showWorld();
+					paralaxManager.setPosLastOrFirst (false);
 				}
-				worldsPopUp.initializeMiniWorld (i, true, starsObtained, PersistentData.GetInstance().levelsData.getLevelsCountByWorld(i+1) * 3);
-				starsObtained = 0;
-			}
-			else
-			{
-				worldsPopUp.initializeMiniWorld (i, false, 0,0);
-			}
-
+				else if(toNextLevel)
+				{
+					showWorld();
+					paralaxManager.setPosToNextLevel (nextLevel);
+					lastLevelPlayed.moveProgress (nextLevel);
+				}
+				else
+				{
+					toNextLevel = true;
+					showNextLevelGoalPopUp ();
+				}
+			break;
+			case "closeRetry":
+				showWorld();
+			break;
+			case "toWorldTraveler":
+				openPopUp ("worldsPopUp");
+			break;
+			case "toFacebookMessages":
+				openPopUp ("facebookNews");
+			break;
+			case "NoLifes":
+				stopInput(true);
+				openPopUp ("NoLifes");
+			break;
+			case "noLifesClose":
+				if(popUpManager.isPopUpOpen("goalPopUp") || popUpManager.isPopUpOpen("retryPopUp"))
+				{
+					stopInput(false);
+				}
+				else
+				{
+					stopInput(true);
+				}
+			break;
+			case "askKeys":
+				stopInput(true);
+				if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+				{
+					openPopUp ("fbFriendsRequestPanel");
+					fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_KEYS);
+				}
+				else
+				{
+					popUpManager.activatePopUp ("fbConnectPopUp");
+				}
+			break;
+			case "needLifes":
+				stopInput(true);
+				if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+				{
+					openPopUp ("fbFriendsRequestPanel");
+					fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_LIFES);
+				}
+				else
+				{
+					popUpManager.activatePopUp ("fbConnectPopUp");
+				}
+			break;
+			default:
+			break;
 		}
 	}
 
