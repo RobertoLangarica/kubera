@@ -56,7 +56,10 @@ public class ScreenRaycaster : MonoBehaviour
     /// Raycast using Physics2D on orthographic cameras (Unity 4.X+ only)
     /// </summary>
     public bool UsePhysics2D = true;
-    
+
+	//vitamos raycast3D innecesario
+	public bool disable3DRaycast = false;
+
     void Start()
     {
         // if no cameras were explicitely provided, use the current main camera
@@ -92,6 +95,7 @@ public class ScreenRaycaster : MonoBehaviour
 
     bool Raycast( Camera cam, Vector2 screenPos, out ScreenRaycastData hitData )
     {
+		//Debug.Log("RAY: "+Time.frameCount);
         Ray ray = cam.ScreenPointToRay( screenPos );
         bool didHit = false;
 
@@ -118,8 +122,9 @@ public class ScreenRaycaster : MonoBehaviour
 #endif
 
         // regular 3D raycast
-        if( !didHit )
+		if( !didHit && !disable3DRaycast )
         {
+			Debug.Log("RAY 3D");
             hitData.Is2D = false;   // ensure this is false
 
             if( RayThickness > 0 )
