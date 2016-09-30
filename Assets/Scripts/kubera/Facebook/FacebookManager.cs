@@ -144,7 +144,7 @@ public class FacebookManager : Manager<FacebookManager>
 		if(life)
 		{
 			//print("recibi " + giftCount + ": vidas");	
-			LifesManager.GetInstance ().giveALife ();
+			LifesManager.GetInstance ().giveALife (giftCount);
 		}
 		else
 		{
