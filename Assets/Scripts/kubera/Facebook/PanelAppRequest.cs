@@ -237,7 +237,7 @@ public class PanelAppRequest : MonoBehaviour {
 		for(int i=0; i<friendInfo.Count; i++)
 		{
 			//print (friendInfo [i].Split ('-') [2]);
-			//facebookManager.deleteAppRequest (friendInfo [i].Split ('-') [2]);
+			facebookManager.deleteAppRequest (friendInfo [i].Split ('-') [2]);
 		}
 	}
 }

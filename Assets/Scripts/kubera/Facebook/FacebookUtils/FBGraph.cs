@@ -191,7 +191,7 @@ public class FBGraph : MonoBehaviour
 	//
 	public void GetInvitableFriends ()
 	{
-		string queryString = "/me/invitable_friends?fields=id,name,picture.width(60).height(60)&limit=200";
+		string queryString = "/me/taggable_friends?fields=id,name,picture.width(50).height(50)&limit=100";
 		FB.API(queryString, HttpMethod.GET, GetInvitableFriendsCallback);
 	}
 
