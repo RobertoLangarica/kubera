@@ -144,7 +144,7 @@ public class FacebookManager : Manager<FacebookManager>
 		if(life)
 		{
 			//print("recibi " + giftCount + ": vidas");	
-			LifesManager.GetInstance ().giveALife ();
+			LifesManager.GetInstance ().giveALife (giftCount);
 		}
 		else
 		{
@@ -279,6 +279,7 @@ public class FacebookManager : Manager<FacebookManager>
 
 	protected void saveDataOnList(string type,string firstName, string playerID, string requestID)
 	{
+		//print (type);
 		switch (type) {
 		case "askLife":
 			if(idExistOnList (askedLifes,playerID))
@@ -287,10 +288,11 @@ public class FacebookManager : Manager<FacebookManager>
 			}
 			else
 			{
+				print ("askedLifes");
 				addToList (askedLifes, firstName, playerID, requestID);
 			}
 			break;
-		case "sendLife":			
+		case "SendLife":			
 			if(idExistOnList (giftLifes,playerID))
 			{
 				deleteAppRequest (requestID);
@@ -301,7 +303,6 @@ public class FacebookManager : Manager<FacebookManager>
 			}
 			break;
 		default:
-			print (type);
 			//llaves que me pidieron
 			if (type.Contains("askKey"))
 			{
@@ -322,7 +323,7 @@ public class FacebookManager : Manager<FacebookManager>
 				}
 			}
 			//llaves que pedí
-			else if(type.Contains("sendKey"))
+			else if(type.Contains("SendKey"))
 			{
 				string[] splitType = type.Split (',');
 				string bossReached = "";
@@ -398,7 +399,6 @@ public class FacebookManager : Manager<FacebookManager>
 
 	protected void fillMessageData ()
 	{
-		print ("SSSSSSSSSSSSSSSSSSS");
 		sortData (askedKeys);
 		fillData (askedKeys, PanelAppRequest.ERequestState.KEY, PanelAppRequest.EAction.SEND,true);
 		fillData (giftKeys, PanelAppRequest.ERequestState.KEY, PanelAppRequest.EAction.ACCEPT);
@@ -442,7 +442,7 @@ public class FacebookManager : Manager<FacebookManager>
 				pR.setParent (panelMessages,false);
 				pR.facebookManager = this;
 				pR.selectRequestState (requestState);
-				pR.selectAction (PanelAppRequest.EAction.SEND);
+				pR.selectAction (action);
 				pR.selectTextButton ();
 				pR.selectImage ();
 			}

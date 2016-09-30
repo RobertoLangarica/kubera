@@ -251,10 +251,16 @@ public class MapManager : MonoBehaviour
 	protected void setLevelsData()
 	{
 		bool isConectedToFacebook = KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn;
+		bool friendInfoInWorld = false;
+
+		if (isConectedToFacebook) 
+		{
+			friendInfoInWorld = friendsOnWorldManager.existAnyFriendInWorld (currentWorld.ToString());
+		}
 
 		for(int i=0; i< mapLevels.Count; i++)
 		{
-			if(isConectedToFacebook)
+			if(isConectedToFacebook && friendInfoInWorld)
 			{
 				FriendInfo friendInfo = isThereAnyFriendOnLevel (currentWorld, mapLevels [i].lvlName);
 

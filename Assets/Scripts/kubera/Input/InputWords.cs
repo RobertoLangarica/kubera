@@ -208,7 +208,7 @@ public class InputWords : MonoBehaviour
 
 	void OnLongPress(LongPressGesture gesture)
 	{
-		if(allowInput && gesture.Raycast.Hit2D)
+		if(allowInput && gesture.Raycast.Hit2D && letter != null)
 		{
 			Vector3 tempV3 = new Vector3 ();
 

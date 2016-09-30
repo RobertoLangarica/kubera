@@ -17,6 +17,7 @@ public class KuberaWebView : MonoBehaviour
 
 	public Camera webViewRectCanvasCamera;
 	public RectTransform webViewSize;
+	public GameObject customToolBar;
 
 	public void showShopikaAndRegisterForEvents()
 	{
@@ -42,6 +43,7 @@ public class KuberaWebView : MonoBehaviour
 				GemsManager.GetCastedInstance<GemsManager> ().currentUser.accesToken);
 		}
 
+		WebViewManager.GetInstance ().OnFinishLoading += showToolBar;
 		registerForMessages ();
 	}
 
@@ -91,11 +93,19 @@ public class KuberaWebView : MonoBehaviour
 		tempHtml = tempHtml.Replace ("{{TokenID}}",tokenID);
 		tempHtml = tempHtml.Replace ("{{UserID}}",userID);
 
-		WebViewManager.GetInstance ().createWebView (tempHtml, true);
+		WebViewManager.GetInstance ().createWebView (tempHtml,webViewSize,webViewRectCanvasCamera,true);
 	}
 
-	protected void closeWebView()
+	public void closeWebView()
 	{
-		WebViewManager.GetInstance ().destroyWebView ();
+		WebViewManager.GetInstance ().OnFinishLoading -= showToolBar;
+		WebViewManager.GetInstance ().hideWebView();
+		customToolBar.SetActive (false);
+	}
+
+	public void showToolBar(WebView webview)
+	{
+		//Debug.Log (customToolBar + "******************");
+		customToolBar.SetActive (true);
 	}
 }

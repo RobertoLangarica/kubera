@@ -113,9 +113,9 @@ public class LifesManager : Manager<LifesManager>
 		}
 	}
 
-	public void giveALife()
+	public void giveALife(int amount = 1)
 	{
-		gotALife ();
+		gotALife (amount);
 
 		//CancelLocalNotification*******De cuando se queda sin vidas y gana 1 vida
 		if (currentUser.playerLifes == 1) 
@@ -214,10 +214,10 @@ public class LifesManager : Manager<LifesManager>
 
 		currentSeconds--;
 
-		if (currentSeconds < 0) 
+		if (currentSeconds <= 0) 
 		{
 			currentMinutes--;
-			if (currentMinutes < 0 && currentSeconds < 0) 
+			if (currentMinutes < 0 && currentSeconds <= 0) 
 			{
 				currentMinutes = 0;
 				gotALife ();
@@ -232,13 +232,14 @@ public class LifesManager : Manager<LifesManager>
 		refreshHUD ();
 	}
 
-	protected void gotALife()
+	protected void gotALife(int amount = 1)
 	{
-		giveLifesToUser();
+		giveLifesToUser(amount);
 
 		if (currentUser.playerLifes == dataManager.initialLifes) 
 		{
 			showTimer = false;	
+			refreshHUD ();
 		} 
 		else 
 		{
