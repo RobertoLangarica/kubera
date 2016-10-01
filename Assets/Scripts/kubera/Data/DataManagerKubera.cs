@@ -40,6 +40,45 @@ namespace Kubera.Data
 			currentData.users.Add(anonymous);
 		}
 
+		public void incrementLevelAttemp(string levelName)
+		{
+			KuberaUser currUser = currentUser;
+			LevelData level = currUser.getLevelById(levelName);
+
+
+			if(level != null)
+			{
+				level.attempts++;
+				level.isDirty = true;
+			}
+			else
+			{
+				level = new LevelData(levelName);
+				level.points	= 0;
+				level.stars		= 0;
+				level.passed	= false;
+				level.world		= levelsList.getLevelByName(levelName).world;
+				level.attempts	= 1;
+				level.isDirty	= true;
+
+				currUser.addLevel(level);
+			}
+				
+			currUser.isDirty = true;
+
+
+			if(currUser.isDirty)
+			{
+				saveLocalData(false);
+
+				//Mandamos un usuario solo con este nivel
+				KuberaUser user = new KuberaUser(currentUserId);
+				user.addLevel(level);
+
+				syncManager.updateData(user);	
+			}
+		}
+
 		public void savePassedLevel(string levelName, int stars, int points)
 		{
 			KuberaUser currUser = currentUser;
@@ -48,8 +87,10 @@ namespace Kubera.Data
 
 			if(level != null)
 			{
-				level.isDirty = level.updateOnlyIncrementalValues(stars, points) || level.isDirty;
-				level.isDirty = level.updatePassed(true) || level.isDirty;
+				level.updateOnlyIncrementalValues(stars, points);
+				level.updatePassed(true);
+				level.attempts++;
+				level.isDirty = true;
 			}
 			else
 			{
@@ -58,6 +99,7 @@ namespace Kubera.Data
 				level.stars		= stars;
 				level.passed	= true;
 				level.world		= levelsList.getLevelByName(levelName).world;
+				level.attempts	= 1;
 				level.isDirty	= true;
 
 				currUser.addLevel(level);
@@ -152,7 +194,6 @@ namespace Kubera.Data
 			{
 				level = new LevelData(levelName);
 				level.locked	= false;
-
 				level.world		= levelsList.getLevelByName(levelName).world;
 				level.isDirty	= true;
 
