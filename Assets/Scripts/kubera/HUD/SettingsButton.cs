@@ -37,6 +37,8 @@ public class SettingsButton : MonoBehaviour
 				AudioManager.GetInstance ().activateMusic = false;
 				UserDataManager.instance.isMusicActive = false;
 
+				KuberaAnalytics.GetInstance ().registerMusicTurnedOff ();
+
 				AudioManager.GetInstance ().StopAllAudiosInCategory ("MAIN MUSIC");
 
 				if(OnActivateMusic != null)
@@ -67,6 +69,8 @@ public class SettingsButton : MonoBehaviour
 			{
 				AudioManager.GetInstance().activateSounds = false;
 				UserDataManager.instance.isSoundEffectsActive = false;
+
+				KuberaAnalytics.GetInstance ().registerFXTurnedOff ();
 
 				AudioManager.GetInstance ().StopAllAudiosInCategory ("LOOP FX");
 				AudioManager.GetInstance ().StopAllAudiosInCategory ("FX");

@@ -23,8 +23,8 @@ public class PersistentData : Manager<PersistentData>
 	[HideInInspector]public int levelNumber = -1;
 	[HideInInspector]public Level currentLevel;
 	[HideInInspector]public string lastLevelReachedName;
-	[HideInInspector]public int lastLevelStars = -1;
-	[HideInInspector]public int lastLevelPoints = -1;
+	[HideInInspector]public int lastPlayedLevelStars = -1;
+	[HideInInspector]public int lastPlayedLevelPoints = -1;
 	[HideInInspector]public bool nextLevelIsReached;
 	[HideInInspector]public Levels levelsData;
 	[HideInInspector]public ABCDictionary abcDictionary;

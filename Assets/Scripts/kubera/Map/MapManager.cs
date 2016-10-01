@@ -347,15 +347,29 @@ public class MapManager : MonoBehaviour
 			{
 				popUpManager.activatePopUp ("retryPopUp");
 				stopInput (true);
+
+				if (((DataManagerKubera)DataManagerKubera.GetInstance ()).currentUser.getLevelById (PersistentData.GetInstance ().currentLevel.name) != null) 
+				{
+					KuberaAnalytics.GetInstance ().registerNewAttempt (PersistentData.GetInstance ().currentLevel.name,false);
+				}
+				else
+				{
+					KuberaAnalytics.GetInstance ().registerNewAttempt (PersistentData.GetInstance ().currentLevel.name,true);
+				}
+
+				if (LifesManager.GetInstance ().currentUser.playerLifes == 0) 
+				{
+					KuberaAnalytics.GetInstance ().registerLevelWhereReached0Lifes (PersistentData.GetInstance ().currentLevel.name);
+				}
 			}
 			else
 			{
-				int starsReached = PersistentData.GetInstance ().lastLevelStars;//;(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
-				int pointsMade = PersistentData.GetInstance ().lastLevelPoints;//(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
+				int starsReached = PersistentData.GetInstance ().lastPlayedLevelStars;//;(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
+				int pointsMade = PersistentData.GetInstance ().lastPlayedLevelPoints;//(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
 
 				goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
 
-				string levelName = PersistentData.GetInstance ().currentLevel.name ;
+				string levelName = PersistentData.GetInstance ().currentLevel.name;
 				for (int i = 0; i < levelName.Length; i++) 
 				{
 					if (levelName [i] == '0') 

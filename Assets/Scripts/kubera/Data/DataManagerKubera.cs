@@ -61,6 +61,8 @@ namespace Kubera.Data
 				level.isDirty	= true;
 
 				currUser.addLevel(level);
+
+				KuberaAnalytics.GetInstance ().registerFirstWinStars (levelName,stars);
 			}
 
 			//El maximo avance
