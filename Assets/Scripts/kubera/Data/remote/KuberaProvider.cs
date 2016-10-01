@@ -123,6 +123,10 @@ namespace Kubera.Data.Remote
 				remoteUser.remoteDataVersion = request.data.version;
 				remoteUser.levels = request.data.levels;
 				remoteUser.maxLevelReached = request.data.maxLevelReached;
+				remoteUser.gemsUse = request.data.gemsUse;
+				remoteUser.gemsPurchase = request.data.gemsPurchase;
+				remoteUser.gemsUseAfterPurchase = request.data.gemsUseAfterPurchase;
+				remoteUser.lifesAsked = request.data.lifesAsked;
 
 				OnDataReceived(JsonUtility.ToJson(remoteUser));
 			}
@@ -156,6 +160,10 @@ namespace Kubera.Data.Remote
 				remoteUser.remoteDataVersion = request.data.version;
 				remoteUser.levels = request.data.levels;
 				remoteUser.maxLevelReached = request.data.maxLevelReached;
+				remoteUser.gemsUse = request.data.gemsUse;
+				remoteUser.gemsPurchase = request.data.gemsPurchase;
+				remoteUser.gemsUseAfterPurchase = request.data.gemsUseAfterPurchase;
+				remoteUser.lifesAsked = request.data.lifesAsked;
 
 				OnDataUpdated(JsonUtility.ToJson(remoteUser));
 			}
@@ -168,6 +176,10 @@ namespace Kubera.Data.Remote
 			builder.Append("{");
 			builder.Append("\"_id\":\""+user._id+"\"");
 			builder.Append(",\"maxLevelReached\":"+user.maxLevelReached.ToString());
+			builder.Append(",\"gemsUse\":"+user.gemsUse.ToString().ToLower());
+			builder.Append(",\"gemsPurchase\":"+user.gemsPurchase.ToString().ToLower());
+			builder.Append(",\"gemsUseAfterPurchase\":"+user.gemsUseAfterPurchase.ToString().ToLower());
+			builder.Append(",\"lifesAsked\":"+user.lifesAsked.ToString().ToLower());
 
 			builder.Append(",\"levels\":{");
 
