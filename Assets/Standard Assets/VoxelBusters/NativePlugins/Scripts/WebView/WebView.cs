@@ -411,8 +411,10 @@ namespace VoxelBusters.NativePlugins
 				m_frame.height	= Screen.height;
 			
 			// Create webview
-			if(NPBinding.WebView != null)//Null acces after Destroy (weird)
-			{NPBinding.WebView.Create(this, m_frame);}
+			if(NPBinding.Instance != null && NPBinding.WebView != null)//Null acces after Destroy (weird)
+			{
+				NPBinding.WebView.Create(this, m_frame);
+			}
 			
 			// Set properties
 			CanHide					= m_canHide;

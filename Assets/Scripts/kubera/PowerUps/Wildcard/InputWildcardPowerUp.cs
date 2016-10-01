@@ -10,6 +10,7 @@ public class InputWildcardPowerUp : MonoBehaviour {
 	public Vector3 initialScale = new Vector3(4,4,4);
 	public float pieceSpeed = 0.3f;
 	public float delaySpeed = 0.2f;
+	public GameObject[] rayCasters;
 
 	protected bool somethingDragged = false;
 	protected int lastTimeDraggedFrame;
@@ -38,6 +39,11 @@ public class InputWildcardPowerUp : MonoBehaviour {
 		cellsManager = FindObjectOfType<CellsManager> ();
 		wordManager = FindObjectOfType<WordManager> ();
 		keyBoardManager = FindObjectOfType<KeyBoardManager> ();
+
+		if(rayCasters != null)
+		{
+			InputBase.registerRayCasters(rayCasters);
+		}
 	}
 
 	public void createBlock(GameObject block, Vector3 bottonPosition,bool canUse)
@@ -81,6 +87,7 @@ public class InputWildcardPowerUp : MonoBehaviour {
 			{
 				if(currentSelected != null)
 				{
+					activateRayCasters(false);
 					somethingDragged = true;
 					Vector3 posOverFinger = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 					posOverFinger.z = currentSelected.transform.position.z;
@@ -110,6 +117,8 @@ public class InputWildcardPowerUp : MonoBehaviour {
 			{	
 				if(currentSelected)
 				{
+					activateRayCasters(true);
+
 					Cell cell = cellsManager.getCellUnderPoint (currentSelected.transform.position);
 
 					if(!canUse)
@@ -134,6 +143,15 @@ public class InputWildcardPowerUp : MonoBehaviour {
 			}
 			break;
 		}
+	}
+
+	void activateRayCasters(bool activate)
+	{
+		InputBase.activateAllRayCasters(activate);
+		/*for(int i = 0; i < rayCasters.Length; i++)
+		{
+			rayCasters[i].SetActive(activate);	
+		}*/		
 	}
 
 	void OnFingerUp()
