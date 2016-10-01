@@ -11,7 +11,7 @@ public class LifesManager : Manager<LifesManager>
 	public List<Text> lifesCount = new List<Text> ();
 	public List<Text> lifesTimer = new List<Text> ();
 
-	protected int timeForLifeInMinutes = 1;
+	protected int timeForLifeInMinutes = 30;
 	public int maximumLifes;
 
 	protected bool showTimer;
@@ -24,6 +24,11 @@ public class LifesManager : Manager<LifesManager>
 
 	void Start()
 	{
+		if(timeForLifeInMinutes != 30)
+		{
+			Debug.Log("<color=red>Modo test: VIDAS NO EN 30min</color>");
+		}
+
 		showTimer = false;
 
 		dataManager = (DataManagerKubera.GetInstance () as DataManagerKubera);
