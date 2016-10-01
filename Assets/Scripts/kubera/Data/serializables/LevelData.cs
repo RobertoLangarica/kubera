@@ -31,6 +31,16 @@ namespace Kubera.Data
 
 			isDirty = false;
 
+			if(!updateAttempts(((LevelData)readOnlyRemote).attempts))
+			{
+				if(attempts > ((LevelData)readOnlyRemote).attempts)
+				{
+					//Debug.Log("DIRTY POR ATTEMP: "+((LevelData)readOnlyRemote).attempts.ToString()+"__"+attempts.ToString());
+					//Los intentos locales son mayores
+					isDirty = true;
+				}
+			}	
+
 			if(!updateOnlyIncrementalValues(((LevelData)readOnlyRemote).stars, ((LevelData)readOnlyRemote).points))
 			{
 				if(stars > ((LevelData)readOnlyRemote).stars || points > ((LevelData)readOnlyRemote).points)
@@ -78,6 +88,19 @@ namespace Kubera.Data
 			return updated;
 		}
 
+		public bool updateAttempts(int _attempts)
+		{
+			bool updated = false;
+
+			if(_attempts > attempts)
+			{
+				attempts = _attempts;
+				updated = true;
+			}
+
+			return updated;
+		}
+
 		public bool updatePassed(bool _passed)
 		{
 			bool updated = false;
@@ -115,7 +138,7 @@ namespace Kubera.Data
 			result.locked = this.locked;
 			result.passed = this.passed;
 			result.world = this.world;
-
+			result.attempts= this.attempts;
 			return result;
 		}
 	}

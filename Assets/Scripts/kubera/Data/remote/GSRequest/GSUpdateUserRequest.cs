@@ -96,6 +96,7 @@ namespace Kubera.Data.Remote
 						level.world = int.Parse(value ["world"].ToString());
 						level.passed= ((bool)value ["passed"]);
 						level.locked= ((bool)value ["locked"]);
+						level.attempts= int.Parse(value ["attempts"].ToString());
 						levels.Add(level); 	
 					}
 
