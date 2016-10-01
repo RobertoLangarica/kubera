@@ -148,7 +148,7 @@ public class FacebookManager : Manager<FacebookManager>
 		}
 	}
 
-	public void acceptGift(bool life, int giftCount,GameObject requestToDelete, string bossReached = "0")
+	public void acceptGift(bool life, int giftCount,GameObject requestToDelete,List<string> requestId, string bossReached = "0")
 	{
 		//TODO: 
 		if(life)
@@ -160,6 +160,10 @@ public class FacebookManager : Manager<FacebookManager>
 		{
 			//print("recibi " + giftCount + ": llaves");
 			mapManager.unlockBoss (bossReached);
+		}
+		for(int i=0; i<requestId.Count; i++)
+		{
+			deleteAppRequest (requestId [i]);
 		}
 		DestroyImmediate (requestToDelete);
 	}
@@ -345,8 +349,8 @@ public class FacebookManager : Manager<FacebookManager>
 				if(askedKeys.Count == maxUsersPerMessage || idExistOnList (giftKeys,playerID )|| !(DataManagerKubera.GetInstance () as DataManagerKubera).isLevelLocked(bossReached))
 				{
 
-					print ("delete boosKey");
-					//deleteAppRequest (requestID);
+					//print ("delete boosKey");
+					deleteAppRequest (requestID);
 				}
 				else
 				{
