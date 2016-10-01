@@ -1012,8 +1012,8 @@
 		<text id="Life_1_Notification">
 			<languages>
 				<language id="english" text="Pass level {{level}}, you just got a life. Could you pass it?"/>
-				<language id="spanish" text="Vence el nivel {{level}}, ya tienes una vida. ¿Podras lograrlo"/>
-				<language id="default" text="Vence el nivel {{level}}, ya tienes una vida. ¿Podras lograrlo"/>
+				<language id="spanish" text="Vence el nivel {{level}}, ya tienes una vida. ¿Podras lograrlo?"/>
+				<language id="default" text="Vence el nivel {{level}}, ya tienes una vida. ¿Podras lograrlo?"/>
 			</languages>
 		</text>
 		<text id="FullLifes_Notification">
