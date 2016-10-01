@@ -79,6 +79,8 @@ public class HUDMetterAndStars : MonoBehaviour
 			if (!star3Reached && size >= Star3) 
 			{
 				size = 1;
+				Stars [2].transform.localScale *= 1.1f;
+				star3Reached = true;
 			}
 		}
 
