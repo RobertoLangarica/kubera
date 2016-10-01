@@ -11,7 +11,7 @@ public class LifesManager : Manager<LifesManager>
 	public List<Text> lifesCount = new List<Text> ();
 	public List<Text> lifesTimer = new List<Text> ();
 
-	protected int timeForLifeInMinutes = 30;
+	protected int timeForLifeInMinutes = 1;
 	public int maximumLifes;
 
 	protected bool showTimer;
