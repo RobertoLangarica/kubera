@@ -10,14 +10,14 @@ public class FacebookPersistentData : Manager<FacebookPersistentData>
 	public List<object> invitableFriends = new List<object> ();
 	public List<object> allFriends = new List<object>();
 
-	public Dictionary<string, Texture> friendsImage = new Dictionary<string, Texture>();
+	public Dictionary<string, Texture> facebookUsersImage = new Dictionary<string, Texture>();
 
 	public bool infoRequested;
 
 
 	public bool containTextureByID (string id)
 	{
-		if(!friendsImage.ContainsKey(id))
+		if(!facebookUsersImage.ContainsKey(id))
 		{
 			return false;
 		}
@@ -35,14 +35,14 @@ public class FacebookPersistentData : Manager<FacebookPersistentData>
 
 	public void addFriendImage(string id, Texture texture)
 	{
-		//print ("addFriendImage");
 		if(!containTextureByID(id))
 		{
-			friendsImage.Add (id, texture);
+			//print ("addFriendImage  "+ id);
+			facebookUsersImage.Add (id, texture);
 		}
 		else
 		{
-			//print ("friend image exist");
+			//print ("friend image exist   "+ id);
 		}
 	}
 
@@ -102,9 +102,9 @@ public class FacebookPersistentData : Manager<FacebookPersistentData>
 
 	public Texture getTextureById(string id)
 	{
-		if(friendsImage.ContainsKey(id))
+		if(facebookUsersImage.ContainsKey(id))
 		{
-			return friendsImage [id];
+			return facebookUsersImage [id];
 		}
 		return null;
 	}
