@@ -104,7 +104,7 @@ public class LifesManager : Manager<LifesManager>
 		//LocalNotification*******De cuando se queda sin vidas y gana 1 vida
 		if (tempUsr.playerLifes == 0) 
 		{
-			int currentLevel = tempUsr.levels.Count +1;
+			int currentLevel = tempUsr.levels.Count;
 
 			life1NotificationID = (LocalNotificationManager.GetInstance () as LocalNotificationManager).modifyAndScheduleNotificationByName (
 				villavanilla.Notifications.ERegisteredNotification.LIFE_1,
