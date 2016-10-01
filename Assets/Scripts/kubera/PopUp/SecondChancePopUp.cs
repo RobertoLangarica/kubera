@@ -70,6 +70,11 @@ public class SecondChancePopUp : PopUpBase
 		checkDiscount ();
 	}
 
+	public int getCurrentPrice()
+	{
+		return price;
+	}
+
 	protected void checkDiscount()
 	{
 		//Debug.Log (UserDataManager.instance.playerGems);

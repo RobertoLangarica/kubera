@@ -10,12 +10,17 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 	public const string BEFORE_BONIFICATION_POINTS_MOVEMENTS = "beforeBonificationPointsAndMovements";
 	public const string FIRST_WIN_STARS						 = "firstWinStars";
 	public const string ATTEMPTS_TO_WIN_LEVEL				 = "attemptsToWinLevel";
+	public const string ATTEMPT_PER_LEVEL					 = "attemptsPerLevel";
 	public const string POWERUPS_USED						 = "powerUpsUsed";
 	public const string REGISTER_WORD						 = "registerWord";
 	public const string ZERO_LIFES_LEVEL					 = "zeroLifesLevel";
 	public const string LAST_LEVEL_BEFORE_PAUSE_APP			 = "lastLevelBeforePauseApp";
 	public const string MUSIC_TURNED_OFF					 = "musicTurnedOff";
 	public const string FX_TURNED_OFF						 = "fxTurnedOff";
+	public const string GEMS_USED_ON_LEVEL					 = "gemsUsedOnLevel";
+	public const string GEMS_USED_IN_LIFES					 = "gemUsedInLifes";
+	public const string BOSS_REACHED						 = "bossReached";
+	public const string FACEBOOK_KEY_REQUEST				 = "facebookKeyRequest";
 
 	protected DateTime epoch = new DateTime(1970,1,1,0,0,0,DateTimeKind.Local);
 
@@ -50,7 +55,7 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 		{
 			registerEventWithParameters (LAST_LEVEL_BEFORE_PAUSE_APP,
 				new Dictionary<string, string> () {
-					{ "Level","" },
+					{ "Level",PersistentData.GetInstance().lastLevelReachedName},
 					{ "User",DataManagerKubera.GetInstance ().currentUserId }
 				});
 		}
@@ -75,20 +80,30 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 				{"Movements",movements.ToString()}});
 	}
 
-	public void registerNewAttempt(string level,bool isBeforeFirstWin)
+	public void registerFirstWinAttempts(string level,int attempts)
 	{
 		registerEventWithParameters(ATTEMPTS_TO_WIN_LEVEL,
 			new Dictionary<string, string>() {
 				{"Level",level},
 				{"User",DataManagerKubera.GetInstance().currentUserId},
-				{"BeforeFirstWin",isBeforeFirstWin.ToString()}});
+				{"Attempts",attempts.ToString()}});
 	}
 
-	public void registerPowerUpsUse(string level,Dictionary<string,int> powerUps)
+	public void registerLevelAttempts(string level,int attempts)
+	{
+		registerEventWithParameters(ATTEMPT_PER_LEVEL,
+			new Dictionary<string, string>() {
+				{"Level",level},
+				{"User",DataManagerKubera.GetInstance().currentUserId},
+				{"Attempts",attempts.ToString()}});
+	}
+
+	public void registerPowerUpsUse(string level,Dictionary<string,int> powerUps,int attempt)
 	{
 		Dictionary<string,string> parameters = new Dictionary<string, string>{
 			{ "Level",level },
-			{ "User",DataManagerKubera.GetInstance ().currentUserId }};
+			{ "User",DataManagerKubera.GetInstance ().currentUserId },
+			{"Attempts",attempt.ToString()}};
 
 		foreach(KeyValuePair<string,int> val in powerUps)
 		{
@@ -111,6 +126,43 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 	public void registerLevelWhereReached0Lifes(string level)
 	{
 		registerEventWithParameters(ZERO_LIFES_LEVEL,
+			new Dictionary<string, string>() {
+				{"Level",level},
+				{"User",DataManagerKubera.GetInstance().currentUserId}});
+	}
+
+	public void registerForBossReached(string level,int currentStars)
+	{
+		float percent = (currentStars / (int.Parse(level) * 3)) * 100;
+
+		registerEventWithParameters(BOSS_REACHED,
+			new Dictionary<string, string>() {
+				{"Level",level},
+				{"User",DataManagerKubera.GetInstance().currentUserId},
+				{"StarsEarned",currentStars.ToString()},
+				{"PercentOfStars",percent.ToString()}});
+	}
+
+	public void registerFacebookKeyRequest(string level)
+	{
+		registerEventWithParameters(FACEBOOK_KEY_REQUEST,
+			new Dictionary<string, string>() {
+				{"Level",level},
+				{"User",DataManagerKubera.GetInstance().currentUserId}});
+	}
+
+	public void registerGemsUsedOnLevel(string level,int gems)
+	{
+		registerEventWithParameters(GEMS_USED_ON_LEVEL,
+			new Dictionary<string, string>() {
+				{"Level",level},
+				{"User",DataManagerKubera.GetInstance().currentUserId},
+				{"Gems",gems.ToString()}});
+	}
+
+	public void registerGemsUsedOnLifes(string level)
+	{
+		registerEventWithParameters(GEMS_USED_IN_LIFES,
 			new Dictionary<string, string>() {
 				{"Level",level},
 				{"User",DataManagerKubera.GetInstance().currentUserId}});

@@ -213,6 +213,8 @@ public class FBFriendsRequestPanel : PopUpBase {
 		switch (currentRequestType) {
 		case ERequestType.ASK_KEYS:
 
+			KuberaAnalytics.GetInstance ().registerFacebookKeyRequest (PersistentData.GetInstance().lastLevelReachedName);
+
 			if(friendsIds.Count>30)
 			{
 				for(int i=0,k = 0; i <= friendGroups; i++)

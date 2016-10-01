@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
 
 	//Para los analiticos
 	protected Dictionary<string,int> powerUpsUsedCount = new Dictionary<string, int>();
+	protected int expendedGems = 0;
 
 	void Start()
 	{
@@ -854,6 +855,7 @@ public class GameManager : MonoBehaviour
 	{
 		remainingMoves += secondChance.movements;
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
+		expendedGems += secondChance.getCurrentPrice ();
 		secondChanceFreeBombs ();
 		allowGameInput (true);
 	}
@@ -1111,6 +1113,10 @@ public class GameManager : MonoBehaviour
 			ScreenManager.GetInstance().testContinue();
 		}
 
+		KuberaAnalytics.GetInstance ().registerPowerUpsUse (currentLevel.name,powerUpsUsedCount,
+			(DataManagerKubera.GetInstance() as DataManagerKubera).getLevelAttempts(currentLevel.name));
+
+		KuberaAnalytics.GetInstance ().registerGemsUsedOnLevel (currentLevel.name,expendedGems);
 		//ScreenManager.instance.GoToScene ("Levels");
 	}
 
@@ -1248,6 +1254,7 @@ public class GameManager : MonoBehaviour
 		if(isBombAndSecondChance(type))
 		{
 			useFreeBomb ();
+			powerUpsUsedCount[type.ToString()]++;
 		}
 		else
 		{
@@ -1255,6 +1262,7 @@ public class GameManager : MonoBehaviour
 			if(!powerupManager.getPowerupByType(type).isFree)
 			{
 				GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(powerupManager.getPowerUpPrice(type));
+				expendedGems += powerupManager.getPowerUpPrice (type);
 				powerUpsUsedCount[type.ToString()]++;
 			}
 		}
@@ -1359,7 +1367,6 @@ public class GameManager : MonoBehaviour
 		case "loose":
 			PersistentData.GetInstance ().fromLoose = true;
 			PersistentData.GetInstance ().fromGameToLevels = true;
-			sendDataToAnalytics ();
 			toLevels ();
 			break;
 		case "NoGemsPopUp":
@@ -1393,17 +1400,11 @@ public class GameManager : MonoBehaviour
 	{
 		PersistentData.GetInstance().startLevel -= 1;
 		PersistentData.GetInstance ().fromLoose = true;
-		PersistentData.GetInstance ().fromGameToLevels = true;
-		sendDataToAnalytics ();
+		PersistentData.GetInstance ().fromGameToLevels = true;		
 		activatePopUp ("exitGame");
 		//toLevels ();
 		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
 		activatePopUp ("exitGame");*/
-	}
-
-	protected void sendDataToAnalytics()
-	{
-		KuberaAnalytics.GetInstance ().registerPowerUpsUse (currentLevel.name,powerUpsUsedCount);
 	}
 
 	//DONE:Le cambie el nombre de actualizeHudInfo a updateHudGameInfo 
