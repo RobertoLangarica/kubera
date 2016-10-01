@@ -57,6 +57,11 @@ public class InputPowerUpRotate : MonoBehaviour
 		}
 	}
 
+	void OnDestroy()
+	{
+		InputBase.clearRaycasters();
+	}
+
 	public void startRotate()
 	{
 		if(pieceManager == null ||gameManager == null|| hudManager == null)

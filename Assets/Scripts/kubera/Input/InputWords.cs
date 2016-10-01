@@ -67,6 +67,11 @@ public class InputWords : MonoBehaviour
 		}
 	}
 		
+	void OnDestroy()
+	{
+		InputBase.clearRaycasters();
+	}
+
 	public void foo(GameObject go,bool byDrag=false){}
 
 

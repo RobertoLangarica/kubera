@@ -49,6 +49,11 @@ public class InputBlockPowerUp : MonoBehaviour
 		}
 	}
 
+	void OnDestroy()
+	{
+		InputBase.clearRaycasters();
+	}
+
 	public void createBlock(GameObject block, Vector3 bottonPosition,bool canUse)
 	{
 		GameObject blockGO = Instantiate (block,bottonPosition,Quaternion.identity) as GameObject;
