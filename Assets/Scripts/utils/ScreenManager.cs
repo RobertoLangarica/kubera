@@ -74,10 +74,10 @@ public class ScreenManager : Manager<ScreenManager> {
 		}
 		#endif
 
-		if (Input.GetKeyUp(KeyCode.Escape))
+		/*if (Input.GetKeyUp(KeyCode.Escape))
 		{
 			showPrevScene();
-		}
+		}*/
 
 
 		if(waitingScreen != null)

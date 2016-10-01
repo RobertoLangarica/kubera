@@ -37,6 +37,11 @@ public class InputBombAndDestroy : MonoBehaviour
 		}
 	}
 
+	void OnDestroy()
+	{
+		InputBase.clearRaycasters();
+	}
+
 	void OnDrag(DragGesture gesture) 
 	{
 		//Solo se ejecuta una vez por frame (multifinger puede llamarlo mas de una vez)

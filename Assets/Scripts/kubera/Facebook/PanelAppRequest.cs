@@ -201,21 +201,27 @@ public class PanelAppRequest : MonoBehaviour {
 
 	public void doAction()
 	{
+		List<string> requestIDs = new List<string> ();
+
+		for(int i=0; i<friendInfo.Count; i++)
+		{
+			requestIDs.Add (friendInfo [i].Split ('-') [2]);
+		}
+
 		if(actionChosed == EAction.ACCEPT)
 		{
 			if(stateRequested == ERequestState.KEY)
 			{
-				facebookManager.acceptGift (false, friendInfo.Count,this.gameObject,friendInfo [0].Split ('-') [3]);
+				facebookManager.acceptGift (false, friendInfo.Count,this.gameObject, requestIDs,friendInfo [0].Split ('-') [3]);
 			}
 			else
 			{
-				facebookManager.acceptGift (true, friendInfo.Count,this.gameObject);
+				facebookManager.acceptGift (true, friendInfo.Count,this.gameObject,requestIDs);
 			}
 		}
 		else if(actionChosed == EAction.SEND)
 		{
 			List<string> friendsIDs = new List<string> ();
-			List<string> requestIDs = new List<string> ();
 
 			for(int i=0; i<friendInfo.Count; i++)
 			{
@@ -231,13 +237,15 @@ public class PanelAppRequest : MonoBehaviour {
 			{
 				facebookManager.sendGift (true, friendsIDs,this.gameObject,requestIDs);
 			}
+
+			//TODO: checar si se enviaron
+			for(int i=0; i<friendInfo.Count; i++)
+			{
+				//print (friendInfo [i].Split ('-') [2]);
+				facebookManager.deleteAppRequest (friendInfo [i].Split ('-') [2]);
+			}
 		}
 
-		//TODO: checar si se enviaron
-		for(int i=0; i<friendInfo.Count; i++)
-		{
-			//print (friendInfo [i].Split ('-') [2]);
-			facebookManager.deleteAppRequest (friendInfo [i].Split ('-') [2]);
-		}
+
 	}
 }

@@ -45,6 +45,9 @@ namespace Kubera.Data.Remote.GSResponseData
 		public List<LevelData> levels;
 		public int version;
 		public int maxLevelReached;
-		//public Dictionary<string, object> scriptData;
+		public bool gemsUse;
+		public bool gemsPurchase;
+		public bool gemsUseAfterPurchase;
+		public bool lifesAsked;
 	}
 }
