@@ -11,6 +11,7 @@ public class FBPicture :MonoBehaviour {
 	public DOnPictureFound OnFound;
 
 	protected int attempts = 5;
+
 	public Sprite getPicture()
 	{
 		picture =  FacebookPersistentData.GetInstance ().getSpritePictureById (fbId);
@@ -25,10 +26,11 @@ public class FBPicture :MonoBehaviour {
 	{
 		yield return new WaitForSeconds (requestAgainTime);
 		picture = FacebookPersistentData.GetInstance ().getSpritePictureById (fbId);
+		
 		if(picture == null && attempts >0)
 		{
 			attempts--;
-			findPicture ();
+			StartCoroutine ("findPicture");
 		}
 		else if(attempts >0)
 		{

@@ -34,6 +34,7 @@ public class PersistentData : Manager<PersistentData>
 	private bool destroyed = false;//Indica si el objeto ya se destruyo
 
 	[HideInInspector]public int currentWorld  =-1;
+	[HideInInspector]public int maxWorldReached  =-1;
 
 	[HideInInspector]
 	public bool fromLevelBuilder;
