@@ -113,7 +113,6 @@ namespace utils.gems.sync
 			//Si no hay usuario remoto entonces no hay nada que actualizar
 			if(existCurrentUser())
 			{
-				//TODO mandar consumir gemmas en un update al server
 				server.updateUserData(currentUser.id, gemsToConsume.ToString());
 			}
 		}

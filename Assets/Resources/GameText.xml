@@ -405,8 +405,8 @@
 		<text id="NoGemsPopUpTitle">
 			<languages>
 				<language id="english" text="Not enough Gems"/>
-				<language id="spanish" text="Gemmas Insuficientes"/>
-				<language id="default" text="Gemmas Insuficientes"/>
+				<language id="spanish" text="Gemas Insuficientes"/>
+				<language id="default" text="Gemas Insuficientes"/>
 			</languages>
 		</text>
 		<text id="NoGemsPopUpInfo">
