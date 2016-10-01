@@ -50,7 +50,7 @@ namespace Kubera.Data
 				{
 					if(maxLevelReached > ((KuberaUser)readOnlyRemote).maxLevelReached)
 					{
-						Debug.Log("DIRTY FOR MAX REACHED: "+((KuberaUser)readOnlyRemote).maxLevelReached);
+						//Debug.Log("DIRTY FOR MAX REACHED: "+((KuberaUser)readOnlyRemote).maxLevelReached);
 						//El local es mayor
 						isDirty = true;
 					}		
