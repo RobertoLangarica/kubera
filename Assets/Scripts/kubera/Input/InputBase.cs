@@ -17,6 +17,14 @@ public class InputBase : MonoBehaviour
 		AllRayCasters.AddRange(casters);
 	}
 
+	public static void clearRaycasters()
+	{
+		if(AllRayCasters != null)
+		{
+			AllRayCasters.Clear();
+		}
+	}
+
 	public static void activateAllRayCasters(bool activate)
 	{
 		if(AllRayCasters == null){return;}
