@@ -10,12 +10,16 @@ public class FacebookNews : PopUpBase {
 	public Image messageCountImage;
 	public GridLayoutGroup panelMessageGridLayout;
 	public RectTransform panelMessageGridRectTransform;
+	public Text title;
 
 	void Start()
 	{
 		panelMessageGridLayout.cellSize = new Vector2 (panelMessageGridRectTransform.rect.width, Screen.height *0.175f);
 		panelMessageGridLayout.spacing = new Vector2 (0,panelMessageGridRectTransform.rect.width*0.2f);
 		actualizeMessageNumber ("0");
+
+		//TODO hardcoding
+		title.text = "MENSAJES";
 	}
 
 	public void actualizeMessageNumber(string messageCount)
