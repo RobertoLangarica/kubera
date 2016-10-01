@@ -29,11 +29,13 @@ public class WebViewManager : Manager<WebViewManager>
 	public Action<WebView> OnHide;
 	public Action<WebView> OnDestroy;
 
-	protected WebView displayWebView;
+	public WebView displayWebView;
+	//public WebView OriginalWebView;
 	protected Dictionary<string,ReceivedMessage> webViewMessagesSubscriptors;
 
 	void Start()
 	{
+		//OriginalWebView = GetComponent<WebView> ();
 		displayWebView = GetComponent<WebView> ();
 
 		registerAllListeners ();

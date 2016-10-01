@@ -50,6 +50,7 @@ public class KuberaWebView : MonoBehaviour
 	protected void showShopikaLogin()
 	{
 		WebViewManager.GetInstance ().createWebView ("http://shopika-store.cuatromedios.net/standalone-login",webViewSize,webViewRectCanvasCamera,false);
+		//WebViewManager.GetInstance ().displayWebView.CanBounce = true;
 	}
 
 	protected void showShopikaFromVideo(ePlayVideoFinishReason reason)
@@ -101,11 +102,12 @@ public class KuberaWebView : MonoBehaviour
 		tempHtml = tempHtml.Replace ("{{UserID}}",userID);
 
 		WebViewManager.GetInstance ().createWebView (tempHtml,webViewSize,webViewRectCanvasCamera,true);
+		//WebViewManager.GetInstance ().displayWebView.CanBounce = true;
 	}
 
 	public void closeWebView()
 	{
-		WebViewManager.GetInstance ().OnFinishLoading -= showToolBar;
+		WebViewManager.GetInstance().OnFinishLoading -= showToolBar;
 		WebViewManager.GetInstance ().hideWebView();
 		customToolBar.SetActive (false);
 	}
@@ -113,6 +115,7 @@ public class KuberaWebView : MonoBehaviour
 	public void showToolBar(WebView webview)
 	{
 		//Debug.Log (customToolBar + "******************");
+		WebViewManager.GetInstance().showWebView();
 		customToolBar.SetActive (true);
 	}
 }
