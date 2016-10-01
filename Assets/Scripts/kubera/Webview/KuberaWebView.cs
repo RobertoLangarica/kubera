@@ -7,6 +7,8 @@ using Kubera.Data;
 
 public class KuberaWebView : MonoBehaviour 
 {
+	public GameObject videoModal;
+
 	protected const string WEBVIEW_SCHEME = "shopika";
 
 	protected const string WEBVIEW_LOGIN 	= "login";
@@ -19,8 +21,14 @@ public class KuberaWebView : MonoBehaviour
 	public RectTransform webViewSize;
 	public GameObject customToolBar;
 
+	void Start()
+	{
+		videoModal.SetActive(false);
+	}
+
 	public void showShopikaAndRegisterForEvents()
 	{
+		videoModal.SetActive(true);
 		if (GemsManager.GetCastedInstance<GemsManager> ().currentUserId == GemsManager.GetCastedInstance<GemsManager> ().ANONYMOUS_USER) 
 		{
 			if (((DataManagerKubera)DataManagerKubera.GetInstance ()).currentUser.firstTimeShopping) 
@@ -28,6 +36,8 @@ public class KuberaWebView : MonoBehaviour
 				((DataManagerKubera)DataManagerKubera.GetInstance ()).currentUser.firstTimeShopping = false;
 
 				URLVideoManager videoM = gameObject.AddComponent<URLVideoManager> ();
+
+
 
 				videoM.OnVideoFinished += showShopikaFromVideo;
 				videoM.playVideoFromURL (VIDEO_URL);
@@ -49,6 +59,7 @@ public class KuberaWebView : MonoBehaviour
 
 	protected void showShopikaLogin()
 	{
+		videoModal.SetActive(true);
 		WebViewManager.GetInstance ().createWebView ("http://shopika-store.cuatromedios.net/standalone-login",webViewSize,webViewRectCanvasCamera,false);
 		//WebViewManager.GetInstance ().displayWebView.CanBounce = true;
 	}
@@ -101,13 +112,20 @@ public class KuberaWebView : MonoBehaviour
 		tempHtml = tempHtml.Replace ("{{TokenID}}",tokenID);
 		tempHtml = tempHtml.Replace ("{{UserID}}",userID);
 
+		videoModal.SetActive(true);
+
 		WebViewManager.GetInstance ().createWebView (tempHtml,webViewSize,webViewRectCanvasCamera,true);
 		//WebViewManager.GetInstance ().displayWebView.CanBounce = true;
 	}
 
 	public void closeWebView()
 	{
+		if(videoModal.activeInHierarchy)
+		{
+			videoModal.SetActive(false);	
+		}
 		WebViewManager.GetInstance().OnFinishLoading -= showToolBar;
+		WebViewManager.GetInstance ().stopLoading();
 		WebViewManager.GetInstance ().hideWebView();
 		customToolBar.SetActive (false);
 	}

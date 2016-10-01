@@ -130,6 +130,11 @@ public class WebViewManager : Manager<WebViewManager>
 		displayWebView.ClearCache ();
 	}
 
+	public void stopLoading()
+	{
+		displayWebView.StopLoading();
+	}
+
 	public void registerToReceiveMessageFromWebView(string messageID,DWebViewReceivedMessage callBack)
 	{
 		if (webViewMessagesSubscriptors.ContainsKey (messageID)) 
