@@ -95,11 +95,18 @@ public class ScreenRaycaster : MonoBehaviour
 
     bool Raycast( Camera cam, Vector2 screenPos, out ScreenRaycastData hitData )
     {
+		hitData = new ScreenRaycastData();
+
+		if(!gameObject.activeInHierarchy)
+		{
+			return false;
+		}
+
 		//Debug.Log("RAY: "+Time.frameCount);
         Ray ray = cam.ScreenPointToRay( screenPos );
         bool didHit = false;
 
-        hitData = new ScreenRaycastData();
+        
 
 #if !UNITY_3_5
         // try to raycast 2D first - this only makes sense on orthographic cameras (physics2D doesnt work with perspective cameras)
@@ -124,7 +131,6 @@ public class ScreenRaycaster : MonoBehaviour
         // regular 3D raycast
 		if( !didHit && !disable3DRaycast )
         {
-			Debug.Log("RAY 3D");
             hitData.Is2D = false;   // ensure this is false
 
             if( RayThickness > 0 )

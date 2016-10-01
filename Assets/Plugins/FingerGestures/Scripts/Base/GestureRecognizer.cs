@@ -178,6 +178,9 @@ public abstract class Gesture
     GameObject selection;       // object picked at current Position
     ScreenRaycastData lastRaycast = new ScreenRaycastData();
 
+	/*public float timeBetweenRaycast = 0.25f;
+	public float lastTimeRaycast = 0.0f;*/
+
     /// <summary>
     /// GameObject that was at the gesture start position
     /// </summary>
@@ -209,6 +212,18 @@ public abstract class Gesture
     {
         if( !raycaster || !raycaster.enabled )
             return null;
+
+		/*if((float)(Time.realtimeSinceStartup - lastTimeRaycast*1.0f) >= timeBetweenRaycast)
+		{
+			lastTimeRaycast = Time.realtimeSinceStartup;
+
+			if( !raycaster.Raycast( screenPos, out lastRaycast ) )
+				return null;
+		}
+		else
+		{
+			return null;
+		}*/
 
         if( !raycaster.Raycast( screenPos, out lastRaycast ) )
             return null;

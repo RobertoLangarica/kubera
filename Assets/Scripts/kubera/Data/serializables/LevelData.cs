@@ -13,6 +13,7 @@ namespace Kubera.Data
 		public bool locked;
 		public bool passed;
 		public int world;
+		public int attempts;
 
 		public LevelData(string levelId)
 		{
@@ -21,6 +22,7 @@ namespace Kubera.Data
 			passed = false;
 			stars = 0;
 			points = 0;
+			attempts = 0;
 		}
 
 		public override void updateFrom (BasicData readOnlyRemote, bool ignoreVersion = false)
