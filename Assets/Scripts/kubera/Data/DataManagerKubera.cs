@@ -40,6 +40,98 @@ namespace Kubera.Data
 			currentData.users.Add(anonymous);
 		}
 
+		public bool alreadyUseGems()
+		{
+			return currentUser.gemsUse;
+		}
+
+		public bool alreadyPurchaseGems()
+		{
+			return currentUser.gemsPurchase;
+		}
+
+		public bool alreadyUseGemsAfterPurchase()
+		{
+			return currentUser.gemsUseAfterPurchase;
+		}
+
+		public bool alreadyAskForLifes()
+		{
+			return currentUser.lifesAsked;
+		}
+
+		public void markGemsAsUsed()
+		{
+			KuberaUser currUser = currentUser;
+
+			currUser.isDirty = currUser.updateGemsUse(true) || currUser.isDirty;
+
+			if(currUser.isDirty)
+			{
+				saveLocalData(false);
+
+				//Mandamos el dato al server
+				KuberaUser user = new KuberaUser(currentUserId);
+				user.gemsUse = true;
+
+				syncManager.updateData(user);	
+			}
+		}
+
+		public void markGemsAsPurchased()
+		{
+			KuberaUser currUser = currentUser;
+
+			currUser.isDirty = currUser.updateGemsPurchase(true) || currUser.isDirty;
+
+			if(currUser.isDirty)
+			{
+				saveLocalData(false);
+
+				//Mandamos el dato al server
+				KuberaUser user = new KuberaUser(currentUserId);
+				user.gemsPurchase = true;
+
+				syncManager.updateData(user);	
+			}
+		}
+
+		public void markGemsAsUsedAfterPurchased()
+		{
+			KuberaUser currUser = currentUser;
+
+			currUser.isDirty = currUser.updateGemsAfterPurchase(true) || currUser.isDirty;
+
+			if(currUser.isDirty)
+			{
+				saveLocalData(false);
+
+				//Mandamos el dato al server
+				KuberaUser user = new KuberaUser(currentUserId);
+				user.gemsUseAfterPurchase = true;
+
+				syncManager.updateData(user);	
+			}
+		}
+
+		public void markLifesAsAsked()
+		{
+			KuberaUser currUser = currentUser;
+
+			currUser.isDirty = currUser.updateLifesAsked(true) || currUser.isDirty;
+
+			if(currUser.isDirty)
+			{
+				saveLocalData(false);
+
+				//Mandamos el dato al server
+				KuberaUser user = new KuberaUser(currentUserId);
+				user.lifesAsked = true;
+
+				syncManager.updateData(user);	
+			}
+		}
+
 		public void incrementLevelAttemp(string levelName)
 		{
 			KuberaUser currUser = currentUser;
@@ -439,6 +531,10 @@ namespace Kubera.Data
 			result.facebookId = user.facebookId;
 			result.levels = user.getDirtyLevelsCopy();
 			result.maxLevelReached = user.maxLevelReached;
+			result.gemsUse = user.gemsUse;
+			result.gemsPurchase = user.gemsPurchase;
+			result.gemsUseAfterPurchase = user.gemsUseAfterPurchase;
+			result.lifesAsked = user.lifesAsked;
 
 			//Se envian como no sucios
 			result.markAllLevelsAsNoDirty();

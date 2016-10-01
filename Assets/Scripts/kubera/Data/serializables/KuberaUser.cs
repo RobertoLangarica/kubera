@@ -9,13 +9,19 @@ namespace Kubera.Data
 	[Serializable]
 	public class KuberaUser : BasicData 
 	{
-		public int remoteDataVersion;//version de los datos del server
-		public string facebookId;//Id de facebook del usuario
+		/********SINCRONIZADAS REMOTAMENTE********/
+		public bool gemsUse;//Ya se uso una gema
+		public bool gemsPurchase;//Ya compro gemas
+		public bool gemsUseAfterPurchase;//Ya uso gemas despues de comprar
+		public bool lifesAsked;//Ya pidio vidas
 		public List<LevelData> levels;//niveles ya pasados
-		public List<LevelData> levelsPlayed;//niveles ya pasados
+		public int remoteDataVersion;//version de los datos del server
+		public int maxLevelReached;//Para avance de mapa
+		/***************************************/
+
+		public string facebookId;//Id de facebook del usuario
 		public int playerLifes;//Vidas del usuario
 		public string lifeTimerDate;//Para dar vidas por tiempo
-		public int maxLevelReached;//Para avance de mapa
 		public bool firstTimeShopping;//Para emebeber video de shopika
 
 		public KuberaUser()
@@ -42,6 +48,47 @@ namespace Kubera.Data
 				
 			//Le quitamos lo sucio a los datos
 			isDirty = false;
+
+			/*public bool gemsUse;//Ya se uso una gema
+			public bool gemsPurchase;//Ya compro gemas
+			public bool gemsUseAfterPurchase;//Ya uso gemas despues de comprar
+			public bool lifesAsked;//Ya pidio vidas*/
+
+			if(!updateGemsUse(((KuberaUser)readOnlyRemote).gemsUse))
+			{
+				if(gemsUse && !((KuberaUser)readOnlyRemote).gemsUse)
+				{
+					//En el server vino en false
+					isDirty = true;
+				}
+			}
+
+			if(!updateGemsPurchase(((KuberaUser)readOnlyRemote).gemsPurchase))
+			{
+				if(gemsPurchase && !((KuberaUser)readOnlyRemote).gemsPurchase)
+				{
+					//En el server vino en false
+					isDirty = true;
+				}
+			}
+
+			if(!updateGemsAfterPurchase(((KuberaUser)readOnlyRemote).gemsUseAfterPurchase))
+			{
+				if(gemsUseAfterPurchase && !((KuberaUser)readOnlyRemote).gemsUseAfterPurchase)
+				{
+					//En el server vino en false
+					isDirty = true;
+				}
+			}
+
+			if(!updateLifesAsked(((KuberaUser)readOnlyRemote).lifesAsked))
+			{
+				if(lifesAsked && !((KuberaUser)readOnlyRemote).lifesAsked)
+				{
+					//En el server vino en false
+					isDirty = true;
+				}
+			}
 
 			//-1 es el dato vacio del server y se debe ignorar
 			if(((KuberaUser)readOnlyRemote).maxLevelReached >= 0)
@@ -89,6 +136,58 @@ namespace Kubera.Data
 					}
 				}
 			}
+		}
+
+		public bool updateGemsUse(bool _used)
+		{
+			bool updated = false;
+
+			if(_used && !gemsUse)
+			{
+				gemsUse = _used;
+				updated = true;
+			}
+
+			return updated;
+		}
+
+		public bool updateGemsPurchase(bool _purchase)
+		{
+			bool updated = false;
+
+			if(_purchase && !gemsPurchase)
+			{
+				gemsPurchase = _purchase;
+				updated = true;
+			}
+
+			return updated;
+		}
+
+		public bool updateGemsAfterPurchase(bool _purchase)
+		{
+			bool updated = false;
+
+			if(_purchase && !gemsUseAfterPurchase)
+			{
+				gemsUseAfterPurchase = _purchase;
+				updated = true;
+			}
+
+			return updated;
+		}
+
+		public bool updateLifesAsked(bool _asked)
+		{
+			bool updated = false;
+
+			if(_asked && !lifesAsked)
+			{
+				lifesAsked = _asked;
+				updated = true;
+			}
+
+			return updated;
 		}
 
 		public bool upgradeMaxLevelReached(int incommingValue)
