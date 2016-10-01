@@ -51,8 +51,8 @@ namespace Data.Sync
 
 		public override void login ()
 		{
-			FBPermissions.PromptForLogin();
-			FBPermissions.PromptForPublish(OnLoginAttempComplete);
+			FBPermissions.PromptForLogin(OnLoginAttempComplete);
+			//FBPermissions.PromptForPublish(OnLoginAttempComplete);
 		}
 			
 
