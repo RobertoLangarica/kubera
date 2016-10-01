@@ -20,12 +20,18 @@ public class FacebookConnectButton : MonoBehaviour {
 
 	public void conectFacebook()
 	{
+		if(syncManager.facebookProvider.isLoggedIn)
+		{
+			logOutFacebook ();
+			return;
+		}
+
 		//TODO: Quitar hardcoding de boton
 		if(AudioManager.GetInstance())
 		{
 			AudioManager.GetInstance().Play("fxButton");
 		}
-
+		
 		syncManager.facebookLogin();
 	}
 
