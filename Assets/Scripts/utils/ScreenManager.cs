@@ -70,7 +70,7 @@ public class ScreenManager : Manager<ScreenManager> {
 		//Back nativo de android
 		if (Input.GetKey(KeyCode.Escape))
 		{
-			showPrevScene();
+			//showPrevScene();
 		}
 		#endif
 

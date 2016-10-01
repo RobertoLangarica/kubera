@@ -206,7 +206,7 @@ public class GameManager : MonoBehaviour
 
 		if (Input.GetKeyUp (KeyCode.X)) 
 		{
-			onUsersAction (50, 0);
+			onUsersAction (10, 0);
 			//activatePopUp ("noOptionsPopUp");
 			//onUsersAction (0);
 		}

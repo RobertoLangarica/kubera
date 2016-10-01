@@ -12,7 +12,6 @@ public class InvitationToReview : MonoBehaviour {
 
 	public bool isHappeningAReview(int currentLevelNumber)
 	{
-		print (currentLevelNumber);
 		switch (currentLevelNumber) 
 		{
 		case 11:

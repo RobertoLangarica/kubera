@@ -17,14 +17,14 @@ public class FBGraph : MonoBehaviour
 	public delegate void DOnGetPlayerInfo(string id, string name);
 	public delegate void DOnGetFriends(List<object> friends);
 	public delegate void DOnGetAppRequest(List<object> friends);
-	public delegate void DOnAddTextureFriend(string id, Texture picture);
+	public delegate void DOnAddTexture(string id, Texture picture,bool myPicture =false);
 	public delegate void DOnFinishGetingInfo();
 
 	public DOnGetPlayerInfo OnPlayerInfo;
 	public DOnGetFriends OnGetGameFriends;
 	public DOnGetFriends OnGetInvitableFriends;
 	public DOnGetAppRequest OnGetAppRequest;
-	public DOnAddTextureFriend OnGetFriendTextures;
+	public DOnAddTexture OnGetFriendTextures;
 	public DOnFinishGetingInfo onFinishGettingInfo;
 	public DOnFinishGetingInfo onFinishGettingFriends;
 
@@ -75,7 +75,7 @@ public class FBGraph : MonoBehaviour
 					//GameStateManager.UserTexture = pictureTexture;
 
 				}
-				OnGetFriendTextures (id,pictureTexture);
+				OnGetFriendTextures (id,pictureTexture,true);
 				textureReady = true;
 				setPlayerInfoReady(infoReady,textureReady);
 				//print("finishPLAYERINFO");
@@ -191,7 +191,7 @@ public class FBGraph : MonoBehaviour
 	//
 	public void GetInvitableFriends ()
 	{
-		string queryString = "/me/taggable_friends?fields=id,name,picture.width(50).height(50)&limit=100";
+		string queryString = "/me/invitable_friends?fields=id,name,picture.width(50).height(50)&limit=100";
 		FB.API(queryString, HttpMethod.GET, GetInvitableFriendsCallback);
 	}
 
@@ -244,11 +244,8 @@ public class FBGraph : MonoBehaviour
 		Texture texture = new Texture();
 		GraphUtil.LoadImgFromURL(url, delegate(Texture pictureTexture)
 			{
-				// Setup the User's profile picture
 				if (pictureTexture != null)
 				{
-					//Imagen del usuario
-					//GameStateManager.UserTexture = pictureTexture;
 					texture = pictureTexture;
 					OnGetFriendTextures (friendID, pictureTexture);
 					textureAdded();

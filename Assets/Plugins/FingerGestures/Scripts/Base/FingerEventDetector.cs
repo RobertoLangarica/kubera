@@ -131,6 +131,9 @@ public abstract class FingerEventDetector : MonoBehaviour
     public bool SendMessageToSelection = true;
     public GameObject MessageTarget = null;
 
+	/*public float timeBetweenRaycast = 0.25f;
+	public float lastTimeRaycast = 0.0f;*/
+
     FingerGestures.Finger activeFinger;
     ScreenRaycastData lastRaycast = new ScreenRaycastData();
 
@@ -157,8 +160,8 @@ public abstract class FingerEventDetector : MonoBehaviour
         
     protected virtual void Update()
     {
-        ProcessFingers();
-    }
+		ProcessFingers();
+	}
 
     protected virtual void ProcessFingers()
     {
@@ -199,8 +202,20 @@ public abstract class FingerEventDetector : MonoBehaviour
         if( !Raycaster || !Raycaster.enabled )
             return null;
 
-        if( !Raycaster.Raycast( screenPos, out lastRaycast ) )
-            return null;
+		/*if((float)(Time.realtimeSinceStartup - lastTimeRaycast*1.0f) >= timeBetweenRaycast)
+		{
+			lastTimeRaycast = Time.realtimeSinceStartup;
+
+			if( !Raycaster.Raycast( screenPos, out lastRaycast ) )
+				return null;
+		}
+		else
+		{
+			return null;
+		}*/
+
+		if( !Raycaster.Raycast( screenPos, out lastRaycast ) )
+			return null;
 
         return lastRaycast.GameObject;
     }

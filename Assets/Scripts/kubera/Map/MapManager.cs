@@ -68,6 +68,8 @@ public class MapManager : MonoBehaviour
 				int passedLevelsCount = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser.countPassedLevelsByWorld(currentWorld);
 				int levelsInWorld = PersistentData.GetInstance().levelsData.getLevelsByWorld(currentWorld).Length;
 
+				PersistentData.GetInstance().maxWorldReached = currentWorld;
+
 				if(passedLevelsCount == levelsInWorld)
 				{
 					int worldCount = PersistentData.GetInstance().levelsData.getWorldCount();
@@ -76,6 +78,7 @@ public class MapManager : MonoBehaviour
 					{
 						currentWorld++;
 					}
+					PersistentData.GetInstance().maxWorldReached = currentWorld;
 				}
 			}
 		}
@@ -251,10 +254,16 @@ public class MapManager : MonoBehaviour
 	protected void setLevelsData()
 	{
 		bool isConectedToFacebook = KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn;
+		bool friendInfoInWorld = false;
+
+		if (isConectedToFacebook) 
+		{
+			friendInfoInWorld = friendsOnWorldManager.existAnyFriendInWorld (currentWorld.ToString());
+		}
 
 		for(int i=0; i< mapLevels.Count; i++)
 		{
-			if(isConectedToFacebook)
+			if(isConectedToFacebook && friendInfoInWorld)
 			{
 				FriendInfo friendInfo = isThereAnyFriendOnLevel (currentWorld, mapLevels [i].lvlName);
 
@@ -274,7 +283,6 @@ public class MapManager : MonoBehaviour
 
 			if(mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_REACHED
 				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_PASSED
-				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_UNLOCKED
 				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_REACHED
 				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED)
 			{				
@@ -297,15 +305,17 @@ public class MapManager : MonoBehaviour
 			}
 		}
 
-		if(toNextLevel)
+		if(PersistentData.GetInstance().maxWorldReached <= currentWorld)
 		{
-			lastLevelPlayed.myProgress (isConectedToFacebook);
+			if(toNextLevel)
+			{
+				lastLevelPlayed.myProgress (isConectedToFacebook);
+			}
+			else
+			{
+				currentLevel.myProgress (isConectedToFacebook);
+			}
 		}
-		else
-		{
-			currentLevel.myProgress (isConectedToFacebook);
-		}
-
 	}
 
 	protected void setLastLevelReached()
@@ -422,6 +432,10 @@ public class MapManager : MonoBehaviour
 
 		if (level.isBoss)
 		{
+			//facebook
+			level.status = MapLevel.EMapLevelsStatus.BOSS_REACHED;
+			return;
+
 			if (DataManager.isLevelPassed (level.lvlName))
 			{
 				level.status = MapLevel.EMapLevelsStatus.BOSS_PASSED;
@@ -536,8 +550,6 @@ public class MapManager : MonoBehaviour
 		
 	public void unlockBoss(string lvlName)
 	{
-		(DataManagerKubera.GetInstance () as DataManagerKubera).unlockLevel (lvlName);
-
 		//TODO Hacer animacion
 		for (int i = 0; i < mapLevels.Count; i++)
 		{
@@ -552,6 +564,7 @@ public class MapManager : MonoBehaviour
 
 	protected void OnBossReachedPressed(MapLevel pressed)
 	{
+		print ((DataManagerKubera.GetInstance () as DataManagerKubera).getAllEarnedStars());
 		if ((DataManagerKubera.GetInstance () as DataManagerKubera).getAllEarnedStars() >= pressed.starsNeeded)
 		{
 			unlockBoss (pressed.fullLvlName);
@@ -761,7 +774,14 @@ public class MapManager : MonoBehaviour
 		{
 			if(!invitationToReview.isHappeningAReview (level))
 			{
-				OnLevelUnlockedPressed (nextLevel);
+				if(nextLevel.isBoss)
+				{
+					OnBossReachedPressed (nextLevel);
+				}
+				else
+				{
+					OnLevelUnlockedPressed (nextLevel);
+				}
 			}
 			else
 			{

@@ -12,6 +12,7 @@ namespace Kubera.Data
 		public int remoteDataVersion;//version de los datos del server
 		public string facebookId;//Id de facebook del usuario
 		public List<LevelData> levels;//niveles ya pasados
+		public List<LevelData> levelsPlayed;//niveles ya pasados
 		public int playerLifes;//Vidas del usuario
 		public string lifeTimerDate;//Para dar vidas por tiempo
 		public int maxLevelReached;//Para avance de mapa
@@ -173,7 +174,7 @@ namespace Kubera.Data
 
 			foreach(LevelData item in levels)
 			{
-				if(item.world > result)
+				if(item.passed && item.world > result)
 				{
 					result = item.world;
 				}

@@ -52,7 +52,7 @@ public class FacebookManager : Manager<FacebookManager>
 		fbGraph.OnPlayerInfo += showPlayerInfo;
 		fbGraph.OnGetGameFriends += addGameFriends;
 		fbGraph.OnGetInvitableFriends += addInivitableFriends;
-		fbGraph.OnGetFriendTextures += addFriendsImage;
+		fbGraph.OnGetFriendTextures += addUsersImage;
 		fbGraph.onFinishGettingFriends += mergeFriends;
 
 		fbGraph.OnGetAppRequest += chanelData;
@@ -79,6 +79,10 @@ public class FacebookManager : Manager<FacebookManager>
 			else
 			{
 				fbGraph.setActive ();
+
+
+				fillRequestPanel (FacebookPersistentData.GetInstance().gameFriends, FBFriendsRequestPanel.EFriendsType.GAME);
+				fillRequestPanel (FacebookPersistentData.GetInstance().allFriends, FBFriendsRequestPanel.EFriendsType.ALL);
 			}
 
 			fbGraph.getFriendsAppRequests ();
@@ -130,8 +134,14 @@ public class FacebookManager : Manager<FacebookManager>
 		fillRequestPanel (FacebookPersistentData.GetInstance().allFriends, FBFriendsRequestPanel.EFriendsType.ALL);
 	}
 
-	protected void addFriendsImage(string id, Texture image)
+	protected void addUsersImage(string id, Texture image,bool myPicture = false)
 	{
+		if(myPicture)
+		{
+			FacebookPersistentData.GetInstance().addFriendImage (id, image);
+			return;
+		}
+		
 		if(FacebookPersistentData.GetInstance().containTextureByID(id))
 		{			
 			FacebookPersistentData.GetInstance().addFriendImage (id, image);
@@ -144,7 +154,7 @@ public class FacebookManager : Manager<FacebookManager>
 		if(life)
 		{
 			//print("recibi " + giftCount + ": vidas");	
-			LifesManager.GetInstance ().giveALife ();
+			LifesManager.GetInstance ().giveALife (giftCount);
 		}
 		else
 		{
@@ -334,7 +344,9 @@ public class FacebookManager : Manager<FacebookManager>
 
 				if(askedKeys.Count == maxUsersPerMessage || idExistOnList (giftKeys,playerID )|| !(DataManagerKubera.GetInstance () as DataManagerKubera).isLevelLocked(bossReached))
 				{
-					deleteAppRequest (requestID);
+
+					print ("delete boosKey");
+					//deleteAppRequest (requestID);
 				}
 				else
 				{
@@ -494,7 +506,7 @@ public class FacebookManager : Manager<FacebookManager>
 			Texture friendTexture = FacebookPersistentData.GetInstance().getTextureFromURL (FacebookPersistentData.GetInstance().getFriendPictureUrl (FacebookPersistentData.GetInstance().getFriendInfo (id)));
 			return friendTexture;
 		}
-		return FacebookPersistentData.GetInstance().friendsImage [id];
+		return FacebookPersistentData.GetInstance().facebookUsersImage [id];
 	}
 
 
@@ -529,7 +541,7 @@ public class FacebookManager : Manager<FacebookManager>
 		fbGraph.OnPlayerInfo -= showPlayerInfo;
 		fbGraph.OnGetGameFriends -= addGameFriends;
 		fbGraph.OnGetInvitableFriends -= addInivitableFriends;
-		fbGraph.OnGetFriendTextures -= addFriendsImage;
+		fbGraph.OnGetFriendTextures -= addUsersImage;
 
 		fbGraph.OnGetAppRequest -= chanelData;
 
