@@ -927,7 +927,11 @@ public class MapManager : MonoBehaviour
 			if(AudioManager.GetInstance())
 			{
 				AudioManager.GetInstance ().Stop ("gamePlay",false);
-				AudioManager.GetInstance ().Play ("menuMusic");
+
+				if(!AudioManager.GetInstance().IsPlaying("menuMusic"))
+				{
+					AudioManager.GetInstance ().Play ("menuMusic");
+				}
 			}
 		}
 	}

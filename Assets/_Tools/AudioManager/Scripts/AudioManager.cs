@@ -159,6 +159,22 @@ public class AudioManager : Manager<AudioManager>
         }
     }
 
+	public bool IsPlaying(string strAudioItemId)
+	{
+		AudioCategory ac;
+		AudioItem ai = GetAudioItem(strAudioItemId, out ac);
+		if (ai != null)
+		{
+			return ai.IsPlaying ();
+		}
+		else
+		{
+			if (_mustShowDebugInfo)
+				Debug.Log("AudioItem [" + strAudioItemId + "] not founded!");
+			return false;
+		}
+	}
+
     /*
     *  Function: Resume all paused Audios
     *  Parameter: None
@@ -1142,6 +1158,11 @@ public class AudioItem
     {
         relatedCategory = pAudioCategory;
     }
+
+	public bool IsPlaying()
+	{
+		return playingAudioObjsMap.Count > 0;
+	}
 
 }
 #endregion
