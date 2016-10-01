@@ -119,7 +119,7 @@ public class TutorialLvl1 : TutorialBase
 
 			shakeToErrase ();
 
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SUBMIT_WORD);
+			Invoke ("highLightSubmitButton",1.5f);
 
 			Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
@@ -130,6 +130,11 @@ public class TutorialLvl1 : TutorialBase
 		}
 
 		return base.canMoveToNextPhase ();
+	}
+
+	protected void highLightSubmitButton()
+	{
+		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SUBMIT_WORD);
 	}
 
 	public override bool phaseObjectiveAchived ()

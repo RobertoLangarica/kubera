@@ -155,6 +155,8 @@ namespace Kubera.Data
 
 				currUser.addLevel(level);
 			}
+
+			KuberaAnalytics.GetInstance ().registerLevelAttempts (levelName,level.attempts);
 				
 			currUser.isDirty = true;
 
@@ -179,6 +181,7 @@ namespace Kubera.Data
 
 			if(level != null)
 			{
+				KuberaAnalytics.GetInstance ().registerFirstWinAttempts (levelName,level.attempts);
 				level.updateOnlyIncrementalValues(stars, points);
 				level.updatePassed(true);
 				level.attempts++;
@@ -195,7 +198,12 @@ namespace Kubera.Data
 				level.isDirty	= true;
 
 				currUser.addLevel(level);
+
+				KuberaAnalytics.GetInstance ().registerFirstWinStars (levelName,stars);
+				KuberaAnalytics.GetInstance ().registerFirstWinAttempts (levelName,level.attempts);
 			}
+
+			KuberaAnalytics.GetInstance ().registerLevelAttempts (levelName,level.attempts);
 
 			//El maximo avance
 			currUser.isDirty = currUser.upgradeMaxLevelReached(int.Parse(level._id)) || currUser.isDirty;
@@ -359,6 +367,18 @@ namespace Kubera.Data
 			}
 
 			return level.points;
+		}
+
+		public int getLevelAttempts(string levelName)
+		{
+			LevelData level = currentUser.getLevelById(levelName);
+
+			if(level == null)
+			{
+				return 0;
+			}
+
+			return level.attempts;
 		}
 
 		public void giveUserLifes(int amount = 1)

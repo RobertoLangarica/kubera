@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using Facebook.Unity;
+using Kubera.Data;
 
 public class FBFriendsRequestPanel : PopUpBase {
 
@@ -213,6 +214,8 @@ public class FBFriendsRequestPanel : PopUpBase {
 		switch (currentRequestType) {
 		case ERequestType.ASK_KEYS:
 
+			KuberaAnalytics.GetInstance ().registerFacebookKeyRequest (PersistentData.GetInstance().lastLevelReachedName);
+
 			if(friendsIds.Count>30)
 			{
 				for(int i=0,k = 0; i <= friendGroups; i++)
@@ -240,6 +243,12 @@ public class FBFriendsRequestPanel : PopUpBase {
 
 			break;
 		case ERequestType.ASK_LIFES:
+
+			if (!((DataManagerKubera)DataManagerKubera.GetInstance ()).alreadyAskForLifes()) 
+			{
+				KuberaAnalytics.GetInstance ().registerFacebookFirstLifeRequest (PersistentData.GetInstance().lastLevelReachedName);
+				((DataManagerKubera)DataManagerKubera.GetInstance ()).markLifesAsAsked ();
+			}
 
 			if(friendsIds.Count>30)
 			{

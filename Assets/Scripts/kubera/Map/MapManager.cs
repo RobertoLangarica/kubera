@@ -288,6 +288,7 @@ public class MapManager : MonoBehaviour
 				|| mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED)
 			{				
 				currentLevel = mapLevels [i];
+				PersistentData.GetInstance ().lastLevelReachedName = currentLevel.fullLvlName;
 				if(fromGame && PersistentData.GetInstance().currentLevel.name == mapLevels[i].fullLvlName) 
 				{
 					lastLevelPlayed = mapLevels [i];
@@ -340,6 +341,7 @@ public class MapManager : MonoBehaviour
 		if(currentLevel == null)
 		{
 			currentLevel = mapLevels [0];
+			PersistentData.GetInstance ().lastLevelReachedName = currentLevel.fullLvlName;
 		}
 
 		if(first)
@@ -358,15 +360,22 @@ public class MapManager : MonoBehaviour
 			{
 				popUpManager.activatePopUp ("retryPopUp");
 				stopInput (true);
+
+				(DataManagerKubera.GetInstance () as DataManagerKubera).incrementLevelAttemp (PersistentData.GetInstance ().currentLevel.name);
+
+				if (LifesManager.GetInstance ().currentUser.playerLifes == 0) 
+				{
+					KuberaAnalytics.GetInstance ().registerLevelWhereReached0Lifes (PersistentData.GetInstance ().currentLevel.name);
+				}
 			}
 			else
 			{
-				int starsReached = PersistentData.GetInstance ().lastLevelStars;//;(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
-				int pointsMade = PersistentData.GetInstance ().lastLevelPoints;//(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
+				int starsReached = PersistentData.GetInstance ().lastPlayedLevelStars;//;(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelStars (PersistentData.GetInstance ().currentLevel.name);
+				int pointsMade = PersistentData.GetInstance ().lastPlayedLevelPoints;//(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelPoints (PersistentData.GetInstance ().currentLevel.name);
 
 				goalManager.initializeFromString(PersistentData.GetInstance().currentLevel.goal);
 
-				string levelName = PersistentData.GetInstance ().currentLevel.name ;
+				string levelName = PersistentData.GetInstance ().currentLevel.name;
 				for (int i = 0; i < levelName.Length; i++) 
 				{
 					if (levelName [i] == '0') 
@@ -555,6 +564,7 @@ public class MapManager : MonoBehaviour
 
 	protected void OnBossReachedPressed(MapLevel pressed)
 	{
+		KuberaAnalytics.GetInstance ().registerForBossReached (pressed.fullLvlName,(DataManagerKubera.GetInstance () as DataManagerKubera).getAllEarnedStars());
 		if ((DataManagerKubera.GetInstance () as DataManagerKubera).getAllEarnedStars() >= pressed.starsNeeded)
 		{
 			unlockBoss (pressed.fullLvlName);

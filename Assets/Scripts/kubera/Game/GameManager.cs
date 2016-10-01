@@ -73,6 +73,10 @@ public class GameManager : MonoBehaviour
 
 	protected bool cancelBonify;
 
+	//Para los analiticos
+	protected Dictionary<string,int> powerUpsUsedCount = new Dictionary<string, int>();
+	protected int expendedGems = 0;
+
 	void Start()
 	{
 		isAnObjectMissing ();
@@ -121,6 +125,11 @@ public class GameManager : MonoBehaviour
 		//TODO: hardcoding
 		bonificationPiecePrefab.SetActive (true);
 		//TODO: Control de flujo de juego con un init
+
+		for (int i = 0; i < powerupManager.powerups.Count; i++) 
+		{
+			powerUpsUsedCount.Add (powerupManager.powerups [i].type.ToString (), 0);
+		}
 	}
 
 	void OnDestroy()
@@ -592,6 +601,8 @@ public class GameManager : MonoBehaviour
 
 	public void OnRetrieveWord()
 	{
+		KuberaAnalytics.GetInstance ().registerCreatedWord (currentLevel.name,wordManager.getCurrentWordOnList(),wordManager.letters.Count);
+
 		//Contamos obstaculos y si la meta es usar letras entonces vemos si se usan
 		goalManager.submitWord(wordManager.letters);
 
@@ -844,6 +855,7 @@ public class GameManager : MonoBehaviour
 	{
 		remainingMoves += secondChance.movements;
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
+		expendedGems += secondChance.getCurrentPrice ();
 		secondChanceFreeBombs ();
 		allowGameInput (true);
 	}
@@ -876,6 +888,8 @@ public class GameManager : MonoBehaviour
 
 	protected void winBonification()
 	{
+		KuberaAnalytics.GetInstance().registerForBeforeBonification(currentLevel.name,pointsCount,remainingMoves);
+
 		HighLightManager.GetInstance ().turnOffAllHighLights ();
 		wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
 		updatePiecesLight (true);
@@ -1057,8 +1071,8 @@ public class GameManager : MonoBehaviour
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
-				PersistentData.GetInstance ().lastLevelStars = hudManager.getEarnedStars();
-				PersistentData.GetInstance ().lastLevelPoints = pointsCount;
+				PersistentData.GetInstance ().lastPlayedLevelStars = hudManager.getEarnedStars();
+				PersistentData.GetInstance ().lastPlayedLevelPoints = pointsCount;
 
 				Invoke ("toLevels", 0.75f);
 			}
@@ -1071,8 +1085,8 @@ public class GameManager : MonoBehaviour
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
-				PersistentData.GetInstance ().lastLevelStars = hudManager.getEarnedStars();
-				PersistentData.GetInstance ().lastLevelPoints = pointsCount;
+				PersistentData.GetInstance ().lastPlayedLevelStars = hudManager.getEarnedStars();
+				PersistentData.GetInstance ().lastPlayedLevelPoints = pointsCount;
 
 				LifesManager.GetInstance ().giveALife();
 
@@ -1097,6 +1111,27 @@ public class GameManager : MonoBehaviour
 		if(ScreenManager.GetInstance())
 		{
 			ScreenManager.GetInstance().testContinue();
+		}
+
+		KuberaAnalytics.GetInstance ().registerPowerUpsUse (currentLevel.name,powerUpsUsedCount,
+			(DataManagerKubera.GetInstance() as DataManagerKubera).getLevelAttempts(currentLevel.name));
+
+		KuberaAnalytics.GetInstance ().registerGemsUsedOnLevel (currentLevel.name,expendedGems);
+
+		if (expendedGems != 0) 
+		{
+			if (!((DataManagerKubera)DataManagerKubera.GetInstance ()).alreadyUseGems ()) 
+			{
+				KuberaAnalytics.GetInstance ().registerGemsUsedForFirstTime (currentLevel.name);
+				((DataManagerKubera)DataManagerKubera.GetInstance ()).markGemsAsUsed ();
+			}
+
+			if (((DataManagerKubera)DataManagerKubera.GetInstance ()).alreadyPurchaseGems () &&
+			   !((DataManagerKubera)DataManagerKubera.GetInstance ()).alreadyUseGemsAfterPurchase ()) 
+			{
+				KuberaAnalytics.GetInstance ().registerGemsUsedAfterFirstPurchase (currentLevel.name);
+				((DataManagerKubera)DataManagerKubera.GetInstance ()).markGemsAsUsedAfterPurchased ();
+			}
 		}
 
 		//ScreenManager.instance.GoToScene ("Levels");
@@ -1236,12 +1271,17 @@ public class GameManager : MonoBehaviour
 		if(isBombAndSecondChance(type))
 		{
 			useFreeBomb ();
+			powerUpsUsedCount[type.ToString()]++;
 		}
 		else
 		{
 
 			if(!powerupManager.getPowerupByType(type).isFree)
-			{GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(powerupManager.getPowerUpPrice(type));}
+			{
+				GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(powerupManager.getPowerUpPrice(type));
+				expendedGems += powerupManager.getPowerUpPrice (type);
+				powerUpsUsedCount[type.ToString()]++;
+			}
 		}
 
 		allowGameInput(true);
@@ -1377,7 +1417,7 @@ public class GameManager : MonoBehaviour
 	{
 		PersistentData.GetInstance().startLevel -= 1;
 		PersistentData.GetInstance ().fromLoose = true;
-		PersistentData.GetInstance ().fromGameToLevels = true;
+		PersistentData.GetInstance ().fromGameToLevels = true;		
 		activatePopUp ("exitGame");
 		//toLevels ();
 		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);

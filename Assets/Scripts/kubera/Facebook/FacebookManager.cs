@@ -197,10 +197,10 @@ public class FacebookManager : Manager<FacebookManager>
 
 	public void sendLife(List<string> friendsIDs)
 	{
-		if (!canPublish())
+		/*if (!canPublish())
 		{
 			return;
-		}
+		}*/
 
 		FB.AppRequest ("Here, take this life!", // A message for the user
 			OGActionType.SEND, // Can be .Send or .AskFor depending on what you want to do with the object.
@@ -217,10 +217,10 @@ public class FacebookManager : Manager<FacebookManager>
 
 	public void sendKey(List<string> friendsIDs,string bossReached)
 	{
-		if (!canPublish())
+		/*if (!canPublish())
 		{
 			return;
-		}
+		}*/
 
 		print (bossReached);
 
