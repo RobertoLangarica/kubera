@@ -72,6 +72,13 @@ public class KuberaWebView : MonoBehaviour
 				GemsManager.GetCastedInstance<GemsManager> ().currentUser.accesToken);
 			break;
 		case(WEBVIEW_GEMS):
+			
+			if (!((DataManagerKubera)DataManagerKubera.GetInstance ()).alreadyPurchaseGems ()) 
+			{
+				KuberaAnalytics.GetInstance ().registerGemsFirstPurchase (PersistentData.GetInstance().lastLevelReachedName);
+				((DataManagerKubera)DataManagerKubera.GetInstance ()).markGemsAsPurchased ();
+			}
+
 			GemsManager.GetCastedInstance<GemsManager>().OnGemsRemotleyChanged();
 			break;
 		case(WEBVIEW_FINISH):

@@ -1117,6 +1117,23 @@ public class GameManager : MonoBehaviour
 			(DataManagerKubera.GetInstance() as DataManagerKubera).getLevelAttempts(currentLevel.name));
 
 		KuberaAnalytics.GetInstance ().registerGemsUsedOnLevel (currentLevel.name,expendedGems);
+
+		if (expendedGems != 0) 
+		{
+			if (!((DataManagerKubera)DataManagerKubera.GetInstance ()).alreadyUseGems ()) 
+			{
+				KuberaAnalytics.GetInstance ().registerGemsUsedForFirstTime (currentLevel.name);
+				((DataManagerKubera)DataManagerKubera.GetInstance ()).markGemsAsUsed ();
+			}
+
+			if (((DataManagerKubera)DataManagerKubera.GetInstance ()).alreadyPurchaseGems () &&
+			   !((DataManagerKubera)DataManagerKubera.GetInstance ()).alreadyUseGemsAfterPurchase ()) 
+			{
+				KuberaAnalytics.GetInstance ().registerGemsUsedAfterFirstPurchase (currentLevel.name);
+				((DataManagerKubera)DataManagerKubera.GetInstance ()).markGemsAsUsedAfterPurchased ();
+			}
+		}
+
 		//ScreenManager.instance.GoToScene ("Levels");
 	}
 

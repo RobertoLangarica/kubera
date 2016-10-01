@@ -60,7 +60,7 @@ namespace Kubera.Data
 			return currentUser.lifesAsked;
 		}
 
-		public bool markGemsAsUsed()
+		public void markGemsAsUsed()
 		{
 			KuberaUser currUser = currentUser;
 
@@ -78,7 +78,7 @@ namespace Kubera.Data
 			}
 		}
 
-		public bool markGemsAsPurchased()
+		public void markGemsAsPurchased()
 		{
 			KuberaUser currUser = currentUser;
 
@@ -96,7 +96,7 @@ namespace Kubera.Data
 			}
 		}
 
-		public bool markGemsAsUsedAfterPurchased()
+		public void markGemsAsUsedAfterPurchased()
 		{
 			KuberaUser currUser = currentUser;
 
@@ -114,7 +114,7 @@ namespace Kubera.Data
 			}
 		}
 
-		public bool markLifesAsAsked()
+		public void markLifesAsAsked()
 		{
 			KuberaUser currUser = currentUser;
 

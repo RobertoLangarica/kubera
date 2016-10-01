@@ -19,8 +19,12 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 	public const string FX_TURNED_OFF						 = "fxTurnedOff";
 	public const string GEMS_USED_ON_LEVEL					 = "gemsUsedOnLevel";
 	public const string GEMS_USED_IN_LIFES					 = "gemUsedInLifes";
+	public const string GEMS_USED_FOR_FIRST_TIME			 = "gemsUsedForFirstTime";
+	public const string GEMS_USED_AFTER_FIRST_PURCHASE		 = "gemsUsedAfterFirstPurchased";
+	public const string GEMS_FIRST_PURCHASE					 = "gemsFirstPurchase";
 	public const string BOSS_REACHED						 = "bossReached";
 	public const string FACEBOOK_KEY_REQUEST				 = "facebookKeyRequest";
+	public const string FACEBOOK_FIRST_LIFE_REQUEST			 = "facebookFirstLifeRequest";
 
 	protected DateTime epoch = new DateTime(1970,1,1,0,0,0,DateTimeKind.Local);
 
@@ -47,6 +51,11 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 	protected void switchForUnityAnalytics(bool activate)
 	{
 		FlurryAnalytics.Instance.replicateDataToUnityAnalytics = activate;
+	}
+
+	void Start()
+	{
+		switchForUnityAnalytics (true);
 	}
 
 	void OnApplicationPause(bool pauseStatus)
@@ -151,6 +160,14 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 				{"User",DataManagerKubera.GetInstance().currentUserId}});
 	}
 
+	public void registerFacebookFirstLifeRequest(string level)
+	{
+		registerEventWithParameters(FACEBOOK_FIRST_LIFE_REQUEST,
+			new Dictionary<string, string>() {
+				{"Level",level},
+				{"User",DataManagerKubera.GetInstance().currentUserId}});
+	}
+
 	public void registerGemsUsedOnLevel(string level,int gems)
 	{
 		registerEventWithParameters(GEMS_USED_ON_LEVEL,
@@ -163,6 +180,30 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 	public void registerGemsUsedOnLifes(string level)
 	{
 		registerEventWithParameters(GEMS_USED_IN_LIFES,
+			new Dictionary<string, string>() {
+				{"Level",level},
+				{"User",DataManagerKubera.GetInstance().currentUserId}});
+	}
+
+	public void registerGemsUsedForFirstTime(string level)
+	{
+		registerEventWithParameters(GEMS_USED_FOR_FIRST_TIME,
+			new Dictionary<string, string>() {
+				{"Level",level},
+				{"User",DataManagerKubera.GetInstance().currentUserId}});
+	}
+
+	public void registerGemsUsedAfterFirstPurchase(string level)
+	{
+		registerEventWithParameters(GEMS_USED_AFTER_FIRST_PURCHASE,
+			new Dictionary<string, string>() {
+				{"Level",level},
+				{"User",DataManagerKubera.GetInstance().currentUserId}});
+	}
+
+	public void registerGemsFirstPurchase(string level)
+	{
+		registerEventWithParameters(GEMS_FIRST_PURCHASE,
 			new Dictionary<string, string>() {
 				{"Level",level},
 				{"User",DataManagerKubera.GetInstance().currentUserId}});

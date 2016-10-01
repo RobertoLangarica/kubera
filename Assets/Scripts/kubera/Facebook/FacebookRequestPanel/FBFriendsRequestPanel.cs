@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using Facebook.Unity;
+using Kubera.Data;
 
 public class FBFriendsRequestPanel : PopUpBase {
 
@@ -242,6 +243,12 @@ public class FBFriendsRequestPanel : PopUpBase {
 
 			break;
 		case ERequestType.ASK_LIFES:
+
+			if (!((DataManagerKubera)DataManagerKubera.GetInstance ()).alreadyAskForLifes()) 
+			{
+				KuberaAnalytics.GetInstance ().registerFacebookFirstLifeRequest (PersistentData.GetInstance().lastLevelReachedName);
+				((DataManagerKubera)DataManagerKubera.GetInstance ()).markLifesAsAsked ();
+			}
 
 			if(friendsIds.Count>30)
 			{
