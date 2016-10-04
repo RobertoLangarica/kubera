@@ -1071,8 +1071,9 @@ public class GameManager : MonoBehaviour
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
-				PersistentData.GetInstance ().lastPlayedLevelStars = hudManager.getEarnedStars();
+				PersistentData.GetInstance ().lastPlayedLevelStars = 3;
 				PersistentData.GetInstance ().lastPlayedLevelPoints = pointsCount;
+				LifesManager.GetInstance ().giveALife(1,true);
 
 				Invoke ("toLevels", 0.75f);
 			}
