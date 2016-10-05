@@ -25,6 +25,7 @@ public class PowerUpManager : MonoBehaviour
 				powerup.OnPowerupCanceled += cancelPowerup;
 				powerup.OnPowerupCompleted += completePowerup;
 				powerup.OnPowerupCompletedNoGems += completePowerupNoGems;
+				powerup.priceText.text = getPowerUpPrice (powerup.type).ToString();
 			}
 		}
 	}
