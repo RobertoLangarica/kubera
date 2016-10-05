@@ -138,8 +138,6 @@ public class SettingsButton : MonoBehaviour
 			//Activar los otros botones
 			settingsBackground.transform.DOLocalRotate (Vector3.zero,0.3f).SetId(settingsBackground).OnComplete(()=>
 				{
-
-
 					Exit.enabled = true;
 					Music.enabled = true;
 					Sounds.enabled = true;
@@ -154,7 +152,7 @@ public class SettingsButton : MonoBehaviour
 		{
 			DOTween.Kill(settingsBackground,true);
 
-			Exit.transform.DOScale(Vector3.zero,0.2f).SetEase(Ease.InBack);
+			/*Exit.transform.DOScale(Vector3.zero,0.2f).SetEase(Ease.InBack);
 			Music.transform.DOScale(Vector3.zero,0.2f).SetEase(Ease.InBack);
 			Sounds.transform.DOScale(Vector3.zero,0.2f).SetEase(Ease.InBack).OnComplete(()=>
 				{
@@ -165,6 +163,18 @@ public class SettingsButton : MonoBehaviour
 							settingsBackground.SetActive(false);
 
 						});
+				});*/
+
+			settingsBackground.transform.DOLocalRotate (new Vector3 (0, 0, -180),0.3f).SetId(settingsBackground).OnComplete(()=>
+				{
+					settingsBackground.SetActive(false);
+					/*Exit.enabled = true;
+					Music.enabled = true;
+					Sounds.enabled = true;
+
+					Exit.transform.DOScale(Vector3.one,0.2f).SetEase(Ease.OutBack);
+					Music.transform.DOScale(Vector3.one,0.2f).SetEase(Ease.OutBack);
+					Sounds.transform.DOScale(Vector3.one,0.2f).SetEase(Ease.OutBack);*/
 				});
 
 			PointerOnScene.SetActive(false);

@@ -777,23 +777,23 @@
 		<text id="fbConectButton">
 			<languages>
 				<language id="english" text="LogIn Faceebok"/>
-				<language id="spanish" text="Conectar Facebook"/>
-				<language id="default" text="Conectar Facebook"/>
+				<language id="spanish" text="Conectar"/>
+				<language id="default" text="Conectar"/>
 			</languages>
 		</text>
 
 		<text id="fbLogInText">
 			<languages>
 				<language id="english" text="LogIn Faceebok"/>
-				<language id="spanish" text="Conectar Facebook"/>
-				<language id="default" text="Conectar Facebook"/>
+				<language id="spanish" text="Conectar"/>
+				<language id="default" text="Conectar"/>
 			</languages>
 		</text>
 		<text id="fbLogOutText">
 			<languages>
-				<language id="english" text="LogOut Faceebok"/>
-				<language id="spanish" text="Desconectar Facebook"/>
-				<language id="default" text="Desconectar Facebook"/>
+				<language id="english" text="LogOut"/>
+				<language id="spanish" text="Desconectar"/>
+				<language id="default" text="Desconectar "/>
 			</languages>                    
 		</text>
 

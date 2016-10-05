@@ -162,6 +162,10 @@ TextureImporter:
     21300310: K-Mapa_base_out-of-order
     21300312: K-popups-pq_candado1
     21300314: K-popups-pq_candado2
+    21300316: Facebook
+    21300318: facebook_blanco
+    21300320: K-inicio_shopika
+    21300322: K-inicio_btnshopika
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -218,11 +222,22 @@ TextureImporter:
     allowsAlphaSplitting: 0
   spriteSheet:
     sprites:
+    - name: facebook_blanco
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 140
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: K-_estrella1
       rect:
         serializedVersion: 2
-        x: 659
-        y: 619
+        x: 469
+        y: 144
         width: 21
         height: 20
       alignment: 9
@@ -232,7 +247,7 @@ TextureImporter:
     - name: K-_estrella2
       rect:
         serializedVersion: 2
-        x: 439
+        x: 506
         y: 130
         width: 9
         height: 9
@@ -380,7 +395,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 677
-        y: 202
+        y: 198
         width: 102
         height: 411
       alignment: 0
@@ -398,6 +413,28 @@ TextureImporter:
         - {x: 51, y: -166.5}
         - {x: 47, y: -106.5}
         - {x: 1, y: 205.5}
+    - name: K-inicio_btnshopika
+      rect:
+        serializedVersion: 2
+        x: 659
+        y: 615
+        width: 70
+        height: 24
+      alignment: 9
+      pivot: {x: 0.50714284, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-inicio_shopika
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 121
+        width: 61
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: K-Mapa_1caminoAzul
       rect:
         serializedVersion: 2
@@ -1545,7 +1582,7 @@ TextureImporter:
     - name: K-popups-pq_candado2
       rect:
         serializedVersion: 2
-        x: 439
+        x: 496
         y: 145
         width: 30
         height: 19
@@ -1782,7 +1819,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 693
-        y: 27
+        y: 23
         width: 175
         height: 169
       alignment: 0
