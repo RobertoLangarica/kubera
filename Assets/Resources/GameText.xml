@@ -68,8 +68,8 @@
 		<text id="hudScore">
 			<languages>
 				<language id="english" text="score"/>
-				<language id="spanish" text="puntuación"/>
-				<language id="default" text="puntuación"/>
+				<language id="spanish" text="puntos"/>
+				<language id="default" text="puntos"/>
 			</languages>
 		</text>
 

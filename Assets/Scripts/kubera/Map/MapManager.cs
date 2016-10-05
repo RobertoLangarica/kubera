@@ -185,7 +185,14 @@ public class MapManager : MonoBehaviour
 		paralaxManager.enabled = true;
 		PersistentData.GetInstance ().currentWorld = currentWorld;
 
-		Invoke ("onFinishLoad",0.65f);
+		if(fromGame)
+		{
+			Invoke ("onFinishLoad",0.1f);
+		}
+		else
+		{
+			Invoke ("onFinishLoad",0.7f);
+		}
 	}
 
 	protected void configureWorldOnScene(int world)
@@ -312,14 +319,15 @@ public class MapManager : MonoBehaviour
 
 				if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
 				{
-					toStairs = true;
+					if(currentWorld +1 <= worlds.Count)
+					{
+						toStairs = true;
+					}
 					toNextLevel = false;
 				}
 			}
 		}
 
-		print ("PersistentData.GetInstance ().maxWorldReached  "+PersistentData.GetInstance().maxWorldReached);
-		print ("currentWorld  "+currentWorld);
 		if(PersistentData.GetInstance().maxWorldReached <= currentWorld)
 		{
 			if(toNextLevel)
@@ -745,11 +753,16 @@ public class MapManager : MonoBehaviour
 			aABLetterObjectives = 2;
 			break;
 		case GoalManager.OBSTACLES:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_OBSTACLES_ID;
+			textToReplace = "{{blackLetters}}";
+			replacement = (Convert.ToInt32(parameters)).ToString();
+
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_OBSTACLES_ID_A;
 			textA = MultiLanguageTextManager.instance.getTextByID (textId);
-			/*textToReplace = "{{goalObstacleLetters}}";
-			replacement = (Convert.ToInt32(parameters)).ToString();*/
-			aABLetterObjectives = 1;
+
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_OBSTACLES_ID_B;
+			textB = MultiLanguageTextManager.instance.getTextByID (textId).Replace (textToReplace, replacement);
+
+			aABLetterObjectives = 0;
 			break;
 		case GoalManager.POINTS:
 			textToReplace = "{{goalPoints}}";
@@ -772,11 +785,16 @@ public class MapManager : MonoBehaviour
 			aABLetterObjectives = 0;
 			break;
 		case GoalManager.SYNONYMOUS:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID;
+			textToReplace = "{{word}}";
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID_A;
 			textA = MultiLanguageTextManager.instance.getTextByID (textId);
 			word= (List<string>)parameters;
 			replacement = word[0];
 			textB = replacement;
+
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID_B;
+			textB = MultiLanguageTextManager.instance.getTextByID (textId).Replace(textToReplace,replacement);
+
 			aABLetterObjectives = 0;
 			break;
 		case GoalManager.WORD:
@@ -788,11 +806,16 @@ public class MapManager : MonoBehaviour
 			aABLetterObjectives = 0;
 			break;		
 		case GoalManager.ANTONYMS:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_ANTONYM_ID;
+			textToReplace = "{{word}}";
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_ANTONYM_ID_A;
 			textA = MultiLanguageTextManager.instance.getTextByID (textId);
 			word= (List<string>)parameters;
 			replacement = word[0];
 			textB = replacement;
+
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID_B;
+			textB = MultiLanguageTextManager.instance.getTextByID (textId).Replace(textToReplace,replacement);
+
 			aABLetterObjectives = 0;
 			break;
 		}
@@ -852,10 +875,8 @@ public class MapManager : MonoBehaviour
 		worlds [currentWorld-1].SetActive (true);
 		WorldPrefab.SetActive (true);
 
-		print ("showWorld");
 		if(toStairs)
 		{
-			print ("toStairs");
 			Invoke ("activateStairs", 0.5f);
 		}
 	}

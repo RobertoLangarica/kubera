@@ -1067,7 +1067,7 @@ public class GameManager : MonoBehaviour
 			{
 				//Se guarda en sus datos que ha pasado el nivel
 				(DataManagerKubera.GetInstance() as DataManagerKubera).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
-					hudManager.getEarnedStars(),pointsCount);
+					3,pointsCount);
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
