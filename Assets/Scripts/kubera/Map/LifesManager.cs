@@ -60,8 +60,8 @@ public class LifesManager : Manager<LifesManager>
 
 		if (Input.GetKeyUp (KeyCode.B)) 
 		{
-			takeALife ();
-			Debug.Log ("Se quitan las vidas");
+			giveALife ();
+			Debug.Log ("te dan una vida");
 		}
 
 		//Prueba para las vidas

@@ -49,10 +49,13 @@ public class MultiLanguageTextManager
 	public const string OBJECTIVE_POPUP_BY_WORDS_ID_A 		= "goalByWordsObjectivePopUpA";
 	public const string OBJECTIVE_POPUP_BY_WORDS_ID_B 		= "goalByWordsObjectivePopUpB";
 	public const string OBJECTIVE_POPUP_BY_LETTERS_ID 		= "goalByLettersObjectivePopUp";
-	public const string OBJECTIVE_POPUP_BY_OBSTACLES_ID 	= "goalByObstaclesObjectivePopUp";
+	public const string OBJECTIVE_POPUP_BY_OBSTACLES_ID_A 	= "goalByObstaclesObjectivePopUpA";
+	public const string OBJECTIVE_POPUP_BY_OBSTACLES_ID_B 	= "goalByObstaclesObjectivePopUpB";
 	public const string OBJECTIVE_POPUP_BY_1_WORD_ID 		= "goalBy1WordObjectivePopUp";
-	public const string OBJECTIVE_POPUP_BY_SYNONYMOUS_ID 	= "goalBySynonymousObjectivePopUp";
-	public const string OBJECTIVE_POPUP_BY_ANTONYM_ID 		= "goalByAntonymObjectivePopUp";
+	public const string OBJECTIVE_POPUP_BY_SYNONYMOUS_ID_A 	= "goalBySynonymousObjectivePopUpA";
+	public const string OBJECTIVE_POPUP_BY_SYNONYMOUS_ID_B 	= "goalBySynonymousObjectivePopUpB";
+	public const string OBJECTIVE_POPUP_BY_ANTONYM_ID_A 	= "goalByAntonymObjectivePopUpA";
+	public const string OBJECTIVE_POPUP_BY_ANTONYM_ID_B		= "goalByAntonymObjectivePopUpB";
 	public const string OBJECTIVE_POPUP_PLAY		 		= "goalPlay";
 	public const string OBJECTIVE_POPUP_FACEBOOK	 		= "goalFacebook";
 

@@ -103,8 +103,12 @@ public class GameManager : MonoBehaviour
 
 		hudManager.OnPopUpCompleted += popUpCompleted;
 		hudManager.OnPiecesScaled += checkIfLose;
-		//actualizamos gemas
-		GemsManager.GetCastedInstance<GemsManager>().OnGemsUpdated += hudManager.updateTextGems;
+
+		if(GemsManager.GetCastedInstance<GemsManager>())
+		{
+			//actualizamos gemas
+			GemsManager.GetCastedInstance<GemsManager>().OnGemsUpdated += hudManager.updateTextGems;
+		}
 
 		wordManager.onWordChange += refreshCurrentWordScoreOnHUD;
 		settingsButton.OnActivateMusic += activateMusic;
@@ -134,7 +138,10 @@ public class GameManager : MonoBehaviour
 
 	void OnDestroy()
 	{
-		GemsManager.GetCastedInstance<GemsManager>().OnGemsUpdated -= hudManager.updateTextGems;
+		if(GemsManager.GetCastedInstance<GemsManager>())
+		{
+			GemsManager.GetCastedInstance<GemsManager>().OnGemsUpdated -= hudManager.updateTextGems;
+		}
 	}
 
 	protected void startGame()
@@ -712,7 +719,11 @@ public class GameManager : MonoBehaviour
 
 		hudManager.updateTextPoints(0);
 		hudManager.showPieces (pieceManager.getShowingPieces ());
-		hudManager.updateTextGems(GemsManager.GetCastedInstance<GemsManager>().currentGems);
+		if(GemsManager.GetCastedInstance<GemsManager>())
+		{
+			hudManager.updateTextGems(GemsManager.GetCastedInstance<GemsManager>().currentGems);
+		}
+
 		hudManager.setLevelName (currentLevel.name);
 		hudManager.setSecondChanceLock (false);
 
@@ -1067,12 +1078,13 @@ public class GameManager : MonoBehaviour
 			{
 				//Se guarda en sus datos que ha pasado el nivel
 				(DataManagerKubera.GetInstance() as DataManagerKubera).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
-					hudManager.getEarnedStars(),pointsCount);
+					3,pointsCount);
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
-				PersistentData.GetInstance ().lastPlayedLevelStars = hudManager.getEarnedStars();
+				PersistentData.GetInstance ().lastPlayedLevelStars = 3;
 				PersistentData.GetInstance ().lastPlayedLevelPoints = pointsCount;
+				LifesManager.GetInstance ().giveALife(1,true);
 
 				Invoke ("toLevels", 0.75f);
 			}
