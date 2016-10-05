@@ -11,9 +11,18 @@ public class Stairs : MonoBehaviour {
 
 	public Image[] stairs;
 	public float lastPosition;
+
+	public Transform friendFirstPosition;
+	public Transform friendLastPosition;
+	public Image outOfOrder;
+	public ParticleSystem starsParticleSystem;
+
 	void Start()
 	{
 		lastPosition = stairs [stairs.Length - 1].rectTransform.anchoredPosition.x;
+		outOfOrder.gameObject.SetActive (false);
+
+		Invoke ("activateOutOfOrder", 0.6f);
 	}
 
 	void Update()
@@ -38,6 +47,14 @@ public class Stairs : MonoBehaviour {
 		}
 	}
 
+	public void activateOutOfOrder()
+	{
+		if(!active)
+		{
+			outOfOrder.gameObject.SetActive (true);
+		}
+	}
+
 	public void animateStairs()
 	{
 		active = true;
@@ -55,7 +72,52 @@ public class Stairs : MonoBehaviour {
 	{
 		if(active)
 		{			
-			mapManager.changeCurrentWorld (toWorld,true,false);
+			if(friendLastPosition != null && mapManager.isInLastLevelWorld)
+			{
+				DOTween.Kill ("animateWaiting");
+				mapManager.getCurrentLevel ().facebookBackground.transform.DOLocalMove (friendLastPosition.localPosition, 3.0f).OnComplete(()=>
+					{
+						mapManager.changeCurrentWorld (toWorld,true,false);
+					}).SetId("onClick").SetEase(Ease.Linear);
+			}
+			else
+			{
+				mapManager.changeCurrentWorld (toWorld,true,false);
+			}
 		}
+	}
+
+	public void animateToWait()
+	{
+		if(friendLastPosition == null)
+		{
+			return;
+		}
+
+		starsParticleSystem.Play ();
+		outOfOrder.GetComponentInChildren<Text> ().DOFade (0,1);
+		outOfOrder.DOFade (0, 1).OnComplete(()=>
+			{
+				mapManager.getCurrentLevel ().facebookBackground.transform.DOLocalMove (friendFirstPosition.localPosition, 1.0f).OnComplete(()=>
+					{
+						animateWaiting();
+						active = true;
+					}).SetId("animateToWait");
+			}
+		);
+	}
+
+	public void animateWaiting()
+	{
+		if(friendLastPosition == null)
+		{
+			return;
+		}
+
+		mapManager.getCurrentLevel ().facebookBackground.transform.DOShakePosition (1,4).OnComplete(()=>
+			{
+				animateWaiting();
+			}).SetId("animateWaiting");
+
 	}
 }

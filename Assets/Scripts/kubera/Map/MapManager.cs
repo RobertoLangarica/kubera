@@ -27,10 +27,12 @@ public class MapManager : MonoBehaviour
 	protected List<MapLevel> mapLevels;
 	protected bool fromGame;
 	protected bool fromLoose;
-	protected bool toDoor;
+	protected bool toStairs;
 	protected bool toNextLevel;
 	protected bool first;
 	protected bool last;
+
+	public bool isInLastLevelWorld;
 
 	protected MapLevel currentLevel = null;
 	protected MapLevel lastLevelPlayed = null;
@@ -50,6 +52,7 @@ public class MapManager : MonoBehaviour
 	public GoalAfterGame goalAfterGame;
 	public GoalPopUp goalPopUp;
 	public WorldsPopUp worldsPopUp;
+
 
 	void Start()
 	{
@@ -93,8 +96,16 @@ public class MapManager : MonoBehaviour
 			fromGame = true;
 			fromLoose= PersistentData.GetInstance ().fromLoose;
 			PersistentData.GetInstance ().fromGameToLevels = false;
-			toNextLevel = !PersistentData.GetInstance ().nextLevelIsReached;
 			nameOfLastLevelPlayed = PersistentData.GetInstance ().lastLevelPlayedName;
+
+			if(PersistentData.GetInstance().fromLoose)
+			{
+				toNextLevel = false;
+			}
+			else
+			{
+				toNextLevel = !PersistentData.GetInstance ().nextLevelIsReached;
+			}
 		}
 		PersistentData.GetInstance ().fromLevelsToGame = true;
 
@@ -124,7 +135,7 @@ public class MapManager : MonoBehaviour
 	{
 		KuberaUser user = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser;
 		int worldCount = PersistentData.GetInstance().levelsData.getWorldCount();
-		int maxWorldReached = user.maxWorldReached();
+		int maxWorldReached = PersistentData.GetInstance ().maxWorldReached;
 		int starsObtained =0;
 		List<LevelData> worldLevels;
 
@@ -174,7 +185,14 @@ public class MapManager : MonoBehaviour
 		paralaxManager.enabled = true;
 		PersistentData.GetInstance ().currentWorld = currentWorld;
 
-		Invoke ("onFinishLoad",0.1f);
+		if(fromGame)
+		{
+			Invoke ("onFinishLoad",0.1f);
+		}
+		else
+		{
+			Invoke ("onFinishLoad",0.7f);
+		}
 	}
 
 	protected void configureWorldOnScene(int world)
@@ -301,7 +319,10 @@ public class MapManager : MonoBehaviour
 
 				if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
 				{
-					toDoor = true;
+					if(currentWorld +1 <= worlds.Count)
+					{
+						toStairs = true;
+					}
 					toNextLevel = false;
 				}
 			}
@@ -315,6 +336,10 @@ public class MapManager : MonoBehaviour
 			}
 			else
 			{
+				if(toStairs)
+				{
+					isInLastLevelWorld = true;
+				}
 				currentLevel.myProgress (isConectedToFacebook);
 			}
 		}
@@ -395,7 +420,7 @@ public class MapManager : MonoBehaviour
 				stopInput (true);
 			}
 
-			if(toDoor)
+			if(toStairs)
 			{
 				paralaxManager.setPosByCurrentLevel (paralaxManager.getPosByLevel(mapLevels[mapLevels.Count-1]));
 			}
@@ -551,10 +576,8 @@ public class MapManager : MonoBehaviour
 		//TODO Hacer animacion
 		for (int i = 0; i < mapLevels.Count; i++)
 		{
-			print (mapLevels [i].fullLvlName);
 			if (mapLevels [i].fullLvlName == lvlName)
 			{
-				print (lvlName);
 				mapLevels [i].status = MapLevel.EMapLevelsStatus.BOSS_UNLOCKED;
 				mapLevels [i].OnClickNotification -= OnBossReachedPressed;
 				mapLevels [i].OnClickNotification += OnLevelUnlockedPressed;
@@ -568,7 +591,14 @@ public class MapManager : MonoBehaviour
 		if ((DataManagerKubera.GetInstance () as DataManagerKubera).getAllEarnedStars() >= pressed.starsNeeded)
 		{
 			unlockBoss (pressed.fullLvlName);
-			OnLevelUnlockedPressed (nextLevel);
+			if(nextLevel != null)
+			{
+				OnLevelUnlockedPressed (nextLevel);
+			}
+			else
+			{
+				OnLevelUnlockedPressed (pressed);
+			}
 		}
 		else
 		{
@@ -617,17 +647,28 @@ public class MapManager : MonoBehaviour
 	protected void activateStairs()
 	{
 		Stairs stairs = WorldPrefab.GetComponentInChildren<Stairs>();
-		print (stairs);
-		if(stairs)
+
+		if(stairs && !isInLastLevelWorld)
 		{
 			stairs.mapManager = this;
 			stairs.animateStairs ();
 		}
 	}
 
+	protected void stairsToWait()
+	{
+		Stairs stairs = WorldPrefab.GetComponentInChildren<Stairs>();
+
+		if(stairs && isInLastLevelWorld)
+		{
+			stairs.mapManager = this;
+			stairs.animateToWait ();
+		}
+	}
+
 	public void changeCurrentWorld(int world,bool isFirst, bool isLast)
 	{
-		toDoor = false;
+		toStairs = false;
 		if(isFirst)
 		{
 			first = true;
@@ -640,6 +681,13 @@ public class MapManager : MonoBehaviour
 		if(world != currentWorld)
 		{
 			currentWorld = world;
+			isInLastLevelWorld = false;
+
+			if(PersistentData.GetInstance().maxWorldReached < world)
+			{
+				PersistentData.GetInstance ().maxWorldReached = world;
+			}
+
 			changeWorld ();
 		}
 	}
@@ -705,11 +753,16 @@ public class MapManager : MonoBehaviour
 			aABLetterObjectives = 2;
 			break;
 		case GoalManager.OBSTACLES:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_OBSTACLES_ID;
+			textToReplace = "{{blackLetters}}";
+			replacement = (Convert.ToInt32(parameters)).ToString();
+
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_OBSTACLES_ID_A;
 			textA = MultiLanguageTextManager.instance.getTextByID (textId);
-			/*textToReplace = "{{goalObstacleLetters}}";
-			replacement = (Convert.ToInt32(parameters)).ToString();*/
-			aABLetterObjectives = 1;
+
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_OBSTACLES_ID_B;
+			textB = MultiLanguageTextManager.instance.getTextByID (textId).Replace (textToReplace, replacement);
+
+			aABLetterObjectives = 0;
 			break;
 		case GoalManager.POINTS:
 			textToReplace = "{{goalPoints}}";
@@ -732,11 +785,16 @@ public class MapManager : MonoBehaviour
 			aABLetterObjectives = 0;
 			break;
 		case GoalManager.SYNONYMOUS:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID;
+			textToReplace = "{{word}}";
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID_A;
 			textA = MultiLanguageTextManager.instance.getTextByID (textId);
 			word= (List<string>)parameters;
 			replacement = word[0];
 			textB = replacement;
+
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID_B;
+			textB = MultiLanguageTextManager.instance.getTextByID (textId).Replace(textToReplace,replacement);
+
 			aABLetterObjectives = 0;
 			break;
 		case GoalManager.WORD:
@@ -748,11 +806,16 @@ public class MapManager : MonoBehaviour
 			aABLetterObjectives = 0;
 			break;		
 		case GoalManager.ANTONYMS:
-			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_ANTONYM_ID;
+			textToReplace = "{{word}}";
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_ANTONYM_ID_A;
 			textA = MultiLanguageTextManager.instance.getTextByID (textId);
 			word= (List<string>)parameters;
 			replacement = word[0];
 			textB = replacement;
+
+			textId = MultiLanguageTextManager.OBJECTIVE_POPUP_BY_SYNONYMOUS_ID_B;
+			textB = MultiLanguageTextManager.instance.getTextByID (textId).Replace(textToReplace,replacement);
+
 			aABLetterObjectives = 0;
 			break;
 		}
@@ -812,7 +875,7 @@ public class MapManager : MonoBehaviour
 		worlds [currentWorld-1].SetActive (true);
 		WorldPrefab.SetActive (true);
 
-		if(toDoor)
+		if(toStairs)
 		{
 			Invoke ("activateStairs", 0.5f);
 		}
@@ -829,94 +892,105 @@ public class MapManager : MonoBehaviour
 		return friendsOnWorldManager.getFriendOnLevel (world, level);
 	}
 
+	public MapLevel getCurrentLevel()
+	{
+		return currentLevel;
+	}
+
 	private void OnPopupCompleted(string action ="")
 	{
 		stopInput(false);
-		switch (action) {
-			case "closeObjective":
-				if(toNextLevel)
-				{
-					paralaxManager.setPosToNextLevel (nextLevel);
-					lastLevelPlayed.moveProgress (nextLevel);
+		switch (action) 
+		{
+		case "closeObjective":
+			if(toNextLevel)
+			{
+				paralaxManager.setPosToNextLevel (nextLevel);
+				lastLevelPlayed.moveProgress (nextLevel);
 
-					toNextLevel = false;
-				}
-				showWorld();
-			break;
-			case "retry":
-			case "playGame":
+				toNextLevel = false;
+			}
+			else
+			{
+				stairsToWait ();
+			}
+			//showWorld();
+		break;
+		case "retry":
+		case "playGame":
+			stopInput(true);
+			//TODO probablemente no haga falta mostrar el mundo
+			//showWorld();
+			ScreenManager.GetInstance().GoToScene ("Game");
+		break;
+		case "continue":
+			if(toStairs)
+			{
+				//showWorld();
+				paralaxManager.setPosLastOrFirst (false);
+				stairsToWait ();
+			}
+			else if(toNextLevel)
+			{
+				//showWorld();
+				paralaxManager.setPosToNextLevel (nextLevel);
+				lastLevelPlayed.moveProgress (nextLevel);
+			}
+			else
+			{
+				toNextLevel = true;
+				showNextLevelGoalPopUp ();
+			}
+		break;
+		case "closeRetry":
+			//showWorld();
+		break;
+		case "toWorldTraveler":
+			openPopUp ("worldsPopUp");
+		break;
+		case "toFacebookMessages":
+			openPopUp ("facebookNews");
+		break;
+		case "NoLifes":
+			stopInput(true);
+			openPopUp ("NoLifes");
+		break;
+		case "noLifesClose":
+			if(popUpManager.isPopUpOpen("goalPopUp") || popUpManager.isPopUpOpen("retryPopUp"))
+			{
+				stopInput(false);
+			}
+			else
+			{
 				stopInput(true);
-				//TODO probablemente no haga falta mostrar el mundo
-				showWorld();
-				ScreenManager.GetInstance().GoToScene ("Game");
-			break;
-			case "continue":
-				if(toDoor)
-				{
-					showWorld();
-					paralaxManager.setPosLastOrFirst (false);
-				}
-				else if(toNextLevel)
-				{
-					showWorld();
-					paralaxManager.setPosToNextLevel (nextLevel);
-					lastLevelPlayed.moveProgress (nextLevel);
-				}
-				else
-				{
-					toNextLevel = true;
-					showNextLevelGoalPopUp ();
-				}
-			break;
-			case "closeRetry":
-				showWorld();
-			break;
-			case "toWorldTraveler":
-				openPopUp ("worldsPopUp");
-			break;
-			case "toFacebookMessages":
-				openPopUp ("facebookNews");
-			break;
-			case "NoLifes":
-				stopInput(true);
-				openPopUp ("NoLifes");
-			break;
-			case "noLifesClose":
-				if(popUpManager.isPopUpOpen("goalPopUp") || popUpManager.isPopUpOpen("retryPopUp"))
-				{
-					stopInput(false);
-				}
-				else
-				{
-					stopInput(true);
-				}
-			break;
-			case "askKeys":
-				stopInput(true);
-				if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
-				{
-					openPopUp ("fbFriendsRequestPanel");
-					fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_KEYS);
-				}
-				else
-				{
-					popUpManager.activatePopUp ("fbConnectPopUp");
-				}
-			break;
-			case "needLifes":
-				stopInput(true);
-				if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
-				{
-					openPopUp ("fbFriendsRequestPanel");
-					fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_LIFES);
-				}
-				else
-				{
-					popUpManager.activatePopUp ("fbConnectPopUp");
-				}
-			break;
-			default:
-			break;
+			}
+		break;
+		case "askKeys":
+			stopInput(true);
+			if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+			{
+				openPopUp ("fbFriendsRequestPanel");
+				fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_KEYS);
+			}
+			else
+			{
+				popUpManager.activatePopUp ("fbConnectPopUp");
+			}
+		break;
+		case "needLifes":
+			stopInput(true);
+			if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+			{
+				openPopUp ("fbFriendsRequestPanel");
+				fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_LIFES);
+			}
+			else
+			{
+				popUpManager.activatePopUp ("fbConnectPopUp");
+			}
+		break;
+		default:
+		break;
 		}
 	}
 

@@ -19,7 +19,7 @@ namespace utils.gems.remote
 
 		private SPGetGemsRequest mainUpdateRequest;
 
-		private string SP_API = "http://45.55.222.58:4001/api";
+		private string SP_API = "http://api.shopika.net/api";
 
 		public override void getUserData (string id, bool saveAsMainRequest = false)
 		{
