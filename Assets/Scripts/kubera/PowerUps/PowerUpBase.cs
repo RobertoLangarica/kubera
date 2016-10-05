@@ -20,6 +20,7 @@ public class PowerupBase : MonoBehaviour
 	public Transform powerUpButton;
 	public GameObject powerUpBlock;
 	public Sprite powerUpImage;
+	public Text priceText;
 
 	public bool isFree;
 

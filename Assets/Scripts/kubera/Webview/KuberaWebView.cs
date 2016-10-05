@@ -15,8 +15,6 @@ public class KuberaWebView : MonoBehaviour
 	protected const string WEBVIEW_GEMS 	= "gemsUpdated";
 	protected const string WEBVIEW_FINISH	= "purchaseFinished";
 
-	protected const string VIDEO_URL = "https://s3-us-west-1.amazonaws.com/4mstatic/home_video.mp4";
-
 	public Camera webViewRectCanvasCamera;
 	public RectTransform webViewSize;
 	public GameObject customToolBar;
@@ -34,18 +32,8 @@ public class KuberaWebView : MonoBehaviour
 			if (((DataManagerKubera)DataManagerKubera.GetInstance ()).currentUser.firstTimeShopping) 
 			{
 				((DataManagerKubera)DataManagerKubera.GetInstance ()).currentUser.firstTimeShopping = false;
-
-				URLVideoManager videoM = gameObject.AddComponent<URLVideoManager> ();
-
-
-
-				videoM.OnVideoFinished += showShopikaFromVideo;
-				videoM.playVideoFromURL (VIDEO_URL);
 			} 
-			else 
-			{
-				showShopikaLogin ();
-			}
+			showShopikaLogin ();
 		} 
 		else 
 		{
@@ -64,11 +52,6 @@ public class KuberaWebView : MonoBehaviour
 		//WebViewManager.GetInstance ().displayWebView.CanBounce = true;
 	}
 
-	protected void showShopikaFromVideo(ePlayVideoFinishReason reason)
-	{
-		showShopikaLogin ();
-	}
-
 	protected void registerForMessages()
 	{
 		WebViewManager.GetInstance ().registerToReceiveMessageFromWebView (WEBVIEW_SCHEME, messageCallBack);
@@ -79,9 +62,10 @@ public class KuberaWebView : MonoBehaviour
 		switch (message.Host) 
 		{
 		case(WEBVIEW_LOGIN):
-			saveUserInfo (message.Arguments ["userId"],message.Arguments ["tokenId"]);
+			saveUserInfo (message.Arguments ["userId"], message.Arguments ["tokenId"]);
 			loginToShopika (GemsManager.GetCastedInstance<GemsManager> ().currentUserId,
 				GemsManager.GetCastedInstance<GemsManager> ().currentUser.accesToken);
+			Debug.Log ("WEBLOGIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			break;
 		case(WEBVIEW_GEMS):
 			
@@ -92,9 +76,11 @@ public class KuberaWebView : MonoBehaviour
 			}
 
 			GemsManager.GetCastedInstance<GemsManager>().OnGemsRemotleyChanged();
+			Debug.Log ("GEMS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			break;
 		case(WEBVIEW_FINISH):
 			closeWebView ();
+			Debug.Log ("FINISH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			break;
 		}
 	}

@@ -608,7 +608,10 @@ public class GameManager : MonoBehaviour
 
 	public void OnRetrieveWord()
 	{
-		KuberaAnalytics.GetInstance ().registerCreatedWord (currentLevel.name,wordManager.getCurrentWordOnList(),wordManager.letters.Count);
+		if (!PersistentData.GetInstance ().fromLevelBuilder) 
+		{
+			KuberaAnalytics.GetInstance ().registerCreatedWord (currentLevel.name, wordManager.getCurrentWordOnList (), wordManager.letters.Count);
+		}
 
 		//Contamos obstaculos y si la meta es usar letras entonces vemos si se usan
 		goalManager.submitWord(wordManager.letters);
@@ -899,7 +902,10 @@ public class GameManager : MonoBehaviour
 
 	protected void winBonification()
 	{
-		KuberaAnalytics.GetInstance().registerForBeforeBonification(currentLevel.name,pointsCount,remainingMoves);
+		if (!PersistentData.GetInstance ().fromLevelBuilder) 
+		{
+			KuberaAnalytics.GetInstance ().registerForBeforeBonification (currentLevel.name, pointsCount, remainingMoves);
+		}
 
 		HighLightManager.GetInstance ().turnOffAllHighLights ();
 		wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
@@ -1125,13 +1131,18 @@ public class GameManager : MonoBehaviour
 			ScreenManager.GetInstance().testContinue();
 		}
 
-		KuberaAnalytics.GetInstance ().registerPowerUpsUse (currentLevel.name,powerUpsUsedCount,
-			(DataManagerKubera.GetInstance() as DataManagerKubera).getLevelAttempts(currentLevel.name));
 
-		KuberaAnalytics.GetInstance ().registerGemsUsedOnLevel (currentLevel.name,expendedGems);
-
-		if (expendedGems != 0) 
+		if (!PersistentData.GetInstance ().fromLevelBuilder) 
 		{
+			KuberaAnalytics.GetInstance ().registerPowerUpsUse (currentLevel.name, powerUpsUsedCount,
+				(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelAttempts (currentLevel.name));
+		}
+
+		if (expendedGems != 0 && !PersistentData.GetInstance ().fromLevelBuilder) 
+		{
+
+			KuberaAnalytics.GetInstance ().registerGemsUsedOnLevel (currentLevel.name, expendedGems);
+
 			if (!((DataManagerKubera)DataManagerKubera.GetInstance ()).alreadyUseGems ()) 
 			{
 				KuberaAnalytics.GetInstance ().registerGemsUsedForFirstTime (currentLevel.name);

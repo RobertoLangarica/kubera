@@ -124,6 +124,11 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 
 	public void registerCreatedWord(string level,string word,int length)
 	{
+		if (level == "0001" && word == "FELIZ") 
+		{
+			return;
+		}
+
 		registerEventWithParameters(REGISTER_WORD,
 			new Dictionary<string, string>() {
 				{"Level",level},
