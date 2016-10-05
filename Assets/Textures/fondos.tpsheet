@@ -1,0 +1,22 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:2dd383d5f4d7b54e5ff1d7d280454707:5bf50101f77c41fc90e7d22fa69338fb:e61590bcbfc45266be57cac9f1e5d658$
+#
+:format=40000
+:texture=fondos.png
+:size=256x512
+:pivotpoints=enabled
+
+1-fondoGame-Musica;3;70;10;439;0.5;0.5
+2-fondoGame-Mascotas;19;70;10;439;0.5;0.5
+3-fondoGame-Ropa;35;70;10;439;0.5;0.5
+4-fondoGame-libros;51;70;10;439;0.5;0.5
+5-fondoGame-Zapatos;67;70;10;439;0.5;0.5
+6-fondoGame-Maquillaje;83;70;10;439;0.5;0.5
+7-fondoGame-Deportes;99;70;10;439;0.5;0.5
+8-fondoGame-joyeria;115;70;10;439;0.5;0.5
+9-fondoGame-perfumes;131;70;10;439;0.5;0.5

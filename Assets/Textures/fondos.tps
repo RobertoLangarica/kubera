@@ -6,12 +6,12 @@
         <key>texturePackerVersion</key>
         <string>4.2.3</string>
         <key>fileName</key>
-        <string>C:/VillaVanilla/Kubera/Assets/Textures/WorldTextures3Background.tps</string>
+        <string>/Users/Roberto/Documents/Trabajo/VillaVanilla/kubera/Assets/Textures/fondos.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
                 <key>scale</key>
-                <double>0.07</double>
+                <double>0.65</double>
                 <key>extension</key>
                 <string></string>
                 <key>spriteFilter</key>
@@ -36,7 +36,7 @@
         <key>dataFormat</key>
         <string>unity-texture2d</string>
         <key>textureFileName</key>
-        <filename>WorldTextures3Backgrounds.png</filename>
+        <filename>fondos.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -82,7 +82,7 @@
         <key>textureFormat</key>
         <enum type="SettingsBase::TextureFormat">png</enum>
         <key>borderPadding</key>
-        <uint>1</uint>
+        <uint>2</uint>
         <key>maxTextureSize</key>
         <QSize>
             <key>width</key>
@@ -141,7 +141,7 @@
             <key>datafile</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>WorldTextures3Backgrounds.tpsheet</filename>
+                <filename>fondos.tpsheet</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -166,7 +166,7 @@
         <key>globalSpriteSettings</key>
         <struct type="SpriteSettings">
             <key>scale</key>
-            <double>1</double>
+            <double>0.25</double>
             <key>scaleMode</key>
             <enum type="ScaleMode">Smooth</enum>
             <key>extrude</key>
@@ -176,7 +176,7 @@
             <key>trimMargin</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">Polygon</enum>
+            <enum type="SpriteSettings::TrimMode">None</enum>
             <key>tracerTolerance</key>
             <int>200</int>
             <key>heuristicMask</key>
@@ -188,15 +188,15 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos/K-1-MapaMúsica_degradadoMundo1.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos/K-2-MapaMascotasdelgado_fondo.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos/K-3-MapaRopa_fondo.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos/K-4-MapaLibros_FONDO.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos/K-5-MapaZapatos_fondo.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos/K-6-MapaMaquillaje_fondo.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos/K-7-MapaDeportes_fondoGYM.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos/K-8-MapaJoyería_techo.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos/K-9-Mapaperfumeria_fondo.png</key>
+            <key type="filename">../../../../../../Downloads/Fondos/1-fondoGame-Musica.png</key>
+            <key type="filename">../../../../../../Downloads/Fondos/2-fondoGame-Mascotas.png</key>
+            <key type="filename">../../../../../../Downloads/Fondos/3-fondoGame-Ropa.png</key>
+            <key type="filename">../../../../../../Downloads/Fondos/4-fondoGame-libros.png</key>
+            <key type="filename">../../../../../../Downloads/Fondos/5-fondoGame-Zapatos.png</key>
+            <key type="filename">../../../../../../Downloads/Fondos/6-fondoGame-Maquillaje.png</key>
+            <key type="filename">../../../../../../Downloads/Fondos/7-fondoGame-Deportes.png</key>
+            <key type="filename">../../../../../../Downloads/Fondos/8-fondoGame-joyeria.png</key>
+            <key type="filename">../../../../../../Downloads/Fondos/9-fondoGame-perfumes.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -204,7 +204,15 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/Mundos</filename>
+            <filename>../../../../../../Downloads/Fondos/1-fondoGame-Musica.png</filename>
+            <filename>../../../../../../Downloads/Fondos/2-fondoGame-Mascotas.png</filename>
+            <filename>../../../../../../Downloads/Fondos/3-fondoGame-Ropa.png</filename>
+            <filename>../../../../../../Downloads/Fondos/4-fondoGame-libros.png</filename>
+            <filename>../../../../../../Downloads/Fondos/5-fondoGame-Zapatos.png</filename>
+            <filename>../../../../../../Downloads/Fondos/6-fondoGame-Maquillaje.png</filename>
+            <filename>../../../../../../Downloads/Fondos/7-fondoGame-Deportes.png</filename>
+            <filename>../../../../../../Downloads/Fondos/8-fondoGame-joyeria.png</filename>
+            <filename>../../../../../../Downloads/Fondos/9-fondoGame-perfumes.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
