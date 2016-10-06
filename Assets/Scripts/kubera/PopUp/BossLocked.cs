@@ -55,7 +55,7 @@ public class BossLocked : PopUpBase {
 		if(GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(gemsNeeded))
 		{
 			GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(gemsNeeded);
-			mapManager.unlockBoss (lvlName);
+			mapManager.unlockBoss (fullLvlName);
 			closePressed ();	
 		}
 		else

@@ -336,11 +336,17 @@ public class MapManager : MonoBehaviour
 			}
 			else
 			{
-				if(toStairs)
+				if(toStairs && !PersistentData.GetInstance().stairsUnblocked)
 				{
 					isInLastLevelWorld = true;
+					PersistentData.GetInstance ().stairsUnblocked = true;
+					currentLevel.myProgress (isConectedToFacebook);
 				}
-				currentLevel.myProgress (isConectedToFacebook);
+				else if(!toStairs)
+				{
+					PersistentData.GetInstance ().stairsUnblocked = false;
+					currentLevel.myProgress (isConectedToFacebook);
+				}
 			}
 		}
 	}
