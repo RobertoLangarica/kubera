@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
 		wordManager.onWordChange += refreshCurrentWordScoreOnHUD;
 		settingsButton.OnActivateMusic += activateMusic;
 
-		powerupManager.getPowerupByType (PowerupBase.EType.ROTATE).OnPowerupCompleted += rotationDeactivated;
+		powerupManager.getPowerupByType (PowerupBase.EType.ROTATE).OnPowerupUsed += rotationDeactivated;
 
 		inputRotate.OnRotateArrowsActivated += rotationActivated;
 	
@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(!PersistentData.GetInstance().fromLevelsToGame && !PersistentData.GetInstance().fromLevelBuilder)
 		{
-			configureLevel(PersistentData.GetInstance().getLevelByIndex(7));
+			configureLevel(PersistentData.GetInstance().getLevelByIndex(37));
 		}
 		else
 		{
@@ -1266,7 +1266,6 @@ public class GameManager : MonoBehaviour
 
 		if(AudioManager.GetInstance())
 		{
-			
 			AudioManager.GetInstance().Play("fxButton");
 		}
 	}
@@ -1279,6 +1278,7 @@ public class GameManager : MonoBehaviour
 			return true;
 		}
 		#endif
+
 		//Checa si tiene dinero para usar el poder
 		return powerupManager.getPowerupByType(type).isFree || GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(powerupManager.getPowerUpPrice(type));
 	}
@@ -1305,7 +1305,6 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-
 			if(!powerupManager.getPowerupByType(type).isFree)
 			{
 				GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(powerupManager.getPowerUpPrice(type));
