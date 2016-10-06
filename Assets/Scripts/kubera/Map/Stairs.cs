@@ -100,8 +100,8 @@ public class Stairs : MonoBehaviour {
 			{
 				mapManager.getCurrentLevel ().facebookBackground.transform.DOLocalMove (friendFirstPosition.localPosition, 1.0f).OnComplete(()=>
 					{
-						animateWaiting();
 						active = true;
+						onClick();
 					}).SetId("animateToWait");
 			}
 		);
