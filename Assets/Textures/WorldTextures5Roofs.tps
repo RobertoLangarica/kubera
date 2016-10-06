@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.2.3</string>
         <key>fileName</key>
-        <string>C:/VillaVanilla/Kubera/Assets/Textures/WorldTextures5Roofs.tps</string>
+        <string>/Users/Roberto/Documents/Trabajo/VillaVanilla/kubera/Assets/Textures/WorldTextures5Roofs.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -166,7 +166,7 @@
         <key>globalSpriteSettings</key>
         <struct type="SpriteSettings">
             <key>scale</key>
-            <double>1</double>
+            <double>0.41667</double>
             <key>scaleMode</key>
             <enum type="ScaleMode">Smooth</enum>
             <key>extrude</key>
@@ -188,24 +188,24 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_1.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_1Adorno.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_2.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_2Adorno.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_3.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_3Adorno.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_4.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_4Adorno.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_5.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_5Adorno.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_6.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_6Adorno.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_7.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_7Adorno.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_8.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_8Adorno.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_9.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos/K-techosMundos_9Adorno.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_1.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_1Adorno.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_2.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_2Adorno.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_3.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_3Adorno.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_4.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_4Adorno.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_5.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_5Adorno.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_6.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_6Adorno.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_7.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_7Adorno.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_8.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_8Adorno.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_9.png</key>
+            <key type="filename">../../../../../../Downloads/techos/K-techosMundos_9Adorno.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -213,7 +213,7 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/techos</filename>
+            <filename>../../../../../../Downloads/techos</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
