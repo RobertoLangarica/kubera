@@ -179,7 +179,7 @@ public class GameManager : MonoBehaviour
 		if(PersistentData.GetInstance().fromLevelsToGame)
 		{
 			yield return new WaitForEndOfFrame ();
-			ScreenManager.GetInstance().testLoading ("Levels");
+			//ScreenManager.GetInstance().preLoadingScene ("Levels");
 			yield return new WaitForEndOfFrame ();
 			//yield return new WaitUntil (()=> ScreenManager.instance.preloadSceneAsync.isDone);
 		}
@@ -1129,7 +1129,7 @@ public class GameManager : MonoBehaviour
 
 		if(ScreenManager.GetInstance())
 		{
-			ScreenManager.GetInstance().testContinue();
+			//ScreenManager.GetInstance().preLoadingContinue();
 		}
 
 
@@ -1158,7 +1158,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		//ScreenManager.instance.GoToScene ("Levels");
+		ScreenManager.GetInstance().GoToScene ("Levels");
 	}
 
 	protected void showDestroyedLetterScore(Cell cell)
