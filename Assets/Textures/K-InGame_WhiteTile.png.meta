@@ -1,13 +1,13 @@
 fileFormatVersion: 2
 guid: d5400dfdd33de4f88ac9ac75868f3ffb
-timeCreated: 1475723158
+timeCreated: 1475779851
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -30,26 +30,42 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
-  nPOTScale: 0
+  nPOTScale: 1
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 2, y: 2, z: 2, w: 1}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
-  textureType: 8
-  buildTargetSettings: []
+  textureType: 5
+  buildTargetSettings:
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: 47
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: K-InGame_WhiteTile_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2
+        width: 69
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     outline: []
   spritePackingTag: 
   userData: 
