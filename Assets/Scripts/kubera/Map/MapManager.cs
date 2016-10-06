@@ -146,7 +146,7 @@ public class MapManager : MonoBehaviour
 
 		for(int i=0; i < worldCount; i++)
 		{
-			if(maxWorldReached > i)
+			if(maxWorldReached > i || AllLevelsUnlocked)
 			{
 				worldLevels = user.getLevelsByWorld(i+1);
 

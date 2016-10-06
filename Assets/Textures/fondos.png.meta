@@ -1,29 +1,18 @@
 fileFormatVersion: 2
-guid: f23d654e9f647cc46bc2b700d578c31e
-timeCreated: 1473865896
+guid: 33ddd50477e78450f9a9b5762e268bf8
+timeCreated: 1475709964
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: "K-1-MapaM\xFAsica_degradadoMundo1"
-    21300002: K-2-MapaMascotasdelgado_fondo
-    21300004: K-3-MapaRopa_fondo
-    21300006: K-4-MapaLibros_FONDO
-    21300008: K-5-MapaZapatos_fondo
-    21300010: K-7-MapaDeportes_fondoGYM
-    21300012: "K-8-MapaJoyer\xEDa_techo"
-    21300014: K-9-Mapaperfumeria_fondo
-    21300016: K-6-MapaMaquillaje_fondo
-    21300018: 1-fondoGame-Musica
-    21300020: 2-fondoGame-Mascotas
-    21300022: 3-fondoGame-Ropa
-    21300024: 4-fondoGame-libros
-    21300026: 5-fondoGame-Zapatos
-    21300028: 6-fondoGame-Maquillaje
-    21300030: 7-fondoGame-Deportes
-    21300032: 8-fondoGame-joyeria
-    21300034: 9-fondoGame-perfumes
-    21300036: cuadrosFondo
-    21300038: K-magia-del-gamplay
+    21300000: 1-fondoGame-Musica
+    21300002: 2-fondoGame-Mascotas
+    21300004: 3-fondoGame-Ropa
+    21300006: 4-fondoGame-libros
+    21300008: 5-fondoGame-Zapatos
+    21300010: 6-fondoGame-Maquillaje
+    21300012: 7-fondoGame-Deportes
+    21300014: 8-fondoGame-joyeria
+    21300016: 9-fondoGame-perfumes
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -60,121 +49,111 @@ TextureImporter:
   allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
-  textureType: 8
-  buildTargetSettings:
-  - buildTarget: Android
-    maxTextureSize: 2048
-    textureFormat: -3
-    compressionQuality: 50
-    allowsAlphaSplitting: 0
-  - buildTarget: iPhone
-    maxTextureSize: 4096
-    textureFormat: -3
-    compressionQuality: 50
-    allowsAlphaSplitting: 0
+  textureType: 5
+  buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: "K-1-MapaM\xFAsica_degradadoMundo1"
+    - name: 1-fondoGame-Musica
       rect:
         serializedVersion: 2
-        x: 217
-        y: 1227
-        width: 14
-        height: 819
+        x: 3
+        y: 70
+        width: 10
+        height: 439
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: K-2-MapaMascotasdelgado_fondo
+    - name: 2-fondoGame-Mascotas
       rect:
         serializedVersion: 2
-        x: 195
-        y: 579
-        width: 16
-        height: 1467
+        x: 19
+        y: 70
+        width: 10
+        height: 439
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: K-3-MapaRopa_fondo
+    - name: 3-fondoGame-Ropa
       rect:
         serializedVersion: 2
-        x: 2
-        y: 21
-        width: 18
-        height: 2025
+        x: 35
+        y: 70
+        width: 10
+        height: 439
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: K-4-MapaLibros_FONDO
+    - name: 4-fondoGame-libros
       rect:
         serializedVersion: 2
-        x: 57
-        y: 82
-        width: 23
-        height: 1964
+        x: 51
+        y: 70
+        width: 10
+        height: 439
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: K-5-MapaZapatos_fondo
+    - name: 5-fondoGame-Zapatos
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 70
+        width: 10
+        height: 439
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: 6-fondoGame-Maquillaje
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 70
+        width: 10
+        height: 439
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: 7-fondoGame-Deportes
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 70
+        width: 10
+        height: 439
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: 8-fondoGame-joyeria
       rect:
         serializedVersion: 2
         x: 115
-        y: 82
-        width: 19
-        height: 1964
+        y: 70
+        width: 10
+        height: 439
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: K-6-MapaMaquillaje_fondo
+    - name: 9-fondoGame-perfumes
       rect:
         serializedVersion: 2
-        x: 165
-        y: 371
-        width: 24
-        height: 1675
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: K-7-MapaDeportes_fondoGYM
-      rect:
-        serializedVersion: 2
-        x: 86
-        y: 82
-        width: 23
-        height: 1964
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: "K-8-MapaJoyer\xEDa_techo"
-      rect:
-        serializedVersion: 2
-        x: 26
-        y: 82
-        width: 25
-        height: 1964
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: K-9-Mapaperfumeria_fondo
-      rect:
-        serializedVersion: 2
-        x: 140
-        y: 82
-        width: 19
-        height: 1964
+        x: 131
+        y: 70
+        width: 10
+        height: 439
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
