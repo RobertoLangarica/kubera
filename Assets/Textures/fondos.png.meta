@@ -54,9 +54,14 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
-  alphaIsTransparency: 1
+  alphaIsTransparency: 0
   textureType: 5
-  buildTargetSettings: []
+  buildTargetSettings:
+  - buildTarget: Android
+    maxTextureSize: 512
+    textureFormat: 47
+    compressionQuality: 100
+    allowsAlphaSplitting: 0
   spriteSheet:
     sprites:
     - name: 1-fondoGame-Musica
