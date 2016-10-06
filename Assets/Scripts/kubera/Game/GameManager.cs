@@ -1272,6 +1272,12 @@ public class GameManager : MonoBehaviour
 
 	protected bool canActivatePowerUp(PowerupBase.EType type)
 	{
+		#if UNITY_EDITOR
+		if(!GemsManager.GetCastedInstance<GemsManager>())
+		{
+			return true;
+		}
+		#endif
 		//Checa si tiene dinero para usar el poder
 		return powerupManager.getPowerupByType(type).isFree || GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(powerupManager.getPowerUpPrice(type));
 	}

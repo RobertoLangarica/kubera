@@ -53,7 +53,7 @@ public class Square : MonoBehaviour
 		}
 		else
 		{
-			this.transform.localScale = new Vector3 (0.36f, 0.36f, 0.36f);
+			this.transform.localScale = new Vector3 (0.58f, 0.58f, 0.58f);
 		}
 		yield return new WaitUntil (()=>flipAnimation.sequences[0].currentFrame >= 14);
 		cellParent.content.GetComponent<SpriteRenderer> ().color = Color.white;
