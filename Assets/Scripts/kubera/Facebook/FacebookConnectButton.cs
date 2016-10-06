@@ -20,12 +20,18 @@ public class FacebookConnectButton : MonoBehaviour {
 
 	public void conectFacebook()
 	{
+		if(syncManager.facebookProvider.isLoggedIn)
+		{
+			logOutFacebook ();
+			return;
+		}
+
 		//TODO: Quitar hardcoding de boton
 		if(AudioManager.GetInstance())
 		{
 			AudioManager.GetInstance().Play("fxButton");
 		}
-
+		
 		syncManager.facebookLogin();
 	}
 
@@ -36,14 +42,17 @@ public class FacebookConnectButton : MonoBehaviour {
 
 	public void changeText(bool loggedIn)
 	{
-		//TODO Tomar string del archivo de lenguaje
-		if(loggedIn)
+		if(fbText)
 		{
-			fbText.text = "Desconectate";
-		}
-		else
-		{
-			fbText.text = "Conectate";
+			//TODO Tomar string del archivo de lenguaje
+			if(loggedIn)
+			{
+				fbText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FB_LOG_OUT_TEXT);
+			}
+			else
+			{
+				fbText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.FB_LOG_IN_TEXT);
+			}
 		}
 	}
 

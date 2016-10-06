@@ -19,12 +19,12 @@ public class TutorialLvl1 : TutorialBase
 
 	protected override void Start()
 	{
-		inputPiece.OnPlayer += animation;
+		inputPiece.OnPlayer += animationController;
 
 		base.Start ();
 	}
 
-	protected void animation(bool stop)
+	protected void animationController(bool stop)
 	{
 		if(stop)
 		{
@@ -71,7 +71,7 @@ public class TutorialLvl1 : TutorialBase
 			phase = 1;
 			return true;
 		case(1):
-			inputPiece.OnPlayer -= animation;
+			inputPiece.OnPlayer -= animationController;
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.CREATE_WORD);
@@ -119,7 +119,7 @@ public class TutorialLvl1 : TutorialBase
 
 			shakeToErrase ();
 
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SUBMIT_WORD);
+			Invoke ("highLightSubmitButton",1.5f);
 
 			Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
@@ -130,6 +130,11 @@ public class TutorialLvl1 : TutorialBase
 		}
 
 		return base.canMoveToNextPhase ();
+	}
+
+	protected void highLightSubmitButton()
+	{
+		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SUBMIT_WORD);
 	}
 
 	public override bool phaseObjectiveAchived ()
@@ -166,7 +171,6 @@ public class TutorialLvl1 : TutorialBase
 		changeDommy ();
 
 		Vector3 originalScale = inputPiece.selectedScale;
-		SpriteRenderer tempSpt = powerUpDommy.GetComponent<SpriteRenderer> ();
 
 		powerUpDommy.transform.position = posFrom;
 

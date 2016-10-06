@@ -8,10 +8,10 @@ using ABCSerializer;
 using Data;
 
 /**
- * clase que ponemos en un prefab que va existir 
- * desde el inicio del juego con informacion que debe ser permanente o compartida sin 
+ * clase que ponemos en un prefab que va existir
+ * desde el inicio del juego con informacion que debe ser permanente o compartida sin
  * necesidad de ir directamente dirigida a alguien.
- * 
+ *
  * */
 public class PersistentData : Manager<PersistentData>
 {
@@ -23,6 +23,8 @@ public class PersistentData : Manager<PersistentData>
 	[HideInInspector]public int levelNumber = -1;
 	[HideInInspector]public Level currentLevel;
 	[HideInInspector]public string lastLevelReachedName;
+	[HideInInspector]public int lastPlayedLevelStars = -1;
+	[HideInInspector]public int lastPlayedLevelPoints = -1;
 	[HideInInspector]public bool nextLevelIsReached;
 	[HideInInspector]public Levels levelsData;
 	[HideInInspector]public ABCDictionary abcDictionary;
@@ -32,6 +34,7 @@ public class PersistentData : Manager<PersistentData>
 	private bool destroyed = false;//Indica si el objeto ya se destruyo
 
 	[HideInInspector]public int currentWorld  =-1;
+	[HideInInspector]public int maxWorldReached  =-1;
 
 	[HideInInspector]
 	public bool fromLevelBuilder;
@@ -51,7 +54,7 @@ public class PersistentData : Manager<PersistentData>
 	[HideInInspector]
 	public bool fromLoose;
 
-	protected override void Awake() 
+	protected override void Awake()
 	{
 		base.Awake ();
 		setLevelNumber(levelNumber);
@@ -66,7 +69,8 @@ public class PersistentData : Manager<PersistentData>
 
 		abcDictionary = FindObjectOfType<ABCDictionary>();
 		onDictionaryFinished += foo;
-		configureGameForLanguage("spanish");
+		//HARDCODING
+		configureGameForLanguage("spanish");//english,spanish
 
 		/*currentWorld = */
 		//print((LevelsDataManager.GetInstance () as LevelsDataManager).getCurrentData ().levels [((LevelsDataManager.GetInstance () as LevelsDataManager).getCurrentData ().levels.Count - 1)]);
@@ -77,7 +81,7 @@ public class PersistentData : Manager<PersistentData>
 	/**
 	 * Configura el juego para el lenguaje que tiene UserDataManager
 	 * @param language el lenguaje para configurar, si se deja vacio se utiliza el de UserDataManager.
-	 **/ 
+	 **/
 	public void configureGameForLanguage(string language = "")
 	{
 		if(language == currentLanguage)
@@ -114,7 +118,7 @@ public class PersistentData : Manager<PersistentData>
 		#if UNITY_EDITOR
 		if(loadSerializedDictionary)
 		{
-			loadAndDeserializeDictionary(language);	
+			loadAndDeserializeDictionary(language);
 			onDictionaryFinished();
 		}
 		else
@@ -123,9 +127,9 @@ public class PersistentData : Manager<PersistentData>
 			//abc = Resources.Load("ABCData/WORDS_"+language) as TextAsset;
 
 			StreamReader stream = new StreamReader(Application.dataPath+"/ABCData/WORDS_"+language+".txt");
-			abcDictionary.onDictionaryFinished += onDictionaryFinishedCallback;	
-			//abcDictionary.processDictionary(abc.text, maxWordLength);	
-			abcDictionary.processDictionary(stream.ReadToEnd(), maxWordLength);	
+			abcDictionary.onDictionaryFinished += onDictionaryFinishedCallback;
+			//abcDictionary.processDictionary(abc.text, maxWordLength);
+			abcDictionary.processDictionary(stream.ReadToEnd(), maxWordLength);
 			stream.Close();
 			stream.Dispose();
 		}
@@ -175,7 +179,7 @@ public class PersistentData : Manager<PersistentData>
 
 		ABCNode data = null;
 		ABCNodeSerializer serializer = new ABCNodeSerializer();
-		TextAsset resource = Resources.Load("ABCData/DICTIONARY_"+language) as TextAsset; 
+		TextAsset resource = Resources.Load("ABCData/DICTIONARY_"+language) as TextAsset;
 		Stream source = new MemoryStream(resource.bytes);
 		data = (ABCNode)serializer.Deserialize(source, null, typeof(ABCNode));
 
@@ -205,7 +209,7 @@ public class PersistentData : Manager<PersistentData>
 
 	/**
 	 * Indica el indice de nivel que el usuario va jugar
-	 **/ 
+	 **/
 	public void setLevelNumber(int value,bool fromBuilder = false)
 	{
 		levelNumber = value;
@@ -221,11 +225,20 @@ public class PersistentData : Manager<PersistentData>
 		}
 	}
 
+	//HACK para pruebas
 	public Level getRandomLevel()
 	{
-		int le = 15;
-		return levelsData.levels[1];
 		return levelsData.levels[Random.Range(0,levelsData.levels.Length-1)];
+	}
+
+	public Level getLevelByIndex(int index)
+	{
+		return levelsData.levels[index];
+	}
+
+	public Level getFirstLevel()
+	{
+		return levelsData.levels[0];
 	}
 
 	public Level getNextLevel()
@@ -234,7 +247,7 @@ public class PersistentData : Manager<PersistentData>
 
 		startLevel++;
 
-		if (currentLevel == null) 
+		if (currentLevel == null)
 		{
 			startLevel = 1;
 			setLevelNumber (startLevel);

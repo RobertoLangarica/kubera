@@ -56,6 +56,7 @@ public class GoalPopUp : PopUpBase {
 	public Image topLevelImage;
 	public Image topIcon;
 	public Image topIconShadow;
+	protected bool pressed;
 
 	void Start()
 	{
@@ -188,13 +189,20 @@ public class GoalPopUp : PopUpBase {
 
 	public void playGame()
 	{
+		if(pressed)
+		{
+			return;
+		}
+		pressed = true;
+
 		soundButton ();
-		if ((KuberaDataManager.GetInstance () as KuberaDataManager).currentUser.playerLifes > 0) 
+		if ((DataManagerKubera.GetInstance () as DataManagerKubera).currentUser.playerLifes > 0) 
 		{
 			OnComplete ("playGame",false);
 		} 
 		else 
 		{
+			pressed = false;
 			OnComplete ("NoLifes",false);
 		}
 	}
@@ -251,8 +259,11 @@ public class GoalPopUp : PopUpBase {
 											{
 												facebookFriends.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 													{
-														LevelLeaderboard leaderboard = leaderboardManager.getLeaderboard(this.LevelNumber.text,slotParent);
-														leaderboard.showSlots(true);
+														if(leaderboardManager != null)
+														{
+															LevelLeaderboard leaderboard = leaderboardManager.getLeaderboard(this.LevelNumber.text,slotParent);
+															leaderboard.showSlots(true);
+														}
 
 														scrollRect.horizontalNormalizedPosition = 0;
 

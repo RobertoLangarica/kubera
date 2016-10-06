@@ -80,7 +80,43 @@ namespace Kubera.Data.Remote
 					data.maxLevelReached = -1;
 				}
 
-				//Niveles de los datos enviados
+				if(scriptData.ContainsKey("gemsUse"))
+				{
+					data.gemsUse = int.Parse(scriptData ["gemsUse"].ToString()) == 1 ? true:false;
+				}
+				else
+				{
+					data.gemsUse = false;
+				}
+
+				if(scriptData.ContainsKey("gemsPurchase"))
+				{
+					data.gemsPurchase = int.Parse(scriptData ["gemsPurchase"].ToString()) == 1 ? true:false;
+				}
+				else
+				{
+					data.gemsPurchase = false;
+				}
+
+				if(scriptData.ContainsKey("gemsUseAfterPurchase"))
+				{
+					data.gemsUseAfterPurchase = int.Parse(scriptData ["gemsUseAfterPurchase"].ToString()) == 1 ? true:false;
+				}
+				else
+				{
+					data.gemsUseAfterPurchase = false;
+				}
+
+				if(scriptData.ContainsKey("lifesAsked"))
+				{
+					data.lifesAsked = int.Parse(scriptData ["lifesAsked"].ToString()) == 1 ? true:false;
+				}
+				else
+				{
+					data.lifesAsked = false;
+				}
+
+				//WARNING: Los niveles no vienen del server, son aprte de la data enviada
 				Dictionary<string,object> dataSended = MiniJSON.Json.Deserialize(jsonToUpdate) as Dictionary<string,object>;
 				if(dataSended.ContainsKey("levels"))
 				{
@@ -91,11 +127,12 @@ namespace Kubera.Data.Remote
 					{
 						LevelData level = new LevelData(item.Key);
 						Dictionary<string,object> value = item.Value as Dictionary<string,object>;
-						level.points= int.Parse(value["points"].ToString());
-						level.stars	= int.Parse(value ["stars"].ToString());
-						level.world = int.Parse(value ["world"].ToString());
-						level.passed= ((bool)value ["passed"]);
-						level.locked= ((bool)value ["locked"]);
+						level.points	= int.Parse(value["points"].ToString());
+						level.stars		= int.Parse(value ["stars"].ToString());
+						level.world 	= int.Parse(value ["world"].ToString());
+						level.passed	= ((bool)value ["passed"]);
+						level.locked	= ((bool)value ["locked"]);
+						level.attempts	= int.Parse(value ["attempts"].ToString());
 						levels.Add(level); 	
 					}
 

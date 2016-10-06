@@ -11,7 +11,7 @@ public class LifesManager : Manager<LifesManager>
 	public List<Text> lifesCount = new List<Text> ();
 	public List<Text> lifesTimer = new List<Text> ();
 
-	public int timeForLifeInMinutes;
+	protected int timeForLifeInMinutes = 30;
 	public int maximumLifes;
 
 	protected bool showTimer;
@@ -20,13 +20,18 @@ public class LifesManager : Manager<LifesManager>
 	protected float updateLifeTimer;
 
 	protected string life1NotificationID;
-	private KuberaDataManager dataManager;
+	private DataManagerKubera dataManager;
 
 	void Start()
 	{
+		if(timeForLifeInMinutes != 30)
+		{
+			Debug.Log("<color=red>Modo test: VIDAS NO EN 30min</color>");
+		}
+
 		showTimer = false;
 
-		dataManager = (KuberaDataManager.GetInstance () as KuberaDataManager);
+		dataManager = (DataManagerKubera.GetInstance () as DataManagerKubera);
 
 		if (PersistentData.GetInstance ().fromLevelBuilder) 
 		{
@@ -35,15 +40,7 @@ public class LifesManager : Manager<LifesManager>
 
 		if (currentUser.playerLifes < dataManager.initialLifes) 
 		{
-			if (currentUser.lifeTimerDate != "") 
-			{
 				updateLifesSinceLastPlay ();
-			} 
-			else 
-			{
-				setLifeDate ();
-				updateLifesSinceLastPlay ();
-			}
 		}
 
 		refreshHUD ();
@@ -61,17 +58,19 @@ public class LifesManager : Manager<LifesManager>
 			updateLifeTimer += Time.deltaTime;
 		}
 
+		if (Input.GetKeyUp (KeyCode.B)) 
+		{
+			giveALife ();
+			Debug.Log ("te dan una vida");
+		}
+
 		//Prueba para las vidas
 		/*if (Input.GetKeyUp (KeyCode.A)) 
 		{
 			setLifeDate ();
 			Debug.Log ("Se setea la fecha de la ultima vez que se sale del mapa");
 		}
-		if (Input.GetKeyUp (KeyCode.B)) 
-		{
-			UserDataManager.instance.giveLifeToPlayer (-3);
-			Debug.Log ("Se quitan las vidas");
-		}
+
 		if (Input.GetKeyUp (KeyCode.C))
 		{
 			UserDataManager.instance.giveLifeToPlayer (UserDataManager.instance.maximumLifes);
@@ -102,7 +101,7 @@ public class LifesManager : Manager<LifesManager>
 		//LocalNotification*******De cuando se queda sin vidas y gana 1 vida
 		if (tempUsr.playerLifes == 0) 
 		{
-			int currentLevel = tempUsr.levels.Count +1;
+			int currentLevel = tempUsr.levels.Count;
 
 			life1NotificationID = (LocalNotificationManager.GetInstance () as LocalNotificationManager).modifyAndScheduleNotificationByName (
 				villavanilla.Notifications.ERegisteredNotification.LIFE_1,
@@ -111,9 +110,9 @@ public class LifesManager : Manager<LifesManager>
 		}
 	}
 
-	public void giveALife()
+	public void giveALife(int amount = 1,bool fromGame = false)
 	{
-		gotALife ();
+		gotALife (amount,fromGame);
 
 		//CancelLocalNotification*******De cuando se queda sin vidas y gana 1 vida
 		if (currentUser.playerLifes == 1) 
@@ -203,12 +202,19 @@ public class LifesManager : Manager<LifesManager>
 
 	protected void decreaseLifeTimer(int seconds = 1)
 	{
+		if (currentUser.playerLifes == dataManager.initialLifes) 
+		{
+			showTimer = false;
+			refreshHUD ();
+			return;
+		} 
+
 		currentSeconds--;
 
-		if (currentSeconds < 0) 
+		if (currentSeconds <= 0) 
 		{
 			currentMinutes--;
-			if (currentMinutes < 0 && currentSeconds < 0) 
+			if (currentMinutes < 0 && currentSeconds <= 0) 
 			{
 				currentMinutes = 0;
 				gotALife ();
@@ -223,15 +229,16 @@ public class LifesManager : Manager<LifesManager>
 		refreshHUD ();
 	}
 
-	protected void gotALife()
+	protected void gotALife(int amount = 1,bool fromGame = false)
 	{
-		giveLifesToUser();
+		giveLifesToUser(amount);
 
 		if (currentUser.playerLifes == dataManager.initialLifes) 
 		{
 			showTimer = false;	
+			refreshHUD ();
 		} 
-		else 
+		else if(!fromGame)
 		{
 			currentMinutes = timeForLifeInMinutes;
 			currentSeconds = 0;
@@ -300,6 +307,6 @@ public class LifesManager : Manager<LifesManager>
 
 	public void giveLifesToUser(int amount = 1)
 	{
-		(KuberaDataManager.GetInstance () as KuberaDataManager).giveUserLifes (amount);
+		(DataManagerKubera.GetInstance () as DataManagerKubera).giveUserLifes (amount);
 	}
 }

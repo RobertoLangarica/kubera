@@ -51,8 +51,8 @@ namespace Data.Sync
 
 		public override void login ()
 		{
-			FBPermissions.PromptForLogin();
-			FBPermissions.PromptForPublish(OnLoginAttempComplete);
+			FBPermissions.PromptForLogin(OnLoginAttempComplete);
+			//FBPermissions.PromptForPublish(OnLoginAttempComplete);
 		}
 			
 
@@ -79,7 +79,8 @@ namespace Data.Sync
 
 		public override void logout()
 		{
-			FB.LogOut();
+			print ("S");
+			//FB.LogOut();
 			isLoggedIn = false;
 			if(OnLogoutSuccessfull != null)
 			{
@@ -90,14 +91,11 @@ namespace Data.Sync
 
 		void OnApplicationPause (bool pauseStatus)
 		{
-			#if UNITY_EDITOR
-			return;
-			#endif
-
-			#if UNITY_ANDROID || UNITY_IOS
+			#if ((UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR)
 			// Check the pauseStatus to see if we are in the foreground
 			// or background
-			if (!pauseStatus) {
+			if (!pauseStatus) 
+			{
 				//Solo nos interesa cuando ya lo inicializamos nosotros
 				if (FB.IsInitialized) 
 				{

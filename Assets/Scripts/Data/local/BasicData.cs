@@ -12,7 +12,7 @@ namespace Data
 
 		public BasicData(){}
 
-		public bool compareAndUpdate(BasicData remote, bool ignoreVersion = false)
+		public virtual bool compareAndUpdate(BasicData remote, bool ignoreVersion = false)
 		{
 			if(remote.version != version || ignoreVersion)
 			{

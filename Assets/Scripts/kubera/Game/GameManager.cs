@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 using Kubera.Data;
+using utils.gems;
 
 public class GameManager : MonoBehaviour 
 {
@@ -51,40 +52,34 @@ public class GameManager : MonoBehaviour
 
 	protected int currentWildCardsActivated;
 
-	private WordManager		wordManager;
-	private CellsManager	cellManager;
-	private PowerUpManager	powerupManager;
-	private PieceManager 	pieceManager;
-	private HUDManager 	 	hudManager;
-	private InputPiece 		inputPiece;
-	private InputWords 		inputWords;
-	private GoalManager		goalManager;
-
-	private SettingsButton settingsButton;
-	private LinesCreatedAnimation linesAnimation;
-	private BombAnimation bombAnimation;
+	//TODO hacerlos publicos y ponerlos en el editor
+	public WordManager		wordManager;
+	public CellsManager		cellManager;
+	public PowerUpManager	powerupManager;
+	public PieceManager 	pieceManager;
+	public HUDManager 	 	hudManager;
+	public InputPiece 		inputPiece;
+	public InputWords 		inputWords;
+	public GoalManager		goalManager;
+	public SettingsButton settingsButton;
+	public BombAnimation bombAnimation;
 	public SecondChancePopUp secondChance;
-	private SecondChanceFreeBombs SecondChanceFreeBombs;
+	public SecondChanceFreeBombs SecondChanceFreeBombs;
+	public LinesCreatedAnimation linesAnimation;
+	public startGamePopUp startGameReference;
 
 	private Level currentLevel;
 	private List<Letter> gridCharacters = new List<Letter>();
 
 	protected bool cancelBonify;
 
+	//Para los analiticos
+	protected Dictionary<string,int> powerUpsUsedCount = new Dictionary<string, int>();
+	protected int expendedGems = 0;
+
 	void Start()
 	{
-		wordManager			= FindObjectOfType<WordManager>();
-		cellManager			= FindObjectOfType<CellsManager>();
-		powerupManager		= FindObjectOfType<PowerUpManager>();
-		hudManager			= FindObjectOfType<HUDManager> ();
-		pieceManager		= FindObjectOfType<PieceManager>();
-		inputPiece			= FindObjectOfType<InputPiece>();
-		inputWords			= FindObjectOfType<InputWords>();
-		goalManager			= FindObjectOfType<GoalManager>();
-		linesAnimation 		= FindObjectOfType<LinesCreatedAnimation> ();
-		bombAnimation 		= FindObjectOfType<BombAnimation> ();
-		SecondChanceFreeBombs 	= FindObjectOfType<SecondChanceFreeBombs> ();
-		settingsButton 		= FindObjectOfType<SettingsButton> ();
+		isAnObjectMissing ();
 
 		secondChance.OnSecondChanceAquired += secondChanceBought;
 		secondChance.gameObject.SetActive (false);
@@ -109,10 +104,17 @@ public class GameManager : MonoBehaviour
 		hudManager.OnPopUpCompleted += popUpCompleted;
 		hudManager.OnPiecesScaled += checkIfLose;
 
+		if(GemsManager.GetCastedInstance<GemsManager>())
+		{
+			//actualizamos gemas
+			GemsManager.GetCastedInstance<GemsManager>().OnGemsUpdated += hudManager.updateTextGems;
+		}
+
 		wordManager.onWordChange += refreshCurrentWordScoreOnHUD;
 		settingsButton.OnActivateMusic += activateMusic;
 
 		powerupManager.getPowerupByType (PowerupBase.EType.ROTATE).OnPowerupCompleted += rotationDeactivated;
+
 		inputRotate.OnRotateArrowsActivated += rotationActivated;
 	
 		if (PersistentData.GetInstance().abcDictionary.getAlfabet () == null) 
@@ -123,21 +125,45 @@ public class GameManager : MonoBehaviour
 		{
 			startGame ();
 		}
+
 		//TODO: hardcoding
 		bonificationPiecePrefab.SetActive (true);
 		//TODO: Control de flujo de juego con un init
+
+		for (int i = 0; i < powerupManager.powerups.Count; i++) 
+		{
+			powerUpsUsedCount.Add (powerupManager.powerups [i].type.ToString (), 0);
+		}
+	}
+
+	void OnDestroy()
+	{
+		if(GemsManager.GetCastedInstance<GemsManager>())
+		{
+			GemsManager.GetCastedInstance<GemsManager>().OnGemsUpdated -= hudManager.updateTextGems;
+		}
 	}
 
 	protected void startGame()
 	{
 		if(!PersistentData.GetInstance().fromLevelsToGame && !PersistentData.GetInstance().fromLevelBuilder)
 		{
-			configureLevel(PersistentData.GetInstance().getRandomLevel());
+			configureLevel(PersistentData.GetInstance().getLevelByIndex(7));
 		}
 		else
 		{
 			configureLevel(PersistentData.GetInstance().currentLevel);
 		}
+
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance ().Stop ("menuMusic",false);
+			AudioManager.GetInstance ().Play ("gamePlay");
+		}
+
+		hudManager.enablePowerUps ();
+		unBlockPowerUpForThisLevel ();
+
 		hudManager.setWorldBackground (currentLevel.world-1);
 		populateGridFromLevel(currentLevel);
 		cellManager.createFrame ();
@@ -152,13 +178,14 @@ public class GameManager : MonoBehaviour
 		if(PersistentData.GetInstance().fromLevelsToGame)
 		{
 			yield return new WaitForEndOfFrame ();
-			ScreenManager.instance.testLoading ("Levels");
+			ScreenManager.GetInstance().testLoading ("Levels");
+			yield return new WaitForEndOfFrame ();
 			//yield return new WaitUntil (()=> ScreenManager.instance.preloadSceneAsync.isDone);
 		}
 		yield return new WaitForEndOfFrame ();
-		if(ScreenManager.instance && !PersistentData.GetInstance().fromLevelBuilder)
+		if(ScreenManager.GetInstance() && !PersistentData.GetInstance().fromLevelBuilder)
 		{
-			ScreenManager.instance.sceneFinishLoading ();
+			ScreenManager.GetInstance().sceneFinishLoading ();
 		}
 	}
 
@@ -167,27 +194,27 @@ public class GameManager : MonoBehaviour
 		if (Input.GetKeyUp (KeyCode.R)) 
 		{
 			PersistentData.GetInstance().startLevel -= 1;
-			ScreenManager.instance.GoToScene ("Game");
+			ScreenManager.GetInstance().GoToScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.N)) 
 		{
-			ScreenManager.instance.GoToScene ("Game");
+			ScreenManager.GetInstance().GoToScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.B) && PersistentData.GetInstance().startLevel > 1) 
 		{
 			PersistentData.GetInstance().startLevel -= 2;
-			ScreenManager.instance.GoToScene ("Game");
+			ScreenManager.GetInstance().GoToScene ("Game");
 		}
 		if (Input.GetKeyUp (KeyCode.Z)) 
 		{
-			onUsersAction (0, 29);
+			onUsersAction (0, 5);
 			//activatePopUp ("noOptionsPopUp");
 			//onUsersAction (0);
 		}
 
 		if (Input.GetKeyUp (KeyCode.X)) 
 		{
-			onUsersAction (1, 0);
+			onUsersAction (10, 0);
 			//activatePopUp ("noOptionsPopUp");
 			//onUsersAction (0);
 		}
@@ -445,8 +472,6 @@ public class GameManager : MonoBehaviour
 			//Puntos por las lineas creadas
 			linesCreated (cells.Count);
 
-			int a = Mathf.RoundToInt(cells.Count *0.5f);
-
 			if(cells.Count > linesCreatedPoints.Count)
 			{
 				pointsMade += linesCreatedPoints[linesCreatedPoints.Count-1];
@@ -496,6 +521,7 @@ public class GameManager : MonoBehaviour
 						cellsToAnimate.Add(cells[i][j]);
 
 						cellManager.setCellContentType (cells[i][j], Piece.EType.LETTER);
+						cellManager.setCellContentColor (cells [i] [j], Piece.EColor.NONE);
 
 						letters.Add(wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL));						
 					}
@@ -582,6 +608,11 @@ public class GameManager : MonoBehaviour
 
 	public void OnRetrieveWord()
 	{
+		if (!PersistentData.GetInstance ().fromLevelBuilder) 
+		{
+			KuberaAnalytics.GetInstance ().registerCreatedWord (currentLevel.name, wordManager.getCurrentWordOnList (), wordManager.letters.Count);
+		}
+
 		//Contamos obstaculos y si la meta es usar letras entonces vemos si se usan
 		goalManager.submitWord(wordManager.letters);
 
@@ -627,14 +658,7 @@ public class GameManager : MonoBehaviour
 		{
 			if(useReferenceInstead)
 			{
-				if(letters[i].wildCard)
-				{
-					letter = letters [i];
-				}
-				else
-				{
-					letter = letters[i].letterReference;
-				}
+				letter = letters[i].letterReference;
 			}
 			else
 			{
@@ -643,19 +667,11 @@ public class GameManager : MonoBehaviour
 			
 			if(letter != null)
 			{
-				if(letter.wildCard)
-				{
-					StartCoroutine(wordManager.animateWordRetrieved (letter,wait,fulltime));
-					gridCharacters.Remove(letter);
-				}
-				else
-				{
-					cellManager.getCellUnderPoint(letter.transform.position).clearCell();
-					gridCharacters.Remove(letter);
+				cellManager.getCellUnderPoint(letter.transform.position).clearCell();
+				gridCharacters.Remove(letter);
 
-					StartCoroutine(wordManager.animateWordRetrieved (letter.letterReference,wait,fulltime));
-					GameObject.DestroyImmediate(letter.gameObject);
-				}
+				StartCoroutine(wordManager.animateWordRetrieved (letter.letterReference,wait,fulltime));
+				GameObject.DestroyImmediate(letter.gameObject);
 			}
 		}
 
@@ -706,7 +722,11 @@ public class GameManager : MonoBehaviour
 
 		hudManager.updateTextPoints(0);
 		hudManager.showPieces (pieceManager.getShowingPieces ());
-		hudManager.updateTextGems(UserDataManager.instance.playerGems);
+		if(GemsManager.GetCastedInstance<GemsManager>())
+		{
+			hudManager.updateTextGems(GemsManager.GetCastedInstance<GemsManager>().currentGems);
+		}
+
 		hudManager.setLevelName (currentLevel.name);
 		hudManager.setSecondChanceLock (false);
 
@@ -715,7 +735,7 @@ public class GameManager : MonoBehaviour
 		hudManager.setWinCondition (goalManager.currentCondition, goalManager.getGoalConditionParameters());
 
 		activatePopUp ("startGamePopUp");
-		FindObjectOfType<startGamePopUp> ().initText (goalManager.currentCondition);
+		startGameReference.initText (goalManager.currentCondition);
 
 	}
 
@@ -849,6 +869,7 @@ public class GameManager : MonoBehaviour
 	{
 		remainingMoves += secondChance.movements;
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
+		expendedGems += secondChance.getCurrentPrice ();
 		secondChanceFreeBombs ();
 		allowGameInput (true);
 	}
@@ -881,6 +902,11 @@ public class GameManager : MonoBehaviour
 
 	protected void winBonification()
 	{
+		if (!PersistentData.GetInstance ().fromLevelBuilder) 
+		{
+			KuberaAnalytics.GetInstance ().registerForBeforeBonification (currentLevel.name, pointsCount, remainingMoves);
+		}
+
 		HighLightManager.GetInstance ().turnOffAllHighLights ();
 		wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
 		updatePiecesLight (true);
@@ -903,6 +929,10 @@ public class GameManager : MonoBehaviour
 		if(cellManager.getAllEmptyCells().Length > 0 && remainingMoves > 0 )
 		{
 			add1x1Block ();
+			if (cellManager.getAllEmptyCells ().Length > 0) 
+			{
+				add1x1Block ();
+			}
 			if(AudioManager.GetInstance())
 			{
 				AudioManager.GetInstance().Stop("addBlock");
@@ -913,6 +943,7 @@ public class GameManager : MonoBehaviour
 		{
 			if (remainingMoves > 0) 
 			{
+				addMovementPoint ();
 				addMovementPoint ();
 				if(AudioManager.GetInstance())
 				{
@@ -937,12 +968,22 @@ public class GameManager : MonoBehaviour
 
 	protected void addMovementPoint()
 	{
+		if (remainingMoves == 0) 
+		{
+			return;
+		}
+
 		addPoints (1);
 		substractMoves (1);
 	}
 
 	protected void add1x1Block()
 	{
+		if (remainingMoves == 0) 
+		{
+			return;
+		}
+
 		Cell[] emptyCells = cellManager.getAllEmptyCells();
 		Cell cell;
 
@@ -969,11 +1010,18 @@ public class GameManager : MonoBehaviour
 			StartCoroutine (bombAnimation.startSinglePieceAnimation (cellToLetter [random]));
 			cellToLetter.RemoveAt (random);
 
-			Invoke ("addWinLetterAfterActions", 0.2f);
+			if (cellToLetter.Count > 0) 
+			{
+				random = Random.Range (0, cellToLetter.Count);
+				StartCoroutine (bombAnimation.startSinglePieceAnimation (cellToLetter [random]));
+				cellToLetter.RemoveAt (random);
+			}
+
+			Invoke ("addWinLetterAfterActions", 0.1f);
 		}
 		else
 		{
-			Invoke ("destroyAndCountAllLetters", 1.2f);
+			Invoke ("destroyAndCountAllLetters", 1);
 		}
 	}
 
@@ -995,13 +1043,21 @@ public class GameManager : MonoBehaviour
 			cellToLetter [random].destroyCell ();
 			cellToLetter.RemoveAt (random);
 
+			if (cellToLetter.Count > 0) 
+			{
+				random = Random.Range (0, cellToLetter.Count);
+				showDestroyedLetterScore (cellToLetter [random]);
+				cellToLetter [random].destroyCell ();
+				cellToLetter.RemoveAt (random);
+			}
+
 			if(AudioManager.GetInstance())
 			{
 				AudioManager.GetInstance().Stop("letterPoint");
 				AudioManager.GetInstance().Play("letterPoint");
 			}
 
-			Invoke ("destroyLetter", 0.2f);
+			Invoke ("destroyLetter", 0.1f);
 		} 
 		else 
 		{
@@ -1012,7 +1068,7 @@ public class GameManager : MonoBehaviour
 	protected void afterBonification()
 	{
 		#if UNITY_EDITOR
-		if(!KuberaDataManager.GetInstance())
+		if(!DataManagerKubera.GetInstance())
 		{
 
 		}
@@ -1027,11 +1083,14 @@ public class GameManager : MonoBehaviour
 			if(cancelBonify)
 			{
 				//Se guarda en sus datos que ha pasado el nivel
-				(KuberaDataManager.GetInstance() as KuberaDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
-					3,Random.Range(70,200));
+				(DataManagerKubera.GetInstance() as DataManagerKubera).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
+					3,pointsCount);
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
+				PersistentData.GetInstance ().lastPlayedLevelStars = 3;
+				PersistentData.GetInstance ().lastPlayedLevelPoints = pointsCount;
+				LifesManager.GetInstance ().giveALife(1,true);
 
 				Invoke ("toLevels", 0.75f);
 			}
@@ -1039,13 +1098,15 @@ public class GameManager : MonoBehaviour
 			#endif	
 			{
 				//Se guarda en sus datos que ha pasado el nivel
-				(KuberaDataManager.GetInstance() as KuberaDataManager).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
+				(DataManagerKubera.GetInstance() as DataManagerKubera).savePassedLevel(PersistentData.GetInstance().currentLevel.name,
 					hudManager.getEarnedStars(),pointsCount);
 
 				PersistentData.GetInstance ().fromGameToLevels = true;
 				PersistentData.GetInstance ().fromLoose = false;
+				PersistentData.GetInstance ().lastPlayedLevelStars = hudManager.getEarnedStars();
+				PersistentData.GetInstance ().lastPlayedLevelPoints = pointsCount;
 
-				LifesManager.GetInstance ().giveALife();
+				LifesManager.GetInstance ().giveALife(1,true);
 
 				Invoke ("toLevels", 0.75f);
 
@@ -1058,10 +1119,42 @@ public class GameManager : MonoBehaviour
 
 	protected void toLevels()
 	{
-		activateMusic (false);
-		if(ScreenManager.instance)
+		//activateMusic (false);
+		if(AudioManager.GetInstance())
 		{
-			ScreenManager.instance.testContinue();
+			AudioManager.GetInstance ().Stop ("gamePlay",false);
+			AudioManager.GetInstance ().Play ("menuMusic");
+		}
+
+		if(ScreenManager.GetInstance())
+		{
+			ScreenManager.GetInstance().testContinue();
+		}
+
+
+		if (!PersistentData.GetInstance ().fromLevelBuilder) 
+		{
+			KuberaAnalytics.GetInstance ().registerPowerUpsUse (currentLevel.name, powerUpsUsedCount,
+				(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelAttempts (currentLevel.name));
+		}
+
+		if (expendedGems != 0 && !PersistentData.GetInstance ().fromLevelBuilder) 
+		{
+
+			KuberaAnalytics.GetInstance ().registerGemsUsedOnLevel (currentLevel.name, expendedGems);
+
+			if (!((DataManagerKubera)DataManagerKubera.GetInstance ()).alreadyUseGems ()) 
+			{
+				KuberaAnalytics.GetInstance ().registerGemsUsedForFirstTime (currentLevel.name);
+				((DataManagerKubera)DataManagerKubera.GetInstance ()).markGemsAsUsed ();
+			}
+
+			if (((DataManagerKubera)DataManagerKubera.GetInstance ()).alreadyPurchaseGems () &&
+			   !((DataManagerKubera)DataManagerKubera.GetInstance ()).alreadyUseGemsAfterPurchase ()) 
+			{
+				KuberaAnalytics.GetInstance ().registerGemsUsedAfterFirstPurchase (currentLevel.name);
+				((DataManagerKubera)DataManagerKubera.GetInstance ()).markGemsAsUsedAfterPurchased ();
+			}
 		}
 
 		//ScreenManager.instance.GoToScene ("Levels");
@@ -1102,17 +1195,17 @@ public class GameManager : MonoBehaviour
 		
 	protected void unlockPowerUp()
 	{
-		if(currentLevel.unblockBlock)
+		if(currentLevel.unblockWordHint)
 		{
-			UserDataManager.instance.isOnePiecePowerUpUnlocked = true;
+			UserDataManager.instance.isWordHintPowerUpUnlocked = true;
 		}
 		if(currentLevel.unblockBomb)
 		{
 			UserDataManager.instance.isDestroyNeighborsPowerUpUnlocked = true;
 		}
-		if(currentLevel.unblockDestroy)
+		if(currentLevel.unblockBlock)
 		{
-			UserDataManager.instance.isDestroyPowerUpUnlocked = true;
+			UserDataManager.instance.isOnePiecePowerUpUnlocked = true;
 		}
 		if(currentLevel.unblockRotate)
 		{
@@ -1122,9 +1215,37 @@ public class GameManager : MonoBehaviour
 		{
 			UserDataManager.instance.isWildCardPowerUpUnlocked = true;
 		}
+		if(currentLevel.unblockDestroy)
+		{
+			UserDataManager.instance.isDestroyPowerUpUnlocked = true;
+		}
+	}
+
+	protected void unBlockPowerUpForThisLevel()
+	{
 		if(currentLevel.unblockWordHint)
 		{
-			UserDataManager.instance.isWordHintPowerUpUnlocked = true;
+			hudManager.powerUps [0].gameObject.SetActive(true);
+		}
+		if(currentLevel.unblockBomb)
+		{
+			hudManager.powerUps [1].gameObject.SetActive(true);
+		}
+		if(currentLevel.unblockBlock)
+		{
+			hudManager.powerUps [2].gameObject.SetActive(true);
+		}
+		if(currentLevel.unblockRotate)
+		{
+			hudManager.powerUps [3].gameObject.SetActive(true);
+		}
+		if(currentLevel.unblockWildcard)
+		{
+			hudManager.powerUps [4].gameObject.SetActive(true);
+		}
+		if(currentLevel.unblockDestroy)
+		{
+			hudManager.powerUps [5].gameObject.SetActive(true);
 		}
 	}
 
@@ -1152,16 +1273,7 @@ public class GameManager : MonoBehaviour
 	protected bool canActivatePowerUp(PowerupBase.EType type)
 	{
 		//Checa si tiene dinero para usar el poder
-		//transaction manager
-		//print (powerupManager.getPowerupByType(type).isFree);
-		if(powerupManager.getPowerupByType(type).isFree || TransactionManager.GetInstance().tryToUseGems(TransactionManager.GetInstance().powerUpPrices(type)))
-		{			
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return powerupManager.getPowerupByType(type).isFree || GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(powerupManager.getPowerUpPrice(type));
 	}
 
 	private void OnPowerupCanceled(PowerupBase.EType type)
@@ -1182,11 +1294,17 @@ public class GameManager : MonoBehaviour
 		if(isBombAndSecondChance(type))
 		{
 			useFreeBomb ();
+			powerUpsUsedCount[type.ToString()]++;
 		}
 		else
 		{
-			//TODO: consumimos gemas
 
+			if(!powerupManager.getPowerupByType(type).isFree)
+			{
+				GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(powerupManager.getPowerUpPrice(type));
+				expendedGems += powerupManager.getPowerUpPrice (type);
+				powerUpsUsedCount[type.ToString()]++;
+			}
 		}
 
 		allowGameInput(true);
@@ -1265,7 +1383,7 @@ public class GameManager : MonoBehaviour
 			hudManager.animateLvlGo ();
 			TutorialManager.GetInstance ().init ();
 
-			if(!PersistentData.GetInstance().fromLevelBuilder)
+			if(PersistentData.GetInstance().fromLevelsToGame)
 			{
 				LifesManager.GetInstance ().takeALife ();
 			}
@@ -1322,7 +1440,7 @@ public class GameManager : MonoBehaviour
 	{
 		PersistentData.GetInstance().startLevel -= 1;
 		PersistentData.GetInstance ().fromLoose = true;
-		PersistentData.GetInstance ().fromGameToLevels = true;
+		PersistentData.GetInstance ().fromGameToLevels = true;		
 		activatePopUp ("exitGame");
 		//toLevels ();
 		/*AudioManager.instance.PlaySoundEffect(AudioManager.ESOUND_EFFECTS.BUTTON);
@@ -1385,6 +1503,66 @@ public class GameManager : MonoBehaviour
 				AudioManager.GetInstance ().Stop ("gamePlay");
 			}
 
+		}
+	}
+
+	protected void isAnObjectMissing()
+	{
+		if(wordManager == null)
+		{
+			Debug.LogError ("misingObject: wordManager");
+		}
+		if(cellManager == null)
+		{
+			Debug.LogError ("misingObject: cellManager");
+		}
+		if(powerupManager == null)
+		{
+			Debug.LogError ("misingObject: powerupManager");
+		}
+		if(hudManager == null)
+		{
+			Debug.LogError ("misingObject: hudManager");
+		}
+		if(pieceManager == null)
+		{
+			Debug.LogError ("misingObject: pieceManager");
+		}
+		if(wordManager == null)
+		{
+			Debug.LogError ("misingObject: wordManager");
+		}
+		if(inputPiece == null)
+		{
+			Debug.LogError ("misingObject: inputPiece");
+		}
+		if(inputWords == null)
+		{
+			Debug.LogError ("misingObject: inputWords");
+		}
+		if(goalManager == null)
+		{
+			Debug.LogError ("misingObject: goalManager");
+		}
+		if(bombAnimation == null)
+		{
+			Debug.LogError ("misingObject: bombAnimation");
+		}
+		if(settingsButton == null)
+		{
+			Debug.LogError ("misingObject: settingsButton");
+		}
+		if(SecondChanceFreeBombs == null)
+		{
+			Debug.LogError ("misingObject: SecondChanceFreeBombs");
+		}
+		if(linesAnimation == null)
+		{
+			Debug.LogError ("misingObject: linesAnimation");
+		}
+		if(startGameReference == null)
+		{
+			Debug.LogError ("misingObject: startGameReference");
 		}
 	}
 }

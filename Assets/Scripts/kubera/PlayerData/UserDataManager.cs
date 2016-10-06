@@ -9,7 +9,7 @@ public class UserDataManager
 	public const int version = 1;
 
 	public static UserDataManager instance 
-	{
+	{ 
 		get {
 			if(null == _instance)
 			{
@@ -173,11 +173,11 @@ public class UserDataManager
 	{
 		get
 		{
-			return PlayerPrefs.GetInt("wildCardPowerUpUses") == 0 ? false : true;
+			return PlayerPrefs.GetInt("wordHintPowerUpUses") == 0 ? false : true;
 		}		
 		set
 		{
-			PlayerPrefs.SetInt("wildCardPowerUpUses",value == false ? 0 : 1);
+			PlayerPrefs.SetInt("wordHintPowerUpUses",value == false ? 0 : 1);
 		}
 	}
 
@@ -227,30 +227,6 @@ public class UserDataManager
 		{
 			PlayerPrefs.SetInt("musicSetting",value == false ? 0 : 1);
 		}
-	}
-
-	public int playerGems
-	{
-		get
-		{
-			return PlayerPrefs.GetInt("playerGems");
-		}		
-		protected set
-		{
-			PlayerPrefs.SetInt("playerGems",value);
-		}
-	}
-
-	public void giveGemsToPlayer(int amount = 1)
-	{
-		int totalLifes = playerGems + amount;
-			
-		playerGems = totalLifes;
-	}
-
-	public void setGems(int newAmount)
-	{
-		playerGems = newAmount;
 	}
 }
 

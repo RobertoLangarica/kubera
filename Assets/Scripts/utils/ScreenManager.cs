@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using DG.Tweening;
 
 public class ScreenManager : Manager<ScreenManager> {
-	public static ScreenManager instance;
 
 	public string firstScreenName;//Primer pantalla que se muestra en el juego
 	public string firstEditorScreen;//Primer pantalla que se muestra en el editor
@@ -35,27 +34,14 @@ public class ScreenManager : Manager<ScreenManager> {
 
 	public AsyncOperation preloadSceneAsync;
 
-	void Awake()
+	protected override void Awake ()
 	{
-		GameObject[] go = GameObject.FindGameObjectsWithTag ("screenManager");
-		for(int i=1; i< go.Length; i++)
-		{
-			DestroyImmediate (go [i]);
-		}
-		//No se si al mandar destroyed en el awake llegue entrar a start pero no corremos riesgos
-		if (go.Length > 1) 
-		{
-			destroyed = true;
-			return;
-		}
-
-		DontDestroyOnLoad(this);
-		instance = this;
+		base.Awake ();
 
 		backScreens = new Dictionary<string, string>();
-	
 		transform.SetAsLastSibling(); 
 	}
+
 
 	void Start()
 	{
@@ -84,14 +70,14 @@ public class ScreenManager : Manager<ScreenManager> {
 		//Back nativo de android
 		if (Input.GetKey(KeyCode.Escape))
 		{
-			showPrevScene();
+			//showPrevScene();
 		}
 		#endif
 
-		if (Input.GetKeyUp(KeyCode.Escape))
+		/*if (Input.GetKeyUp(KeyCode.Escape))
 		{
 			showPrevScene();
-		}
+		}*/
 
 
 		if(waitingScreen != null)
@@ -160,7 +146,7 @@ public class ScreenManager : Manager<ScreenManager> {
 
 		if(loading != null)
 		{			
-			loading.showLoading (0.25f,()=>{StartCoroutine(loadScene(newScene));});
+			loading.showLoading (0,()=>{StartCoroutine(loadScene(newScene));});
 		}
 		else
 		{

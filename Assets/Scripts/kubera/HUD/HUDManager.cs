@@ -63,8 +63,15 @@ public class HUDManager : MonoBehaviour
 	public Image worldBackground;
 	public Sprite[] worldsBackground;
 
+	public bool enableAllPowerUps = false;
+
 	void Start () 
 	{
+		if(enableAllPowerUps)
+		{
+			Debug.Log("<color=red>Modo test: POWER-UPS Activados</color>");	
+		}
+
 		hudStars = FindObjectOfType<HUDMetterAndStars> ();
 		scorePool = FindObjectOfType<FloatingTextPool>();
 		popUpManager = FindObjectOfType <PopUpManager> ();
@@ -345,7 +352,7 @@ public class HUDManager : MonoBehaviour
 		print (Sounds.gameObject.activeSelf);*/
 		if (!settingsBackground.activeSelf) 
 		{
-			DOTween.Kill(settingsBackground,true);
+			DOTween.Kill(settingsBackground,false);
 
 			Exit.enabled = false;
 			Music.enabled = false;
@@ -377,19 +384,18 @@ public class HUDManager : MonoBehaviour
 		}
 		else 
 		{
-			DOTween.Kill(settingsBackground,true);
+			DOTween.Kill(settingsBackground,false);
 
-			Exit.transform.DOScale(Vector3.zero,0.2f).SetEase(Ease.InBack);
-			Music.transform.DOScale(Vector3.zero,0.2f).SetEase(Ease.InBack);
-			Sounds.transform.DOScale(Vector3.zero,0.2f).SetEase(Ease.InBack).OnComplete(()=>
+			settingsBackground.transform.DOLocalRotate (new Vector3 (0, 0, -180),0.3f).SetId(settingsBackground).OnComplete(()=>
 				{
-					settingsBackground.GetComponent<RectTransform> ().pivot = Vector2.one;
+					settingsBackground.SetActive(false);
+					/*Exit.enabled = true;
+					Music.enabled = true;
+					Sounds.enabled = true;
 
-					settingsBackground.transform.DOScale (new Vector3 (0, 0,0),0.3f).SetId(settingsBackground).OnComplete(()=>
-						{
-							settingsBackground.SetActive(false);
-
-						});
+					Exit.transform.DOScale(Vector3.one,0.2f).SetEase(Ease.OutBack);
+					Music.transform.DOScale(Vector3.one,0.2f).SetEase(Ease.OutBack);
+					Sounds.transform.DOScale(Vector3.one,0.2f).SetEase(Ease.OutBack);*/
 				});
 
 			PointerOnScene.SetActive(false);
@@ -506,5 +512,15 @@ public class HUDManager : MonoBehaviour
 
 			}
 		}
+	}
+
+	public void enablePowerUps()
+	{
+		powerUps [0].gameObject.SetActive(UserDataManager.instance.isWordHintPowerUpUnlocked || enableAllPowerUps);
+		powerUps [1].gameObject.SetActive(UserDataManager.instance.isDestroyNeighborsPowerUpUnlocked || enableAllPowerUps);
+		powerUps [2].gameObject.SetActive(UserDataManager.instance.isOnePiecePowerUpUnlocked || enableAllPowerUps);
+		powerUps [3].gameObject.SetActive(UserDataManager.instance.isRotatePowerUpUnlocked || enableAllPowerUps);
+		powerUps [4].gameObject.SetActive(UserDataManager.instance.isWildCardPowerUpUnlocked || enableAllPowerUps);
+		powerUps [5].gameObject.SetActive(UserDataManager.instance.isDestroyPowerUpUnlocked || enableAllPowerUps);
 	}
 }

@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
+using utils.gems;
 
 public class SecondChancePopUp : PopUpBase 
 {
@@ -69,10 +70,15 @@ public class SecondChancePopUp : PopUpBase
 		checkDiscount ();
 	}
 
+	public int getCurrentPrice()
+	{
+		return price;
+	}
+
 	protected void checkDiscount()
 	{
 		//Debug.Log (UserDataManager.instance.playerGems);
-		if (!TransactionManager.GetInstance().checkIfExistEnoughGems (price)) 
+		if (!GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(price)) 
 		{
 			price = (int)(price * 0.5f);
 			discountDisplay.SetActive (true);
@@ -86,9 +92,12 @@ public class SecondChancePopUp : PopUpBase
 		{
 			return;
 		}
+
 		pressed = true;
-		if(TransactionManager.GetInstance().tryToUseGems(price))
+
+		if(GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(price))
 		{
+			GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(price);
 			secondChanceTimes++;
 
 			thisObject.DOAnchorPos (-v3, speed).SetEase(Ease.InBack).OnComplete(()=>

@@ -9,6 +9,7 @@ public class InputWords : MonoBehaviour
 	protected int lastTimeDraggedFrame;
 	public GameObject letter;
 	public GameObject gridLetter;
+	public GameObject[] rayCasters;
 
 	public RectTransform wordsContainer;
 
@@ -60,7 +61,17 @@ public class InputWords : MonoBehaviour
 		onLetterOnGridDragFinish += foo;
 		onChangePutLetterOverContainer += foo;
 
+		if(rayCasters != null)
+		{
+			InputBase.registerRayCasters(rayCasters);
+		}
 	}
+		
+	void OnDestroy()
+	{
+		InputBase.clearRaycasters();
+	}
+
 	public void foo(GameObject go,bool byDrag=false){}
 
 
@@ -113,6 +124,7 @@ public class InputWords : MonoBehaviour
 				//letter = gesture.Raycast.Hit2D.transform.gameObject;
 				offset += objectSize.y*0.5f;
 
+				activateRayCasters(false);
 				onDragStart(letter);
 
 				drag = true;
@@ -120,11 +132,14 @@ public class InputWords : MonoBehaviour
 				onChangePutLetterOverContainer (letter, !gridLetter);
 				isOnLettersContainer = !gridLetter;
 
-				if(objectSize.x == 0 && letter.GetComponent<BoxCollider2D>())
+				if(objectSize.x == 0)
 				{				
-					letter.GetComponent<BoxCollider2D> ().enabled = true;
-
-					objectSize = letter.GetComponent<BoxCollider2D> ().bounds.size;
+					BoxCollider2D collider = letter.GetComponent<BoxCollider2D>();
+					if(collider != null)
+					{
+						collider.enabled = true;
+						objectSize = collider.bounds.size;	
+					}
 				}
 			}	
 			break;
@@ -171,11 +186,12 @@ public class InputWords : MonoBehaviour
 
 		case (ContinuousGesturePhase.Ended):
 			{	
-				
 				if (!letter) 
 				{
 					return;
 				}
+				
+				activateRayCasters(true);
 				//letter.transform.position = firstPosition;
 				//onDragFinish(letter);
 				//DOTween.Kill ("InputW_Dragging");
@@ -189,6 +205,15 @@ public class InputWords : MonoBehaviour
 			}
 			break;
 		}
+	}
+
+	void activateRayCasters(bool activate)
+	{
+		InputBase.activateAllRayCasters(activate);
+		/*for(int i = 0; i < rayCasters.Length; i++)
+		{
+			rayCasters[i].SetActive(activate);	
+		}*/	
 	}
 
 	//Letters on Word
@@ -208,8 +233,9 @@ public class InputWords : MonoBehaviour
 
 	void OnLongPress(LongPressGesture gesture)
 	{
-		if(allowInput && gesture.Raycast.Hit2D)
+		if(allowInput && gesture.Raycast.Hit2D && letter != null)
 		{
+			activateRayCasters(false);
 			Vector3 tempV3 = new Vector3 ();
 
 			offset = letter.transform.position.y;
@@ -232,6 +258,7 @@ public class InputWords : MonoBehaviour
 	{
 		if (allowInput && letter) 
 		{
+			activateRayCasters(true);
 			onDragFinish(letter,isOnLettersContainer);
 
 			letter.transform.position = new Vector3(letter.transform.position.x,firstPosition.y,0);
@@ -315,6 +342,8 @@ public class InputWords : MonoBehaviour
 	{
 		if (allowInput && gridLetter != null) 
 		{
+			activateRayCasters(true);
+
 			if(!allowAnimation)
 			{		
 				animationFingerUp (gridLetter);

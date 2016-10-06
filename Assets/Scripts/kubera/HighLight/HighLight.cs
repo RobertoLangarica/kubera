@@ -13,6 +13,10 @@ public class HighLight : MonoBehaviour
 		HUD
 	}
 
+	public Image image;
+	public SpriteRenderer sprite_renderer;
+	public Cell cellParent;
+
 	public float minAlpha = 0.5f;
 	public float animStep = 0.02f;
 
@@ -40,8 +44,8 @@ public class HighLight : MonoBehaviour
 
 	void Start()
 	{
-		particles = borderStars.GetComponent<ParticleSystem> ();
-		borderStars.SetActive (true);
+		//particles = borderStars.GetComponent<ParticleSystem> ();
+		//borderStars.SetActive (true);
 	}
 
 	void Update()
@@ -98,15 +102,17 @@ public class HighLight : MonoBehaviour
 	protected virtual void updateColor()
 	{
 		Color temp = Color.white;
-		Image tempImg = null;
-		SpriteRenderer tempSpt = null;
+		//Image tempImg = null;
+		//SpriteRenderer tempSpt = null;
 
-		if (particles != null) 
+		//HACK revisar
+		/*if (particles != null) 
 		{
 			//borderStars.SetActive (true);
 			particles.Play();
-		}
+		}*/
 
+		//Obtenemos el color desde el manager dependiendo del tipo
 		switch (suscribedStatus[suscribedStatus.Count -1]) 
 		{
 		case(HighLightManager.EHighLightStatus.NORMAL):
@@ -114,21 +120,32 @@ public class HighLight : MonoBehaviour
 			break;
 		case(HighLightManager.EHighLightStatus.WRONG):
 			temp = HighLightManager.GetInstance().wrongHighLight;
-
-			if (particles != null) 
+			//HACK revisar
+			/*if (particles != null) 
 			{
 				//borderStars.SetActive (false);
 				particles.Clear();
 				particles.Stop();
-			}
-
+			}*/
 			break;
 		case(HighLightManager.EHighLightStatus.HINT):
 			temp = HighLightManager.GetInstance().hintHighLight;
 			break;
 		}
 
-		tempImg = gameObject.GetComponent<Image>();
+		//Asignamos el color dependiendo si es de canvas o de sprite normal
+		if(image != null)
+		{
+			image.color = temp;
+		}
+
+		if(sprite_renderer)
+		{
+			sprite_renderer.color = temp;
+		}
+
+		/*tempImg = gameObject.GetComponent<Image>();
+
 		if (tempImg != null) 
 		{
 			tempImg.color = temp;
@@ -140,7 +157,7 @@ public class HighLight : MonoBehaviour
 			{
 				tempSpt.color = temp;
 			}
-		}
+		}*/
 
 		if (!isScaled) 
 		{
@@ -208,12 +225,15 @@ public class HighLight : MonoBehaviour
 			if (suscribedTypes.Count == 0) 
 			{
 				gameObject.SetActive (false);
+
+				//HACK revisar
+				/*
 				if (particles != null) 
 				{
 					particles.Clear();
 					particles.Stop ();
 					//borderStars.SetActive (false);
-				}
+				}*/
 
 				finishAnim ();
 
@@ -240,12 +260,13 @@ public class HighLight : MonoBehaviour
 		suscribedStatus.Clear ();
 
 		gameObject.SetActive (false);
-		if (particles != null) 
+		//HACK revisar
+		/*if (particles != null) 
 		{
 			particles.Clear();
 			particles.Stop ();
 			//borderStars.SetActive (false);
-		}
+		}*/
 
 		finishAnim ();
 	}
@@ -262,14 +283,18 @@ public class HighLight : MonoBehaviour
 
 	public void scaleSpriteToFather()
 	{
-		float percent = (FindObjectOfType<CellsManager>().cellSize / GetComponent<SpriteRenderer> ().bounds.size.x);
+
+		float percent = (CellsManager.instance.cellSize / sprite_renderer.bounds.size.x);
+		//float percent = (FindObjectOfType<CellsManager>().cellSize / GetComponent<SpriteRenderer> ().bounds.size.x);
 		percent *= 1.18f;
 
 		transform.localScale = new Vector3 (percent, percent, percent);
 
-		Cell tempC = transform.parent.GetComponent<Cell> ();
-		borderStars.transform.position = transform.position = tempC.transform.position + (new Vector3 (tempC.GetComponent<SpriteRenderer> ().bounds.extents.x,
-			-tempC.GetComponent<SpriteRenderer> ().bounds.extents.x, 0));
+
+		transform.position = cellParent.transform.position + (new Vector3 (cellParent.sprite_renderer.bounds.extents.x,
+			-cellParent.sprite_renderer.bounds.extents.x, 0));
+
+		//borderStars.transform.position = transform.position;
 
 		isScaled = true;
 	}

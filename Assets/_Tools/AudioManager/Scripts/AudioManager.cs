@@ -124,13 +124,13 @@ public class AudioManager : Manager<AudioManager>
      *  Parameter: AudioItem to be Stopped
      *  Return: None
      */
-    public void Stop(string strAudioItemId)
+	public void Stop(string strAudioItemId, bool forceStop = true)
     {
         AudioCategory ac;
         AudioItem ai = GetAudioItem(strAudioItemId, out ac);
         if (ai != null)
         {
-            ai.StopAllSubItems();
+			ai.StopAllSubItems(forceStop);
         }
         else
         {
@@ -158,6 +158,22 @@ public class AudioManager : Manager<AudioManager>
                 Debug.Log("AudioItem [" + strAudioItemId + "] not founded!");
         }
     }
+
+	public bool IsPlaying(string strAudioItemId)
+	{
+		AudioCategory ac;
+		AudioItem ai = GetAudioItem(strAudioItemId, out ac);
+		if (ai != null)
+		{
+			return ai.IsPlaying ();
+		}
+		else
+		{
+			if (_mustShowDebugInfo)
+				Debug.Log("AudioItem [" + strAudioItemId + "] not founded!");
+			return false;
+		}
+	}
 
     /*
     *  Function: Resume all paused Audios
@@ -1088,13 +1104,13 @@ public class AudioItem
     *  Parameter: None
     *  Return: None
     */
-    public void StopAllSubItems()
+	public void StopAllSubItems( bool forceStop = true)
     {
         List<AudioObject> listAO = new List<AudioObject>();
         listAO.AddRange(playingAudioObjsMap.Values);
         for (int i = 0; i < listAO.Count; i++)
         {
-            listAO[i].Stop(true);
+			listAO[i].Stop(forceStop);
         }
     }
 
@@ -1142,6 +1158,11 @@ public class AudioItem
     {
         relatedCategory = pAudioCategory;
     }
+
+	public bool IsPlaying()
+	{
+		return playingAudioObjsMap.Count > 0;
+	}
 
 }
 #endregion

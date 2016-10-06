@@ -1105,7 +1105,7 @@ public class WordManager : MonoBehaviour
 		for(int i=0; i<gridLetter.Count; i++)
 		{
 			yield return new WaitForSeconds (0.4f);
-			if(!cancelHint)
+			if(!cancelHint && gridLetter[i] != null)
 			{
 				cellSelected = cellManager.getCellUnderPoint (gridLetter [i].transform.position);
 				//gridLetter [i].updateState (Letter.EState.NORMAL);

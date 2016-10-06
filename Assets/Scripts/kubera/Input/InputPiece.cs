@@ -7,6 +7,7 @@ public class InputPiece : MonoBehaviour
 	public Vector3 offsetPositionOverFinger = new Vector3(0,1.5f,0);
 	public Vector3 selectedScale = new Vector3 (4.5f, 4.5f, 4.5f);
 	public bool allowInput = true;
+	public GameObject[] rayCasters;
 
 	public delegate void DOnDragNotification(GameObject target);
 	public delegate void DOnPlayer(bool onPlayer);
@@ -27,6 +28,19 @@ public class InputPiece : MonoBehaviour
 
 	protected bool isLongPressed = false;
 
+	void Start()
+	{
+		if(rayCasters != null)
+		{
+			InputBase.registerRayCasters(rayCasters);
+		}
+	}
+
+	void OnDestroy()
+	{
+		InputBase.clearRaycasters();
+	}
+
 	void OnDrag(DragGesture gesture) 
 	{
 		//Solo se ejecuta una vez por frame (multifinger puede llamarlo mas de una vez)
@@ -42,7 +56,8 @@ public class InputPiece : MonoBehaviour
 		case (ContinuousGesturePhase.Started):
 			{
 				if(currentSelected != null)
-				{					
+				{	
+					activateRayCasters(false);
 					somethingDragged = true;
 
 					if(OnDragStart != null)
@@ -80,6 +95,8 @@ public class InputPiece : MonoBehaviour
 			{	
 				if(currentSelected)
 				{
+					activateRayCasters(true);
+
 					changePositionZ (currentSelected,selectedInitialPosition.z);
 
 					if(OnDrop != null)
@@ -96,6 +113,15 @@ public class InputPiece : MonoBehaviour
 			}
 			break;
 		}
+	}
+
+	void activateRayCasters(bool activate)
+	{
+		InputBase.activateAllRayCasters(activate);
+		/*for(int i = 0; i < rayCasters.Length; i++)
+		{
+			rayCasters[i].SetActive(activate);	
+		}*/	
 	}
 
 	void changePositionZ(GameObject go,float z)
@@ -119,6 +145,7 @@ public class InputPiece : MonoBehaviour
 	{
 		if (allowInput && gesture.Raycast.Hits2D != null) 
 		{
+			activateRayCasters(false);
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
 			//DOTween.Kill("Input_InitialPosition",true);
 			//DOTween.Kill("Input_ScalePosition",true);
@@ -154,6 +181,7 @@ public class InputPiece : MonoBehaviour
 	{
 		if(!somethingDragged && currentSelected != null && isLongPressed)
 		{		
+			activateRayCasters(true);
 			DOTween.Kill (currentSelected);
 			returnSelectedToInitialState(0.1f);
 			reset();

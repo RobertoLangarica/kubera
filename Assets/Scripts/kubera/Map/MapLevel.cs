@@ -62,6 +62,8 @@ public class MapLevel : MonoBehaviour
 
 	public bool nextLevelIsReached;
 
+	protected ParalaxManager paralaxManager;
+
 	public void updateText()
 	{
 		for (int i = 0; i < lvlName.Length; i++) 
@@ -144,7 +146,7 @@ public class MapLevel : MonoBehaviour
 		fbPicture = facebookBackground.GetComponent <FBPicture>();
 		fbPicture.fbId = friendInfo.facebookID;
 
-		Invoke ("pictureRequest", 0.5f);
+		Invoke ("pictureRequest", 0.1f);
 	}
 
 	protected void pictureRequest()
@@ -180,7 +182,7 @@ public class MapLevel : MonoBehaviour
 			fbPicture = facebookBackground.GetComponent <FBPicture>();
 			fbPicture.fbId = Kubera.Data.Sync.KuberaSyncManger.GetCastedInstance<Kubera.Data.Sync.KuberaSyncManger>().facebookUserId;
 
-			Invoke ("pictureRequest", 0.5f);
+			Invoke ("pictureRequest", 0.1f);
 		}
 	}
 
@@ -196,8 +198,13 @@ public class MapLevel : MonoBehaviour
 			{
 				facebookBackground.transform.SetSiblingIndex (0); 
 
-				FindObjectOfType<ParalaxManager>().finish();
+				paralaxManager.finish();
 			});
+	}
+
+	public void setParalaxManager(ParalaxManager paralaxManager)
+	{
+		this.paralaxManager = paralaxManager;
 	}
 
 	public void onClick()

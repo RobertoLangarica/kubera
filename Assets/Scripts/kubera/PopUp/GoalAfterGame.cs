@@ -47,6 +47,7 @@ public class GoalAfterGame : PopUpBase {
 	public Image topLevelImage;
 	public Image topIcon;
 	public Image topIconShadow;
+	protected bool pressed;
 
 	void Start()
 	{
@@ -89,7 +90,6 @@ public class GoalAfterGame : PopUpBase {
 		this.LevelNumber.text =	this.LevelNumberShadow.text  = levelName;
 		this.Points.text = points;
 
-		print ("S"+ currentWorld);
 		topLevelImage.sprite = worldTopBackground [currentWorld-1];
 		topIcon.sprite = topIconShadow.sprite = worldIcon [currentWorld-1];
 
@@ -132,6 +132,12 @@ public class GoalAfterGame : PopUpBase {
 
 	public void playGame()
 	{
+		if(pressed)
+		{
+			return;
+		}
+		pressed = true;
+
 		soundButton ();
 
 		setStartingPlaces ();
@@ -141,6 +147,12 @@ public class GoalAfterGame : PopUpBase {
 
 	public void retryGame()
 	{
+		if(pressed)
+		{
+			return;
+		}
+		pressed = true;
+
 		soundButton ();
 
 		OnComplete ("retry");

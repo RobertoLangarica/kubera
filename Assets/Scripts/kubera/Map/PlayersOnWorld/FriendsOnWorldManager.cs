@@ -8,6 +8,18 @@ public class FriendsOnWorldManager : MonoBehaviour {
 
 	protected FriendsOnWorld currentFriends;
 
+	public bool existAnyFriendInWorld(string world)
+	{
+		for(int i=0; i<friendsOnWorlds.Count; i++)
+		{
+			if(friendsOnWorlds[i].world == world)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public FriendsOnWorld existFriendsOnWorld(string world)
 	{
 		for(int i=0; i<friendsOnWorlds.Count; i++)
@@ -41,6 +53,9 @@ public class FriendsOnWorldManager : MonoBehaviour {
 
 	public FriendInfo getFriendOnLevel(int world, string level)
 	{
+		print (currentFriends);
+		print (currentFriends.friendsInfo.Count);
+
 		for(int i=0; i<currentFriends.friendsInfo.Count; i++)
 		{
 			if(currentFriends.friendsInfo[i].level == level)

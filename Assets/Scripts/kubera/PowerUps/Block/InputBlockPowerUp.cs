@@ -9,6 +9,7 @@ public class InputBlockPowerUp : MonoBehaviour
 	public Vector3 offsetPositionOverFinger = new Vector3(0,0,0);
 	public Vector3 initialScale = new Vector3(4,4,4);
 	public float pieceSpeed = 0.3f;
+	public GameObject[] rayCasters;
 
 	protected bool somethingDragged = false;
 	protected int lastTimeDraggedFrame;
@@ -26,11 +27,31 @@ public class InputBlockPowerUp : MonoBehaviour
 	protected bool canUse;
 	public Transform parent;
 
+	[HideInInspector]public bool rayCastersRegistered = false;
 	void Start()
 	{
 		gameManager = FindObjectOfType<GameManager> ();
 		pieceSpeed = FindObjectOfType<InputPiece> ().pieceSpeed;
 
+		if(!rayCastersRegistered)
+		{
+			registerRayCasters();
+		}
+	}
+
+	public void registerRayCasters()
+	{
+		rayCastersRegistered = true;
+
+		if(rayCasters != null)
+		{
+			InputBase.registerRayCasters(rayCasters);
+		}
+	}
+
+	void OnDestroy()
+	{
+		InputBase.clearRaycasters();
 	}
 
 	public void createBlock(GameObject block, Vector3 bottonPosition,bool canUse)
@@ -55,7 +76,7 @@ public class InputBlockPowerUp : MonoBehaviour
 
 	public void setPieceColor()
 	{
-		currentSelected.GetComponent<Piece> ().currentColor = Piece.EColor.PURPLE;
+		currentSelected.GetComponent<Piece> ().currentColor = Piece.EColor.RED;
 	}
 
 	public GameObject getCurrentSelected()
@@ -79,6 +100,7 @@ public class InputBlockPowerUp : MonoBehaviour
 			{
 				if(currentSelected != null)
 				{
+					activateRayCasters(false);
 					somethingDragged = true;
 					Vector3 posOverFinger = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
 					posOverFinger.z = currentSelected.transform.position.z;
@@ -108,6 +130,7 @@ public class InputBlockPowerUp : MonoBehaviour
 			{	
 				if(currentSelected)
 				{
+					activateRayCasters(true);
 					if(!canUse && gameManager.canDropOnGrid (currentSelected.GetComponent<Piece> ()))
 					{
 						returnSelectedToInitialState(0.2f);
@@ -129,6 +152,15 @@ public class InputBlockPowerUp : MonoBehaviour
 			}
 			break;
 		}
+	}
+
+	void activateRayCasters(bool activate)
+	{
+		InputBase.activateAllRayCasters(activate);
+		/*for(int i = 0; i < rayCasters.Length; i++)
+		{
+			rayCasters[i].SetActive(activate);	
+		}*/	
 	}
 
 	void OnFingerUp()

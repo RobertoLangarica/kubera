@@ -49,10 +49,13 @@ public class MultiLanguageTextManager
 	public const string OBJECTIVE_POPUP_BY_WORDS_ID_A 		= "goalByWordsObjectivePopUpA";
 	public const string OBJECTIVE_POPUP_BY_WORDS_ID_B 		= "goalByWordsObjectivePopUpB";
 	public const string OBJECTIVE_POPUP_BY_LETTERS_ID 		= "goalByLettersObjectivePopUp";
-	public const string OBJECTIVE_POPUP_BY_OBSTACLES_ID 	= "goalByObstaclesObjectivePopUp";
+	public const string OBJECTIVE_POPUP_BY_OBSTACLES_ID_A 	= "goalByObstaclesObjectivePopUpA";
+	public const string OBJECTIVE_POPUP_BY_OBSTACLES_ID_B 	= "goalByObstaclesObjectivePopUpB";
 	public const string OBJECTIVE_POPUP_BY_1_WORD_ID 		= "goalBy1WordObjectivePopUp";
-	public const string OBJECTIVE_POPUP_BY_SYNONYMOUS_ID 	= "goalBySynonymousObjectivePopUp";
-	public const string OBJECTIVE_POPUP_BY_ANTONYM_ID 		= "goalByAntonymObjectivePopUp";
+	public const string OBJECTIVE_POPUP_BY_SYNONYMOUS_ID_A 	= "goalBySynonymousObjectivePopUpA";
+	public const string OBJECTIVE_POPUP_BY_SYNONYMOUS_ID_B 	= "goalBySynonymousObjectivePopUpB";
+	public const string OBJECTIVE_POPUP_BY_ANTONYM_ID_A 	= "goalByAntonymObjectivePopUpA";
+	public const string OBJECTIVE_POPUP_BY_ANTONYM_ID_B		= "goalByAntonymObjectivePopUpB";
 	public const string OBJECTIVE_POPUP_PLAY		 		= "goalPlay";
 	public const string OBJECTIVE_POPUP_FACEBOOK	 		= "goalFacebook";
 
@@ -91,6 +94,15 @@ public class MultiLanguageTextManager
 	public const string NO_LIFES_POPUP_BUTTON2				= "noLifesButton2";
 
 	public const string FULL_LIFES_TEXT						= "fullLifesText";
+
+	public const string FB_CONNECT_POPUP_TITLE				= "fbConectTitle";
+	public const string FB_CONNECT_POPUP_INFO1				= "fbConectInfo1";
+	public const string FB_CONNECT_POPUP_BUTTON				= "fbConectButton";
+
+	public const string FB_LOG_IN_TEXT						= "fbLogInText";
+	public const string FB_LOG_OUT_TEXT						= "fbLogOutText";
+
+
 	//GAME
 	public const string FLAVOR_TEXT							= "ticketFlavorText";
 	public const string EXIT_POPUP_ID 						= "exitText";
@@ -140,6 +152,7 @@ public class MultiLanguageTextManager
 
 
 	//Invitation to review
+	public const string INVITATION_TITLE_TEXT1 				="Invitation_title_text1";
 	public const string INVITATION_11_TEXT1 				="Invitation_11_text1";
 
 	public const string INVITATION_21_TEXT1 				="Invitation_21_text1";

@@ -64,7 +64,12 @@ public class HUDMetterAndStars : MonoBehaviour
 	{
 		float size = 0;
 
-		if(star1Reached && !star2Reached)
+		if(star3Reached)
+		{
+			size = 1;
+		}
+
+		if(star2Reached && !star3Reached)
 		{
 			size = (scoreToReachStar [2] - scoreToReachStar [1]) / (Star3 -Star2);
 
@@ -73,12 +78,13 @@ public class HUDMetterAndStars : MonoBehaviour
 			size = size + Star2;
 			if (!star3Reached && size >= Star3) 
 			{
-				star3Reached = true;
+				size = 1;
 				Stars [2].transform.localScale *= 1.1f;
+				star3Reached = true;
 			}
 		}
 
-		if(star2Reached && !star3Reached)
+		if(star1Reached && !star2Reached)
 		{
 			size = (scoreToReachStar [1] - scoreToReachStar [0]) / (Star2 -Star1);
 
@@ -91,8 +97,7 @@ public class HUDMetterAndStars : MonoBehaviour
 			{
 				Stars [1].transform.localScale *= 1.1f;
 				//Stars [1].sprite = StarFilled;
-				star2Reached = false;
-				star3Reached = true;
+				star2Reached = true;
 			}
 		}
 
@@ -106,7 +111,6 @@ public class HUDMetterAndStars : MonoBehaviour
 			{
 				Stars [0].transform.localScale *= 1.1f;
 				star1Reached = true;
-				star2Reached = true;
 			}
 		}
 
@@ -126,7 +130,7 @@ public class HUDMetterAndStars : MonoBehaviour
 		{
 			result = 2;
 		}
-		else if (star3Reached) 
+		else if (star1Reached) 
 		{
 			result = 1;
 		}

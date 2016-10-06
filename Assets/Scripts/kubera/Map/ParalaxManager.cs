@@ -67,7 +67,6 @@ public class ParalaxManager : MonoBehaviour {
 			{
 				toNextLevel = false;
 				scrollRect.enabled = true;
-
 			}
 		}
 	}

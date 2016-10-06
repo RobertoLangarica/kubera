@@ -57,7 +57,6 @@ namespace Kubera.Data.Remote
 			{
 				// The request finished without any problem.
 				case HTTPRequestStates.Finished:
-					string dataAsText = response.DataAsText;
 					secureLog("Request Finished Successfully!\n" + response.DataAsText);
 
 					data = JsonUtility.FromJson<PFResponseBase<PFUserData>>(response.DataAsText);

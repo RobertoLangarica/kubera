@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using Kubera.Data;
+using utils.gems;
 
 public class NoLifesPopUp : PopUpBase 
 {
@@ -33,7 +34,7 @@ public class NoLifesPopUp : PopUpBase
 	public void closePressed()
 	{
 		popUp.SetActive (false);
-		OnPopUpCompleted (this);
+		OnComplete ("noLifesClose");
 		if (SceneManager.GetActiveScene ().name != "Levels") 
 		{
 			SceneManager.LoadScene ("Levels");
@@ -48,15 +49,19 @@ public class NoLifesPopUp : PopUpBase
 
 	public void rechargeLifes()
 	{
-		if (TransactionManager.GetInstance ().tryToUseGems (price)) 
+		if(GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(price))
 		{
-			LifesManager.GetInstance ().giveLifesToUser ((KuberaDataManager.GetInstance () as KuberaDataManager).initialLifes);
+			GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(price);
+			LifesManager.GetInstance ().giveLifesToUser ((DataManagerKubera.GetInstance () as DataManagerKubera).initialLifes);
+
+			KuberaAnalytics.GetInstance ().registerGemsUsedOnLifes (PersistentData.GetInstance().lastLevelReachedName);
 
 			popUp.SetActive (false);
 			OnComplete ();
-		} 
+		}
 		else 
 		{
+			//TODO mandar a shopika o mostrar popus de gemas o algo
 			Debug.Log ("Fondos insuficientes");
 		}
 	}

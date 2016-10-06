@@ -13,6 +13,7 @@ public class InputPowerUpRotate : MonoBehaviour
 	public Vector3 selectedScale = new Vector3 (4.5f, 4.5f, 4.5f);
 	public bool allowInput = true;
 	public Transform pieceStock;
+	public GameObject[] rayCasters;
 
 	public delegate void DOnDragNotification(GameObject target);
 	public DOnDragNotification OnRotateArrowsActivated;
@@ -49,6 +50,16 @@ public class InputPowerUpRotate : MonoBehaviour
 		{
 			print("Falta asignarlo en el editor");
 		}
+
+		if(rayCasters != null)
+		{
+			InputBase.registerRayCasters(rayCasters);
+		}
+	}
+
+	void OnDestroy()
+	{
+		InputBase.clearRaycasters();
 	}
 
 	public void startRotate()
@@ -79,6 +90,7 @@ public class InputPowerUpRotate : MonoBehaviour
 			{
 				if(currentSelected != null)
 				{
+					activateRayCasters(false);
 					somethingDragged = true;
 
 					if(OnDragStartPieceRotated != null)
@@ -113,6 +125,7 @@ public class InputPowerUpRotate : MonoBehaviour
 				
 				if(currentSelected)
 				{
+					activateRayCasters(true);
 					if(!gameManager.canDropOnGrid(currentSelected.GetComponent<Piece>()))
 					{
 						returnSelectedToInitialState();
@@ -133,6 +146,15 @@ public class InputPowerUpRotate : MonoBehaviour
 			}
 			break;
 		}
+	}
+
+	void activateRayCasters(bool activate)
+	{
+		InputBase.activateAllRayCasters(activate);
+		/*for(int i = 0; i < rayCasters.Length; i++)
+		{
+			rayCasters[i].SetActive(activate);	
+		}*/		
 	}
 
 	void OnFingerDown(FingerDownEvent  gesture)
@@ -180,7 +202,7 @@ public class InputPowerUpRotate : MonoBehaviour
 	void OnFingerUp()
 	{
 		if(!somethingDragged && currentSelected != null && !isLongPressed)
-		{				
+		{			
 			RotatePiece (currentSelected);
 			reset ();
 			//returnSelectedToInitialState (0.1f);

@@ -9,22 +9,32 @@ namespace Kubera.Data
 	[Serializable]
 	public class KuberaUser : BasicData 
 	{
-		public int remoteDataVersion;
-		public string facebookId;
-		public List<LevelData> levels;
-		public int playerLifes;
-		public string lifeTimerDate;
-		public int maxLevelReached;
+		/********SINCRONIZADAS REMOTAMENTE********/
+		public bool gemsUse;//Ya se uso una gema
+		public bool gemsPurchase;//Ya compro gemas
+		public bool gemsUseAfterPurchase;//Ya uso gemas despues de comprar
+		public bool lifesAsked;//Ya pidio vidas
+		public List<LevelData> levels;//niveles ya pasados
+		public int remoteDataVersion;//version de los datos del server
+		public int maxLevelReached;//Para avance de mapa
+		/***************************************/
+
+		public string facebookId;//Id de facebook del usuario
+		public int playerLifes;//Vidas del usuario
+		public string lifeTimerDate;//Para dar vidas por tiempo
+		public bool firstTimeShopping;//Para emebeber video de shopika
 
 		public KuberaUser()
 		{
 			levels = new List<LevelData>();
+			firstTimeShopping = true;
 		}
 
 		public KuberaUser(string userId)
 		{
 			_id = userId;
 			levels = new List<LevelData>();
+			firstTimeShopping = true;
 		}
 
 		public override void updateFrom (BasicData readOnlyRemote, bool ignoreVersion = false)
@@ -39,6 +49,47 @@ namespace Kubera.Data
 			//Le quitamos lo sucio a los datos
 			isDirty = false;
 
+			/*public bool gemsUse;//Ya se uso una gema
+			public bool gemsPurchase;//Ya compro gemas
+			public bool gemsUseAfterPurchase;//Ya uso gemas despues de comprar
+			public bool lifesAsked;//Ya pidio vidas*/
+
+			if(!updateGemsUse(((KuberaUser)readOnlyRemote).gemsUse))
+			{
+				if(gemsUse && !((KuberaUser)readOnlyRemote).gemsUse)
+				{
+					//En el server vino en false
+					isDirty = true;
+				}
+			}
+
+			if(!updateGemsPurchase(((KuberaUser)readOnlyRemote).gemsPurchase))
+			{
+				if(gemsPurchase && !((KuberaUser)readOnlyRemote).gemsPurchase)
+				{
+					//En el server vino en false
+					isDirty = true;
+				}
+			}
+
+			if(!updateGemsAfterPurchase(((KuberaUser)readOnlyRemote).gemsUseAfterPurchase))
+			{
+				if(gemsUseAfterPurchase && !((KuberaUser)readOnlyRemote).gemsUseAfterPurchase)
+				{
+					//En el server vino en false
+					isDirty = true;
+				}
+			}
+
+			if(!updateLifesAsked(((KuberaUser)readOnlyRemote).lifesAsked))
+			{
+				if(lifesAsked && !((KuberaUser)readOnlyRemote).lifesAsked)
+				{
+					//En el server vino en false
+					isDirty = true;
+				}
+			}
+
 			//-1 es el dato vacio del server y se debe ignorar
 			if(((KuberaUser)readOnlyRemote).maxLevelReached >= 0)
 			{
@@ -46,7 +97,7 @@ namespace Kubera.Data
 				{
 					if(maxLevelReached > ((KuberaUser)readOnlyRemote).maxLevelReached)
 					{
-						Debug.Log("DIRTY FOR MAX REACHED: "+((KuberaUser)readOnlyRemote).maxLevelReached);
+						//Debug.Log("DIRTY FOR MAX REACHED: "+((KuberaUser)readOnlyRemote).maxLevelReached);
 						//El local es mayor
 						isDirty = true;
 					}		
@@ -85,6 +136,58 @@ namespace Kubera.Data
 					}
 				}
 			}
+		}
+
+		public bool updateGemsUse(bool _used)
+		{
+			bool updated = false;
+
+			if(_used && !gemsUse)
+			{
+				gemsUse = _used;
+				updated = true;
+			}
+
+			return updated;
+		}
+
+		public bool updateGemsPurchase(bool _purchase)
+		{
+			bool updated = false;
+
+			if(_purchase && !gemsPurchase)
+			{
+				gemsPurchase = _purchase;
+				updated = true;
+			}
+
+			return updated;
+		}
+
+		public bool updateGemsAfterPurchase(bool _purchase)
+		{
+			bool updated = false;
+
+			if(_purchase && !gemsUseAfterPurchase)
+			{
+				gemsUseAfterPurchase = _purchase;
+				updated = true;
+			}
+
+			return updated;
+		}
+
+		public bool updateLifesAsked(bool _asked)
+		{
+			bool updated = false;
+
+			if(_asked && !lifesAsked)
+			{
+				lifesAsked = _asked;
+				updated = true;
+			}
+
+			return updated;
 		}
 
 		public bool upgradeMaxLevelReached(int incommingValue)
@@ -170,7 +273,7 @@ namespace Kubera.Data
 
 			foreach(LevelData item in levels)
 			{
-				if(item.world > result)
+				if(item.passed && item.world > result)
 				{
 					result = item.world;
 				}

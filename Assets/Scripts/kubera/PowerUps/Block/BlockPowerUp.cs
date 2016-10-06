@@ -4,22 +4,30 @@ using DG.Tweening;
 
 public class BlockPowerUp : PowerupBase
 {
-	protected InputBlockPowerUp inputBlockPowerUp;
+	public  InputBlockPowerUp inputBlockPowerUp;
+
 	protected GameManager gameManager;
 	void Start()
 	{
-		inputBlockPowerUp = FindObjectOfType<InputBlockPowerUp> ();
+		//inputBlockPowerUp = FindObjectOfType<InputBlockPowerUp> ();
 		inputBlockPowerUp.OnPowerupCanceled += cancel;
 		inputBlockPowerUp.OnPowerupCompleted += completePowerUp;
 		inputBlockPowerUp.OnPowerupCompletedNoGems += completePowerUpNoGems;
 			
+		if(!inputBlockPowerUp.rayCastersRegistered)
+		{
+			inputBlockPowerUp.registerRayCasters();
+		}
 		inputBlockPowerUp.enabled = false;
+		//inputBlockPowerUp.gameObject.SetActive(false);
+
 		gameManager = FindObjectOfType<GameManager> ();
 	}
 
 	public override void activate (bool canUse)
 	{
 		inputBlockPowerUp.enabled = true;
+		//inputBlockPowerUp.gameObject.SetActive(true);
 
 		inputBlockPowerUp.createBlock (powerUpBlock,powerUpButton.position,canUse);
 
@@ -32,6 +40,7 @@ public class BlockPowerUp : PowerupBase
 	protected void completePowerUp()
 	{
 		inputBlockPowerUp.enabled = false;
+		//inputBlockPowerUp.gameObject.SetActive(false);
 		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SQUARE_POWERUP);
 
 		gameManager.updatePiecesLightAndUpdateLetterState ();
@@ -41,6 +50,7 @@ public class BlockPowerUp : PowerupBase
 	protected void completePowerUpNoGems()
 	{
 		inputBlockPowerUp.enabled = false;
+		//inputBlockPowerUp.gameObject.SetActive(false);
 		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SQUARE_POWERUP);
 		OnCompletedNoGems ();
 	}
@@ -48,6 +58,7 @@ public class BlockPowerUp : PowerupBase
 	public override void cancel()
 	{
 		inputBlockPowerUp.enabled = false;
+		//inputBlockPowerUp.gameObject.SetActive(false);
 		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SQUARE_POWERUP);
 		OnCancel ();
 	}

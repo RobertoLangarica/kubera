@@ -25,6 +25,7 @@ public class PowerUpManager : MonoBehaviour
 				powerup.OnPowerupCanceled += cancelPowerup;
 				powerup.OnPowerupCompleted += completePowerup;
 				powerup.OnPowerupCompletedNoGems += completePowerupNoGems;
+				powerup.priceText.text = getPowerUpPrice (powerup.type).ToString();
 			}
 		}
 	}
@@ -35,10 +36,13 @@ public class PowerUpManager : MonoBehaviour
 		{
 			powerup = getPowerupByType (wichOne);
 
-			if (powerup == null) {
+			if (powerup == null) 
+			{
 				cancelPowerup ();
-			} else {
-				powerup.activate (canUse);
+			} 
+			else 
+			{
+				powerup.activate(canUse);
 			}
 		}
 	}
@@ -90,5 +94,25 @@ public class PowerUpManager : MonoBehaviour
 	public void cancelCurrentPowerUp()
 	{
 		powerup.cancel ();
+	}
+
+	public int getPowerUpPrice(PowerupBase.EType powerUptype)
+	{
+		switch (powerUptype) {
+		case PowerupBase.EType.HINT_WORD:
+			return 	5;
+			case PowerupBase.EType.BLOCK:
+			return 	30;
+			case PowerupBase.EType.BOMB: 
+			return 	15;
+			case PowerupBase.EType.DESTROY:
+			return 	70;
+			case PowerupBase.EType.ROTATE:
+			return 	50;
+			case PowerupBase.EType.WILDCARD:
+			return 	100;
+		}
+
+		return 0;
 	}
 }

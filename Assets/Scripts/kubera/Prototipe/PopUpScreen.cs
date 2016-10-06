@@ -21,13 +21,13 @@ public class PopUpScreen : MonoBehaviour
 	{
 		//ScreenManager.instance.GoToScene("Intro");
 		FindObjectOfType<PopUp>().closePopUp();
-		ScreenManager.instance.GoToSceneAsync("Intro",0.5f);
+		ScreenManager.GetInstance().GoToSceneAsync("Intro",0.5f);
 	}
 
 	protected void goToGame()
 	{
 		//ScreenManager.instance.GoToScene("Game");
 		FindObjectOfType<PopUp>().closePopUp();
-		ScreenManager.instance.GoToSceneAsync("Game",0.5f);
+		ScreenManager.GetInstance().GoToSceneAsync("Game",0.5f);
 	}
 }

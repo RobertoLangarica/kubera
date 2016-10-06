@@ -7,11 +7,11 @@ using Kubera.Data.Remote;
 
 namespace Kubera.Data.Sync
 {
-	public class KuberaSyncManger : SyncManager
+	public class KuberaSyncManger : SyncManager<KuberaSyncManger>
 	{
 		public Action<PFLeaderboardData> OnLeaderboardObtained;
 
-		public KuberaDataManager localData;
+		public DataManagerKubera localData;
 
 		protected override void Awake()
 		{
@@ -165,6 +165,8 @@ namespace Kubera.Data.Sync
 		 **/ 
 		public void getLevelLeaderboard(string levelId, int maxResultsCount = 10)
 		{
+			return;
+
 			//Si no hay usuario remoto entonces no hay nada que actualizar
 			if(existCurrentUser())
 			{

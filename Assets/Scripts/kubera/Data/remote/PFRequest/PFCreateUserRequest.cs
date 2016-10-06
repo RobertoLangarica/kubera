@@ -23,7 +23,7 @@ namespace Kubera.Data.Remote
 			request.Send();
 		}
 
-		public void initialize<T>(string titleID,string jsonData, string sessionTicket, T dataToSend)
+		public void initialize(string titleID,string jsonData, string sessionTicket, T dataToSend)
 		{
 			request = new HTTPRequest(new System.Uri("https://"+titleID+".playfabapi.com/Client/UpdateUserData"), HTTPMethods.Post);
 			request.AddHeader("X-Authentication",sessionTicket);

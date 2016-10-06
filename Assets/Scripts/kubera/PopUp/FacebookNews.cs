@@ -4,19 +4,22 @@ using UnityEngine.UI;
 
 public class FacebookNews : PopUpBase {
 
-	protected MapManager mapManager;
+	public MapManager mapManager;
 	public Button newsButton;
 	public Text messageCount;
 	public Image messageCountImage;
 	public GridLayoutGroup panelMessageGridLayout;
 	public RectTransform panelMessageGridRectTransform;
+	public Text title;
 
 	void Start()
 	{
-		mapManager = FindObjectOfType<MapManager> ();
 		panelMessageGridLayout.cellSize = new Vector2 (panelMessageGridRectTransform.rect.width, Screen.height *0.175f);
 		panelMessageGridLayout.spacing = new Vector2 (0,panelMessageGridRectTransform.rect.width*0.2f);
 		actualizeMessageNumber ("0");
+
+		//TODO hardcoding
+		title.text = "MENSAJES";
 	}
 
 	public void actualizeMessageNumber(string messageCount)

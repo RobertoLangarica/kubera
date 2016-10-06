@@ -22,7 +22,7 @@ public class FriendsController : MonoBehaviour {
 
 		cellSize.y = Screen.height / 9;
 		gridLayout.cellSize = cellSize;
-		//initializeFriends ();
+		initializeFriends ();
 	}
 
 	public void initializeFriends()

@@ -39,10 +39,6 @@ public class noOptionsPopUp : PopUpBase {
 		toChose.SetActive(false);
 		winContent.localPosition = startPosition;
 
-
-		Vector3 v3 = new Vector3 ();
-		v3 = winContent.anchoredPosition;
-
 		winContent.DOAnchorPos (new Vector3(winContent.anchoredPosition.x,0), speed).SetEase(Ease.OutBack).OnComplete(()=>
 			{
 				winContent.DOAnchorPos (new Vector3(winContent.anchoredPosition.x,0), speed).OnComplete(()=>

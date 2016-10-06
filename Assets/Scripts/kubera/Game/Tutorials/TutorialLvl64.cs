@@ -16,12 +16,12 @@ public class TutorialLvl64 : TutorialBase
 	protected override void Start()
 	{
 		inputBomb = FindObjectOfType<InputBombAndDestroy> ();
-		inputBomb.OnPlayer += animation;
+		inputBomb.OnPlayer += animationController;
 
 		base.Start ();
 	}
 
-	protected void animation(bool stop)
+	protected void animationController(bool stop)
 	{
 		if(stop)
 		{
@@ -72,7 +72,7 @@ public class TutorialLvl64 : TutorialBase
 			phase = 1;
 			return true;
 		case(1):
-			inputBomb.OnPlayer -= animation;
+			inputBomb.OnPlayer -= animationController;
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 
@@ -175,17 +175,12 @@ public class TutorialLvl64 : TutorialBase
 		case(1):
 			return true;
 		case(2):
-			Debug.Log (keyBoard.getSelectedWildCard ().abcChar.character);
 			if (keyBoard.getSelectedWildCard ().abcChar.character == "Z") 
 			{
 				phase = 3;
 				return true;
 			} 
-			else 
-			{
-				return true;
-			}
-			return false;
+			return true;
 		case(3):
 			return true;
 		}

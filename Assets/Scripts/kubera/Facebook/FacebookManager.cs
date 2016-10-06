@@ -10,10 +10,9 @@ using Kubera.Data.Sync;
 
 public class FacebookManager : Manager<FacebookManager>
 {
-	protected FBGraph fbGraph;
-	protected FacebookNews facebookNews;
-	protected PlayerInfo playerInfo;
-	protected MapManager mapManager;
+	public FBGraph fbGraph;
+	public FacebookNews facebookNews;
+	public MapManager mapManager;
 	public FBFriendsRequestPanel fbRequestPanel;
 
 	public Transform panelMessages;
@@ -39,12 +38,11 @@ public class FacebookManager : Manager<FacebookManager>
 
 	protected GameObject conectFacebook;
 
-	void Awake()
+	protected override void Awake ()
 	{
+		base.Awake ();
 		fbGraph = FindObjectOfType<FBGraph> ();
-		facebookNews = FindObjectOfType<FacebookNews> ();
-		playerInfo = FindObjectOfType<PlayerInfo> ();
-		mapManager = FindObjectOfType<MapManager> ();
+		fbRequestPanel.facebookManager = this;
 	}
 
 	void Start()
@@ -54,7 +52,7 @@ public class FacebookManager : Manager<FacebookManager>
 		fbGraph.OnPlayerInfo += showPlayerInfo;
 		fbGraph.OnGetGameFriends += addGameFriends;
 		fbGraph.OnGetInvitableFriends += addInivitableFriends;
-		fbGraph.OnGetFriendTextures += addFriendsImage;
+		fbGraph.OnGetFriendTextures += addUsersImage;
 		fbGraph.onFinishGettingFriends += mergeFriends;
 
 		fbGraph.OnGetAppRequest += chanelData;
@@ -68,14 +66,27 @@ public class FacebookManager : Manager<FacebookManager>
 	{
 		if (KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 		{
+			//print ("is loggedIn--------------------------");
 			if(canRequestMoreFriends())
 			{
+				//print ("canRequestMoreFriends--------------------------");
 				fbGraph.GetPlayerInfo();
 				fbGraph.GetFriends();
 				fbGraph.GetInvitableFriends();
+
+				FacebookPersistentData.GetInstance ().infoRequested = true;
+			}
+			else
+			{
+				fbGraph.setActive ();
+
+
+				fillRequestPanel (FacebookPersistentData.GetInstance().gameFriends, FBFriendsRequestPanel.EFriendsType.GAME);
+				fillRequestPanel (FacebookPersistentData.GetInstance().allFriends, FBFriendsRequestPanel.EFriendsType.ALL);
 			}
 
 			fbGraph.getFriendsAppRequests ();
+			//print ("getFriendsAppRequests--------------------------");
 			if(conectFacebook != null)
 			{
 				DestroyImmediate (conectFacebook);
@@ -123,30 +134,41 @@ public class FacebookManager : Manager<FacebookManager>
 		fillRequestPanel (FacebookPersistentData.GetInstance().allFriends, FBFriendsRequestPanel.EFriendsType.ALL);
 	}
 
-	protected void addFriendsImage(string id, Texture image)
+	protected void addUsersImage(string id, Texture image,bool myPicture = false)
 	{
+		if(myPicture)
+		{
+			FacebookPersistentData.GetInstance().addFriendImage (id, image);
+			return;
+		}
+		
 		if(FacebookPersistentData.GetInstance().containTextureByID(id))
 		{			
 			FacebookPersistentData.GetInstance().addFriendImage (id, image);
 		}
 	}
 
-	public void acceptGift(bool life, int giftCount,GameObject requestToDelete, string bossReached = "0")
+	public void acceptGift(bool life, int giftCount,GameObject requestToDelete,List<string> requestId, string bossReached = "0")
 	{
 		//TODO: 
 		if(life)
 		{
-			print("recibi " + giftCount + ": vidas");	
+			//print("recibi " + giftCount + ": vidas");	
+			LifesManager.GetInstance ().giveALife (giftCount);
 		}
 		else
 		{
-			print("recibi " + giftCount + ": llaves");
+			//print("recibi " + giftCount + ": llaves");
 			mapManager.unlockBoss (bossReached);
+		}
+		for(int i=0; i<requestId.Count; i++)
+		{
+			deleteAppRequest (requestId [i]);
 		}
 		DestroyImmediate (requestToDelete);
 	}
 
-	public void sendGift (bool life, List<string> friendsIDs,GameObject requestToDelete, string bossReached = "0")
+	public void sendGift (bool life, List<string> friendsIDs,GameObject requestToDelete,List<string> requestId, string bossReached = "0")
 	{
 		if(life)
 		{
@@ -175,10 +197,10 @@ public class FacebookManager : Manager<FacebookManager>
 
 	public void sendLife(List<string> friendsIDs)
 	{
-		if (!canPublish())
+		/*if (!canPublish())
 		{
 			return;
-		}
+		}*/
 
 		FB.AppRequest ("Here, take this life!", // A message for the user
 			OGActionType.SEND, // Can be .Send or .AskFor depending on what you want to do with the object.
@@ -195,10 +217,12 @@ public class FacebookManager : Manager<FacebookManager>
 
 	public void sendKey(List<string> friendsIDs,string bossReached)
 	{
-		if (!canPublish())
+		/*if (!canPublish())
 		{
 			return;
-		}
+		}*/
+
+		print (bossReached);
 
 		FB.AppRequest ("Here, take this key!", // A message for the user
 			OGActionType.SEND, // Can be .Send or .AskFor depending on what you want to do with the object.
@@ -215,11 +239,11 @@ public class FacebookManager : Manager<FacebookManager>
 
 	public void askKey(List<string> idsFriends)
 	{
-		if(idsFriends.Count<50)
+		if(idsFriends.Count>50)
 		{
 			return;
 		}
-		FB.AppRequest ("Give me a key!", OGActionType.ASKFOR, "795229890609809", idsFriends, "askKey,"+ mapManager.bossLockedPopUp.lvlName, // Here you can put in any data you want
+		FB.AppRequest ("Give me a key!", OGActionType.ASKFOR, "795229890609809", idsFriends, "askKey,"+ mapManager.bossLockedPopUp.fullLvlName, // Here you can put in any data you want
 			"Ask a life to your friend", // A title
 			delegate (IAppRequestResult result) {
 				Debug.Log (result.RawResult);
@@ -269,6 +293,7 @@ public class FacebookManager : Manager<FacebookManager>
 
 	protected void saveDataOnList(string type,string firstName, string playerID, string requestID)
 	{
+		//print (type);
 		switch (type) {
 		case "askLife":
 			if(idExistOnList (askedLifes,playerID))
@@ -277,10 +302,11 @@ public class FacebookManager : Manager<FacebookManager>
 			}
 			else
 			{
+				print ("askedLifes");
 				addToList (askedLifes, firstName, playerID, requestID);
 			}
 			break;
-		case "sendLife":			
+		case "SendLife":			
 			if(idExistOnList (giftLifes,playerID))
 			{
 				deleteAppRequest (requestID);
@@ -291,7 +317,6 @@ public class FacebookManager : Manager<FacebookManager>
 			}
 			break;
 		default:
-			print (type);
 			//llaves que me pidieron
 			if (type.Contains("askKey"))
 			{
@@ -312,7 +337,7 @@ public class FacebookManager : Manager<FacebookManager>
 				}
 			}
 			//llaves que pedí
-			else if(type.Contains("sendKey"))
+			else if(type.Contains("SendKey"))
 			{
 				string[] splitType = type.Split (',');
 				string bossReached = "";
@@ -321,8 +346,10 @@ public class FacebookManager : Manager<FacebookManager>
 					bossReached = splitType [1];
 				}
 
-				if(askedKeys.Count == maxUsersPerMessage || idExistOnList (giftKeys,playerID )|| !(KuberaDataManager.GetInstance () as KuberaDataManager).isLevelLocked(bossReached))
+				if(askedKeys.Count == maxUsersPerMessage || idExistOnList (giftKeys,playerID )|| !(DataManagerKubera.GetInstance () as DataManagerKubera).isLevelLocked(bossReached))
 				{
+
+					//print ("delete boosKey");
 					deleteAppRequest (requestID);
 				}
 				else
@@ -431,7 +458,7 @@ public class FacebookManager : Manager<FacebookManager>
 				pR.setParent (panelMessages,false);
 				pR.facebookManager = this;
 				pR.selectRequestState (requestState);
-				pR.selectAction (PanelAppRequest.EAction.SEND);
+				pR.selectAction (action);
 				pR.selectTextButton ();
 				pR.selectImage ();
 			}
@@ -456,7 +483,7 @@ public class FacebookManager : Manager<FacebookManager>
 					pR.selectText ();
 				}
 
-				if (j == maxUsersPerMessage || requested[i].Split(',')[3] != requested[i+1].Split(',')[3] ) 
+				if (requested.Count == 1 ||j == maxUsersPerMessage || requested[i].Split(',')[3] != requested[i+1].Split(',')[3] ) 
 				{
 					j = 0;
 				}
@@ -483,7 +510,7 @@ public class FacebookManager : Manager<FacebookManager>
 			Texture friendTexture = FacebookPersistentData.GetInstance().getTextureFromURL (FacebookPersistentData.GetInstance().getFriendPictureUrl (FacebookPersistentData.GetInstance().getFriendInfo (id)));
 			return friendTexture;
 		}
-		return FacebookPersistentData.GetInstance().friendsImage [id];
+		return FacebookPersistentData.GetInstance().facebookUsersImage [id];
 	}
 
 
@@ -518,7 +545,7 @@ public class FacebookManager : Manager<FacebookManager>
 		fbGraph.OnPlayerInfo -= showPlayerInfo;
 		fbGraph.OnGetGameFriends -= addGameFriends;
 		fbGraph.OnGetInvitableFriends -= addInivitableFriends;
-		fbGraph.OnGetFriendTextures -= addFriendsImage;
+		fbGraph.OnGetFriendTextures -= addUsersImage;
 
 		fbGraph.OnGetAppRequest -= chanelData;
 

@@ -6,6 +6,7 @@ public class InputBombAndDestroy : MonoBehaviour
 {
 	public Vector3 offsetPositionOverFinger = new Vector3(0,0.3f,0);
 	public bool allowInput = true;
+	public GameObject[] rayCasters;
 
 	public delegate void DOnDragNotification();
 	public delegate void DOnPlayer(bool onPlayer);
@@ -29,6 +30,16 @@ public class InputBombAndDestroy : MonoBehaviour
 
 		cellsManager = FindObjectOfType<CellsManager> ();
 		pieceSpeed = FindObjectOfType<InputPiece> ().pieceSpeed;
+
+		if(rayCasters != null)
+		{
+			InputBase.registerRayCasters(rayCasters);
+		}
+	}
+
+	void OnDestroy()
+	{
+		InputBase.clearRaycasters();
 	}
 
 	void OnDrag(DragGesture gesture) 
@@ -47,6 +58,7 @@ public class InputBombAndDestroy : MonoBehaviour
 			{
 				if(currentSelected != null)
 				{
+					activateRayCasters(false);
 					somethingDragged = true;
 
 					Vector3 posOverFinger = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
@@ -77,7 +89,8 @@ public class InputBombAndDestroy : MonoBehaviour
 								if (cellSelected.contentColor != Piece.EColor.LETTER_OBSTACLE &&
 								   cellSelected.contentColor != Piece.EColor.NONE) 
 								{
-									if (selectedCellColor != null) 
+									//if (selectedCellColor != null) 
+									if (selectedCellColor != Piece.EColor.NONE) 
 									{
 										if (selectedCellColor != cellSelected.contentColor) 
 										{
@@ -109,6 +122,7 @@ public class InputBombAndDestroy : MonoBehaviour
 			{	
 				if(currentSelected)
 				{
+					activateRayCasters(true);
 					if(OnDrop != null)
 					{
 						OnDrop();	
@@ -118,6 +132,15 @@ public class InputBombAndDestroy : MonoBehaviour
 			}
 			break;
 		}
+	}
+
+	void activateRayCasters(bool activate)
+	{
+		InputBase.activateAllRayCasters(activate);
+		/*for(int i = 0; i < rayCasters.Length; i++)
+		{
+			rayCasters[i].SetActive(activate);	
+		}*/	
 	}
 
 	void OnFingerUp()
