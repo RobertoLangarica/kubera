@@ -43,12 +43,8 @@ public class noOptionsPopUp : PopUpBase {
 			{
 				winContent.DOAnchorPos (new Vector3(winContent.anchoredPosition.x,0), speed).OnComplete(()=>
 					{
-						winContent.DOLocalMoveY(LetterContainer.transform.localPosition.y,speed).SetEase(Ease.InBack).OnComplete(()=>
-							{
-								initial.SetActive(false);
-								toChose.SetActive(true);
-
-							});
+						initial.SetActive(false);
+						toChose.SetActive(true);
 					});
 			});
 	}

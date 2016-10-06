@@ -17,6 +17,8 @@ public class Gems : MonoBehaviour {
 	void Start()
 	{
 		GemsManager.GetCastedInstance<GemsManager>().OnGemsUpdated += actualizeGems;
+
+		actualizeGems(GemsManager.GetCastedInstance<GemsManager>().currentGems);
 	}
 
 	void OnDestroy()
