@@ -1,0 +1,28 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:650bd58e5b2335bc12f1e3afb8faa386:9cedb640eaef0e93a482a882e7de45e2:812d580a03b79e14022df46ae19500d8$
+#
+:format=40000
+:texture=Home.png
+:size=1024x2048
+:pivotpoints=enabled
+
+facebook_blanco;914;2002;48;46;0.5;0.5
+K-InGame_BACK3;966;2004;44;44;0.4772727272727273;0.48863636363636365
+K-InGame_musicOFF;966;1956;44;44;0.5113636363636364;0.5113636363636364
+K-InGame_musicON2;914;1954;44;44;0.48863636363636365;0.48863636363636365
+K-InGame_ruedasettings;751;1751;118;113;0.5;0.5
+K-InGame_soundOFF;962;1908;44;44;0.5113636363636364;0.5113636363636364
+K-InGame_soundON2;913;1906;44;44;0.48863636363636365;0.5113636363636364
+K-inicio_btnshopika;751;1896;152;47;0.506578947368421;0.4893617021276596
+K-inicio_shopika;751;1868;131;24;0.4961832061068702;0.5
+K-magia-del-gamplay2;0;728;747;1320;0.5;0.5
+K-MapaGeneral_settings;961;1861;42;43;0.4642857142857143;0.5
+K-menus_fondo-menus;1007;1392;16;512;0.5;0.5
+K-popups-pq_btnAzul;751;1999;159;49;0.4968553459119497;0.5408163265306123
+K-popups-pq_btnVerde;751;1947;158;48;0.5;0.53125
+KuberaLogo-02;0;472;377;252;0.5013262599469496;0.5059523809523809

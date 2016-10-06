@@ -6,12 +6,12 @@
         <key>texturePackerVersion</key>
         <string>4.2.3</string>
         <key>fileName</key>
-        <string>C:/VillaVanilla/Kubera/Assets/Textures/MapHUD.tps</string>
+        <string>/Users/Roberto/Documents/Trabajo/VillaVanilla/kubera/Assets/Textures/MapHUD.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
                 <key>scale</key>
-                <double>0.07</double>
+                <double>1</double>
                 <key>extension</key>
                 <string></string>
                 <key>spriteFilter</key>
@@ -70,7 +70,7 @@
             </struct>
         </struct>
         <key>shapePadding</key>
-        <uint>4</uint>
+        <uint>2</uint>
         <key>jpgQuality</key>
         <uint>80</uint>
         <key>pngOptimizationLevel</key>
@@ -166,7 +166,7 @@
         <key>globalSpriteSettings</key>
         <struct type="SpriteSettings">
             <key>scale</key>
-            <double>1</double>
+            <double>0.09</double>
             <key>scaleMode</key>
             <enum type="ScaleMode">Smooth</enum>
             <key>extrude</key>
@@ -188,82 +188,86 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Inicio/K-inicio_btnshopika.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Inicio/K-inicio_shopika.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Inicio/facebook_blanco.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/luces/K-_estrella1.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/luces/K-_estrella2.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/luces/K-_luz1.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/luces/K-_luz2.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/luces/K-_luz3.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/luces/K-_luz4.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/luces/K-_luz5.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/luces/K-_luz6.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/luces/K-_luz7-22.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/luces/K-_luz7-24.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/HUD/K-MapaGeneral-31.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/HUD/K-MapaGeneral_HUDbaseAbajo.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/HUD/K-MapaGeneral_HUDbaseGem-Cor.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/HUD/K-MapaGeneral_HUDgemas.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/HUD/K-MapaGeneral_HUDvidas.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/HUD/K-MapaGeneral_Navegacion.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/HUD/K-MapaGeneral_interaccionFB.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/HUD/K-MapaGeneral_settings.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_MarcoAvatardorado.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_MarcoAvatargris.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_Puertas.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_bloqued.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_bossbloqued.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_bossplay.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_bosswin.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_brilloAvatar.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_play.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_stargray.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_starwin.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-popUps_close.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/camino/K-Mapa_1caminoAzul.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/camino/K-Mapa_1caminoBlanco.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/camino/K-Mapa_2caminoAzul.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/camino/K-Mapa_2caminoBlanco.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/camino/K-Mapa_3caminoAzul.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/camino/K-Mapa_3caminoBlanco.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/escalera/K-MapaGeneral_HUDvidas_barandal-escalera.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/escalera/K-MapaGeneral_HUDvidas_base-escalera2.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/escalera/K-Mapa_base-coming soon.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/escalera/K-Mapa_base-escalera.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/escalera/K-Mapa_base-proximanete.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/escalera/K-Mapa_base_out-of-order.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/escalera/K-Mapa_escalera.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_baseGrande.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_corazonRoto.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_grayStar.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_monito.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_monito2.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_monitoblink.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_objetiveBase.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_playBTN.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_rug.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_socialBTN.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_socialBase.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_socialBasepick.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_stars-base.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popUps_winStar.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popups-pq_baseGris.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popups-pq_btnAzul.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popups-pq_btnRojo.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popups-pq_btnVerde.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popups-pq_candado.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popups-pq_candado1.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popups-pq_candado2.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/K-popups-pq_gemaLibre.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/popups pequeños/K-popups-pq_baseGris.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/popups pequeños/K-popups-pq_bolsaAtras.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/popups pequeños/K-popups-pq_btnVerde.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/popups pequeños/K-popups-pq_candado.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/popups pequeños/K-popups-pq_gemaLibre.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/popups vidas/K-popupsVidas_NOselectBTN.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/popups vidas/K-popupsVidas_SelectBTN.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup/popups vidas/K-popupsVidas_kindBTN.png</key>
+            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral-31.png</key>
+            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_HUDbaseAbajo.png</key>
+            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_HUDbaseGem-Cor.png</key>
+            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_HUDgemas.png</key>
+            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_HUDvidas.png</key>
+            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_Navegacion.png</key>
+            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_interaccionFB.png</key>
+            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_settings.png</key>
+            <key type="filename">../../../../../../Downloads/map/K-Mapa_MarcoAvatardorado.png</key>
+            <key type="filename">../../../../../../Downloads/map/K-Mapa_MarcoAvatargris.png</key>
+            <key type="filename">../../../../../../Downloads/map/K-Mapa_Puertas.png</key>
+            <key type="filename">../../../../../../Downloads/map/K-Mapa_bloqued.png</key>
+            <key type="filename">../../../../../../Downloads/map/K-Mapa_bossbloqued.png</key>
+            <key type="filename">../../../../../../Downloads/map/K-Mapa_bossplay.png</key>
+            <key type="filename">../../../../../../Downloads/map/K-Mapa_bosswin.png</key>
+            <key type="filename">../../../../../../Downloads/map/K-Mapa_brilloAvatar.png</key>
+            <key type="filename">../../../../../../Downloads/map/K-Mapa_play.png</key>
+            <key type="filename">../../../../../../Downloads/map/K-Mapa_stargray.png</key>
+            <key type="filename">../../../../../../Downloads/map/K-Mapa_starwin.png</key>
+            <key type="filename">../../../../../../Downloads/map/K-popUps_close.png</key>
+            <key type="filename">../../../../../../Downloads/map/camino/K-Mapa_1caminoAzul.png</key>
+            <key type="filename">../../../../../../Downloads/map/camino/K-Mapa_1caminoBlanco.png</key>
+            <key type="filename">../../../../../../Downloads/map/camino/K-Mapa_2caminoAzul.png</key>
+            <key type="filename">../../../../../../Downloads/map/camino/K-Mapa_2caminoBlanco.png</key>
+            <key type="filename">../../../../../../Downloads/map/camino/K-Mapa_3caminoAzul.png</key>
+            <key type="filename">../../../../../../Downloads/map/camino/K-Mapa_3caminoBlanco.png</key>
+            <key type="filename">../../../../../../Downloads/map/config/K-InGame_BACK3.png</key>
+            <key type="filename">../../../../../../Downloads/map/config/K-InGame_musicOFF.png</key>
+            <key type="filename">../../../../../../Downloads/map/config/K-InGame_musicON2.png</key>
+            <key type="filename">../../../../../../Downloads/map/config/K-InGame_ruedasettings.png</key>
+            <key type="filename">../../../../../../Downloads/map/config/K-InGame_soundOFF.png</key>
+            <key type="filename">../../../../../../Downloads/map/config/K-InGame_soundON2.png</key>
+            <key type="filename">../../../../../../Downloads/map/escalera/K-MapaGeneral_HUDvidas_barandal-escalera.png</key>
+            <key type="filename">../../../../../../Downloads/map/escalera/K-MapaGeneral_HUDvidas_base-escalera2.png</key>
+            <key type="filename">../../../../../../Downloads/map/escalera/K-Mapa_base-coming soon.png</key>
+            <key type="filename">../../../../../../Downloads/map/escalera/K-Mapa_base-escalera.png</key>
+            <key type="filename">../../../../../../Downloads/map/escalera/K-Mapa_base-proximanete.png</key>
+            <key type="filename">../../../../../../Downloads/map/escalera/K-Mapa_base_out-of-order.png</key>
+            <key type="filename">../../../../../../Downloads/map/escalera/K-Mapa_escalera.png</key>
+            <key type="filename">../../../../../../Downloads/map/facebook_blanco.png</key>
+            <key type="filename">../../../../../../Downloads/map/luces/K-_estrella1.png</key>
+            <key type="filename">../../../../../../Downloads/map/luces/K-_estrella2.png</key>
+            <key type="filename">../../../../../../Downloads/map/luces/K-_luz1.png</key>
+            <key type="filename">../../../../../../Downloads/map/luces/K-_luz2.png</key>
+            <key type="filename">../../../../../../Downloads/map/luces/K-_luz3.png</key>
+            <key type="filename">../../../../../../Downloads/map/luces/K-_luz4.png</key>
+            <key type="filename">../../../../../../Downloads/map/luces/K-_luz5.png</key>
+            <key type="filename">../../../../../../Downloads/map/luces/K-_luz6.png</key>
+            <key type="filename">../../../../../../Downloads/map/luces/K-_luz7-22.png</key>
+            <key type="filename">../../../../../../Downloads/map/luces/K-_luz7-24.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_Avatar1.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_corazonRoto.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_grayStar.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_monito.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_monito2.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_monitoblink.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_objetiveBase.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_playBTN.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_rug.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_socialBTN.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_socialBase.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_socialBasepick.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_stars-base.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_winStar.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popups-pq_baseGris.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popups-pq_btnAzul.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popups-pq_btnRojo.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popups-pq_btnVerde.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popups-pq_candado.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popups-pq_candado1.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popups-pq_candado2.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/K-popups-pq_gemaLibre.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/popups pequeños/K-popups-pq_baseGris.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/popups pequeños/K-popups-pq_bolsaAtras.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/popups pequeños/K-popups-pq_btnVerde.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/popups pequeños/K-popups-pq_candado.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/popups pequeños/K-popups-pq_gemaLibre.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/popups vidas/K-popupsVidas_NOselectBTN.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/popups vidas/K-popupsVidas_SelectBTN.png</key>
+            <key type="filename">../../../../../../Downloads/map/popup/popups vidas/K-popupsVidas_kindBTN.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -271,26 +275,25 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/popup</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_starwin.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_bloqued.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_bossbloqued.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_bossplay.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_bosswin.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_brilloAvatar.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_MarcoAvatardorado.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_MarcoAvatargris.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_play.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_Puertas.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-Mapa_stargray.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/camino</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/escalera</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/HUD</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/K-popUps_close.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Fondos/luces</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Inicio/facebook_blanco.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Inicio/K-inicio_shopika.png</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Inicio/K-inicio_btnshopika.png</filename>
+            <filename>../../../../../../Downloads/map/camino</filename>
+            <filename>../../../../../../Downloads/map/escalera</filename>
+            <filename>../../../../../../Downloads/map/facebook_blanco.png</filename>
+            <filename>../../../../../../Downloads/map/HUD</filename>
+            <filename>../../../../../../Downloads/map/K-Mapa_bloqued.png</filename>
+            <filename>../../../../../../Downloads/map/K-Mapa_bossbloqued.png</filename>
+            <filename>../../../../../../Downloads/map/K-Mapa_bossplay.png</filename>
+            <filename>../../../../../../Downloads/map/K-Mapa_bosswin.png</filename>
+            <filename>../../../../../../Downloads/map/K-Mapa_brilloAvatar.png</filename>
+            <filename>../../../../../../Downloads/map/K-Mapa_MarcoAvatardorado.png</filename>
+            <filename>../../../../../../Downloads/map/K-Mapa_MarcoAvatargris.png</filename>
+            <filename>../../../../../../Downloads/map/K-Mapa_play.png</filename>
+            <filename>../../../../../../Downloads/map/K-Mapa_Puertas.png</filename>
+            <filename>../../../../../../Downloads/map/K-Mapa_stargray.png</filename>
+            <filename>../../../../../../Downloads/map/K-Mapa_starwin.png</filename>
+            <filename>../../../../../../Downloads/map/K-popUps_close.png</filename>
+            <filename>../../../../../../Downloads/map/luces</filename>
+            <filename>../../../../../../Downloads/map/popup</filename>
+            <filename>../../../../../../Downloads/map/config</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

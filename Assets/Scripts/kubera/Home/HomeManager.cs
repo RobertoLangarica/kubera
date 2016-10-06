@@ -60,7 +60,7 @@ public class HomeManager : MonoBehaviour
 
 	void startScene()
 	{
-		StartCoroutine (showLetters ());
+		//StartCoroutine (showLetters ());
 		ScreenManager.GetInstance().sceneFinishLoading ();
 	}
 
