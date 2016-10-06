@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.2.3</string>
         <key>fileName</key>
-        <string>C:/VillaVanilla/Kubera/Assets/Textures/Worlds2.tps</string>
+        <string>/Users/Roberto/Documents/Trabajo/VillaVanilla/kubera/Assets/Textures/Worlds2.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -166,7 +166,7 @@
         <key>globalSpriteSettings</key>
         <struct type="SpriteSettings">
             <key>scale</key>
-            <double>1</double>
+            <double>0.48</double>
             <key>scaleMode</key>
             <enum type="ScaleMode">Smooth</enum>
             <key>extrude</key>
@@ -188,60 +188,60 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo5/K-5-MapaZapatos_adornopie.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo5/K-5-MapaZapatos_techozapato.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo5/K-5-MapaZapatos_z1.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo5/K-5-MapaZapatos_z2.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo5/K-5-MapaZapatos_z3.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo5/K-5-MapaZapatos_z4 .png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo5/K-5-MapaZapatos_z5.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo5/K-5-MapaZapatos_z7.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo5/K-5-MapaZapatos_zseis.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo6/K-6-MapaMaquillaje_adorno blanco.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo6/K-6-MapaMaquillaje_brochas.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo6/K-6-MapaMaquillaje_delineador.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo6/K-6-MapaMaquillaje_esmalte1.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo6/K-6-MapaMaquillaje_esmalte2.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo6/K-6-MapaMaquillaje_lipstick2.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo6/K-6-MapaMaquillaje_rimel.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo6/K-6-MapaMaquillaje_rubor.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo6/K-6-MapaMaquillaje_sombras.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo6/K-6-MapaMaquillaje_techo.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo7/K-7-MapaDeportes_brillo1.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo7/K-7-MapaDeportes_brillo2.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo7/K-7-MapaDeportes_brillo3.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo7/K-7-MapaDeportes_brillo4.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo7/K-7-MapaDeportes_g1.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo7/K-7-MapaDeportes_g2.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo7/K-7-MapaDeportes_g3.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo7/K-7-MapaDeportes_g4.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo7/K-7-MapaDeportes_g5.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo7/K-7-MapaDeportes_g7.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo7/K-7-MapaDeportes_g8.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo7/K-7-MapaDeportes_gseis.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo7/K-7-MapaDeportes_techogym.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo9/K-9-Mapaperfumeria_brillo1.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo9/K-9-Mapaperfumeria_brillo2.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo9/K-9-Mapaperfumeria_brillo3.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo9/K-9-Mapaperfumeria_p1.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo9/K-9-Mapaperfumeria_p2.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo9/K-9-Mapaperfumeria_p3.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo9/K-9-Mapaperfumeria_p4.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo9/K-9-Mapaperfumeria_p5.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo9/K-9-Mapaperfumeria_p7.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo9/K-9-Mapaperfumeria_p8.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo9/K-9-Mapaperfumeria_pseis.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo9/K-9-Mapaperfumeria_techo.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/mundo3/K-3-MapaRopa_LBD.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/mundo3/K-3-MapaRopa_beige.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/mundo3/K-3-MapaRopa_blusas.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/mundo3/K-3-MapaRopa_calcetines.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/mundo3/K-3-MapaRopa_camisa.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/mundo3/K-3-MapaRopa_gancho.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/mundo3/K-3-MapaRopa_pantalones.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/mundo3/K-3-MapaRopa_techoropa.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/mundo3/K-3-MapaRopa_vestido.png</key>
-            <key type="filename">../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/mundo3/K-Mapa1_columna.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo3/K-3-MapaRopa_LBD.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo3/K-3-MapaRopa_beige.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo3/K-3-MapaRopa_blusas.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo3/K-3-MapaRopa_calcetines.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo3/K-3-MapaRopa_camisa.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo3/K-3-MapaRopa_gancho.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo3/K-3-MapaRopa_pantalones.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo3/K-3-MapaRopa_techoropa.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo3/K-3-MapaRopa_vestido.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo3/K-Mapa1_columna.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo5/K-5-MapaZapatos_adornopie.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo5/K-5-MapaZapatos_techozapato.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo5/K-5-MapaZapatos_z1.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo5/K-5-MapaZapatos_z2.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo5/K-5-MapaZapatos_z3.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo5/K-5-MapaZapatos_z4 .png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo5/K-5-MapaZapatos_z5.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo5/K-5-MapaZapatos_z7.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo5/K-5-MapaZapatos_zseis.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo6/K-6-MapaMaquillaje_adorno blanco.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo6/K-6-MapaMaquillaje_brochas.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo6/K-6-MapaMaquillaje_delineador.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo6/K-6-MapaMaquillaje_esmalte1.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo6/K-6-MapaMaquillaje_esmalte2.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo6/K-6-MapaMaquillaje_lipstick2.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo6/K-6-MapaMaquillaje_rimel.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo6/K-6-MapaMaquillaje_rubor.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo6/K-6-MapaMaquillaje_sombras.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo6/K-6-MapaMaquillaje_techo.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo7/K-7-MapaDeportes_brillo1.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo7/K-7-MapaDeportes_brillo2.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo7/K-7-MapaDeportes_brillo3.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo7/K-7-MapaDeportes_brillo4.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo7/K-7-MapaDeportes_g1.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo7/K-7-MapaDeportes_g2.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo7/K-7-MapaDeportes_g3.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo7/K-7-MapaDeportes_g4.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo7/K-7-MapaDeportes_g5.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo7/K-7-MapaDeportes_g7.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo7/K-7-MapaDeportes_g8.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo7/K-7-MapaDeportes_gseis.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo7/K-7-MapaDeportes_techogym.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo9/K-9-Mapaperfumeria_brillo1.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo9/K-9-Mapaperfumeria_brillo2.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo9/K-9-Mapaperfumeria_brillo3.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo9/K-9-Mapaperfumeria_p1.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo9/K-9-Mapaperfumeria_p2.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo9/K-9-Mapaperfumeria_p3.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo9/K-9-Mapaperfumeria_p4.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo9/K-9-Mapaperfumeria_p5.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo9/K-9-Mapaperfumeria_p7.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo9/K-9-Mapaperfumeria_p8.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo9/K-9-Mapaperfumeria_pseis.png</key>
+            <key type="filename">../../../../../../Downloads/mundos/mundo9/K-9-Mapaperfumeria_techo.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -249,11 +249,11 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo7</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/mundo3</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo5</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo6</filename>
-            <filename>../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Mapa/Mundo9</filename>
+            <filename>../../../../../../Downloads/mundos/mundo3</filename>
+            <filename>../../../../../../Downloads/mundos/mundo5</filename>
+            <filename>../../../../../../Downloads/mundos/mundo6</filename>
+            <filename>../../../../../../Downloads/mundos/mundo7</filename>
+            <filename>../../../../../../Downloads/mundos/mundo9</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
