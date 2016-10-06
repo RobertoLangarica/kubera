@@ -49,7 +49,7 @@ public class Square : MonoBehaviour
 		yield return new WaitUntil (()=>flipAnimation.sequences[0].currentFrame >= 1);
 		if(!oneSquare)
 		{
-			this.transform.localScale = new Vector3 (1.45f, 1.45f, 1.45f);
+			this.transform.localScale = new Vector3 (2.2f, 2.2f, 2.2f);
 		}
 		else
 		{

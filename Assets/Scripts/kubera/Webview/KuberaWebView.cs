@@ -65,7 +65,6 @@ public class KuberaWebView : MonoBehaviour
 			saveUserInfo (message.Arguments ["userId"], message.Arguments ["tokenId"]);
 			loginToShopika (GemsManager.GetCastedInstance<GemsManager> ().currentUserId,
 				GemsManager.GetCastedInstance<GemsManager> ().currentUser.accesToken);
-			Debug.Log ("WEBLOGIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			break;
 		case(WEBVIEW_GEMS):
 			
@@ -76,11 +75,9 @@ public class KuberaWebView : MonoBehaviour
 			}
 
 			GemsManager.GetCastedInstance<GemsManager>().OnGemsRemotleyChanged();
-			Debug.Log ("GEMS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			break;
 		case(WEBVIEW_FINISH):
 			closeWebView ();
-			Debug.Log ("FINISH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			break;
 		}
 	}

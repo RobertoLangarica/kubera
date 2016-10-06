@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
 	public SecondChanceFreeBombs SecondChanceFreeBombs;
 	public LinesCreatedAnimation linesAnimation;
 	public startGamePopUp startGameReference;
+	public FloatingTextBase gemsExpendedFeedBack;
 
 	private Level currentLevel;
 	private List<Letter> gridCharacters = new List<Letter>();
@@ -113,7 +114,7 @@ public class GameManager : MonoBehaviour
 		wordManager.onWordChange += refreshCurrentWordScoreOnHUD;
 		settingsButton.OnActivateMusic += activateMusic;
 
-		powerupManager.getPowerupByType (PowerupBase.EType.ROTATE).OnPowerupCompleted += rotationDeactivated;
+		powerupManager.getPowerupByType (PowerupBase.EType.ROTATE).OnPowerupUsed += rotationDeactivated;
 
 		inputRotate.OnRotateArrowsActivated += rotationActivated;
 	
@@ -148,7 +149,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(!PersistentData.GetInstance().fromLevelsToGame && !PersistentData.GetInstance().fromLevelBuilder)
 		{
-			configureLevel(PersistentData.GetInstance().getLevelByIndex(7));
+			configureLevel(PersistentData.GetInstance().getLevelByIndex(37));
 		}
 		else
 		{
@@ -1265,7 +1266,6 @@ public class GameManager : MonoBehaviour
 
 		if(AudioManager.GetInstance())
 		{
-			
 			AudioManager.GetInstance().Play("fxButton");
 		}
 	}
@@ -1278,6 +1278,7 @@ public class GameManager : MonoBehaviour
 			return true;
 		}
 		#endif
+
 		//Checa si tiene dinero para usar el poder
 		return powerupManager.getPowerupByType(type).isFree || GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(powerupManager.getPowerUpPrice(type));
 	}
@@ -1304,12 +1305,16 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-
 			if(!powerupManager.getPowerupByType(type).isFree)
 			{
 				GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(powerupManager.getPowerUpPrice(type));
 				expendedGems += powerupManager.getPowerUpPrice (type);
 				powerUpsUsedCount[type.ToString()]++;
+
+				Vector3 tempV3 = gemsExpendedFeedBack.transform.position;
+				tempV3.y += cellManager.cellSize * 2;
+				gemsExpendedFeedBack.startAnim (gemsExpendedFeedBack.transform.position,tempV3);
+				gemsExpendedFeedBack.myText.text = "-" + powerupManager.getPowerUpPrice (type);
 			}
 		}
 
