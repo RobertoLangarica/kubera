@@ -15,6 +15,7 @@ public class PowerupBase : MonoBehaviour
 	public delegate void DPowerUpNotification();
 	public DPowerUpNotification OnPowerupCanceled;
 	public DPowerUpNotification OnPowerupCompleted;
+	public DPowerUpNotification OnPowerupUsed;
 	public DPowerUpNotification OnPowerupCompletedNoGems;
 
 	public Transform powerUpButton;

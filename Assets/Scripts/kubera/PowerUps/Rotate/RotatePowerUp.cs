@@ -114,7 +114,7 @@ public class RotatePowerUp : PowerupBase
 			inputPowerUpRotate.enabled = true;
 			inputPowerUpRotate.startRotate ();
 			inputPowerUpRotate.OnPowerupRotateCompleted += completePowerUp;
-			print ("activate");
+			
 			gameManager.updatePiecesLightAndUpdateLetterState ();
 			Invoke ("rotateImage", 2);
 
@@ -123,6 +123,7 @@ public class RotatePowerUp : PowerupBase
 				AudioManager.GetInstance().Stop("startRotate");
 				AudioManager.GetInstance().Play("startRotate");
 			}
+			OnComplete ();
 		}
 		else
 		{
@@ -137,7 +138,7 @@ public class RotatePowerUp : PowerupBase
 		inputPowerUpRotate.enabled = false;
 		inputPowerUpRotate.gameObject.SetActive (false);
 		cancelInvoke ();
-		OnComplete ();
+		OnPowerupUsed ();
 	}
 
 	public override void cancel()

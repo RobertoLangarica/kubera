@@ -11,6 +11,7 @@ public class PowerUpManager : MonoBehaviour
 	public delegate void DPowerUpNotification(PowerupBase.EType type);
 	public DPowerUpNotification OnPowerupCanceled;
 	public DPowerUpNotification OnPowerupCompleted;
+	public DPowerUpNotification OnPowerupUsed;
 	public DPowerUpNotification OnPowerupCompletedNoGems;
 
 	protected PowerupBase powerup;
@@ -24,6 +25,7 @@ public class PowerUpManager : MonoBehaviour
 			if (powerup != null) {
 				powerup.OnPowerupCanceled += cancelPowerup;
 				powerup.OnPowerupCompleted += completePowerup;
+				powerup.OnPowerupUsed += usedPowerup;
 				powerup.OnPowerupCompletedNoGems += completePowerupNoGems;
 				powerup.priceText.text = getPowerUpPrice (powerup.type).ToString();
 			}
@@ -83,6 +85,14 @@ public class PowerUpManager : MonoBehaviour
 		if(OnPowerupCompletedNoGems != null)
 		{
 			OnPowerupCompletedNoGems(powerup.type);
+		}
+	}
+
+	private void usedPowerup()
+	{
+		if(OnPowerupUsed != null)
+		{
+			OnPowerupUsed(powerup.type);
 		}
 	}
 
