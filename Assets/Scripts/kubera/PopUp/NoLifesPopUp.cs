@@ -52,7 +52,7 @@ public class NoLifesPopUp : PopUpBase
 		if(GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(price))
 		{
 			GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(price);
-			LifesManager.GetInstance ().giveLifesToUser ((DataManagerKubera.GetInstance () as DataManagerKubera).initialLifes);
+			LifesManager.GetInstance ().giveLifesToUser (LifesManager.GetInstance().maximumLifes);
 
 			KuberaAnalytics.GetInstance ().registerGemsUsedOnLifes (PersistentData.GetInstance().lastLevelReachedName);
 

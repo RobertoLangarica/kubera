@@ -385,7 +385,7 @@ namespace Kubera.Data
 		{
 			int totalLifes = currentUser.playerLifes + amount;
 
-			if (totalLifes > initialLifes) 
+			if (totalLifes > initialLifes && currentUserId == ANONYMOUS_USER) 
 			{
 				currentUser.playerLifes = initialLifes;
 			} 

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <scrabtris xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <levels>
     <level name="0001" difficulty="0" lettersPool="01_E_1_1,01_F_1_1,01_I_1_1,01_L_1_1,04_W_6_1,01_Z_10_1" obstacleLettersPool="" unblockWordHint="false" unblockBomb="false" unblockBlock="false" unblockRotate="false" unblockDestroy="false" unblockWildcard="false" goal="points-20" tutorialLettersPool="01_A_1_1,01_M_3_1,01_R_1_1-" pieces="01_4A2" grid="4,1,1,1,1,1,1,4,4,66,66,1,322,322,322,4,4,1,66,1,194,322,1,4,4,1,66,1,194,194,194,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4" moves="25" scoreToStar1="20" scoreToStar2="60" scoreToStar3="100" world="1" isBoss="false" friendsNeeded="0" starsNeeded="0" gemsNeeded="0" />
