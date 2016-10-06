@@ -2,19 +2,19 @@
 using UnityEngine.UI;
 using System.Collections;
 
-/*
- * Clase creada para evitar el uso de Tweens en los textos del dinero que dan los edificios.
- * Este texto es manipulado por una pool que verifica el estado de los textos para saber si esta disponible o no.
- */
-public class FloatingText : MonoBehaviour 
+public class FloatingTextBase : MonoBehaviour 
 {
+	public delegate void textAnimationEnded(Text text);
+
 	/*Valores de tuneo para el movimiento del texto*/
 	public float steps;
 	public float lerpTime;
 
+	public bool returnToInitialPosition;
+
 	public Text myText;
 
-	protected FloatingTextPool pool;
+	public textAnimationEnded OnEnded;
 
 	protected float lerpPercent;
 	protected bool animate = false;
@@ -24,17 +24,12 @@ public class FloatingText : MonoBehaviour
 	protected float elapsedTime;
 	protected float stepValue;
 	protected float stepTime;
-	
-	void Start()
+
+	protected virtual void Start () 
 	{
 		//Se calculan los valores de la animacion
 		stepValue = 1 / steps;
 		stepTime = lerpTime / steps;
-
-		if(pool == null)
-		{
-			pool = FindObjectOfType<FloatingTextPool>();
-		}
 	}
 
 	void Update () 
@@ -55,7 +50,16 @@ public class FloatingText : MonoBehaviour
 			{
 				lerpPercent = 0;
 				animate = false;
-				pool.releaseText(myText);
+				gameObject.SetActive (false);
+				if (OnEnded != null) 
+				{
+					OnEnded (myText);
+				}
+
+				if (returnToInitialPosition) 
+				{
+					transform.position = startPosition;
+				}
 			}
 		}
 	}
@@ -67,13 +71,9 @@ public class FloatingText : MonoBehaviour
 	 * 
 	 * @params end{Vector3}: El punto en el que se termina la animacion, y se libera el texto para ser reutilizado
 	 */
-	public void startAnim(Vector3 start,Vector3 end)
+	public virtual void startAnim(Vector3 start,Vector3 end)
 	{
-		if(pool == null)
-		{
-			pool = FindObjectOfType<FloatingTextPool>();
-		}
-
+		gameObject.SetActive (true);
 		transform.position = start;
 		startPosition = start;
 		finishPosition = end;

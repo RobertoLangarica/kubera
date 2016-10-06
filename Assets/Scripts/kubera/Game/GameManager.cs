@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
 	public SecondChanceFreeBombs SecondChanceFreeBombs;
 	public LinesCreatedAnimation linesAnimation;
 	public startGamePopUp startGameReference;
+	public FloatingTextBase gemsExpendedFeedBack;
 
 	private Level currentLevel;
 	private List<Letter> gridCharacters = new List<Letter>();
@@ -1304,6 +1305,11 @@ public class GameManager : MonoBehaviour
 				GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(powerupManager.getPowerUpPrice(type));
 				expendedGems += powerupManager.getPowerUpPrice (type);
 				powerUpsUsedCount[type.ToString()]++;
+
+				Vector3 tempV3 = gemsExpendedFeedBack.transform.position;
+				tempV3.y += cellManager.cellSize * 2;
+				gemsExpendedFeedBack.startAnim (gemsExpendedFeedBack.transform.position,tempV3);
+				gemsExpendedFeedBack.myText.text = "-" + powerupManager.getPowerUpPrice (type);
 			}
 		}
 
