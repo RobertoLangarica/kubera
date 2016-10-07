@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 
 public class FloatingTextBase : MonoBehaviour 
 {
-	public delegate void textAnimationEnded(Text text);
+	//public delegate void textAnimationEnded(FloatingTextBase text);
 
 	/*Valores de tuneo para el movimiento del texto*/
 	public float steps;
@@ -14,7 +15,7 @@ public class FloatingTextBase : MonoBehaviour
 
 	public Text myText;
 
-	public textAnimationEnded OnEnded;
+	public Action OnEnded;
 
 	protected float lerpPercent;
 	protected bool animate = false;
@@ -28,7 +29,7 @@ public class FloatingTextBase : MonoBehaviour
 	protected virtual void Start () 
 	{
 		//Se calculan los valores de la animacion
-		stepValue = 1 / steps;
+		stepValue = 1.0f / steps;
 		stepTime = lerpTime / steps;
 	}
 
@@ -53,7 +54,7 @@ public class FloatingTextBase : MonoBehaviour
 				gameObject.SetActive (false);
 				if (OnEnded != null) 
 				{
-					OnEnded (myText);
+					OnEnded ();
 				}
 
 				if (returnToInitialPosition) 
