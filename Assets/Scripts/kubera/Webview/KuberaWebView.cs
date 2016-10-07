@@ -7,6 +7,8 @@ using Kubera.Data;
 
 public class KuberaWebView : MonoBehaviour 
 {
+	public delegate void DwebViewNotifications();
+
 	public GameObject videoModal;
 
 	protected const string WEBVIEW_SCHEME = "shopika";
@@ -18,6 +20,8 @@ public class KuberaWebView : MonoBehaviour
 	public Camera webViewRectCanvasCamera;
 	public RectTransform webViewSize;
 	public GameObject customToolBar;
+
+	public DwebViewNotifications OnLoggedIn;
 
 	void Start()
 	{
@@ -65,6 +69,12 @@ public class KuberaWebView : MonoBehaviour
 			saveUserInfo (message.Arguments ["userId"], message.Arguments ["tokenId"]);
 			loginToShopika (GemsManager.GetCastedInstance<GemsManager> ().currentUserId,
 				GemsManager.GetCastedInstance<GemsManager> ().currentUser.accesToken);
+
+			if (OnLoggedIn != null) 
+			{
+				OnLoggedIn ();
+			}
+
 			break;
 		case(WEBVIEW_GEMS):
 			
@@ -78,6 +88,7 @@ public class KuberaWebView : MonoBehaviour
 			break;
 		case(WEBVIEW_FINISH):
 			closeWebView ();
+			GemsManager.GetCastedInstance<GemsManager>().OnGemsRemotleyChanged();
 			break;
 		}
 	}
