@@ -516,11 +516,11 @@ public class HUDManager : MonoBehaviour
 
 	public void enablePowerUps()
 	{
-		powerUps [0].gameObject.SetActive(UserDataManager.instance.isWordHintPowerUpUnlocked || enableAllPowerUps);
-		powerUps [1].gameObject.SetActive(UserDataManager.instance.isDestroyNeighborsPowerUpUnlocked || enableAllPowerUps);
-		powerUps [2].gameObject.SetActive(UserDataManager.instance.isOnePiecePowerUpUnlocked || enableAllPowerUps);
-		powerUps [3].gameObject.SetActive(UserDataManager.instance.isRotatePowerUpUnlocked || enableAllPowerUps);
-		powerUps [4].gameObject.SetActive(UserDataManager.instance.isWildCardPowerUpUnlocked || enableAllPowerUps);
-		powerUps [5].gameObject.SetActive(UserDataManager.instance.isDestroyPowerUpUnlocked || enableAllPowerUps);
+		powerUps [0].gameObject.SetActive (int.Parse(PersistentData.GetInstance().currentLevel.name) >= 3 ? true : false);//UserDataManager.instance.isWordHintPowerUpUnlocked || enableAllPowerUps);
+		powerUps [1].gameObject.SetActive(int.Parse(PersistentData.GetInstance().currentLevel.name) >= 8 ? true : false);//UserDataManager.instance.isDestroyNeighborsPowerUpUnlocked || enableAllPowerUps);
+		powerUps [2].gameObject.SetActive(int.Parse(PersistentData.GetInstance().currentLevel.name) >= 22 ? true : false);//UserDataManager.instance.isOnePiecePowerUpUnlocked || enableAllPowerUps);
+		powerUps [3].gameObject.SetActive(int.Parse(PersistentData.GetInstance().currentLevel.name) >= 37 ? true : false);//UserDataManager.instance.isRotatePowerUpUnlocked || enableAllPowerUps);
+		powerUps [4].gameObject.SetActive(int.Parse(PersistentData.GetInstance().currentLevel.name) >= 52 ? true : false);//UserDataManager.instance.isWildCardPowerUpUnlocked || enableAllPowerUps);
+		powerUps [5].gameObject.SetActive(false);//int.Parse(PersistentData.GetInstance().currentLevel.name) >= 2 ? true : false);//UserDataManager.instance.isDestroyPowerUpUnlocked || enableAllPowerUps);
 	}
 }
