@@ -15,7 +15,8 @@ namespace Kubera.Data.Remote.GSResponseData
 	  "scripData":
 		 {
 		    "_id" : "user2",
-		    "version":int
+		    "version":int,
+		    "maxLevelReached":int,
 		    "levels" : {
 		        "5" : {
 		            "points" : 4000
@@ -33,7 +34,12 @@ namespace Kubera.Data.Remote.GSResponseData
 		        "7" : {
 		            "points" : 4000
 		        }
-		    }
+		    },
+		    "gemsUse" : bool,
+		 	"gemsPurchase" : bool,
+		 	"gemsUseAfterPurchase" : bool
+		 	"lifesAsked" : bool,
+		 	"remoteLifesGranted" : bool
 		}
 	}
 	**/
@@ -49,5 +55,6 @@ namespace Kubera.Data.Remote.GSResponseData
 		public bool gemsPurchase;
 		public bool gemsUseAfterPurchase;
 		public bool lifesAsked;
+		public bool remoteLifesGranted;
 	}
 }

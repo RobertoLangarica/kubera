@@ -12,6 +12,7 @@ namespace Kubera.Data.Sync
 		public Action<PFLeaderboardData> OnLeaderboardObtained;
 
 		public DataManagerKubera localData;
+		public int freeLifesAfterSignIn = 2;
 
 		protected override void Awake()
 		{
@@ -74,6 +75,17 @@ namespace Kubera.Data.Sync
 					Debug.Log("Creating remote user.");
 				}
 
+				if(!localData.currentUser.remoteLifesGranted)
+				{
+					if(_mustShowDebugInfo)
+					{
+						Debug.Log("Granted Lifes: " + freeLifesAfterSignIn.ToString());	
+					}
+
+					localData.giveUserLifes(freeLifesAfterSignIn);
+					localData.currentUser.isDirty = localData.currentUser.updateremoteLifesGranted(true) || localData.currentUser.isDirty;
+				}
+
 				//Hacemos un update normal del usuario
 				updateData(localData.getUserDirtyData());
 			}
@@ -96,12 +108,23 @@ namespace Kubera.Data.Sync
 		{
 			base.OnDataReceived (fullData);
 
-			Debug.Log("BEforeDiff:\n"+fullData);
+			Debug.Log("BeforeDiff:\n"+fullData);
 			localData.diffUser(JsonUtility.FromJson<KuberaUser>(fullData), true);
 
 			if(_mustShowDebugInfo)
 			{
 				Debug.Log("Usuario sincronizado.");
+			}
+
+			if(!localData.currentUser.remoteLifesGranted)
+			{
+				if(_mustShowDebugInfo)
+				{
+					Debug.Log("Granted Lifes: " + freeLifesAfterSignIn.ToString());	
+				}
+
+				localData.giveUserLifes(freeLifesAfterSignIn);
+				localData.currentUser.isDirty = localData.currentUser.updateremoteLifesGranted(true) || localData.currentUser.isDirty;
 			}
 
 			//Necesita subirse?

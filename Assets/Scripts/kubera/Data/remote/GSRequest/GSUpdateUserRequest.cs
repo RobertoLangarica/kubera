@@ -116,6 +116,15 @@ namespace Kubera.Data.Remote
 					data.lifesAsked = false;
 				}
 
+				if(scriptData.ContainsKey("remoteLifesGranted"))
+				{
+					data.remoteLifesGranted = int.Parse(scriptData ["remoteLifesGranted"].ToString()) == 1 ? true:false;
+				}
+				else
+				{
+					data.remoteLifesGranted = false;
+				}
+
 				//WARNING: Los niveles no vienen del server, son aprte de la data enviada
 				Dictionary<string,object> dataSended = MiniJSON.Json.Deserialize(jsonToUpdate) as Dictionary<string,object>;
 				if(dataSended.ContainsKey("levels"))

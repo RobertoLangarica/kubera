@@ -127,6 +127,7 @@ namespace Kubera.Data.Remote
 				remoteUser.gemsPurchase = request.data.gemsPurchase;
 				remoteUser.gemsUseAfterPurchase = request.data.gemsUseAfterPurchase;
 				remoteUser.lifesAsked = request.data.lifesAsked;
+				remoteUser.remoteLifesGranted = request.data.remoteLifesGranted;
 
 				OnDataReceived(JsonUtility.ToJson(remoteUser));
 			}
@@ -164,6 +165,7 @@ namespace Kubera.Data.Remote
 				remoteUser.gemsPurchase = request.data.gemsPurchase;
 				remoteUser.gemsUseAfterPurchase = request.data.gemsUseAfterPurchase;
 				remoteUser.lifesAsked = request.data.lifesAsked;
+				remoteUser.remoteLifesGranted = request.data.remoteLifesGranted;
 
 				OnDataUpdated(JsonUtility.ToJson(remoteUser));
 			}
@@ -180,6 +182,7 @@ namespace Kubera.Data.Remote
 			builder.Append(",\"gemsPurchase\":"+user.gemsPurchase.ToString().ToLower());
 			builder.Append(",\"gemsUseAfterPurchase\":"+user.gemsUseAfterPurchase.ToString().ToLower());
 			builder.Append(",\"lifesAsked\":"+user.lifesAsked.ToString().ToLower());
+			builder.Append(",\"remoteLifesGranted\":"+user.remoteLifesGranted.ToString().ToLower());
 
 			builder.Append(",\"levels\":{");
 

@@ -17,6 +17,7 @@ namespace Kubera.Data
 		public List<LevelData> levels;//niveles ya pasados
 		public int remoteDataVersion;//version de los datos del server
 		public int maxLevelReached;//Para avance de mapa
+		public bool remoteLifesGranted;//Indica si ya le dimos vidas
 		/***************************************/
 
 		public string facebookId;//Id de facebook del usuario
@@ -49,11 +50,6 @@ namespace Kubera.Data
 			//Le quitamos lo sucio a los datos
 			isDirty = false;
 
-			/*public bool gemsUse;//Ya se uso una gema
-			public bool gemsPurchase;//Ya compro gemas
-			public bool gemsUseAfterPurchase;//Ya uso gemas despues de comprar
-			public bool lifesAsked;//Ya pidio vidas*/
-
 			if(!updateGemsUse(((KuberaUser)readOnlyRemote).gemsUse))
 			{
 				if(gemsUse && !((KuberaUser)readOnlyRemote).gemsUse)
@@ -84,6 +80,15 @@ namespace Kubera.Data
 			if(!updateLifesAsked(((KuberaUser)readOnlyRemote).lifesAsked))
 			{
 				if(lifesAsked && !((KuberaUser)readOnlyRemote).lifesAsked)
+				{
+					//En el server vino en false
+					isDirty = true;
+				}
+			}
+
+			if(!updateremoteLifesGranted(((KuberaUser)readOnlyRemote).remoteLifesGranted))
+			{
+				if(remoteLifesGranted && !((KuberaUser)readOnlyRemote).remoteLifesGranted)
 				{
 					//En el server vino en false
 					isDirty = true;
@@ -201,6 +206,19 @@ namespace Kubera.Data
 			}
 
 			return updgraded;
+		}
+
+		public bool updateremoteLifesGranted(bool _granted)
+		{
+			bool updated = false;
+
+			if(_granted && !remoteLifesGranted)
+			{
+				remoteLifesGranted = _granted;
+				updated = true;
+			}
+
+			return updated;
 		}
 
 		public LevelData getLevelById(string id)

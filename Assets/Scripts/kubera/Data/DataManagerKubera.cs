@@ -11,7 +11,7 @@ namespace Kubera.Data
 	{
 		public KuberaSyncManger syncManager;
 		public int initialLifes = 5;
-
+		public int maximumLifesPossible = 7;
 		protected Levels levelsList;
 
 		protected override void Start ()
@@ -385,16 +385,24 @@ namespace Kubera.Data
 		{
 			int totalLifes = currentUser.playerLifes + amount;
 
+			//Los usuarios anonimos solo tienen derechos a las vidas iniciales
 			if (totalLifes > initialLifes && currentUserId == ANONYMOUS_USER) 
 			{
 				currentUser.playerLifes = initialLifes;
 			} 
 			else if (totalLifes < 0) 
 			{
+				//nunca menos de 0 vidas
 				currentUser.playerLifes = 0;
 			}
 			else 
 			{
+				//que no se acumulen cuando un usuario tiene mas vidas por estar conectado a facebook
+				if(totalLifes > maximumLifesPossible)
+				{
+					totalLifes = maximumLifesPossible;
+				}
+
 				currentUser.playerLifes = totalLifes;
 			}
 
@@ -555,6 +563,7 @@ namespace Kubera.Data
 			result.gemsPurchase = user.gemsPurchase;
 			result.gemsUseAfterPurchase = user.gemsUseAfterPurchase;
 			result.lifesAsked = user.lifesAsked;
+			result.remoteLifesGranted = user.remoteLifesGranted;
 
 			//Se envian como no sucios
 			result.markAllLevelsAsNoDirty();
