@@ -413,6 +413,7 @@ namespace Kubera.Data
 		{
 			string newId;
 			KuberaUser user;
+			KuberaUser anon;
 
 			if(currentUserId == ANONYMOUS_USER)
 			{
@@ -422,28 +423,49 @@ namespace Kubera.Data
 					//NO existe y creamos uno nuevo
 					user = currentData.getUserById(ANONYMOUS_USER);
 
-					user._id = facebookId;
-					user.facebookId = facebookId;
+
+					anon = new KuberaUser(ANONYMOUS_USER);
 					newId = facebookId;
-
-					//Agregamos un nuevo usuario anonimo
-					KuberaUser anon = new KuberaUser(ANONYMOUS_USER);
+					//Valores iniciales
 					cleanToAnonymousData(anon);
+
+					//Este usuario anonimo pertenece a otro id de facebook?
+					if(user.facebookId != "")
+					{
+						//Un nuevo usuario para este que llego
+						anon._id = facebookId;	
+						anon.facebookId = facebookId;
+
+					}
+					else
+					{
+						//este anonimo se convierte en el de facebook que llego
+						user._id = facebookId;
+						user.facebookId = facebookId;
+					}
+
 					currentData.users.Add(anon);
-
-
 				}
 				else
 				{
+					//Ya existe
 					//Diff de los datos sin verificar version
 					user = currentData.getUserByFacebookId(facebookId);
-					//prevalece la version del usuario que no es anonimo
-					currentUser.remoteDataVersion = user.remoteDataVersion;
-					user.compareAndUpdate(currentUser, true);
+					anon = currentData.getUserById(ANONYMOUS_USER);
+
 					newId = user._id;
 
-					//Limpiamos al usuario anonimo para que tenga valores iniciales
-					cleanToAnonymousData(currentUser);
+					//Solo se hace un diff si el anonimo no pertenecea ningun usuario de facebook
+					if(user.facebookId == "")
+					{
+						//prevalece la version del usuario que no es anonimo
+						currentUser.remoteDataVersion = user.remoteDataVersion;
+						user.compareAndUpdate(currentUser, true);
+
+
+						//Limpiamos al usuario anonimo para que tenga valores iniciales
+						cleanToAnonymousData(currentUser);
+					}
 				}
 			}
 			else
@@ -479,6 +501,8 @@ namespace Kubera.Data
 				//No hay cambios que hacer
 				return;	
 			}
+
+			//NOTA: Aqui por el flujo de login teoricamente nunca se llega con usuario anonimo pero es un reality check
 
 			//Si es anonimo hay que ver si los avances se guardan
 			if(currentUserId == ANONYMOUS_USER)
@@ -533,6 +557,22 @@ namespace Kubera.Data
 
 		public override void setUserAsAnonymous ()
 		{
+			//Reality check
+			if(currentUserId == ANONYMOUS_USER)
+			{
+				return;	
+			}
+
+			/*El current user se hace anonimo y mantiene su facebook ID,
+			el anonimo previo se elimina con todos sus datos*/
+			KuberaUser anon = currentData.getUserById(ANONYMOUS_USER);
+			if(anon != null)
+			{
+				currentData.users.Remove(anon);
+			}
+
+			currentUser._id = ANONYMOUS_USER;
+
 			base.setUserAsAnonymous ();
 		}
 

@@ -86,8 +86,10 @@ namespace Kubera.Data.Sync
 					localData.currentUser.isDirty = localData.currentUser.updateremoteLifesGranted(true) || localData.currentUser.isDirty;
 				}
 
+				//WARNING El server esta enviando siempre newlyCreated con algunos usuarios y para evitar problemas siempre consultamos info
 				//Hacemos un update normal del usuario
-				updateData(localData.getUserDirtyData());
+				//updateData(localData.getUserDirtyData());
+				server.getUserData(currentUser.id, localData.currentUser.remoteDataVersion, true);
 			}
 			else
 			{
@@ -95,6 +97,7 @@ namespace Kubera.Data.Sync
 				{
 					Debug.Log("Getting data from remote user.");
 				}
+
 				//Nos traemos los datos de este usuario
 				server.getUserData(currentUser.id, localData.currentUser.remoteDataVersion, true);
 			}
@@ -109,7 +112,13 @@ namespace Kubera.Data.Sync
 			base.OnDataReceived (fullData);
 
 			Debug.Log("BeforeDiff:\n"+fullData);
-			localData.diffUser(JsonUtility.FromJson<KuberaUser>(fullData), true);
+			KuberaUser toDiff = JsonUtility.FromJson<KuberaUser>(fullData);
+
+			//Solo se hace diff si no llego vacio del server
+			if(toDiff.remoteDataVersion != -1)
+			{
+				localData.diffUser(toDiff, true);	
+			}
 
 			if(_mustShowDebugInfo)
 			{
