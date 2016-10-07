@@ -408,7 +408,8 @@ public class HUDManager : MonoBehaviour
 
 		FloatingTextForPool bText = scorePool.getFreeText();;
 
-		bText.myText.text = "+" + (score < 10 ? " ":"") +score.ToString();
+		//bText.myText.text = "+" + (score < 10 ? " ":"") +score.ToString();
+		bText.myText.text = "+" + score.ToString();
 
 		scorePosition.z = 0;
 		finish.y += 1;// HACK: poolText.rectTransform.rect.height;
