@@ -129,6 +129,11 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 			return;
 		}
 
+		if (level == "0003" && word == "YEN") 
+		{
+			return;
+		}
+
 		registerEventWithParameters(REGISTER_WORD,
 			new Dictionary<string, string>() {
 				{"Level",level},
