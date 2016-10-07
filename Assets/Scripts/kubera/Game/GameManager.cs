@@ -1355,6 +1355,7 @@ public class GameManager : MonoBehaviour
 	{
 		List<Letter> hintLetters = new List<Letter> ();
 		hintLetters =  wordManager.findLetters (gridCharacters);
+
 		if(use)
 		{
 			wordManager.cancelHint = false;

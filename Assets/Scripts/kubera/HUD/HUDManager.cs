@@ -405,10 +405,10 @@ public class HUDManager : MonoBehaviour
 	public void showScoreTextAt(Vector3 scorePosition,int score)
 	{
 		Vector3 finish = scorePosition;
-		Text poolText = scorePool.getFreeText();
-		FloatingTextForPool bText = poolText.gameObject.GetComponent<FloatingTextForPool>();
 
-		poolText.text = "+" + score.ToString();
+		FloatingTextForPool bText = scorePool.getFreeText();;
+
+		bText.myText.text = "+" + (score < 10 ? " ":"") +score.ToString();
 
 		scorePosition.z = 0;
 		finish.y += 1;// HACK: poolText.rectTransform.rect.height;

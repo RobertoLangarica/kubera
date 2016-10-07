@@ -10,15 +10,15 @@ public class FloatingTextForPool : FloatingTextBase
 {
 	protected FloatingTextPool pool;
 	
-	protected override void Start()
+	/*protected override void Start()
 	{
 		base.Start();
+	}*/
 
-		if(pool == null)
-		{
-			pool = FindObjectOfType<FloatingTextPool>();
-			OnEnded += pool.releaseText;
-		}
+	public void setPool(FloatingTextPool _pool)
+	{
+		pool = _pool;
+		OnEnded += pool.releaseText;
 	}
 
 	/*
@@ -28,14 +28,8 @@ public class FloatingTextForPool : FloatingTextBase
 	 * 
 	 * @params end{Vector3}: El punto en el que se termina la animacion, y se libera el texto para ser reutilizado
 	 */
-	public override void startAnim(Vector3 start,Vector3 end)
+	/*public override void startAnim(Vector3 start,Vector3 end)
 	{
 		base.startAnim (start,end);
-
-		if(pool == null)
-		{
-			pool = FindObjectOfType<FloatingTextPool>();
-			OnEnded += pool.releaseText;
-		}
-	}
+	}*/
 }

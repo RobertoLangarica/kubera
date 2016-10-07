@@ -8,7 +8,7 @@ public class Level
 	/**
 	 * Nombre que tendra el nivel con el siguiente formato:
 	 * Numero de 4 digitos minimo
-	 * ej. 00001
+	 * ej. 0001
 	 **/ 
 	[XmlAttribute("name")]public string name; 
 
