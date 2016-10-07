@@ -708,7 +708,7 @@ public class GameManager : MonoBehaviour
 		{
 			totalLines = linesCreatedPoints.Count-1;
 		}
-		print ("totalLines" +totalLines);
+		//print ("totalLines" +totalLines);
 		addPoints(linesCreatedPoints[totalLines]);
 	}
 

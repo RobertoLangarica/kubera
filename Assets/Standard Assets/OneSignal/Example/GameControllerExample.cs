@@ -45,7 +45,7 @@ public class GameControllerExample : MonoBehaviour {
       // Call before using any other methods on OneSignal.
       // Should only be called once when your app is loaded.
       // OneSignal.Init(OneSignal_AppId, GoogleProjectNumber, NotificationReceivedHandler(optional));
-		OneSignal.Init("54a71637-0755-4b10-9d21-f91659637a36", "28159365108", HandleNotification);
+      OneSignal.Init("b2f7f966-d8cc-11e4-bed1-df8f05be55ba", "703322744261", HandleNotification);
 
       // Shows a Native iOS/Android alert dialog when the user is in your app when a notification comes in.
       OneSignal.EnableInAppAlertNotification(true);
