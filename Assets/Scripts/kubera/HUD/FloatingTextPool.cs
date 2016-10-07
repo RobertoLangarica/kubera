@@ -48,7 +48,6 @@ public class FloatingTextPool : MonoBehaviour
 
 	public void releaseText()
 	{
-		Debug.Log("REMOVING");
 		FloatingTextForPool result = occupiedText[0];
 		occupiedText.RemoveAt (0);
 
