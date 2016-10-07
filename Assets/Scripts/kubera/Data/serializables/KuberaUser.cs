@@ -9,21 +9,21 @@ namespace Kubera.Data
 	[Serializable]
 	public class KuberaUser : BasicData 
 	{
+		public string facebookId;//Id de facebook del usuario
+		public int playerLifes;//Vidas del usuario
+		public string lifeTimerDate;//Para dar vidas por tiempo
+		public bool firstTimeShopping;//Para emebeber video de shopika
+
 		/********SINCRONIZADAS REMOTAMENTE********/
 		public bool gemsUse;//Ya se uso una gema
 		public bool gemsPurchase;//Ya compro gemas
 		public bool gemsUseAfterPurchase;//Ya uso gemas despues de comprar
 		public bool lifesAsked;//Ya pidio vidas
-		public List<LevelData> levels;//niveles ya pasados
 		public int remoteDataVersion;//version de los datos del server
 		public int maxLevelReached;//Para avance de mapa
 		public bool remoteLifesGranted;//Indica si ya le dimos vidas
+		public List<LevelData> levels;//niveles ya pasados
 		/***************************************/
-
-		public string facebookId;//Id de facebook del usuario
-		public int playerLifes;//Vidas del usuario
-		public string lifeTimerDate;//Para dar vidas por tiempo
-		public bool firstTimeShopping;//Para emebeber video de shopika
 
 		public KuberaUser()
 		{
