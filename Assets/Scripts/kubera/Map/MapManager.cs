@@ -984,6 +984,14 @@ public class MapManager : MonoBehaviour
 			}
 		break;
 		case "needLifes":
+			foreach (PopUpBase val in popUpManager.popups) 
+			{
+				if (val.gameObject.activeSelf) 
+				{
+					val.deactivate ();
+				}
+			}
+
 			stopInput(true);
 			if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 			{
