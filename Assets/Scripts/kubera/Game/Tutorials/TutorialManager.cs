@@ -111,7 +111,7 @@ public class TutorialManager : Manager<TutorialManager>
 			break;
 		}
 
-		powerUp.isFree = flag;
+		powerUp.makePowerUpFree(flag);
 	}
 
 	public void  registerForNextPhase(TutorialBase.ENextPhaseEvent nEvent)

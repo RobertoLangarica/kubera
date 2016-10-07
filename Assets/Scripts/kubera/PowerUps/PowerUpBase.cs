@@ -22,6 +22,7 @@ public class PowerupBase : MonoBehaviour
 	public GameObject powerUpBlock;
 	public Sprite powerUpImage;
 	public Text priceText;
+	public Text freeText;
 
 	public bool isFree;
 
@@ -81,6 +82,26 @@ public class PowerupBase : MonoBehaviour
 				tempS.color = Color.white;
 				powerUpImage = tempS.sprite;
 			}
+		}
+	}
+
+	public void makePowerUpFree(bool makeFree)
+	{
+		if (makeFree) 
+		{
+			isFree = true;
+
+			priceText.gameObject.SetActive (false);
+			freeText.gameObject.SetActive (true);
+
+			freeText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FREE_POWERUP_PRICE);
+		}
+		else
+		{
+			isFree = false;
+
+			priceText.gameObject.SetActive (true);
+			freeText.gameObject.SetActive (false);
 		}
 	}
 }

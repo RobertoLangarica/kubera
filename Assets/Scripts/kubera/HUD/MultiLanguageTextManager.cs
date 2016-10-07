@@ -113,6 +113,7 @@ public class MultiLanguageTextManager
 	public const string NO_OPTIONS_FIRST					= "noOptionsFirst";
 	public const string NO_OPTIONS_GIVEUP					= "noOptionsGiveUp";
 	public const string NO_OPTIONS_USEPOWER					= "noOptionsUsePower";
+	public const string FREE_POWERUP_PRICE 					= "powerUpFreePrice";
 
 	public const string TUTORIAL_LV1_PHASE1					= "Tutorial_lvl1_phase1";
 	public const string TUTORIAL_LV1_PHASE2					= "Tutorial_lvl1_phase2";

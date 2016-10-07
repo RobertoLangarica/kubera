@@ -16,6 +16,13 @@
 		<!--
 		Game	
 		-->
+		<text id="powerUpFreePrice">
+			<languages>
+				<language id="english" text="Free"/>
+				<language id="spanish" text="Gratis"/>
+				<language id="default" text="Gratis"/>
+			</languages>
+		</text>
 		<text id="secondChanceGiveUp">
 			<languages>
 				<language id="english" text="GIVE UP"/>
