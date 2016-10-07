@@ -46,7 +46,17 @@ public class LifesManager : Manager<LifesManager>
 
 		if (currentUser.playerLifes < maximumLifes) 
 		{
-				updateLifesSinceLastPlay ();
+			if (currentUser.lifeTimerDate == null) 
+			{
+				setLifeDate ();
+			} 
+
+			if (currentUser.lifeTimerDate == "") 
+			{
+				setLifeDate ();
+			} 
+
+			updateLifesSinceLastPlay ();
 		}
 
 		refreshHUD ();
