@@ -190,7 +190,6 @@
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">../../../../../../Downloads/home/Copia de K-popUps_close.png</key>
             <key type="filename">../../../../../../Downloads/home/K-InGame_BACK3.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-InGame_HUDbase.png</key>
             <key type="filename">../../../../../../Downloads/home/K-InGame_musicOFF.png</key>
             <key type="filename">../../../../../../Downloads/home/K-InGame_musicON2.png</key>
             <key type="filename">../../../../../../Downloads/home/K-InGame_ruedasettings.png</key>
@@ -202,6 +201,7 @@
             <key type="filename">../../../../../../Downloads/home/K-magia-del-gamplay2.png</key>
             <key type="filename">../../../../../../Downloads/home/K-menus1_corazon.png</key>
             <key type="filename">../../../../../../Downloads/home/K-menus_fondo-menus.png</key>
+            <key type="filename">../../../../../../Downloads/home/K-popUps_objetiveBase.png</key>
             <key type="filename">../../../../../../Downloads/home/K-popups-pq_btnAzul.png</key>
             <key type="filename">../../../../../../Downloads/home/K-popups-pq_btnVerde.png</key>
             <key type="filename">../../../../../../Downloads/home/K-popups-pq_gemaLibre.png</key>
@@ -231,10 +231,10 @@
             <filename>../../../../../../Downloads/home/K-menus_fondo-menus.png</filename>
             <filename>../../../../../../Downloads/home/K-magia-del-gamplay2.png</filename>
             <filename>../../../../../../Downloads/home/Copia de K-popUps_close.png</filename>
-            <filename>../../../../../../Downloads/home/K-InGame_HUDbase.png</filename>
             <filename>../../../../../../Downloads/home/K-menus1_corazon.png</filename>
             <filename>../../../../../../Downloads/home/K-popups-pq_gemaLibre.png</filename>
             <filename>../../../../../../Downloads/home/piezasglow.png</filename>
+            <filename>../../../../../../Downloads/home/K-popUps_objetiveBase.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
