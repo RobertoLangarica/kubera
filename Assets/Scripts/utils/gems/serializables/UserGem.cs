@@ -11,6 +11,7 @@ namespace utils.gems
 	{
 		//TODO el usuario debe de guardar sus consumos que el server no responda como terminados (hay que ver como)
 		public string accesToken;
+		public string  shareLink;
 		public int gems;
 
 		public UserGem()
