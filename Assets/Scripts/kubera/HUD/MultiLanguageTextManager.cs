@@ -7,7 +7,9 @@ using System.Collections;
 public class MultiLanguageTextManager
 {
 	//HOME
-	public const string START_GAME		= "startGame";
+	public const string START_GAME						= "startGame";
+	public const string CONNECT_SHOPIKA_POPUP			= "connectShopikaPopUp";
+	public const string INVITE_FRIENDS_SHOPIKA_POPUP	= "inviteFriendsShopikaPopUp";
 
 
 
