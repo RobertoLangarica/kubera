@@ -21,9 +21,6 @@ echo "Making sharing.jar…"
 jar -cf feature.sharing.jar com/voxelbusters/nativeplugins/features/sharing
 rm -rf com/voxelbusters/nativeplugins/features/sharing
 
-
-
-
 echo "Making billing.jar…"
 jar -cf feature.billing.jar com/voxelbusters/nativeplugins/features/billing com/android/vending
 rm -rf com/voxelbusters/nativeplugins/features/billing

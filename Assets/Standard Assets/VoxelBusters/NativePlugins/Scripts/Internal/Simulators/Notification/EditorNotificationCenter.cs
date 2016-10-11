@@ -101,8 +101,6 @@ namespace VoxelBusters.NativePlugins.Internal
 
 		public void OnAfterDeserialize ()
 		{
-			// Deserialise
-			Deserialise();
 		}
 
 		public void OnBeforeSerialize ()
@@ -120,7 +118,7 @@ namespace VoxelBusters.NativePlugins.Internal
 		protected override void OnEnable ()
 		{
 			base.OnEnable ();
-			
+		
 			// Deserialise
 			Deserialise();
 		}

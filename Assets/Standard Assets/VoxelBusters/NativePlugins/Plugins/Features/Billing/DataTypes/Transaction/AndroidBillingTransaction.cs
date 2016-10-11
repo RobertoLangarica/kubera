@@ -10,28 +10,26 @@ namespace VoxelBusters.NativePlugins.Internal
 	{
 		#region Constants
 
-		// http://developer.android.com/google/play/billing/billing_reference.html Table 4
-		// From transaction payload - DONT MODIFY THE KEYS BELOW
-		private const string	kOriginalJSON					= "original-json";
+		private const string	kProductIdentifier				= "product-identifier";
+		private const string	kTransactionDate				= "transaction-date";
+		private const string	kTransactionIdentifier			= "transaction-identifier";
+		private const string	kTransactionReceipt				= "transaction-receipt";
+		private const string	kTransactionState				= "transaction-state";
+		private const string	kVerificationState				= "verification-state";
+		private const string	kError							= "error";
 		private const string	kRawPurchaseData				= "raw-purchase-data";
 		
-		private const string 	kOrderID						= "orderId";
-		private const string 	kPackageName					= "packageName";
-		private const string 	kProductID						= "productId";
-		private const string 	kPurchaseTime					= "purchaseTime";
-		private const string 	kPurchaseState					= "purchaseState";
-		private const string 	kDeveloperPayload				= "developerPayload";
-		private const string 	kPurchaseToken					= "purchaseToken";
-
-		// Custom flags added in Native
-		private const string	kPurchaseValidationState		= "purchaseValidationState";
-		private const string 	kSignature						= "signature";
-		private const string 	kError							= "error";
 
 		// Validation values
 		private const string 	kNoValidationDone				= "no-validation-done";
 		private const string 	kValidationSuccess				= "success";
 		private const string 	kValidationFailed				= "failed";
+
+		// Purchase state values
+		private const string 	kPurchaseFailed					= "failed";
+		private const string 	kPurchaseSuccess				= "purchased";
+		private const string 	kPurchaseRefunded				= "refunded";
+		private const string 	kPurchaseRestored				= "restored";
 
 		#endregion
 
@@ -39,45 +37,34 @@ namespace VoxelBusters.NativePlugins.Internal
 		
 		public AndroidBillingTransaction (IDictionary _transactionInfo)
 		{
-			IDictionary _originalJSON 		= _transactionInfo[kOriginalJSON] as IDictionary;
-
-			// Set raw response
-			RawPurchaseData					= _transactionInfo.GetIfAvailable<string>(kRawPurchaseData);
+			// Get Product Identifier
+			ProductIdentifier				= _transactionInfo.GetIfAvailable<string>(kProductIdentifier);
 			
-			// Assign values
-			ProductIdentifier				= _originalJSON.GetIfAvailable<string>(kProductID);
-
 			// Transaction time
-			long _purchaseTimeInMillis		= _originalJSON.GetIfAvailable<long>(kPurchaseTime);
+			long _purchaseTimeInMillis		= _transactionInfo.GetIfAvailable<long>(kTransactionDate);
 			System.DateTime _purchaseDate 	= _purchaseTimeInMillis.ToDateTimeFromJavaTime();
 			TransactionDateUTC				= _purchaseDate.ToUniversalTime();
 			TransactionDateLocal			= _purchaseDate.ToLocalTime();
+			
+			// Transaction ID
+			TransactionIdentifier			= _transactionInfo.GetIfAvailable<string>(kTransactionIdentifier);
 
-			TransactionIdentifier			= GetPurchaseIdentifier(_originalJSON);
-
-			int _purchaseState;
-
-			if(_transactionInfo.Contains(kPurchaseState))//There is an override for purchase state.
-			{
-				_purchaseState				= _transactionInfo.GetIfAvailable<int>(kPurchaseState);	
-			}
-			else
-			{
-				_purchaseState 				= _originalJSON.GetIfAvailable<int>(kPurchaseState);
-			}
-
-			TransactionState				= GetConvertedPurchaseState(_purchaseState);
-
-			// Data from _transactionInfo
-			TransactionReceipt				= _transactionInfo.GetIfAvailable<string>(kSignature);
-
-			//First find out if the transaction is valid
-			string _validationState 		= _transactionInfo.GetIfAvailable<string>(kPurchaseValidationState);
+			// Transaction Receipt
+			TransactionReceipt				= _transactionInfo.GetIfAvailable<string>(kTransactionReceipt);
+			
+			// Transaction State
+			string _transactionState		= _transactionInfo.GetIfAvailable<string>(kTransactionState);
+			TransactionState				= GetTransactionState(_transactionState);
+		
+			// Verification State
+			string _validationState 		= _transactionInfo.GetIfAvailable<string>(kVerificationState);
 			VerificationState 				= GetValidationState(_validationState);
 
-			
 			// Error
 			Error							= _transactionInfo.GetIfAvailable<string>(kError);					
+
+			// Raw Purchase data in JSON format
+			RawPurchaseData					= _transactionInfo.GetIfAvailable<string>(kRawPurchaseData);
 		}
 
 		#endregion
@@ -87,33 +74,17 @@ namespace VoxelBusters.NativePlugins.Internal
 		public static IDictionary CreateJSONObject (BillingTransaction _transaction)
 		{
 			IDictionary _transactionJsonDict						= new Dictionary<string, object>();
-
-			IDictionary _originalJson								= new Dictionary<string, object>();
-
-			_originalJson[kPurchaseTime]							= _transaction.TransactionDateUTC.ToJavaTimeFromDateTime();
-			_originalJson[kOrderID]									= _transaction.TransactionIdentifier;
-			_originalJson[kPurchaseState]							= GetConvertedPurchaseState(_transaction.TransactionState);
-			_originalJson[kProductID]								= _transaction.ProductIdentifier;
-
-			_transactionJsonDict[kOriginalJSON]						= _originalJson;
-			_transactionJsonDict[kRawPurchaseData]					= _transaction.RawPurchaseData;
-			_transactionJsonDict[kPurchaseValidationState]			= GetValidationState(_transaction.VerificationState);
-			_transactionJsonDict[kSignature]						= _transaction.TransactionReceipt;
-			_transactionJsonDict[kError]							= _transaction.Error;
 			
+			_transactionJsonDict[kProductIdentifier] 				= _transaction.ProductIdentifier;
+			_transactionJsonDict[kTransactionDate]					= _transaction.TransactionDateUTC.ToJavaTimeFromDateTime();
+			_transactionJsonDict[kTransactionIdentifier]			= _transaction.TransactionIdentifier;
+			_transactionJsonDict[kTransactionReceipt]				= _transaction.TransactionReceipt;
+			_transactionJsonDict[kTransactionState]					= GetTransactionState(_transaction.TransactionState);
+			_transactionJsonDict[kVerificationState]				= GetValidationState(_transaction.VerificationState);
+			_transactionJsonDict[kError]							= _transaction.Error;
+			_transactionJsonDict[kRawPurchaseData]					= _transaction.RawPurchaseData;
+
 			return _transactionJsonDict;
-		}
-
-		public string GetPurchaseIdentifier(IDictionary _transactionJsonDict)
-		{
-			string _identifier = _transactionJsonDict.GetIfAvailable<string>(kOrderID);
-
-			if (string.IsNullOrEmpty(_identifier))
-			{
-				_identifier = _transactionJsonDict.GetIfAvailable<string>(kPurchaseToken);
-			}
-
-			return _identifier;
 		}
 
 		private static eBillingTransactionVerificationState GetValidationState(string _validationState)
@@ -173,53 +144,53 @@ namespace VoxelBusters.NativePlugins.Internal
 		}
 
 		/*
-	 	* The purchase state of the order. Possible values are 0 (purchased), 1 (canceled), or 2 (refunded). - Google doc
+	 	* The purchase state of the order.
 	 	*/
-		private static eBillingTransactionState GetConvertedPurchaseState(int _stateInt)
+		private static eBillingTransactionState GetTransactionState(string _transactionState)
 		{
 			eBillingTransactionState  _state = eBillingTransactionState.FAILED;
 
-			if (_stateInt == -1 || _stateInt == 1)
+			if(_transactionState.Equals(kPurchaseFailed))
 			{
 				_state = eBillingTransactionState.FAILED;
 			}
-			else if (_stateInt == 0)
+			else if (_transactionState.Equals(kPurchaseSuccess))
 			{
 				_state = eBillingTransactionState.PURCHASED;
 			}
-			else if (_stateInt == 2)
+			else if (_transactionState.Equals(kPurchaseRefunded))
 			{
 				_state = eBillingTransactionState.REFUNDED;
 			}
-			else if (_stateInt == 3)
+			else if (_transactionState.Equals(kPurchaseRestored))
 			{
 				_state = eBillingTransactionState.RESTORED;
 			}
 			return _state;
 		}
 
-		private static int GetConvertedPurchaseState(eBillingTransactionState _state)
+		private static string GetTransactionState(eBillingTransactionState _state)
 		{
-			int  _stateInt = -1;
+			string  _transactionState = kPurchaseFailed;
 			
 			if (_state == eBillingTransactionState.FAILED)
 			{
-				_stateInt = 1;
+				_transactionState = kPurchaseFailed;
 			}
 			else if(_state == eBillingTransactionState.PURCHASED)
 			{
-				_stateInt = 0;
+				_transactionState = kPurchaseSuccess;
 			}
 			else if(_state == eBillingTransactionState.REFUNDED)
 			{
-				_stateInt = 2;	
+				_transactionState = kPurchaseRefunded;
 			}
 			else if(_state == eBillingTransactionState.RESTORED)
 			{
-				_stateInt = 3;	
+				_transactionState = kPurchaseRestored;
 			}
 	
-			return _stateInt;
+			return _transactionState;
 		}
 		
 		#endregion
