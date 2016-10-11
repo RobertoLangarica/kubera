@@ -1268,6 +1268,19 @@ public class GameManager : MonoBehaviour
 		{
 			AudioManager.GetInstance().Play("fxButton");
 		}
+
+		if (!powerupManager.getPowerupByType ((PowerupBase.EType)powerupTypeIndex).isFree) 
+		{
+			gemsExpendedFeedBack.myText.text = "-" + powerupManager.getPowerUpPrice ((PowerupBase.EType)powerupTypeIndex);
+			gemsExpendedFeedBack.gameObject.SetActive (true);
+			gemsExpendedFeedBack.transform.GetChild (0).gameObject.SetActive (true);
+		} 
+		else 
+		{
+			gemsExpendedFeedBack.myText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FREE_POWERUP_PRICE);
+			gemsExpendedFeedBack.gameObject.SetActive (true);
+			gemsExpendedFeedBack.transform.GetChild (0).gameObject.SetActive (false);
+		}
 	}
 
 	protected bool canActivatePowerUp(PowerupBase.EType type)
@@ -1290,6 +1303,8 @@ public class GameManager : MonoBehaviour
 			AudioManager.GetInstance().Stop("powerupCanceled");
 			AudioManager.GetInstance().Play("powerupCanceled");
 		}
+
+		gemsExpendedFeedBack.gameObject.SetActive (false);
 		
 		allowGameInput(true);
 	}
@@ -1311,11 +1326,12 @@ public class GameManager : MonoBehaviour
 				expendedGems += powerupManager.getPowerUpPrice (type);
 				powerUpsUsedCount[type.ToString()]++;
 
-				Vector3 tempV3 = gemsExpendedFeedBack.transform.position;
-				tempV3.y += cellManager.cellSize * 2;
-				gemsExpendedFeedBack.startAnim (gemsExpendedFeedBack.transform.position,tempV3);
 				gemsExpendedFeedBack.myText.text = "-" + powerupManager.getPowerUpPrice (type);
 			}
+
+			Vector3 tempV3 = gemsExpendedFeedBack.transform.position;
+			tempV3.y += cellManager.cellSize;
+			gemsExpendedFeedBack.startAnim (gemsExpendedFeedBack.transform.position,tempV3);
 		}
 
 		allowGameInput(true);
