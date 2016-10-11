@@ -10,27 +10,21 @@ public class WildCardPowerUp : PowerupBase
 
 	public KeyBoardManager keyBoard;
 
-	protected CellsManager cellsManager;
-	protected InputWildcardPowerUp powerUpInput;
-	protected GameManager gameManager;
-	protected WordManager wordManager;
-	public AnimatedSprite animatedSprite;
+	public CellsManager cellsManager;
+	public InputWildcardPowerUp powerUpInput;
+	public GameManager gameManager;
+	public WordManager wordManager;
 
 	protected bool canUse;
 	protected bool canActivate;
 	protected GameObject powerUpGO;
 	void Start()
 	{
-		wordManager = FindObjectOfType<WordManager> ();
-		gameManager = FindObjectOfType<GameManager> ();
-
-		powerUpInput = FindObjectOfType<InputWildcardPowerUp> ();
 		powerUpInput.OnPowerupCanceled += cancel;
 		powerUpInput.OnPowerupCompleted += completePowerUp;
 		powerUpInput.OnPowerupCompletedNoGems += completePowerUpNoGems;
 
 		powerUpInput.enabled = false;
-		gameManager = FindObjectOfType<GameManager> ();
 	}
 
 	public override void activate (bool canUse)

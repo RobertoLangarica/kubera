@@ -47,10 +47,10 @@ public class HighLightManager : Manager<HighLightManager>
 	public Color hintHighLight;
 
 	protected List<HighLight> activeHighLight = new List<HighLight>();
-	protected CellsManager _cellManager;
-	protected HUDManager _hudManager;
-	protected WordManager _wordManager;
-	protected PowerUpManager _powerUpManager;
+	public CellsManager _cellManager;
+	public HUDManager _hudManager;
+	public WordManager _wordManager;
+	public PowerUpManager _powerUpManager;
 
 	protected EHighLightType currentType;
 
@@ -123,7 +123,7 @@ public class HighLightManager : Manager<HighLightManager>
 
 			for (int i = 0; i < tempCell.Length; i++) 
 			{
-					turnOnHighLights (tempCell [i].transform,EHighLightStatus.NORMAL);
+				turnOnHighLights (tempCell [i].transform,EHighLightStatus.NORMAL);
 			}
 			break;
 		case(EHighLightType.BOMB_SPECIFIC_COLOR):

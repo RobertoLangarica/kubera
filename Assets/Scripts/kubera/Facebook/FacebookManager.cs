@@ -41,7 +41,6 @@ public class FacebookManager : Manager<FacebookManager>
 	protected override void Awake ()
 	{
 		base.Awake ();
-		fbGraph = FindObjectOfType<FBGraph> ();
 		fbRequestPanel.facebookManager = this;
 	}
 

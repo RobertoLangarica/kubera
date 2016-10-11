@@ -1096,10 +1096,6 @@ public class WordManager : MonoBehaviour
 
 	IEnumerator updateLetterHintState(List<Letter> gridLetter)
 	{
-		
-		CellsManager cellManager = FindObjectOfType<CellsManager> ();
-		Cell cellSelected = null;
-
 		yield return new WaitForSeconds (0);
 		cancelHint = false;
 		for(int i=0; i<gridLetter.Count; i++)
@@ -1107,11 +1103,11 @@ public class WordManager : MonoBehaviour
 			yield return new WaitForSeconds (0.4f);
 			if(!cancelHint && gridLetter[i] != null)
 			{
-				cellSelected = cellManager.getCellUnderPoint (gridLetter [i].transform.position);
 				//gridLetter [i].updateState (Letter.EState.NORMAL);
 
 				//HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SPECIFIC_CELL,cellSelected.transform);
-				cellSelected.content.transform.DOShakePosition (0.5f);
+				gridLetter[i].transform.DOShakePosition (0.5f);
+
 				gridLetter [i].hinted = true;
 				gridLetter [i].updateState (Letter.EState.HINTED);
 				if(AudioManager.GetInstance())

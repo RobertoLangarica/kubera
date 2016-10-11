@@ -4,24 +4,15 @@ using DG.Tweening;
 
 public class WordHintPowerUp : PowerupBase {
 
-	protected CellsManager cellsManager;
-	protected InputBombAndDestroy powerUpInput;
-	protected GameManager gameManager;
-	protected WordManager wordManager;
-	public AnimatedSprite animatedSprite;
+	public CellsManager cellsManager;
+	public InputBombAndDestroy powerUpInput;
+	public GameManager gameManager;
+	public WordManager wordManager;
 
 	protected bool canUse;
 	protected bool canActivate;
 	protected GameObject powerUpGO;
 
-	void Start () 
-	{
-		gameManager = FindObjectOfType<GameManager>();
-		wordManager = FindObjectOfType<WordManager>();
-		cellsManager = FindObjectOfType<CellsManager>();
-		powerUpInput = FindObjectOfType<InputBombAndDestroy>();
-
-	}
 
 	public override void activate(bool canUse)
 	{
