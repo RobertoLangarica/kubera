@@ -85,8 +85,7 @@ namespace Kubera.Data.Sync
 					localData.giveUserLifes(freeLifesAfterSignIn);
 					localData.currentUser.isDirty = localData.currentUser.updateremoteLifesGranted(true) || localData.currentUser.isDirty;
 				}
-
-				//WARNING El server esta enviando siempre newlyCreated con algunos usuarios y para evitar problemas siempre consultamos info
+					
 				//Hacemos un update normal del usuario
 				//updateData(localData.getUserDirtyData());
 				server.getUserData(currentUser.id, localData.currentUser.remoteDataVersion, true);
