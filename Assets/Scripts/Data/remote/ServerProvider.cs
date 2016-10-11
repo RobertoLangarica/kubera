@@ -8,17 +8,48 @@ namespace Data.Remote
 {
 	public class ServerProvider : MonoBehaviour 
 	{
+		public bool _mustShowDebugInfo = false;
+
 		public RequestQueue queue;
 
 		public Action<RemoteUser> OnUserReceived;//string: Only id's data
 		public Action<string> OnDataReceived;//string: full json
 		public Action<string> OnDataUpdated;//string:  Updated data
+		public Action OnGetDataFailed;
 
 		protected List<BaseRequest> requests;
+
+		protected int getDataFailCount;//Conteo de fallos el hacer getUserData
+		protected int getDataMaxFailCountAllowed = 2;//Maximos fallos permitidos
 
 		void Start()
 		{
 			requests = new List<BaseRequest>();
+		}
+
+		protected void getDataFailed(string requestId)
+		{
+			getDataFailCount++;
+
+			if(getDataFailCount >= getDataMaxFailCountAllowed)
+			{
+				maxFailCountReached(getRequestById(requestId));
+			}
+		}
+
+		protected virtual void maxFailCountReached(BaseRequest request)
+		{
+			if(_mustShowDebugInfo)
+			{
+				Debug.Log("Failed to retreive user data.");
+			}
+				
+			stopAndRemoveRequest(request);
+
+			if(OnGetDataFailed != null)
+			{
+				OnGetDataFailed();
+			}
 		}
 
 		public virtual void getUniqueUser(string customId, string facebookId){Debug.LogError("No existe implementación de esta función");}
@@ -56,6 +87,29 @@ namespace Data.Remote
 			}
 
 			requests.Clear();
+		}
+
+		public virtual void stopAndRemoveRequest(BaseRequest request)
+		{
+			queue.removeAndStopRequest(request, true);
+		}
+
+		protected BaseRequest getRequestById(string id)
+		{
+			return requests.Find(item => item.id == id);
+		}
+
+		protected void addRequest(BaseRequest request, bool isPriority = false)
+		{
+			requests.Add(request);
+			if(isPriority)
+			{
+				queue.addPriorityRequest(request);
+			}
+			else
+			{
+				queue.addRequest(request);	
+			}
 		}
 	}
 }

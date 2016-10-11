@@ -11,9 +11,6 @@ namespace utils.gems.remote
 {
 	public class SiliconIslandProvider: ServerProvider 
 	{
-		public bool _mustShowDebugInfo = false;
-
-
 
 		private SPGetGemsRequest mainUpdateRequest;
 
@@ -28,24 +25,6 @@ namespace utils.gems.remote
 			request.initialize(GP_API);
 
 			addRequest(request,true);
-		}
-
-		protected BaseRequest getRequestById(string id)
-		{
-			return requests.Find(item => item.id == id);
-		}
-
-		private void addRequest(BaseRequest request, bool isPriority = false)
-		{
-			requests.Add(request);
-			if(isPriority)
-			{
-				queue.addPriorityRequest(request);
-			}
-			else
-			{
-				queue.addRequest(request);	
-			}
 		}
 
 		private void addDependantRequest(BaseRequest request, bool isPriority = false)

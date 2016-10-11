@@ -11,7 +11,6 @@ namespace utils.gems.remote
 {
 	public class ShopikaProvider : ServerProvider 
 	{
-		public bool _mustShowDebugInfo = false;
 		[HideInInspector]public string userId;
 		[HideInInspector]public string token;
 
@@ -23,6 +22,8 @@ namespace utils.gems.remote
 
 		public override void getUserData (string id, bool saveAsMainRequest = false)
 		{
+			getDataFailCount = 0;
+
 			SPGetGemsRequest request = queue.getComponentAttachedToGameObject<SPGetGemsRequest>("GS_GetUserData");
 
 			if(saveAsMainRequest)
@@ -37,8 +38,8 @@ namespace utils.gems.remote
 			request.showDebugInfo = _mustShowDebugInfo;
 			request.initialize(SP_API);
 			request.OnComplete += OnUserDataObtained;
+			request.OnFailed += getDataFailed;
 			request.OnFailed += OnRequestFailed;
-
 
 			addDependantRequest(request,true);
 		}
@@ -108,25 +109,7 @@ namespace utils.gems.remote
 				}
 			}
 		}
-
-		protected BaseRequest getRequestById(string id)
-		{
-			return requests.Find(item => item.id == id);
-		}
-
-		private void addRequest(BaseRequest request, bool isPriority = false)
-		{
-			requests.Add(request);
-			if(isPriority)
-			{
-				queue.addPriorityRequest(request);
-			}
-			else
-			{
-				queue.addRequest(request);	
-			}
-		}
-
+			
 		private void addDependantRequest(BaseRequest request, bool isPriority = false)
 		{
 

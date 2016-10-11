@@ -33,9 +33,9 @@ namespace Kubera.Data.Sync
 		/**
 		 * Cuando se hace logout en local hay responder a ese cambio y hay que hacer logout remoto
 		 **/ 
-		protected override void logout ()
+		protected override void afterLogout ()
 		{
-			base.logout ();
+			base.afterLogout ();
 			localData.setUserAsAnonymous();
 
 			if(_mustShowDebugInfo)
@@ -88,6 +88,8 @@ namespace Kubera.Data.Sync
 					
 				//Hacemos un update normal del usuario
 				//updateData(localData.getUserDirtyData());
+
+				isGettingData = true;
 				server.getUserData(currentUser.id, localData.currentUser.remoteDataVersion, true);
 			}
 			else
@@ -97,6 +99,7 @@ namespace Kubera.Data.Sync
 					Debug.Log("Getting data from remote user.");
 				}
 
+				isGettingData = true;
 				//Nos traemos los datos de este usuario
 				server.getUserData(currentUser.id, localData.currentUser.remoteDataVersion, true);
 			}
@@ -118,6 +121,8 @@ namespace Kubera.Data.Sync
 			{
 				localData.diffUser(toDiff, true);	
 			}
+
+			isGettingData = false;
 
 			if(_mustShowDebugInfo)
 			{
@@ -144,8 +149,13 @@ namespace Kubera.Data.Sync
 				}
 				updateData(localData.getUserDirtyData());
 			}
-		}
 
+			if(OnDataRetrieved != null)
+			{
+				OnDataRetrieved();
+			}
+		}
+			
 		/**
 		 * Una vez actualizados los datos hay que actualizar el estado local de los datos
 		 **/ 

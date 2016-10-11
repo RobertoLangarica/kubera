@@ -20,7 +20,9 @@ public class KuberaShare : MonoBehaviour
 
 		// Show composer
 		NPBinding.UI.SetPopoverPointAtLastTouchPosition();
+		#if USES_SHARING
 		NPBinding.Sharing.ShowView(_shareSheet, FinishedSharing);
+		#endif
 	}
 
 	private void FinishedSharing (eShareResult _result)

@@ -37,13 +37,13 @@ namespace utils.gems.sync
 
 		private void OnBadCredentials()
 		{
-			logout();
+			afterLogout();
 		}
 			
 		/**
 		 * Cuando se hace logout en local hay responder a ese cambio y hay que hacer logout remoto
 		 **/ 
-		protected override void logout ()
+		protected override void afterLogout ()
 		{
 			//Olvidamos las credenciales y limpiamos el usuairo con malas credenciales
 			localData.currentUser.clear();
@@ -51,7 +51,7 @@ namespace utils.gems.sync
 			localData.saveLocalData(false);
 
 			//Detenemos lo que este haciendo el server provider y quitamos el currentUser
-			base.logout ();
+			base.afterLogout ();
 
 			//La local data se va en modo anonimo
 			localData.setUserAsAnonymous();
@@ -64,6 +64,7 @@ namespace utils.gems.sync
 
 		public void getGems()
 		{
+			isGettingData = true;
 			server.getUserData(currentUser.id, false);
 		}
 			
@@ -74,12 +75,17 @@ namespace utils.gems.sync
 		{
 			base.OnDataReceived (fullData);
 
-
 			localData.diffUser(JsonUtility.FromJson<UserGem>(fullData), true);
+			isGettingData = false;
 
 			if(_mustShowDebugInfo)
 			{
 				Debug.Log("Usuario sincronizado.");
+			}
+
+			if(OnDataRetrieved != null)
+			{
+				OnDataRetrieved();
 			}
 		}
 
