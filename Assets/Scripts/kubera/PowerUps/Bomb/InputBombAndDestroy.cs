@@ -19,7 +19,8 @@ public class InputBombAndDestroy : MonoBehaviour
 	protected int lastTimeDraggedFrame;
 	protected GameObject currentSelected = null;
 
-	protected CellsManager cellsManager;
+	public CellsManager cellsManager;
+	public InputPiece inputPiece;
 	protected Piece.EColor selectedCellColor;
 
 	public float pieceSpeed = 0.3f;
@@ -28,8 +29,7 @@ public class InputBombAndDestroy : MonoBehaviour
 	{
 		enabled = false;
 
-		cellsManager = FindObjectOfType<CellsManager> ();
-		pieceSpeed = FindObjectOfType<InputPiece> ().pieceSpeed;
+		pieceSpeed = inputPiece.pieceSpeed;
 
 		if(rayCasters != null)
 		{

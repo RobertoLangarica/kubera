@@ -4,10 +4,10 @@ using DG.Tweening;
 
 public class BombPowerUp : PowerupBase 
 {
-	protected CellsManager cellsManager;
-	protected InputBombAndDestroy bombInput;
-	protected BombAnimation bombAnimation;
-	protected GameManager gameManager ;
+	public CellsManager cellsManager;
+	public InputBombAndDestroy bombInput;
+	public BombAnimation bombAnimation;
+	public GameManager gameManager ;
 
 	protected bool canUse;
 	protected GameObject bombGO;
@@ -16,10 +16,6 @@ public class BombPowerUp : PowerupBase
 
 	void Start () 
 	{
-		cellsManager = FindObjectOfType<CellsManager>();
-		bombInput = FindObjectOfType<InputBombAndDestroy>();
-		bombAnimation = FindObjectOfType<BombAnimation> ();
-		gameManager = FindObjectOfType<GameManager> ();
 		bombAnimation.OnCellFlipped += gameManager.OnCellFlipped;
 		bombAnimation.OnAllAnimationsCompleted += gameManager.updatePiecesLightAndUpdateLetterState;
 	}

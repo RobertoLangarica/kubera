@@ -46,10 +46,11 @@ public class HUDManager : MonoBehaviour
 	public RectTransform vacum;
 	protected Vector2 vacumStartPos;
 
-	protected FloatingTextPool scorePool;
 	protected List<GameObject> lettersToFound = new List<GameObject>();
-	protected HUDMetterAndStars hudStars;
-	protected PopUpManager popUpManager;
+
+	public HUDMetterAndStars hudStars;
+	public FloatingTextPool scorePool;
+	public PopUpManager popUpManager;
 
 	public delegate void DPopUpNotification(string action ="");
 	public DPopUpNotification OnPopUpCompleted;
@@ -71,10 +72,6 @@ public class HUDManager : MonoBehaviour
 		{
 			Debug.Log("<color=red>Modo test: POWER-UPS Activados</color>");	
 		}
-
-		hudStars = FindObjectOfType<HUDMetterAndStars> ();
-		scorePool = FindObjectOfType<FloatingTextPool>();
-		popUpManager = FindObjectOfType <PopUpManager> ();
 
 		popUpManager.OnPopUpCompleted += popUpCompleted;
 		lvlButton = lvlGo.GetComponent<Button> ();		

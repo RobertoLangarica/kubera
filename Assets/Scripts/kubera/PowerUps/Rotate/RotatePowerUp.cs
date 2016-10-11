@@ -6,10 +6,11 @@ public class RotatePowerUp : PowerupBase
 {
 	public RectTransform piecesPanel;
 
-	protected InputPowerUpRotate inputPowerUpRotate;
-	protected InputBombAndDestroy inputPowerUp;
-	protected InputWords inputWords;
-	protected GameManager gameManager;
+	public InputPowerUpRotate inputPowerUpRotate;
+	public InputBombAndDestroy inputPowerUp;
+	public InputWords inputWords;
+	public GameManager gameManager;
+	public HUDManager hudManager;
 
 	protected GameObject powerUpGO;
 	protected bool canUse;
@@ -18,16 +19,11 @@ public class RotatePowerUp : PowerupBase
 
 	void Start()
 	{
-		inputWords = FindObjectOfType<InputWords> ();
-		inputPowerUpRotate = FindObjectOfType<InputPowerUpRotate> ();
-		inputPowerUp = FindObjectOfType<InputBombAndDestroy> ();
-		gameManager = FindObjectOfType<GameManager> ();
-
 		this.gameObject.SetActive( false);
 		inputPowerUpRotate.enabled = false;
 		inputPowerUpRotate.gameObject.SetActive (false);
 
-		imageToRotate = FindObjectOfType<HUDManager>().rotationImagePositions;
+		imageToRotate = hudManager.rotationImagePositions;
 		initiaImageToRotateScale = imageToRotate [0].transform.localScale;
 	}
 

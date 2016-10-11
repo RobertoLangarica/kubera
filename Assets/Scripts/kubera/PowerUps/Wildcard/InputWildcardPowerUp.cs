@@ -16,10 +16,11 @@ public class InputWildcardPowerUp : MonoBehaviour {
 	protected int lastTimeDraggedFrame;
 	public GameObject currentSelected = null;
 
-	protected GameManager gameManager;
-	protected CellsManager cellsManager;
-	protected WordManager wordManager;
-	protected KeyBoardManager keyBoardManager;
+	public GameManager gameManager;
+	public CellsManager cellsManager;
+	public WordManager wordManager;
+	public KeyBoardManager keyBoardManager;
+	public InputPiece inputPiece;
 
 	public delegate void DPowerUpNotification();
 	public DPowerUpNotification OnPowerupCanceled;
@@ -34,11 +35,7 @@ public class InputWildcardPowerUp : MonoBehaviour {
 
 	void Start()
 	{
-		gameManager = FindObjectOfType<GameManager> ();
-		pieceSpeed = FindObjectOfType<InputPiece> ().pieceSpeed;
-		cellsManager = FindObjectOfType<CellsManager> ();
-		wordManager = FindObjectOfType<WordManager> ();
-		keyBoardManager = FindObjectOfType<KeyBoardManager> ();
+		pieceSpeed = inputPiece.pieceSpeed;
 
 		if(rayCasters != null)
 		{

@@ -15,15 +15,12 @@ public class KeyBoardManager : MonoBehaviour
 	public DLetterPressed OnLetterSelected;
 
 	protected Letter wildCardSelected;
-	protected WordManager wordManager;
-	protected GameManager gameManager;
+	public WordManager wordManager;
+	public GameManager gameManager;
 	protected List<RectTransform> keys = new List<RectTransform>();
 
 	void Start()
 	{
-		wordManager = FindObjectOfType<WordManager> ();
-		gameManager = FindObjectOfType<GameManager> ();
-
 		calculateCellSize ();
 
 		powerUP.OnPowerupCompleted += showKeyBoardForWildCard;

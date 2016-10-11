@@ -17,28 +17,15 @@ public class TutorialManager : Manager<TutorialManager>
 	//private InputBlockPowerUp inputBlock;
 	//private InputPiece inputPiece;
 	//private InputBombAndDestroy inputBomb;
-	private InputWords inputWords;
+	public InputWords inputWords;
 
-	private WordManager wordManager;
-	private GameManager gameManager;
-	private PowerUpManager powerUpManager;
-	private LinesCreatedAnimation linesAnimation;
+	public WordManager wordManager;
+	public GameManager gameManager;
+	public PowerUpManager powerUpManager;
+	public LinesCreatedAnimation linesAnimation;
 
 	public void init()
 	{
-		//inputBlock = FindObjectOfType<InputBlockPowerUp> ();
-		//inputPiece = FindObjectOfType<InputPiece> ();
-		//inputBomb = FindObjectOfType<InputBombAndDestroy> ();
-		inputWords = FindObjectOfType<InputWords> ();
-
-		wordManager = FindObjectOfType<WordManager> ();
-
-		gameManager = FindObjectOfType<GameManager> ();
-
-		powerUpManager = FindObjectOfType<PowerUpManager> ();
-
-		linesAnimation = FindObjectOfType<LinesCreatedAnimation> ();
-
 		selectTutorial ();
 	}
 

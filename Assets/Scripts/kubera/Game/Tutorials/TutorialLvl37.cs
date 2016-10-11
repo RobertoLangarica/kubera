@@ -9,11 +9,10 @@ public class TutorialLvl37 : TutorialBase
 	public GameObject fromPosition;
 
 	protected bool doAnimation;
-	protected InputBombAndDestroy inputBomb;
+	public InputBombAndDestroy inputBomb;
 
 	protected override void Start()
 	{
-		inputBomb = FindObjectOfType<InputBombAndDestroy> ();
 		inputBomb.OnPlayer += animationController;
 		base.Start ();
 	}

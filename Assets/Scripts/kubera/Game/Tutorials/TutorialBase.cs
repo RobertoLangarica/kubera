@@ -80,17 +80,14 @@ public class TutorialBase : MonoBehaviour
 
 	protected bool alphaLowered;
 	protected DAnimationNotification OnMovementComplete;
-	protected WordManager wordManager;
-	protected GameManager gameManager;
-	protected CellsManager cellManager;
-	protected HUDManager hudManager;
+	public WordManager wordManager;
+	public GameManager gameManager;
+	public CellsManager cellManager;
+	public HUDManager hudManager;
 
 	protected virtual void Start()
 	{
-		gameManager = FindObjectOfType<GameManager> ();
-		wordManager = FindObjectOfType<WordManager> ();
-		cellManager = FindObjectOfType<CellsManager> ();
-		hudManager = FindObjectOfType<HUDManager> ();
+		
 	}
 
 	void Update()
