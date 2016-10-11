@@ -12,8 +12,8 @@ public class BombAnimation : MonoBehaviour
 	public DAnimationNotification OnAllAnimationsCompleted;
 	public DOnAnimationFinish OnCellFlipped;
 
-	protected CellsManager cellsManager;
-	protected WordManager wordManager;
+	public CellsManager cellsManager;
+	public WordManager wordManager;
 
 	protected List<AnimatedSprite> freeAnimation = new List<AnimatedSprite>();
 	protected List<AnimatedSprite> occupiedAnimation = new List<AnimatedSprite>();
@@ -23,9 +23,6 @@ public class BombAnimation : MonoBehaviour
 
 	void Start () 
 	{
-		cellsManager = FindObjectOfType<CellsManager>();
-		wordManager = FindObjectOfType<WordManager>();
-
 		for(int i=0; i<1; i++)
 		{
 			addAnimationToThePool ();
