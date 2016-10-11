@@ -195,6 +195,8 @@ namespace Data.Sync
 				}
 			}
 
+			isGettingData = false;
+
 			if(OnDataRetrievedFailure != null)
 			{
 				OnDataRetrievedFailure();
