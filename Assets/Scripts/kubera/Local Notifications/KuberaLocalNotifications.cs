@@ -6,18 +6,12 @@ using Kubera.Data.Sync;
 
 public class KuberaLocalNotifications : MonoBehaviour 
 {
-	protected bool deleted = false;
 	protected bool scheduled = false;
 
 	void Start()
 	{
-		if (!deleted) 
-		{
-			(LocalNotificationManager.GetInstance () as LocalNotificationManager).cancelScheduledTypeOfNotifications (
-				villavanilla.Notifications.ERegisteredNotification.NO_PLAYING_GAMES);
-
-			deleted = true;
-		}
+		(LocalNotificationManager.GetInstance () as LocalNotificationManager).cancelScheduledTypeOfNotifications (
+			villavanilla.Notifications.ERegisteredNotification.NO_PLAYING_GAMES);
 	}
 
 	void OnApplicationPause( bool pauseStatus )
@@ -28,12 +22,12 @@ public class KuberaLocalNotifications : MonoBehaviour
 
 			setFullLifesNotification ();
 		}
-		else if(LocalNotificationManager.GetInstance().currentUserId != null && !deleted)
+		else if(LocalNotificationManager.GetInstance().currentUserId != null)
 		{
 			(LocalNotificationManager.GetInstance () as LocalNotificationManager).cancelScheduledTypeOfNotifications (
 				villavanilla.Notifications.ERegisteredNotification.NO_PLAYING_GAMES);
 
-			deleted = true;
+			scheduled = false;
 		}
 	}
 

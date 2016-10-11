@@ -7,10 +7,10 @@ public class DestroyPowerUp : PowerupBase
 {
 	public AnimatedSprite Animation;
 
-	protected CellsManager cellsManager;
-	protected InputBombAndDestroy bombInput;
-	protected WordManager wordManager;
-	protected GameManager gameManager;
+	public CellsManager cellsManager;
+	public InputBombAndDestroy bombInput;
+	public WordManager wordManager;
+	public GameManager gameManager;
 
 	protected GameObject destroyGO;
 
@@ -25,11 +25,6 @@ public class DestroyPowerUp : PowerupBase
 
 	void Start () 
 	{
-		cellsManager = FindObjectOfType<CellsManager>();
-		bombInput = FindObjectOfType<InputBombAndDestroy>();
-		wordManager = FindObjectOfType<WordManager> ();
-		gameManager = FindObjectOfType<GameManager> ();
-
 		for(int i=0; i<1; i++)
 		{
 			addAnimationToThePool ();

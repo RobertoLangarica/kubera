@@ -33,14 +33,13 @@ namespace VoxelBusters.NativePlugins
 			if(string.IsNullOrEmpty(_publicKey))
 			{
 				Console.LogError(Constants.kDebugTag, "[Billing] Please specify public key in the configuration to proceed");
-				return;
+				_publicKey = "";
 			}
 
 			string[] _consumableProductIDs = GetConsumableProductIDs(_settings.Products);
 
 			// Native store init is called
-			Plugin.Call(Native.Methods.INITIALIZE,_publicKey, _consumableProductIDs.ToJSON()); //Update with consumable products initially. 
-
+			Plugin.Call(Native.Methods.INITIALIZE, _publicKey, _consumableProductIDs.ToJSON()); //Update with consumable products initially. 
 		}
 
 		public override bool IsAvailable ()
@@ -58,6 +57,31 @@ namespace VoxelBusters.NativePlugins
 			// Send request to native store
 			Plugin.Call(Native.Methods.REQUEST_BILLING_PRODUCTS,_consumableProductIDs.ToJSON(), _nonConsumableProductIDs.ToJSON());
 		}
+
+		public override void BuyProduct (BillingProduct _product)
+		{	
+			if (_product != null)
+			{		
+				BuyProduct(_product.ProductIdentifier, _product.DeveloperPayload);
+			}
+			else
+			{
+				Debug.LogError("[Billing] Product can't be null");
+			}
+		}
+
+		private void BuyProduct (string _productID , string _developerPayload)
+		{
+			#pragma warning disable
+			base.BuyProduct(_productID);
+			#pragma warning restore
+			
+			if (!string.IsNullOrEmpty(_productID))
+			{
+				Plugin.Call(Native.Methods.BUY_PRODUCT,_productID, _developerPayload);
+			}
+		}
+		
 
 #pragma warning disable	
 

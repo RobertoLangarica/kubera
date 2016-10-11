@@ -25,12 +25,19 @@ namespace VoxelBusters.NativePlugins
 		CloudServicesAndroid()
 		{
 			Plugin = AndroidPluginUtility.GetSingletonInstance(Native.Class.NAME);
-
-			// Load here m_dataStore from local disk
-			LoadLocalDataStore();
 		}
 
 		#endregion
+
+		#region Life Cylce
+		private void Awake()
+		{
+			// Load here m_dataStore from local disk
+			LoadLocalDataStore();
+		}
+	
+		#endregion
+
 
 		#region Initialise
 

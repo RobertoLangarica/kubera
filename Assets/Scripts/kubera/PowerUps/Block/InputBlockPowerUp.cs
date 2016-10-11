@@ -15,7 +15,8 @@ public class InputBlockPowerUp : MonoBehaviour
 	protected int lastTimeDraggedFrame;
 	protected GameObject currentSelected = null;
 
-	protected GameManager gameManager;
+	public GameManager gameManager;
+	public InputPiece inputPiece;
 
 	public delegate void DPowerUpBlockNotification();
 	public DPowerUpBlockNotification OnPowerupCanceled;
@@ -30,8 +31,7 @@ public class InputBlockPowerUp : MonoBehaviour
 	[HideInInspector]public bool rayCastersRegistered = false;
 	void Start()
 	{
-		gameManager = FindObjectOfType<GameManager> ();
-		pieceSpeed = FindObjectOfType<InputPiece> ().pieceSpeed;
+		pieceSpeed = inputPiece.pieceSpeed;
 
 		if(!rayCastersRegistered)
 		{

@@ -53,6 +53,7 @@ public class MapManager : MonoBehaviour
 	public GoalPopUp goalPopUp;
 	public WorldsPopUp worldsPopUp;
 
+	protected bool cantPlay;
 
 	void Start()
 	{
@@ -630,6 +631,11 @@ public class MapManager : MonoBehaviour
 
 	protected void OnLevelUnlockedPressed(MapLevel pressed)
 	{
+		if(cantPlay)
+		{
+			return;
+		}
+		
 		PersistentData.GetInstance ().setLevelNumber (int.Parse (pressed.lvlName));
 		PersistentData.GetInstance ().lastLevelPlayedName = pressed.lvlName;
 		PersistentData.GetInstance ().nextLevelIsReached = pressed.nextLevelIsReached;
@@ -667,6 +673,7 @@ public class MapManager : MonoBehaviour
 
 		if(stairs && isInLastLevelWorld)
 		{
+			cantPlay = true;
 			stairs.mapManager = this;
 			stairs.animateToWait ();
 		}
@@ -675,6 +682,7 @@ public class MapManager : MonoBehaviour
 	public void changeCurrentWorld(int world,bool isFirst, bool isLast)
 	{
 		toStairs = false;
+		cantPlay = false;
 		if(isFirst)
 		{
 			first = true;

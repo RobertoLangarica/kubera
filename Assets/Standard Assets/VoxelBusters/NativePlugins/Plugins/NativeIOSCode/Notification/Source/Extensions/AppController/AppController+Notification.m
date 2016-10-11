@@ -94,6 +94,20 @@ NSString *kDidReceiveRemoteNotification				= @"kDidReceiveRemoteNotification";
 	[self sendRemoteNotification:userInfo];
 }
 
+#if !UNITY_TVOS
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler
+{
+	if (userInfo != NULL)
+	{
+		[self sendRemoteNotification:userInfo];
+	}
+	
+	if (handler)
+	{
+		handler(UIBackgroundFetchResultNoData);
+	}
+}
+#endif
 
 - (void)sendLocalNotification:(UILocalNotification *)notification
 {

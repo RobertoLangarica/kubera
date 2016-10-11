@@ -27,6 +27,8 @@ namespace VoxelBusters.NativePlugins.Internal
 		public const string 		kContentText 					= "content-text";
 		public const string 		kTag			 				= "notification-tag";
 		public const string 		kCustomSoundKey					= "custom-sound";
+	
+		public const string			kBadgeCount						= "badge";
 		
 		
 		public static string 		ContentTitleKey 
@@ -109,6 +111,7 @@ namespace VoxelBusters.NativePlugins.Internal
 			AndroidProperties.TickerText		=  	_payloadDict.GetIfAvailable<string>(TickerTextKey);
 			AndroidProperties.Tag				=  	_payloadDict.GetIfAvailable<string>(TagKey);
 			AndroidProperties.LargeIcon			= 	_payloadDict.GetIfAvailable<string>(kLargeIcon);
+			AndroidProperties.BadgeCount		=	_payloadDict.GetIfAvailable<int>(kBadgeCount);
 		}
 		
 		#endregion
@@ -139,6 +142,7 @@ namespace VoxelBusters.NativePlugins.Internal
 				_payloadDict[TickerTextKey]		= _androidProperties.TickerText;
 				_payloadDict[TagKey]			= _androidProperties.Tag;
 				_payloadDict[kLargeIcon]		= _androidProperties.LargeIcon;
+				_payloadDict[kBadgeCount]		= _androidProperties.BadgeCount;
 
 				if(string.IsNullOrEmpty(_notification.SoundName)) //This fallback will be removed in upcoming version.
 				{

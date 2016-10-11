@@ -113,7 +113,7 @@
 	self.nonConsumableProductIDs 	= nonConsummableProductIDList;
 	
 	// Update purchase info
-	[self refreshPurchaseHistory];
+	[self reloadPurchaseHistory];
 }
 
 #pragma mark - SKProducts Methods
@@ -239,10 +239,12 @@
 												NSLocalizedDescriptionKey : errorMessage
 												}];
 	
-	[self didFinishVerifyingPurchaseTransactions:NULL error:error];
+	[self notifyUnityAboutTransactionEvent:kPurchaseTransactionFinishedEvent withTransactions:NULL error:error];
 }
 
-- (void)refreshPurchaseHistory
+#pragma mark - Purchase History Methods
+
+- (void)reloadPurchaseHistory
 {
 	// Clear in-memory information
 	[self.purchasedProductIDs removeAllObjects];
@@ -260,7 +262,7 @@
 	}
 }
 
-- (void)flushPurchaseHistory
+- (void)clearPurchaseHistory
 {
 	// Clear in-memory information
 	[self.purchasedProductIDs removeAllObjects];
@@ -273,6 +275,33 @@
 	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (void)updatePurchaseHistory:(BillingTransactionInfo *)transactionInfo
+{
+	SKPaymentTransaction *transaction	= transactionInfo.transaction;
+
+	// Check whether product is non consumable product
+	NSString *productID					= transaction.payment.productIdentifier;
+	if (![self.nonConsumableProductIDs containsObject:productID])
+		return;
+	
+	// Only successfully validated transactions are considered
+	if ([transactionInfo verificationState] != ReceiptVerificationStateSuccess)
+		return;
+	
+	// Update user defaults, marking this product is purchased
+	SKPaymentTransactionState transactionState	= transaction.transactionState;
+	if (transactionState == SKPaymentTransactionStatePurchased || transactionState == SKPaymentTransactionStateRestored)
+	{
+		if (![self.purchasedProductIDs containsObject:productID])
+		{
+			[self.purchasedProductIDs addObject:productID];
+			
+			[[NSUserDefaults standardUserDefaults] setBool:YES forKey:productID];
+			[[NSUserDefaults standardUserDefaults] synchronize];
+		}
+	}
+}
+
 #pragma mark - Transaction Methods
 
 - (void)restoreCompletedTransactions
@@ -281,70 +310,57 @@
     [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
 }
 
-- (void)customReceiptVerificationFinishedForTransactionWithID:(NSString *)transactionID
-											 transactionState:(SKPaymentTransactionState)transactionState
-											verificationState:(ReceiptVerificationState)verificationState
+- (void)finishCompletedTransactions:(NSArray *)transactionIDs ofRestoreType:(BOOL)isRestoreType
 {
-	if (transactionState == SKPaymentTransactionStateRestored)
+	NSMutableArray *transactionsList	= isRestoreType
+	? restoreTransactionsList
+	: purchaseTransactionsList;
+	
+	for (NSString *transactionID in transactionIDs)
 	{
-		for (BillingTransactionInfo *currentTransactionInfo in self.restoreTransactionsList)
+		NSPredicate *predicate	= [NSPredicate predicateWithFormat:@"SELF.transaction.transactionIdentifier == %@", transactionID];
+		NSArray *filteredArray 	= [transactionsList filteredArrayUsingPredicate:predicate];
+		
+		if ([filteredArray count] > 0)
 		{
-			NSString *currentTransactionID = [[currentTransactionInfo transaction] transactionIdentifier];
+			BillingTransactionInfo *transactionInfo	= filteredArray.firstObject;
 			
-			if ([transactionID isEqualToString:currentTransactionID])
-			{
-				// Update state
-				[currentTransactionInfo setVerificationState:verificationState];
-				
-				// Invoke handler
-				[self didFinishVerifyingRestoredTransactions:@[currentTransactionInfo] error:nil];
-				break;
-			}
-		}
-	}
-	else
-	{
-		for (BillingTransactionInfo *currentTransactionInfo in self.purchaseTransactionsList)
-		{
-			NSString *currentTransactionID = [[currentTransactionInfo transaction] transactionIdentifier];
+			[self updatePurchaseHistory:transactionInfo];
 			
-			if ([transactionID isEqualToString:currentTransactionID])
-			{
-				// Update state
-				[currentTransactionInfo setVerificationState:verificationState];
-				
-				// Invoke handler
-				[self didFinishVerifyingPurchaseTransactions:@[currentTransactionInfo] error:nil];
-				break;
-			}
+			[[SKPaymentQueue defaultQueue] finishTransaction:transactionInfo.transaction];
+			[transactionsList removeObject:transactionInfo];
 		}
 	}
 }
 
-- (void)finishTransaction:(BillingTransactionInfo *)transactionInfo
+
+- (void)customReceiptVerificationFinishedForTransactionWithID:(NSString *)transactionID
+											 transactionState:(SKPaymentTransactionState)transactionState
+											verificationState:(ReceiptVerificationState)verificationState
 {
-	SKPaymentTransaction *transaction	= transactionInfo.transaction;
+	NSString *eventName;
+	NSMutableArray *transactionsList;
 	
-	// Remove transaction from queue
-	[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-	
-	// Incase if its non consumable product then add it to purchase history
-	NSString *productID							= transaction.payment.productIdentifier;
-	SKPaymentTransactionState transactionState	= transaction.transactionState;
-	
-	if ([self.nonConsumableProductIDs containsObject:productID])
+	if (transactionState == SKPaymentTransactionStateRestored)
 	{
-		if (transactionState == SKPaymentTransactionStatePurchased || transactionState == SKPaymentTransactionStateRestored)
-		{
-			if (![self.purchasedProductIDs containsObject:productID])
-			{
-				[self.purchasedProductIDs addObject:productID];
-				
-				// Update user defaults, marking this product is purchased
-				[[NSUserDefaults standardUserDefaults] setBool:YES forKey:productID];
-				[[NSUserDefaults standardUserDefaults] synchronize];
-			}
-		}
+		eventName			= kRestoreTransactionFinishedEvent;
+		transactionsList	= self.restoreTransactionsList;
+	}
+	else
+	{
+		eventName			= kPurchaseTransactionFinishedEvent;
+		transactionsList	= self.purchaseTransactionsList;
+	}
+	
+	NSPredicate *predicate	= [NSPredicate predicateWithFormat:@"SELF.transaction.transactionIdentifier == %@", transactionID];
+	NSArray *filteredArray 	= [transactionsList filteredArrayUsingPredicate:predicate];
+	
+	if ([filteredArray count] > 0)
+	{
+		BillingTransactionInfo *transactionInfo	= filteredArray.firstObject;
+		[transactionInfo setVerificationState:verificationState];
+		
+		[self notifyUnityAboutTransactionEvent:eventName withTransactions:filteredArray error:NULL];
 	}
 }
 
@@ -358,13 +374,14 @@
 	{
 		[self verifyReceiptForTransactions:transactionListCopy :^() {
 			
-			// Invoke handler
-			[self didFinishVerifyingPurchaseTransactions:transactionListCopy error:NULL];
+			// Send purchase data to Unity
+			[self notifyUnityAboutTransactionEvent:kPurchaseTransactionFinishedEvent withTransactions:transactionListCopy error:NULL];
 		}];
 	}
 	else
 	{
-		[self didFinishVerifyingPurchaseTransactions:transactionListCopy error:NULL];
+		// Send purchase data to Unity
+		[self notifyUnityAboutTransactionEvent:kPurchaseTransactionFinishedEvent withTransactions:transactionListCopy error:NULL];
 	}
 }
 
@@ -377,12 +394,12 @@
 		[self verifyReceiptForTransactions:transactionListCopy :^() {
 			
 			// Invoke handler
-			[self didFinishVerifyingRestoredTransactions:transactionListCopy error:NULL];
+			[self notifyUnityAboutTransactionEvent:kRestoreTransactionFinishedEvent withTransactions:transactionListCopy error:NULL];
 		}];
 	}
 	else
 	{
-		[self didFinishVerifyingRestoredTransactions:transactionListCopy error:NULL];
+		[self notifyUnityAboutTransactionEvent:kRestoreTransactionFinishedEvent withTransactions:transactionListCopy error:NULL];
 	}
 }
 
@@ -438,38 +455,6 @@
 	}
 	
 	return YES;
-}
-
-- (void)didFinishVerifyingPurchaseTransactions:(NSArray *)transactions error:(NSError *)error
-{
-	// Finish all the successfully verified transactions
-	for (BillingTransactionInfo *currentTransactionInfo in transactions)
-	{
-		if ([currentTransactionInfo verificationState] == ReceiptVerificationStateSuccess)
-		{
-			[self finishTransaction:currentTransactionInfo];
-			[self.purchaseTransactionsList removeObject:currentTransactionInfo];
-		}
-	}
-	
-	// Notify Unity
-	[self notifyUnityAboutTransactionEvent:kPurchaseTransactionFinishedEvent withTransactions:transactions error:error];
-}
-
-- (void)didFinishVerifyingRestoredTransactions:(NSArray *)transactions error:(NSError *)error
-{
-	// Finish all the successfully verified transactions
-	for (BillingTransactionInfo *currentTransactionInfo in transactions)
-	{
-		if ([currentTransactionInfo verificationState] == ReceiptVerificationStateSuccess)
-		{
-			[self finishTransaction:currentTransactionInfo];
-			[self.restoreTransactionsList removeObject:currentTransactionInfo];
-		}
-	}
-	
-	// Notify Unity
-	[self notifyUnityAboutTransactionEvent:kRestoreTransactionFinishedEvent withTransactions:transactions error:error];
 }
 
 - (void)notifyUnityAboutTransactionEvent:(NSString *)eventName withTransactions:(NSArray *)transactions error:(NSError *)error
@@ -569,7 +554,7 @@
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
 {
-	[self didFinishVerifyingRestoredTransactions:NULL error:error];
+	[self notifyUnityAboutTransactionEvent:kRestoreTransactionFinishedEvent withTransactions:NULL error:error];
 }
 
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
@@ -579,7 +564,7 @@
 		return;
 	
 	// We just retrieved new set of restorable products, so we are good to flush old history
-	[self flushPurchaseHistory];
+	[self clearPurchaseHistory];
 	
 	// Verify all the purchases
 	[self verifyRestoreTransactions];

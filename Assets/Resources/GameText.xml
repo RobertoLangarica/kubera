@@ -11,7 +11,20 @@
 				<language id="default" text="JUGAR"/>
 			</languages>
 		</text>
-
+		<text id="connectShopikaPopUp">
+			<languages>
+				<language id="english" text="BUY"/>
+				<language id="spanish" text="COMPRA"/>
+				<language id="default" text="COMPRA"/>
+			</languages>
+		</text>
+		<text id="inviteFriendsShopikaPopUp">
+			<languages>
+				<language id="english" text="INVITE FRIENDS"/>
+				<language id="spanish" text="INVITA AMIGOS"/>
+				<language id="default" text="INVITA AMIGOS"/>
+			</languages>
+		</text>
 
 		<!--
 		Game	
@@ -769,7 +782,7 @@
 
 		<text id="fbConectTitle">
 			<languages>
-				<language id="english" text="Conect to Facebook!"/>
+				<language id="english" text="Connect to Facebook!"/>
 				<language id="spanish" text="¡Conectate a Facebook!"/>
 				<language id="default" text="¡Conectate a Facebook!"/>
 			</languages>

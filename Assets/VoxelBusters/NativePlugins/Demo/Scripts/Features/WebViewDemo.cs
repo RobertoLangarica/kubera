@@ -323,7 +323,7 @@ namespace VoxelBusters.NativePlugins.Demo
 
 		private void SetFrame ()
 		{
-			m_webview.Frame		= new Rect(0f, Screen.height * 0.3f, Screen.width, Screen.height * 0.2f);
+			m_webview.Frame		= new Rect(0f, Screen.height * 0.75f, Screen.width, Screen.height * 0.2f);
 
 			AddNewResult(string.Format("Setting new frame: {0} for web view.", m_webview.Frame));
 		}
@@ -391,43 +391,9 @@ namespace VoxelBusters.NativePlugins.Demo
 			AppendResult(string.Format("Scheme: {0}.", 		_message.Scheme));
 			AppendResult(string.Format("URL: {0}.", 		_message.URL));
 			AppendResult(string.Format("Arguments: {0}.", 	_message.Arguments.ToJSON()));
-			Debug.Log (_message.Host);
-			Debug.Log (_message.Scheme);
-			Debug.Log (_message.URL);
-			Debug.Log (_message.Arguments.ToJSON().ToString());
 		}
 
 		#endregion
 	}
 #endif
 }
-
-/*
- * <!DOCTYPE html>
-<html>
-<body bgcolor="#91ACFF">
-	<font color="white">
-		<h1><center>WebView Demo</center></h1>
-		<p>This code is used demo purpose. Can be used to test following features</p>
-		<ul type="square">
-			<li>Load HTML string</li>
-			<li>Load HTML string with JS</li>
-			<li>Evaluate JS</li>
-			<li>Send message to Unity3d</li>
-		</ul>
-	</font>
-	<center><input type='button' value="Open scheme: unity" onclick='window.location="unity://test/number?var1=12345&var2=67890"'/></center>
-
-	<center><input type='button' value="Open scheme: mailto" onclick='window.location="mailto://info@airportpark.de"'/></center>
-
-	<center><input type='button' value="Open scheme: tel" onclick='window.location="tel://+111111111111"'/></center>
-
-	<script>
-	function Concat (str1, str2) 
-	{
-		return str1.concat(str2);
-	}
-	</script>
-</body>
-</html>
-*/

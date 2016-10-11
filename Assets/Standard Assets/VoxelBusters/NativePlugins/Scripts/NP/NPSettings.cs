@@ -29,7 +29,7 @@ namespace VoxelBusters.NativePlugins
 		// Product info
 		private		const	bool		kIsFullVersion					= true;
 		private 	const 	string 		kProductName					= "Native Plugins";
-		private 	const 	string 		kProductVersion					= "1.3.1.1";
+		private 	const 	string 		kProductVersion					= "1.4";
 
 		// Pref key
 		private		const	string		kPrefsKeyBuildIdentifier		= "np-build-identifier";
@@ -70,9 +70,9 @@ namespace VoxelBusters.NativePlugins
 #if UNITY_5 || UNITY_6 || UNITY_7			
 			BuildTargetGroup.WSA, 
 #else
-			BuildTargetGroup.Metro, 
-#endif
+			BuildTargetGroup.Metro,
 			BuildTargetGroup.WP8,
+#endif
 			BuildTargetGroup.Standalone
 		};
 #endif
@@ -278,9 +278,9 @@ namespace VoxelBusters.NativePlugins
 
 		#region Constructor
 
-#if UNITY_EDITOR && !DISABLE_NPSETTINGS_GENERATION
 		static NPSettings ()
 		{
+#if UNITY_EDITOR && !DISABLE_NPSETTINGS_GENERATION
 			EditorInvoke.Invoke(()=>{
 				NPSettings _instance	= NPSettings.Instance;
 
@@ -294,8 +294,8 @@ namespace VoxelBusters.NativePlugins
 				// Monitor player settings changes
 				_instance.MonitorPlayerSettings();
 			}, 1f, 1f);
-		}
 #endif
+		}
 
 		#endregion
 
@@ -370,13 +370,16 @@ namespace VoxelBusters.NativePlugins
 #if UNITY_EDITOR
 		public void SaveConfigurationChanges ()
 		{
-			// Reset flags
-			EditorPrefs.DeleteKey(kPrefsKeyPropertyModified);
-
 			// Actions
 			UpdateDefineSymbols();
 			UpdatePluginResources();
 			WriteAndroidManifestFile();
+
+			// Refresh Database
+			AssetDatabase.Refresh();
+
+			// Reset flags
+			EditorPrefs.DeleteKey(kPrefsKeyPropertyModified);
 		}
 
 		private void UpdateDefineSymbols ()
@@ -448,21 +451,18 @@ namespace VoxelBusters.NativePlugins
 				
 				// Save file
 				_generator.SaveManifest("com.voxelbusters.androidnativeplugin", _manifestFolderPath + "/AndroidManifest.xml");
-				
-				// Refresh
-				AssetDatabase.Refresh();
 			}
 		}
 		
 		private void UpdatePluginResources ()
 		{
 #if UNITY_ANDROID
-			// Update JAR files
-			UpdateJARFilesBasedOnFeaturesUsage();
+				// Update JAR files
+				UpdateResourcesBasedOnFeaturesUsage();
 #endif
-
-			// Copy required assets
-			CopyNotificationAssets();
+	
+				// Copy required assets
+				CopyNotificationAssets();
 		}
 
 		private void CopyNotificationAssets ()
@@ -509,12 +509,12 @@ namespace VoxelBusters.NativePlugins
 			
 			// Update value
 			EditorPrefs.SetString(kPrefsKeyBuildIdentifier, _curBuildIdentifier);
-			
+
 			// Save changes
 			SaveConfigurationChanges();
 		}
 		
-		private void UpdateJARFilesBasedOnFeaturesUsage()
+		private void UpdateResourcesBasedOnFeaturesUsage()
 		{
 			ApplicationSettings.Features 		_supportedFeatures		= m_applicationSettings.SupportedFeatures;
 			ApplicationSettings.AddonServices 	_supportedAddOnServices	= m_applicationSettings.SupportedAddonServices;
@@ -529,9 +529,8 @@ namespace VoxelBusters.NativePlugins
 			UpdateJARFile(_supportedFeatures.UsesSharing, 				Constants.kSharingJARName);
 			UpdateJARFile(_supportedFeatures.UsesTwitter, 				Constants.kSocialNetworkTwitterJARName);
 			UpdateJARFile(_supportedFeatures.UsesWebView, 				Constants.kWebviewJARName);
-			UpdateJARFile(_supportedAddOnServices.UsesSoomlaGrow, 		Constants.kSoomlaIntegrationJARName);
+			UpdateJARFile(_supportedAddOnServices.UsesSoomlaGrow, 		Constants.kSoomlaIntegrationJARName);		
 		}
-
 
 		private void UpdateJARFile (bool _usesFeature, string _JARName)
 		{

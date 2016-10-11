@@ -22,6 +22,10 @@ namespace VoxelBusters.NativePlugins
 				"Awesome! Achievement # completed."
 			};
 
+			[SerializeField]
+			[Tooltip ("Allow to show default error dialogs.")]
+			private 	bool		m_showDefaultErrorDialogs = true;
+
 			#endregion
 
 			#region Properties
@@ -39,6 +43,14 @@ namespace VoxelBusters.NativePlugins
 				get
 				{
 					return m_achievedDescriptionFormats;
+				}
+			}
+
+			internal bool ShowDefaultErrorDialogs
+			{
+				get
+				{
+					return m_showDefaultErrorDialogs;
 				}
 			}
 
