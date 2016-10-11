@@ -13,7 +13,6 @@ namespace Kubera.Data.Remote
 {
 	public class KuberaProvider : ServerProvider 
 	{
-		public bool _mustShowDebugInfo = false;
 		public string GS_API_KEY = "f299147zFN10";
 		/// <summary>
 		/// preview or live
@@ -88,6 +87,8 @@ namespace Kubera.Data.Remote
 		 **/ 
 		public override void getUserData (string id, int aboveVersion, bool saveAsMainRequest = false)
 		{
+			getDataFailCount = 0;
+
 			GSGetUserRequest request = queue.getComponentAttachedToGameObject<GSGetUserRequest>("GS_GetUserData");
 
 			if(saveAsMainRequest)
@@ -102,6 +103,7 @@ namespace Kubera.Data.Remote
 			request.aboveVersion = aboveVersion;
 			request.initialize(getPath());
 			request.OnComplete += OnUserDataObtained;
+			request.OnFailed += getDataFailed;
 
 			addDependantRequest(request,saveAsMainRequest);
 		}
@@ -225,24 +227,6 @@ namespace Kubera.Data.Remote
 
 				OnLeaderboardObtained(request.data.data);
 			}*/
-		}
-
-		protected BaseRequest getRequestById(string id)
-		{
-			return requests.Find(item => item.id == id);
-		}
-
-		private void addRequest(BaseRequest request, bool isPriority = false)
-		{
-			requests.Add(request);
-			if(isPriority)
-			{
-				queue.addPriorityRequest(request);
-			}
-			else
-			{
-				queue.addRequest(request);	
-			}
 		}
 
 		private void addDependantRequest(BaseRequest request, bool isPriority = false)

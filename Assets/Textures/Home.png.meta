@@ -24,6 +24,7 @@ TextureImporter:
     21300034: K-menus1_corazon
     21300036: K-popups-pq_gemaLibre
     21300038: piezasglow
+    21300040: K-popUps_objetiveBase
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -78,8 +79,8 @@ TextureImporter:
     - name: Copia de K-popUps_close
       rect:
         serializedVersion: 2
-        x: 515
-        y: 935
+        x: 414
+        y: 134
         width: 42
         height: 42
       alignment: 9
@@ -89,8 +90,8 @@ TextureImporter:
     - name: facebook_blanco
       rect:
         serializedVersion: 2
-        x: 415
-        y: 130
+        x: 257
+        y: 79
         width: 48
         height: 46
       alignment: 0
@@ -100,30 +101,19 @@ TextureImporter:
     - name: K-InGame_BACK3
       rect:
         serializedVersion: 2
-        x: 462
-        y: 82
+        x: 309
+        y: 81
         width: 44
         height: 44
       alignment: 9
       pivot: {x: 0.47727272, y: 0.48863637}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: K-InGame_HUDbase
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 59
-        width: 201
-        height: 117
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
     - name: K-InGame_musicOFF
       rect:
         serializedVersion: 2
-        x: 467
-        y: 132
+        x: 357
+        y: 81
         width: 44
         height: 44
       alignment: 9
@@ -133,8 +123,8 @@ TextureImporter:
     - name: K-InGame_musicON2
       rect:
         serializedVersion: 2
-        x: 510
-        y: 84
+        x: 366
+        y: 132
         width: 44
         height: 44
       alignment: 9
@@ -144,7 +134,7 @@ TextureImporter:
     - name: K-InGame_ruedasettings
       rect:
         serializedVersion: 2
-        x: 205
+        x: 0
         y: 63
         width: 118
         height: 113
@@ -155,8 +145,8 @@ TextureImporter:
     - name: K-InGame_soundOFF
       rect:
         serializedVersion: 2
-        x: 481
-        y: 19
+        x: 325
+        y: 18
         width: 44
         height: 44
       alignment: 9
@@ -166,8 +156,8 @@ TextureImporter:
     - name: K-InGame_soundON2
       rect:
         serializedVersion: 2
-        x: 529
-        y: 19
+        x: 373
+        y: 18
         width: 44
         height: 44
       alignment: 9
@@ -177,8 +167,8 @@ TextureImporter:
     - name: K-inicio_btnshopika
       rect:
         serializedVersion: 2
-        x: 325
-        y: 12
+        x: 210
+        y: 129
         width: 152
         height: 47
       alignment: 9
@@ -188,7 +178,7 @@ TextureImporter:
     - name: K-inicio_shopika
       rect:
         serializedVersion: 2
-        x: 327
+        x: 122
         y: 66
         width: 131
         height: 24
@@ -210,8 +200,8 @@ TextureImporter:
     - name: K-MapaGeneral_settings
       rect:
         serializedVersion: 2
-        x: 515
-        y: 981
+        x: 405
+        y: 85
         width: 42
         height: 43
       alignment: 9
@@ -221,7 +211,7 @@ TextureImporter:
     - name: K-menus1_corazon
       rect:
         serializedVersion: 2
-        x: 327
+        x: 122
         y: 94
         width: 84
         height: 82
@@ -232,7 +222,7 @@ TextureImporter:
     - name: K-menus_fondo-menus
       rect:
         serializedVersion: 2
-        x: 482
+        x: 863
         y: 512
         width: 16
         height: 512
@@ -244,7 +234,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 6
+        y: 10
         width: 159
         height: 49
       alignment: 9
@@ -255,7 +245,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 163
-        y: 7
+        y: 14
         width: 158
         height: 48
       alignment: 9
@@ -265,18 +255,29 @@ TextureImporter:
     - name: K-popups-pq_gemaLibre
       rect:
         serializedVersion: 2
-        x: 515
-        y: 889
+        x: 421
+        y: 39
         width: 42
         height: 42
       alignment: 9
       pivot: {x: 0.45238096, y: 0.54761904}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+    - name: K-popUps_objetiveBase
+      rect:
+        serializedVersion: 2
+        x: 482
+        y: 584
+        width: 367
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5013624, y: 0.5027174}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: KuberaLogo-02
       rect:
         serializedVersion: 2
-        x: 577
+        x: 482
         y: 772
         width: 377
         height: 252
@@ -287,8 +288,8 @@ TextureImporter:
     - name: piezasglow
       rect:
         serializedVersion: 2
-        x: 462
-        y: 67
+        x: 309
+        y: 66
         width: 72
         height: 11
       alignment: 9
