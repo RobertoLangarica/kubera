@@ -1272,15 +1272,13 @@ public class GameManager : MonoBehaviour
 		if (!powerupManager.getPowerupByType ((PowerupBase.EType)powerupTypeIndex).isFree) 
 		{
 			gemsExpendedFeedBack.myText.text = "-" + powerupManager.getPowerUpPrice ((PowerupBase.EType)powerupTypeIndex);
-			gemsExpendedFeedBack.gameObject.SetActive (true);
-			gemsExpendedFeedBack.transform.GetChild (0).gameObject.SetActive (true);
 		} 
 		else 
 		{
 			gemsExpendedFeedBack.myText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FREE_POWERUP_PRICE);
-			gemsExpendedFeedBack.gameObject.SetActive (true);
-			gemsExpendedFeedBack.transform.GetChild (0).gameObject.SetActive (false);
 		}
+		gemsExpendedFeedBack.gameObject.SetActive (true);
+		gemsExpendedFeedBack.myText.transform.DOScale (new Vector3 (1, 1, 1), 0.1f);
 	}
 
 	protected bool canActivatePowerUp(PowerupBase.EType type)
@@ -1305,6 +1303,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		gemsExpendedFeedBack.gameObject.SetActive (false);
+		gemsExpendedFeedBack.myText.transform.localScale = Vector3.zero;
 		
 		allowGameInput(true);
 	}

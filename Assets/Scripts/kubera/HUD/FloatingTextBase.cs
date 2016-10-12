@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System;
 using System.Collections;
+using DG.Tweening;
 
 public class FloatingTextBase : MonoBehaviour 
 {
@@ -12,6 +13,7 @@ public class FloatingTextBase : MonoBehaviour
 	public float lerpTime;
 
 	public bool returnToInitialPosition;
+	public bool goToZeroAlphaOnStart;
 
 	public Text myText;
 
@@ -60,6 +62,7 @@ public class FloatingTextBase : MonoBehaviour
 				if (returnToInitialPosition) 
 				{
 					transform.position = startPosition;
+					transform.localScale = Vector3.zero;
 				}
 			}
 		}
@@ -79,5 +82,18 @@ public class FloatingTextBase : MonoBehaviour
 		startPosition = start;
 		finishPosition = end;
 		animate = true;
+
+		if (goToZeroAlphaOnStart) 
+		{
+			goToAlphaZero ();
+		}
+	}
+
+	public void goToAlphaZero()
+	{
+		Color temp = myText.color;
+
+		myText.DOColor (new Color(temp.r,temp.g,temp.b,0),0.6f).OnComplete(
+			()=>{myText.color = temp;});
 	}
 }
