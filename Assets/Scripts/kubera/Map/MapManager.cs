@@ -120,8 +120,10 @@ public class MapManager : MonoBehaviour
 
 		//Cambiando al mundo adecuado
 		changeWorld();
-	}
 
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved += restartScene;
+	}
+		
 	#if UNITY_EDITOR
 	void Update()
 	{
@@ -1043,5 +1045,12 @@ public class MapManager : MonoBehaviour
 	public void activateShopika()
 	{
 		openPopUp ("shopikaConnect");
+	}
+
+	protected void restartScene()
+	{
+		print ("S;");
+		//SceneManager.LoadScene ("Levels");
+		ScreenManager.GetInstance().GoToScene("Levels");
 	}
 }

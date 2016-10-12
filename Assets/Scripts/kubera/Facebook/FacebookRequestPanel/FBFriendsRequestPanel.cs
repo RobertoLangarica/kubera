@@ -22,6 +22,7 @@ public class FBFriendsRequestPanel : PopUpBase {
 	public Text requestText;
 	public Button allFriendsButton;
 	public Button gameFriendsButton;
+	public Text askButton;
 	public FriendsController invitableFriends;
 	public FriendsController gameFriends;
 	public Toggle selectAll;
@@ -46,6 +47,7 @@ public class FBFriendsRequestPanel : PopUpBase {
 		changeBetweenFriends (true);
 		invitableFriends.OnActivated = activateAllSelected;
 		gameFriends.OnActivated = activateAllSelected;
+		askButton.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FB_REQUEST_ASK_TEXT);
 	}
 
 	public override void activate()
