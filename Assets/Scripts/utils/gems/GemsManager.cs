@@ -55,12 +55,12 @@ namespace utils.gems
 		/**
 		 * Cuando se recibe la data desde el web-component
 		 **/ 
-		public void OnUserLoggedIn(string id, string token, string shareLink = "")
+		public void OnUserLoggedIn(string id, string token, string shareCode = "")
 		{
 			//Cambio de usuario
 			changeCurrentuser(id);
 			currentUser.accesToken = token;
-			currentUser.shareLink = shareLink;
+			currentUser.shareCode = shareCode;
 			saveLocalData(false);
 
 			//Avisamos al syncManager
