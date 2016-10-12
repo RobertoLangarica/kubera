@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 using VoxelBusters.NativePlugins;
 using VoxelBusters.Utility;
 
 public class KuberaShare : MonoBehaviour 
 {
-	private 	eShareOptions[]	m_excludedOptions	= new eShareOptions[0];
+	private eShareOptions[]	m_excludedOptions	= new eShareOptions[0];
+
+	public Action OnFinishedSharing;
 
 	public void shareShopikaURL()
 	{
@@ -24,6 +27,9 @@ public class KuberaShare : MonoBehaviour
 
 	private void FinishedSharing (eShareResult _result)
 	{
-		Debug.Log("Finished sharing");
+		if (OnFinishedSharing != null) 
+		{
+			OnFinishedSharing ();
+		}
 	}
 }

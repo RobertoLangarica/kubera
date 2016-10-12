@@ -25,6 +25,7 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 	public const string BOSS_REACHED						 = "bossReached";
 	public const string FACEBOOK_KEY_REQUEST				 = "facebookKeyRequest";
 	public const string FACEBOOK_FIRST_LIFE_REQUEST			 = "facebookFirstLifeRequest";
+	public const string FACEBOOK_LOGIN						 = "facebookLogin";
 
 	protected DateTime epoch = new DateTime(1970,1,1,0,0,0,DateTimeKind.Local);
 
@@ -175,6 +176,13 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 		registerEventWithParameters(FACEBOOK_FIRST_LIFE_REQUEST,
 			new Dictionary<string, string>() {
 				{"Level",level},
+				{"User",DataManagerKubera.GetInstance().currentUserId}});
+	}
+
+	public void registerFaceBookLogin()
+	{
+		registerEventWithParameters(FACEBOOK_LOGIN,
+			new Dictionary<string, string>() {
 				{"User",DataManagerKubera.GetInstance().currentUserId}});
 	}
 

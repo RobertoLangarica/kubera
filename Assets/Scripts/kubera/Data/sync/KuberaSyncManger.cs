@@ -75,6 +75,8 @@ namespace Kubera.Data.Sync
 					Debug.Log("Creating remote user.");
 				}
 
+				KuberaAnalytics.GetInstance ().registerFaceBookLogin ();
+
 				if(!localData.currentUser.remoteLifesGranted)
 				{
 					if(_mustShowDebugInfo)
@@ -150,8 +152,11 @@ namespace Kubera.Data.Sync
 				updateData(localData.getUserDirtyData());
 			}
 
+			print ("fa");
+			print (OnDataRetrieved);
 			if(OnDataRetrieved != null)
 			{
+				print ("retr");
 				OnDataRetrieved();
 			}
 		}

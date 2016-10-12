@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using Kubera.Data;
+using utils.gems.sync;
+using Kubera.Data.Sync;
 
 public class HomeManager : MonoBehaviour 
 {
@@ -16,8 +18,10 @@ public class HomeManager : MonoBehaviour
 	public Text playText;
 	public GameObject block;
 	public GameObject shopikaPopUp;
-	public GameObject connectingFacebookPopUp;
-	public GameObject connectingShopikaPopUp;
+
+	public GameObject modal;
+
+	public PopUpManager popUpManager;
 
 	void Start()
 	{
@@ -40,6 +44,17 @@ public class HomeManager : MonoBehaviour
 		}
 
 		Invoke ("startScene",0.3f);
+
+		if(GemsSyncManager.GetCastedInstance<GemsSyncManager>().isGettingData)
+		{
+			activatePopUp ("shopikaConnect");
+		}
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().isGettingData)
+		{
+			activatePopUp ("facebookLoadingConnect");
+		}
+
+		popUpManager.OnPopUpCompleted += closePopUp;
 	}
 
 	void startScene()
@@ -119,5 +134,29 @@ public class HomeManager : MonoBehaviour
 	public void activateShopikaPopUp()
 	{
 		shopikaPopUp.SetActive (true);
+	}
+		
+	protected void activatePopUp(string name)
+	{
+		modal.SetActive (true);
+		popUpManager.activatePopUp (name);
+	}
+
+	protected void closePopUp(string action ="")
+	{
+		if(popUpManager.openPopUps.Count == 0)
+		{
+			modal.SetActive (false);
+		}
+	}
+
+	public void activateFacebook()
+	{
+		activatePopUp ("facebookLoadingConnect");
+	}
+
+	public void activateShopika()
+	{
+		activatePopUp ("shopikaConnect");
 	}
 }

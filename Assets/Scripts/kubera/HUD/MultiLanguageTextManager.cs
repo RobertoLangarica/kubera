@@ -11,6 +11,14 @@ public class MultiLanguageTextManager
 	public const string CONNECT_SHOPIKA_POPUP			= "connectShopikaPopUp";
 	public const string INVITE_FRIENDS_SHOPIKA_POPUP	= "inviteFriendsShopikaPopUp";
 
+	public const string CONNECTING_SHOPIKA_TITLE 			= "connecting_shopika_title";
+	public const string CONNECTING_SHOPIKA_INFO 	   		= "connecting_shopika_info";
+	public const string CONNECTING_FAILURE_SHOPIKA_TITLE   	= "connecting_failure_shopika_title";
+	public const string CONNECTING_FAILURE_SHOPIKA_INFO		= "connecting_failure_shopika_info";
+	public const string CONNECTING_FACEBOOK_TITLE 	    	= "connecting_facebook_title";
+	public const string CONNECTING_FACEBOOK_INFO 	    	= "connecting_facebook_info";
+	public const string CONNECTING_FAILURE_FACEBOOK_TITLE 	= "connecting_failure_facebook_title";
+	public const string CONNECTING_FAILURE_FACEBOOK_INFO 	= "connecting_failure_facebook_info";
 
 
 	//GAME
