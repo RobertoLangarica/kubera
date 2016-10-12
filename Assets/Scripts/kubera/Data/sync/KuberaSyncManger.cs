@@ -76,7 +76,6 @@ namespace Kubera.Data.Sync
 				}
 
 				KuberaAnalytics.GetInstance ().registerFaceBookLogin ();
-
 				if(!localData.currentUser.remoteLifesGranted)
 				{
 					if(_mustShowDebugInfo)
@@ -152,11 +151,8 @@ namespace Kubera.Data.Sync
 				updateData(localData.getUserDirtyData());
 			}
 
-			print ("fa");
-			print (OnDataRetrieved);
-			if(OnDataRetrieved != null)
+ 			if(OnDataRetrieved != null)
 			{
-				print ("retr");
 				OnDataRetrieved();
 			}
 		}

@@ -46,7 +46,11 @@ public class FacebookManager : Manager<FacebookManager>
 
 	void Start()
 	{
-		KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.OnLoginSuccessfull += OnLoginComplete;
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+		{
+			OnLoginComplete ();
+		}
+		//KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.OnLoginSuccessfull += OnLoginComplete;
 
 		fbGraph.OnPlayerInfo += showPlayerInfo;
 		fbGraph.OnGetGameFriends += addGameFriends;
@@ -59,6 +63,11 @@ public class FacebookManager : Manager<FacebookManager>
 		fbGraph.onFinishGettingInfo += fillMessageData;
 
 		OnLoginComplete();
+	}
+
+	protected void loginCompleted()
+	{
+		Invoke ("OnLoginComplete", 1);
 	}
 
 	protected void OnLoginComplete(string message = "")
@@ -78,7 +87,6 @@ public class FacebookManager : Manager<FacebookManager>
 			else
 			{
 				fbGraph.setActive ();
-
 
 				fillRequestPanel (FacebookPersistentData.GetInstance().gameFriends, FBFriendsRequestPanel.EFriendsType.GAME);
 				fillRequestPanel (FacebookPersistentData.GetInstance().allFriends, FBFriendsRequestPanel.EFriendsType.ALL);

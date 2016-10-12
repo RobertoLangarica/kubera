@@ -112,6 +112,8 @@ public class MultiLanguageTextManager
 	public const string FB_LOG_IN_TEXT						= "fbLogInText";
 	public const string FB_LOG_OUT_TEXT						= "fbLogOutText";
 
+	public const string FB_REQUEST_ASK_TEXT					= "fbRequestAskText";
+
 
 	//GAME
 	public const string FLAVOR_TEXT							= "ticketFlavorText";

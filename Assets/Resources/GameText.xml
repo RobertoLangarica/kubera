@@ -41,16 +41,16 @@
 		</text>
 		<text id="connecting_failure_shopika_title">
 			<languages>
-				<language id="english" text="FAILURE"/>
-				<language id="spanish" text="Algo fallo intenta de nuevo"/>
-				<language id="default" text="Algo fallo intenta de nuevo"/>
+				<language id="english" text="Something fail"/>
+				<language id="spanish" text="Algo fallo"/>
+				<language id="default" text="Algo fallo"/>
 			</languages>
 		</text>
-		<text id="connectin_failureg_shopika_info">
+		<text id="connecting_failure_shopika_info">
 			<languages>
-				<language id="english" text="Something fail"/>
-				<language id="spanish" text="Obteniendo tu progreso"/>
-				<language id="default" text="Obteniendo tu progreso"/>
+				<language id="english" text="Try again to connect Shopika"/>
+				<language id="spanish" text="Intenta de nuevo conectarte a shopika"/>
+				<language id="default" text="Intenta de nuevo conectarte a shopika"/>
 			</languages>
 		</text>
 
@@ -71,15 +71,15 @@
 		<text id="connecting_failure_facebook_title">
 			<languages>
 				<language id="english" text="Something fail"/>
-				<language id="spanish" text="Algo fallo intenta de nuevo"/>
-				<language id="default" text="Algo fallo intenta de nuevo"/>
+				<language id="spanish" text="Algo fallo"/>
+				<language id="default" text="Algo fallo"/>
 			</languages>
 		</text>
 		<text id="connecting_failure_facebook_info">
 			<languages>
-				<language id="english" text="Getting your info"/>
-				<language id="spanish" text="Obteniendo tu progreso"/>
-				<language id="default" text="Obteniendo tu progreso"/>
+				<language id="english" text="Try again to connect facebook"/>
+				<language id="spanish" text="Intenta de nuevo conectarte a facebook"/>
+				<language id="default" text="Intenta de nuevo conectarte a facebook"/>
 			</languages>
 		</text>
 
@@ -871,6 +871,14 @@
 				<language id="english" text="LogOut"/>
 				<language id="spanish" text="Desconectar"/>
 				<language id="default" text="Desconectar "/>
+			</languages>                    
+		</text>
+
+		<text id="fbRequestAskText">
+			<languages>
+				<language id="english" text="ASK"/>
+				<language id="spanish" text="PEDIR"/>
+				<language id="default" text="PEDIR "/>
 			</languages>                    
 		</text>
 
