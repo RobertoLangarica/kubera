@@ -45,9 +45,9 @@
 		</text>
 		<text id="connecting_shopika_info">
 			<languages>
-				<language id="english" text="Getting your info"/>
-				<language id="spanish" text="Obteniendo tu progreso"/>
-				<language id="default" text="Obteniendo tu progreso"/>
+				<language id="english" text="Getting your info of shopika"/>
+				<language id="spanish" text="Obteniendo tu progreso de shopika"/>
+				<language id="default" text="Obteniendo tu progreso de shopika"/>
 			</languages>
 		</text>
 		<text id="connecting_failure_shopika_title">
@@ -74,9 +74,9 @@
 		</text>
 		<text id="connecting_facebook_info">
 			<languages>
-				<language id="english" text="Getting your info"/>
-				<language id="spanish" text="Obteniendo tu progreso"/>
-				<language id="default" text="Obteniendo tu progreso"/>
+				<language id="english" text="Getting your info of facebook"/>
+				<language id="spanish" text="Obteniendo tu progreso de facebook"/>
+				<language id="default" text="Obteniendo tu progreso de facebook"/>
 			</languages>
 		</text>
 		<text id="connecting_failure_facebook_title">

@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Kubera.Data;
 using Kubera.Data.Sync;
+using utils.gems;
 
 public class MapManager : MonoBehaviour
 {
@@ -1044,13 +1045,15 @@ public class MapManager : MonoBehaviour
 
 	public void activateShopika()
 	{
-		openPopUp ("shopikaConnect");
+		if (GemsManager.GetCastedInstance<GemsManager> ().currentUserId == GemsManager.GetCastedInstance<GemsManager> ().ANONYMOUS_USER) 
+		{
+			openPopUp ("shopikaConnect");
+		}
 	}
 
 	protected void restartScene()
 	{
-		print ("S;");
 		//SceneManager.LoadScene ("Levels");
-		ScreenManager.GetInstance().GoToScene("Levels");
+		ScreenManager.GetInstance().GoToScene("Levels",true);
 	}
 }
