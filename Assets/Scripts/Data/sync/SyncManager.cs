@@ -210,6 +210,8 @@ namespace Data.Sync
 
 		protected virtual void OnGetDataFailed()
 		{
+			isGettingData = false;
+
 			if(autoLogoutAfterGetDataFailed)
 			{
 				if(customProvider != null)
@@ -222,9 +224,7 @@ namespace Data.Sync
 					facebookLogout();
 				}
 			}
-
-			isGettingData = false;
-
+				
 			if(OnDataRetrievedFailure != null)
 			{
 				OnDataRetrievedFailure();

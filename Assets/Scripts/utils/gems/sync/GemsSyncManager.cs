@@ -37,6 +37,17 @@ namespace utils.gems.sync
 
 		private void OnBadCredentials()
 		{
+
+			if(isGettingData)
+			{
+				isGettingData = false;
+
+				if(OnDataRetrievedFailure)
+				{
+					OnDataRetrievedFailure();	
+				}
+			}
+
 			afterLogout();
 		}
 			
