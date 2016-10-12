@@ -192,6 +192,7 @@
             <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_HUDbaseAbajo.png</key>
             <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_HUDbaseGem-Cor.png</key>
             <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_HUDgemas.png</key>
+            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_HUDshopika.png</key>
             <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_HUDvidas.png</key>
             <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_Navegacion.png</key>
             <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_interaccionFB.png</key>

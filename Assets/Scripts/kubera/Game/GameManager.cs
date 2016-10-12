@@ -39,6 +39,14 @@ public class GameManager : MonoBehaviour
 	public float gridLettersSizeMultiplier = 0.9f;
 
 	public List<int> linesCreatedPoints = new List<int> ();
+	public List<List<string>> linesMultipliers = new List<List<string>>{ new List<string>{""},
+																			new List<string>{""},
+																			new List<string>{"x2"},
+																			new List<string>{"x3"},
+																			new List<string>{"x2","x2"},
+																			new List<string>{"x3","x2"},
+																			new List<string>{"x3","x3"},
+																			new List<string>{"x3","x3","x3"}};
 
 	public InputPowerUpRotate inputRotate;
 	public float checkIfLoseSeconds = 5;
@@ -149,7 +157,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(!PersistentData.GetInstance().fromLevelsToGame && !PersistentData.GetInstance().fromLevelBuilder)
 		{
-			configureLevel(PersistentData.GetInstance().getLevelByIndex(37));
+			configureLevel(PersistentData.GetInstance().getLevelByIndex(163));
 		}
 		else
 		{
@@ -473,7 +481,7 @@ public class GameManager : MonoBehaviour
 			//Puntos por las lineas creadas
 			linesCreated (cells.Count);
 
-			if(cells.Count > linesCreatedPoints.Count)
+			if(cells.Count >= linesCreatedPoints.Count)
 			{
 				pointsMade += linesCreatedPoints[linesCreatedPoints.Count-1];
 			}
@@ -524,13 +532,38 @@ public class GameManager : MonoBehaviour
 						cellManager.setCellContentType (cells[i][j], Piece.EType.LETTER);
 						cellManager.setCellContentColor (cells [i] [j], Piece.EColor.NONE);
 
-						letters.Add(wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL));						
+						letters.Add(wordManager.getGridLetterFromPool(WordManager.EPoolType.NORMAL));
 					}
 				}
 			}
 		}
 
+		addMultipliersToNewLines (cells.Count, letters);
+
 		linesAnimation.configurateAnimation(cellsToAnimate,letters);
+	}
+
+	private void addMultipliersToNewLines(int totalLines,List<Letter> newLetters)
+	{
+		List<Letter> temp = new List<Letter> (newLetters);
+		int tempIndex;
+		int tempIndex2;
+
+		if(totalLines >= linesMultipliers.Count)
+		{
+			totalLines = linesMultipliers.Count-1;
+		}
+
+		for (int i = 0; i < linesMultipliers [totalLines].Count; i++) 
+		{
+			tempIndex = Random.Range (0,temp.Count);
+			tempIndex2 = newLetters.IndexOf (temp [tempIndex]);
+			temp.RemoveAt (tempIndex);
+
+			newLetters [tempIndex2].abcChar.pointsOrMultiple = linesMultipliers [totalLines][i];
+			newLetters [tempIndex2].updateTexts ();
+			newLetters [tempIndex2].updateSprite ();
+		}
 	}
 
 	public void OnCellFlipped(Cell cell, Letter letter)
