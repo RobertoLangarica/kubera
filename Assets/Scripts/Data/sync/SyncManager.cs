@@ -17,6 +17,7 @@ namespace Data.Sync
 
 		public Action OnDataRetrieved;
 		public Action OnDataRetrievedFailure;
+		public Action OnLoginFailure;
 
 		[HideInInspector]public bool isGettingData = false;
 
@@ -30,12 +31,16 @@ namespace Data.Sync
 			{
 				customProvider.OnLoginSuccessfull	+= OnCustomLogin;
 				customProvider.OnLogoutSuccessfull	+= OnCustomLogout;
+				customProvider.OnLoginFail += onCustomLoginFailed;
+				customProvider.OnServerOutOfReach += onCustomLoginFailed;
 			}
 
 			if(facebookProvider != null) 
 			{
 				facebookProvider.OnLoginSuccessfull += OnFacebookLogin;
 				facebookProvider.OnLogoutSuccessfull+= OnFacebookLogout;
+				facebookProvider.OnLoginFail += onFacebookLoginFailed;
+				facebookProvider.OnServerOutOfReach += onFacebookLoginFailed;
 			}
 
 			server.OnUserReceived += OnUserReceived;
@@ -43,6 +48,7 @@ namespace Data.Sync
 			server.OnDataUpdated += OnDataUpdated;
 			server.OnGetDataFailed += OnGetDataFailed;
 		}
+
 
 		public void facebookLogin()
 		{
@@ -167,6 +173,28 @@ namespace Data.Sync
 		{
 			server.stopAndRemoveCurrentRequests();
 			currentUser = null;
+		}
+
+		protected virtual void onFacebookLoginFailed(string message)
+		{
+			if(customProvider == null || !customProvider.isLoggedIn)
+			{
+				if(OnLoginFailure != null)
+				{
+					OnLoginFailure();
+				}
+			}
+		}
+
+		protected virtual void onCustomLoginFailed(string message)
+		{
+			if(facebookProvider == null || !facebookProvider.isLoggedIn)
+			{
+				if(OnLoginFailure != null)
+				{
+					OnLoginFailure();
+				}
+			}
 		}
 
 		protected virtual void OnUserReceived(RemoteUser user)
