@@ -25,6 +25,63 @@
 				<language id="default" text="INVITA AMIGOS"/>
 			</languages>
 		</text>
+		<text id="connecting_shopika_title">
+			<languages>
+				<language id="english" text="CONNECTING"/>
+				<language id="spanish" text="CONECTANDO"/>
+				<language id="default" text="CONECTANDO"/>
+			</languages>
+		</text>
+		<text id="connecting_shopika_info">
+			<languages>
+				<language id="english" text="Getting your info"/>
+				<language id="spanish" text="Obteniendo tu progreso"/>
+				<language id="default" text="Obteniendo tu progreso"/>
+			</languages>
+		</text>
+		<text id="connecting_failure_shopika_title">
+			<languages>
+				<language id="english" text="FAILURE"/>
+				<language id="spanish" text="Algo fallo intenta de nuevo"/>
+				<language id="default" text="Algo fallo intenta de nuevo"/>
+			</languages>
+		</text>
+		<text id="connectin_failureg_shopika_info">
+			<languages>
+				<language id="english" text="Something fail"/>
+				<language id="spanish" text="Obteniendo tu progreso"/>
+				<language id="default" text="Obteniendo tu progreso"/>
+			</languages>
+		</text>
+
+		<text id="connecting_facebook_title">
+			<languages>
+				<language id="english" text="CONNECTING"/>
+				<language id="spanish" text="CONECTANDO"/>
+				<language id="default" text="CONECTANDO"/>
+			</languages>
+		</text>
+		<text id="connecting_facebook_info">
+			<languages>
+				<language id="english" text="Getting your info"/>
+				<language id="spanish" text="Obteniendo tu progreso"/>
+				<language id="default" text="Obteniendo tu progreso"/>
+			</languages>
+		</text>
+		<text id="connecting_failure_facebook_title">
+			<languages>
+				<language id="english" text="Something fail"/>
+				<language id="spanish" text="Algo fallo intenta de nuevo"/>
+				<language id="default" text="Algo fallo intenta de nuevo"/>
+			</languages>
+		</text>
+		<text id="connecting_failure_facebook_info">
+			<languages>
+				<language id="english" text="Getting your info"/>
+				<language id="spanish" text="Obteniendo tu progreso"/>
+				<language id="default" text="Obteniendo tu progreso"/>
+			</languages>
+		</text>
 
 		<!--
 		Game	

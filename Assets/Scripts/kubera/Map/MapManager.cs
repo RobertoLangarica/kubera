@@ -1011,6 +1011,9 @@ public class MapManager : MonoBehaviour
 				popUpManager.activatePopUp ("fbConnectPopUp");
 			}
 		break;
+		case "notClose":
+			stopInput(true);
+			break;
 		default:
 		break;
 		}
@@ -1030,5 +1033,15 @@ public class MapManager : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	public void activateFacebook()
+	{
+		openPopUp ("facebookLoadingConnect");
+	}
+
+	public void activateShopika()
+	{
+		openPopUp ("shopikaConnect");
 	}
 }
