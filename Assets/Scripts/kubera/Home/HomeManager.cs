@@ -4,8 +4,9 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using Kubera.Data;
-using utils.gems.sync;
 using Kubera.Data.Sync;
+using utils.gems;
+using utils.gems.sync;
 
 public class HomeManager : MonoBehaviour 
 {
@@ -152,11 +153,19 @@ public class HomeManager : MonoBehaviour
 
 	public void activateFacebook()
 	{
-		activatePopUp ("facebookLoadingConnect");
+		print (KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().facebookProvider.isLoggedIn);
+		if(!KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+		{
+			activatePopUp ("facebookLoadingConnect");
+		}
 	}
+
 
 	public void activateShopika()
 	{
-		activatePopUp ("shopikaConnect");
+		if (GemsManager.GetCastedInstance<GemsManager> ().currentUserId == GemsManager.GetCastedInstance<GemsManager> ().ANONYMOUS_USER) 
+		{
+			activatePopUp ("shopikaConnect");
+		}
 	}
 }

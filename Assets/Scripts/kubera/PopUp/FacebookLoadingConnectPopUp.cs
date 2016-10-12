@@ -18,6 +18,15 @@ public class FacebookLoadingConnectPopUp : PopUpBase {
 
 		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved  += popUpCompleted;
 		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrievedFailure += failure;
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnLoginFailure += failure;
+	}
+
+	public override void activate()
+	{
+		popUp.SetActive (true);
+
+		title.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_FACEBOOK_TITLE);
+		Info.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_FACEBOOK_INFO);
 	}
 
 	protected void failure()

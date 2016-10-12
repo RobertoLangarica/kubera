@@ -43,11 +43,14 @@ public class ButtonsControl : MonoBehaviour
 		{
 			facebookLargeButton.gameObject.SetActive (true);
 			facebookHighLight.gameObject.SetActive (true);
+			facebookButton.gameObject.SetActive (false);
 			facebookAnim = true;
 		} 
 		else 
 		{
 			facebookButton.gameObject.SetActive (true);
+			facebookLargeButton.gameObject.SetActive (false);
+			facebookHighLight.gameObject.SetActive (false);
 		}
 	}
 
@@ -57,11 +60,14 @@ public class ButtonsControl : MonoBehaviour
 		{
 			shopikaLargeButton.gameObject.SetActive (true);
 			shopikaHighLight.gameObject.SetActive (true);
+			shopikaButton.gameObject.SetActive (false);
 			shopikaAnim = true;
 		}
 		else 
 		{
 			shopikaButton.gameObject.SetActive (true);
+			shopikaLargeButton.gameObject.SetActive (false);
+			shopikaHighLight.gameObject.SetActive (false);
 		}
 	}
 

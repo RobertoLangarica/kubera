@@ -40,11 +40,17 @@ public class FBConnectPopUp : PopUpBase {
 
 		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().isGettingData)
 		{
-			OnComplete ("notClose");
+			completed();
 		}
 		else
 		{
-			syncManager.facebookProvider.OnLoginSuccessfull += OnComplete;
+			syncManager.facebookProvider.OnLoginSuccessfull += completed;
+			syncManager.facebookProvider.OnLoginFail += completed;
 		}
+	}
+
+	protected void completed(string action ="")
+	{
+		OnComplete ("notClose");
 	}
 }

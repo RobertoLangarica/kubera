@@ -66,7 +66,7 @@ public class KuberaWebView : MonoBehaviour
 		switch (message.Host) 
 		{
 		case(WEBVIEW_LOGIN):
-			saveUserInfo (message.Arguments ["userId"], message.Arguments ["tokenId"]);
+			saveUserInfo (message.Arguments ["userId"], message.Arguments ["tokenId"],message.Arguments["displayName"]);
 			loginToShopika (GemsManager.GetCastedInstance<GemsManager> ().currentUserId,
 				GemsManager.GetCastedInstance<GemsManager> ().currentUser.accesToken);
 
@@ -93,10 +93,10 @@ public class KuberaWebView : MonoBehaviour
 		}
 	}
 
-	protected void saveUserInfo(string userID,string tokenID)
+	protected void saveUserInfo(string userID,string tokenID,string displayName)
 	{
 		//TODO: Guardar datos de login en lugar seguro
-		GemsManager.GetCastedInstance<GemsManager>().OnUserLoggedIn(userID,tokenID);
+		GemsManager.GetCastedInstance<GemsManager>().OnUserLoggedIn(userID,tokenID,displayName);
 	}
 
 	protected void loginToShopika(string userID,string tokenID)

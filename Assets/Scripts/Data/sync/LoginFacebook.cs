@@ -79,7 +79,6 @@ namespace Data.Sync
 
 		public override void logout()
 		{
-			print ("S");
 			//FB.LogOut();
 			isLoggedIn = false;
 			if(OnLogoutSuccessfull != null)

@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using utils.gems;
 using utils.gems.sync;
+using VoxelBusters.Utility;
+using VoxelBusters.NativePlugins;
 
 public class ShopikaConnectPopUp : PopUpBase {
 
@@ -18,6 +21,8 @@ public class ShopikaConnectPopUp : PopUpBase {
 
 		utils.gems.sync.GemsSyncManager.GetCastedInstance<utils.gems.sync.GemsSyncManager> ().OnDataRetrieved  += popUpCompleted;
 		utils.gems.sync.GemsSyncManager.GetCastedInstance<utils.gems.sync.GemsSyncManager> ().OnDataRetrievedFailure += failure;
+
+		WebViewManager.GetInstance ().OnFinishLoading += webClosed;
 	}
 
 	protected void failure()
@@ -36,5 +41,13 @@ public class ShopikaConnectPopUp : PopUpBase {
 	{
 		popUp.SetActive (false);
 		OnComplete ("");
+	}
+
+	protected void webClosed(WebView webview)
+	{
+		if (GemsManager.GetCastedInstance<GemsManager> ().currentUserId == GemsManager.GetCastedInstance<GemsManager> ().ANONYMOUS_USER) 
+		{
+			failure ();
+		}
 	}
 }

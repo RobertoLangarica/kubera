@@ -112,6 +112,8 @@ public class MultiLanguageTextManager
 	public const string FB_LOG_IN_TEXT						= "fbLogInText";
 	public const string FB_LOG_OUT_TEXT						= "fbLogOutText";
 
+	public const string FB_REQUEST_ASK_TEXT					= "fbRequestAskText";
+
 
 	//GAME
 	public const string FLAVOR_TEXT							= "ticketFlavorText";
@@ -206,6 +208,9 @@ public class MultiLanguageTextManager
 	public const string NOTIFICATION_7_DAYS 				= "7_Days_Without_Playing";
 	public const string NOTIFICATION_14_DAYS 				= "14_Days_Without_Playing";
 	public const string NOTIFICATION_30_DAYS 				= "30_Days_Without_Playing";
+
+	//Share
+	public const string SHARE_DEFAULT_TEXT					="shareDefaultText";
 
 	protected static MultiLanguageTextManager _instance;
 
