@@ -233,6 +233,7 @@ TextureImporter:
     21300452: K-InGame_ruedasettings
     21300454: K-InGame_soundOFF
     21300456: K-InGame_soundON2
+    21300458: K-MapaGeneral_HUDshopika
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -292,8 +293,8 @@ TextureImporter:
     - name: facebook_blanco
       rect:
         serializedVersion: 2
-        x: 1003
-        y: 864
+        x: 810
+        y: 737
         width: 20
         height: 20
       alignment: 0
@@ -303,8 +304,8 @@ TextureImporter:
     - name: K-_estrella1
       rect:
         serializedVersion: 2
-        x: 832
-        y: 483
+        x: 905
+        y: 839
         width: 18
         height: 17
       alignment: 9
@@ -314,8 +315,8 @@ TextureImporter:
     - name: K-_estrella2
       rect:
         serializedVersion: 2
-        x: 441
-        y: 163
+        x: 1
+        y: 4
         width: 9
         height: 9
       alignment: 0
@@ -325,557 +326,316 @@ TextureImporter:
     - name: K-_luz1
       rect:
         serializedVersion: 2
-        x: 500
-        y: 240
+        x: 782
+        y: 467
         width: 40
         height: 165
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -20, y: 82.5}
-        - {x: -20, y: -80.5}
-        - {x: -3, y: -82.5}
-        - {x: 20, y: -82.5}
-        - {x: 20, y: -66.5}
-        - {x: 8, y: 4.5}
-        - {x: -13, y: 80.5}
-        - {x: -14, y: 82.5}
+      outline: []
     - name: K-_luz2
       rect:
         serializedVersion: 2
-        x: 544
-        y: 255
+        x: 947
+        y: 266
         width: 72
         height: 160
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -10, y: 40}
-        - {x: -28, y: 80}
-        - {x: -36, y: 80}
-        - {x: -36, y: 68}
-        - {x: -19, y: 3}
-        - {x: 2, y: -72}
-        - {x: 6, y: -76}
-        - {x: 23, y: -80}
-        - {x: 36, y: -80}
-        - {x: 36, y: -71}
-        - {x: 25, y: -44}
+      outline: []
     - name: K-_luz3
       rect:
         serializedVersion: 2
-        x: 385
-        y: 163
+        x: 87
+        y: 24
         width: 52
         height: 188
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 19, y: 94}
-        - {x: 3, y: 70}
-        - {x: -26, y: -76}
-        - {x: -26, y: -94}
-        - {x: 0, y: -94}
-        - {x: 14, y: -89}
-        - {x: 20, y: -84}
-        - {x: 26, y: 34}
-        - {x: 26, y: 94}
+      outline: []
     - name: K-_luz4
       rect:
         serializedVersion: 2
-        x: 786
-        y: 245
+        x: 947
+        y: 103
         width: 72
         height: 160
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 28, y: 80}
-        - {x: -36, y: -67}
-        - {x: -36, y: -80}
-        - {x: -14, y: -80}
-        - {x: 11, y: -71}
-        - {x: 36, y: 61}
-        - {x: 36, y: 80}
+      outline: []
     - name: K-_luz5
       rect:
         serializedVersion: 2
-        x: 175
-        y: 8
+        x: 1
+        y: 351
         width: 66
         height: 333
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 19, y: 166.5}
-        - {x: -6, y: 161.5}
-        - {x: -10, y: 150.5}
-        - {x: -29, y: -82.5}
-        - {x: -33, y: -128.5}
-        - {x: -33, y: -166.5}
-        - {x: -25, y: -166.5}
-        - {x: 25, y: 79.5}
-        - {x: 33, y: 142.5}
-        - {x: 33, y: 166.5}
+      outline: []
     - name: K-_luz6
       rect:
         serializedVersion: 2
-        x: 245
-        y: 76
+        x: 70
+        y: 409
         width: 68
         height: 275
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -34, y: 105.5}
-        - {x: 29, y: -137.5}
-        - {x: 34, y: -137.5}
-        - {x: 34, y: -51.5}
-        - {x: 17, y: 137.5}
-        - {x: -16, y: 137.5}
-        - {x: -34, y: 133.5}
+      outline: []
     - name: K-_luz7-22
       rect:
         serializedVersion: 2
-        x: 88
-        y: 9
+        x: 1
+        y: 16
         width: 83
         height: 332
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 29.5, y: 166}
-        - {x: 2.5, y: 160}
-        - {x: -0.5, y: 159}
-        - {x: -4.5, y: 136}
-        - {x: -41.5, y: -143}
-        - {x: -41.5, y: -166}
-        - {x: -34.5, y: -166}
-        - {x: -24.5, y: -126}
-        - {x: 41.5, y: 148}
-        - {x: 41.5, y: 166}
+      outline: []
     - name: K-_luz7-24
       rect:
         serializedVersion: 2
         x: 1
-        y: 5
+        y: 687
         width: 83
         height: 336
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -41.5, y: 134}
-        - {x: 33.5, y: -168}
-        - {x: 41.5, y: -168}
-        - {x: 41.5, y: -123}
-        - {x: 10.5, y: 128}
-        - {x: 0.5, y: 168}
-        - {x: -27.5, y: 168}
-        - {x: -41.5, y: 165}
+      outline: []
     - name: K-InGame_BACK3
       rect:
         serializedVersion: 2
-        x: 493
-        y: 18
+        x: 220
+        y: 151
         width: 64
         height: 67
       alignment: 9
       pivot: {x: 0.484375, y: 0.48507464}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -20, y: 34.5}
-        - {x: -31, y: 20.5}
-        - {x: -31, y: -24.5}
-        - {x: -18, y: -32.5}
-        - {x: 27, y: -32.5}
-        - {x: 33, y: -21.5}
-        - {x: 33, y: 16.5}
-        - {x: 18, y: 34.5}
+      outline: []
     - name: K-InGame_musicOFF
       rect:
         serializedVersion: 2
-        x: 324
-        y: 11
+        x: 530
+        y: 737
         width: 66
         height: 66
       alignment: 9
       pivot: {x: 0.5, y: 0.50757575}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 12, y: 32.5}
-        - {x: -12, y: 32.5}
-        - {x: -17, y: 30.5}
-        - {x: -23, y: 27.5}
-        - {x: -33, y: 14.5}
-        - {x: -33, y: -21.5}
-        - {x: -20, y: -33.5}
-        - {x: 23, y: -33.5}
-        - {x: 33, y: -16.5}
-        - {x: 33, y: 16.5}
-        - {x: 30, y: 21.5}
+      outline: []
     - name: K-InGame_musicON2
       rect:
         serializedVersion: 2
-        x: 958
-        y: 957
+        x: 528
+        y: 530
         width: 65
         height: 66
       alignment: 9
       pivot: {x: 0.4923077, y: 0.49242425}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -23, y: 33.5}
-        - {x: -32, y: 25.5}
-        - {x: -32, y: -16.5}
-        - {x: -23, y: -32.5}
-        - {x: 24, y: -32.5}
-        - {x: 33, y: -26.5}
-        - {x: 33, y: 19.5}
-        - {x: 18, y: 33.5}
+      outline: []
     - name: K-InGame_ruedasettings
       rect:
         serializedVersion: 2
-        x: 321
-        y: 583
+        x: 596
+        y: 332
         width: 170
         height: 164
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -22, y: 82}
-        - {x: -68, y: 82}
-        - {x: -85, y: 59}
-        - {x: -85, y: -77}
-        - {x: -66, y: -82}
-        - {x: 85, y: -82}
-        - {x: 85, y: -19}
-        - {x: 58, y: -7}
+      outline: []
     - name: K-InGame_soundOFF
       rect:
         serializedVersion: 2
-        x: 786
-        y: 175
+        x: 530
+        y: 668
         width: 66
         height: 66
       alignment: 9
       pivot: {x: 0.50757575, y: 0.50757575}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -23.5, y: 32.5}
-        - {x: -33.5, y: 25.5}
-        - {x: -33.5, y: -24.5}
-        - {x: -15.5, y: -33.5}
-        - {x: 29.5, y: -33.5}
-        - {x: 32.5, y: -31.5}
-        - {x: 32.5, y: 25.5}
-        - {x: 31.5, y: 32.5}
+      outline: []
     - name: K-InGame_soundON2
       rect:
         serializedVersion: 2
-        x: 774
-        y: 105
+        x: 530
+        y: 599
         width: 66
         height: 66
       alignment: 9
       pivot: {x: 0.49242425, y: 0.50757575}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -22.5, y: 32.5}
-        - {x: -32.5, y: 25.5}
-        - {x: -32.5, y: -20.5}
-        - {x: -18.5, y: -33.5}
-        - {x: 21.5, y: -33.5}
-        - {x: 33.5, y: -16.5}
-        - {x: 33.5, y: 20.5}
-        - {x: 24.5, y: 32.5}
+      outline: []
     - name: K-Mapa_1caminoAzul
       rect:
         serializedVersion: 2
-        x: 441
-        y: 220
+        x: 468
+        y: 215
         width: 55
         height: 185
       alignment: 9
       pivot: {x: 0.5090909, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -18, y: 92.5}
-        - {x: -28, y: 80.5}
-        - {x: -28, y: -85.5}
-        - {x: -17, y: -92.5}
-        - {x: 20, y: -92.5}
-        - {x: 27, y: -83.5}
-        - {x: 27, y: 80.5}
-        - {x: 14, y: 92.5}
+      outline: []
     - name: K-Mapa_1caminoBlanco
       rect:
         serializedVersion: 2
-        x: 317
-        y: 156
+        x: 528
+        y: 264
         width: 64
         height: 195
       alignment: 9
       pivot: {x: 0.515625, y: 0.56153846}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -20, y: 85.5}
-        - {x: -33, y: 69.5}
-        - {x: -33, y: -94.5}
-        - {x: -19, y: -109.5}
-        - {x: 18, y: -109.5}
-        - {x: 31, y: -102.5}
-        - {x: 31, y: 78.5}
-        - {x: 18, y: 85.5}
+      outline: []
     - name: K-Mapa_2caminoAzul
       rect:
         serializedVersion: 2
-        x: 198
-        y: 355
+        x: 833
+        y: 519
         width: 185
         height: 217
       alignment: 9
       pivot: {x: 0.4945946, y: 0.55069125}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -91.5, y: 97.5}
-        - {x: -91.5, y: -17.5}
-        - {x: -49.5, y: -68.5}
-        - {x: 19.5, y: -119.5}
-        - {x: 93.5, y: -119.5}
-        - {x: 93.5, y: 1.5}
-        - {x: 72.5, y: 61.5}
-        - {x: -13.5, y: 97.5}
+      outline: []
     - name: K-Mapa_2caminoBlanco
       rect:
         serializedVersion: 2
-        x: 1
-        y: 345
+        x: 87
+        y: 796
         width: 193
         height: 227
       alignment: 9
       pivot: {x: 0.4715026, y: 0.5110132}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -91, y: 111}
-        - {x: -91, y: -44}
-        - {x: -80, y: -84}
-        - {x: 25, y: -116}
-        - {x: 91, y: -116}
-        - {x: 102, y: -113}
-        - {x: 102, y: -4}
-        - {x: -8, y: 111}
+      outline: []
     - name: K-Mapa_3caminoAzul
       rect:
         serializedVersion: 2
-        x: 1
-        y: 576
+        x: 283
+        y: 806
         width: 316
         height: 217
       alignment: 9
       pivot: {x: 0.49841774, y: 0.53686637}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 115.5, y: 100.5}
-        - {x: 103.5, y: 96.5}
-        - {x: -157.5, y: -16.5}
-        - {x: -157.5, y: -116.5}
-        - {x: -102.5, y: -116.5}
-        - {x: -61.5, y: -86.5}
-        - {x: 155.5, y: -69.5}
-        - {x: 158.5, y: -45.5}
-        - {x: 158.5, y: 100.5}
+      outline: []
     - name: K-Mapa_3caminoBlanco
       rect:
         serializedVersion: 2
-        x: 1
-        y: 797
+        x: 141
+        y: 462
         width: 324
         height: 226
       alignment: 9
       pivot: {x: 0.49691358, y: 0.5022124}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 108, y: 112.5}
-        - {x: 82, y: 97.5}
-        - {x: 75, y: 22.5}
-        - {x: -128, y: 14.5}
-        - {x: -161, y: -20.5}
-        - {x: -161, y: -113.5}
-        - {x: -99, y: -113.5}
-        - {x: -65, y: -72.5}
-        - {x: 163, y: -41.5}
-        - {x: 163, y: 112.5}
+      outline: []
     - name: K-Mapa_base-coming soon
       rect:
         serializedVersion: 2
-        x: 620
-        y: 200
+        x: 825
+        y: 429
         width: 162
         height: 87
       alignment: 9
       pivot: {x: 0.50308645, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -81.5, y: 43.5}
-        - {x: -81.5, y: 32.5}
-        - {x: -75.5, y: -12.5}
-        - {x: -59.5, y: -43.5}
-        - {x: 67.5, y: -43.5}
-        - {x: 80.5, y: 11.5}
-        - {x: 80.5, y: 43.5}
+      outline: []
     - name: K-Mapa_base-escalera
       rect:
         serializedVersion: 2
-        x: 654
-        y: 881
+        x: 288
+        y: 705
         width: 239
         height: 98
       alignment: 9
       pivot: {x: 0.5, y: 0.47959185}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -29.5, y: 51}
-        - {x: -119.5, y: -25}
-        - {x: -119.5, y: -47}
-        - {x: 92.5, y: -47}
-        - {x: 119.5, y: 46}
-        - {x: 119.5, y: 51}
+      outline: []
     - name: K-Mapa_base-proximanete
       rect:
         serializedVersion: 2
-        x: 862
-        y: 412
+        x: 165
+        y: 262
         width: 161
         height: 88
       alignment: 9
       pivot: {x: 0.50621116, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 79.5, y: -20}
-        - {x: 79.5, y: 44}
-        - {x: -81.5, y: 44}
-        - {x: -81.5, y: 17}
-        - {x: -75.5, y: -13}
-        - {x: -60.5, y: -44}
-        - {x: -51.5, y: -44}
-        - {x: -49.5, y: -38}
-        - {x: -20.5, y: -44}
-        - {x: 60.5, y: -44}
+      outline: []
     - name: K-Mapa_base_out-of-order
       rect:
         serializedVersion: 2
-        x: 387
-        y: 409
+        x: 462
+        y: 42
         width: 129
         height: 170
       alignment: 9
       pivot: {x: 0.50775194, y: 0.49411765}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 38.5, y: 86}
-        - {x: -20.5, y: 86}
-        - {x: -65.5, y: 47}
-        - {x: -65.5, y: -54}
-        - {x: 6.5, y: -84}
-        - {x: 54.5, y: -84}
-        - {x: 57.5, y: -79}
-        - {x: 63.5, y: -55}
-        - {x: 63.5, y: -21}
+      outline: []
     - name: K-Mapa_bloqued
       rect:
         serializedVersion: 2
-        x: 674
-        y: 97
+        x: 189
+        y: 694
         width: 96
         height: 99
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -30, y: 49.5}
-        - {x: -48, y: 30.5}
-        - {x: -48, y: -19.5}
-        - {x: -35, y: -37.5}
-        - {x: -26, y: -49.5}
-        - {x: 34, y: -49.5}
-        - {x: 48, y: -45.5}
-        - {x: 48, y: 20.5}
-        - {x: 42, y: 49.5}
+      outline: []
     - name: K-Mapa_bossbloqued
       rect:
         serializedVersion: 2
-        x: 495
-        y: 585
+        x: 594
+        y: 56
         width: 115
         height: 162
       alignment: 9
       pivot: {x: 0.5043478, y: 0.50617284}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -27, y: 80}
-        - {x: -58, y: 41}
-        - {x: -58, y: -68}
-        - {x: -50, y: -82}
-        - {x: 57, y: -82}
-        - {x: 57, y: 57}
-        - {x: 50, y: 80}
+      outline: []
     - name: K-Mapa_bossplay
       rect:
         serializedVersion: 2
-        x: 520
-        y: 419
+        x: 830
+        y: 81
         width: 114
         height: 162
       alignment: 9
       pivot: {x: 0.49561402, y: 0.50617284}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 57.5, y: -4}
-        - {x: 51.5, y: 11}
-        - {x: 36.5, y: 69}
-        - {x: 17.5, y: 80}
-        - {x: -16.5, y: 80}
-        - {x: -35.5, y: 71}
-        - {x: -56.5, y: 33}
-        - {x: -56.5, y: -52}
-        - {x: -43.5, y: -82}
-        - {x: 34.5, y: -82}
-        - {x: 41.5, y: -79}
-        - {x: 57.5, y: -51}
+      outline: []
     - name: K-Mapa_bosswin
       rect:
         serializedVersion: 2
-        x: 798
-        y: 658
+        x: 712
+        y: 80
         width: 115
         height: 162
       alignment: 9
       pivot: {x: 0.4869565, y: 0.5123457}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -56, y: -54}
-        - {x: -34, y: -83}
-        - {x: 40, y: -83}
-        - {x: 59, y: -75}
-        - {x: 59, y: 17}
-        - {x: 40, y: 74}
-        - {x: 31, y: 79}
-        - {x: -23, y: 79}
-        - {x: -56, y: 28}
+      outline: []
     - name: K-Mapa_brilloAvatar
       rect:
         serializedVersion: 2
-        x: 958
-        y: 877
+        x: 13
+        y: 6
         width: 41
         height: 7
       alignment: 9
@@ -885,412 +645,261 @@ TextureImporter:
     - name: K-Mapa_escalera
       rect:
         serializedVersion: 2
-        x: 654
-        y: 983
+        x: 602
+        y: 816
         width: 300
         height: 40
       alignment: 9
       pivot: {x: 0.49666667, y: 0.5625}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -149, y: 17.5}
-        - {x: -149, y: -15.5}
-        - {x: -128, y: -22.5}
-        - {x: 129, y: -22.5}
-        - {x: 151, y: -0.5}
-        - {x: 151, y: 6.5}
-        - {x: 142, y: 17.5}
+      outline: []
     - name: K-Mapa_MarcoAvatardorado
       rect:
         serializedVersion: 2
-        x: 897
-        y: 922
+        x: 468
+        y: 583
         width: 57
         height: 57
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -28.5, y: 28.5}
-        - {x: -28.5, y: -27.5}
-        - {x: -26.5, y: -28.5}
-        - {x: 28.5, y: -28.5}
-        - {x: 28.5, y: 28.5}
-      - - {x: -19.5, y: 16.5}
-        - {x: -16.5, y: 19.5}
-        - {x: 20.5, y: 19.5}
-        - {x: 17.5, y: -19.5}
+      outline: []
     - name: K-Mapa_MarcoAvatargris
       rect:
         serializedVersion: 2
-        x: 897
-        y: 861
+        x: 468
+        y: 523
         width: 57
         height: 57
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -28.5, y: 28.5}
-        - {x: -28.5, y: -28.5}
-        - {x: 28.5, y: -28.5}
-        - {x: 28.5, y: 28.5}
-      - - {x: -19.5, y: -10.5}
-        - {x: 20.5, y: 18.5}
-        - {x: 19.5, y: -16.5}
-        - {x: 16.5, y: -20.5}
+      outline: []
     - name: K-Mapa_play
       rect:
         serializedVersion: 2
-        x: 571
-        y: 94
+        x: 87
+        y: 691
         width: 99
         height: 102
       alignment: 9
       pivot: {x: 0.4848485, y: 0.49019608}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 16, y: 52}
-        - {x: -21, y: 52}
-        - {x: -48, y: 35}
-        - {x: -48, y: -31}
-        - {x: -38, y: -50}
-        - {x: 44, y: -50}
-        - {x: 51, y: -48}
-        - {x: 51, y: 27}
-        - {x: 29, y: 49}
+      outline: []
     - name: K-Mapa_Puertas
       rect:
         serializedVersion: 2
-        x: 862
-        y: 293
+        x: 329
+        y: 295
         width: 136
         height: 115
       alignment: 9
       pivot: {x: 0.5110294, y: 0.5043478}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -69.5, y: 57}
-        - {x: -69.5, y: -50}
-        - {x: -49.5, y: -58}
-        - {x: 37.5, y: -58}
-        - {x: 44.5, y: -56}
-        - {x: 66.5, y: -46}
-        - {x: 66.5, y: 57}
+      outline: []
     - name: K-Mapa_stargray
       rect:
         serializedVersion: 2
-        x: 387
-        y: 362
+        x: 782
+        y: 680
         width: 43
         height: 43
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -9.5, y: 21.5}
-        - {x: -21.5, y: 15.5}
-        - {x: -21.5, y: -18.5}
-        - {x: -18.5, y: -21.5}
-        - {x: 21.5, y: -21.5}
-        - {x: 21.5, y: 11.5}
-        - {x: 9.5, y: 21.5}
+      outline: []
     - name: K-Mapa_starwin
       rect:
         serializedVersion: 2
-        x: 785
-        y: 458
+        x: 782
+        y: 635
         width: 43
         height: 42
       alignment: 9
       pivot: {x: 0.5, y: 0.5119048}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -18.5, y: 20.5}
-        - {x: -21.5, y: 19.5}
-        - {x: -21.5, y: -10.5}
-        - {x: -15.5, y: -21.5}
-        - {x: 18.5, y: -21.5}
-        - {x: 21.5, y: -13.5}
-        - {x: 21.5, y: 8.5}
-        - {x: 13.5, y: 20.5}
+      outline: []
     - name: K-MapaGeneral-31
       rect:
         serializedVersion: 2
-        x: 638
-        y: 409
+        x: 833
+        y: 739
         width: 190
         height: 42
       alignment: 9
       pivot: {x: 0.5, y: 0.5119048}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -95, y: 20.5}
-        - {x: -95, y: -21.5}
-        - {x: 84, y: -21.5}
-        - {x: 95, y: -16.5}
-        - {x: 95, y: 13.5}
-        - {x: 85, y: 20.5}
+      outline: []
     - name: K-MapaGeneral_HUDbaseAbajo
       rect:
         serializedVersion: 2
-        x: 917
-        y: 658
+        x: 926
+        y: 941
         width: 86
         height: 82
       alignment: 9
       pivot: {x: 0.45930234, y: 0.5243902}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -25.5, y: 39}
-        - {x: -39.5, y: 29}
-        - {x: -39.5, y: -31}
-        - {x: -21.5, y: -43}
-        - {x: 46.5, y: -43}
-        - {x: 46.5, y: 39}
+      outline: []
     - name: K-MapaGeneral_HUDbaseGem-Cor
       rect:
         serializedVersion: 2
-        x: 441
-        y: 176
+        x: 526
+        y: 221
         width: 111
         height: 40
       alignment: 9
       pivot: {x: 0.5, y: 0.5125}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -49.5, y: 19.5}
-        - {x: -55.5, y: 14.5}
-        - {x: -55.5, y: -10.5}
-        - {x: -51.5, y: -20.5}
-        - {x: 53.5, y: -20.5}
-        - {x: 55.5, y: -19.5}
-        - {x: 55.5, y: 16.5}
-        - {x: 52.5, y: 19.5}
+      outline: []
     - name: K-MapaGeneral_HUDgemas
       rect:
         serializedVersion: 2
-        x: 396
-        y: 76
+        x: 749
+        y: 246
         width: 84
         height: 83
       alignment: 9
       pivot: {x: 0.50595236, y: 0.5180723}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16.5, y: 40}
-        - {x: -26.5, y: 38}
-        - {x: -42.5, y: 21}
-        - {x: -42.5, y: -22}
-        - {x: -25.5, y: -43}
-        - {x: 41.5, y: -43}
-        - {x: 41.5, y: 20}
-        - {x: 20.5, y: 40}
+      outline: []
+    - name: K-MapaGeneral_HUDshopika
+      rect:
+        serializedVersion: 2
+        x: 855
+        y: 343
+        width: 81
+        height: 83
+      alignment: 9
+      pivot: {x: 0.52469134, y: 0.5180723}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: K-MapaGeneral_HUDvidas
       rect:
         serializedVersion: 2
-        x: 484
-        y: 89
+        x: 769
+        y: 343
         width: 83
         height: 83
       alignment: 9
       pivot: {x: 0.48192772, y: 0.4939759}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -39, y: 42}
-        - {x: -40, y: 39}
-        - {x: -40, y: -23}
-        - {x: -38, y: -31}
-        - {x: -28, y: -41}
-        - {x: 41, y: -41}
-        - {x: 43, y: -40}
-        - {x: 43, y: 42}
+      outline: []
     - name: K-MapaGeneral_HUDvidas_barandal-escalera
       rect:
         serializedVersion: 2
-        x: 797
-        y: 539
+        x: 329
+        y: 146
         width: 130
         height: 115
       alignment: 9
       pivot: {x: 0.48846152, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 45.5, y: 57.5}
-        - {x: -63.5, y: -53.5}
-        - {x: -63.5, y: -57.5}
-        - {x: -45.5, y: -57.5}
-        - {x: 65.5, y: 52.5}
-        - {x: 66.5, y: 55.5}
-        - {x: 66.5, y: 57.5}
+      outline: []
     - name: K-MapaGeneral_HUDvidas_base-escalera2
       rect:
         serializedVersion: 2
-        x: 620
-        y: 291
+        x: 142
+        y: 29
         width: 162
         height: 114
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 31, y: 57}
-        - {x: -81, y: -54}
-        - {x: -81, y: -57}
-        - {x: -31, y: -57}
-        - {x: 81, y: 55}
-        - {x: 81, y: 57}
+      outline: []
     - name: K-MapaGeneral_interaccionFB
       rect:
         serializedVersion: 2
-        x: 844
-        y: 66
+        x: 595
+        y: 264
         width: 64
         height: 65
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -22, y: 32.5}
-        - {x: -32, y: 18.5}
-        - {x: -32, y: -15.5}
-        - {x: -29, y: -27.5}
-        - {x: -16, y: -32.5}
-        - {x: 20, y: -32.5}
-        - {x: 32, y: -19.5}
-        - {x: 32, y: 25.5}
-        - {x: 18, y: 32.5}
+      outline: []
     - name: K-MapaGeneral_Navegacion
       rect:
         serializedVersion: 2
-        x: 958
-        y: 888
+        x: 528
+        y: 462
         width: 65
         height: 65
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 20.5, y: 32.5}
-        - {x: -27.5, y: 32.5}
-        - {x: -32.5, y: 16.5}
-        - {x: -32.5, y: -17.5}
-        - {x: -23.5, y: -32.5}
-        - {x: 21.5, y: -32.5}
-        - {x: 32.5, y: -22.5}
-        - {x: 32.5, y: 16.5}
+      outline: []
     - name: K-MapaGeneral_settings
       rect:
         serializedVersion: 2
-        x: 912
-        y: 67
+        x: 712
+        y: 13
         width: 64
         height: 64
       alignment: 9
       pivot: {x: 0.46875, y: 0.4921875}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -26, y: 32.5}
-        - {x: -30, y: 24.5}
-        - {x: -30, y: -14.5}
-        - {x: -22, y: -31.5}
-        - {x: 27, y: -31.5}
-        - {x: 34, y: -17.5}
-        - {x: 34, y: 15.5}
-        - {x: 18, y: 32.5}
+      outline: []
     - name: K-popups-pq_baseGris
       rect:
         serializedVersion: 2
-        x: 329
-        y: 751
+        x: 239
+        y: 413
         width: 218
         height: 46
       alignment: 9
       pivot: {x: 0.49541286, y: 0.5217391}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -108, y: 22}
-        - {x: -108, y: -24}
-        - {x: 110, y: -24}
-        - {x: 110, y: 22}
+      outline: []
     - name: K-popups-pq_btnAzul
       rect:
         serializedVersion: 2
-        x: 862
-        y: 219
+        x: 905
+        y: 784
         width: 117
         height: 38
       alignment: 9
       pivot: {x: 0.4957265, y: 0.5394737}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -58, y: 17.5}
-        - {x: -58, y: -20.5}
-        - {x: 59, y: -20.5}
-        - {x: 59, y: 17.5}
+      outline: []
     - name: K-popups-pq_btnRojo
       rect:
         serializedVersion: 2
-        x: 856
-        y: 177
+        x: 165
+        y: 221
         width: 117
         height: 38
       alignment: 9
       pivot: {x: 0.491453, y: 0.5131579}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -54.5, y: 18.5}
-        - {x: -57.5, y: 16.5}
-        - {x: -57.5, y: -17.5}
-        - {x: -55.5, y: -19.5}
-        - {x: 59.5, y: -19.5}
-        - {x: 59.5, y: 18.5}
+      outline: []
     - name: K-popups-pq_btnVerde
       rect:
         serializedVersion: 2
-        x: 856
-        y: 135
+        x: 453
+        y: 1
         width: 117
         height: 38
       alignment: 9
       pivot: {x: 0.5, y: 0.5394737}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -58.5, y: 17.5}
-        - {x: -58.5, y: -20.5}
-        - {x: 58.5, y: -20.5}
-        - {x: 58.5, y: 17.5}
+      outline: []
     - name: K-popups-pq_candado
       rect:
         serializedVersion: 2
-        x: 917
-        y: 744
+        x: 926
+        y: 825
         width: 85
         height: 113
       alignment: 9
       pivot: {x: 0.5, y: 0.5442478}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -40.5, y: 8.5}
-        - {x: -42.5, y: 3.5}
-        - {x: -42.5, y: -57.5}
-        - {x: -41.5, y: -61.5}
-        - {x: 40.5, y: -61.5}
-        - {x: 42.5, y: -58.5}
-        - {x: 42.5, y: 7.5}
-        - {x: 35.5, y: 8.5}
-      - - {x: 24.5, y: 51.5}
-        - {x: -19.5, y: 51.5}
-        - {x: -35.5, y: 41.5}
-        - {x: -35.5, y: 12.5}
-        - {x: 34.5, y: 12.5}
-        - {x: 34.5, y: 28.5}
-        - {x: 28.5, y: 48.5}
+      outline: []
     - name: K-popups-pq_candado1
       rect:
         serializedVersion: 2
-        x: 589
-        y: 828
+        x: 833
+        y: 787
         width: 32
         height: 26
       alignment: 9
@@ -1300,8 +909,8 @@ TextureImporter:
     - name: K-popups-pq_candado2
       rect:
         serializedVersion: 2
-        x: 551
-        y: 782
+        x: 868
+        y: 798
         width: 25
         height: 15
       alignment: 0
@@ -1311,185 +920,118 @@ TextureImporter:
     - name: K-popups-pq_gemaLibre
       rect:
         serializedVersion: 2
-        x: 628
-        y: 26
+        x: 845
+        y: 14
         width: 62
         height: 64
       alignment: 9
       pivot: {x: 0.45967743, y: 0.5546875}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -10.5, y: 28.5}
-        - {x: -28.5, y: 10.5}
-        - {x: -28.5, y: -9.5}
-        - {x: -12.5, y: -35.5}
-        - {x: 15.5, y: -35.5}
-        - {x: 33.5, y: -8.5}
-        - {x: 33.5, y: 14.5}
-        - {x: 22.5, y: 28.5}
+      outline: []
     - name: K-popUps_Avatar1
       rect:
         serializedVersion: 2
-        x: 694
-        y: 34
+        x: 468
+        y: 643
         width: 59
         height: 59
       alignment: 9
       pivot: {x: 0.4915254, y: 0.5084746}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -27, y: 29}
-        - {x: -29, y: 27}
-        - {x: -29, y: -29}
-        - {x: -28, y: -30}
-        - {x: 30, y: -30}
-        - {x: 30, y: 28}
-        - {x: 29, y: 29}
+      outline: []
     - name: K-popUps_close
       rect:
         serializedVersion: 2
-        x: 561
-        y: 21
+        x: 779
+        y: 13
         width: 63
         height: 64
       alignment: 9
       pivot: {x: 0.48412699, y: 0.515625}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16.5, y: 31}
-        - {x: -30.5, y: 25}
-        - {x: -30.5, y: -14}
-        - {x: -23.5, y: -33}
-        - {x: 28.5, y: -33}
-        - {x: 32.5, y: -31}
-        - {x: 32.5, y: 23}
-        - {x: 21.5, y: 31}
+      outline: []
     - name: K-popUps_corazonRoto
       rect:
         serializedVersion: 2
-        x: 638
-        y: 455
+        x: 307
+        y: 7
         width: 143
         height: 136
       alignment: 9
       pivot: {x: 0.5034965, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 61, y: 68}
-        - {x: -71, y: 68}
-        - {x: -72, y: 65}
-        - {x: -72, y: -25}
-        - {x: -59, y: -47}
-        - {x: -6, y: -68}
-        - {x: 29, y: -68}
-        - {x: 66, y: -17}
-        - {x: 71, y: -9}
-        - {x: 71, y: 53}
+      outline: []
     - name: K-popUps_grayStar
       rect:
         serializedVersion: 2
-        x: 245
-        y: 1
+        x: 87
+        y: 221
         width: 75
         height: 71
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 25.5, y: 35.5}
-        - {x: -15.5, y: 35.5}
-        - {x: -37.5, y: 14.5}
-        - {x: -37.5, y: -15.5}
-        - {x: -28.5, y: -35.5}
-        - {x: 24.5, y: -35.5}
-        - {x: 30.5, y: -33.5}
-        - {x: 37.5, y: -21.5}
-        - {x: 37.5, y: 23.5}
+      outline: []
     - name: K-popUps_monito
       rect:
         serializedVersion: 2
-        x: 757
-        y: 36
+        x: 468
+        y: 463
         width: 57
         height: 57
       alignment: 9
       pivot: {x: 0.50877196, y: 0.51754385}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -29, y: 27.5}
-        - {x: -29, y: -29.5}
-        - {x: 28, y: -29.5}
-        - {x: 28, y: 24.5}
-        - {x: 25, y: 27.5}
+      outline: []
     - name: K-popUps_monito2
       rect:
         serializedVersion: 2
-        x: 818
-        y: 5
+        x: 468
+        y: 403
         width: 57
         height: 57
       alignment: 9
       pivot: {x: 0.50877196, y: 0.51754385}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -29, y: 27.5}
-        - {x: -29, y: -29.5}
-        - {x: 28, y: -29.5}
-        - {x: 28, y: 27.5}
+      outline: []
     - name: K-popUps_monitoblink
       rect:
         serializedVersion: 2
-        x: 912
-        y: 1
+        x: 947
+        y: 38
         width: 62
         height: 62
       alignment: 9
       pivot: {x: 0.4919355, y: 0.5080645}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -30.5, y: 30.5}
-        - {x: -30.5, y: -30.5}
-        - {x: -28.5, y: -31.5}
-        - {x: 31.5, y: -31.5}
-        - {x: 31.5, y: 30.5}
+      outline: []
     - name: K-popUps_objetiveBase
       rect:
         serializedVersion: 2
-        x: 614
-        y: 595
+        x: 596
+        y: 499
         width: 179
         height: 91
       alignment: 9
       pivot: {x: 0.5, y: 0.50549453}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -88.5, y: 45}
-        - {x: -89.5, y: 41}
-        - {x: -89.5, y: -46}
-        - {x: 89.5, y: -46}
-        - {x: 89.5, y: 45}
+      outline: []
     - name: K-popUps_playBTN
       rect:
         serializedVersion: 2
-        x: 394
-        y: 23
+        x: 141
+        y: 410
         width: 95
         height: 49
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -45.5, y: 24.5}
-        - {x: -47.5, y: 22.5}
-        - {x: -47.5, y: -24.5}
-        - {x: 47.5, y: -24.5}
-        - {x: 47.5, y: 20.5}
-        - {x: 43.5, y: 24.5}
+      outline: []
     - name: K-popUps_rug
       rect:
         serializedVersion: 2
-        x: 862
-        y: 261
+        x: 329
+        y: 264
         width: 135
         height: 28
       alignment: 0
@@ -1499,8 +1041,8 @@ TextureImporter:
     - name: K-popUps_socialBase
       rect:
         serializedVersion: 2
-        x: 785
-        y: 504
+        x: 599
+        y: 726
         width: 208
         height: 31
       alignment: 9
@@ -1510,25 +1052,19 @@ TextureImporter:
     - name: K-popUps_socialBasepick
       rect:
         serializedVersion: 2
-        x: 931
-        y: 570
+        x: 662
+        y: 245
         width: 84
         height: 84
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -42, y: 42}
-        - {x: -42, y: -37}
-        - {x: -39, y: -42}
-        - {x: 42, y: -42}
-        - {x: 42, y: 35}
-        - {x: 38, y: 42}
+      outline: []
     - name: K-popUps_socialBTN
       rect:
         serializedVersion: 2
-        x: 931
-        y: 546
+        x: 87
+        y: 1
         width: 80
         height: 20
       alignment: 0
@@ -1538,199 +1074,113 @@ TextureImporter:
     - name: K-popUps_stars-base
       rect:
         serializedVersion: 2
-        x: 614
-        y: 690
+        x: 599
+        y: 593
         width: 180
         height: 130
       alignment: 9
       pivot: {x: 0.5, y: 0.4730769}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 54, y: 24.5}
-        - {x: 42, y: 20.5}
-        - {x: 45, y: 31.5}
-        - {x: 43, y: 55.5}
-        - {x: 15, y: 68.5}
-        - {x: -18, y: 68.5}
-        - {x: -46, y: 38.5}
-        - {x: -39, y: 26.5}
-        - {x: -37, y: 24.5}
-        - {x: -53, y: 22.5}
-        - {x: -63, y: 11.5}
-        - {x: -83, y: -1.5}
-        - {x: -90, y: -6.5}
-        - {x: -90, y: -61.5}
-        - {x: 83, y: -61.5}
-        - {x: 90, y: -47.5}
-        - {x: 90, y: -0.5}
+      outline: []
     - name: K-popUps_winStar
       rect:
         serializedVersion: 2
-        x: 317
-        y: 81
+        x: 142
+        y: 147
         width: 75
         height: 71
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 25.5, y: 35.5}
-        - {x: -15.5, y: 35.5}
-        - {x: -37.5, y: 14.5}
-        - {x: -37.5, y: -15.5}
-        - {x: -28.5, y: -35.5}
-        - {x: 24.5, y: -35.5}
-        - {x: 30.5, y: -33.5}
-        - {x: 37.5, y: -21.5}
-        - {x: 37.5, y: 23.5}
+      outline: []
     - name: "popups peque\xF1os-K-popups-pq_baseGris"
       rect:
         serializedVersion: 2
-        x: 329
-        y: 751
+        x: 239
+        y: 413
         width: 218
         height: 46
       alignment: 9
       pivot: {x: 0.49541286, y: 0.5217391}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -108, y: 22}
-        - {x: -108, y: -24}
-        - {x: 110, y: -24}
-        - {x: 110, y: 22}
+      outline: []
     - name: "popups peque\xF1os-K-popups-pq_bolsaAtras"
       rect:
         serializedVersion: 2
-        x: 329
-        y: 801
+        x: 70
+        y: 353
         width: 256
         height: 53
       alignment: 9
       pivot: {x: 0.515625, y: 0.5471698}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -132, y: 24}
-        - {x: -132, y: -5}
-        - {x: -127, y: -27}
-        - {x: -106, y: -29}
-        - {x: 116, y: -29}
-        - {x: 124, y: -4}
-        - {x: 124, y: 24}
+      outline: []
     - name: "popups peque\xF1os-K-popups-pq_btnVerde"
       rect:
         serializedVersion: 2
-        x: 856
-        y: 135
+        x: 453
+        y: 1
         width: 117
         height: 38
       alignment: 9
       pivot: {x: 0.5, y: 0.5394737}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -58.5, y: 17.5}
-        - {x: -58.5, y: -20.5}
-        - {x: 58.5, y: -20.5}
-        - {x: 58.5, y: 17.5}
+      outline: []
     - name: "popups peque\xF1os-K-popups-pq_candado"
       rect:
         serializedVersion: 2
-        x: 917
-        y: 744
+        x: 926
+        y: 825
         width: 85
         height: 113
       alignment: 9
       pivot: {x: 0.5, y: 0.5442478}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -40.5, y: 8.5}
-        - {x: -42.5, y: 3.5}
-        - {x: -42.5, y: -57.5}
-        - {x: -41.5, y: -61.5}
-        - {x: 40.5, y: -61.5}
-        - {x: 42.5, y: -58.5}
-        - {x: 42.5, y: 7.5}
-        - {x: 35.5, y: 8.5}
-      - - {x: 24.5, y: 51.5}
-        - {x: -19.5, y: 51.5}
-        - {x: -35.5, y: 41.5}
-        - {x: -35.5, y: 12.5}
-        - {x: 34.5, y: 12.5}
-        - {x: 34.5, y: 28.5}
-        - {x: 28.5, y: 48.5}
+      outline: []
     - name: "popups peque\xF1os-K-popups-pq_gemaLibre"
       rect:
         serializedVersion: 2
-        x: 628
-        y: 26
+        x: 845
+        y: 14
         width: 62
         height: 64
       alignment: 9
       pivot: {x: 0.45967743, y: 0.5546875}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -10.5, y: 28.5}
-        - {x: -28.5, y: 10.5}
-        - {x: -28.5, y: -9.5}
-        - {x: -12.5, y: -35.5}
-        - {x: 15.5, y: -35.5}
-        - {x: 33.5, y: -8.5}
-        - {x: 33.5, y: 14.5}
-        - {x: 22.5, y: 28.5}
+      outline: []
     - name: popups vidas-K-popupsVidas_kindBTN
       rect:
         serializedVersion: 2
-        x: 645
-        y: 824
+        x: 602
+        y: 760
         width: 228
         height: 53
       alignment: 9
       pivot: {x: 0.5, y: 0.4811321}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -114, y: 27.5}
-        - {x: -114, y: -25.5}
-        - {x: 114, y: -25.5}
-        - {x: 114, y: 22.5}
-        - {x: 104, y: 27.5}
+      outline: []
     - name: popups vidas-K-popupsVidas_NOselectBTN
       rect:
         serializedVersion: 2
-        x: 329
-        y: 858
+        x: 602
+        y: 859
         width: 312
         height: 74
       alignment: 9
       pivot: {x: 0.49519232, y: 0.527027}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 146.5, y: 35}
-        - {x: -149.5, y: 35}
-        - {x: -154.5, y: 32}
-        - {x: -154.5, y: -39}
-        - {x: 151.5, y: -39}
-        - {x: 157.5, y: -36}
-        - {x: 157.5, y: 24}
-        - {x: 154.5, y: 29}
+      outline: []
     - name: popups vidas-K-popupsVidas_SelectBTN
       rect:
         serializedVersion: 2
-        x: 329
+        x: 602
         y: 936
         width: 321
         height: 87
       alignment: 9
       pivot: {x: 0.49221185, y: 0.545977}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 118, y: 39.5}
-        - {x: 113, y: 38.5}
-        - {x: -148, y: 27.5}
-        - {x: -158, y: 22.5}
-        - {x: -158, y: -47.5}
-        - {x: 148, y: -47.5}
-        - {x: 159, y: -40.5}
-        - {x: 163, y: -9.5}
-        - {x: 163, y: 39.5}
+      outline: []
     outline: []
   spritePackingTag: 
   userData: 
