@@ -150,8 +150,11 @@ namespace Kubera.Data.Sync
 				updateData(localData.getUserDirtyData());
 			}
 
+			print ("fa");
+			print (OnDataRetrieved);
 			if(OnDataRetrieved != null)
 			{
+				print ("retr");
 				OnDataRetrieved();
 			}
 		}
