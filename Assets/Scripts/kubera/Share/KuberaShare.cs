@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using VoxelBusters.NativePlugins;
 using VoxelBusters.Utility;
+using utils.gems;
 
 public class KuberaShare : MonoBehaviour 
 {
@@ -14,8 +15,8 @@ public class KuberaShare : MonoBehaviour
 	{
 		// Create share sheet
 		ShareSheet _shareSheet 	= new ShareSheet();	
-		_shareSheet.Text		= "Algo";
-		_shareSheet.URL			= "https://www.youtube.com/watch?v=J1Rd7zrvW7k";
+		_shareSheet.Text 		= MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SHARE_DEFAULT_TEXT);
+		_shareSheet.URL			= "http://shopika-store.cuatromedios.com/i/" + GemsManager.GetCastedInstance<GemsManager> ().currentUser.shareCode;
 		_shareSheet.ExcludedShareOptions	= m_excludedOptions;
 
 		// Show composer

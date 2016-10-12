@@ -2,6 +2,17 @@
 <gameText>
 	<texts>
 		<!--
+		Share
+		-->
+		<text id="shareDefaultText">
+			<languages>
+				<language id="english" text="Join my network in Shop!ka."/>
+				<language id="spanish" text="Unete a mi red en Shop!ka."/>
+				<language id="default" text="Unete a mi red en Shop!ka."/>
+			</languages>
+		</text>
+
+		<!--
 		Home
 		-->
 		<text id="startGame">
