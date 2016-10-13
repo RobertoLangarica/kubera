@@ -161,8 +161,8 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			configureLevel(PersistentData.GetInstance().getLevelByIndex(162));
-			//configureLevel(PersistentData.GetInstance().currentLevel);
+			//configureLevel(PersistentData.GetInstance().getLevelByIndex(162));
+			configureLevel(PersistentData.GetInstance().currentLevel);
 		}
 
 		if(AudioManager.GetInstance())
