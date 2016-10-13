@@ -85,11 +85,11 @@ public class Letter : MonoBehaviour
 				txtLetter.color = Color.black;
 				if (txtPoints.text == "x2") 
 				{
-					txtPoints.color = Color.green;
+					txtPoints.color = new Color(1,0.6313f,0.047f);
 				}
 				else if (txtPoints.text == "x3") 
 				{
-					txtPoints.color = Color.magenta;
+					txtPoints.color = new Color(1,1,0);
 				} 
 				else 
 				{
@@ -134,11 +134,11 @@ public class Letter : MonoBehaviour
 					txtLetter.color = Color.black;
 					if (txtPoints.text == "x2") 
 					{
-						txtPoints.color = Color.green;
+						txtPoints.color = new Color(1,0.6313f,0.047f);
 					}
 					else if (txtPoints.text == "x3") 
 					{
-						txtPoints.color = Color.magenta;
+						txtPoints.color = new Color(1,1,0);
 					} 
 					else 
 					{

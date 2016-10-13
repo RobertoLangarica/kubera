@@ -1066,6 +1066,11 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
+	public void activateOpeningShopika()
+	{
+		openPopUp ("OpeningShopika");
+	}
+
 	protected void restartScene()
 	{
 		//SceneManager.LoadScene ("Levels");
