@@ -19,7 +19,7 @@ public class FacebookManager : Manager<FacebookManager>
 	public GameObject friendRequest;
 	public GameObject FacebookConectMessage;
 
-	protected bool facebookConectMessageCreated;
+	[HideInInspector]public bool facebookConectMessageCreated;
 
 	///Vidas que pedi
 	protected List<string> askedLifes = new List<string>();

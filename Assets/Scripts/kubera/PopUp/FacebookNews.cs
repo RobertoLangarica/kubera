@@ -11,6 +11,7 @@ public class FacebookNews : PopUpBase {
 	public GridLayoutGroup panelMessageGridLayout;
 	public RectTransform panelMessageGridRectTransform;
 	public Text title;
+	public GameObject noMessagesMessage;
 
 	void Start()
 	{
@@ -27,6 +28,14 @@ public class FacebookNews : PopUpBase {
 		if(messageCount == 0)
 		{
 			messageCountImage.gameObject.SetActive(false);
+			if(!FacebookManager.GetInstance().facebookConectMessageCreated && panelMessageGridLayout.transform.childCount != 0)
+			{
+				noMessagesMessage.SetActive (true);
+			}
+			else
+			{
+				noMessagesMessage.SetActive (false);
+			}
 		}
 		else
 		{
