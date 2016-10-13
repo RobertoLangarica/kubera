@@ -530,4 +530,9 @@ public class HUDManager : MonoBehaviour
 			activatePopUp ("shopikaConnect");
 		}
 	}
+
+	public void activateOpeningShopika()
+	{
+		activatePopUp ("OpeningShopika");
+	}
 }

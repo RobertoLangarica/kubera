@@ -29,6 +29,8 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 
 	protected DateTime epoch = new DateTime(1970,1,1,0,0,0,DateTimeKind.Local);
 
+	public bool _dontSendData = false;
+
 	protected void registerSimpleEvent(string eventName)
 	{
 		FlurryAnalytics.Instance.LogEvent (eventName);
@@ -36,6 +38,11 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 
 	protected void registerEventWithParameters(string eventName,Dictionary<string,string> parameters)
 	{
+		if (_dontSendData) 
+		{
+			return;
+		}
+
 		FlurryAnalytics.Instance.LogEventWithParameters (eventName, parameters);
 	}
 
@@ -57,6 +64,11 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 	void Start()
 	{
 		switchForUnityAnalytics (true);
+
+		if(_dontSendData)
+		{
+			Debug.Log("<color=red>Modo test: MODO SIN ANALITICOS!!!!!!!!!!!!</color>");
+		}
 	}
 
 	void OnApplicationPause(bool pauseStatus)

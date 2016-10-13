@@ -13,6 +13,31 @@
 		</text>
 
 		<!--
+		Shopika visit
+		-->
+		<text id="visitShopikaTitle">
+			<languages>
+				<language id="english" text="Visita Shopika"/>
+				<language id="spanish" text="Visita Shopika"/>
+				<language id="default" text="Visita Shopika"/>
+			</languages>
+		</text>
+		<text id="visitShopikaDescription">
+			<languages>
+				<language id="english" text="¡Compra fabulosos productos y obten gemas gratis!"/>
+				<language id="spanish" text="¡Compra fabulosos productos y obten gemas gratis!"/>
+				<language id="default" text="¡Compra fabulosos productos y obten gemas gratis!"/>
+			</languages>
+		</text>
+		<text id="visitShopikaButton">
+			<languages>
+				<language id="english" text="¡ir de compras!"/>
+				<language id="spanish" text="¡ir de compras!"/>
+				<language id="default" text="¡ir de compras!"/>
+			</languages>
+		</text>
+
+		<!--
 		Home
 		-->
 		<text id="startGame">

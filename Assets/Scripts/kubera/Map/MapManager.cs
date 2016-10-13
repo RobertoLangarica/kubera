@@ -54,6 +54,9 @@ public class MapManager : MonoBehaviour
 	public GoalPopUp goalPopUp;
 	public WorldsPopUp worldsPopUp;
 
+	public GameObject hudWithShareButton;
+	public GameObject hudWithOutShareButton;
+
 	protected bool cantPlay;
 
 	void Start()
@@ -123,6 +126,18 @@ public class MapManager : MonoBehaviour
 		changeWorld();
 
 		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved += restartScene;
+
+
+		if (GemsManager.GetCastedInstance<GemsManager> ().currentUserId == GemsManager.GetCastedInstance<GemsManager> ().ANONYMOUS_USER) 
+		{
+			hudWithOutShareButton.SetActive (true);
+			hudWithShareButton.SetActive (false);
+		} 
+		else 
+		{
+			hudWithOutShareButton.SetActive (false);
+			hudWithShareButton.SetActive (true);
+		}
 	}
 		
 	#if UNITY_EDITOR

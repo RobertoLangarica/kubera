@@ -212,6 +212,11 @@ public class MultiLanguageTextManager
 	//Share
 	public const string SHARE_DEFAULT_TEXT					="shareDefaultText";
 
+	//VisitShopika
+	public const string VISIT_SHOPIKA_TITLE					="visitShopikaTitle";
+	public const string VISIT_SHOPIKA_INFO					="visitShopikaDescription";
+	public const string VISIT_SHOPIKA_BUTTON				="visitShopikaButton";
+
 	protected static MultiLanguageTextManager _instance;
 
 	protected string _gameLanguage;
