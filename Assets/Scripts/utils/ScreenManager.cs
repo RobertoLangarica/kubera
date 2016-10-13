@@ -131,7 +131,7 @@ public class ScreenManager : Manager<ScreenManager> {
 
 	public void GoToScene(string newScene,bool sameScreen = false)
 	{
-		if(blocked || waitingScreen != null || (sameScreen && newScene == SceneManager.GetActiveScene().name))
+		if(blocked || waitingScreen != null || (!sameScreen && newScene == SceneManager.GetActiveScene().name))
 		{
 			print ("s");
 			return;

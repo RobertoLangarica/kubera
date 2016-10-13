@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using utils.gems;
 
 public class HUDManager : MonoBehaviour 
 {
@@ -520,5 +521,13 @@ public class HUDManager : MonoBehaviour
 		powerUps [3].gameObject.SetActive(int.Parse(PersistentData.GetInstance().currentLevel.name) >= 37 ? true : false);//UserDataManager.instance.isRotatePowerUpUnlocked || enableAllPowerUps);
 		powerUps [4].gameObject.SetActive(int.Parse(PersistentData.GetInstance().currentLevel.name) >= 52 ? true : false);//UserDataManager.instance.isWildCardPowerUpUnlocked || enableAllPowerUps);
 		powerUps [5].gameObject.SetActive(false);//int.Parse(PersistentData.GetInstance().currentLevel.name) >= 2 ? true : false);//UserDataManager.instance.isDestroyPowerUpUnlocked || enableAllPowerUps);
+	}
+
+	public void activateShopika()
+	{
+		if (GemsManager.GetCastedInstance<GemsManager> ().currentUserId == GemsManager.GetCastedInstance<GemsManager> ().ANONYMOUS_USER) 
+		{
+			activatePopUp ("shopikaConnect");
+		}
 	}
 }
