@@ -30,14 +30,14 @@ namespace Data.Remote
 		 **/ 
 		public void removeAndStopRequest(BaseRequest request, bool destroy = true)
 		{
+			request.OnComplete -= OnRequestComplete;
+			request.OnFailed -= OnRequestFailed;
+			request.OnTimeout -= OnRequestTimeout;
+
 			if(request.isRequesting)
 			{
 				request.stop();
 			}
-
-			request.OnComplete -= OnRequestComplete;
-			request.OnFailed -= OnRequestFailed;
-			request.OnTimeout -= OnRequestTimeout;
 
 			if(destroy)
 			{
@@ -136,6 +136,12 @@ namespace Data.Remote
 		{
 			BaseRequest request = getRequestById(requestId);
 
+			if(request == null)
+			{
+				//Evitando race conditions con scripts que tmb eliminen requests al fallar
+				return;
+			}
+
 			if(request.persistAfterFailed)
 			{
 				moveRequestToLast(request);	
@@ -152,6 +158,12 @@ namespace Data.Remote
 		protected void OnRequestTimeout(string requestId)
 		{
 			BaseRequest request = getRequestById(requestId);
+
+			if(request == null)
+			{
+				//Evitando race conditions con scripts que tmb eliminen requests al fallar
+				return;
+			}
 
 			if(request.persistAfterFailed)
 			{

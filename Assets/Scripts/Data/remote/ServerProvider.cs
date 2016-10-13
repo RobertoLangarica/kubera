@@ -33,6 +33,7 @@ namespace Data.Remote
 
 			if(getDataFailCount >= getDataMaxFailCountAllowed)
 			{
+				//Maximo de intentos alcanzado
 				maxFailCountReached(getRequestById(requestId));
 			}
 		}
@@ -43,8 +44,13 @@ namespace Data.Remote
 			{
 				Debug.Log("Failed to retreive user data.");
 			}
-				
-			stopAndRemoveRequest(request);
+
+			//reallity check
+			if(request.isRequesting)
+			{request.stop();}
+
+			//Que no se vuelva a ejecutar (el ciclo para eliminarla ya se hace fuera de aqui)
+			request.persistAfterFailed = false;
 
 			if(OnGetDataFailed != null)
 			{
@@ -89,14 +95,9 @@ namespace Data.Remote
 			requests.Clear();
 		}
 
-		public virtual void stopAndRemoveRequest(BaseRequest request)
-		{
-			queue.removeAndStopRequest(request, true);
-		}
-
 		protected BaseRequest getRequestById(string id)
 		{
-			return requests.Find(item => item.id == id);
+			return requests.Find(item => item.id.Equals(id));
 		}
 
 		protected void addRequest(BaseRequest request, bool isPriority = false)

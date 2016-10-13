@@ -104,6 +104,8 @@ namespace Kubera.Data.Remote
 			request.initialize(getPath());
 			request.OnComplete += OnUserDataObtained;
 			request.OnFailed += getDataFailed;
+			request.OnTimeout += getDataFailed;
+			request.tryoutsBeforeDefinitelyFail = this.getDataMaxFailCountAllowed;
 
 			addDependantRequest(request,saveAsMainRequest);
 		}

@@ -42,7 +42,7 @@ namespace utils.gems.sync
 			{
 				isGettingData = false;
 
-				if(OnDataRetrievedFailure)
+				if(OnDataRetrievedFailure != null)
 				{
 					OnDataRetrievedFailure();	
 				}
@@ -71,6 +71,14 @@ namespace utils.gems.sync
 			{
 				Debug.Log("Logged OUT");
 			}
+		}
+
+		override protected void OnGetDataFailed()
+		{
+			base.OnGetDataFailed();
+
+			//HACK este syncManager no maneja login asi que fuerza el after logout
+			afterLogout();
 		}
 
 		public void getGems()

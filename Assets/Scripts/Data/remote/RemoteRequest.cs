@@ -8,6 +8,8 @@ namespace Data.Remote
 {
 	public class RemoteRequest<T>: BaseRequest 
 	{
+		public Action<string> OnBadCredentials;
+
 		protected HTTPRequest request;
 		public T data;
 
@@ -35,30 +37,51 @@ namespace Data.Remote
 			return false;	
 		}
 
+		public virtual bool hasCredentialError()
+		{
+			return false;	
+		}
+
 		private void OnCompleteCallback(HTTPRequest originalRequest, HTTPResponse response)
 		{
 			switch (originalRequest.State)
 			{
 				// The request finished without any problem.
 				case HTTPRequestStates.Finished:
-					secureLog("Request Finished Successfully!\n" + response.DataAsText);
+					secureLog("Request Finished: Successfull:<"+response.IsSuccess+">\n" + response.DataAsText);
 
-					formatData(response.DataAsText);
-
-					if(!hasError())
+					//No fue exitosa aunque termino
+					if(!response.IsSuccess)
 					{
-						OnRequestComplete();
-					}	
+						OnRequestFailed();
+					}
 					else
 					{
-						OnRequestFailed();	
+						formatData(response.DataAsText);
+
+						if(!hasError())
+						{
+							OnRequestComplete();
+						}	
+						else
+						{
+							if(hasCredentialError())
+							{
+								if(OnBadCredentials != null)
+								{
+									OnBadCredentials(id);
+								}
+							}
+
+							OnRequestFailed();	
+						}
 					}
 
 				break;
 					// The request finished with an unexpected error.
 					// The request's Exception property may contain more information about the error.
 				case HTTPRequestStates.Error:
-					secureLogError("Request Finished with Error! " +
+					secureLogWarning("Request Finished with Error! " +
 						(originalRequest.Exception != null ?
 							(originalRequest.Exception.Message + "\n" + originalRequest.Exception.StackTrace) :
 							"No Exception"));
@@ -72,14 +95,14 @@ namespace Data.Remote
 
 					// Ceonnecting to the server timed out.
 				case HTTPRequestStates.ConnectionTimedOut:
-					secureLogError("Connection Timed Out!");
+					secureLogWarning("Connection Timed Out!");
 					OnRequestTimeout();
 					originalRequest.Abort();
 				break;
 
 					// The request didn't finished in the given time.
 				case HTTPRequestStates.TimedOut:
-					secureLogError("Processing the request Timed Out!");
+					secureLogWarning("Processing the request Timed Out!");
 					OnRequestTimeout();
 					originalRequest.Abort();
 				break;

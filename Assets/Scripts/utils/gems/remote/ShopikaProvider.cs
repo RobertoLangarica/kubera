@@ -24,7 +24,7 @@ namespace utils.gems.remote
 		{
 			getDataFailCount = 0;
 
-			SPGetGemsRequest request = queue.getComponentAttachedToGameObject<SPGetGemsRequest>("GS_GetUserData");
+			SPGetGemsRequest request = queue.getComponentAttachedToGameObject<SPGetGemsRequest>("SP_GetGems");
 
 			if(saveAsMainRequest)
 			{
@@ -39,7 +39,9 @@ namespace utils.gems.remote
 			request.initialize(SP_API);
 			request.OnComplete += OnUserDataObtained;
 			request.OnFailed += getDataFailed;
-			request.OnFailed += OnRequestFailed;
+			request.OnTimeout += getDataFailed;
+			request.OnBadCredentials += OnRequestBadToken;
+			request.tryoutsBeforeDefinitelyFail = this.getDataMaxFailCountAllowed;
 
 			addDependantRequest(request,true);
 		}
@@ -55,7 +57,6 @@ namespace utils.gems.remote
 			{
 				SPGetGemsRequest request = (SPGetGemsRequest)getRequestById(request_id);
 
-
 				//Hacemos un usuario para el diff
 				UserGem remoteUser = new UserGem(userId);
 				remoteUser.gems = request.data.gemBalance;
@@ -66,7 +67,7 @@ namespace utils.gems.remote
 
 		public override void updateUserData(string id, string gemsToConsume)
 		{
-			SPConsumeGemsRequest request = queue.getComponentAttachedToGameObject<SPConsumeGemsRequest>("GS_GetUserData");
+			SPConsumeGemsRequest request = queue.getComponentAttachedToGameObject<SPConsumeGemsRequest>("SP_ConsumeGems");
 
 			request.id = "consume_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
 			request.playerId = id;
@@ -77,7 +78,7 @@ namespace utils.gems.remote
 
 			request.initialize(SP_API);
 			request.OnComplete += OnUserDataUpdated;
-			request.OnFailed += OnRequestFailed;
+			request.OnBadCredentials += OnRequestBadToken;
 
 			addDependantRequest(request,true);
 		}
@@ -97,16 +98,11 @@ namespace utils.gems.remote
 			}
 		}
 
-		protected void OnRequestFailed(string requestId)
+		protected void OnRequestBadToken(string requestId)
 		{
-			RemoteRequest<SPBaseResponse> request = getRequestById(requestId) as RemoteRequest<SPBaseResponse>;
-
-			if(request.data.error != null && request.data.error.isBadTokenError())
+			if(OnBadToken != null)
 			{
-				if(OnBadToken != null)
-				{
-					OnBadToken();
-				}
+				OnBadToken();
 			}
 		}
 			
