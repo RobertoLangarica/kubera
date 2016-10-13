@@ -16,22 +16,29 @@ public class FacebookNews : PopUpBase {
 	{
 		panelMessageGridLayout.cellSize = new Vector2 (panelMessageGridRectTransform.rect.width, Screen.height *0.175f);
 		panelMessageGridLayout.spacing = new Vector2 (0,panelMessageGridRectTransform.rect.width*0.2f);
-		actualizeMessageNumber ("0");
+		actualizeMessageNumber ();
 
 		//TODO hardcoding
 		title.text = "MENSAJES";
 	}
 
-	public void actualizeMessageNumber(string messageCount)
+	public void actualizeMessageNumber(int messageCount = 0)
 	{
-		if(messageCount == "0")
+		if(messageCount == 0)
 		{
 			messageCountImage.gameObject.SetActive(false);
 		}
 		else
-		{			
+		{
 			messageCountImage.gameObject.SetActive (true);
-			this.messageCount.text = messageCount;
+			if(messageCount > 9)
+			{				
+				this.messageCount.text = "+9";
+			}
+			else
+			{
+				this.messageCount.text = messageCount.ToString();
+			}
 		}
 	}
 
@@ -39,7 +46,7 @@ public class FacebookNews : PopUpBase {
 	{
 		activate ();
 		mapManager.openPopUp ("facebookNews");
-		actualizeMessageNumber ("0");
+		actualizeMessageNumber ();
 	}
 
 	public void exit()
