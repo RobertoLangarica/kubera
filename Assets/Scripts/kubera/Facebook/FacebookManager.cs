@@ -19,7 +19,7 @@ public class FacebookManager : Manager<FacebookManager>
 	public GameObject friendRequest;
 	public GameObject FacebookConectMessage;
 
-	protected bool facebookConectMessageCreated;
+	[HideInInspector]public bool facebookConectMessageCreated;
 
 	///Vidas que pedi
 	protected List<string> askedLifes = new List<string>();
@@ -539,7 +539,7 @@ public class FacebookManager : Manager<FacebookManager>
 
 	protected void actualizeMessageNumber()
 	{
-		//facebookNews.actualizeMessageNumber (messageCount.ToString());
+		facebookNews.actualizeMessageNumber (messageCount);
 	}
 
 	void OnDestroy() 
