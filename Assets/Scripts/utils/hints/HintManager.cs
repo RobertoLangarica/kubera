@@ -15,6 +15,6 @@ public class HintManager : MonoBehaviour {
 	
 	public void changeText()
 	{
-		txt.text = hints[Random.Range(0,hints.Length-1)];
+		txt.text = hints[Random.Range(0,hints.Length)];
 	}
 }
