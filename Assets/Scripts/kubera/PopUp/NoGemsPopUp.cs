@@ -14,7 +14,7 @@ public class NoGemsPopUp : PopUpBase {
 	void Start()
 	{
 		Title.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.NO_GEMS_POPUP_TITLE);
-		if (GemsManager.GetCastedInstance<GemsManager> ().currentUserId == GemsManager.GetCastedInstance<GemsManager> ().ANONYMOUS_USER) 
+		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
 		{
 			Info.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.NO_GEMS_POPUP_INFO_NO_LOGIN);
 		} 
