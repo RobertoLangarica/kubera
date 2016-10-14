@@ -46,7 +46,7 @@ public class HomeManager : MonoBehaviour
 
 		Invoke ("startScene",0.3f);
 
-		if(GemsSyncManager.GetCastedInstance<GemsSyncManager>().isGettingData)
+		if(ShopikaSyncManager.GetCastedInstance<ShopikaSyncManager>().isGettingData)
 		{
 			activatePopUp ("shopikaConnect");
 		}
@@ -163,7 +163,7 @@ public class HomeManager : MonoBehaviour
 
 	public void activateShopika()
 	{
-		if (GemsManager.GetCastedInstance<GemsManager> ().currentUserId == GemsManager.GetCastedInstance<GemsManager> ().ANONYMOUS_USER) 
+		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
 		{
 			activatePopUp ("shopikaConnect");
 		}

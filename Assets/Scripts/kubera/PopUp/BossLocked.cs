@@ -52,9 +52,9 @@ public class BossLocked : PopUpBase {
 	public void gemsCharge()
 	{
 		print (lvlName);
-		if(GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(gemsNeeded))
+		if(ShopikaManager.GetCastedInstance<ShopikaManager>().isPossibleToConsumeGems(gemsNeeded))
 		{
-			GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(gemsNeeded);
+			ShopikaManager.GetCastedInstance<ShopikaManager>().tryToConsumeGems(gemsNeeded);
 			mapManager.unlockBoss (fullLvlName);
 			closePressed ();	
 		}

@@ -529,6 +529,13 @@
 				<language id="default" text="Visita Shop!ka para comprar fabulosos productos y obtener gemas."/>
 			</languages>
 		</text>
+		<text id="NoGemsPopUpInfoNoShopikaLogin">
+			<languages>
+				<language id="english" text="Registrate a Shopika para obtener 100 gemas."/>
+				<language id="spanish" text="Registrate a Shopika para obtener 100 gemas."/>
+				<language id="default" text="Registrate a Shopika para obtener 100 gemas."/>
+			</languages>
+		</text>
 		<text id="NoGemsPopUpButton">
 			<languages>
 				<language id="english" text="Go shopping"/>

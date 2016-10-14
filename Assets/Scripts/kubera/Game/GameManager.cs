@@ -39,8 +39,8 @@ public class GameManager : MonoBehaviour
 	public float gridLettersSizeMultiplier = 0.9f;
 
 	public List<int> linesCreatedPoints = new List<int> ();
-	public List<List<string>> linesMultipliers = new List<List<string>>{ new List<string>{""},
-																			new List<string>{""},
+	public List<List<string>> linesMultipliers = new List<List<string>>{ new List<string>(),
+																			new List<string>(),
 																			new List<string>{"x2"},
 																			new List<string>{"x3"},
 																			new List<string>{"x2","x2"},
@@ -113,10 +113,10 @@ public class GameManager : MonoBehaviour
 		hudManager.OnPopUpCompleted += popUpCompleted;
 		hudManager.OnPiecesScaled += checkIfLose;
 
-		if(GemsManager.GetCastedInstance<GemsManager>())
+		if(ShopikaManager.GetCastedInstance<ShopikaManager>())
 		{
 			//actualizamos gemas
-			GemsManager.GetCastedInstance<GemsManager>().OnGemsUpdated += hudManager.updateTextGems;
+			ShopikaManager.GetCastedInstance<ShopikaManager>().OnGemsUpdated += hudManager.updateTextGems;
 		}
 
 		wordManager.onWordChange += refreshCurrentWordScoreOnHUD;
@@ -147,9 +147,9 @@ public class GameManager : MonoBehaviour
 
 	void OnDestroy()
 	{
-		if(GemsManager.GetCastedInstance<GemsManager>())
+		if(ShopikaManager.GetCastedInstance<ShopikaManager>())
 		{
-			GemsManager.GetCastedInstance<GemsManager>().OnGemsUpdated -= hudManager.updateTextGems;
+			ShopikaManager.GetCastedInstance<ShopikaManager>().OnGemsUpdated -= hudManager.updateTextGems;
 		}
 	}
 
@@ -651,7 +651,7 @@ public class GameManager : MonoBehaviour
 		//Contamos obstaculos y si la meta es usar letras entonces vemos si se usan
 		goalManager.submitWord(wordManager.letters);
 
-		showFloatingPointsAt (wordManager.letterContainer.transform.position, wordManager.wordPoints);
+		showFloatingPointsAt (wordManager.wordCompleteButton.transform.position, wordManager.wordPoints);
 
 		//Los puntos se leen antes de limpiar porque sin letras no hay puntos
 		onUsersAction (wordManager.wordPoints);
@@ -757,9 +757,9 @@ public class GameManager : MonoBehaviour
 
 		hudManager.updateTextPoints(0);
 		hudManager.showPieces (pieceManager.getShowingPieces ());
-		if(GemsManager.GetCastedInstance<GemsManager>())
+		if(ShopikaManager.GetCastedInstance<ShopikaManager>())
 		{
-			hudManager.updateTextGems(GemsManager.GetCastedInstance<GemsManager>().currentGems);
+			hudManager.updateTextGems(ShopikaManager.GetCastedInstance<ShopikaManager>().currentGems);
 		}
 
 		hudManager.setLevelName (currentLevel.name);
@@ -1312,20 +1312,20 @@ public class GameManager : MonoBehaviour
 			gemsExpendedFeedBack.myText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FREE_POWERUP_PRICE);
 		}
 		gemsExpendedFeedBack.gameObject.SetActive (true);
-		gemsExpendedFeedBack.myText.transform.DOScale (new Vector3 (1, 1, 1), 0.1f);
+		gemsExpendedFeedBack.myText.transform.DOScale (new Vector3 (1, 1, 1), 0.15f);
 	}
 
 	protected bool canActivatePowerUp(PowerupBase.EType type)
 	{
 		#if UNITY_EDITOR
-		if(!GemsManager.GetCastedInstance<GemsManager>())
+		if(!ShopikaManager.GetCastedInstance<ShopikaManager>())
 		{
 			return true;
 		}
 		#endif
 
 		//Checa si tiene dinero para usar el poder
-		return powerupManager.getPowerupByType(type).isFree || GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(powerupManager.getPowerUpPrice(type));
+		return powerupManager.getPowerupByType(type).isFree || ShopikaManager.GetCastedInstance<ShopikaManager>().isPossibleToConsumeGems(powerupManager.getPowerUpPrice(type));
 	}
 
 	private void OnPowerupCanceled(PowerupBase.EType type)
@@ -1335,9 +1335,8 @@ public class GameManager : MonoBehaviour
 			AudioManager.GetInstance().Stop("powerupCanceled");
 			AudioManager.GetInstance().Play("powerupCanceled");
 		}
-
-		gemsExpendedFeedBack.gameObject.SetActive (false);
-		gemsExpendedFeedBack.myText.transform.localScale = Vector3.zero;
+			
+		gemsExpendedFeedBack.myText.transform.DOScale (Vector3.zero, 0.15f).OnComplete (()=>{gemsExpendedFeedBack.gameObject.SetActive (false);});
 		
 		allowGameInput(true);
 	}
@@ -1355,7 +1354,7 @@ public class GameManager : MonoBehaviour
 		{
 			if(!powerupManager.getPowerupByType(type).isFree)
 			{
-				GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(powerupManager.getPowerUpPrice(type));
+				ShopikaManager.GetCastedInstance<ShopikaManager>().tryToConsumeGems(powerupManager.getPowerUpPrice(type));
 				expendedGems += powerupManager.getPowerUpPrice (type);
 				powerUpsUsedCount[type.ToString()]++;
 

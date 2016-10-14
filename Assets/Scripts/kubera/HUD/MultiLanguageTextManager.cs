@@ -80,6 +80,7 @@ public class MultiLanguageTextManager
 
 	public const string NO_GEMS_POPUP_TITLE					= "NoGemsPopUpTitle";
 	public const string NO_GEMS_POPUP_INFO					= "NoGemsPopUpInfo";
+	public const string NO_GEMS_POPUP_INFO_NO_LOGIN			= "NoGemsPopUpInfoNoShopikaLogin";
 	public const string NO_GEMS_POPUP_BUTTON				= "NoGemsPopUpButton";
 
 	public const string BOSS_LOCKED_UNLOCK_TEXT 			= "BossLockedUnlockText";
