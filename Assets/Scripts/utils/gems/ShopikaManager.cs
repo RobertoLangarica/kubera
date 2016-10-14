@@ -7,12 +7,12 @@ using utils.gems.sync;
 
 namespace utils.gems
 {
-	public class GemsManager : LocalDataManager<MultipleUserGem>
+	public class ShopikaManager : LocalDataManager<MultipleUserGem>
 	{
 		public bool _freeTestMode = false;
 
 		public Action<int> OnGemsUpdated;
-		public GemsSyncManager syncManager;
+		public ShopikaSyncManager syncManager;
 
 
 		public UserGem currentUser{get{return currentData.getUserById(currentUserId);}}
@@ -102,6 +102,11 @@ namespace utils.gems
 			syncManager.consumeGems(amount);
 
 			afterGemsModified();
+		}
+
+		public void registerInvite(string invitedFacebookId,string inviterFacebookId, string invitedEmail = "", string invitedPhoneNumber = "", string invitedId = "", string inviterId = "")
+		{
+			syncManager.registerInvite(invitedFacebookId,inviterFacebookId,invitedEmail,invitedPhoneNumber,invitedId,inviterId);
 		}
 
 		public int currentGems

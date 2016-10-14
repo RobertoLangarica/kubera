@@ -113,10 +113,10 @@ public class GameManager : MonoBehaviour
 		hudManager.OnPopUpCompleted += popUpCompleted;
 		hudManager.OnPiecesScaled += checkIfLose;
 
-		if(GemsManager.GetCastedInstance<GemsManager>())
+		if(ShopikaManager.GetCastedInstance<ShopikaManager>())
 		{
 			//actualizamos gemas
-			GemsManager.GetCastedInstance<GemsManager>().OnGemsUpdated += hudManager.updateTextGems;
+			ShopikaManager.GetCastedInstance<ShopikaManager>().OnGemsUpdated += hudManager.updateTextGems;
 		}
 
 		wordManager.onWordChange += refreshCurrentWordScoreOnHUD;
@@ -147,9 +147,9 @@ public class GameManager : MonoBehaviour
 
 	void OnDestroy()
 	{
-		if(GemsManager.GetCastedInstance<GemsManager>())
+		if(ShopikaManager.GetCastedInstance<ShopikaManager>())
 		{
-			GemsManager.GetCastedInstance<GemsManager>().OnGemsUpdated -= hudManager.updateTextGems;
+			ShopikaManager.GetCastedInstance<ShopikaManager>().OnGemsUpdated -= hudManager.updateTextGems;
 		}
 	}
 
@@ -757,9 +757,9 @@ public class GameManager : MonoBehaviour
 
 		hudManager.updateTextPoints(0);
 		hudManager.showPieces (pieceManager.getShowingPieces ());
-		if(GemsManager.GetCastedInstance<GemsManager>())
+		if(ShopikaManager.GetCastedInstance<ShopikaManager>())
 		{
-			hudManager.updateTextGems(GemsManager.GetCastedInstance<GemsManager>().currentGems);
+			hudManager.updateTextGems(ShopikaManager.GetCastedInstance<ShopikaManager>().currentGems);
 		}
 
 		hudManager.setLevelName (currentLevel.name);
@@ -1318,14 +1318,14 @@ public class GameManager : MonoBehaviour
 	protected bool canActivatePowerUp(PowerupBase.EType type)
 	{
 		#if UNITY_EDITOR
-		if(!GemsManager.GetCastedInstance<GemsManager>())
+		if(!ShopikaManager.GetCastedInstance<ShopikaManager>())
 		{
 			return true;
 		}
 		#endif
 
 		//Checa si tiene dinero para usar el poder
-		return powerupManager.getPowerupByType(type).isFree || GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(powerupManager.getPowerUpPrice(type));
+		return powerupManager.getPowerupByType(type).isFree || ShopikaManager.GetCastedInstance<ShopikaManager>().isPossibleToConsumeGems(powerupManager.getPowerUpPrice(type));
 	}
 
 	private void OnPowerupCanceled(PowerupBase.EType type)
@@ -1354,7 +1354,7 @@ public class GameManager : MonoBehaviour
 		{
 			if(!powerupManager.getPowerupByType(type).isFree)
 			{
-				GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(powerupManager.getPowerUpPrice(type));
+				ShopikaManager.GetCastedInstance<ShopikaManager>().tryToConsumeGems(powerupManager.getPowerUpPrice(type));
 				expendedGems += powerupManager.getPowerUpPrice (type);
 				powerUpsUsedCount[type.ToString()]++;
 

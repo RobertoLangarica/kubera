@@ -19,8 +19,8 @@ public class ShopikaConnectPopUp : PopUpBase {
 		title.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_SHOPIKA_TITLE);
 		Info.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_SHOPIKA_INFO);
 
-		utils.gems.sync.GemsSyncManager.GetCastedInstance<utils.gems.sync.GemsSyncManager> ().OnDataRetrieved  += popUpCompleted;
-		utils.gems.sync.GemsSyncManager.GetCastedInstance<utils.gems.sync.GemsSyncManager> ().OnDataRetrievedFailure += failure;
+		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnDataRetrieved  += popUpCompleted;
+		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnDataRetrievedFailure += failure;
 
 		WebViewManager.GetInstance ().OnFinishLoading += webClosed;
 	}
@@ -45,7 +45,7 @@ public class ShopikaConnectPopUp : PopUpBase {
 
 	protected void webClosed(WebView webview)
 	{
-		if (GemsManager.GetCastedInstance<GemsManager> ().currentUserId == GemsManager.GetCastedInstance<GemsManager> ().ANONYMOUS_USER) 
+		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
 		{
 			failure ();
 		}

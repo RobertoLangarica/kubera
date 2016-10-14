@@ -7,7 +7,6 @@ public class HintManager : MonoBehaviour {
 	public string[] hints;
 	public Text txt;
 
-	// Use this for initialization
 	void Start () 
 	{
 		changeText();

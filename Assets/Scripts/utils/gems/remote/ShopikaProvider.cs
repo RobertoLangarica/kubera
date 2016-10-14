@@ -98,6 +98,26 @@ namespace utils.gems.remote
 			}
 		}
 
+		public void registerShopikaInvite(string invitedFacebookId,string inviterFacebookId, string invitedEmail = "", string invitedPhoneNumber = "", string invitedId = "", string inviterId = "")
+		{
+			SPRegisterInvite request = queue.getComponentAttachedToGameObject<SPRegisterInvite>("SP_RegisterInvite");
+
+			request.id = "invite_"+inviterFacebookId+"_"+invitedFacebookId+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
+			request.invitedEmail = invitedEmail;
+			request.invitedFacebookId = invitedFacebookId;
+			request.invitedId = invitedId;
+			request.invitedPhoneNumber = invitedPhoneNumber;
+			request.inviterFacebookId = inviterFacebookId;
+			request.inviterId = inviterId;
+			request.persistAfterFailed = true;
+			request.showDebugInfo = _mustShowDebugInfo;
+
+			request.initialize(SP_API);
+			request.OnBadCredentials += OnRequestBadToken;
+
+			addRequest(request,false);
+		}
+
 		protected void OnRequestBadToken(string requestId)
 		{
 			if(OnBadToken != null)

@@ -525,7 +525,7 @@ public class HUDManager : MonoBehaviour
 
 	public void activateShopika()
 	{
-		if (GemsManager.GetCastedInstance<GemsManager> ().currentUserId == GemsManager.GetCastedInstance<GemsManager> ().ANONYMOUS_USER) 
+		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
 		{
 			activatePopUp ("shopikaConnect");
 		}

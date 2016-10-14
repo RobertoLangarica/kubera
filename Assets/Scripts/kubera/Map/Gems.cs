@@ -16,14 +16,14 @@ public class Gems : MonoBehaviour {
 
 	void Start()
 	{
-		GemsManager.GetCastedInstance<GemsManager>().OnGemsUpdated += actualizeGems;
+		ShopikaManager.GetCastedInstance<ShopikaManager>().OnGemsUpdated += actualizeGems;
 
-		actualizeGems(GemsManager.GetCastedInstance<GemsManager>().currentGems);
+		actualizeGems(ShopikaManager.GetCastedInstance<ShopikaManager>().currentGems);
 	}
 
 	void OnDestroy()
 	{
-		GemsManager.GetCastedInstance<GemsManager>().OnGemsUpdated -= actualizeGems;
+		ShopikaManager.GetCastedInstance<ShopikaManager>().OnGemsUpdated -= actualizeGems;
 	}
 
 	public void actualizeGems(int gems)

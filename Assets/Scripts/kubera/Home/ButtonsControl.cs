@@ -56,7 +56,7 @@ public class ButtonsControl : MonoBehaviour
 
 	public void analizeShopikaStatus()
 	{
-		if (GemsManager.GetCastedInstance<GemsManager> ().currentUserId == GemsManager.GetCastedInstance<GemsManager> ().ANONYMOUS_USER) 
+		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
 		{
 			shopikaLargeButton.gameObject.SetActive (true);
 			shopikaHighLight.gameObject.SetActive (true);

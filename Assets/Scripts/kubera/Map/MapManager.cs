@@ -128,7 +128,7 @@ public class MapManager : MonoBehaviour
 		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved += restartScene;
 
 
-		if (GemsManager.GetCastedInstance<GemsManager> ().currentUserId == GemsManager.GetCastedInstance<GemsManager> ().ANONYMOUS_USER) 
+		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
 		{
 			hudWithOutShareButton.SetActive (true);
 			hudWithShareButton.SetActive (false);
@@ -1060,7 +1060,7 @@ public class MapManager : MonoBehaviour
 
 	public void activateShopika()
 	{
-		if (GemsManager.GetCastedInstance<GemsManager> ().currentUserId == GemsManager.GetCastedInstance<GemsManager> ().ANONYMOUS_USER) 
+		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
 		{
 			openPopUp ("shopikaConnect");
 		}

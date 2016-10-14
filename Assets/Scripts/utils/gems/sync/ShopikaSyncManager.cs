@@ -6,14 +6,14 @@ using utils.gems.remote;
 
 namespace utils.gems.sync
 {
-	public class GemsSyncManager : SyncManager<GemsSyncManager>
+	public class ShopikaSyncManager : SyncManager<ShopikaSyncManager>
 	{
 
 		/**
 		 * NOTA: Este manager no hace login solo recibe las credenciales
 		 * el login es web.
 		 **/
-		public GemsManager localData;
+		public ShopikaManager localData;
 
 		protected override void Awake()
 		{
@@ -125,6 +125,10 @@ namespace utils.gems.sync
 			}
 		}
 
+		public void registerInvite(string invitedFacebookId,string inviterFacebookId, string invitedEmail = "", string invitedPhoneNumber = "", string invitedId = "", string inviterId = "")
+		{
+			((ShopikaProvider)server).registerShopikaInvite(invitedFacebookId,inviterFacebookId,invitedEmail,invitedPhoneNumber,invitedId,inviterId);
+		}
 		/**
 		 * Manda consumir gemas
 		 **/ 
