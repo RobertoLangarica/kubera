@@ -17,9 +17,9 @@
 		-->
 		<text id="visitShopikaTitle">
 			<languages>
-				<language id="english" text="Visita Shopika"/>
-				<language id="spanish" text="Visita Shopika"/>
-				<language id="default" text="Visita Shopika"/>
+				<language id="english" text="Visita Shop!ka"/>
+				<language id="spanish" text="Visita Shop!ka"/>
+				<language id="default" text="Visita Shop!ka"/>
 			</languages>
 		</text>
 		<text id="visitShopikaDescription">
@@ -84,7 +84,7 @@
 		</text>
 		<text id="connecting_failure_shopika_info">
 			<languages>
-				<language id="english" text="Try again to connect Shopika"/>
+				<language id="english" text="Try again to connect Shop!ka"/>
 				<language id="spanish" text="Intenta de nuevo conectarte a shopika"/>
 				<language id="default" text="Intenta de nuevo conectarte a shopika"/>
 			</languages>
@@ -524,9 +524,9 @@
 		</text>
 		<text id="NoGemsPopUpInfo">
 			<languages>
-				<language id="english" text="Visit Shopika to buy awesome products and get Gems."/>
-				<language id="spanish" text="Visita Shopika para comprar fabulosos productos y obtener gemas."/>
-				<language id="default" text="Visita Shopika para comprar fabulosos productos y obtener gemas."/>
+				<language id="english" text="Visit Shop!ka to buy awesome products and get Gems."/>
+				<language id="spanish" text="Visita Shop!ka para comprar fabulosos productos y obtener gemas."/>
+				<language id="default" text="Visita Shop!ka para comprar fabulosos productos y obtener gemas."/>
 			</languages>
 		</text>
 		<text id="NoGemsPopUpInfoNoShopikaLogin">
