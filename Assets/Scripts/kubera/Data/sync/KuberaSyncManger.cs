@@ -114,7 +114,11 @@ namespace Kubera.Data.Sync
 		{
 			base.OnDataReceived (fullData);
 
-			Debug.Log("BeforeDiff:\n"+fullData);
+			if(_mustShowDebugInfo)
+			{
+				Debug.Log("BeforeDiff:\n"+fullData);
+			}
+
 			KuberaUser toDiff = JsonUtility.FromJson<KuberaUser>(fullData);
 
 			//Solo se hace diff si no llego vacio del server
