@@ -176,12 +176,12 @@ public class PanelAppRequest : MonoBehaviour {
 		switch(actionChosed)
 		{
 		case EAction.SEND:
-			buttonText.text = "send";
+			buttonText.text = "enviar";
 			//enviar
 			break;
 		case EAction.ACCEPT:
 			//aceptar
-			buttonText.text = "accept";
+			buttonText.text = "aceptar";
 			break;
 		}
 	}

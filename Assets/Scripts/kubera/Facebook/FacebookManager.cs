@@ -51,6 +51,14 @@ public class FacebookManager : Manager<FacebookManager>
 		{
 			OnLoginComplete ();
 		}
+		else if(!facebookConectMessageCreated)
+		{
+			//crear FacebookConectMessage
+			print ("creando mensaje para conectar");
+			conectFacebook = Instantiate (FacebookConectMessage);
+			conectFacebook.transform.SetParent (panelMessages,false);
+			facebookConectMessageCreated = true;
+		}
 		//KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.OnLoginSuccessfull += OnLoginComplete;
 
 		fbGraph.OnPlayerInfo += showPlayerInfo;
@@ -97,14 +105,6 @@ public class FacebookManager : Manager<FacebookManager>
 			{
 				DestroyImmediate (conectFacebook);
 			}
-		}
-		else if(!facebookConectMessageCreated)
-		{
-			//crear FacebookConectMessage
-			//print ("creando mensaje para conectar");
-			conectFacebook = Instantiate (FacebookConectMessage);
-			conectFacebook.transform.SetParent (panelMessages,false);
-			facebookConectMessageCreated = true;
 		}
 	}
 
@@ -203,6 +203,7 @@ public class FacebookManager : Manager<FacebookManager>
 
 	public void sendLife(List<string> friendsIDs, List<string> requestID)
 	{
+		print ("sendlife");
 		/*if (!canPublish())
 		{
 			return;
@@ -217,7 +218,8 @@ public class FacebookManager : Manager<FacebookManager>
 			"SendLife", // Here you can put in any data you want
 			"Send a life to your friend", // A title
 			delegate (IAppRequestResult result) {
-				if(result.Error != null)
+				
+				if(result.Error == null)
 				{
 					for(int i=0; i<friendsIDs.Count; i++)
 					{						
@@ -248,7 +250,7 @@ public class FacebookManager : Manager<FacebookManager>
 			"SendKey,"+bossReached, // Here you can put in any data you want
 			"Send a key to your friend", // A title
 			delegate (IAppRequestResult result) {
-				if(result.Error != null)
+				if(result.Error == null)
 				{
 					for(int i=0; i<friendsIDs.Count; i++)
 					{						
