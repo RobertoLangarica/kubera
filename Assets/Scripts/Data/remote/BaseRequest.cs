@@ -23,7 +23,7 @@ namespace Data.Remote
 		public EStatus status = EStatus.WAITING;
 		public bool hasFailed = false;
 		public bool persistAfterFailed = false;
-		public int tryoutsBeforeDefinitelyFail = 0;//Maximos intentos permitidos antes de fallar por completo
+		public int tryoutsBeforeDefinitelyFail = 10;//Maximos intentos permitidos antes de fallar por completo
 		public int tryouts = 0;//Intentos de hacer la request
 		public int timeBeforeTimeout = 20;
 		public List<BaseRequest> dependantRequests = new List<BaseRequest>();
@@ -70,6 +70,12 @@ namespace Data.Remote
 			//La marcamos como fallida
 			status = EStatus.FAILED;
 			elapsedWhenFailed = Time.realtimeSinceStartup;
+
+			if(tryoutsBeforeDefinitelyFail > 0 && tryouts >= tryoutsBeforeDefinitelyFail)
+			{
+				//Ya no es persistente
+				persistAfterFailed = false;
+			}
 
 			if(OnTimeout != null)
 			{
