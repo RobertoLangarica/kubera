@@ -1374,6 +1374,7 @@ public class GameManager : MonoBehaviour
 		//TODO: abrimos el popUp de no Gems
 		print ("noGems");
 		activatePopUp ("NoGemsPopUp");
+		gemsExpendedFeedBack.myText.transform.DOScale (Vector3.zero, 0.15f).OnComplete (()=>{gemsExpendedFeedBack.gameObject.SetActive (false);});
 
 		allowGameInput(true);
 	}

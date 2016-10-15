@@ -303,7 +303,6 @@ public class FBGraph : MonoBehaviour
 		{
 			apprequestsData = (List<object>)(((Dictionary<string, object>)dataObject) ["data"]);
 		}
-		print ("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
 		OnGetAppRequest (apprequestsData);
 		appRequestReady = true;
 		AllinfoGathered ();

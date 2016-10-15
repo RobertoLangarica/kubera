@@ -82,7 +82,6 @@ public class FacebookManager : Manager<FacebookManager>
 				fbGraph.GetInvitableFriends();
 
 				FacebookPersistentData.GetInstance ().infoRequested = true;
-				fbGraph.getFriendsAppRequests ();
 			}
 			else
 			{
@@ -93,6 +92,7 @@ public class FacebookManager : Manager<FacebookManager>
 			}
 
 			//print ("getFriendsAppRequests--------------------------");
+			fbGraph.getFriendsAppRequests ();
 			if(conectFacebook != null)
 			{
 				DestroyImmediate (conectFacebook);

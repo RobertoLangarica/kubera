@@ -38,6 +38,10 @@ public class LifesManager : Manager<LifesManager>
 		{
 			maximumLifes += 2;
 		}
+		else if(maximumLifes < currentUser.playerLifes)
+		{
+			currentUser.playerLifes = maximumLifes;
+		}
 
 		if (PersistentData.GetInstance ().fromLevelBuilder) 
 		{
