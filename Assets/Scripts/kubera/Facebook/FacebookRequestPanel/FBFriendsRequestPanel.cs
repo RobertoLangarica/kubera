@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Facebook.Unity;
 using Kubera.Data;
+using utils.gems.sync;
 
 public class FBFriendsRequestPanel : PopUpBase {
 
@@ -213,6 +214,18 @@ public class FBFriendsRequestPanel : PopUpBase {
 		friendsIds = getFriendsActivatedIDByFriendsType (currentFriendType);
 		int friendGroups = (int)Mathf.Floor(friendsIds.Count / 30.0f);
 	
+		/*
+
+		string myId = FacebookPersistentData.GetInstance ().getPlayerId ();
+
+		if(currentFriendType == EFriendsType.GAME)
+		{
+			for(int i=0; i<friendsIds.Count; i++)
+			{
+				ShopikaSyncManager.GetCastedInstance<ShopikaSyncManager>().registerInvite(friendsIds[i],myId);
+			}
+		}*/
+
 		switch (currentRequestType) {
 		case ERequestType.ASK_KEYS:
 
@@ -241,8 +254,7 @@ public class FBFriendsRequestPanel : PopUpBase {
 			{
 				facebookManager.askKey (friendsIds);
 				return;
-			}
-
+			}				
 			break;
 		case ERequestType.ASK_LIFES:
 
@@ -276,7 +288,6 @@ public class FBFriendsRequestPanel : PopUpBase {
 				facebookManager.askLife (friendsIds);
 				return;
 			}
-
 			break;
 		default:
 			break;

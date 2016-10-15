@@ -237,15 +237,6 @@ public class PanelAppRequest : MonoBehaviour {
 			{
 				facebookManager.sendGift (true, friendsIDs,this.gameObject,requestIDs);
 			}
-
-			//TODO: checar si se enviaron
-			for(int i=0; i<friendInfo.Count; i++)
-			{
-				//print (friendInfo [i].Split ('-') [2]);
-				facebookManager.deleteAppRequest (friendInfo [i].Split ('-') [2]);
-			}
 		}
-
-
 	}
 }

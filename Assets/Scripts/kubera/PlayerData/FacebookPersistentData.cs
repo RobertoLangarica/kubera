@@ -5,7 +5,7 @@ using Facebook.Unity;
 
 public class FacebookPersistentData : Manager<FacebookPersistentData> 
 {
-	public object currentPlayerInfo = new List<object> ();
+	public string currentPlayerId;
 	public List<object> gameFriends = new List<object> ();
 	public List<object> invitableFriends = new List<object> ();
 	public List<object> allFriends = new List<object>();
@@ -14,6 +14,15 @@ public class FacebookPersistentData : Manager<FacebookPersistentData>
 
 	public bool infoRequested;
 
+	public void setPlayerId (string id)
+	{
+		currentPlayerId = id;
+	}
+
+	public string getPlayerId()
+	{
+		return currentPlayerId;
+	}
 
 	public bool containTextureByID (string id)
 	{

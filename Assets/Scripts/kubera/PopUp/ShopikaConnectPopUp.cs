@@ -25,6 +25,15 @@ public class ShopikaConnectPopUp : PopUpBase {
 		WebViewManager.GetInstance ().OnFinishLoading += webClosed;
 	}
 
+	public override void activate()
+	{
+		popUp.SetActive (true);
+		exitBTN.gameObject.SetActive (false);
+
+		title.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_SHOPIKA_TITLE);
+		Info.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_SHOPIKA_INFO);
+	}
+
 	protected void failure()
 	{
 		title.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_FAILURE_SHOPIKA_TITLE);

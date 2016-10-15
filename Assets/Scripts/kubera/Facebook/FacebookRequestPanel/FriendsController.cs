@@ -66,7 +66,7 @@ public class FriendsController : MonoBehaviour {
 		{
 			if(friends [i].selected.isOn)
 			{
-				print("id: "+ friends[i].id);
+				//print("id: "+ friends[i].id);
 				ids.Add (friends [i].id);
 			}
 		}

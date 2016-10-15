@@ -24,6 +24,7 @@ public class FacebookLoadingConnectPopUp : PopUpBase {
 	public override void activate()
 	{
 		popUp.SetActive (true);
+		exitBTN.gameObject.SetActive (false);
 
 		title.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_FACEBOOK_TITLE);
 		Info.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_FACEBOOK_INFO);

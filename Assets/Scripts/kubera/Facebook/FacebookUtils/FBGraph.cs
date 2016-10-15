@@ -33,6 +33,9 @@ public class FBGraph : MonoBehaviour
 	protected bool appRequestReady;
 	protected bool playerInfoReady;
 	protected bool texturesFriendReady;// = true;
+
+	protected bool allInfoGather;
+
 	protected int texturesCount;
 	protected int texturesAdded;
 	public void GetPlayerInfo()
@@ -300,6 +303,7 @@ public class FBGraph : MonoBehaviour
 		{
 			apprequestsData = (List<object>)(((Dictionary<string, object>)dataObject) ["data"]);
 		}
+		print ("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
 		OnGetAppRequest (apprequestsData);
 		appRequestReady = true;
 		AllinfoGathered ();
@@ -308,8 +312,10 @@ public class FBGraph : MonoBehaviour
 
 	protected void AllinfoGathered()
 	{
-		if(gameFriendsReady&& invitableFriendsReady && appRequestReady && playerInfoReady && texturesFriendReady)
+		if(gameFriendsReady&& invitableFriendsReady && appRequestReady && playerInfoReady && texturesFriendReady && !allInfoGather)
 		{
+			print ("AllinfoGathered");
+			allInfoGather = true;
 			onFinishGettingInfo ();
 		}
 	}   

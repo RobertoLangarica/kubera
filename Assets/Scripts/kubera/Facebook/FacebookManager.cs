@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using Facebook.MiniJSON;
 using Kubera.Data;
 using Kubera.Data.Sync;
+using utils.gems.sync;
 
 public class FacebookManager : Manager<FacebookManager>
 {
@@ -61,8 +62,6 @@ public class FacebookManager : Manager<FacebookManager>
 		fbGraph.OnGetAppRequest += chanelData;
 
 		fbGraph.onFinishGettingInfo += fillMessageData;
-
-		OnLoginComplete();
 	}
 
 	protected void loginCompleted()
@@ -83,6 +82,7 @@ public class FacebookManager : Manager<FacebookManager>
 				fbGraph.GetInvitableFriends();
 
 				FacebookPersistentData.GetInstance ().infoRequested = true;
+				fbGraph.getFriendsAppRequests ();
 			}
 			else
 			{
@@ -92,7 +92,6 @@ public class FacebookManager : Manager<FacebookManager>
 				fillRequestPanel (FacebookPersistentData.GetInstance().allFriends, FBFriendsRequestPanel.EFriendsType.ALL);
 			}
 
-			fbGraph.getFriendsAppRequests ();
 			//print ("getFriendsAppRequests--------------------------");
 			if(conectFacebook != null)
 			{
@@ -120,7 +119,7 @@ public class FacebookManager : Manager<FacebookManager>
 
 	protected void showPlayerInfo(string id, string name)
 	{
-		
+		FacebookPersistentData.GetInstance ().setPlayerId (id);
 	}
 
 	protected void addGameFriends(List<object> gameFriends)
@@ -179,11 +178,11 @@ public class FacebookManager : Manager<FacebookManager>
 	{
 		if(life)
 		{
-			sendLife (friendsIDs);
+			sendLife (friendsIDs,requestId);
 		}
 		else
 		{
-			sendKey (friendsIDs,bossReached);
+			sendKey (friendsIDs,bossReached,requestId);
 		}
 		DestroyImmediate (requestToDelete);
 	}
@@ -202,12 +201,13 @@ public class FacebookManager : Manager<FacebookManager>
 		}
 	}
 
-	public void sendLife(List<string> friendsIDs)
+	public void sendLife(List<string> friendsIDs, List<string> requestID)
 	{
 		/*if (!canPublish())
 		{
 			return;
 		}*/
+		string myFBID = FacebookPersistentData.GetInstance ().getPlayerId();
 
 		FB.AppRequest ("Here, take this life!", // A message for the user
 			OGActionType.SEND, // Can be .Send or .AskFor depending on what you want to do with the object.
@@ -217,18 +217,27 @@ public class FacebookManager : Manager<FacebookManager>
 			"SendLife", // Here you can put in any data you want
 			"Send a life to your friend", // A title
 			delegate (IAppRequestResult result) {
+				if(result.Error != null)
+				{
+					for(int i=0; i<friendsIDs.Count; i++)
+					{						
+						ShopikaSyncManager.GetCastedInstance<ShopikaSyncManager>().registerInvite(myFBID,friendsIDs[i]);
+						deleteAppRequest(requestID[i]);
+					}
+				}
 				Debug.Log(result.RawResult);
 			}
 		);
 	}
 
-	public void sendKey(List<string> friendsIDs,string bossReached)
+	public void sendKey(List<string> friendsIDs,string bossReached,List<string> requestID)
 	{
 		/*if (!canPublish())
 		{
 			return;
 		}*/
 
+		string myFBID = FacebookPersistentData.GetInstance ().getPlayerId();
 		print (bossReached);
 
 		FB.AppRequest ("Here, take this key!", // A message for the user
@@ -239,6 +248,14 @@ public class FacebookManager : Manager<FacebookManager>
 			"SendKey,"+bossReached, // Here you can put in any data you want
 			"Send a key to your friend", // A title
 			delegate (IAppRequestResult result) {
+				if(result.Error != null)
+				{
+					for(int i=0; i<friendsIDs.Count; i++)
+					{						
+						ShopikaSyncManager.GetCastedInstance<ShopikaSyncManager>().registerInvite(myFBID,friendsIDs[i]);
+						deleteAppRequest(requestID[i]);
+					}
+				}
 				Debug.Log(result.RawResult);
 			}
 		);
@@ -253,6 +270,7 @@ public class FacebookManager : Manager<FacebookManager>
 		FB.AppRequest ("Give me a key!", OGActionType.ASKFOR, "795229890609809", idsFriends, "askKey,"+ mapManager.bossLockedPopUp.fullLvlName, // Here you can put in any data you want
 			"Ask a life to your friend", // A title
 			delegate (IAppRequestResult result) {
+				
 				Debug.Log (result.RawResult);
 			}
 		);
@@ -294,12 +312,12 @@ public class FacebookManager : Manager<FacebookManager>
 			string requestID = (string)dataDict ["id"];
 
 			saveDataOnList (dataType, firstName, playerID, requestID);
-			gotMessage ();
 		}
 	}
 
 	protected void saveDataOnList(string type,string firstName, string playerID, string requestID)
 	{
+		//print (requestID);
 		//print (type);
 		switch (type) {
 		case "askLife":
@@ -309,7 +327,7 @@ public class FacebookManager : Manager<FacebookManager>
 			}
 			else
 			{
-				print ("askedLifes");
+				gotMessage ();
 				addToList (askedLifes, firstName, playerID, requestID);
 			}
 			break;
@@ -320,6 +338,7 @@ public class FacebookManager : Manager<FacebookManager>
 			}
 			else
 			{
+				gotMessage ();
 				addToList (giftLifes, firstName, playerID, requestID);
 			}
 			break;
@@ -340,6 +359,7 @@ public class FacebookManager : Manager<FacebookManager>
 				}
 				else
 				{
+					gotMessage ();
 					addToList (askedKeys, firstName,playerID, requestID, bossReached);
 				}
 			}
@@ -361,6 +381,7 @@ public class FacebookManager : Manager<FacebookManager>
 				}
 				else
 				{
+					gotMessage ();
 					addToList (giftKeys, firstName, playerID, requestID, bossReached);
 				}
 			}
@@ -399,6 +420,7 @@ public class FacebookManager : Manager<FacebookManager>
 
 	public void deleteAppRequest(string id)
 	{
+		//print (id);
 		FB.API (id, HttpMethod.DELETE, deleteCallBackRequest);
 	}
 
@@ -406,7 +428,7 @@ public class FacebookManager : Manager<FacebookManager>
 	{
 		if (result.Error != null) 
 		{
-			Debug.LogError (result.Error);
+			//Debug.LogError (result.Error);
 			return;
 		}
 		else

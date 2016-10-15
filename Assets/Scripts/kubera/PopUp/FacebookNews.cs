@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using Kubera.Data.Sync;
 
 public class FacebookNews : PopUpBase {
 
@@ -17,6 +18,8 @@ public class FacebookNews : PopUpBase {
 	{
 		panelMessageGridLayout.cellSize = new Vector2 (panelMessageGridRectTransform.rect.width, Screen.height *0.175f);
 		panelMessageGridLayout.spacing = new Vector2 (0,panelMessageGridRectTransform.rect.width*0.2f);
+
+		panelMessageGridLayout.padding.top = (int)(panelMessageGridLayout.cellSize.y *.5f);
 		actualizeMessageNumber ();
 
 		//TODO hardcoding
@@ -28,7 +31,7 @@ public class FacebookNews : PopUpBase {
 		if(messageCount == 0)
 		{
 			messageCountImage.gameObject.SetActive(false);
-			if(!FacebookManager.GetInstance().facebookConectMessageCreated && panelMessageGridLayout.transform.childCount != 0)
+			if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 			{
 				noMessagesMessage.SetActive (true);
 			}
@@ -40,6 +43,7 @@ public class FacebookNews : PopUpBase {
 		else
 		{
 			messageCountImage.gameObject.SetActive (true);
+			noMessagesMessage.SetActive (false);
 			if(messageCount > 9)
 			{				
 				this.messageCount.text = "+9";
@@ -55,7 +59,7 @@ public class FacebookNews : PopUpBase {
 	{
 		activate ();
 		mapManager.openPopUp ("facebookNews");
-		actualizeMessageNumber ();
+		messageCountImage.gameObject.SetActive(false);
 	}
 
 	public void exit()
