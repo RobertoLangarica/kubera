@@ -100,8 +100,8 @@
 		<text id="connecting_facebook_info">
 			<languages>
 				<language id="english" text="Getting your info of facebook"/>
-				<language id="spanish" text="Obteniendo tu progreso de facebook"/>
-				<language id="default" text="Obteniendo tu progreso de facebook"/>
+				<language id="spanish" text="Obteniendo tu progreso de juego"/>
+				<language id="default" text="Obteniendo tu progreso de juego"/>
 			</languages>
 		</text>
 		<text id="connecting_failure_facebook_title">
