@@ -29,6 +29,11 @@ namespace utils.gems.remote.request
 			request.FormUsage = BestHTTP.Forms.HTTPFormUsage.UrlEncoded;
 		}
 
+		public override bool hasCredentialError ()
+		{
+			return (data.error != null && data.error.isBadTokenError());
+		}
+
 		public override bool hasError ()
 		{
 			return (data == null || !data.error.isEmpty());

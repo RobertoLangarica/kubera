@@ -9,13 +9,12 @@ public class TutorialLvl64 : TutorialBase
 
 	public Image powerUpDommy;
 	public GameObject fromPosition;
-	protected InputBombAndDestroy inputBomb;
+	public InputBombAndDestroy inputBomb;
 
 	protected bool doAnimation;
 
 	protected override void Start()
 	{
-		inputBomb = FindObjectOfType<InputBombAndDestroy> ();
 		inputBomb.OnPlayer += animationController;
 
 		base.Start ();

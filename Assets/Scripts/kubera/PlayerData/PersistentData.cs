@@ -47,6 +47,9 @@ public class PersistentData : Manager<PersistentData>
 	public bool fromLevelsToGame = false;
 
 	[HideInInspector]
+	public bool stairsUnblocked = false;
+
+	[HideInInspector]
 	public int startLevel = 1;
 
 	[HideInInspector]

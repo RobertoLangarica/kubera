@@ -78,7 +78,7 @@ public class SecondChancePopUp : PopUpBase
 	protected void checkDiscount()
 	{
 		//Debug.Log (UserDataManager.instance.playerGems);
-		if (!GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(price)) 
+		if (!ShopikaManager.GetCastedInstance<ShopikaManager>().isPossibleToConsumeGems(price)) 
 		{
 			price = (int)(price * 0.5f);
 			discountDisplay.SetActive (true);
@@ -95,9 +95,9 @@ public class SecondChancePopUp : PopUpBase
 
 		pressed = true;
 
-		if(GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(price))
+		if(ShopikaManager.GetCastedInstance<ShopikaManager>().isPossibleToConsumeGems(price))
 		{
-			GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(price);
+			ShopikaManager.GetCastedInstance<ShopikaManager>().tryToConsumeGems(price);
 			secondChanceTimes++;
 
 			thisObject.DOAnchorPos (-v3, speed).SetEase(Ease.InBack).OnComplete(()=>

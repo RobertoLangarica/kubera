@@ -49,10 +49,10 @@ public class NoLifesPopUp : PopUpBase
 
 	public void rechargeLifes()
 	{
-		if(GemsManager.GetCastedInstance<GemsManager>().isPossibleToConsumeGems(price))
+		if(ShopikaManager.GetCastedInstance<ShopikaManager>().isPossibleToConsumeGems(price))
 		{
-			GemsManager.GetCastedInstance<GemsManager>().tryToConsumeGems(price);
-			LifesManager.GetInstance ().giveLifesToUser ((DataManagerKubera.GetInstance () as DataManagerKubera).initialLifes);
+			ShopikaManager.GetCastedInstance<ShopikaManager>().tryToConsumeGems(price);
+			LifesManager.GetInstance ().giveLifesToUser (LifesManager.GetInstance().maximumLifes);
 
 			KuberaAnalytics.GetInstance ().registerGemsUsedOnLifes (PersistentData.GetInstance().lastLevelReachedName);
 

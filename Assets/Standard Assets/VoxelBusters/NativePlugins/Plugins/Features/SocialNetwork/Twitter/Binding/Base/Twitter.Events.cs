@@ -44,7 +44,7 @@ namespace VoxelBusters.NativePlugins
 		/// </summary>
 		/// <param name="_responseData">Response to a Twitter request.</param>
 		/// <param name="_error">If the operation was successful, this value is nil; otherwise, this parameter holds the description of the problem that occurred.</param>
-		public delegate void TWTRResonse (object _responseData, string _error);
+		public delegate void TWTRResponse (object _responseData, string _error);
 
 		#endregion
 
@@ -54,7 +54,7 @@ namespace VoxelBusters.NativePlugins
 		protected TWTRTweetCompletion				OnTweetComposerClosed;
 		protected TWTRAccountDetailsCompletion		OnRequestAccountDetailsFinished;
 		protected TWTREmailAccessCompletion			OnRequestEmailAccessFinished;
-		protected TWTRResonse						OnTwitterURLRequestFinished;
+		protected TWTRResponse						OnTwitterURLRequestFinished;
 		
 		#endregion
 
@@ -75,6 +75,7 @@ namespace VoxelBusters.NativePlugins
 			
 			// Invoke handler
 			TwitterLoginFinished(_session, null);
+			SetActiveSession(_session);
 		}
 		
 		protected void TwitterLoginFailed (string _error)
@@ -103,6 +104,14 @@ namespace VoxelBusters.NativePlugins
 				NPBinding.SoomlaGrowService.ReportOnSocialLoginFailed(eSocialProvider.TWITTER);
 			}
 #endif
+		}
+
+		protected void TwitterLogoutFinished ()
+		{
+#if USES_SOOMLA_GROW
+			NPBinding.SoomlaGrowService.ReportOnSocialLogoutFinished(eSocialProvider.TWITTER);
+#endif
+			m_activeSessionUserID	= null;
 		}
 		
 		protected void TweetComposerDismissed (string _resultStr)

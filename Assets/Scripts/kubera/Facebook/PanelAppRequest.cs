@@ -176,12 +176,12 @@ public class PanelAppRequest : MonoBehaviour {
 		switch(actionChosed)
 		{
 		case EAction.SEND:
-			buttonText.text = "send";
+			buttonText.text = "enviar";
 			//enviar
 			break;
 		case EAction.ACCEPT:
 			//aceptar
-			buttonText.text = "accept";
+			buttonText.text = "aceptar";
 			break;
 		}
 	}
@@ -237,15 +237,6 @@ public class PanelAppRequest : MonoBehaviour {
 			{
 				facebookManager.sendGift (true, friendsIDs,this.gameObject,requestIDs);
 			}
-
-			//TODO: checar si se enviaron
-			for(int i=0; i<friendInfo.Count; i++)
-			{
-				//print (friendInfo [i].Split ('-') [2]);
-				facebookManager.deleteAppRequest (friendInfo [i].Split ('-') [2]);
-			}
 		}
-
-
 	}
 }

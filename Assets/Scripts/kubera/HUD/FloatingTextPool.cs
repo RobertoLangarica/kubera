@@ -5,15 +5,15 @@ using System.Collections.Generic;
 
 public class FloatingTextPool : MonoBehaviour 
 {
-	public Text originalObject;
+	public FloatingTextForPool originalObject;
 
-	protected List<Text> freeText = new List<Text>();
-	protected List<Text> occupiedText = new List<Text>();
+	protected List<FloatingTextForPool> freeText = new List<FloatingTextForPool>();
+	protected List<FloatingTextForPool> occupiedText = new List<FloatingTextForPool>();
 
 	// Use this for initialization
 	void Start () 
 	{
-		originalObject.enabled = false;
+		originalObject.myText.enabled = false;
 
 		for(int i = 0;i < 3 ;i++)
 		{
@@ -22,38 +22,46 @@ public class FloatingTextPool : MonoBehaviour
 	}
 
 	//DONE: Cambie deactivateText por releaseText
-	public Text getFreeText()
+	public FloatingTextForPool getFreeText()
 	{
+		//Por si no hay
 		if(freeText.Count == 0)
 		{
 			addTextToThePool();
 		}
 
-		Text result = freeText[0];
+		FloatingTextForPool result = freeText[0];
 		freeText.RemoveAt (0);
 
 		occupiedText.Add (result);
 
-		result.enabled = true;
+		result.myText.enabled = true;
+
+		//Si se acabaron estiramos la pool
+		if(freeText.Count == 0)
+		{
+			addTextToThePool();
+		}
 
 		return result;
 	}
 
-	public void releaseText(Text text)
+	public void releaseText()
 	{
-		Text result = occupiedText[0];
+		FloatingTextForPool result = occupiedText[0];
 		occupiedText.RemoveAt (0);
 
 		freeText.Add (result);
 
-		result.enabled = false;
+		result.myText.enabled = false;
 	}
 
 	protected void addTextToThePool()
 	{
-		GameObject go;
-		go = GameObject.Instantiate(originalObject.gameObject) as GameObject;
-		freeText.Add(go.GetComponent<Text>());
-		go.transform.SetParent(transform,false);
+		FloatingTextForPool go;
+		go = GameObject.Instantiate<FloatingTextForPool>(originalObject);
+		go.setPool(this);
+		freeText.Add(go);
+		go.gameObject.transform.SetParent(transform,false);
 	}
 }

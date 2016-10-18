@@ -1,0 +1,170 @@
+fileFormatVersion: 2
+guid: 33ddd50477e78450f9a9b5762e268bf8
+timeCreated: 1475709964
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: 1-fondoGame-Musica
+    21300002: 2-fondoGame-Mascotas
+    21300004: 3-fondoGame-Ropa
+    21300006: 4-fondoGame-libros
+    21300008: 5-fondoGame-Zapatos
+    21300010: 6-fondoGame-Maquillaje
+    21300012: 7-fondoGame-Deportes
+    21300014: 8-fondoGame-joyeria
+    21300016: 9-fondoGame-perfumes
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 4096
+  textureSettings:
+    filterMode: 2
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 0
+  textureType: 5
+  buildTargetSettings:
+  - buildTarget: Android
+    maxTextureSize: 512
+    textureFormat: 47
+    compressionQuality: 100
+    allowsAlphaSplitting: 0
+  spriteSheet:
+    sprites:
+    - name: 1-fondoGame-Musica
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 70
+        width: 10
+        height: 439
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: 2-fondoGame-Mascotas
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 70
+        width: 10
+        height: 439
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: 3-fondoGame-Ropa
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 70
+        width: 10
+        height: 439
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: 4-fondoGame-libros
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 70
+        width: 10
+        height: 439
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: 5-fondoGame-Zapatos
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 70
+        width: 10
+        height: 439
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: 6-fondoGame-Maquillaje
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 70
+        width: 10
+        height: 439
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: 7-fondoGame-Deportes
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 70
+        width: 10
+        height: 439
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: 8-fondoGame-joyeria
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 70
+        width: 10
+        height: 439
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: 9-fondoGame-perfumes
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 70
+        width: 10
+        height: 439
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

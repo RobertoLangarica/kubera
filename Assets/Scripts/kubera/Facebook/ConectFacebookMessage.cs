@@ -6,6 +6,7 @@ public class ConectFacebookMessage : MonoBehaviour
 {
 	public void conectFacebook()
 	{
+		FindObjectOfType<MapManager> ().activateFacebook();
 		KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookLogin();
 	}
 }

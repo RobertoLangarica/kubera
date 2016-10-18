@@ -1,0 +1,303 @@
+fileFormatVersion: 2
+guid: a171de8d97c8b4b2dab8c42afac30a2a
+timeCreated: 1475721408
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: facebook_blanco
+    21300002: K-InGame_BACK3
+    21300004: K-InGame_musicOFF
+    21300006: K-InGame_musicON2
+    21300008: K-InGame_ruedasettings
+    21300010: K-InGame_soundOFF
+    21300012: K-InGame_soundON2
+    21300014: K-inicio_btnshopika
+    21300016: K-inicio_shopika
+    21300018: K-magia-del-gamplay2
+    21300020: K-MapaGeneral_settings
+    21300022: K-menus_fondo-menus
+    21300024: K-popups-pq_btnAzul
+    21300026: K-popups-pq_btnVerde
+    21300028: KuberaLogo-02
+    21300030: Copia de K-popUps_close
+    21300032: K-InGame_HUDbase
+    21300034: K-menus1_corazon
+    21300036: K-popups-pq_gemaLibre
+    21300038: piezasglow
+    21300040: K-popUps_objetiveBase
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 1
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 4096
+  textureSettings:
+    filterMode: 2
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 5
+  buildTargetSettings:
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: 47
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
+  spriteSheet:
+    sprites:
+    - name: Copia de K-popUps_close
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 134
+        width: 42
+        height: 42
+      alignment: 9
+      pivot: {x: 0.47619048, y: 0.52380955}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: facebook_blanco
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 79
+        width: 48
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-InGame_BACK3
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 81
+        width: 44
+        height: 44
+      alignment: 9
+      pivot: {x: 0.47727272, y: 0.48863637}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-InGame_musicOFF
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 81
+        width: 44
+        height: 44
+      alignment: 9
+      pivot: {x: 0.5113636, y: 0.5113636}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-InGame_musicON2
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 132
+        width: 44
+        height: 44
+      alignment: 9
+      pivot: {x: 0.48863637, y: 0.48863637}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-InGame_ruedasettings
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 63
+        width: 118
+        height: 113
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-InGame_soundOFF
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 18
+        width: 44
+        height: 44
+      alignment: 9
+      pivot: {x: 0.5113636, y: 0.5113636}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-InGame_soundON2
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 18
+        width: 44
+        height: 44
+      alignment: 9
+      pivot: {x: 0.48863637, y: 0.5113636}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-inicio_btnshopika
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 129
+        width: 152
+        height: 47
+      alignment: 9
+      pivot: {x: 0.5065789, y: 0.4893617}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-inicio_shopika
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 66
+        width: 131
+        height: 24
+      alignment: 9
+      pivot: {x: 0.49618322, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-magia-del-gamplay2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 478
+        height: 844
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-MapaGeneral_settings
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 85
+        width: 42
+        height: 43
+      alignment: 9
+      pivot: {x: 0.4642857, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-menus1_corazon
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 94
+        width: 84
+        height: 82
+      alignment: 9
+      pivot: {x: 0.48809522, y: 0.5792683}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-menus_fondo-menus
+      rect:
+        serializedVersion: 2
+        x: 863
+        y: 512
+        width: 16
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-popups-pq_btnAzul
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 10
+        width: 159
+        height: 49
+      alignment: 9
+      pivot: {x: 0.49685535, y: 0.5408163}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-popups-pq_btnVerde
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 14
+        width: 158
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.53125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-popups-pq_gemaLibre
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 39
+        width: 42
+        height: 42
+      alignment: 9
+      pivot: {x: 0.45238096, y: 0.54761904}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-popUps_objetiveBase
+      rect:
+        serializedVersion: 2
+        x: 482
+        y: 584
+        width: 367
+        height: 184
+      alignment: 9
+      pivot: {x: 0.5013624, y: 0.5027174}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: KuberaLogo-02
+      rect:
+        serializedVersion: 2
+        x: 482
+        y: 772
+        width: 377
+        height: 252
+      alignment: 9
+      pivot: {x: 0.50132626, y: 0.50595236}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: piezasglow
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 66
+        width: 72
+        height: 11
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45454547}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

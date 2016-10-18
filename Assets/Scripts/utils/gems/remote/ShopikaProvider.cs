@@ -11,7 +11,6 @@ namespace utils.gems.remote
 {
 	public class ShopikaProvider : ServerProvider 
 	{
-		public bool _mustShowDebugInfo = false;
 		[HideInInspector]public string userId;
 		[HideInInspector]public string token;
 
@@ -23,7 +22,9 @@ namespace utils.gems.remote
 
 		public override void getUserData (string id, bool saveAsMainRequest = false)
 		{
-			SPGetGemsRequest request = queue.getComponentAttachedToGameObject<SPGetGemsRequest>("GS_GetUserData");
+			getDataFailCount = 0;
+
+			SPGetGemsRequest request = queue.getComponentAttachedToGameObject<SPGetGemsRequest>("SP_GetGems");
 
 			if(saveAsMainRequest)
 			{
@@ -37,8 +38,10 @@ namespace utils.gems.remote
 			request.showDebugInfo = _mustShowDebugInfo;
 			request.initialize(SP_API);
 			request.OnComplete += OnUserDataObtained;
-			request.OnFailed += OnRequestFailed;
-
+			request.OnFailed += getDataFailed;
+			request.OnTimeout += getDataFailed;
+			request.OnBadCredentials += OnRequestBadToken;
+			request.tryoutsBeforeDefinitelyFail = this.getDataMaxFailCountAllowed;
 
 			addDependantRequest(request,true);
 		}
@@ -54,7 +57,6 @@ namespace utils.gems.remote
 			{
 				SPGetGemsRequest request = (SPGetGemsRequest)getRequestById(request_id);
 
-
 				//Hacemos un usuario para el diff
 				UserGem remoteUser = new UserGem(userId);
 				remoteUser.gems = request.data.gemBalance;
@@ -65,7 +67,7 @@ namespace utils.gems.remote
 
 		public override void updateUserData(string id, string gemsToConsume)
 		{
-			SPConsumeGemsRequest request = queue.getComponentAttachedToGameObject<SPConsumeGemsRequest>("GS_GetUserData");
+			SPConsumeGemsRequest request = queue.getComponentAttachedToGameObject<SPConsumeGemsRequest>("SP_ConsumeGems");
 
 			request.id = "consume_"+id+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
 			request.playerId = id;
@@ -76,7 +78,7 @@ namespace utils.gems.remote
 
 			request.initialize(SP_API);
 			request.OnComplete += OnUserDataUpdated;
-			request.OnFailed += OnRequestFailed;
+			request.OnBadCredentials += OnRequestBadToken;
 
 			addDependantRequest(request,true);
 		}
@@ -96,37 +98,34 @@ namespace utils.gems.remote
 			}
 		}
 
-		protected void OnRequestFailed(string requestId)
+		public void registerShopikaInvite(string invitedFacebookId,string inviterFacebookId, string invitedEmail = "", string invitedPhoneNumber = "", string invitedId = "", string inviterId = "")
 		{
-			RemoteRequest<SPBaseResponse> request = getRequestById(requestId) as RemoteRequest<SPBaseResponse>;
+			SPRegisterInvite request = queue.getComponentAttachedToGameObject<SPRegisterInvite>("SP_RegisterInvite");
 
-			if(request.data.error != null && request.data.error.isBadTokenError())
-			{
-				if(OnBadToken != null)
-				{
-					OnBadToken();
-				}
-			}
+			request.id = "invite_"+inviterFacebookId+"_"+invitedFacebookId+"_"+UnityEngine.Random.Range(0,99999).ToString("0000");
+			request.invitedEmail = invitedEmail;
+			request.invitedFacebookId = invitedFacebookId;
+			request.invitedId = invitedId;
+			request.invitedPhoneNumber = invitedPhoneNumber;
+			request.inviterFacebookId = inviterFacebookId;
+			request.inviterId = inviterId;
+			request.persistAfterFailed = true;
+			request.showDebugInfo = _mustShowDebugInfo;
+
+			request.initialize(SP_API);
+			request.OnBadCredentials += OnRequestBadToken;
+
+			addRequest(request,false);
 		}
 
-		protected BaseRequest getRequestById(string id)
+		protected void OnRequestBadToken(string requestId)
 		{
-			return requests.Find(item => item.id == id);
-		}
-
-		private void addRequest(BaseRequest request, bool isPriority = false)
-		{
-			requests.Add(request);
-			if(isPriority)
+			if(OnBadToken != null)
 			{
-				queue.addPriorityRequest(request);
-			}
-			else
-			{
-				queue.addRequest(request);	
+				OnBadToken();
 			}
 		}
-
+			
 		private void addDependantRequest(BaseRequest request, bool isPriority = false)
 		{
 

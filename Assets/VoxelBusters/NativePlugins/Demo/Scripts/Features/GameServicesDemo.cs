@@ -525,6 +525,7 @@ namespace VoxelBusters.NativePlugins.Demo
 				AddNewResult("Achievements view dismissed.");
 				AppendResult(string.Format("Error= {0}.", _error.GetPrintableString()));
 			});
+
 		}
 
 		private void ShowLeaderboardUIWithGlobalID (string _leaderboadGID)

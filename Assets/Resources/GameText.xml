@@ -2,6 +2,42 @@
 <gameText>
 	<texts>
 		<!--
+		Share
+		-->
+		<text id="shareDefaultText">
+			<languages>
+				<language id="english" text="Join my network in Shop!ka."/>
+				<language id="spanish" text="Unete a mi red en Shop!ka."/>
+				<language id="default" text="Unete a mi red en Shop!ka."/>
+			</languages>
+		</text>
+
+		<!--
+		Shopika visit
+		-->
+		<text id="visitShopikaTitle">
+			<languages>
+				<language id="english" text="Visita Shop!ka"/>
+				<language id="spanish" text="Visita Shop!ka"/>
+				<language id="default" text="Visita Shop!ka"/>
+			</languages>
+		</text>
+		<text id="visitShopikaDescription">
+			<languages>
+				<language id="english" text="¡Compra fabulosos productos y obten gemas gratis!"/>
+				<language id="spanish" text="¡Compra fabulosos productos y obten gemas gratis!"/>
+				<language id="default" text="¡Compra fabulosos productos y obten gemas gratis!"/>
+			</languages>
+		</text>
+		<text id="visitShopikaButton">
+			<languages>
+				<language id="english" text="¡ir de compras!"/>
+				<language id="spanish" text="¡ir de compras!"/>
+				<language id="default" text="¡ir de compras!"/>
+			</languages>
+		</text>
+
+		<!--
 		Home
 		-->
 		<text id="startGame">
@@ -11,11 +47,88 @@
 				<language id="default" text="JUGAR"/>
 			</languages>
 		</text>
+		<text id="connectShopikaPopUp">
+			<languages>
+				<language id="english" text="BUY"/>
+				<language id="spanish" text="COMPRA"/>
+				<language id="default" text="COMPRA"/>
+			</languages>
+		</text>
+		<text id="inviteFriendsShopikaPopUp">
+			<languages>
+				<language id="english" text="INVITE FRIENDS"/>
+				<language id="spanish" text="INVITA AMIGOS"/>
+				<language id="default" text="INVITA AMIGOS"/>
+			</languages>
+		</text>
+		<text id="connecting_shopika_title">
+			<languages>
+				<language id="english" text="CONNECTING"/>
+				<language id="spanish" text="CONECTANDO"/>
+				<language id="default" text="CONECTANDO"/>
+			</languages>
+		</text>
+		<text id="connecting_shopika_info">
+			<languages>
+				<language id="english" text="Getting your info of shopika"/>
+				<language id="spanish" text="Obteniendo tu progreso de shopika"/>
+				<language id="default" text="Obteniendo tu progreso de shopika"/>
+			</languages>
+		</text>
+		<text id="connecting_failure_shopika_title">
+			<languages>
+				<language id="english" text="Something fail"/>
+				<language id="spanish" text="Algo fallo"/>
+				<language id="default" text="Algo fallo"/>
+			</languages>
+		</text>
+		<text id="connecting_failure_shopika_info">
+			<languages>
+				<language id="english" text="Try again to connect Shop!ka"/>
+				<language id="spanish" text="Intenta de nuevo conectarte a shopika"/>
+				<language id="default" text="Intenta de nuevo conectarte a shopika"/>
+			</languages>
+		</text>
 
+		<text id="connecting_facebook_title">
+			<languages>
+				<language id="english" text="CONNECTING"/>
+				<language id="spanish" text="CONECTANDO"/>
+				<language id="default" text="CONECTANDO"/>
+			</languages>
+		</text>
+		<text id="connecting_facebook_info">
+			<languages>
+				<language id="english" text="Getting your info of facebook"/>
+				<language id="spanish" text="Obteniendo tu progreso de juego"/>
+				<language id="default" text="Obteniendo tu progreso de juego"/>
+			</languages>
+		</text>
+		<text id="connecting_failure_facebook_title">
+			<languages>
+				<language id="english" text="Something fail"/>
+				<language id="spanish" text="Algo fallo"/>
+				<language id="default" text="Algo fallo"/>
+			</languages>
+		</text>
+		<text id="connecting_failure_facebook_info">
+			<languages>
+				<language id="english" text="Try again to connect facebook"/>
+				<language id="spanish" text="Intenta de nuevo conectarte a facebook"/>
+				<language id="default" text="Intenta de nuevo conectarte a facebook"/>
+			</languages>
+		</text>
 
 		<!--
 		Game	
 		-->
+		<text id="powerUpFreePrice">
+			<languages>
+				<language id="english" text="Free"/>
+				<language id="spanish" text="Gratis"/>
+				<language id="default" text="Gratis"/>
+			</languages>
+		</text>
 		<text id="secondChanceGiveUp">
 			<languages>
 				<language id="english" text="GIVE UP"/>
@@ -40,8 +153,8 @@
 		<text id="noOptionsGameContinue">
 			<languages>
 				<language id="english" text="USE POWER UP"/>
-				<language id="spanish" text="USAR POWER UP"/>
-				<language id="default" text="USAR POWER UP"/>
+				<language id="spanish" text="USAR PODER"/>
+				<language id="default" text="USAR PODER"/>
 			</languages>
 		</text>
 		<text id="noOptionsGameGiveUp">
@@ -54,8 +167,8 @@
 		<text id="noOptionGameTitle">
 			<languages>
 				<language id="english" text="Use a power up or give up"/>
-				<language id="spanish" text="Usa un power up o rindete"/>
-				<language id="default" text="Usa un power up o rindete"/>
+				<language id="spanish" text="Usa un poder o rindete"/>
+				<language id="default" text="Usa un poder o rindete"/>
 			</languages>
 		</text>
 		<text id="hudLevel">
@@ -68,8 +181,8 @@
 		<text id="hudScore">
 			<languages>
 				<language id="english" text="score"/>
-				<language id="spanish" text="puntos"/>
-				<language id="default" text="puntos"/>
+				<language id="spanish" text="pts"/>
+				<language id="default" text="pts"/>
 			</languages>
 		</text>
 
@@ -146,8 +259,8 @@
 		<text id="exitText">
 			<languages>
 				<language id="english" text="You tapped the exit button."/>
-				<language id="spanish" text="Presionaste el boton de salida"/>
-				<language id="default" text="Presionaste el boton de salida"/>
+				<language id="spanish" text="Presionaste el botón de salida"/>
+				<language id="default" text="Presionaste el botón de salida"/>
 			</languages>
 		</text>
 		<text id="ticketFlavorText">
@@ -411,9 +524,16 @@
 		</text>
 		<text id="NoGemsPopUpInfo">
 			<languages>
-				<language id="english" text="Visit Shopika to buy awesome products and get Gems."/>
-				<language id="spanish" text="Visita Shopika para comprar fabulosos productos y obtener gemas."/>
-				<language id="default" text="Visita Shopika para comprar fabulosos productos y obtener gemas."/>
+				<language id="english" text="Visit Shop!ka to buy awesome products and get Gems."/>
+				<language id="spanish" text="Visita Shop!ka para comprar fabulosos productos y obtener gemas."/>
+				<language id="default" text="Visita Shop!ka para comprar fabulosos productos y obtener gemas."/>
+			</languages>
+		</text>
+		<text id="NoGemsPopUpInfoNoShopikaLogin">
+			<languages>
+				<language id="english" text="Registrate a Shopika para obtener 100 gemas."/>
+				<language id="spanish" text="Registrate a Shopika para obtener 100 gemas."/>
+				<language id="default" text="Registrate a Shopika para obtener 100 gemas."/>
 			</languages>
 		</text>
 		<text id="NoGemsPopUpButton">
@@ -762,7 +882,7 @@
 
 		<text id="fbConectTitle">
 			<languages>
-				<language id="english" text="Conect to Facebook!"/>
+				<language id="english" text="Connect to Facebook!"/>
 				<language id="spanish" text="¡Conectate a Facebook!"/>
 				<language id="default" text="¡Conectate a Facebook!"/>
 			</languages>
@@ -794,6 +914,14 @@
 				<language id="english" text="LogOut"/>
 				<language id="spanish" text="Desconectar"/>
 				<language id="default" text="Desconectar "/>
+			</languages>                    
+		</text>
+
+		<text id="fbRequestAskText">
+			<languages>
+				<language id="english" text="ASK"/>
+				<language id="spanish" text="PEDIR"/>
+				<language id="default" text="PEDIR "/>
 			</languages>                    
 		</text>
 

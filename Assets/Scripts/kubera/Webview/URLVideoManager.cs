@@ -15,7 +15,9 @@ public class URLVideoManager : Manager<URLVideoManager>
 
 	public void playVideoFromURL(URL _url)
 	{
+		#if USES_MEDIA_LIBRARY
 		NPBinding.MediaLibrary.PlayVideoFromURL(_url, PlayVideoFinished);
+		#endif
 	}
 
 	private void PlayVideoFinished (ePlayVideoFinishReason reason)

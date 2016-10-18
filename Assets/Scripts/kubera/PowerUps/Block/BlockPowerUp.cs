@@ -6,7 +6,7 @@ public class BlockPowerUp : PowerupBase
 {
 	public  InputBlockPowerUp inputBlockPowerUp;
 
-	protected GameManager gameManager;
+	public GameManager gameManager;
 	void Start()
 	{
 		//inputBlockPowerUp = FindObjectOfType<InputBlockPowerUp> ();
@@ -20,8 +20,6 @@ public class BlockPowerUp : PowerupBase
 		}
 		inputBlockPowerUp.enabled = false;
 		//inputBlockPowerUp.gameObject.SetActive(false);
-
-		gameManager = FindObjectOfType<GameManager> ();
 	}
 
 	public override void activate (bool canUse)

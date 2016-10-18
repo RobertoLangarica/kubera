@@ -49,11 +49,11 @@ public class Square : MonoBehaviour
 		yield return new WaitUntil (()=>flipAnimation.sequences[0].currentFrame >= 1);
 		if(!oneSquare)
 		{
-			this.transform.localScale = new Vector3 (0.45f, 0.45f, 0.45f);
+			this.transform.localScale = new Vector3 (2.2f, 2.2f, 2.2f);
 		}
 		else
 		{
-			this.transform.localScale = new Vector3 (0.115f, 0.115f, 0.115f);
+			this.transform.localScale = new Vector3 (0.58f, 0.58f, 0.58f);
 		}
 		yield return new WaitUntil (()=>flipAnimation.sequences[0].currentFrame >= 14);
 		cellParent.content.GetComponent<SpriteRenderer> ().color = Color.white;

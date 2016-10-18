@@ -103,10 +103,10 @@ namespace VoxelBusters.NativePlugins
 		}
 
 		/// <summary>
-		/// Sends the request to retrieve localized information about billing products from the Store.	
+		/// Sends a request to retrieve localized information about the billing products from the Store.	
 		/// </summary>
 		///	<description> 
-		/// Call to this method, creates a request with products configured in <c>Billing Settings</c>.
+		/// Call to this method retrieves information of the products that are configured in <c>Billing Settings</c>.
 		/// Your application uses this request to present localized prices and other information to the user without having to maintain that list itself. 
 		/// </description>
 		/// <remarks>
@@ -120,7 +120,7 @@ namespace VoxelBusters.NativePlugins
 		}
 
 		/// <summary>
-		/// Sends the request to retrieve localized information about specified billing products from the Store.	
+		/// Sends a request to retrieve localized information about the billing products from the Store.	
 		/// </summary>
 		///	<description> 
 		/// Your application uses this request to present localized prices and other information to the user without having to maintain that list itself. 
@@ -184,7 +184,7 @@ namespace VoxelBusters.NativePlugins
 		/// <remarks>
 		/// \note The payment request must have a product identifier registered with the Store.
 		/// </remarks>
-		public void BuyProduct (BillingProduct _product)
+		public virtual void BuyProduct (BillingProduct _product)
 		{
 			string	_productID	= (_product == null) ? null : _product.ProductIdentifier;
 
@@ -200,7 +200,8 @@ namespace VoxelBusters.NativePlugins
 		/// Your application calls this method to restore transactions that were previously purchased so that you can process them again.
 		/// </description>
 		///	<remarks> 
-		/// \note Internally this feature needs consumable list to be updated first. So make sure that you call <see cref="RequestForBillingProducts"/> prior to this. 
+		/// \note 
+		/// Internally this feature requires consumable product information. So ensure that <see cref="RequestForBillingProducts"/> is called prior to this. 
 		/// </remarks>
 		public virtual void RestorePurchases ()
 		{

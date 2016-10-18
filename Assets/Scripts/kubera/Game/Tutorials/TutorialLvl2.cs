@@ -26,8 +26,6 @@ public class TutorialLvl2 : TutorialBase
 			phasesPanels [0].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
-			freeHint = true;
-
 			firstAnim ();
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.PIECES_AREA);
@@ -44,8 +42,6 @@ public class TutorialLvl2 : TutorialBase
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.EARNED_POINTS);
-
-			freeHint = true;
 
 			if (instructionIndex < currentInstruction.Length) 
 			{
@@ -72,8 +68,6 @@ public class TutorialLvl2 : TutorialBase
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.EARNED_POINTS);
-
-			freeHint = true;
 
 			if (instructionIndex < currentInstruction.Length) 
 			{
@@ -102,8 +96,6 @@ public class TutorialLvl2 : TutorialBase
 			phasesPanels [3].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.EARNED_POINTS);
 
-			freeHint = true;
-
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
 				foundStringTag = false;
@@ -126,8 +118,6 @@ public class TutorialLvl2 : TutorialBase
 		case(4):
 			phasesPanels [3].SetActive (false);
 			phasesPanels [4].SetActive (true);
-
-			freeHint = true;
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;

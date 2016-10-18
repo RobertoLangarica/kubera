@@ -7,6 +7,8 @@ using Kubera.Data;
 
 public class KuberaWebView : MonoBehaviour 
 {
+	public delegate void DwebViewNotifications();
+
 	public GameObject videoModal;
 
 	protected const string WEBVIEW_SCHEME = "shopika";
@@ -19,6 +21,8 @@ public class KuberaWebView : MonoBehaviour
 	public RectTransform webViewSize;
 	public GameObject customToolBar;
 
+	public DwebViewNotifications OnLoggedIn;
+
 	void Start()
 	{
 		videoModal.SetActive(false);
@@ -27,7 +31,7 @@ public class KuberaWebView : MonoBehaviour
 	public void showShopikaAndRegisterForEvents()
 	{
 		videoModal.SetActive(true);
-		if (GemsManager.GetCastedInstance<GemsManager> ().currentUserId == GemsManager.GetCastedInstance<GemsManager> ().ANONYMOUS_USER) 
+		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
 		{
 			if (((DataManagerKubera)DataManagerKubera.GetInstance ()).currentUser.firstTimeShopping) 
 			{
@@ -37,8 +41,8 @@ public class KuberaWebView : MonoBehaviour
 		} 
 		else 
 		{
-			loginToShopika (GemsManager.GetCastedInstance<GemsManager> ().currentUserId,
-				GemsManager.GetCastedInstance<GemsManager> ().currentUser.accesToken);
+			loginToShopika (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId,
+				ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUser.accesToken);
 		}
 
 		WebViewManager.GetInstance ().OnFinishLoading += showToolBar;
@@ -62,10 +66,15 @@ public class KuberaWebView : MonoBehaviour
 		switch (message.Host) 
 		{
 		case(WEBVIEW_LOGIN):
-			saveUserInfo (message.Arguments ["userId"], message.Arguments ["tokenId"]);
-			loginToShopika (GemsManager.GetCastedInstance<GemsManager> ().currentUserId,
-				GemsManager.GetCastedInstance<GemsManager> ().currentUser.accesToken);
-			Debug.Log ("WEBLOGIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			saveUserInfo (message.Arguments ["userId"], message.Arguments ["tokenId"],message.Arguments["displayName"]);
+			loginToShopika (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId,
+				ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUser.accesToken);
+
+			if (OnLoggedIn != null) 
+			{
+				OnLoggedIn ();
+			}
+
 			break;
 		case(WEBVIEW_GEMS):
 			
@@ -75,20 +84,19 @@ public class KuberaWebView : MonoBehaviour
 				((DataManagerKubera)DataManagerKubera.GetInstance ()).markGemsAsPurchased ();
 			}
 
-			GemsManager.GetCastedInstance<GemsManager>().OnGemsRemotleyChanged();
-			Debug.Log ("GEMS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			ShopikaManager.GetCastedInstance<ShopikaManager>().OnGemsRemotleyChanged();
 			break;
 		case(WEBVIEW_FINISH):
 			closeWebView ();
-			Debug.Log ("FINISH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			ShopikaManager.GetCastedInstance<ShopikaManager>().OnGemsRemotleyChanged();
 			break;
 		}
 	}
 
-	protected void saveUserInfo(string userID,string tokenID)
+	protected void saveUserInfo(string userID,string tokenID,string displayName)
 	{
 		//TODO: Guardar datos de login en lugar seguro
-		GemsManager.GetCastedInstance<GemsManager>().OnUserLoggedIn(userID,tokenID);
+		ShopikaManager.GetCastedInstance<ShopikaManager>().OnUserLoggedIn(userID,tokenID,displayName);
 	}
 
 	protected void loginToShopika(string userID,string tokenID)

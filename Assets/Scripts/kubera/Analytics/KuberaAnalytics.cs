@@ -25,8 +25,11 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 	public const string BOSS_REACHED						 = "bossReached";
 	public const string FACEBOOK_KEY_REQUEST				 = "facebookKeyRequest";
 	public const string FACEBOOK_FIRST_LIFE_REQUEST			 = "facebookFirstLifeRequest";
+	public const string FACEBOOK_LOGIN						 = "facebookLogin";
 
 	protected DateTime epoch = new DateTime(1970,1,1,0,0,0,DateTimeKind.Local);
+
+	public bool _dontSendData = false;
 
 	protected void registerSimpleEvent(string eventName)
 	{
@@ -35,6 +38,11 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 
 	protected void registerEventWithParameters(string eventName,Dictionary<string,string> parameters)
 	{
+		if (_dontSendData) 
+		{
+			return;
+		}
+
 		FlurryAnalytics.Instance.LogEventWithParameters (eventName, parameters);
 	}
 
@@ -56,6 +64,11 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 	void Start()
 	{
 		switchForUnityAnalytics (true);
+
+		if(_dontSendData)
+		{
+			Debug.Log("<color=red>Modo test: MODO SIN ANALITICOS!!!!!!!!!!!!</color>");
+		}
 	}
 
 	void OnApplicationPause(bool pauseStatus)
@@ -129,6 +142,11 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 			return;
 		}
 
+		if (level == "0003" && word == "YEN") 
+		{
+			return;
+		}
+
 		registerEventWithParameters(REGISTER_WORD,
 			new Dictionary<string, string>() {
 				{"Level",level},
@@ -170,6 +188,13 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 		registerEventWithParameters(FACEBOOK_FIRST_LIFE_REQUEST,
 			new Dictionary<string, string>() {
 				{"Level",level},
+				{"User",DataManagerKubera.GetInstance().currentUserId}});
+	}
+
+	public void registerFaceBookLogin()
+	{
+		registerEventWithParameters(FACEBOOK_LOGIN,
+			new Dictionary<string, string>() {
 				{"User",DataManagerKubera.GetInstance().currentUserId}});
 	}
 

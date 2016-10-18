@@ -21,6 +21,7 @@ public class HighLight : MonoBehaviour
 	public float animStep = 0.02f;
 
 	public bool hasBeat;
+	public bool lastForever;
 	public float beatTime = 1;
 	public float beatStrength = 0.1f;
 	public int beatVibrato = 1;
@@ -46,6 +47,11 @@ public class HighLight : MonoBehaviour
 	{
 		//particles = borderStars.GetComponent<ParticleSystem> ();
 		//borderStars.SetActive (true);
+
+		if (lastForever) 
+		{
+			initAnim ();
+		}
 	}
 
 	void Update()
@@ -92,7 +98,10 @@ public class HighLight : MonoBehaviour
 
 			updateColor ();
 
-			initAnim ();
+			if (!lastForever) 
+			{
+				initAnim ();
+			}
 
 			return true;
 		}
@@ -178,9 +187,12 @@ public class HighLight : MonoBehaviour
 
 	protected void finishAnim()
 	{
-		startAnim = false;
+		if (!lastForever) 
+		{
+			startAnim = false;
 
-		getModifiedAlpha (0,true);
+			getModifiedAlpha (0, true);
+		}
 	}
 
 	protected float getModifiedAlpha(float value,bool reset = false)

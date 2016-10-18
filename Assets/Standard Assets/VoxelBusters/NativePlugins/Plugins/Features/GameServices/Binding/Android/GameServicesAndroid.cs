@@ -53,6 +53,7 @@ namespace VoxelBusters.NativePlugins
 
 			// Register native API Service
 			Plugin.Call(Native.Methods.REGISTER_SERVICE, NPSettings.Application.SupportedFeatures.UsesCloudServices);
+			Plugin.Call(Native.Methods.SET_SHOW_DEFAULT_ERROR_DIALOGS, NPSettings.GameServicesSettings.Android.ShowDefaultErrorDialogs);
 		}
 
 		#endregion

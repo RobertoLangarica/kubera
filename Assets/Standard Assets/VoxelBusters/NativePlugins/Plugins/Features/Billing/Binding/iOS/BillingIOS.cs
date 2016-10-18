@@ -33,6 +33,9 @@ namespace VoxelBusters.NativePlugins
 		[DllImport("__Internal")]
 		private static extern void cpnpBillingRestoreCompletedTransactions ();
 
+		[DllImport("__Internal")]
+		private static extern void cpnpBillingFinishCompletedTransactions (string _transactionIDs, bool _isRestoreType);
+
 		#endregion
 
 		#region Overriden API's

@@ -28,6 +28,9 @@ namespace VoxelBusters.NativePlugins
 		[SerializeField]
 		[Tooltip("Product's registration id in Google Play Store.")]
 		private 	string 		m_androidProductId;
+		[SerializeField]
+		[Tooltip("Optional extra data to let store to send back in purchase response. Used for security purposes and supported by Google's Android Platform only currently.")]
+		private 	string 		m_developerPayload;
 
 		#endregion
 
@@ -164,6 +167,24 @@ namespace VoxelBusters.NativePlugins
 #endif
 			}
 		}
+
+		/// <summary>
+		/// This is used to specify any additional arguments that you want Store to send back along with the purchase information.
+		/// Note : This is currently supported by Google's Android Platform only.
+		/// </summary>
+		public string DeveloperPayload
+		{
+			get
+			{
+				return m_developerPayload;
+			}
+			
+			set
+			{
+				m_developerPayload = value;
+			}
+		}
+
 
 		#endregion
 

@@ -38,6 +38,19 @@ public class FBConnectPopUp : PopUpBase {
 	{
 		syncManager.facebookLogin();
 
-		syncManager.facebookProvider.OnLoginSuccessfull += OnComplete;
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().isGettingData)
+		{
+			completed();
+		}
+		else
+		{
+			syncManager.facebookProvider.OnLoginSuccessfull += completed;
+			syncManager.facebookProvider.OnLoginFail += completed;
+		}
+	}
+
+	protected void completed(string action ="")
+	{
+		OnComplete ("notClose");
 	}
 }

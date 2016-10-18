@@ -214,11 +214,11 @@ public class WebViewManager : Manager<WebViewManager>
 
 	protected void receiveMessageEvent (WebView webview,  WebViewMessage message)
 	{
-		/*Debug.Log("Received a new message from web view.");
-		Debug.Log(string.Format("Host: {0}.", 		message.Host));
-		Debug.Log(string.Format("Scheme: {0}.", 		message.Scheme));
-		Debug.Log(string.Format("URL: {0}.", 		message.URL));
-		Debug.Log(string.Format("Arguments: {0}.", 	message.Arguments.ToJSON()));*/
+		//Debug.Log("Received a new message from web view.");
+		//Debug.Log(string.Format("Host: {0}.", 		message.Host));
+		//Debug.Log(string.Format("Scheme: {0}.", 		message.Scheme));
+		//Debug.Log(string.Format("URL: {0}.", 		message.URL));
+		//Debug.Log(string.Format("Arguments: {0}.", 	message.Arguments.ToJSON()));
 
 		if (webViewMessagesSubscriptors.ContainsKey (message.Scheme)) 
 		{

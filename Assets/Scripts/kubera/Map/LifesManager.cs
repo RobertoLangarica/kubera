@@ -32,15 +32,35 @@ public class LifesManager : Manager<LifesManager>
 		showTimer = false;
 
 		dataManager = (DataManagerKubera.GetInstance () as DataManagerKubera);
+		maximumLifes = dataManager.initialLifes;
+
+		if (dataManager.currentUserId != dataManager.ANONYMOUS_USER) 
+		{
+			maximumLifes += 2;
+		}
+		else if(maximumLifes < currentUser.playerLifes)
+		{
+			currentUser.playerLifes = maximumLifes;
+		}
 
 		if (PersistentData.GetInstance ().fromLevelBuilder) 
 		{
 			return;
 		}
 
-		if (currentUser.playerLifes < dataManager.initialLifes) 
+		if (currentUser.playerLifes < maximumLifes) 
 		{
-				updateLifesSinceLastPlay ();
+			if (currentUser.lifeTimerDate == null) 
+			{
+				setLifeDate ();
+			} 
+
+			if (currentUser.lifeTimerDate == "") 
+			{
+				setLifeDate ();
+			} 
+
+			updateLifesSinceLastPlay ();
 		}
 
 		refreshHUD ();
@@ -89,7 +109,7 @@ public class LifesManager : Manager<LifesManager>
 	{
 		KuberaUser tempUsr = currentUser;
 		
-		if (tempUsr.playerLifes == dataManager.initialLifes) 
+		if (tempUsr.playerLifes == maximumLifes) 
 		{
 			setLifeDate ();
 		}
@@ -146,7 +166,7 @@ public class LifesManager : Manager<LifesManager>
 				updateDateOnData (lifesGained);
 			}
 
-			int missingLifes = dataManager.initialLifes - tempUsr.playerLifes;
+			int missingLifes = maximumLifes - tempUsr.playerLifes;
 
 			difference -= (missingLifes - 1) * (60 * timeForLifeInMinutes);
 
@@ -162,13 +182,13 @@ public class LifesManager : Manager<LifesManager>
 		} 
 		else 
 		{
-			giveLifesToUser(dataManager.initialLifes);
+			giveLifesToUser(maximumLifes);
 		}
 	}
 
 	public double getTimeToWait()
 	{
-		if (currentUser.playerLifes >= dataManager.initialLifes) 
+		if (currentUser.playerLifes >= maximumLifes) 
 		{
 			return 0;
 		}
@@ -188,7 +208,7 @@ public class LifesManager : Manager<LifesManager>
 
 	protected double calculateTotalWaitingTime()
 	{
-		return (double)(timeForLifeInMinutes * (dataManager.initialLifes - currentUser.playerLifes) * 60);
+		return (double)(timeForLifeInMinutes * (maximumLifes - currentUser.playerLifes) * 60);
 	}
 
 	protected double lifeDateDifferenceInSecs()
@@ -202,7 +222,7 @@ public class LifesManager : Manager<LifesManager>
 
 	protected void decreaseLifeTimer(int seconds = 1)
 	{
-		if (currentUser.playerLifes == dataManager.initialLifes) 
+		if (currentUser.playerLifes == maximumLifes) 
 		{
 			showTimer = false;
 			refreshHUD ();
@@ -233,7 +253,7 @@ public class LifesManager : Manager<LifesManager>
 	{
 		giveLifesToUser(amount);
 
-		if (currentUser.playerLifes == dataManager.initialLifes) 
+		if (currentUser.playerLifes == maximumLifes) 
 		{
 			showTimer = false;	
 			refreshHUD ();

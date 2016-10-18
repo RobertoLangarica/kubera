@@ -7,8 +7,18 @@ using System.Collections;
 public class MultiLanguageTextManager
 {
 	//HOME
-	public const string START_GAME		= "startGame";
+	public const string START_GAME						= "startGame";
+	public const string CONNECT_SHOPIKA_POPUP			= "connectShopikaPopUp";
+	public const string INVITE_FRIENDS_SHOPIKA_POPUP	= "inviteFriendsShopikaPopUp";
 
+	public const string CONNECTING_SHOPIKA_TITLE 			= "connecting_shopika_title";
+	public const string CONNECTING_SHOPIKA_INFO 	   		= "connecting_shopika_info";
+	public const string CONNECTING_FAILURE_SHOPIKA_TITLE   	= "connecting_failure_shopika_title";
+	public const string CONNECTING_FAILURE_SHOPIKA_INFO		= "connecting_failure_shopika_info";
+	public const string CONNECTING_FACEBOOK_TITLE 	    	= "connecting_facebook_title";
+	public const string CONNECTING_FACEBOOK_INFO 	    	= "connecting_facebook_info";
+	public const string CONNECTING_FAILURE_FACEBOOK_TITLE 	= "connecting_failure_facebook_title";
+	public const string CONNECTING_FAILURE_FACEBOOK_INFO 	= "connecting_failure_facebook_info";
 
 
 	//GAME
@@ -70,6 +80,7 @@ public class MultiLanguageTextManager
 
 	public const string NO_GEMS_POPUP_TITLE					= "NoGemsPopUpTitle";
 	public const string NO_GEMS_POPUP_INFO					= "NoGemsPopUpInfo";
+	public const string NO_GEMS_POPUP_INFO_NO_LOGIN			= "NoGemsPopUpInfoNoShopikaLogin";
 	public const string NO_GEMS_POPUP_BUTTON				= "NoGemsPopUpButton";
 
 	public const string BOSS_LOCKED_UNLOCK_TEXT 			= "BossLockedUnlockText";
@@ -102,6 +113,8 @@ public class MultiLanguageTextManager
 	public const string FB_LOG_IN_TEXT						= "fbLogInText";
 	public const string FB_LOG_OUT_TEXT						= "fbLogOutText";
 
+	public const string FB_REQUEST_ASK_TEXT					= "fbRequestAskText";
+
 
 	//GAME
 	public const string FLAVOR_TEXT							= "ticketFlavorText";
@@ -113,6 +126,7 @@ public class MultiLanguageTextManager
 	public const string NO_OPTIONS_FIRST					= "noOptionsFirst";
 	public const string NO_OPTIONS_GIVEUP					= "noOptionsGiveUp";
 	public const string NO_OPTIONS_USEPOWER					= "noOptionsUsePower";
+	public const string FREE_POWERUP_PRICE 					= "powerUpFreePrice";
 
 	public const string TUTORIAL_LV1_PHASE1					= "Tutorial_lvl1_phase1";
 	public const string TUTORIAL_LV1_PHASE2					= "Tutorial_lvl1_phase2";
@@ -195,6 +209,14 @@ public class MultiLanguageTextManager
 	public const string NOTIFICATION_7_DAYS 				= "7_Days_Without_Playing";
 	public const string NOTIFICATION_14_DAYS 				= "14_Days_Without_Playing";
 	public const string NOTIFICATION_30_DAYS 				= "30_Days_Without_Playing";
+
+	//Share
+	public const string SHARE_DEFAULT_TEXT					="shareDefaultText";
+
+	//VisitShopika
+	public const string VISIT_SHOPIKA_TITLE					="visitShopikaTitle";
+	public const string VISIT_SHOPIKA_INFO					="visitShopikaDescription";
+	public const string VISIT_SHOPIKA_BUTTON				="visitShopikaButton";
 
 	protected static MultiLanguageTextManager _instance;
 

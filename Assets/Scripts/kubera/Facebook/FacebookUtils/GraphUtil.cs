@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Facebook.Unity;
 
 // Utility class for useful operations when working with the Graph API
 public class GraphUtil : ScriptableObject 
@@ -56,6 +57,10 @@ public class GraphUtil : ScriptableObject
 		var user = userObject as Dictionary<string, object>;
 
 		object pictureObj;
+		if(user == null)
+		{
+			return null;
+		}
 		if (user.TryGetValue("picture", out pictureObj))
 		{
 			var pictureData = (Dictionary<string, object>)(((Dictionary<string, object>)pictureObj)["data"]);

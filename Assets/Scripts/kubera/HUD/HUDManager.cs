@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using utils.gems;
 
 public class HUDManager : MonoBehaviour 
 {
@@ -46,10 +47,11 @@ public class HUDManager : MonoBehaviour
 	public RectTransform vacum;
 	protected Vector2 vacumStartPos;
 
-	protected FloatingTextPool scorePool;
 	protected List<GameObject> lettersToFound = new List<GameObject>();
-	protected HUDMetterAndStars hudStars;
-	protected PopUpManager popUpManager;
+
+	public HUDMetterAndStars hudStars;
+	public FloatingTextPool scorePool;
+	public PopUpManager popUpManager;
 
 	public delegate void DPopUpNotification(string action ="");
 	public DPopUpNotification OnPopUpCompleted;
@@ -71,10 +73,6 @@ public class HUDManager : MonoBehaviour
 		{
 			Debug.Log("<color=red>Modo test: POWER-UPS Activados</color>");	
 		}
-
-		hudStars = FindObjectOfType<HUDMetterAndStars> ();
-		scorePool = FindObjectOfType<FloatingTextPool>();
-		popUpManager = FindObjectOfType <PopUpManager> ();
 
 		popUpManager.OnPopUpCompleted += popUpCompleted;
 		lvlButton = lvlGo.GetComponent<Button> ();		
@@ -405,10 +403,11 @@ public class HUDManager : MonoBehaviour
 	public void showScoreTextAt(Vector3 scorePosition,int score)
 	{
 		Vector3 finish = scorePosition;
-		Text poolText = scorePool.getFreeText();
-		FloatingText bText = poolText.gameObject.GetComponent<FloatingText>();
 
-		poolText.text = "+" + score.ToString();
+		FloatingTextForPool bText = scorePool.getFreeText();;
+
+		//bText.myText.text = "+" + (score < 10 ? " ":"") +score.ToString();
+		bText.myText.text = "+" + score.ToString();
 
 		scorePosition.z = 0;
 		finish.y += 1;// HACK: poolText.rectTransform.rect.height;
@@ -516,11 +515,24 @@ public class HUDManager : MonoBehaviour
 
 	public void enablePowerUps()
 	{
-		powerUps [0].gameObject.SetActive(UserDataManager.instance.isWordHintPowerUpUnlocked || enableAllPowerUps);
-		powerUps [1].gameObject.SetActive(UserDataManager.instance.isDestroyNeighborsPowerUpUnlocked || enableAllPowerUps);
-		powerUps [2].gameObject.SetActive(UserDataManager.instance.isOnePiecePowerUpUnlocked || enableAllPowerUps);
-		powerUps [3].gameObject.SetActive(UserDataManager.instance.isRotatePowerUpUnlocked || enableAllPowerUps);
-		powerUps [4].gameObject.SetActive(UserDataManager.instance.isWildCardPowerUpUnlocked || enableAllPowerUps);
-		powerUps [5].gameObject.SetActive(UserDataManager.instance.isDestroyPowerUpUnlocked || enableAllPowerUps);
+		powerUps [0].gameObject.SetActive (int.Parse(PersistentData.GetInstance().currentLevel.name) >= 3 ? true : false);//UserDataManager.instance.isWordHintPowerUpUnlocked || enableAllPowerUps);
+		powerUps [1].gameObject.SetActive(int.Parse(PersistentData.GetInstance().currentLevel.name) >= 8 ? true : false);//UserDataManager.instance.isDestroyNeighborsPowerUpUnlocked || enableAllPowerUps);
+		powerUps [2].gameObject.SetActive(int.Parse(PersistentData.GetInstance().currentLevel.name) >= 22 ? true : false);//UserDataManager.instance.isOnePiecePowerUpUnlocked || enableAllPowerUps);
+		powerUps [3].gameObject.SetActive(int.Parse(PersistentData.GetInstance().currentLevel.name) >= 37 ? true : false);//UserDataManager.instance.isRotatePowerUpUnlocked || enableAllPowerUps);
+		powerUps [4].gameObject.SetActive(int.Parse(PersistentData.GetInstance().currentLevel.name) >= 52 ? true : false);//UserDataManager.instance.isWildCardPowerUpUnlocked || enableAllPowerUps);
+		powerUps [5].gameObject.SetActive(false);//int.Parse(PersistentData.GetInstance().currentLevel.name) >= 2 ? true : false);//UserDataManager.instance.isDestroyPowerUpUnlocked || enableAllPowerUps);
+	}
+
+	public void activateShopika()
+	{
+		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
+		{
+			activatePopUp ("shopikaConnect");
+		}
+	}
+
+	public void activateOpeningShopika()
+	{
+		activatePopUp ("OpeningShopika");
 	}
 }

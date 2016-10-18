@@ -83,7 +83,18 @@ public class Letter : MonoBehaviour
 			if (!selected) 
 			{
 				txtLetter.color = Color.black;
-				txtPoints.color = Color.white;
+				if (txtPoints.text == "x2") 
+				{
+					txtPoints.color = new Color(1,0.6313f,0.047f);
+				}
+				else if (txtPoints.text == "x3") 
+				{
+					txtPoints.color = new Color(1,1,0);
+				} 
+				else 
+				{
+					txtPoints.color = Color.white;
+				}
 			}
 			else
 			{
@@ -121,7 +132,18 @@ public class Letter : MonoBehaviour
 				if (!selected) 
 				{
 					txtLetter.color = Color.black;
-					txtPoints.color = Color.white;
+					if (txtPoints.text == "x2") 
+					{
+						txtPoints.color = new Color(1,0.6313f,0.047f);
+					}
+					else if (txtPoints.text == "x3") 
+					{
+						txtPoints.color = new Color(1,1,0);
+					} 
+					else 
+					{
+						txtPoints.color = Color.white;
+					}
 				}
 				else
 				{

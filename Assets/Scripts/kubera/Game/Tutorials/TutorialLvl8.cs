@@ -9,12 +9,11 @@ public class TutorialLvl8 : TutorialBase
 	public GameObject fromPosition;
 
 	protected bool doAnimation;
-	protected InputBombAndDestroy inputBomb;
+	public InputBombAndDestroy inputBomb;
 	protected Vector3 posFrom;
 	protected Vector3 posTo;  
 	protected override void Start()
 	{
-		inputBomb = FindObjectOfType<InputBombAndDestroy> ();
 		inputBomb.OnPlayer += animationController;
 
 		base.Start ();

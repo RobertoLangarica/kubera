@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using Data;
 using Data.Remote;
@@ -8,9 +9,17 @@ namespace Data.Sync
 	
 	public class SyncManager<T> : Manager<T> where T:Manager
 	{
+		public bool autoLogoutAfterGetDataFailed = true;
+
 		public LoginProvider customProvider;
 		public LoginProvider facebookProvider;
 		public ServerProvider server;
+
+		public Action OnDataRetrieved;
+		public Action OnDataRetrievedFailure;
+		public Action OnLoginFailure;
+
+		[HideInInspector]public bool isGettingData = false;
 
 		protected RemoteUser currentUser;
 
@@ -22,18 +31,24 @@ namespace Data.Sync
 			{
 				customProvider.OnLoginSuccessfull	+= OnCustomLogin;
 				customProvider.OnLogoutSuccessfull	+= OnCustomLogout;
+				customProvider.OnLoginFail += onCustomLoginFailed;
+				customProvider.OnServerOutOfReach += onCustomLoginFailed;
 			}
 
 			if(facebookProvider != null) 
 			{
 				facebookProvider.OnLoginSuccessfull += OnFacebookLogin;
 				facebookProvider.OnLogoutSuccessfull+= OnFacebookLogout;
+				facebookProvider.OnLoginFail += onFacebookLoginFailed;
+				facebookProvider.OnServerOutOfReach += onFacebookLoginFailed;
 			}
 
 			server.OnUserReceived += OnUserReceived;
 			server.OnDataReceived += OnDataReceived;
 			server.OnDataUpdated += OnDataUpdated;
+			server.OnGetDataFailed += OnGetDataFailed;
 		}
+
 
 		public void facebookLogin()
 		{
@@ -141,7 +156,7 @@ namespace Data.Sync
 			if(facebookProvider == null || !facebookProvider.isLoggedIn)
 			{
 				//Ya no hay usuario
-				logout();
+				afterLogout();
 			}
 		}
 
@@ -150,14 +165,36 @@ namespace Data.Sync
 			if(customProvider == null || !customProvider.isLoggedIn)
 			{
 				//Ya no hay usuario
-				logout();
+				afterLogout();
 			}
 		}
 
-		protected virtual void logout()
+		protected virtual void afterLogout()
 		{
 			server.stopAndRemoveCurrentRequests();
 			currentUser = null;
+		}
+
+		protected virtual void onFacebookLoginFailed(string message)
+		{
+			if(customProvider == null || !customProvider.isLoggedIn)
+			{
+				if(OnLoginFailure != null)
+				{
+					OnLoginFailure();
+				}
+			}
+		}
+
+		protected virtual void onCustomLoginFailed(string message)
+		{
+			if(facebookProvider == null || !facebookProvider.isLoggedIn)
+			{
+				if(OnLoginFailure != null)
+				{
+					OnLoginFailure();
+				}
+			}
 		}
 
 		protected virtual void OnUserReceived(RemoteUser user)
@@ -166,13 +203,32 @@ namespace Data.Sync
 		}
 
 		protected virtual void OnDataReceived(string fullData)
-		{
-			
-		}
+		{}
 
 		protected virtual void OnDataUpdated(string updatedData)
+		{}
+
+		protected virtual void OnGetDataFailed()
 		{
-			
+			isGettingData = false;
+
+			if(autoLogoutAfterGetDataFailed)
+			{
+				if(customProvider != null)
+				{
+					customLogout();
+				}
+
+				if(facebookProvider != null)
+				{
+					facebookLogout();
+				}
+			}
+				
+			if(OnDataRetrievedFailure != null)
+			{
+				OnDataRetrievedFailure();
+			}
 		}
 	}
 }

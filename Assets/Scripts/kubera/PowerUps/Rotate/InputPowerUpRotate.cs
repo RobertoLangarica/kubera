@@ -5,9 +5,10 @@ using DG.Tweening;
 
 public class InputPowerUpRotate : MonoBehaviour
 {
-	protected PieceManager pieceManager;
-	protected GameManager gameManager;
-	protected HUDManager hudManager;
+	public PieceManager pieceManager;
+	public GameManager gameManager;
+	public HUDManager hudManager;
+	public InputPiece inputPiece;
 
 	public Vector3 offsetPositionOverFinger = new Vector3(0,1.5f,0);
 	public Vector3 selectedScale = new Vector3 (4.5f, 4.5f, 4.5f);
@@ -42,10 +43,8 @@ public class InputPowerUpRotate : MonoBehaviour
 
 	void Start()
 	{
-		pieceManager = FindObjectOfType<PieceManager> ();
-		gameManager = FindObjectOfType<GameManager> ();
-		hudManager = FindObjectOfType<HUDManager> ();
-		pieceSpeed = FindObjectOfType<InputPiece> ().pieceSpeed;
+		pieceSpeed = inputPiece.pieceSpeed;
+
 		if(pieceStock == null)
 		{
 			print("Falta asignarlo en el editor");
@@ -64,13 +63,6 @@ public class InputPowerUpRotate : MonoBehaviour
 
 	public void startRotate()
 	{
-		if(pieceManager == null ||gameManager == null|| hudManager == null)
-		{
-			pieceManager = FindObjectOfType<PieceManager> ();
-			gameManager = FindObjectOfType<GameManager> ();
-			hudManager = FindObjectOfType<HUDManager> ();
-		}
-	
 		activateRotateImage (true);
 	}
 

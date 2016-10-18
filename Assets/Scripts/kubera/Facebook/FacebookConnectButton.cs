@@ -3,9 +3,13 @@ using System.Collections;
 using UnityEngine.UI;
 using Kubera.Data.Sync;
 
-public class FacebookConnectButton : MonoBehaviour {
+public class FacebookConnectButton : MonoBehaviour 
+{
+	public delegate void DfacebookConnectNotifications();
 
 	public Text fbText;
+	public DfacebookConnectNotifications OnLoggedIn;
+	public DfacebookConnectNotifications OnLoggedOut;
 
 	private KuberaSyncManger syncManager;
 
@@ -48,10 +52,20 @@ public class FacebookConnectButton : MonoBehaviour {
 			if(loggedIn)
 			{
 				fbText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FB_LOG_OUT_TEXT);
+
+				if (OnLoggedIn != null) 
+				{
+					OnLoggedIn ();
+				}
 			}
 			else
 			{
 				fbText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.FB_LOG_IN_TEXT);
+
+				if (OnLoggedOut != null) 
+				{
+					OnLoggedOut ();
+				}
 			}
 		}
 	}

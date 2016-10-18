@@ -14,6 +14,11 @@ public class PopUpBase : MonoBehaviour {
 		popUp.SetActive (true);
 	}
 
+	public virtual void deactivate()
+	{
+		popUp.SetActive (false);
+	}
+
 	protected void OnComplete(string action ="",bool deActivate = true)
 	{
 		if(deActivate)

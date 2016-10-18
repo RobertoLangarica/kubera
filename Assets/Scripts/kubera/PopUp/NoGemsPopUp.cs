@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using utils.gems;
 
 public class NoGemsPopUp : PopUpBase {
 
@@ -13,7 +14,14 @@ public class NoGemsPopUp : PopUpBase {
 	void Start()
 	{
 		Title.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.NO_GEMS_POPUP_TITLE);
-		Info.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.NO_GEMS_POPUP_INFO);
+		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
+		{
+			Info.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.NO_GEMS_POPUP_INFO_NO_LOGIN);
+		} 
+		else 
+		{
+			Info.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.NO_GEMS_POPUP_INFO);
+		}
 		buttonText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.NO_GEMS_POPUP_BUTTON);
 	}
 

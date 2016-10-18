@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Kubera.Data;
 using Kubera.Data.Sync;
+using utils.gems;
 
 public class MapManager : MonoBehaviour
 {
@@ -53,6 +54,10 @@ public class MapManager : MonoBehaviour
 	public GoalPopUp goalPopUp;
 	public WorldsPopUp worldsPopUp;
 
+	public GameObject hudWithShareButton;
+	public GameObject hudWithOutShareButton;
+
+	protected bool cantPlay;
 
 	void Start()
 	{
@@ -119,8 +124,22 @@ public class MapManager : MonoBehaviour
 
 		//Cambiando al mundo adecuado
 		changeWorld();
-	}
 
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved += restartScene;
+
+
+		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
+		{
+			hudWithOutShareButton.SetActive (true);
+			hudWithShareButton.SetActive (false);
+		} 
+		else 
+		{
+			hudWithOutShareButton.SetActive (false);
+			hudWithShareButton.SetActive (true);
+		}
+	}
+		
 	#if UNITY_EDITOR
 	void Update()
 	{
@@ -146,7 +165,7 @@ public class MapManager : MonoBehaviour
 
 		for(int i=0; i < worldCount; i++)
 		{
-			if(maxWorldReached > i)
+			if(maxWorldReached > i || AllLevelsUnlocked)
 			{
 				worldLevels = user.getLevelsByWorld(i+1);
 
@@ -336,11 +355,17 @@ public class MapManager : MonoBehaviour
 			}
 			else
 			{
-				if(toStairs)
+				if(toStairs && !PersistentData.GetInstance().stairsUnblocked)
 				{
 					isInLastLevelWorld = true;
+					PersistentData.GetInstance ().stairsUnblocked = true;
+					currentLevel.myProgress (isConectedToFacebook);
 				}
-				currentLevel.myProgress (isConectedToFacebook);
+				else if(!toStairs)
+				{
+					PersistentData.GetInstance ().stairsUnblocked = false;
+					currentLevel.myProgress (isConectedToFacebook);
+				}
 			}
 		}
 	}
@@ -555,7 +580,7 @@ public class MapManager : MonoBehaviour
 	{
 		KuberaUser currentUser = (DataManagerKubera.GetInstance () as DataManagerKubera).currentUser;
 		
-		if (currentUser.playerLifes == (DataManagerKubera.GetInstance () as DataManagerKubera).initialLifes)
+		if (currentUser.playerLifes == LifesManager.GetInstance().maximumLifes)
 		{
 			openPopUp (fullLifes_PopUp);
 		}
@@ -624,6 +649,11 @@ public class MapManager : MonoBehaviour
 
 	protected void OnLevelUnlockedPressed(MapLevel pressed)
 	{
+		if(cantPlay)
+		{
+			return;
+		}
+		
 		PersistentData.GetInstance ().setLevelNumber (int.Parse (pressed.lvlName));
 		PersistentData.GetInstance ().lastLevelPlayedName = pressed.lvlName;
 		PersistentData.GetInstance ().nextLevelIsReached = pressed.nextLevelIsReached;
@@ -661,6 +691,7 @@ public class MapManager : MonoBehaviour
 
 		if(stairs && isInLastLevelWorld)
 		{
+			cantPlay = true;
 			stairs.mapManager = this;
 			stairs.animateToWait ();
 		}
@@ -669,6 +700,7 @@ public class MapManager : MonoBehaviour
 	public void changeCurrentWorld(int world,bool isFirst, bool isLast)
 	{
 		toStairs = false;
+		cantPlay = false;
 		if(isFirst)
 		{
 			first = true;
@@ -978,6 +1010,14 @@ public class MapManager : MonoBehaviour
 			}
 		break;
 		case "needLifes":
+			foreach (PopUpBase val in popUpManager.popups) 
+			{
+				if (val.gameObject.activeSelf) 
+				{
+					val.deactivate ();
+				}
+			}
+
 			stopInput(true);
 			if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 			{
@@ -989,6 +1029,9 @@ public class MapManager : MonoBehaviour
 				popUpManager.activatePopUp ("fbConnectPopUp");
 			}
 		break;
+		case "notClose":
+			stopInput(true);
+			break;
 		default:
 		break;
 		}
@@ -1008,5 +1051,29 @@ public class MapManager : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	public void activateFacebook()
+	{
+		openPopUp ("facebookLoadingConnect");
+	}
+
+	public void activateShopika()
+	{
+		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
+		{
+			openPopUp ("shopikaConnect");
+		}
+	}
+
+	public void activateOpeningShopika()
+	{
+		openPopUp ("OpeningShopika");
+	}
+
+	protected void restartScene()
+	{
+		//SceneManager.LoadScene ("Levels");
+		ScreenManager.GetInstance().GoToScene("Levels",true);
 	}
 }

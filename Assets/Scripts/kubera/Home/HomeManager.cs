@@ -4,28 +4,25 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using Kubera.Data;
+using Kubera.Data.Sync;
+using utils.gems;
+using utils.gems.sync;
 
 public class HomeManager : MonoBehaviour 
 {
-
 	public bool DirectlyToPlayOnTheFirstTime = true;
 
-	public List<PiecesControllAnimation> pieces;
-	public LettersControllerAnimation[] letters;
-	public AnimatedSprite homeAnimatedSprite;
 	public SettingsButton settingButtons;
 
-	public Transform[] positions;
 	protected float speed = .33f;
 
-	protected List<PiecesControllAnimation> piecesMoved = new List<PiecesControllAnimation>();
-
 	public Text playText;
-	public RectTransform play;
-	public RectTransform config;
-	public RectTransform facebookLogin;
-	public RectTransform facebookLogOut;
 	public GameObject block;
+	public GameObject shopikaPopUp;
+
+	public GameObject modal;
+
+	public PopUpManager popUpManager;
 
 	void Start()
 	{
@@ -33,16 +30,6 @@ public class HomeManager : MonoBehaviour
 		{
 			Debug.Log("<color=red>Modo test: Se desactivo el poder ir directamente a jugar en el primer uso del juego.</color>");	
 		}
-
-		for(int i=0, j=0; i<pieces.Count; j++)
-		{
-			piecesMoved.Add (pieces[Random.Range (0, pieces.Count)]);
-			pieces.Remove (piecesMoved [j]);
-			piecesMoved [j].setPosition (positions [j].position);
-			piecesMoved [j].explodePosition = positions [j + 8].position;
-			piecesMoved [j].startRotate (speed);
-		}
-		Invoke ("startScene",0.3f);
 
 		settingButtons.OnActivateMusic += activateMusic;
 
@@ -56,46 +43,24 @@ public class HomeManager : MonoBehaviour
 				AudioManager.GetInstance ().Play ("menuMusic");
 			}
 		}
+
+		Invoke ("startScene",0.3f);
+
+		if(ShopikaSyncManager.GetCastedInstance<ShopikaSyncManager>().isGettingData)
+		{
+			activatePopUp ("shopikaConnect");
+		}
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().isGettingData)
+		{
+			activatePopUp ("facebookLoadingConnect");
+		}
+
+		popUpManager.OnPopUpCompleted += closePopUp;
 	}
 
 	void startScene()
 	{
-		StartCoroutine (showLetters ());
 		ScreenManager.GetInstance().sceneFinishLoading ();
-	}
-
-	IEnumerator showLetters()
-	{
-		yield return new WaitForSeconds (speed * 3);
-		for(int i=0; i<letters.Length; i++)
-		{
-			letters [i].firstPositionMove (speed);
-		}
-		yield return new WaitForSeconds (speed);
-		homeAnimatedSprite.autoUpdate = true;
-		yield return new WaitUntil (() => homeAnimatedSprite.sequences [0].currentFrame == 19);
-		for(int i=0; i<letters.Length; i++)
-		{
-			letters [i].explode (speed);
-		}
-		yield return new WaitForSeconds (speed);
-		for(int i=0; i<letters.Length; i++)
-		{
-			letters [i].ultimatePosition (speed);
-		}
-		for(int i=0; i<piecesMoved.Count; i++)
-		{
-			piecesMoved [i].ultimatePosition (positions[i+16].position, speed);
-		}
-		yield return new WaitForSeconds (speed);
-		config.DOAnchorPos (Vector2.zero, speed);
-		yield return new WaitForSeconds (speed);
-		play.DOAnchorPos (Vector2.zero, speed);
-		yield return new WaitForSeconds (speed);
-		facebookLogin.DOAnchorPos (Vector2.zero, speed);
-		facebookLogOut.DOAnchorPos (Vector2.zero, speed);
-		yield return new WaitForSeconds (speed);
-		block.SetActive (false);
 	}
 
 	public void goToScene(string scene)
@@ -164,6 +129,43 @@ public class HomeManager : MonoBehaviour
 					AudioManager.GetInstance ().Play ("menuMusic");
 				}
 			}
+		}
+	}
+
+	public void activateShopikaPopUp()
+	{
+		shopikaPopUp.SetActive (true);
+	}
+		
+	protected void activatePopUp(string name)
+	{
+		modal.SetActive (true);
+		popUpManager.activatePopUp (name);
+	}
+
+	protected void closePopUp(string action ="")
+	{
+		if(popUpManager.openPopUps.Count == 0)
+		{
+			modal.SetActive (false);
+		}
+	}
+
+	public void activateFacebook()
+	{
+		print (KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().facebookProvider.isLoggedIn);
+		if(!KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+		{
+			activatePopUp ("facebookLoadingConnect");
+		}
+	}
+
+
+	public void activateShopika()
+	{
+		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
+		{
+			activatePopUp ("shopikaConnect");
 		}
 	}
 }

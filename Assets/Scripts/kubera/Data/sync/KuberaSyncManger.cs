@@ -12,6 +12,7 @@ namespace Kubera.Data.Sync
 		public Action<PFLeaderboardData> OnLeaderboardObtained;
 
 		public DataManagerKubera localData;
+		public int freeLifesAfterSignIn = 2;
 
 		protected override void Awake()
 		{
@@ -32,9 +33,9 @@ namespace Kubera.Data.Sync
 		/**
 		 * Cuando se hace logout en local hay responder a ese cambio y hay que hacer logout remoto
 		 **/ 
-		protected override void logout ()
+		protected override void afterLogout ()
 		{
-			base.logout ();
+			base.afterLogout ();
 			localData.setUserAsAnonymous();
 
 			if(_mustShowDebugInfo)
@@ -74,8 +75,23 @@ namespace Kubera.Data.Sync
 					Debug.Log("Creating remote user.");
 				}
 
+				KuberaAnalytics.GetInstance ().registerFaceBookLogin ();
+				if(!localData.currentUser.remoteLifesGranted)
+				{
+					if(_mustShowDebugInfo)
+					{
+						Debug.Log("Granted Lifes: " + freeLifesAfterSignIn.ToString());	
+					}
+
+					localData.giveUserLifes(freeLifesAfterSignIn);
+					localData.currentUser.isDirty = localData.currentUser.updateremoteLifesGranted(true) || localData.currentUser.isDirty;
+				}
+					
 				//Hacemos un update normal del usuario
-				updateData(localData.getUserDirtyData());
+				//updateData(localData.getUserDirtyData());
+
+				isGettingData = true;
+				server.getUserData(currentUser.id, localData.currentUser.remoteDataVersion, true);
 			}
 			else
 			{
@@ -83,6 +99,8 @@ namespace Kubera.Data.Sync
 				{
 					Debug.Log("Getting data from remote user.");
 				}
+
+				isGettingData = true;
 				//Nos traemos los datos de este usuario
 				server.getUserData(currentUser.id, localData.currentUser.remoteDataVersion, true);
 			}
@@ -96,12 +114,35 @@ namespace Kubera.Data.Sync
 		{
 			base.OnDataReceived (fullData);
 
-			Debug.Log("BEforeDiff:\n"+fullData);
-			localData.diffUser(JsonUtility.FromJson<KuberaUser>(fullData), true);
+			if(_mustShowDebugInfo)
+			{
+				Debug.Log("BeforeDiff:\n"+fullData);
+			}
+
+			KuberaUser toDiff = JsonUtility.FromJson<KuberaUser>(fullData);
+
+			//Solo se hace diff si no llego vacio del server
+			if(toDiff.remoteDataVersion != -1)
+			{
+				localData.diffUser(toDiff, true);	
+			}
+
+			isGettingData = false;
 
 			if(_mustShowDebugInfo)
 			{
 				Debug.Log("Usuario sincronizado.");
+			}
+
+			if(!localData.currentUser.remoteLifesGranted)
+			{
+				if(_mustShowDebugInfo)
+				{
+					Debug.Log("Granted Lifes: " + freeLifesAfterSignIn.ToString());	
+				}
+
+				localData.giveUserLifes(freeLifesAfterSignIn);
+				localData.currentUser.isDirty = localData.currentUser.updateremoteLifesGranted(true) || localData.currentUser.isDirty;
 			}
 
 			//Necesita subirse?
@@ -113,8 +154,13 @@ namespace Kubera.Data.Sync
 				}
 				updateData(localData.getUserDirtyData());
 			}
-		}
 
+ 			if(OnDataRetrieved != null)
+			{
+				OnDataRetrieved();
+			}
+		}
+			
 		/**
 		 * Una vez actualizados los datos hay que actualizar el estado local de los datos
 		 **/ 

@@ -12,6 +12,8 @@ public class LoadingScene : MonoBehaviour
 	protected int current = 0;
 	protected float size;
 
+	public HintManager hints;
+
 	void Start()
 	{
 		size = kuberaLoading [0].rectTransform.rect.size.x;
@@ -33,6 +35,8 @@ public class LoadingScene : MonoBehaviour
 			textKuberaLoading[i].DOFade (1,duration);
 		}
 		backGround.gameObject.SetActive (true);
+
+		hints.changeText();
 	}
 
 	public void hideLoading(float duration)

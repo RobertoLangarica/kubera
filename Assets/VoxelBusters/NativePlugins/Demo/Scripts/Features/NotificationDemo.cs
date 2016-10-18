@@ -362,13 +362,13 @@ namespace VoxelBusters.NativePlugins.Demo
 			CrossPlatformNotification.AndroidSpecificProperties _androidProperties	= new CrossPlatformNotification.AndroidSpecificProperties();
 			_androidProperties.ContentTitle	= "content title";
 			_androidProperties.TickerText	= "ticker ticks over here";
-			_androidProperties.LargeIcon	= "NativePlugins.png"; //Keep the files in Assets/PluginResources/NativePlugins/Android or Common folder.
+			_androidProperties.LargeIcon	= "NativePlugins.png"; //Keep the files in Assets/PluginResources/Android or Common folder.
 			
 			CrossPlatformNotification _notification	= new CrossPlatformNotification();
 			_notification.AlertBody			= "alert body"; //On Android, this is considered as ContentText
 			_notification.FireDate			= System.DateTime.Now.AddSeconds(_fireAfterSec);
 			_notification.RepeatInterval	= _repeatInterval;
-			_notification.SoundName			= "Notification.mp3"; //Keep the files in Assets/PluginResources/NativePlugins/Android or iOS or Common folder.
+			_notification.SoundName			= "Notification.mp3"; //Keep the files in Assets/PluginResources/Android or iOS or Common folder.
 			_notification.UserInfo			= _userInfo;
 			_notification.iOSProperties		= _iosProperties;
 			_notification.AndroidProperties	= _androidProperties;

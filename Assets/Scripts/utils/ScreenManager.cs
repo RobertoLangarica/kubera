@@ -129,10 +129,11 @@ public class ScreenManager : Manager<ScreenManager> {
 		}
 	}
 
-	public void GoToScene(string newScene)
+	public void GoToScene(string newScene,bool sameScreen = false)
 	{
-		if(blocked || waitingScreen != null || newScene == SceneManager.GetActiveScene().name)
+		if(blocked || waitingScreen != null || (!sameScreen && newScene == SceneManager.GetActiveScene().name))
 		{
+			print ("s");
 			return;
 		}
 
@@ -154,13 +155,13 @@ public class ScreenManager : Manager<ScreenManager> {
 		}
 	}
 
-	public void testLoading(string level)
+	public void preLoadingScene(string level)
 	{
 		preloadSceneAsync = SceneManager.LoadSceneAsync(level);
 		preloadSceneAsync.allowSceneActivation = false;
 	}
 
-	public void testContinue()
+	public void preLoadingContinue()
 	{
 		print (preloadSceneAsync);
 
