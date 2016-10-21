@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a171de8d97c8b4b2dab8c42afac30a2a
-timeCreated: 1475721408
+timeCreated: 1476900333
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -25,11 +25,12 @@ TextureImporter:
     21300036: K-popups-pq_gemaLibre
     21300038: piezasglow
     21300040: K-popUps_objetiveBase
+    21300042: default_background
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
-    linearTexture: 1
+    linearTexture: 0
     correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
@@ -51,7 +52,7 @@ TextureImporter:
   maxTextureSize: 4096
   textureSettings:
     filterMode: 2
-    aniso: 16
+    aniso: 0
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -72,6 +73,11 @@ TextureImporter:
   - buildTarget: Android
     maxTextureSize: 2048
     textureFormat: 47
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: 33
     compressionQuality: 50
     allowsAlphaSplitting: 0
   spriteSheet:
@@ -173,7 +179,7 @@ TextureImporter:
         height: 47
       alignment: 9
       pivot: {x: 0.5065789, y: 0.4893617}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 14, y: 14, z: 14, w: 14}
       outline: []
     - name: K-inicio_shopika
       rect:
@@ -239,7 +245,7 @@ TextureImporter:
         height: 49
       alignment: 9
       pivot: {x: 0.49685535, y: 0.5408163}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 14, y: 14, z: 14, w: 14}
       outline: []
     - name: K-popups-pq_btnVerde
       rect:
@@ -250,7 +256,7 @@ TextureImporter:
         height: 48
       alignment: 9
       pivot: {x: 0.5, y: 0.53125}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 14, y: 14, z: 14, w: 14}
       outline: []
     - name: K-popups-pq_gemaLibre
       rect:
@@ -294,7 +300,7 @@ TextureImporter:
         height: 11
       alignment: 9
       pivot: {x: 0.5, y: 0.45454547}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 5, y: 5, z: 5, w: 5}
       outline: []
     outline: []
   spritePackingTag: 

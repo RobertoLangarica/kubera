@@ -157,7 +157,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(!PersistentData.GetInstance().fromLevelsToGame && !PersistentData.GetInstance().fromLevelBuilder)
 		{
-			configureLevel(PersistentData.GetInstance().getLevelByIndex(163));
+			configureLevel(PersistentData.GetInstance().getLevelByIndex(2));
 		}
 		else
 		{
