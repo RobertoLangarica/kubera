@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: eb585842367057d42b1480e552708b2c
-timeCreated: 1474933750
+timeCreated: 1476916212
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -234,6 +234,13 @@ TextureImporter:
     21300454: K-InGame_soundOFF
     21300456: K-InGame_soundON2
     21300458: K-MapaGeneral_HUDshopika
+    21300460: popups vidas-K-popupsVidas_vidasBase
+    21300462: popups vidas-K-popupsVidas_vidasBase2
+    21300464: popups vidas-K-popupsVidas_bannerUpPedirVidas
+    21300466: popups vidas-K-popupsVidas_box
+    21300468: popups vidas-K-popupsVidas_cajaPedirVidas
+    21300470: popups vidas-K-popupsVidas_checkedBox
+    21300472: popups vidas-K-popupsVidas_bannerUpPedirVidasSlice
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -293,10 +300,10 @@ TextureImporter:
     - name: facebook_blanco
       rect:
         serializedVersion: 2
-        x: 810
-        y: 737
-        width: 20
-        height: 20
+        x: 1004
+        y: 838
+        width: 15
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -304,21 +311,21 @@ TextureImporter:
     - name: K-_estrella1
       rect:
         serializedVersion: 2
-        x: 905
-        y: 839
-        width: 18
-        height: 17
+        x: 1004
+        y: 822
+        width: 14
+        height: 13
       alignment: 9
-      pivot: {x: 0.4722222, y: 0.5}
+      pivot: {x: 0.4642857, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-_estrella2
       rect:
         serializedVersion: 2
-        x: 1
-        y: 4
-        width: 9
-        height: 9
+        x: 432
+        y: 895
+        width: 7
+        height: 7
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -326,10 +333,10 @@ TextureImporter:
     - name: K-_luz1
       rect:
         serializedVersion: 2
-        x: 782
-        y: 467
-        width: 40
-        height: 165
+        x: 748
+        y: 737
+        width: 31
+        height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -337,10 +344,10 @@ TextureImporter:
     - name: K-_luz2
       rect:
         serializedVersion: 2
-        x: 947
-        y: 266
-        width: 72
-        height: 160
+        x: 429
+        y: 343
+        width: 56
+        height: 125
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -348,10 +355,10 @@ TextureImporter:
     - name: K-_luz3
       rect:
         serializedVersion: 2
-        x: 87
-        y: 24
-        width: 52
-        height: 188
+        x: 281
+        y: 321
+        width: 41
+        height: 147
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -359,10 +366,10 @@ TextureImporter:
     - name: K-_luz4
       rect:
         serializedVersion: 2
-        x: 947
-        y: 103
-        width: 72
-        height: 160
+        x: 678
+        y: 24
+        width: 56
+        height: 125
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -370,10 +377,10 @@ TextureImporter:
     - name: K-_luz5
       rect:
         serializedVersion: 2
-        x: 1
-        y: 351
-        width: 66
-        height: 333
+        x: 972
+        y: 366
+        width: 51
+        height: 259
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -381,10 +388,10 @@ TextureImporter:
     - name: K-_luz6
       rect:
         serializedVersion: 2
-        x: 70
-        y: 409
-        width: 68
-        height: 275
+        x: 68
+        y: 94
+        width: 53
+        height: 214
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -393,9 +400,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 16
-        width: 83
-        height: 332
+        y: 50
+        width: 64
+        height: 258
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -403,10 +410,10 @@ TextureImporter:
     - name: K-_luz7-24
       rect:
         serializedVersion: 2
-        x: 1
-        y: 687
-        width: 83
-        height: 336
+        x: 713
+        y: 334
+        width: 65
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -414,43 +421,43 @@ TextureImporter:
     - name: K-InGame_BACK3
       rect:
         serializedVersion: 2
-        x: 220
-        y: 151
-        width: 64
-        height: 67
+        x: 737
+        y: 6
+        width: 51
+        height: 52
       alignment: 9
-      pivot: {x: 0.484375, y: 0.48507464}
+      pivot: {x: 0.49019608, y: 0.4903846}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-InGame_musicOFF
       rect:
         serializedVersion: 2
-        x: 530
-        y: 737
-        width: 66
-        height: 66
+        x: 791
+        y: 6
+        width: 51
+        height: 52
       alignment: 9
-      pivot: {x: 0.5, y: 0.50757575}
+      pivot: {x: 0.5, y: 0.50961536}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-InGame_musicON2
       rect:
         serializedVersion: 2
-        x: 528
-        y: 530
-        width: 65
-        height: 66
+        x: 971
+        y: 311
+        width: 52
+        height: 52
       alignment: 9
-      pivot: {x: 0.4923077, y: 0.49242425}
+      pivot: {x: 0.4903846, y: 0.4903846}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-InGame_ruedasettings
       rect:
         serializedVersion: 2
-        x: 596
-        y: 332
-        width: 170
-        height: 164
+        x: 426
+        y: 181
+        width: 132
+        height: 127
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -458,142 +465,142 @@ TextureImporter:
     - name: K-InGame_soundOFF
       rect:
         serializedVersion: 2
-        x: 530
-        y: 668
-        width: 66
-        height: 66
+        x: 130
+        y: 4
+        width: 52
+        height: 52
       alignment: 9
-      pivot: {x: 0.50757575, y: 0.50757575}
+      pivot: {x: 0.50961536, y: 0.50961536}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-InGame_soundON2
       rect:
         serializedVersion: 2
-        x: 530
-        y: 599
-        width: 66
-        height: 66
+        x: 949
+        y: 133
+        width: 51
+        height: 52
       alignment: 9
-      pivot: {x: 0.49242425, y: 0.50757575}
+      pivot: {x: 0.5, y: 0.50961536}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_1caminoAzul
       rect:
         serializedVersion: 2
-        x: 468
-        y: 215
-        width: 55
-        height: 185
+        x: 370
+        y: 130
+        width: 53
+        height: 178
       alignment: 9
-      pivot: {x: 0.5090909, y: 0.5}
+      pivot: {x: 0.5188679, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_1caminoBlanco
       rect:
         serializedVersion: 2
-        x: 528
-        y: 264
-        width: 64
-        height: 195
+        x: 305
+        y: 121
+        width: 62
+        height: 187
       alignment: 9
-      pivot: {x: 0.515625, y: 0.56153846}
+      pivot: {x: 0.5080645, y: 0.56149733}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_2caminoAzul
       rect:
         serializedVersion: 2
-        x: 833
-        y: 519
-        width: 185
-        height: 217
+        x: 124
+        y: 99
+        width: 178
+        height: 209
       alignment: 9
-      pivot: {x: 0.4945946, y: 0.55069125}
+      pivot: {x: 0.49438202, y: 0.55263156}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_2caminoBlanco
       rect:
         serializedVersion: 2
-        x: 87
-        y: 796
-        width: 193
-        height: 227
+        x: 782
+        y: 407
+        width: 187
+        height: 218
       alignment: 9
-      pivot: {x: 0.4715026, y: 0.5110132}
+      pivot: {x: 0.47058824, y: 0.5091743}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_3caminoAzul
       rect:
         serializedVersion: 2
-        x: 283
-        y: 806
-        width: 316
-        height: 217
+        x: 442
+        y: 740
+        width: 303
+        height: 209
       alignment: 9
-      pivot: {x: 0.49841774, y: 0.53686637}
+      pivot: {x: 0.5, y: 0.5334928}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_3caminoBlanco
       rect:
         serializedVersion: 2
-        x: 141
-        y: 462
-        width: 324
-        height: 226
+        x: 1
+        y: 695
+        width: 312
+        height: 217
       alignment: 9
-      pivot: {x: 0.49691358, y: 0.5022124}
+      pivot: {x: 0.49839744, y: 0.5046083}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_base-coming soon
       rect:
         serializedVersion: 2
-        x: 825
-        y: 429
-        width: 162
-        height: 87
-      alignment: 9
-      pivot: {x: 0.50308645, y: 0.5}
+        x: 582
+        y: 288
+        width: 126
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_base-escalera
       rect:
         serializedVersion: 2
-        x: 288
-        y: 705
-        width: 239
-        height: 98
+        x: 781
+        y: 328
+        width: 187
+        height: 76
       alignment: 9
-      pivot: {x: 0.5, y: 0.47959185}
+      pivot: {x: 0.5026738, y: 0.48026314}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_base-proximanete
       rect:
         serializedVersion: 2
-        x: 165
-        y: 262
-        width: 161
-        height: 88
+        x: 827
+        y: 62
+        width: 126
+        height: 68
       alignment: 9
-      pivot: {x: 0.50621116, y: 0.5}
+      pivot: {x: 0.50793654, y: 0.50735295}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_base_out-of-order
       rect:
         serializedVersion: 2
-        x: 462
-        y: 42
-        width: 129
-        height: 170
+        x: 325
+        y: 334
+        width: 101
+        height: 134
       alignment: 9
-      pivot: {x: 0.50775194, y: 0.49411765}
+      pivot: {x: 0.5049505, y: 0.49253732}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_bloqued
       rect:
         serializedVersion: 2
-        x: 189
-        y: 694
-        width: 96
-        height: 99
+        x: 881
+        y: 248
+        width: 75
+        height: 77
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -601,65 +608,65 @@ TextureImporter:
     - name: K-Mapa_bossbloqued
       rect:
         serializedVersion: 2
-        x: 594
-        y: 56
-        width: 115
-        height: 162
+        x: 400
+        y: 1
+        width: 90
+        height: 126
       alignment: 9
-      pivot: {x: 0.5043478, y: 0.50617284}
+      pivot: {x: 0.50555557, y: 0.50793654}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_bossplay
       rect:
         serializedVersion: 2
-        x: 830
-        y: 81
-        width: 114
-        height: 162
+        x: 493
+        y: 1
+        width: 90
+        height: 126
       alignment: 9
-      pivot: {x: 0.49561402, y: 0.50617284}
+      pivot: {x: 0.49444443, y: 0.50793654}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_bosswin
       rect:
         serializedVersion: 2
-        x: 712
-        y: 80
-        width: 115
-        height: 162
+        x: 586
+        y: 15
+        width: 89
+        height: 126
       alignment: 9
-      pivot: {x: 0.4869565, y: 0.5123457}
+      pivot: {x: 0.48876405, y: 0.515873}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_brilloAvatar
       rect:
         serializedVersion: 2
-        x: 13
-        y: 6
-        width: 41
+        x: 748
+        y: 868
+        width: 32
         height: 7
       alignment: 9
-      pivot: {x: 0.4878049, y: 0.5714286}
+      pivot: {x: 0.484375, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_escalera
       rect:
         serializedVersion: 2
-        x: 602
-        y: 816
-        width: 300
-        height: 40
+        x: 786
+        y: 924
+        width: 235
+        height: 31
       alignment: 9
-      pivot: {x: 0.49666667, y: 0.5625}
+      pivot: {x: 0.49574468, y: 0.5483871}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_MarcoAvatardorado
       rect:
         serializedVersion: 2
-        x: 468
-        y: 583
-        width: 57
-        height: 57
+        x: 488
+        y: 312
+        width: 44
+        height: 44
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -667,10 +674,10 @@ TextureImporter:
     - name: K-Mapa_MarcoAvatargris
       rect:
         serializedVersion: 2
-        x: 468
-        y: 523
-        width: 57
-        height: 57
+        x: 535
+        y: 312
+        width: 44
+        height: 44
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -678,32 +685,32 @@ TextureImporter:
     - name: K-Mapa_play
       rect:
         serializedVersion: 2
-        x: 87
-        y: 691
-        width: 99
-        height: 102
+        x: 750
+        y: 160
+        width: 78
+        height: 80
       alignment: 9
-      pivot: {x: 0.4848485, y: 0.49019608}
+      pivot: {x: 0.4871795, y: 0.49375}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_Puertas
       rect:
         serializedVersion: 2
-        x: 329
-        y: 295
-        width: 136
-        height: 115
+        x: 185
+        y: 5
+        width: 106
+        height: 91
       alignment: 9
-      pivot: {x: 0.5110294, y: 0.5043478}
+      pivot: {x: 0.509434, y: 0.50549453}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-Mapa_stargray
       rect:
         serializedVersion: 2
-        x: 782
-        y: 680
-        width: 43
-        height: 43
+        x: 748
+        y: 915
+        width: 34
+        height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -711,98 +718,98 @@ TextureImporter:
     - name: K-Mapa_starwin
       rect:
         serializedVersion: 2
-        x: 782
-        y: 635
-        width: 43
-        height: 42
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5119048}
+        x: 748
+        y: 878
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-MapaGeneral-31
       rect:
         serializedVersion: 2
-        x: 833
-        y: 739
-        width: 190
-        height: 42
+        x: 1
+        y: 628
+        width: 296
+        height: 64
       alignment: 9
-      pivot: {x: 0.5, y: 0.5119048}
+      pivot: {x: 0.5, y: 0.515625}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-MapaGeneral_HUDbaseAbajo
       rect:
         serializedVersion: 2
-        x: 926
-        y: 941
-        width: 86
-        height: 82
+        x: 417
+        y: 471
+        width: 67
+        height: 64
       alignment: 9
-      pivot: {x: 0.45930234, y: 0.5243902}
+      pivot: {x: 0.46268657, y: 0.53125}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-MapaGeneral_HUDbaseGem-Cor
       rect:
         serializedVersion: 2
-        x: 526
-        y: 221
-        width: 111
-        height: 40
+        x: 68
+        y: 59
+        width: 87
+        height: 32
       alignment: 9
-      pivot: {x: 0.5, y: 0.5125}
+      pivot: {x: 0.5, y: 0.515625}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-MapaGeneral_HUDgemas
       rect:
         serializedVersion: 2
-        x: 749
-        y: 246
-        width: 84
-        height: 83
+        x: 881
+        y: 179
+        width: 65
+        height: 66
       alignment: 9
-      pivot: {x: 0.50595236, y: 0.5180723}
+      pivot: {x: 0.50769234, y: 0.5151515}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-MapaGeneral_HUDshopika
       rect:
         serializedVersion: 2
-        x: 855
-        y: 343
-        width: 81
-        height: 83
+        x: 959
+        y: 242
+        width: 63
+        height: 66
       alignment: 9
-      pivot: {x: 0.52469134, y: 0.5180723}
+      pivot: {x: 0.52380955, y: 0.5151515}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-MapaGeneral_HUDvidas
       rect:
         serializedVersion: 2
-        x: 769
-        y: 343
-        width: 83
-        height: 83
+        x: 713
+        y: 668
+        width: 66
+        height: 66
       alignment: 9
-      pivot: {x: 0.48192772, y: 0.4939759}
+      pivot: {x: 0.4848485, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-MapaGeneral_HUDvidas_barandal-escalera
       rect:
         serializedVersion: 2
-        x: 329
-        y: 146
-        width: 130
-        height: 115
+        x: 294
+        y: 6
+        width: 103
+        height: 90
       alignment: 9
-      pivot: {x: 0.48846152, y: 0.5}
+      pivot: {x: 0.4854369, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-MapaGeneral_HUDvidas_base-escalera2
       rect:
         serializedVersion: 2
-        x: 142
-        y: 29
-        width: 162
-        height: 114
+        x: 300
+        y: 589
+        width: 127
+        height: 89
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -810,10 +817,10 @@ TextureImporter:
     - name: K-MapaGeneral_interaccionFB
       rect:
         serializedVersion: 2
-        x: 595
-        y: 264
-        width: 64
-        height: 65
+        x: 845
+        y: 8
+        width: 51
+        height: 51
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -821,10 +828,10 @@ TextureImporter:
     - name: K-MapaGeneral_Navegacion
       rect:
         serializedVersion: 2
-        x: 528
-        y: 462
-        width: 65
-        height: 65
+        x: 949
+        y: 188
+        width: 52
+        height: 51
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -832,87 +839,120 @@ TextureImporter:
     - name: K-MapaGeneral_settings
       rect:
         serializedVersion: 2
-        x: 712
-        y: 13
-        width: 64
-        height: 64
+        x: 952
+        y: 9
+        width: 50
+        height: 50
       alignment: 9
-      pivot: {x: 0.46875, y: 0.4921875}
+      pivot: {x: 0.47, y: 0.49}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-menus_nube1
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 471
+        width: 133
+        height: 83
+      alignment: 9
+      pivot: {x: 0.4849624, y: 0.52409637}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-menus_nube2
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 130
+        width: 79
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.46875}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-menus_nube3
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 905
+        width: 114
+        height: 57
+      alignment: 9
+      pivot: {x: 0.5, y: 0.50877196}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popups-pq_baseGris
       rect:
         serializedVersion: 2
-        x: 239
-        y: 413
-        width: 218
-        height: 46
+        x: 444
+        y: 952
+        width: 339
+        height: 71
       alignment: 9
-      pivot: {x: 0.49541286, y: 0.5217391}
+      pivot: {x: 0.49557522, y: 0.5140845}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popups-pq_btnAzul
       rect:
         serializedVersion: 2
-        x: 905
-        y: 784
-        width: 117
-        height: 38
+        x: 493
+        y: 478
+        width: 179
+        height: 57
       alignment: 9
-      pivot: {x: 0.4957265, y: 0.5394737}
+      pivot: {x: 0.49720672, y: 0.54385966}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popups-pq_btnRojo
       rect:
         serializedVersion: 2
-        x: 165
-        y: 221
-        width: 117
-        height: 38
+        x: 493
+        y: 359
+        width: 179
+        height: 56
       alignment: 9
-      pivot: {x: 0.491453, y: 0.5131579}
+      pivot: {x: 0.4888268, y: 0.5089286}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popups-pq_btnVerde
       rect:
         serializedVersion: 2
-        x: 453
-        y: 1
-        width: 117
-        height: 38
+        x: 493
+        y: 418
+        width: 179
+        height: 57
       alignment: 9
-      pivot: {x: 0.5, y: 0.5394737}
+      pivot: {x: 0.5, y: 0.54385966}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popups-pq_candado
       rect:
         serializedVersion: 2
-        x: 926
-        y: 825
-        width: 85
-        height: 113
+        x: 711
+        y: 243
+        width: 67
+        height: 88
       alignment: 9
-      pivot: {x: 0.5, y: 0.5442478}
+      pivot: {x: 0.5, y: 0.53977275}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popups-pq_candado1
       rect:
         serializedVersion: 2
-        x: 833
-        y: 787
-        width: 32
-        height: 26
+        x: 781
+        y: 247
+        width: 97
+        height: 78
       alignment: 9
-      pivot: {x: 0.515625, y: 0.48076922}
+      pivot: {x: 0.5051546, y: 0.4871795}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popups-pq_candado2
       rect:
         serializedVersion: 2
-        x: 868
-        y: 798
-        width: 25
-        height: 15
+        x: 51
+        y: 3
+        width: 76
+        height: 44
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -920,54 +960,54 @@ TextureImporter:
     - name: K-popups-pq_gemaLibre
       rect:
         serializedVersion: 2
-        x: 845
-        y: 14
-        width: 62
-        height: 64
+        x: 956
+        y: 80
+        width: 49
+        height: 50
       alignment: 9
-      pivot: {x: 0.45967743, y: 0.5546875}
+      pivot: {x: 0.4489796, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popUps_Avatar1
       rect:
         serializedVersion: 2
-        x: 468
-        y: 643
-        width: 59
-        height: 59
-      alignment: 9
-      pivot: {x: 0.4915254, y: 0.5084746}
+        x: 1
+        y: 1
+        width: 47
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popUps_close
       rect:
         serializedVersion: 2
-        x: 779
-        y: 13
-        width: 63
-        height: 64
+        x: 899
+        y: 8
+        width: 50
+        height: 51
       alignment: 9
-      pivot: {x: 0.48412699, y: 0.515625}
+      pivot: {x: 0.48, y: 0.51960784}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popUps_corazonRoto
       rect:
         serializedVersion: 2
-        x: 307
-        y: 7
-        width: 143
-        height: 136
+        x: 1
+        y: 315
+        width: 113
+        height: 106
       alignment: 9
-      pivot: {x: 0.5034965, y: 0.5}
+      pivot: {x: 0.50442475, y: 0.495283}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popUps_grayStar
       rect:
         serializedVersion: 2
-        x: 87
-        y: 221
-        width: 75
-        height: 71
+        x: 316
+        y: 793
+        width: 113
+        height: 109
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -975,65 +1015,65 @@ TextureImporter:
     - name: K-popUps_monito
       rect:
         serializedVersion: 2
-        x: 468
-        y: 463
-        width: 57
-        height: 57
+        x: 660
+        y: 152
+        width: 87
+        height: 88
       alignment: 9
-      pivot: {x: 0.50877196, y: 0.51754385}
+      pivot: {x: 0.5114943, y: 0.5113636}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popUps_monito2
       rect:
         serializedVersion: 2
-        x: 468
-        y: 403
-        width: 57
-        height: 57
+        x: 737
+        y: 61
+        width: 87
+        height: 88
       alignment: 9
-      pivot: {x: 0.50877196, y: 0.51754385}
+      pivot: {x: 0.5114943, y: 0.5113636}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popUps_monitoblink
       rect:
         serializedVersion: 2
-        x: 947
-        y: 38
-        width: 62
-        height: 62
+        x: 561
+        y: 144
+        width: 96
+        height: 96
       alignment: 9
-      pivot: {x: 0.4919355, y: 0.5080645}
+      pivot: {x: 0.49479166, y: 0.5104167}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popUps_objetiveBase
       rect:
         serializedVersion: 2
-        x: 596
-        y: 499
-        width: 179
-        height: 91
+        x: 432
+        y: 598
+        width: 278
+        height: 139
       alignment: 9
-      pivot: {x: 0.5, y: 0.50549453}
+      pivot: {x: 0.5, y: 0.50359714}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popUps_playBTN
       rect:
         serializedVersion: 2
-        x: 141
-        y: 410
-        width: 95
-        height: 49
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 117
+        y: 347
+        width: 147
+        height: 74
+      alignment: 9
+      pivot: {x: 0.49659863, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popUps_rug
       rect:
         serializedVersion: 2
-        x: 329
-        y: 264
-        width: 135
-        height: 28
+        x: 782
+        y: 628
+        width: 219
+        height: 45
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1041,21 +1081,21 @@ TextureImporter:
     - name: K-popUps_socialBase
       rect:
         serializedVersion: 2
-        x: 599
-        y: 726
-        width: 208
-        height: 31
+        x: 1
+        y: 915
+        width: 321
+        height: 47
       alignment: 9
-      pivot: {x: 0.50240386, y: 0.516129}
+      pivot: {x: 0.5, y: 0.5106383}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popUps_socialBasepick
       rect:
         serializedVersion: 2
-        x: 662
-        y: 245
-        width: 84
-        height: 84
+        x: 713
+        y: 599
+        width: 66
+        height: 66
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1063,32 +1103,32 @@ TextureImporter:
     - name: K-popUps_socialBTN
       rect:
         serializedVersion: 2
-        x: 87
-        y: 1
-        width: 80
-        height: 20
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 430
+        y: 538
+        width: 255
+        height: 57
+      alignment: 9
+      pivot: {x: 0.49607843, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popUps_stars-base
       rect:
         serializedVersion: 2
-        x: 599
-        y: 593
-        width: 180
-        height: 130
+        x: 1
+        y: 424
+        width: 277
+        height: 201
       alignment: 9
-      pivot: {x: 0.5, y: 0.4730769}
+      pivot: {x: 0.5, y: 0.4751244}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popUps_winStar
       rect:
         serializedVersion: 2
-        x: 142
-        y: 147
-        width: 75
-        height: 71
+        x: 316
+        y: 681
+        width: 113
+        height: 109
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1096,89 +1136,122 @@ TextureImporter:
     - name: "popups peque\xF1os-K-popups-pq_baseGris"
       rect:
         serializedVersion: 2
-        x: 239
-        y: 413
-        width: 218
-        height: 46
+        x: 444
+        y: 952
+        width: 339
+        height: 71
       alignment: 9
-      pivot: {x: 0.49541286, y: 0.5217391}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: "popups peque\xF1os-K-popups-pq_bolsaAtras"
-      rect:
-        serializedVersion: 2
-        x: 70
-        y: 353
-        width: 256
-        height: 53
-      alignment: 9
-      pivot: {x: 0.515625, y: 0.5471698}
+      pivot: {x: 0.49557522, y: 0.5140845}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: "popups peque\xF1os-K-popups-pq_btnVerde"
       rect:
         serializedVersion: 2
-        x: 453
-        y: 1
-        width: 117
-        height: 38
+        x: 493
+        y: 418
+        width: 179
+        height: 57
       alignment: 9
-      pivot: {x: 0.5, y: 0.5394737}
+      pivot: {x: 0.5, y: 0.54385966}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: "popups peque\xF1os-K-popups-pq_candado"
       rect:
         serializedVersion: 2
-        x: 926
-        y: 825
-        width: 85
-        height: 113
+        x: 711
+        y: 243
+        width: 67
+        height: 88
       alignment: 9
-      pivot: {x: 0.5, y: 0.5442478}
+      pivot: {x: 0.5, y: 0.53977275}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: "popups peque\xF1os-K-popups-pq_gemaLibre"
       rect:
         serializedVersion: 2
-        x: 845
-        y: 14
-        width: 62
-        height: 64
+        x: 956
+        y: 80
+        width: 49
+        height: 50
       alignment: 9
-      pivot: {x: 0.45967743, y: 0.5546875}
+      pivot: {x: 0.4489796, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: popups vidas-K-popupsVidas_kindBTN
+    - name: popups vidas-K-popupsVidas_bannerUpPedirVidas
       rect:
         serializedVersion: 2
-        x: 602
-        y: 760
-        width: 228
-        height: 53
+        x: 1
+        y: 965
+        width: 440
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: popups vidas-K-popupsVidas_bannerUpPedirVidasSlice
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 557
+        width: 139
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: popups vidas-K-popupsVidas_box
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 314
+        width: 31
+        height: 30
       alignment: 9
-      pivot: {x: 0.5, y: 0.4811321}
+      pivot: {x: 0.5, y: 0.53333336}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: popups vidas-K-popupsVidas_cajaPedirVidas
+      rect:
+        serializedVersion: 2
+        x: 782
+        y: 676
+        width: 219
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: popups vidas-K-popupsVidas_checkedBox
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 314
+        width: 30
+        height: 30
+      alignment: 9
+      pivot: {x: 0.48333332, y: 0.51666665}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: popups vidas-K-popupsVidas_NOselectBTN
       rect:
         serializedVersion: 2
-        x: 602
-        y: 859
-        width: 312
-        height: 74
+        x: 786
+        y: 958
+        width: 235
+        height: 65
       alignment: 9
-      pivot: {x: 0.49519232, y: 0.527027}
+      pivot: {x: 0.50212765, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: popups vidas-K-popupsVidas_SelectBTN
       rect:
         serializedVersion: 2
-        x: 602
-        y: 936
-        width: 321
-        height: 87
+        x: 785
+        y: 856
+        width: 234
+        height: 65
       alignment: 9
-      pivot: {x: 0.49221185, y: 0.545977}
+      pivot: {x: 0.4871795, y: 0.45384616}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     outline: []
