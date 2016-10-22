@@ -139,7 +139,7 @@ public class FacebookNews : PopUpBase {
 		else 
 		{
 			OnComplete (action);
-			facebookMessagesButton.DOAnchorPos (new Vector2(Screen.width * 0.78f,-Screen.height*0.5f),0.5f,true);
+			facebookMessagesButton.DOAnchorPos (new Vector2(Screen.width * 0.78f,0),0.5f,true);
 		}
 	}
 }

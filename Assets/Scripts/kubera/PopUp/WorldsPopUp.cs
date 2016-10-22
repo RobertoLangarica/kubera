@@ -39,7 +39,7 @@ public class WorldsPopUp : PopUpBase {
 			mapButton.DOAnchorPos (new Vector2 (Screen.width * 0.85f, 0), 0.5f, true);
 			mapButton.SetParent (transform.parent);
 
-			facebookMessagesButton.DOAnchorPos (new Vector2 (Screen.width * 0.78f, -Screen.height * 0.5f), 0.5f, true);
+			facebookMessagesButton.DOAnchorPos (new Vector2 (Screen.width * 0.78f,0), 0.5f, true);
 			facebookMessagesButton.SetParent (transform.parent);
 
 			transform.SetSiblingIndex (transform.parent.childCount - 1);
@@ -51,7 +51,7 @@ public class WorldsPopUp : PopUpBase {
 			popUp.SetActive (true);
 
 			mapButton.DOAnchorPos (new Vector2 (Screen.width * 0.85f, 0), 0.5f, true);
-			facebookMessagesButton.DOAnchorPos (new Vector2 (Screen.width * 0.78f, -Screen.height * 0.5f), 0.5f, true);
+			facebookMessagesButton.DOAnchorPos (new Vector2 (Screen.width * 0.78f,0), 0.5f, true);
 
 			transform.SetSiblingIndex (transform.parent.childCount - 1);
 		}
