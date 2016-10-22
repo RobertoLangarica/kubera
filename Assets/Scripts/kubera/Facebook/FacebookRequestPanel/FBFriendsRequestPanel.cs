@@ -21,30 +21,36 @@ public class FBFriendsRequestPanel : PopUpBase {
 	}
 
 	public Text requestText;
-	public Button allFriendsButton;
-	public Button gameFriendsButton;
+	public Transform allFriendsObject;
+	public Transform gameFriendsObject;
 	public Text askButton;
 	public FriendsController invitableFriends;
 	public FriendsController gameFriends;
 	public Toggle selectAll;
 	public ERequestType currentRequestType;
 	public EFriendsType currentFriendType;
+
+	protected bool allFriendsImageExist;
+	protected bool allGamesFriendsImageExist;
+
 	public int maxFriendsToShow = 200;
 
 	protected bool allFriendsSelected;
 	protected bool friendsInitialized;
 
-	public RectTransform allFriendRT;
-	public RectTransform kuberaFriendsRT;
+	public Text allFriendText;
+	public Text kuberaFriendsText;
+	public Color notSelected;
 
 	public FacebookManager facebookManager;
 
 	protected Vector2 initialPosRT;
+
+	public ScrollRect allFriendsSR;
+	public ScrollRect gameFriendsSR;
+
 	void Start()
 	{
-		initialPosRT = allFriendRT.anchoredPosition;
-
-
 		changeBetweenFriends (true);
 		invitableFriends.OnActivated = activateAllSelected;
 		gameFriends.OnActivated = activateAllSelected;
@@ -54,6 +60,7 @@ public class FBFriendsRequestPanel : PopUpBase {
 	public override void activate()
 	{
 		popUp.SetActive (true);
+
 	}
 
 	public void closePressed()
@@ -65,6 +72,11 @@ public class FBFriendsRequestPanel : PopUpBase {
 
 	public void openFriendsRequestPanel(ERequestType requestType,EFriendsType friendsType = EFriendsType.ALL)
 	{
+		checkImageExist (friendsType);
+
+		allFriendsSR.normalizedPosition = Vector2.zero;
+		gameFriendsSR.normalizedPosition = Vector2.zero;
+
 		switch (requestType) {
 
 		case ERequestType.ASK_KEYS:
@@ -88,8 +100,9 @@ public class FBFriendsRequestPanel : PopUpBase {
 			activateAllSelected (true);
 			currentFriendType = EFriendsType.ALL;
 
-			kuberaFriendsRT.anchoredPosition = initialPosRT;
-			allFriendRT.anchoredPosition = Vector2.zero;
+			allFriendText.color = Color.white;
+			kuberaFriendsText.color = notSelected;
+			gameFriendsObject.SetAsFirstSibling ();
 		}
 		else
 		{
@@ -99,9 +112,12 @@ public class FBFriendsRequestPanel : PopUpBase {
 			activateAllSelected (true);
 			currentFriendType = EFriendsType.GAME;
 
-			allFriendRT.anchoredPosition = initialPosRT;
-			kuberaFriendsRT.anchoredPosition = Vector2.zero;
+			kuberaFriendsText.color = Color.white;
+			allFriendText.color = notSelected;
+			allFriendsObject.SetAsFirstSibling ();
 		}
+
+		checkImageExist (currentFriendType);
 	}
 
 	public void selectAllFriends()
@@ -167,8 +183,6 @@ public class FBFriendsRequestPanel : PopUpBase {
 		}
 	}
 
-
-
 	public void initializeFriendsController(List<object> gameFriends, EFriendsType friendType)
 	{
 		switch (friendType) {
@@ -189,7 +203,6 @@ public class FBFriendsRequestPanel : PopUpBase {
 		{
 			Dictionary<string,object> friendInfo = ((Dictionary<string,object>)(friends [i]));
 			string playerID = (string)friendInfo ["id"];
-			string playerImgUrl ="";
 			//print (friendInfo.Keys.ToCommaSeparateList ());
 			string playerName = (string)friendInfo ["name"];
 			Texture playerImage = new Texture();
@@ -198,11 +211,8 @@ public class FBFriendsRequestPanel : PopUpBase {
 			{
 				playerImage = FacebookPersistentData.GetInstance().getTextureById (playerID);
 			}
-			else
-			{				
-				playerImgUrl = GraphUtil.DeserializePictureURL(friendInfo);
-			}
-			friendController.addFriend (playerID,playerImgUrl, playerName,playerImage);
+
+			friendController.addFriend (playerID, playerName,playerImage);
 		}
 		friendController.initializeFriends ();
 	}
@@ -304,5 +314,59 @@ public class FBFriendsRequestPanel : PopUpBase {
 			return invitableFriends.getFriendsActivatedID ();
 		}
 		return null;
+	}
+
+	protected void checkImageExist(EFriendsType friendsType)
+	{
+		switch (friendsType) {
+		case EFriendsType.ALL:
+			if(!allFriendsImageExist)
+			{
+				allFriendsImageExist = true;
+				for(int i=0; i<invitableFriends.friends.Count; i++)
+				{
+					if(!invitableFriends.friends[i].imageSetted)
+					{
+						allFriendsImageExist = false;
+						Sprite image = FacebookPersistentData.GetInstance ().getSpritePictureById (invitableFriends.friends [i].id);
+						if(image == null)
+						{
+							invitableFriends.friends [i].getTextureFromURL (GraphUtil.DeserializePictureURL(FacebookPersistentData.GetInstance ().getFriendInfo (invitableFriends.friends [i].id)));
+						}
+						else
+						{
+							invitableFriends.friends [i].setFriendImage (image);
+							invitableFriends.friends [i].imageSetted = true;
+						}
+					}
+				}
+			}
+			break;
+		case EFriendsType.GAME:
+			if(!allGamesFriendsImageExist)
+			{
+				allGamesFriendsImageExist = true;
+				for(int i=0; i<gameFriends.friends.Count; i++)
+				{
+					if(!gameFriends.friends[i].imageSetted)
+					{
+						allGamesFriendsImageExist = false;
+						Sprite image = FacebookPersistentData.GetInstance ().getSpritePictureById (gameFriends.friends [i].id);
+						if(image == null)
+						{
+							gameFriends.friends [i].getTextureFromURL (GraphUtil.DeserializePictureURL(FacebookPersistentData.GetInstance ().getFriendInfo (gameFriends.friends [i].id)));
+						}
+						else
+						{
+							gameFriends.friends [i].setFriendImage (image);
+							gameFriends.friends [i].imageSetted = true;
+						}
+					}
+				}
+			}
+			break;
+		default:
+			break;
+		}
 	}
 }

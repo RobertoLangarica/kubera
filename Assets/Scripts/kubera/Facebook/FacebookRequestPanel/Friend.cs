@@ -6,23 +6,42 @@ public class Friend : MonoBehaviour {
 
 	public string id;
 	public Image friendImage;
+	public Image requestFriend;
+
 	public Text userName;
-	public Toggle selected;
+	public bool selected;
+	public bool imageSetted;
 
 	public delegate void DOnActivateToggle(bool activated);
 	public DOnActivateToggle OnActivated;
 
-	public void activateSelected(bool activate)
+	public Sprite selectedImage;
+	public Sprite notSelectedImage;
+
+	public void activateSelected(bool activated)
 	{
-		selected.isOn = activate;
+		selected = activated;
+		changeSprite ();
+		OnActivated (selected);
 	}
 
 	public void activateSelected()
 	{
-		bool activated = selected.isOn;
+		selected = !selected;
+		changeSprite ();
+		OnActivated (selected);
+	}
 
-		selected.isOn = activated;
-		OnActivated (selected.isOn);
+	public void changeSprite()
+	{
+		if(selected)
+		{
+			requestFriend.sprite = selectedImage;
+		}
+		else
+		{
+			requestFriend.sprite = notSelectedImage;
+		}
 	}
 
 	public void setFriendImage(Texture image)
@@ -50,6 +69,7 @@ public class Friend : MonoBehaviour {
 				{
 					FacebookPersistentData.GetInstance().addFriendImage(id,pictureTexture);
 					setFriendImage(pictureTexture);
+					imageSetted = true;
 				}
 			});
 	}

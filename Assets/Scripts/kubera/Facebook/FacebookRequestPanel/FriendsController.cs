@@ -17,10 +17,21 @@ public class FriendsController : MonoBehaviour {
 	void Start()
 	{
 		Vector2 cellSize;
-		cellSize.x = Screen.width * 0.5f ;
-		cellSize.x = cellSize.x - gridLayout.spacing.x * 0.5f;
+		print (Camera.main.aspect);
+		if(Camera.main.aspect > 0.6f)
+		{
+			cellSize.x = Screen.width * 0.4f;
+			cellSize.x = cellSize.x - gridLayout.spacing.x * 0.5f;
+		}
+		else
+		{
+			cellSize.x = Screen.width * 0.6f;
+			cellSize.x = cellSize.x - gridLayout.spacing.x * 0.5f;
+		}
 
-		cellSize.y = Screen.height / 9;
+		cellSize.y = Screen.height * 0.1f;
+		cellSize.y = cellSize.y - gridLayout.spacing.y * 0.5f;
+
 		gridLayout.cellSize = cellSize;
 		initializeFriends ();
 	}
@@ -37,7 +48,7 @@ public class FriendsController : MonoBehaviour {
 	{
 		for(int i=0; i<friends.Count; i++)
 		{
-			friends [i].selected.isOn = activate;
+			friends [i].activateSelected(activate);
 		}
 	}
 
@@ -50,7 +61,7 @@ public class FriendsController : MonoBehaviour {
 	{
 		for(int i=0; i<friends.Count; i++)
 		{
-			if(!friends [i].selected.isOn)
+			if(!friends [i].selected)
 			{
 				return false;
 			}
@@ -64,7 +75,7 @@ public class FriendsController : MonoBehaviour {
 
 		for(int i=0; i<friends.Count; i++)
 		{
-			if(friends [i].selected.isOn)
+			if(friends [i].selected)
 			{
 				//print("id: "+ friends[i].id);
 				ids.Add (friends [i].id);
@@ -74,7 +85,7 @@ public class FriendsController : MonoBehaviour {
 		return ids;
 	}
 
-	public void addFriend(string id, string imageURL, string userName,Texture image = null)
+	public void addFriend(string id, string userName,Texture image = null)
 	{
 		GameObject go = Instantiate (requestFriend)as GameObject;
 		go.transform.SetParent (friendPanel,false);
@@ -85,10 +96,11 @@ public class FriendsController : MonoBehaviour {
 		if(image != null)
 		{
 			friend.setFriendImage (image);
+			friend.imageSetted = true;
 		}
 		else
 		{
-			friend.getTextureFromURL (imageURL);
+			//friend.getTextureFromURL (imageURL);
 		}
 		friend.userName.text = userName;
 		friends.Add (friend);
