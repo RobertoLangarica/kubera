@@ -15,7 +15,7 @@ public class FloatingTextPool : MonoBehaviour
 	{
 		originalObject.myText.enabled = false;
 
-		for(int i = 0;i < 3 ;i++)
+		for(int i = 0;i < 30;i++)
 		{
 			addTextToThePool();
 		}

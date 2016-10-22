@@ -27,22 +27,38 @@ public class WorldsPopUp : PopUpBase {
 
 	public override void activate()
 	{
-		popUpRect.anchoredPosition = new Vector2 (-Screen.width*0.85f,0);
+		if (mapButton.parent != transform.parent) 
+		{
+			popUpRect.anchoredPosition = new Vector2 (-Screen.width * 0.85f, 0);
 
-		//animateWorldsLights (true);
-		popUp.SetActive (true);
+			//animateWorldsLights (true);
+			popUp.SetActive (true);
 
-		popUpRect.DOAnchorPos (Vector2.zero,0.5f,true);
+			popUpRect.DOAnchorPos (Vector2.zero, 0.5f, true);
 
-		previousParent = mapButton.parent;
+			previousParent = mapButton.parent;
 
-		mapButton.DOAnchorPos (new Vector2 (Screen.width * 0.85f, 0), 0.5f, true);
-		mapButton.SetParent (transform.parent);
+			mapButton.DOAnchorPos (new Vector2 (Screen.width * 0.85f, 0), 0.5f, true);
+			mapButton.SetParent (transform.parent);
 
-		facebookMessagesButton.DOAnchorPos (new Vector2(Screen.width * 0.78f,-Screen.height*0.5f),0.5f,true);
-		facebookMessagesButton.SetParent (transform.parent);
+			facebookMessagesButton.DOAnchorPos (new Vector2 (Screen.width * 0.78f, -Screen.height * 0.5f), 0.5f, true);
+			facebookMessagesButton.SetParent (transform.parent);
 
-		transform.SetSiblingIndex(transform.parent.childCount-1);
+			transform.SetSiblingIndex (transform.parent.childCount - 1);
+		} 
+		else 
+		{
+			popUpRect.anchoredPosition = Vector2.zero;
+
+			popUp.SetActive (true);
+
+			previousParent = mapButton.parent;
+
+			mapButton.DOAnchorPos (new Vector2 (Screen.width * 0.85f, 0), 0.5f, true);
+			facebookMessagesButton.DOAnchorPos (new Vector2 (Screen.width * 0.78f, -Screen.height * 0.5f), 0.5f, true);
+
+			transform.SetSiblingIndex (transform.parent.childCount - 1);
+		}
 	}
 
 	public void goToWorld(int world)
@@ -76,7 +92,7 @@ public class WorldsPopUp : PopUpBase {
 
 	public void toMessages()
 	{
-		CompletePopUp ("toFacebookMessages");
+		CompletePopUp ("toFacebookMessages",false);
 	}
 
 	protected void animateWorldsLights(bool animate)
@@ -94,14 +110,25 @@ public class WorldsPopUp : PopUpBase {
 		}
 	}
 
-	protected void CompletePopUp(string action= "")
+	protected void CompletePopUp(string action= "",bool withAnim = true)
 	{
-		popUpRect.DOAnchorPos (new Vector2 (-Screen.width * 0.85f, 0), 0.5f, true).OnComplete (()=>{OnComplete (action);});
+		if (withAnim) 
+		{
+			popUpRect.DOAnchorPos (new Vector2 (-Screen.width * 0.85f, 0), 0.5f, true).OnComplete (() => {
+				OnComplete (action);
+			});
 
-		mapButton.DOAnchorPos (Vector2.zero, 0.5f, true);
-		mapButton.SetParent (previousParent);
+			mapButton.DOAnchorPos (Vector2.zero, 0.5f, true);
+			mapButton.SetParent (previousParent);
 
-		facebookMessagesButton.DOAnchorPos (Vector2.zero,0.5f,true);
-		facebookMessagesButton.SetParent (previousParent);
+			facebookMessagesButton.DOAnchorPos (Vector2.zero, 0.5f, true);
+			facebookMessagesButton.SetParent (previousParent);
+		} 
+		else 
+		{
+			OnComplete (action);
+
+			facebookMessagesButton.DOAnchorPos (new Vector2(Screen.width * 0.85f,0),0.5f,true);
+		}
 	}
 }

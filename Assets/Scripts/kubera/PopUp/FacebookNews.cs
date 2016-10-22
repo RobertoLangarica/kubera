@@ -75,7 +75,6 @@ public class FacebookNews : PopUpBase {
 			} 
 			else 
 			{
-				activate ();
 				mapManager.openPopUp ("facebookNews");
 				messageCountImage.gameObject.SetActive (false);
 			}
@@ -89,34 +88,58 @@ public class FacebookNews : PopUpBase {
 
 	public void toWorlds()
 	{
-		CompletePopUp ("toWorldTraveler");
+		CompletePopUp ("toWorldTraveler",false);
 	}
 
 	public override void activate()
 	{
-		popUpRect.anchoredPosition = new Vector2 (-Screen.width*0.85f,0);
+		if (mapButton.parent != popUpRect.parent) 
+		{
+			popUpRect.anchoredPosition = new Vector2 (-Screen.width * 0.85f, 0);
 
-		popUp.SetActive (true);
+			popUp.SetActive (true);
 
-		popUpRect.DOAnchorPos (Vector2.zero,0.5f,true);
+			popUpRect.DOAnchorPos (Vector2.zero, 0.5f, true);
 
-		mapButton.DOAnchorPos (new Vector2 (Screen.width * 0.78f, 0), 0.5f, true);
-		mapButton.SetParent (popUpRect.parent);
+			mapButton.DOAnchorPos (new Vector2 (Screen.width * 0.78f, 0), 0.5f, true);
+			mapButton.SetParent (popUpRect.parent);
 
-		facebookMessagesButton.DOAnchorPos (new Vector2(Screen.width * 0.85f,0),0.5f,true);
-		facebookMessagesButton.SetParent (popUpRect.parent);
+			facebookMessagesButton.DOAnchorPos (new Vector2 (Screen.width * 0.85f, 0), 0.5f, true);
+			facebookMessagesButton.SetParent (popUpRect.parent);
 
-		popUpRect.SetSiblingIndex(popUpRect.parent.childCount-1);
+			popUpRect.SetSiblingIndex (popUpRect.parent.childCount - 1);
+		} 
+		else 
+		{
+			popUpRect.anchoredPosition = Vector2.zero;
+
+			popUp.SetActive (true);
+
+			mapButton.DOAnchorPos (new Vector2 (Screen.width * 0.78f, 0), 0.5f, true);
+			facebookMessagesButton.DOAnchorPos (new Vector2 (Screen.width * 0.85f, 0), 0.5f, true);
+
+			popUpRect.SetSiblingIndex (popUpRect.parent.childCount - 1);
+		}
 	}
 
-	protected void CompletePopUp(string action= "")
+	protected void CompletePopUp(string action= "",bool withAnim = true)
 	{
-		popUpRect.DOAnchorPos (new Vector2 (-Screen.width * 0.85f, 0), 0.5f, true).OnComplete (()=>{OnComplete (action);});
+		if (withAnim) 
+		{
+			popUpRect.DOAnchorPos (new Vector2 (-Screen.width * 0.85f, 0), 0.5f, true).OnComplete (() => {
+				OnComplete (action);
+			});
 
-		mapButton.DOAnchorPos (Vector2.zero, 0.5f, true);
-		mapButton.SetParent (previousParent);
+			mapButton.DOAnchorPos (Vector2.zero, 0.5f, true);
+			mapButton.SetParent (previousParent);
 
-		facebookMessagesButton.DOAnchorPos (Vector2.zero,0.5f,true);
-		facebookMessagesButton.SetParent (previousParent);
+			facebookMessagesButton.DOAnchorPos (Vector2.zero, 0.5f, true);
+			facebookMessagesButton.SetParent (previousParent);
+		} 
+		else 
+		{
+			OnComplete (action);
+			facebookMessagesButton.DOAnchorPos (new Vector2(Screen.width * 0.78f,-Screen.height*0.5f),0.5f,true);
+		}
 	}
 }
