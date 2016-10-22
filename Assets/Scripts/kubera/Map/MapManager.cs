@@ -53,6 +53,7 @@ public class MapManager : MonoBehaviour
 	public GoalAfterGame goalAfterGame;
 	public GoalPopUp goalPopUp;
 	public WorldsPopUp worldsPopUp;
+	public FacebookNews facebbokMessages;
 
 	public GameObject hudWithShareButton;
 	public GameObject hudWithOutShareButton;
@@ -633,6 +634,25 @@ public class MapManager : MonoBehaviour
 			bossLockedPopUp.initializeValues (pressed.friendsNeeded,pressed.gemsNeeded,pressed.starsNeeded,pressed.lvlName);
 
 			openPopUp ("bossLocked");
+		}
+	}
+
+	public void OnWorldPressed()
+	{
+		if (worldsPopUp.gameObject.activeSelf) 
+		{
+			worldsPopUp.exit ();
+		} 
+		else 
+		{
+			if (modal.activeSelf) 
+			{
+				facebbokMessages.toWorlds ();
+			} 
+			else 
+			{
+				openPopUp ("worldsPopUp");
+			}
 		}
 	}
 

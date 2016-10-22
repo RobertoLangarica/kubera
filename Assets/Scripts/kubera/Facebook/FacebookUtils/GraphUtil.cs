@@ -61,6 +61,7 @@ public class GraphUtil : ScriptableObject
 		{
 			return null;
 		}
+
 		if (user.TryGetValue("picture", out pictureObj))
 		{
 			var pictureData = (Dictionary<string, object>)(((Dictionary<string, object>)pictureObj)["data"]);

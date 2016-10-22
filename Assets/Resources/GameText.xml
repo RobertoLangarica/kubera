@@ -531,9 +531,9 @@
 		</text>
 		<text id="NoGemsPopUpInfoNoShopikaLogin">
 			<languages>
-				<language id="english" text="Registrate a Shopika para obtener 100 gemas."/>
-				<language id="spanish" text="Registrate a Shopika para obtener 100 gemas."/>
-				<language id="default" text="Registrate a Shopika para obtener 100 gemas."/>
+				<language id="english" text="Sing up to Shopika and get 100 free gems!"/>
+				<language id="spanish" text="¡Registrate a Shopika para obtener 100 gemas!"/>
+				<language id="default" text="¡Registrate a Shopika para obtener 100 gemas!"/>
 			</languages>
 		</text>
 		<text id="NoGemsPopUpButton">

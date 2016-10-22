@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
+using System.Collections;
+using DG.Tweening;
 
 public class WorldsPopUp : PopUpBase {
 
@@ -8,25 +9,52 @@ public class WorldsPopUp : PopUpBase {
 
 	public MapManager mapManager;
 
-	public GameObject rightArrow;
-	public GameObject leftArrow;
+	public RectTransform mapButton;
+	public RectTransform facebookMessagesButton;
+	public RectTransform popUpRect;
 
 	public ScrollRect scrollRect;
 
 	public MiniWorld[] worlds;
 
+	public Transform previousParent;
+
 	void Start()
 	{
-		grid.cellSize = new Vector2 (Screen.width * 0.9f, Screen.height * 0.8f);
-		grid.padding.left = (int)(Screen.width * 0.06f);
-		grid.padding.right = (int)(Screen.width * 0.06f);
-		grid.spacing = new Vector2(Screen.height * 0.08f,0);
+		grid.cellSize = new Vector2 (Screen.width * 0.75f, Screen.height * 0.8f);
+		grid.spacing = new Vector2(0,Screen.height * 0.2f);
 	}
 
 	public override void activate()
 	{
-		animateWorldsLights (true);
-		popUp.SetActive (true);
+		if (mapButton.parent != transform.parent) 
+		{
+			popUpRect.anchoredPosition = new Vector2 (-Screen.width * 0.85f, 0);
+
+			//animateWorldsLights (true);
+			popUp.SetActive (true);
+
+			popUpRect.DOAnchorPos (Vector2.zero, 0.5f, true);
+
+			mapButton.DOAnchorPos (new Vector2 (Screen.width * 0.85f, 0), 0.5f, true);
+			mapButton.SetParent (transform.parent);
+
+			facebookMessagesButton.DOAnchorPos (new Vector2 (Screen.width * 0.78f, -Screen.height * 0.5f), 0.5f, true);
+			facebookMessagesButton.SetParent (transform.parent);
+
+			transform.SetSiblingIndex (transform.parent.childCount - 1);
+		} 
+		else 
+		{
+			popUpRect.anchoredPosition = Vector2.zero;
+
+			popUp.SetActive (true);
+
+			mapButton.DOAnchorPos (new Vector2 (Screen.width * 0.85f, 0), 0.5f, true);
+			facebookMessagesButton.DOAnchorPos (new Vector2 (Screen.width * 0.78f, -Screen.height * 0.5f), 0.5f, true);
+
+			transform.SetSiblingIndex (transform.parent.childCount - 1);
+		}
 	}
 
 	public void goToWorld(int world)
@@ -60,7 +88,7 @@ public class WorldsPopUp : PopUpBase {
 
 	public void toMessages()
 	{
-		CompletePopUp ("toFacebookMessages");
+		CompletePopUp ("toFacebookMessages",false);
 	}
 
 	protected void animateWorldsLights(bool animate)
@@ -78,30 +106,25 @@ public class WorldsPopUp : PopUpBase {
 		}
 	}
 
-	protected void CompletePopUp(string action= "")
+	protected void CompletePopUp(string action= "",bool withAnim = true)
 	{
-		animateWorldsLights (false);
-		OnComplete (action);
-	}
+		if (withAnim) 
+		{
+			popUpRect.DOAnchorPos (new Vector2 (-Screen.width * 0.85f, 0), 0.5f, true).OnComplete (() => {
+				OnComplete (action);
+			});
 
-	public void checkPosition()
-	{
-		if(scrollRect.normalizedPosition.x < 0)
-		{
-			leftArrow.SetActive (false);
-		}
-		else
-		{
-			leftArrow.SetActive (true);
-		}
+			mapButton.DOAnchorPos (Vector2.zero, 0.5f, true);
+			mapButton.SetParent (previousParent);
 
-		if(scrollRect.normalizedPosition.x > 1)
+			facebookMessagesButton.DOAnchorPos (Vector2.zero, 0.5f, true);
+			facebookMessagesButton.SetParent (previousParent);
+		} 
+		else 
 		{
-			rightArrow.SetActive (false);
-		}
-		else
-		{
-			rightArrow.SetActive (true);
+			OnComplete (action);
+
+			facebookMessagesButton.DOAnchorPos (new Vector2(Screen.width * 0.85f,0),0.5f,true);
 		}
 	}
 }

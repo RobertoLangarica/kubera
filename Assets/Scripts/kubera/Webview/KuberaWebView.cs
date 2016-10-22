@@ -23,9 +23,27 @@ public class KuberaWebView : MonoBehaviour
 
 	public DwebViewNotifications OnLoggedIn;
 
+	protected bool isWaiting;
+	protected float waitForAnswerTime;
+	public int totalTime = 10;
+
 	void Start()
 	{
 		videoModal.SetActive(false);
+	}
+
+	void Update()
+	{
+		if (isWaiting) 
+		{
+			waitForAnswerTime += Time.deltaTime;
+			if (waitForAnswerTime >= totalTime) 
+			{
+				closeWebView ();
+				isWaiting = false;
+				waitForAnswerTime = 0;
+			}
+		}
 	}
 
 	public void showShopikaAndRegisterForEvents()

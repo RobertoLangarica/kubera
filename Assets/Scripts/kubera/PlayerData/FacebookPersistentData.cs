@@ -69,9 +69,9 @@ public class FacebookPersistentData : Manager<FacebookPersistentData>
 
 	public Dictionary<string,object> getFriendInfo(string id)
 	{
-		for(int i=0; i<gameFriends.Count; i++)
+		for(int i=0; i<allFriends.Count; i++)
 		{
-			Dictionary<string,object> friendInfo = ((Dictionary<string,object>)(gameFriends [i]));
+			Dictionary<string,object> friendInfo = ((Dictionary<string,object>)(allFriends [i]));
 			if((string)friendInfo ["id"] == id)
 			{
 				return friendInfo;

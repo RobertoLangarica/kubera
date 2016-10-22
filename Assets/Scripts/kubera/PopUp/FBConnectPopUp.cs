@@ -44,8 +44,9 @@ public class FBConnectPopUp : PopUpBase {
 		}
 		else
 		{
-			syncManager.facebookProvider.OnLoginSuccessfull += completed;
-			syncManager.facebookProvider.OnLoginFail += completed;
+			completed ();
+			/*syncManager.facebookProvider.OnLoginSuccessfull += completed;
+			syncManager.facebookProvider.OnLoginFail += completed;*/
 		}
 	}
 
