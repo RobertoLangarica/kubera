@@ -1008,14 +1008,12 @@ public class MapManager : MonoBehaviour
 			openPopUp ("NoLifes");
 		break;
 		case "noLifesClose":
-			if(popUpManager.isPopUpOpen("goalPopUp") || popUpManager.isPopUpOpen("retryPopUp"))
-			{
-				stopInput(false);
+			if (popUpManager.isPopUpOpen ("goalPopUp") || popUpManager.isPopUpOpen ("retryPopUp")) {
+				stopInput (false);
+			} else {
+				stopInput (true);
 			}
-			else
-			{
-				stopInput(true);
-			}
+			modal.SetActive (false);
 		break;
 		case "askKeys":
 			stopInput(true);
