@@ -17,7 +17,7 @@ public class WorldsPopUp : PopUpBase {
 
 	public MiniWorld[] worlds;
 
-	protected Transform previousParent;
+	public Transform previousParent;
 
 	void Start()
 	{
@@ -36,8 +36,6 @@ public class WorldsPopUp : PopUpBase {
 
 			popUpRect.DOAnchorPos (Vector2.zero, 0.5f, true);
 
-			previousParent = mapButton.parent;
-
 			mapButton.DOAnchorPos (new Vector2 (Screen.width * 0.85f, 0), 0.5f, true);
 			mapButton.SetParent (transform.parent);
 
@@ -51,8 +49,6 @@ public class WorldsPopUp : PopUpBase {
 			popUpRect.anchoredPosition = Vector2.zero;
 
 			popUp.SetActive (true);
-
-			previousParent = mapButton.parent;
 
 			mapButton.DOAnchorPos (new Vector2 (Screen.width * 0.85f, 0), 0.5f, true);
 			facebookMessagesButton.DOAnchorPos (new Vector2 (Screen.width * 0.78f, -Screen.height * 0.5f), 0.5f, true);
