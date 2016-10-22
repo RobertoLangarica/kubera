@@ -45,7 +45,7 @@ namespace utils.gems
 			{
 				UserGem prevUser = currentData.getUserById(currentData.lastUsedId);
 
-				if(prevUser != null && !string.IsNullOrEmpty(prevUser.accesToken) && !string.IsNullOrEmpty(prevUser._id))
+				if(prevUser != null && !string.IsNullOrEmpty(prevUser.accesToken) && !string.IsNullOrEmpty(prevUser._id) && !string.IsNullOrEmpty(prevUser.shareCode))
 				{
 					OnUserLoggedIn(prevUser._id, prevUser.accesToken);
 				}
