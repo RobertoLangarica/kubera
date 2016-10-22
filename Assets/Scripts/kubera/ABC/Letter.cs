@@ -99,7 +99,18 @@ public class Letter : MonoBehaviour
 			else
 			{
 				txtLetter.color = Color.black;
-				txtPoints.color = Color.black;
+				if (txtPoints.text == "x2") 
+				{
+					txtPoints.color = new Color(1,0.6313f,0.047f);
+				}
+				else if (txtPoints.text == "x3") 
+				{
+					txtPoints.color = new Color(1,1,0);
+				} 
+				else 
+				{
+					txtPoints.color = Color.black;
+				}
 			}
 			return;
 		}
@@ -148,7 +159,18 @@ public class Letter : MonoBehaviour
 				else
 				{
 					txtLetter.color = Color.black;
-					txtPoints.color = Color.black;
+					if (txtPoints.text == "x2") 
+					{
+						txtPoints.color = new Color(1,0.6313f,0.047f);
+					}
+					else if (txtPoints.text == "x3") 
+					{
+						txtPoints.color = new Color(1,1,0);
+					} 
+					else 
+					{
+						txtPoints.color = Color.black;
+					}
 				}
 			}
 			else if( state == EState.WRONG)
