@@ -1073,44 +1073,44 @@
 		-->
 		<text id="World1_name">
 			<languages>
-				<language id="english" text="Pentatonic"/>
-				<language id="spanish" text="Pentatonica"/>
-				<language id="default" text="Pentatonica"/>
+				<language id="english" text="Music"/>
+				<language id="spanish" text="Música"/>
+				<language id="default" text="Música"/>
 			</languages>
 		</text>
 		<text id="World2_name">
 			<languages>
-				<language id="english" text="Best Pet"/>
-				<language id="spanish" text="Mascota Mascota"/>
-				<language id="default" text="Mascota Mascota"/>
+				<language id="english" text="Pets"/>
+				<language id="spanish" text="Mascotas"/>
+				<language id="default" text="Mascotas"/>
 			</languages>
 		</text>
 		<text id="World3_name">
 			<languages>
-				<language id="english" text="Clothes"/>
-				<language id="spanish" text="Las Ropas"/>
-				<language id="default" text="Las Ropas"/>
+				<language id="english" text="Clothing"/>
+				<language id="spanish" text="Ropa"/>
+				<language id="default" text="Ropa"/>
 			</languages>
 		</text>
 		<text id="World4_name">
 			<languages>
-				<language id="english" text="Eye Book"/>
-				<language id="spanish" text="Libroso"/>
-				<language id="default" text="Libroso"/>
+				<language id="english" text="Book Store"/>
+				<language id="spanish" text="Librería"/>
+				<language id="default" text="Librería"/>
 			</languages>
 		</text>
 		<text id="World5_name">
 			<languages>
-				<language id="english" text="Shoe Inc"/>
-				<language id="spanish" text="Zapatin"/>
-				<language id="default" text="Zapatin"/>
+				<language id="english" text="Footwear"/>
+				<language id="spanish" text="Zapatos"/>
+				<language id="default" text="Zapatos"/>
 			</languages>
 		</text>
 		<text id="World6_name">
 			<languages>
 				<language id="english" text="Make Up"/>
-				<language id="spanish" text="Sombra Aqui"/>
-				<language id="default" text="Sombra Aqui"/>
+				<language id="spanish" text="Maquillaje"/>
+				<language id="default" text="Maquillaje"/>
 			</languages>
 		</text>
 		<text id="World7_name">
@@ -1122,16 +1122,16 @@
 		</text>
 		<text id="World8_name">
 			<languages>
-				<language id="english" text="Blink blink"/>
-				<language id="spanish" text="Blink blink"/>
-				<language id="default" text="Blink blink"/>
+				<language id="english" text="Jewelry"/>
+				<language id="spanish" text="Joyería"/>
+				<language id="default" text="Joyería"/>
 			</languages>
 		</text>
 		<text id="World9_name">
 			<languages>
-				<language id="english" text="Smell good"/>
-				<language id="spanish" text="Hueles bien"/>
-				<language id="default" text="Hueles bien"/>
+				<language id="english" text="Perfumery"/>
+				<language id="spanish" text="Perfumería"/>
+				<language id="default" text="Perfumería"/>
 			</languages>
 		</text>
 		<!--

@@ -66,20 +66,6 @@ public class ScreenManager : Manager<ScreenManager> {
 			return;
 		}
 
-		#if UNITY_ANDROID
-		//Back nativo de android
-		if (Input.GetKey(KeyCode.Escape))
-		{
-			//showPrevScene();
-		}
-		#endif
-
-		/*if (Input.GetKeyUp(KeyCode.Escape))
-		{
-			showPrevScene();
-		}*/
-
-
 		if(waitingScreen != null)
 		{
 			timeBeforeNextScreen -= Time.deltaTime;
@@ -106,6 +92,29 @@ public class ScreenManager : Manager<ScreenManager> {
 				}
 			}
 		}
+
+		#if UNITY_ANDROID
+		//Back nativo de android
+		if (Input.GetKey(KeyCode.Escape))
+		{
+			//showPrevScene();
+
+			//HARDCODING
+			if(blocked || !backAllowed){return;}
+
+
+			if(SceneManager.GetActiveScene().name == screenBeforeClose)
+			{
+				Application.Quit();
+			}
+		}
+		#endif
+
+		/*if (Input.GetKeyUp(KeyCode.Escape))
+		{
+			showPrevScene();
+		}*/
+
 	}
 	
 	public void showPrevScene()	
