@@ -104,6 +104,14 @@ public class Levels
 		_levels.Add(level);
 	}
 
+	/**
+	 * Remueve un nivel de la lista de niveles
+	 * */
+	public void removeLevel(Level level)
+	{
+		_levels.Remove(level);
+	}
+
 	public void fillWorlds()
 	{
 		worlds = new Dictionary<int, List<Level>>();
