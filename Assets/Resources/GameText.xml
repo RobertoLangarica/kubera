@@ -333,20 +333,6 @@
 				<language id="default" text="Arrastra una pieza para hacer una línea."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl1_phase2">
-			<languages>
-				<language id="english" text="Tap letters to form a correct word like {{b}}HAPPY{{/b}}."/>
-				<language id="spanish" text="Toca las letras para formar una palabra correcta, por ejemplo: {{b}}FELIZ{{/b}}."/>
-				<language id="default" text="Toca las letras para formar una palabra correcta, por ejemplo: {{b}}FELIZ{{/b}}."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl1_phase3">
-			<languages>
-				<language id="english" text="Tap the button to submit a correct word."/>
-				<language id="spanish" text="Presiona el botón para mandar una palabra correcta."/>
-				<language id="default" text="Presiona el botón para mandar una palabra correcta."/>
-			</languages>
-		</text>
 		<text id="Tutorial_lvl2_phase1">
 			<languages>
 				<language id="english" text="Drag a piece to make a line."/>
@@ -357,29 +343,22 @@
 		<text id="Tutorial_lvl2_phase2">
 			<languages>
 				<language id="english" text="You've got {{points}} out of {{neededPoints}} points, get the remaining points to pass the level."/>
-				<language id="spanish" text="Llevas {{points}} de {{neededPoints}} puntos, haz los puntos restantes para completar el nivel."/>
-				<language id="default" text="Llevas {{points}} de {{neededPoints}} puntos, haz los puntos restantes para completar el nivel."/>
+				<language id="spanish" text="Haz más líneas."/>
+				<language id="default" text="Haz más líneas."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl2_phase3">
 			<languages>
 				<language id="english" text="Careful! /n You lose if you run out of movements."/>
-				<language id="spanish" text="¡Cuidado! /n Pierdes si te quedas sin movimientos."/>
-				<language id="default" text="¡Cuidado! /n Pierdes si te quedas sin movimientos."/>
+				<language id="spanish" text="Las piezas salen de 3 en 3."/>
+				<language id="default" text="Las piezas salen de 3 en 3."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl2_phase4">
 			<languages>
 				<language id="english" text="Placing a piece or forming a word counts as one movement."/>
-				<language id="spanish" text="Poner una pieza o formar una palabra cuenta como un movimiento."/>
-				<language id="default" text="Poner una pieza o formar una palabra cuenta como un movimiento."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl2_phase5">
-			<languages>
-				<language id="english" text="{{b}}Remember:{{/b}} /n You get points by placing a piece, making a line or forming words."/>
-				<language id="spanish" text="{{b}}Recuerda:{{/b}} /n Obtienes puntos al colocar una pieza, hacer una línea o formar una palabra."/>
-				<language id="default" text="{{b}}Recuerda:{{/b}} /n Obtienes puntos al colocar una pieza, hacer una línea o formar una palabra."/>
+				<language id="spanish" text="Haz una línea más."/>
+				<language id="default" text="Haz una línea más."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl3_phase1">
