@@ -17,13 +17,16 @@ public class Frame : MonoBehaviour
 	public GameObject rightBottom;
 	public GameObject bottomLeft;
 
+	public GameObject cellManager;
+
 	public void instanceFrames(GameObject frame,Transform parent,int sortinOrder = 0)
 	{
 		GameObject frameInstance = null;
 		frameInstance = GameObject.Instantiate(frame) as GameObject;
 		frameInstance.GetComponent<SpriteRenderer> ().sortingLayerName = "Grid";
 		frameInstance.GetComponent<SpriteRenderer> ().sortingOrder = sortinOrder;
-		frameInstance.transform.SetParent(parent,false);
+
+		frameInstance.transform.SetParent(parent.transform,false);
 		frameInstance.SetActive (true);
 	}
 

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: b71b4e8e9378e364cac99955436162a8
-timeCreated: 1470345840
+timeCreated: 1476812982
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -290,7 +290,7 @@ TextureImporter:
   textureType: 5
   buildTargetSettings:
   - buildTarget: iPhone
-    maxTextureSize: 4096
+    maxTextureSize: 1024
     textureFormat: 4
     compressionQuality: 50
     allowsAlphaSplitting: 1
@@ -1569,10 +1569,10 @@ TextureImporter:
     - name: Square
       rect:
         serializedVersion: 2
-        x: 910
-        y: 576
-        width: 6
-        height: 6
+        x: 860
+        y: 203
+        width: 54
+        height: 54
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

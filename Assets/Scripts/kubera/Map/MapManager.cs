@@ -53,6 +53,7 @@ public class MapManager : MonoBehaviour
 	public GoalAfterGame goalAfterGame;
 	public GoalPopUp goalPopUp;
 	public WorldsPopUp worldsPopUp;
+	public FacebookNews facebbokMessages;
 
 	public GameObject hudWithShareButton;
 	public GameObject hudWithOutShareButton;
@@ -636,6 +637,25 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
+	public void OnWorldPressed()
+	{
+		if (worldsPopUp.gameObject.activeSelf) 
+		{
+			worldsPopUp.exit ();
+		} 
+		else 
+		{
+			if (modal.activeSelf) 
+			{
+				facebbokMessages.toWorlds ();
+			} 
+			else 
+			{
+				openPopUp ("worldsPopUp");
+			}
+		}
+	}
+
 	protected void stopInput(bool stopInput)
 	{
 		modal.SetActive (stopInput);
@@ -988,14 +1008,12 @@ public class MapManager : MonoBehaviour
 			openPopUp ("NoLifes");
 		break;
 		case "noLifesClose":
-			if(popUpManager.isPopUpOpen("goalPopUp") || popUpManager.isPopUpOpen("retryPopUp"))
-			{
-				stopInput(false);
+			if (popUpManager.isPopUpOpen ("goalPopUp") || popUpManager.isPopUpOpen ("retryPopUp")) {
+				stopInput (false);
+			} else {
+				stopInput (true);
 			}
-			else
-			{
-				stopInput(true);
-			}
+			modal.SetActive (false);
 		break;
 		case "askKeys":
 			stopInput(true);

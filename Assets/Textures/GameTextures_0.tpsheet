@@ -4,7 +4,7 @@
 # To import these sprites into your Unity project, download "TexturePackerImporter":
 # http://www.codeandweb.com/texturepacker/unity
 #
-# $TexturePacker:SmartUpdate:162d877b8bd6288eabb4d3e2a12485a1:2d72fbe0a835b8c047e5f62099bde3a5:9b3ef24a4d35207be08b0aff9a58cba5$
+# $TexturePacker:SmartUpdate:cbd249d6d6b55bcaeb51fb5d8d2e9741:e33cc1ab312e1babf19084c0f35530d5:9b3ef24a4d35207be08b0aff9a58cba5$
 #
 :format=40000
 :texture=GameTextures_0.png
@@ -40,8 +40,8 @@ K-InGame_bar2;570;446;196;37;0.5;0.5135135135135135
 K-InGame_barlight;286;670;167;5;0.5;0.4
 K-InGame_BaseTiles;0;746;456;63;0.5010964912280702;0.5396825396825398
 K-InGame_BaseTilesGray;0;679;455;63;0.5010989010989011;0.5079365079365079
-K-InGame_boardCorner;671;235;51;51;0.5196078431372549;0.5784313725490196
-K-InGame_boardoutline;860;203;54;54;0.5;0.5
+K-InGame_boardCorner;672;237;48;48;0.5;0.5
+K-InGame_boardoutline;860;204;52;52;0.5;0.5
 K-InGame_DobleArrow;780;594;33;30;0.5;0.4833333333333333
 K-InGame_EmptyCircle;898;586;10;10;0.5;0.5
 K-InGame_EmptyStar;778;491;30;28;0.5;0.5
@@ -61,10 +61,10 @@ K-InGame_PWRLetter;217;34;56;56;0.49107142857142855;0.5089285714285714
 K-InGame_PWRRotate;424;5;56;56;0.49107142857142855;0.5089285714285714
 K-InGame_PWRThunder;596;5;56;56;0.49107142857142855;0.5089285714285714
 K-InGame_PWRTip;656;5;55;56;0.5;0.5089285714285714
-K-InGame_Rotatetetris;974;203;44;46;0.5;0.5
+K-InGame_Rotatetetris;973;203;44;46;0.5;0.5
 K-InGame_ruedasettings;286;479;189;182;0.5;0.5
 K-InGame_settings;876;268;52;53;0.5;0.5
-K-InGame_soundOFF;715;34;70;71;0.5071428571428571;0.5140845070422535
+K-InGame_soundOFF;715;35;70;71;0.5071428571428571;0.5140845070422535
 K-InGame_soundON1;449;290;71;71;0.5;0.528169014084507
 K-InGame_soundON2;907;675;71;72;0.5;0.5069444444444444
 K-InGame_Stars1;572;581;204;43;0.5;0.5116279069767442
@@ -103,9 +103,9 @@ Kub_02_Voltear_assets/Kub_02_Voltear_assets0019;186;11;27;32;0.5;0.328125
 Kub_02_Voltear_assets/Kub_02_Voltear_assets0020;217;2;28;28;0.48214285714285715;0.3392857142857143
 Kub_02_Voltear_assets/Kub_02_Voltear_assets0021;524;348;29;27;0.46551724137931033;0.38888888888888884
 Kub_02_Voltear_assets/Kub_02_Voltear_assets0022;249;2;28;28;0.44642857142857145;0.5535714285714286
-Kub_02_Voltear_assets/Kub_02_Voltear_assets0023;671;184;47;47;0.5;0.5212765957446808
-Kub_02_Voltear_assets/Kub_02_Voltear_assets0024;918;198;52;51;0.49038461538461536;0.5
-Kub_02_Voltear_assets/Kub_02_Voltear_assets0025;801;202;55;55;0.5;0.5
+Kub_02_Voltear_assets/Kub_02_Voltear_assets0023;671;185;47;47;0.5;0.5212765957446808
+Kub_02_Voltear_assets/Kub_02_Voltear_assets0024;917;198;52;51;0.49038461538461536;0.5
+Kub_02_Voltear_assets/Kub_02_Voltear_assets0025;800;202;55;55;0.5;0.5
 Kub_02_Voltear_assets/Kub_02_Voltear_assets0026;249;2;28;28;0.44642857142857145;0.5535714285714286
 letras/K-InGame_BlackTile;449;215;71;71;0.5;0.5
 letras/K-InGame_bloquedBlackTile;596;215;71;71;0.5;0.5
@@ -126,12 +126,12 @@ objetivo0001;449;440;85;34;0.49411764705882355;0.47058823529411764
 palabras0001;0;337;150;31;0.5066666666666667;0.467741935483871
 piezasglow;155;346;119;19;0.5;0.4736842105263158
 puntaflecha;780;523;31;34;0.5161290322580645;0.47058823529411764
-Square;910;576;6;6;0.5;0.5
+Square;860;204;52;52;0;1
 tetris/K-InGame_Tetrisblue;801;261;71;71;0.5;0.5
-tetris/K-InGame_Tetrisgray;726;194;71;71;0.5;0.5
+tetris/K-InGame_Tetrisgray;725;194;71;71;0.5;0.5
 tetris/K-InGame_Tetrisgreen;746;121;70;69;0.4928571428571429;0.5
 tetris/K-InGame_Tetrisorange;951;325;71;71;0.5;0.5
 tetris/K-InGame_Tetrispink;596;140;71;71;0.5;0.5
 tetris/K-InGame_Tetrispurple;596;65;71;71;0.5;0.5
-tetris/K-InGame_Tetrissoft;671;109;71;71;0.5;0.5
+tetris/K-InGame_Tetrissoft;671;110;71;71;0.5;0.5
 tetris/K-InGame_Tetrisyellow;789;48;70;69;0.4928571428571429;0.5

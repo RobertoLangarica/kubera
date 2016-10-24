@@ -47,7 +47,7 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 4096
   textureSettings:
-    filterMode: -1
+    filterMode: 2
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -69,6 +69,11 @@ TextureImporter:
   - buildTarget: Android
     maxTextureSize: 1024
     textureFormat: 47
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: 4
     compressionQuality: 50
     allowsAlphaSplitting: 0
   spriteSheet:

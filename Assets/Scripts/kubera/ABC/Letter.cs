@@ -15,6 +15,11 @@ public class Letter : MonoBehaviour
 		NORMAL,WRONG,HINTED	
 	}
 
+	public Color x2Color = new Color(1,1,0);
+	public Color x2ColorHighlight = new Color(0,0,0);
+	public Color x3Color =  new Color(1,0.6313f,0.047f);
+	public Color x3ColorHighlight =  new Color(0,0,0);
+
 	public Image myImage;
 	public Sprite normalSprite;
 	public Sprite normalSelectedSprite;
@@ -85,11 +90,11 @@ public class Letter : MonoBehaviour
 				txtLetter.color = Color.black;
 				if (txtPoints.text == "x2") 
 				{
-					txtPoints.color = new Color(1,0.6313f,0.047f);
+					txtPoints.color = x2Color;
 				}
 				else if (txtPoints.text == "x3") 
 				{
-					txtPoints.color = new Color(1,1,0);
+					txtPoints.color = x3Color;
 				} 
 				else 
 				{
@@ -99,7 +104,18 @@ public class Letter : MonoBehaviour
 			else
 			{
 				txtLetter.color = Color.black;
-				txtPoints.color = Color.black;
+				if (txtPoints.text == "x2") 
+				{
+					txtPoints.color = x2ColorHighlight;
+				}
+				else if (txtPoints.text == "x3") 
+				{
+					txtPoints.color = x3ColorHighlight;
+				} 
+				else 
+				{
+					txtPoints.color = Color.black;
+				}
 			}
 			return;
 		}
@@ -134,11 +150,11 @@ public class Letter : MonoBehaviour
 					txtLetter.color = Color.black;
 					if (txtPoints.text == "x2") 
 					{
-						txtPoints.color = new Color(1,0.6313f,0.047f);
+						txtPoints.color = x2Color;
 					}
 					else if (txtPoints.text == "x3") 
 					{
-						txtPoints.color = new Color(1,1,0);
+						txtPoints.color = x3Color;
 					} 
 					else 
 					{
@@ -148,7 +164,18 @@ public class Letter : MonoBehaviour
 				else
 				{
 					txtLetter.color = Color.black;
-					txtPoints.color = Color.black;
+					if (txtPoints.text == "x2") 
+					{
+						txtPoints.color = x2ColorHighlight;
+					}
+					else if (txtPoints.text == "x3") 
+					{
+						txtPoints.color = x3ColorHighlight;
+					} 
+					else 
+					{
+						txtPoints.color = Color.black;
+					}
 				}
 			}
 			else if( state == EState.WRONG)

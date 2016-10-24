@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using Kubera.Data.Sync;
+using DG.Tweening;
 
 public class FacebookNews : PopUpBase {
 
@@ -13,6 +14,11 @@ public class FacebookNews : PopUpBase {
 	public RectTransform panelMessageGridRectTransform;
 	public Text title;
 	public GameObject noMessagesMessage;
+	public Transform previousParent;
+
+	public RectTransform mapButton;
+	public RectTransform facebookMessagesButton;
+	public RectTransform popUpRect;
 
 	void Start()
 	{
@@ -57,18 +63,83 @@ public class FacebookNews : PopUpBase {
 
 	public void openMessages()
 	{
-		activate ();
-		mapManager.openPopUp ("facebookNews");
-		messageCountImage.gameObject.SetActive(false);
+		if (popUpRect.gameObject.activeSelf) 
+		{
+			exit ();
+		} 
+		else 
+		{
+			if (mapManager.worldsPopUp.gameObject.activeSelf) 
+			{
+				mapManager.worldsPopUp.toMessages ();
+			} 
+			else 
+			{
+				mapManager.openPopUp ("facebookNews");
+				messageCountImage.gameObject.SetActive (false);
+			}
+		}
 	}
 
 	public void exit()
 	{
-		OnComplete ();
+		CompletePopUp ();
 	}
 
 	public void toWorlds()
 	{
-		OnComplete ("toWorldTraveler");
+		CompletePopUp ("toWorldTraveler",false);
+	}
+
+	public override void activate()
+	{
+		if (mapButton.parent != popUpRect.parent) 
+		{
+			popUpRect.anchoredPosition = new Vector2 (-Screen.width * 0.85f, 0);
+
+			popUp.SetActive (true);
+
+			popUpRect.DOAnchorPos (Vector2.zero, 0.5f, true);
+
+			mapButton.DOAnchorPos (new Vector2 (Screen.width * 0.78f, 0), 0.5f, true);
+			mapButton.SetParent (popUpRect.parent);
+
+			facebookMessagesButton.DOAnchorPos (new Vector2 (Screen.width * 0.85f, 0), 0.5f, true);
+			facebookMessagesButton.SetParent (popUpRect.parent);
+
+			popUpRect.SetSiblingIndex (popUpRect.parent.childCount - 1);
+		} 
+		else 
+		{
+			popUpRect.anchoredPosition = Vector2.zero;
+
+			popUp.SetActive (true);
+
+			mapButton.DOAnchorPos (new Vector2 (Screen.width * 0.78f, 0), 0.5f, true);
+			facebookMessagesButton.DOAnchorPos (new Vector2 (Screen.width * 0.85f, 0), 0.5f, true);
+
+			popUpRect.SetSiblingIndex (popUpRect.parent.childCount - 1);
+		}
+	}
+
+	protected void CompletePopUp(string action= "",bool withAnim = true)
+	{
+		if (withAnim) 
+		{
+			popUpRect.DOAnchorPos (new Vector2 (-Screen.width * 0.85f, 0), 0.5f, true).OnComplete (() => {
+				OnComplete (action);
+			});
+
+			mapButton.DOAnchorPos (Vector2.zero, 0.5f, true);
+			mapButton.SetParent (previousParent);
+
+			facebookMessagesButton.DOAnchorPos (Vector2.zero, 0.5f, true);
+			facebookMessagesButton.SetParent (previousParent);
+		} 
+		else 
+		{
+			OnComplete (action);
+			facebookMessagesButton.DOAnchorPos (new Vector2(Screen.width * 0.78f,0),0.5f,true);
+		}
 	}
 }

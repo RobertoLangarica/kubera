@@ -58,6 +58,14 @@ namespace LevelBuilder
 		private Text saveAsWarning;
 		private Button saveAsAccept;
 
+		public GameObject insertPopUp;
+		private InputField insertInput;
+		private Button insertAccept;
+
+		public GameObject deletePopUp;
+		private InputField deleteInput;
+		private Button deleteAccept;
+
 		private string abcDataBeforeOpen;
 		private string piecesDataBeforeOpen;
 		private string gridDataBeforeOpen;
@@ -90,6 +98,18 @@ namespace LevelBuilder
 			saveAsAccept = saveAsPopUp.GetComponentsInChildren<Button>(true)[1];
 			saveAsAccept.interactable = false;
 			saveAsPopUp.SetActive(false);
+
+			insertPopUp.SetActive(true);//Activo para poderle extrar hijos
+			insertInput = insertPopUp.GetComponentInChildren<InputField>();
+			insertAccept = insertPopUp.GetComponentsInChildren<Button>(true)[1];
+			insertAccept.interactable = false;
+			insertPopUp.SetActive(false);
+
+			deletePopUp.SetActive(true);//Activo para poderle extrar hijos
+			deleteInput = deletePopUp.GetComponentInChildren<InputField>();
+			deleteAccept = deletePopUp.GetComponentsInChildren<Button>(true)[1];
+			deleteAccept.interactable = false;
+			deletePopUp.SetActive(false);
 			hideLoadingIndicator();
 
 			levelGoalSelector.isValidWord += wordExistInDictionary;
@@ -266,7 +286,6 @@ namespace LevelBuilder
 			lvlToSave.gemsNeeded = int.Parse(inputGemsNeeded.text);
 			lvlToSave.starsNeeded = int.Parse(inputStarsNeeded.text);
 
-
 			//Agregamos el conteo de obstaculos para esa meta
 			if(levelGoalSelector.isObstacles())
 			{
@@ -278,8 +297,7 @@ namespace LevelBuilder
 				PersistentData.GetInstance().levelsData.addLevel(lvlToSave);
 			}
 
-			//Guardamos el archivo
-			PersistentData.GetInstance().levelsData.Save(Application.dataPath+"/Resources/levels_"+languageSelector.options[languageSelector.value].text+".xml");
+			saveLocalData();
 
 			#if UNITY_EDITOR
 			AssetDatabase.Refresh();
@@ -287,6 +305,77 @@ namespace LevelBuilder
 
 			//Completamos la lista de niveles
 			updateLevelSelectorOptions();
+		}
+
+		protected void saveLocalData()
+		{
+			//Guardamos el archivo
+			PersistentData.GetInstance().levelsData.Save(Application.dataPath+"/Resources/levels_"+languageSelector.options[languageSelector.value].text+".xml");	
+		}
+
+		public void InsertLevel(int index)
+		{
+			string levelName;
+			Level level;
+
+			//Renombramos los niveles (evitamos duplicados recorriendo hacia atras)
+			for(int i = PersistentData.GetInstance().levelsData.levels.Length; i >= index ; i--)
+			{
+				levelName = i.ToString("0000");
+
+				if(PersistentData.GetInstance().levelsData.existLevel(levelName))
+				{
+					level = PersistentData.GetInstance().levelsData.getLevelByName(levelName);
+					level.name = (i+1).ToString("0000");
+				}
+			} 
+
+			//Insertamos uno vacio
+			resetEditorToDefaultState(languageSelector.options[languageSelector.value].text);	
+			currentEditingLevelName = (index).ToString("0000");
+			writeLevelToXML();
+
+			//Mostrando el nombre correcto
+			updateShowedName();
+		}
+
+		public void DeleteLevel(int index)
+		{
+			string levelName = index.ToString("0000");
+			Level level;
+			int length = PersistentData.GetInstance().levelsData.levels.Length;
+			//Lo eliminamos
+			if(PersistentData.GetInstance().levelsData.existLevel(levelName))
+			{
+				PersistentData.GetInstance().levelsData.removeLevel(PersistentData.GetInstance().levelsData.getLevelByName(levelName));
+			}
+				
+			//Renombramos los niveles (evitamos duplicados recorriendo hacia atras)
+			for(int i = index+1; i <= length; i++)
+			{
+				levelName = i.ToString("0000");
+
+				if(PersistentData.GetInstance().levelsData.existLevel(levelName))
+				{
+					level = PersistentData.GetInstance().levelsData.getLevelByName(levelName);
+					level.name = (i-1).ToString("0000");
+				}
+			} 
+
+			saveLocalData();
+
+			#if UNITY_EDITOR
+			AssetDatabase.Refresh();
+			#endif
+
+			//Completamos la lista de niveles
+			updateLevelSelectorOptions();
+
+			//HUD por default
+			resetEditorToDefaultState(UserDataManager.instance.language);
+
+			//Nombre del siguiente nivel (el inmediato siguiente)
+			setcurrentEditingNameToTheLast();
 		}
 
 		private void configureHUDFromLevel(string levelName)
@@ -404,6 +493,74 @@ namespace LevelBuilder
 			showLoadingIndicator();
 			Invoke("hideLoadingIndicator",0.5f);
 
+		}
+
+		public void OnShowInsertPopup()
+		{
+			//Estado default
+			insertInput.text = "";
+			insertAccept.interactable = false;
+
+			insertPopUp.SetActive(true);
+		}
+
+		public void OnInsertPopupNameChange()
+		{
+			if(insertInput.text != "")
+			{
+				insertAccept.interactable = true;
+			}
+			else
+			{
+				insertAccept.interactable = false;
+			}
+		}
+
+		public void OnInsertPopupCancel()
+		{
+			insertPopUp.SetActive(false);
+		}
+
+		public void OnInsertPopupAccept()
+		{
+			insertPopUp.SetActive(false);
+			showLoadingIndicator();
+			InsertLevel(int.Parse(insertInput.text));
+			Invoke("hideLoadingIndicator",0.5f);
+		}
+
+		public void OnShowDeletePopup()
+		{
+			//Estado default
+			deleteInput.text = "";
+			deleteAccept.interactable = false;
+
+			deletePopUp.SetActive(true);
+		}
+
+		public void OnDeletePopupNameChange()
+		{
+			if(deleteInput.text != "")
+			{
+				deleteAccept.interactable = true;
+			}
+			else
+			{
+				deleteAccept.interactable = false;
+			}
+		}
+
+		public void OnDeletePopupCancel()
+		{
+			deletePopUp.SetActive(false);
+		}
+
+		public void OnDeletePopupAccept()
+		{
+			deletePopUp.SetActive(false);
+			showLoadingIndicator();
+			DeleteLevel(int.Parse(deleteInput.text));
+			Invoke("hideLoadingIndicator",0.5f);
 		}
 
 		public void OnSave()
