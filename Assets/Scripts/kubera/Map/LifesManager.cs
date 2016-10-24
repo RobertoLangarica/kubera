@@ -32,6 +32,12 @@ public class LifesManager : Manager<LifesManager>
 		showTimer = false;
 
 		dataManager = (DataManagerKubera.GetInstance () as DataManagerKubera);
+
+		if (dataManager == null) 
+		{
+			return;
+		}
+
 		maximumLifes = dataManager.initialLifes;
 
 		if (dataManager.currentUserId != dataManager.ANONYMOUS_USER) 
