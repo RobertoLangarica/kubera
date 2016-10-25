@@ -39,6 +39,9 @@ public class FacebookManager : Manager<FacebookManager>
 
 	protected GameObject conectFacebook;
 
+	public delegate void DOnSuccesRequest();
+	public DOnSuccesRequest OnSuccesRequest;
+
 	protected override void Awake ()
 	{
 		base.Awake ();
@@ -54,7 +57,7 @@ public class FacebookManager : Manager<FacebookManager>
 		else if(!facebookConectMessageCreated)
 		{
 			//crear FacebookConectMessage
-			print ("creando mensaje para conectar");
+			//print ("creando mensaje para conectar");
 			conectFacebook = Instantiate (FacebookConectMessage);
 			conectFacebook.transform.SetParent (panelMessages,false);
 			facebookConectMessageCreated = true;
@@ -272,7 +275,14 @@ public class FacebookManager : Manager<FacebookManager>
 		FB.AppRequest ("Give me a key!", OGActionType.ASKFOR, "795229890609809", idsFriends, "askKey,"+ mapManager.bossLockedPopUp.fullLvlName, // Here you can put in any data you want
 			"Ask a life to your friend", // A title
 			delegate (IAppRequestResult result) {
-				
+
+				if(result.Error == null)
+				{
+					if(OnSuccesRequest != null)
+					{
+						OnSuccesRequest();
+					}
+				}
 				Debug.Log (result.RawResult);
 			}
 		);
@@ -283,6 +293,13 @@ public class FacebookManager : Manager<FacebookManager>
 		FB.AppRequest ("Give me a life!", OGActionType.ASKFOR, "101162080284933", idsFriends, "askLife", // Here you can put in any data you want
 			"Ask a life to your friend", // A title
 			delegate (IAppRequestResult result) {
+				if(result.Error == null)
+				{
+					if(OnSuccesRequest != null)
+					{
+						OnSuccesRequest();
+					}
+				}
 				Debug.Log (result.RawResult);
 			}
 		);
@@ -586,6 +603,11 @@ public class FacebookManager : Manager<FacebookManager>
 	public void fillRequestPanel(List<object> friends, FBFriendsRequestPanel.EFriendsType friendType)
 	{
 		fbRequestPanel.initializeFriendsController (FBFriendsRequestPanel.ERequestType.ASK_LIFES, friends,friendType);
+	}
+
+	public void updateMessagesNumber(int messagesProcessed)
+	{
+		facebookNews.updateCurrentMessages (messagesProcessed);
 	}
 }
 

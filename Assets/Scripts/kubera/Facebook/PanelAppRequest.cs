@@ -208,6 +208,8 @@ public class PanelAppRequest : MonoBehaviour {
 			requestIDs.Add (friendInfo [i].Split ('-') [2]);
 		}
 
+		facebookManager.updateMessagesNumber (friendInfo.Count);
+
 		if(actionChosed == EAction.ACCEPT)
 		{
 			if(stateRequested == ERequestState.KEY)

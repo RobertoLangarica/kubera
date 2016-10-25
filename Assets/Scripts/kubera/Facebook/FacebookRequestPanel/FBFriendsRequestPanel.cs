@@ -49,22 +49,28 @@ public class FBFriendsRequestPanel : PopUpBase {
 	public ScrollRect allFriendsSR;
 	public ScrollRect gameFriendsSR;
 
+	public GameObject successPopUp;
+	public Text successTextTitle;
+	public Text successText;
+
 	void Start()
 	{
+		successPopUp.SetActive (false);
 		changeBetweenFriends (true);
 		invitableFriends.OnActivated = activateAllSelected;
 		gameFriends.OnActivated = activateAllSelected;
 		askButton.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FB_REQUEST_ASK_TEXT);
+		successTextTitle.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FB_SUCCESS_TEXT);
 	}
 
 	public override void activate()
 	{
 		popUp.SetActive (true);
-
 	}
 
 	public void closePressed()
 	{
+		successPopUp.SetActive (false);
 		popUp.SetActive (false);
 
 		OnPopUpCompleted (this);
@@ -224,8 +230,9 @@ public class FBFriendsRequestPanel : PopUpBase {
 		friendsIds = getFriendsActivatedIDByFriendsType (currentFriendType);
 		int friendGroups = (int)Mathf.Floor(friendsIds.Count / 30.0f);
 	
-		/*
+		facebookManager.OnSuccesRequest += succesPopUp;
 
+		/*
 		string myId = FacebookPersistentData.GetInstance ().getPlayerId ();
 
 		if(currentFriendType == EFriendsType.GAME)
@@ -364,6 +371,23 @@ public class FBFriendsRequestPanel : PopUpBase {
 					}
 				}
 			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	protected void succesPopUp()
+	{
+		facebookManager.OnSuccesRequest -= succesPopUp;
+		successPopUp.SetActive (true);
+
+		switch (currentRequestType) {
+		case ERequestType.ASK_KEYS:
+			successText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FB_SUCCESS_KEYS_TEXT);
+			break;
+		case ERequestType.ASK_LIFES:
+			successText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FB_SUCCESS_LIFES_TEXT);
 			break;
 		default:
 			break;
