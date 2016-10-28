@@ -158,9 +158,9 @@ public class RotatePowerUp : PowerupBase
 		{
 			imageToRotate [i].DOScale (new Vector2 (imageToRotate [i].localScale.x + 0.1f, imageToRotate [i].localScale.y + 0.1f), 0.5f).OnComplete(()=>
 				{
-					imageToRotate [i].DOScale (new Vector2 (imageToRotate [i].localScale.x - 0.1f, imageToRotate [i].localScale.y - 0.1f), 0.5f).OnComplete(()=>
+					/*imageToRotate [i].DOScale (new Vector2 (imageToRotate [i].localScale.x - 0.1f, imageToRotate [i].localScale.y - 0.1f), 0.5f).OnComplete(()=>
 						{
-						}).SetId("imageToRotate");
+						}).SetId("imageToRotate");*/
 				}).SetId("imageToRotate");
 			
 			imageToRotate [i].DOLocalRotate (new Vector3 (0, 0, imageToRotate [i].localRotation.z - 90), 1.0f,RotateMode.LocalAxisAdd).SetId ("imageToRotate");
@@ -175,6 +175,11 @@ public class RotatePowerUp : PowerupBase
 			imageToRotate [i].DOScale (new Vector2 (imageToRotate [i].localScale.x - 0.1f, imageToRotate [i].localScale.y - 0.1f), 0.5f).SetId("imageToRotate");;
 		}
 		Invoke ("rotateImage", Random.Range(2,5));
+	}
+
+	protected void rotateImage(Transform image)
+	{
+		image.DOScale (new Vector2 (image.localScale.x - 0.1f, image.localScale.y - 0.1f), 0.5f).SetId("imageToRotate");;
 	}
 
 	protected void cancelInvoke()

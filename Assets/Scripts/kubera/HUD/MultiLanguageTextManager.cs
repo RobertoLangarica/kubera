@@ -115,6 +115,9 @@ public class MultiLanguageTextManager
 
 	public const string FB_REQUEST_ASK_TEXT					= "fbRequestAskText";
 
+	public const string FB_SUCCESS_TEXT 					= "fbSuccessText";
+	public const string FB_SUCCESS_LIFES_TEXT 				= "fbSuccessLifesText";
+	public const string FB_SUCCESS_KEYS_TEXT 				= "fbSuccessKeysText";
 
 	//GAME
 	public const string FLAVOR_TEXT							= "ticketFlavorText";

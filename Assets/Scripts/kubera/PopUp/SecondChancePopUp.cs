@@ -115,6 +115,7 @@ public class SecondChancePopUp : PopUpBase
 		}
 		else
 		{
+			pressed = false;
 			OnComplete ("NoGemsPopUp",false);
 		}
 

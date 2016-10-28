@@ -990,7 +990,7 @@
 			<languages>
 				<language id="english" text="LogOut"/>
 				<language id="spanish" text="Desconectar"/>
-				<language id="default" text="Desconectar "/>
+				<language id="default" text="Desconectar"/>
 			</languages>                    
 		</text>
 
@@ -998,7 +998,29 @@
 			<languages>
 				<language id="english" text="ASK"/>
 				<language id="spanish" text="PEDIR"/>
-				<language id="default" text="PEDIR "/>
+				<language id="default" text="PEDIR"/>
+			</languages>                    
+		</text>
+
+		<text id="fbSuccessText">
+			<languages>
+				<language id="english" text="Perfect!"/>
+				<language id="spanish" text="¡Perfecto!"/>
+				<language id="default" text="¡Perfecto!"/>
+			</languages>                    
+		</text>
+		<text id="fbSuccessLifesText">
+			<languages>
+				<language id="english" text="You just asked your friends for lives. Lives will come soon!"/>
+				<language id="spanish" text="Has pedido vidas a tus amigos. ¡Vidas llegarán pronto!"/>
+				<language id="default" text="Has pedido vidas a tus amigos. ¡Vidas llegarán pronto!"/>
+			</languages>                    
+		</text>
+		<text id="fbSuccessKeysText">
+			<languages>
+				<language id="english" text="You just asked your friends for a key. Use it to unlock a new level!"/>
+				<language id="spanish" text="Has pedido una llave a tus amigos. ¡Usala para accerder al último nivel del mundo."/>
+				<language id="default" text="Has pedido una llave a tus amigos. ¡Usala para accerder al último nivel del mundo."/>
 			</languages>                    
 		</text>
 

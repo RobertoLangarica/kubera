@@ -146,23 +146,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.4875, y: 0.55263156}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -3.5, y: -14}
-        - {x: 1.5, y: -14}
-        - {x: 7.5, y: -8}
-        - {x: 6.5, y: -1}
-        - {x: 8.5, y: -6}
-        - {x: 16.5, y: -9}
-        - {x: 20.5, y: -4}
-        - {x: 20.5, y: 8}
-        - {x: 16.5, y: 17}
-        - {x: -11.5, y: 17}
-        - {x: -19.5, y: 6}
-        - {x: -19.5, y: -21}
-        - {x: -13.5, y: -21}
-        - {x: -9.5, y: -17}
-        - {x: -8.5, y: -13}
-        - {x: -9.5, y: -10}
+      outline: []
     - name: fondo-K-Mapa1_bolitaparallax
       rect:
         serializedVersion: 2
@@ -184,17 +168,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.4722222, y: 0.58653843}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 28.5, y: 16.500002}
-        - {x: 17.5, y: 21.500002}
-        - {x: -14.5, y: 21.500002}
-        - {x: -25.5, y: 17.500002}
-        - {x: -25.5, y: -12.499998}
-        - {x: -10.5, y: -30.499998}
-        - {x: 12.5, y: -30.499998}
-        - {x: 21.5, y: -26.499998}
-        - {x: 27.5, y: -19.499998}
-        - {x: 28.5, y: -16.499998}
+      outline: []
     - name: fondo-K-Mapa1_Luz1
       rect:
         serializedVersion: 2
@@ -205,15 +179,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 124.5, y: 93}
-        - {x: 105.5, y: 93}
-        - {x: -124.5, y: -89}
-        - {x: -124.5, y: -93}
-        - {x: -45.5, y: -93}
-        - {x: -42.5, y: -90}
-        - {x: -28.5, y: -75}
-        - {x: 124.5, y: 89}
+      outline: []
     - name: 'fondo-K-Mapa1_Luz2 '
       rect:
         serializedVersion: 2
@@ -224,17 +190,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.7906404, y: 0.7584746}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -64.5, y: 57}
-        - {x: -75.5, y: 57}
-        - {x: -79.5, y: 54}
-        - {x: -138.5, y: -110}
-        - {x: -160.5, y: -173}
-        - {x: -160.5, y: -179}
-        - {x: -63.5, y: -179}
-        - {x: 42.5, y: -3}
-        - {x: 42.5, y: 6}
-        - {x: -35.5, y: 44}
+      outline: []
     - name: fondo-K-Mapa1_Luz3h
       rect:
         serializedVersion: 2
@@ -245,23 +201,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 1.3169643, y: 0.06621005}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -147.5, y: -7.5}
-        - {x: -145.5, y: -14.5}
-        - {x: -136.5, y: -14.5}
-        - {x: -57.5, y: 25.5}
-        - {x: -57.5, y: 33.5}
-        - {x: -62.5, y: 49.5}
-        - {x: -144.5, y: 167.5}
-        - {x: -147.5, y: 167.5}
-      - - {x: -147.5, y: 204.5}
-        - {x: -147.5, y: 172.5}
-        - {x: -145.5, y: 160.5}
-        - {x: -54.5, y: 31.5}
-        - {x: -45.5, y: 31.5}
-        - {x: -35.5, y: 36.5}
-        - {x: -35.5, y: 50.5}
-        - {x: -143.5, y: 204.5}
+      outline: []
     - name: fondo-K-Mapa1_Luz4
       rect:
         serializedVersion: 2
@@ -272,14 +212,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.85655737, y: 0.216763}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -41.5, y: -37.5}
-        - {x: -29.5, y: -37.5}
-        - {x: 17.5, y: -12.5}
-        - {x: 17.5, y: 20.5}
-        - {x: -61.5, y: 135.5}
-        - {x: -104.5, y: 135.5}
-        - {x: -104.5, y: 119.5}
+      outline: []
     - name: fondo-K-Mapa1_Luz5
       rect:
         serializedVersion: 2
@@ -290,15 +223,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.13533835, y: 0.78781515}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 80, y: 50.5}
-        - {x: -18, y: 7.5}
-        - {x: -18, y: -4.5}
-        - {x: 1, y: -42.5}
-        - {x: 97, y: -187.5}
-        - {x: 115, y: -187.5}
-        - {x: 115, y: -6.5}
-        - {x: 89, y: 50.5}
+      outline: []
     - name: fondo-K-Mapa1_Luz6
       rect:
         serializedVersion: 2
@@ -309,16 +234,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: -0.46938777, y: -0.14418605}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 141, y: 246}
-        - {x: 139, y: 245}
-        - {x: 49, y: 58}
-        - {x: 46, y: 48}
-        - {x: 46, y: 37}
-        - {x: 51, y: 31}
-        - {x: 81, y: 31}
-        - {x: 144, y: 169}
-        - {x: 144, y: 246}
+      outline: []
     - name: fondo-K-Mapa1_nota1
       rect:
         serializedVersion: 2
@@ -329,16 +245,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.4921875, y: 0.5344828}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 31.5, y: 40.5}
-        - {x: 14.5, y: 40.5}
-        - {x: -31.5, y: -0.5}
-        - {x: -31.5, y: -46.5}
-        - {x: 0.5, y: -46.5}
-        - {x: 3.5, y: -45.5}
-        - {x: 20.5, y: -19.5}
-        - {x: 32.5, y: 13.5}
-        - {x: 32.5, y: 39.5}
+      outline: []
     - name: fondo-K-Mapa1_nota2
       rect:
         serializedVersion: 2
@@ -349,15 +256,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.49, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -0.5, y: 22.5}
-        - {x: -21.5, y: 16.5}
-        - {x: -24.5, y: 5.5}
-        - {x: -24.5, y: -22.5}
-        - {x: -5.5, y: -22.5}
-        - {x: 25.5, y: -15.5}
-        - {x: 25.5, y: 16.5}
-        - {x: 21.5, y: 22.5}
+      outline: []
     - name: fondo-K-Mapa1_nota3
       rect:
         serializedVersion: 2
@@ -368,17 +267,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5, y: 0.53125}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 6, y: 22.5}
-        - {x: -20, y: 22.5}
-        - {x: -24, y: 12.5}
-        - {x: -24, y: -7.5}
-        - {x: -10, y: -25.5}
-        - {x: 9, y: -25.5}
-        - {x: 18, y: -23.5}
-        - {x: 24, y: -18.5}
-        - {x: 24, y: 3.5}
-        - {x: 20, y: 15.5}
+      outline: []
     - name: fondo-K-Mapa1_nota5
       rect:
         serializedVersion: 2
@@ -389,16 +278,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.49137932, y: 0.5405405}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 4.5, y: 17}
-        - {x: 3.5, y: 10}
-        - {x: 1.5, y: 3}
-        - {x: 0.5, y: 8}
-        - {x: -28.5, y: 5}
-        - {x: -28.5, y: -20}
-        - {x: 6.5, y: -20}
-        - {x: 29.5, y: -7}
-        - {x: 29.5, y: 17}
+      outline: []
     - name: fondo-K-Mapa1_nota6
       rect:
         serializedVersion: 2
@@ -453,37 +333,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5, y: 0.42222223}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 66, y: -1}
-        - {x: 54, y: -12}
-        - {x: 46, y: -17}
-        - {x: 44, y: -17}
-        - {x: 43, y: -18}
-        - {x: 40, y: -18}
-        - {x: 39, y: -19}
-        - {x: 34, y: -19}
-        - {x: 41, y: -18}
-        - {x: 48, y: -15}
-        - {x: 55, y: -11}
-        - {x: 74, y: 8}
-        - {x: 106, y: 15}
-        - {x: 106, y: 22}
-        - {x: 74, y: 19}
-        - {x: 46, y: -9}
-        - {x: 41, y: -11}
-        - {x: 48, y: -6}
-        - {x: 60, y: 5}
-        - {x: 79, y: 28}
-        - {x: 106, y: 29}
-        - {x: 106, y: 78}
-        - {x: 68, y: 78}
-        - {x: -106, y: -27}
-        - {x: -106, y: -57}
-        - {x: -28, y: -57}
-        - {x: 50, y: -42}
-        - {x: 106, y: -1}
-        - {x: 106, y: 6}
-        - {x: 82, y: 6}
+      outline: []
     - name: "K-1-MapaM\xFAsica_PlataformaChica"
       rect:
         serializedVersion: 2
@@ -516,17 +366,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.45564517, y: 0.55369127}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -56.5, y: 7.5}
-        - {x: -56.5, y: -13.5}
-        - {x: -53.5, y: -14.5}
-        - {x: -41.5, y: -82.5}
-        - {x: 35.5, y: -82.5}
-        - {x: 67.5, y: -62.5}
-        - {x: 67.5, y: 26.5}
-        - {x: 22.5, y: 66.5}
-        - {x: -19.5, y: 66.5}
-        - {x: -41.5, y: 39.5}
+      outline: []
     - name: K-2-MapaMascotas_gato
       rect:
         serializedVersion: 2
@@ -537,17 +377,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.48214287, y: 0.5561224}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -40.5, y: 43.5}
-        - {x: -40.5, y: -54.5}
-        - {x: -32.5, y: -54.5}
-        - {x: -17.5, y: -51.5}
-        - {x: -16.5, y: -47.5}
-        - {x: 5.5, y: -54.5}
-        - {x: 38.5, y: -54.5}
-        - {x: 43.5, y: -31.5}
-        - {x: 43.5, y: 34.5}
-        - {x: 15.5, y: 43.5}
+      outline: []
     - name: K-2-MapaMascotas_huella1
       rect:
         serializedVersion: 2
@@ -558,16 +388,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5540541, y: 0.5609756}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -20.5, y: -12}
-        - {x: -8.5, y: -23}
-        - {x: 15.5, y: -23}
-        - {x: 16.5, y: -22}
-        - {x: 16.5, y: 10}
-        - {x: 15.5, y: 13}
-        - {x: 2.5, y: 18}
-        - {x: -15.5, y: 18}
-        - {x: -20.5, y: 15}
+      outline: []
     - name: K-2-MapaMascotas_huella3
       rect:
         serializedVersion: 2
@@ -578,17 +399,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.48245615, y: 0.5510204}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 26.5, y: -4}
-        - {x: 18.5, y: 22}
-        - {x: -19.5, y: 22}
-        - {x: -27.5, y: 20}
-        - {x: -27.5, y: -8}
-        - {x: -17.5, y: -27}
-        - {x: 14.5, y: -27}
-        - {x: 28.5, y: -23}
-        - {x: 29.5, y: -16}
-        - {x: 29.5, y: -9}
+      outline: []
     - name: K-2-MapaMascotas_huella4
       rect:
         serializedVersion: 2
@@ -599,14 +410,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.53125, y: 0.51428574}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -17, y: 17}
-        - {x: -17, y: -13}
-        - {x: -8, y: -18}
-        - {x: 6, y: -18}
-        - {x: 15, y: -11}
-        - {x: 15, y: 13}
-        - {x: 14, y: 17}
+      outline: []
     - name: K-2-MapaMascotas_huella5
       rect:
         serializedVersion: 2
@@ -617,16 +421,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5181818, y: 0.4811321}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 18.5, y: 27.5}
-        - {x: -21.5, y: 27.5}
-        - {x: -28.5, y: 14.5}
-        - {x: -28.5, y: -18.5}
-        - {x: -19.5, y: -25.5}
-        - {x: 15.5, y: -25.5}
-        - {x: 25.5, y: -20.5}
-        - {x: 26.5, y: -16.5}
-        - {x: 26.5, y: 13.5}
+      outline: []
     - name: K-2-MapaMascotas_huello2
       rect:
         serializedVersion: 2
@@ -637,16 +432,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.47692308, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -26, y: 31}
-        - {x: -28, y: 28}
-        - {x: -31, y: 14}
-        - {x: -31, y: -22}
-        - {x: -20, y: -31}
-        - {x: 14, y: -31}
-        - {x: 30, y: -28}
-        - {x: 34, y: -17}
-        - {x: 34, y: 31}
+      outline: []
     - name: K-2-MapaMascotas_hueso
       rect:
         serializedVersion: 2
@@ -657,14 +443,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.4473684, y: 0.51282054}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 21, y: 9}
-        - {x: 21, y: 38}
-        - {x: -17, y: 38}
-        - {x: -17, y: -40}
-        - {x: 21, y: -40}
-        - {x: 21, y: -20}
-        - {x: 16, y: -15}
+      outline: []
     - name: K-2-MapaMascotas_jirafa
       rect:
         serializedVersion: 2
@@ -675,30 +454,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.46685082, y: 0.50710595}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 13.5, y: -392.5}
-        - {x: 15.5, y: -340.5}
-        - {x: 53.5, y: -390.5}
-        - {x: 55.5, y: -392.5}
-        - {x: 82.5, y: -392.5}
-        - {x: 84.5, y: -390.5}
-        - {x: 96.5, y: -362.5}
-        - {x: 96.5, y: -102.5}
-        - {x: 50.5, y: -43.5}
-        - {x: 42.5, y: 313.5}
-        - {x: 17.5, y: 381.5}
-        - {x: -18.5, y: 381.5}
-        - {x: -21.5, y: 377.5}
-        - {x: -20.5, y: 365.5}
-        - {x: -23.5, y: 381.5}
-        - {x: -44.5, y: 381.5}
-        - {x: -84.5, y: 353.5}
-        - {x: -84.5, y: -8.5}
-        - {x: -46.5, y: -392.5}
-        - {x: -21.5, y: -392.5}
-        - {x: -20.5, y: -391.5}
-        - {x: -19.5, y: -360.5}
-        - {x: -15.5, y: -392.5}
+      outline: []
     - name: K-2-MapaMascotas_perro
       rect:
         serializedVersion: 2
@@ -709,24 +465,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.49626866, y: 0.5614035}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 60.5, y: 50}
-        - {x: 51.5, y: 50}
-        - {x: 50.5, y: 49}
-        - {x: 9.5, y: 30}
-        - {x: -36.5, y: 14}
-        - {x: -43.5, y: 5}
-        - {x: -42.5, y: -3}
-        - {x: -40.5, y: -8}
-        - {x: -43.5, y: -43}
-        - {x: -43.5, y: 49}
-        - {x: -44.5, y: 50}
-        - {x: -55.5, y: 50}
-        - {x: -66.5, y: -12}
-        - {x: -66.5, y: -64}
-        - {x: 67.5, y: -64}
-        - {x: 67.5, y: 10}
-        - {x: 61.5, y: 49}
+      outline: []
     - name: K-2-MapaMascotas_pez
       rect:
         serializedVersion: 2
@@ -737,17 +476,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.46946564, y: 0.41761363}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 16.5, y: 102.5}
-        - {x: -47.5, y: 102.5}
-        - {x: -61.5, y: 83.5}
-        - {x: -61.5, y: 27.5}
-        - {x: -37.5, y: -71.5}
-        - {x: -27.5, y: -73.5}
-        - {x: 68.5, y: -73.5}
-        - {x: 69.5, y: -70.5}
-        - {x: 69.5, y: -9.5}
-        - {x: 40.5, y: 79.5}
+      outline: []
     - name: K-2-MapaMascotas_serpiente
       rect:
         serializedVersion: 2
@@ -758,16 +487,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5416667, y: 0.57284766}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -19, y: 64.5}
-        - {x: -25, y: 58.5}
-        - {x: -39, y: -6.5}
-        - {x: -39, y: -83.5}
-        - {x: -30, y: -86.5}
-        - {x: 5, y: -86.5}
-        - {x: 33, y: -56.5}
-        - {x: 33, y: 54.5}
-        - {x: 15, y: 64.5}
+      outline: []
     - name: K-2-MapaMascotas_techomascotas
       rect:
         serializedVersion: 2
@@ -778,13 +498,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.50446427, y: 0.515625}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -54.5, y: 15.5}
-        - {x: -56.5, y: 12.5}
-        - {x: -56.5, y: -15.5}
-        - {x: -53.5, y: -16.5}
-        - {x: 55.5, y: -16.5}
-        - {x: 55.5, y: 15.5}
+      outline: []
     - name: K-4-MapaLibros_estante1
       rect:
         serializedVersion: 2
@@ -817,16 +531,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5, y: 0.51086956}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -41, y: 45}
-        - {x: -42, y: 44}
-        - {x: -42, y: -47}
-        - {x: 42, y: -47}
-        - {x: 42, y: 45}
-      - - {x: -23, y: 34}
-        - {x: 30, y: 34}
-        - {x: 30, y: -10}
-        - {x: -23, y: -10}
+      outline: []
     - name: K-4-MapaLibros_L2
       rect:
         serializedVersion: 2
@@ -848,12 +553,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.4888889, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -44, y: 16.5}
-        - {x: -44, y: -16.5}
-        - {x: 46, y: -16.5}
-        - {x: 46, y: 15.5}
-        - {x: 45, y: 16.5}
+      outline: []
     - name: K-4-MapaLibros_L4
       rect:
         serializedVersion: 2
@@ -908,15 +608,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.510101, y: 0.50619835}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -50.5, y: 119.5}
-        - {x: -50.5, y: -77.5}
-        - {x: -46.5, y: -99.5}
-        - {x: -37.5, y: -97.5}
-        - {x: -35.5, y: -95.5}
-        - {x: 28.5, y: -122.5}
-        - {x: 48.5, y: -122.5}
-        - {x: 48.5, y: 119.5}
+      outline: []
     - name: K-4-MapaLibros_librero2
       rect:
         serializedVersion: 2
@@ -927,15 +619,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5050505, y: 0.51960784}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 49, y: 49}
-        - {x: -50, y: 49}
-        - {x: -50, y: -30}
-        - {x: -47, y: -53}
-        - {x: -37, y: -53}
-        - {x: -36, y: -52}
-        - {x: -23, y: -53}
-        - {x: 49, y: -53}
+      outline: []
     - name: K-4-MapaLibros_libreroamarillo
       rect:
         serializedVersion: 2
@@ -946,15 +630,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5049505, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 47, y: 159}
-        - {x: -48, y: 159}
-        - {x: -51, y: 157}
-        - {x: -51, y: -157}
-        - {x: -48, y: -159}
-        - {x: 48, y: -159}
-        - {x: 50, y: -158}
-        - {x: 50, y: 157}
+      outline: []
     - name: K-4-MapaLibros_libreroazul
       rect:
         serializedVersion: 2
@@ -965,13 +641,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5049505, y: 0.5125}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -50, y: 58.5}
-        - {x: -51, y: 56.5}
-        - {x: -51, y: -61.5}
-        - {x: 50, y: -61.5}
-        - {x: 50, y: 56.5}
-        - {x: 48, y: 58.5}
+      outline: []
     - name: K-4-MapaLibros_LSEIS
       rect:
         serializedVersion: 2
@@ -982,12 +652,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5, y: 0.50476193}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -38.5, y: 52}
-        - {x: -38.5, y: -53}
-        - {x: 38.5, y: -53}
-        - {x: 38.5, y: 51}
-        - {x: 37.5, y: 52}
+      outline: []
     - name: K-4-MapaLibros_separador
       rect:
         serializedVersion: 2
@@ -998,13 +663,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.50793654, y: 0.5065789}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 1, y: 37.5}
-        - {x: -32, y: 37.5}
-        - {x: -32, y: -38.5}
-        - {x: 31, y: -38.5}
-        - {x: 31, y: 3.5}
-        - {x: 15, y: 26.5}
+      outline: []
     - name: K-4-MapaLibros_techolibros
       rect:
         serializedVersion: 2
@@ -1015,11 +674,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -56, y: 16}
-        - {x: -56, y: -16}
-        - {x: 56, y: -16}
-        - {x: 56, y: 16}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_j1"
       rect:
         serializedVersion: 2
@@ -1030,20 +685,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.572, y: 0.49173555}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -52.5, y: 61.5}
-        - {x: -71.5, y: 34.5}
-        - {x: -71.5, y: -31.5}
-        - {x: -51.5, y: -55.5}
-        - {x: -26.5, y: -59.5}
-        - {x: 41.5, y: -59.5}
-        - {x: 53.5, y: -52.5}
-        - {x: 53.5, y: 32.5}
-        - {x: 38.5, y: 61.5}
-      - - {x: -50.5, y: 30.5}
-        - {x: -21.5, y: 47.5}
-        - {x: 20.5, y: 27.5}
-        - {x: -21.5, y: -35.5}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_j2"
       rect:
         serializedVersion: 2
@@ -1054,16 +696,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.54901963, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -31, y: 165.5}
-        - {x: -56, y: 132.5}
-        - {x: -56, y: -50.5}
-        - {x: -41, y: -141.5}
-        - {x: -38, y: -165.5}
-        - {x: 39, y: -165.5}
-        - {x: 46, y: -75.5}
-        - {x: 46, y: 139.5}
-        - {x: 11, y: 165.5}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_j3 "
       rect:
         serializedVersion: 2
@@ -1074,18 +707,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5060241, y: 0.5029412}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 18, y: 169}
-        - {x: 2, y: 169}
-        - {x: 0, y: 166}
-        - {x: -25, y: 115}
-        - {x: -42, y: -41}
-        - {x: -42, y: -137}
-        - {x: -4, y: -171}
-        - {x: 6, y: -171}
-        - {x: 41, y: -142}
-        - {x: 41, y: -22}
-        - {x: 22, y: 168}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_j4"
       rect:
         serializedVersion: 2
@@ -1096,18 +718,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.46354166, y: 0.516129}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 25.5, y: 60}
-        - {x: 15.5, y: 60}
-        - {x: -39.5, y: 24}
-        - {x: -44.5, y: 17}
-        - {x: -44.5, y: 2}
-        - {x: -19.5, y: -63}
-        - {x: -17.5, y: -64}
-        - {x: -5.5, y: -64}
-        - {x: 46.5, y: -29}
-        - {x: 51.5, y: -20}
-        - {x: 51.5, y: -1}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_j5"
       rect:
         serializedVersion: 2
@@ -1118,18 +729,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.48039216, y: 0.56956524}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 15, y: 49.5}
-        - {x: -40, y: 49.5}
-        - {x: -49, y: 46.5}
-        - {x: -49, y: -37.5}
-        - {x: -46, y: -62.5}
-        - {x: -26, y: -65.5}
-        - {x: 9, y: -65.5}
-        - {x: 48, y: -49.5}
-        - {x: 53, y: -27.5}
-        - {x: 53, y: -3.5}
-        - {x: 43, y: 41.5}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_j7"
       rect:
         serializedVersion: 2
@@ -1140,16 +740,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.52970296, y: 0.4954955}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 16.5, y: 56}
-        - {x: -48.5, y: 56}
-        - {x: -53.5, y: 52}
-        - {x: -53.5, y: -7}
-        - {x: -39.5, y: -55}
-        - {x: 13.5, y: -55}
-        - {x: 45.5, y: -36}
-        - {x: 47.5, y: -33}
-        - {x: 47.5, y: 28}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_j8"
       rect:
         serializedVersion: 2
@@ -1160,14 +751,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.50769234, y: 0.52350426}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -33, y: 111.5}
-        - {x: -33, y: -23.5}
-        - {x: -22, y: -117.5}
-        - {x: -19, y: -122.5}
-        - {x: 32, y: -122.5}
-        - {x: 32, y: 77.5}
-        - {x: 22, y: 111.5}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_j9 "
       rect:
         serializedVersion: 2
@@ -1178,15 +762,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.51152074, y: 0.5233333}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 92, y: 71.5}
-        - {x: 86, y: 71.5}
-        - {x: -111, y: -41.5}
-        - {x: -111, y: -78.5}
-        - {x: 12, y: -78.5}
-        - {x: 103, y: 24.5}
-        - {x: 106, y: 32.5}
-        - {x: 106, y: 50.5}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_j10 "
       rect:
         serializedVersion: 2
@@ -1197,19 +773,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.4769585, y: 0.57615894}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 65.5, y: 64}
-        - {x: 6.5, y: 47}
-        - {x: -52.5, y: 3}
-        - {x: -94.5, y: -35}
-        - {x: -100.5, y: -44}
-        - {x: -103.5, y: -50}
-        - {x: -103.5, y: -64}
-        - {x: -88.5, y: -87}
-        - {x: -79.5, y: -87}
-        - {x: 113.5, y: 30}
-        - {x: 113.5, y: 43}
-        - {x: 103.5, y: 64}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_j11"
       rect:
         serializedVersion: 2
@@ -1220,16 +784,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.516, y: 0.5247934}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -54.5, y: 57.5}
-        - {x: -64.5, y: 50.5}
-        - {x: -64.5, y: -20.5}
-        - {x: -17.5, y: -62.5}
-        - {x: -15.5, y: -63.5}
-        - {x: -0.5, y: -63.5}
-        - {x: 60.5, y: -39.5}
-        - {x: 60.5, y: 1.5}
-        - {x: 51.5, y: 57.5}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_j13"
       rect:
         serializedVersion: 2
@@ -1240,19 +795,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.47260273, y: 0.56060606}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -9.5, y: 29}
-        - {x: -19.5, y: 28}
-        - {x: -26.5, y: 15}
-        - {x: -34.5, y: -5}
-        - {x: -34.5, y: -10}
-        - {x: -33.5, y: -13}
-        - {x: -19.5, y: -37}
-        - {x: 19.5, y: -37}
-        - {x: 28.5, y: -35}
-        - {x: 38.5, y: -10}
-        - {x: 38.5, y: 4}
-        - {x: 20.5, y: 29}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_j14"
       rect:
         serializedVersion: 2
@@ -1263,16 +806,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.61764705, y: 0.46710527}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -12, y: 81}
-        - {x: -15, y: 80}
-        - {x: -21, y: 19}
-        - {x: -21, y: -66}
-        - {x: -20, y: -71}
-        - {x: 9, y: -71}
-        - {x: 13, y: -59}
-        - {x: 13, y: 25}
-        - {x: 2, y: 81}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_joyablanca1"
       rect:
         serializedVersion: 2
@@ -1283,16 +817,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -33.5, y: 49.5}
-        - {x: -49.5, y: 30.5}
-        - {x: -49.5, y: -14.5}
-        - {x: -40.5, y: -24.5}
-        - {x: -13.5, y: -49.5}
-        - {x: 24.5, y: -49.5}
-        - {x: 49.5, y: -17.5}
-        - {x: 49.5, y: 35.5}
-        - {x: 33.5, y: 49.5}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_joyablanca2"
       rect:
         serializedVersion: 2
@@ -1303,17 +828,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.48095238, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 10.5, y: 67}
-        - {x: -4.5, y: 62}
-        - {x: -50.5, y: 27}
-        - {x: -50.5, y: 0}
-        - {x: -34.5, y: -66}
-        - {x: -32.5, y: -67}
-        - {x: -3.5, y: -67}
-        - {x: 54.5, y: -22}
-        - {x: 54.5, y: -2}
-        - {x: 28.5, y: 67}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_joyablanca3"
       rect:
         serializedVersion: 2
@@ -1324,20 +839,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.509009, y: 0.52916664}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 30.5, y: 39.5}
-        - {x: 25.5, y: 45.5}
-        - {x: 2.5, y: 56.5}
-        - {x: -20.5, y: 56.5}
-        - {x: -44.5, y: 39.5}
-        - {x: -53.5, y: 32.5}
-        - {x: -56.5, y: 29.5}
-        - {x: -56.5, y: -35.5}
-        - {x: -26.5, y: -63.5}
-        - {x: 38.5, y: -63.5}
-        - {x: 51.5, y: -42.5}
-        - {x: 54.5, y: -25.5}
-        - {x: 54.5, y: 1.5}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_jseis"
       rect:
         serializedVersion: 2
@@ -1348,15 +850,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5, y: 0.5188679}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -23.5, y: 25.5}
-        - {x: -26.5, y: 23.5}
-        - {x: -26.5, y: -15.5}
-        - {x: -14.5, y: -27.5}
-        - {x: 19.5, y: -27.5}
-        - {x: 26.5, y: -22.5}
-        - {x: 26.5, y: 17.5}
-        - {x: 22.5, y: 25.5}
+      outline: []
     - name: "K-8-MapaJoyer\xEDa_techo-20"
       rect:
         serializedVersion: 2
@@ -1367,13 +861,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.49557522, y: 0.53125}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -54, y: 15}
-        - {x: -56, y: 12}
-        - {x: -56, y: -15}
-        - {x: -54, y: -17}
-        - {x: 57, y: -17}
-        - {x: 57, y: 15}
+      outline: []
     - name: K-Mapa1_arpa
       rect:
         serializedVersion: 2
@@ -1384,14 +872,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.47540984, y: 0.52803737}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -28, y: 50.5}
-        - {x: -29, y: 27.5}
-        - {x: -29, y: -56.5}
-        - {x: 4, y: -56.5}
-        - {x: 32, y: -13.5}
-        - {x: 32, y: 38.5}
-        - {x: 23, y: 50.5}
+      outline: []
     - name: K-Mapa1_bocina
       rect:
         serializedVersion: 2
@@ -1402,14 +883,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.47014925, y: 0.5555556}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -29.5, y: 32}
-        - {x: -31.5, y: 31}
-        - {x: -31.5, y: -40}
-        - {x: 33.5, y: -40}
-        - {x: 35.5, y: -37}
-        - {x: 35.5, y: -3}
-        - {x: 21.5, y: 32}
+      outline: []
     - name: K-Mapa1_CD
       rect:
         serializedVersion: 2
@@ -1420,22 +894,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.48863637, y: 0.5466667}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -8.5, y: -3}
-        - {x: -15.5, y: -9}
-        - {x: -15.5, y: -31}
-        - {x: -3.5, y: -41}
-        - {x: 22.5, y: -41}
-        - {x: 22.5, y: -7}
-        - {x: 13.5, y: -3}
-      - - {x: -13.5, y: 34}
-        - {x: -21.5, y: 31}
-        - {x: -21.5, y: 7}
-        - {x: -15.5, y: 0}
-        - {x: 9.5, y: 0}
-        - {x: 12.5, y: 1}
-        - {x: 12.5, y: 30}
-        - {x: 6.5, y: 34}
+      outline: []
     - name: K-Mapa1_columna
       rect:
         serializedVersion: 2
@@ -1446,14 +905,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.510989, y: 0.515748}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -46.5, y: 123}
-        - {x: -46.5, y: 110}
-        - {x: -45.5, y: 109}
-        - {x: -31.5, y: -131}
-        - {x: 30.5, y: -131}
-        - {x: 44.5, y: 95}
-        - {x: 44.5, y: 123}
+      outline: []
     - name: K-Mapa1_guitarra
       rect:
         serializedVersion: 2
@@ -1464,14 +916,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.49074075, y: 0.4925926}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -15.5, y: 68.5}
-        - {x: -26.5, y: 9.5}
-        - {x: -26.5, y: -66.5}
-        - {x: 23.5, y: -66.5}
-        - {x: 27.5, y: -62.5}
-        - {x: 27.5, y: 17.5}
-        - {x: 18.5, y: 68.5}
+      outline: []
     - name: K-Mapa1_piano
       rect:
         serializedVersion: 2
@@ -1482,15 +927,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.4744898, y: 0.5618557}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 26.5, y: 42.5}
-        - {x: -46.5, y: 13.5}
-        - {x: -46.5, y: -33.5}
-        - {x: -36.5, y: -50.5}
-        - {x: -32.5, y: -54.5}
-        - {x: 51.5, y: -54.5}
-        - {x: 51.5, y: 34.5}
-        - {x: 49.5, y: 42.5}
+      outline: []
     - name: K-Mapa1_PlataformaChica
       rect:
         serializedVersion: 2
@@ -1523,16 +960,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.51282054, y: 0.5576923}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 18, y: -29}
-        - {x: 19, y: -27}
-        - {x: 19, y: 23}
-        - {x: -20, y: 23}
-        - {x: -20, y: -29}
-        - {x: -13, y: -29}
-        - {x: -12, y: -28}
-        - {x: -11, y: -23}
-        - {x: -5, y: -29}
+      outline: []
     outline: []
   spritePackingTag: 
   userData: 

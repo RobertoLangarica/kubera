@@ -60,11 +60,11 @@ TextureImporter:
   - buildTarget: Android
     maxTextureSize: 512
     textureFormat: 47
-    compressionQuality: 100
+    compressionQuality: 50
     allowsAlphaSplitting: 0
   - buildTarget: iPhone
     maxTextureSize: 512
-    textureFormat: 33
+    textureFormat: 4
     compressionQuality: 50
     allowsAlphaSplitting: 0
   spriteSheet:
@@ -73,9 +73,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 3
-        y: 70
-        width: 10
-        height: 439
+        y: 4
+        width: 11
+        height: 505
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -83,10 +83,10 @@ TextureImporter:
     - name: 2-fondoGame-Mascotas
       rect:
         serializedVersion: 2
-        x: 19
-        y: 70
-        width: 10
-        height: 439
+        x: 20
+        y: 4
+        width: 11
+        height: 505
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -94,10 +94,10 @@ TextureImporter:
     - name: 3-fondoGame-Ropa
       rect:
         serializedVersion: 2
-        x: 35
-        y: 70
-        width: 10
-        height: 439
+        x: 37
+        y: 4
+        width: 11
+        height: 505
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -105,10 +105,10 @@ TextureImporter:
     - name: 4-fondoGame-libros
       rect:
         serializedVersion: 2
-        x: 51
-        y: 70
-        width: 10
-        height: 439
+        x: 54
+        y: 4
+        width: 11
+        height: 505
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -116,10 +116,10 @@ TextureImporter:
     - name: 5-fondoGame-Zapatos
       rect:
         serializedVersion: 2
-        x: 67
-        y: 70
-        width: 10
-        height: 439
+        x: 71
+        y: 4
+        width: 11
+        height: 505
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,10 +127,10 @@ TextureImporter:
     - name: 6-fondoGame-Maquillaje
       rect:
         serializedVersion: 2
-        x: 83
-        y: 70
-        width: 10
-        height: 439
+        x: 88
+        y: 4
+        width: 11
+        height: 505
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,10 +138,10 @@ TextureImporter:
     - name: 7-fondoGame-Deportes
       rect:
         serializedVersion: 2
-        x: 99
-        y: 70
-        width: 10
-        height: 439
+        x: 105
+        y: 4
+        width: 11
+        height: 505
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,10 +149,10 @@ TextureImporter:
     - name: 8-fondoGame-joyeria
       rect:
         serializedVersion: 2
-        x: 115
-        y: 70
-        width: 10
-        height: 439
+        x: 122
+        y: 4
+        width: 11
+        height: 505
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,10 +160,10 @@ TextureImporter:
     - name: 9-fondoGame-perfumes
       rect:
         serializedVersion: 2
-        x: 131
-        y: 70
-        width: 10
-        height: 439
+        x: 139
+        y: 4
+        width: 11
+        height: 505
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

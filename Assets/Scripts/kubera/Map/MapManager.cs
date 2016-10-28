@@ -103,7 +103,7 @@ public class MapManager : MonoBehaviour
 			fromLoose= PersistentData.GetInstance ().fromLoose;
 			PersistentData.GetInstance ().fromGameToLevels = false;
 			nameOfLastLevelPlayed = PersistentData.GetInstance ().lastLevelPlayedName;
-
+			
 			if(PersistentData.GetInstance().fromLoose)
 			{
 				toNextLevel = false;
@@ -111,6 +111,7 @@ public class MapManager : MonoBehaviour
 			else
 			{
 				toNextLevel = !PersistentData.GetInstance ().nextLevelIsReached;
+
 			}
 		}
 		PersistentData.GetInstance ().fromLevelsToGame = true;
@@ -884,6 +885,10 @@ public class MapManager : MonoBehaviour
 		
 	protected void showNextLevelGoalPopUp ()
 	{
+		if(nameOfLastLevelPlayed == "")
+		{
+			nameOfLastLevelPlayed = "1";
+		}
 		int level = int.Parse (nameOfLastLevelPlayed);
 
 		if (toNextLevel)
@@ -979,8 +984,17 @@ public class MapManager : MonoBehaviour
 			if(toStairs)
 			{
 				//showWorld();
-				paralaxManager.setPosLastOrFirst (false);
 				stairsToWait ();
+
+				if(PersistentData.GetInstance().maxWorldReached > currentWorld)
+				{
+					toNextLevel = true;
+					showNextLevelGoalPopUp ();
+				}
+				else
+				{
+					paralaxManager.setPosLastOrFirst (false);
+				}
 			}
 			else if(toNextLevel)
 			{

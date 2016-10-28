@@ -20,6 +20,7 @@ public class FacebookNews : PopUpBase {
 	public RectTransform facebookMessagesButton;
 	public RectTransform popUpRect;
 
+	public int currentMessages;
 	void Start()
 	{
 		panelMessageGridLayout.cellSize = new Vector2 (panelMessageGridRectTransform.rect.width, Screen.height *0.175f);
@@ -48,6 +49,7 @@ public class FacebookNews : PopUpBase {
 		}
 		else
 		{
+			currentMessages = messageCount;
 			messageCountImage.gameObject.SetActive (true);
 			noMessagesMessage.SetActive (false);
 			if(messageCount > 9)
@@ -140,6 +142,17 @@ public class FacebookNews : PopUpBase {
 		{
 			OnComplete (action);
 			facebookMessagesButton.DOAnchorPos (new Vector2(Screen.width * 0.78f,0),0.5f,true);
+		}
+	}
+
+	public void updateCurrentMessages(int messagesProcessed)
+	{
+		currentMessages -= messagesProcessed;
+
+		if(currentMessages == 0)
+		{
+			messageCountImage.gameObject.SetActive(false);
+			noMessagesMessage.SetActive (true);
 		}
 	}
 }

@@ -174,6 +174,7 @@ public class InputBombAndDestroy : MonoBehaviour
 	public void setCurrentSelected(GameObject selected)
 	{
 		currentSelected = selected;
+		moveTo (currentSelected, offsetPositionOverFinger);
 	}
 
 	protected void isOnPlayer(bool isOn)
