@@ -267,6 +267,11 @@ public class MapManager : MonoBehaviour
 			settingMapLevelStatus (mapLevels[i]);
 			setOnClickDelegates (mapLevels[i]);
 
+			if(i==0 && mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_LOCKED)
+			{
+				mapLevels [i].status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
+			}
+
 			mapLevels [i].updateStatus();
 			mapLevels[i].updateStars();
 			mapLevels [i].updateText ();

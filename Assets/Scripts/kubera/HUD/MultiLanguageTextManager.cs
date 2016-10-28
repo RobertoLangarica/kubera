@@ -215,6 +215,8 @@ public class MultiLanguageTextManager
 
 	//Share
 	public const string SHARE_DEFAULT_TEXT					="shareDefaultText";
+	public const string SHARE_LEVEL_PASSED_TEXT				="shareLevelPassedText";
+
 
 	//VisitShopika
 	public const string VISIT_SHOPIKA_TITLE					="visitShopikaTitle";
