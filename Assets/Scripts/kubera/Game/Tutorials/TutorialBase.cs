@@ -72,8 +72,6 @@ public class TutorialBase : MonoBehaviour
 
 	public List<GameObject> phasesPanels;
 
-	public startGamePopUp startGamePopUp;
-
 	[HideInInspector]public int phase;
 	[HideInInspector]public string phaseObj;
 	[HideInInspector]public List<ENextPhaseEvent> phaseEvent;
@@ -190,3 +188,5 @@ public class TutorialBase : MonoBehaviour
 	{
 	}
 }
+
+/*3331700654*/

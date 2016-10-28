@@ -438,6 +438,13 @@
 				<language id="default" text="Presiona el botón verde para enviar una palabra correcta."/>
 			</languages>
 		</text>
+		<text id="Tutorial_lvl5_word">
+			<languages>
+				<language id="english" text="Get {{score}} points to complete the level."/>
+				<language id="spanish" text="FELIZ"/>
+				<language id="default" text="FELIZ"/>
+			</languages>
+		</text>
 		<text id="Tutorial_lvl6_phase1">
 			<languages>
 				<language id="english" text="Press the button"/>
@@ -478,6 +485,13 @@
 				<language id="english" text="Get {{score}} points to complete the level."/>
 				<language id="spanish" text="El valor de la palabra que estás formando aparece arriba de la palabra y es la suma de los valores de cada letra usada."/>
 				<language id="default" text="El valor de la palabra que estás formando aparece arriba de la palabra y es la suma de los valores de cada letra usada."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl7_word">
+			<languages>
+				<language id="english" text="Get {{score}} points to complete the level."/>
+				<language id="spanish" text="AZAFATAS"/>
+				<language id="default" text="AZAFATAS"/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl8_phase1">

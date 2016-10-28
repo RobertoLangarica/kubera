@@ -4,9 +4,15 @@ using System.Collections.Generic;
 
 public class TutorialLvl7 : TutorialBase 
 {
-	public string tutorialWord = "AZAFATA";
-
 	protected bool isWaitingForText;
+	protected string tutorialWord;
+
+	protected override void Start ()
+	{
+		base.Start ();
+
+		tutorialWord = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV7_WORD);
+	}
 
 	public override bool canMoveToNextPhase ()
 	{

@@ -151,6 +151,7 @@ public class MultiLanguageTextManager
 	public const string TUTORIAL_LV5_PHASE1					= "Tutorial_lvl5_phase1";
 	public const string TUTORIAL_LV5_PHASE2					= "Tutorial_lvl5_phase2";
 	public const string TUTORIAL_LV5_PHASE3					= "Tutorial_lvl5_phase3";
+	public const string TUTORIAL_LV5_WORD					= "Tutorial_lvl5_word";
 
 	public const string TUTORIAL_LV6_PHASE1					= "Tutorial_lvl6_phase1";
 	public const string TUTORIAL_LV6_PHASE2					= "Tutorial_lvl6_phase2";
@@ -159,6 +160,7 @@ public class MultiLanguageTextManager
 	public const string TUTORIAL_LV7_PHASE2					= "Tutorial_lvl7_phase2";
 	public const string TUTORIAL_LV7_PHASE3					= "Tutorial_lvl7_phase3";
 	public const string TUTORIAL_LV7_PHASE4					= "Tutorial_lvl7_phase4";
+	public const string TUTORIAL_LV7_WORD					= "Tutorial_lvl7_word";
 
 	public const string TUTORIAL_LV8_PHASE1					= "Tutorial_lvl8_phase1";
 	public const string TUTORIAL_LV8_PHASE2					= "Tutorial_lvl8_phase2";

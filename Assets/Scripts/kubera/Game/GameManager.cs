@@ -574,6 +574,19 @@ public class GameManager : MonoBehaviour
 			totalLines = linesMultipliers.Count-1;
 		}
 
+		if (currentLevel.name == "0007") 
+		{
+			for (int i = temp.Count-1; i >= 0 ; i--) 
+			{
+				if (temp [i].abcChar.character != "A"
+					&& temp [i].abcChar.character != "S"
+					&& temp [i].abcChar.character != "T") 
+				{
+					temp.RemoveAt (i);
+				}
+			}
+		}
+
 		for (int i = 0; i < linesMultipliers [totalLines].Count; i++) 
 		{
 			tempIndex = Random.Range (0,temp.Count);
