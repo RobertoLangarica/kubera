@@ -174,7 +174,11 @@ public class InputBombAndDestroy : MonoBehaviour
 	public void setCurrentSelected(GameObject selected)
 	{
 		currentSelected = selected;
-		moveTo (currentSelected, offsetPositionOverFinger);
+
+		Vector3 posOverFinger = new Vector3(selected.transform.position.x,selected.transform.position.y,0);
+		posOverFinger.z = currentSelected.transform.position.z;
+		posOverFinger += offsetPositionOverFinger;
+		moveTo(currentSelected,posOverFinger,pieceSpeed);
 	}
 
 	protected void isOnPlayer(bool isOn)

@@ -12,6 +12,14 @@
 			</languages>
 		</text>
 
+		<text id="shareLevelPassedText">
+			<languages>
+				<language id="english" text="Pase Un nivel."/>
+				<language id="spanish" text="Pase Un nivel."/>
+				<language id="default" text="Pase Un nivel."/>
+			</languages>
+		</text>
+
 		<!--
 		Shopika visit
 		-->

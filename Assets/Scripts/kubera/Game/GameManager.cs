@@ -675,7 +675,7 @@ public class GameManager : MonoBehaviour
 
 	public void OnRetrieveWord()
 	{
-		if (!PersistentData.GetInstance ().fromLevelBuilder) 
+		if (!PersistentData.GetInstance ().fromLevelBuilder && PersistentData.GetInstance().fromLevelsToGame) 
 		{
 			KuberaAnalytics.GetInstance ().registerCreatedWord (currentLevel.name, wordManager.getCurrentWordOnList (), wordManager.letters.Count);
 		}
@@ -982,7 +982,7 @@ public class GameManager : MonoBehaviour
 
 	protected void winBonification()
 	{
-		if (!PersistentData.GetInstance ().fromLevelBuilder) 
+		if (!PersistentData.GetInstance ().fromLevelBuilder && PersistentData.GetInstance().fromLevelsToGame) 
 		{
 			KuberaAnalytics.GetInstance ().registerForBeforeBonification (currentLevel.name, pointsCount, remainingMoves);
 		}
@@ -1211,7 +1211,7 @@ public class GameManager : MonoBehaviour
 		}
 
 
-		if (!PersistentData.GetInstance ().fromLevelBuilder) 
+		if (!PersistentData.GetInstance ().fromLevelBuilder && PersistentData.GetInstance().fromLevelsToGame ) 
 		{
 			KuberaAnalytics.GetInstance ().registerPowerUpsUse (currentLevel.name, powerUpsUsedCount,
 				(DataManagerKubera.GetInstance () as DataManagerKubera).getLevelAttempts (currentLevel.name));

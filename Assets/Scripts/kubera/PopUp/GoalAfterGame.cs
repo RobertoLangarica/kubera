@@ -49,6 +49,8 @@ public class GoalAfterGame : PopUpBase {
 	public Image topIconShadow;
 	protected bool pressed;
 
+	public ShareScore shareScore;
+
 	void Start()
 	{
 		//TODO checar login a facebook
@@ -165,6 +167,11 @@ public class GoalAfterGame : PopUpBase {
 		setStartingPlaces ();
 		leaderboardManager.moveCurrentLeaderboardSlots (goalPopUpSlotsParent);
 		OnComplete ("closeObjective");
+	}
+
+	public void sharingScore()
+	{
+		shareScore.sharePassedLevel ("S");
 	}
 
 	protected void setStartingPlaces()
