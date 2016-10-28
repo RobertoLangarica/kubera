@@ -30,6 +30,7 @@ public class TutorialBase : MonoBehaviour
 		CREATE_WORD,
 		SUBMIT_WORD,
 		DELETE_WORD,
+		SELECT_LETTER,
 		CREATE_A_LINE,
 		WORD_SPECIFIC_LETTER_TAPPED,
 		GRID_SPECIFIC_LETTER_TAPPED,
@@ -46,7 +47,8 @@ public class TutorialBase : MonoBehaviour
 		CLEAR_A_LINE,
 		EARNED_POINTS,
 		MOVEMENT_USED,
-		HINT_USED
+		HINT_USED,
+		ALL_PIECES_USED
 	}
 
 	[HideInInspector]public bool allowGridTap;
@@ -87,7 +89,6 @@ public class TutorialBase : MonoBehaviour
 
 	protected virtual void Start()
 	{
-		
 	}
 
 	void Update()
@@ -181,7 +182,11 @@ public class TutorialBase : MonoBehaviour
 		if (instructionIndex == currentInstruction.Length) 
 		{
 			isWriting = false;
-			//Invoke ("writeLetterByLetter",writingSpeed);
+			OnWritingFinished ();
 		}
+	}
+
+	protected virtual void OnWritingFinished()
+	{
 	}
 }

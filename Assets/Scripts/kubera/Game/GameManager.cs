@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 	public DGameManagerNotification OnPiecePositionated;
 	public DGameManagerNotification OnPointsEarned;
 	public DGameManagerNotification OnMovementRemoved;
+	public DGameManagerNotification OnPiecesFinished;
 
 	public Text scoreText;
 
@@ -157,7 +158,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(!PersistentData.GetInstance().fromLevelsToGame && !PersistentData.GetInstance().fromLevelBuilder)
 		{
-			configureLevel(PersistentData.GetInstance().getLevelByIndex(36));
+			configureLevel(PersistentData.GetInstance().getLevelByIndex(0));
 		}
 		else
 		{
@@ -295,6 +296,11 @@ public class GameManager : MonoBehaviour
 	private void initPiecesFromLevel(Level level)
 	{
 		pieceManager.initializePiecesFromCSV(level.pieces);
+		if (level.name == "0004") 
+		{
+			pieceManager.initializePiecesToShow (false);	
+			return;
+		}
 		pieceManager.initializePiecesToShow ();	
 	}
 
@@ -406,7 +412,7 @@ public class GameManager : MonoBehaviour
 			}
 
 			//Tomamos en cuenta los tiempos de todos los twens de posicionamiento
-			StartCoroutine(afterPiecePositioned(piece));
+			StartCoroutine (afterPiecePositioned (piece));
 
 			return true;
 		}
@@ -457,14 +463,27 @@ public class GameManager : MonoBehaviour
 
 			if (pieceManager.getShowingPieces ().Count == 0) 
 			{
-				piecesWhereCreated = true;
-				pieceManager.initializePiecesToShow ();
-				hudManager.showPieces (pieceManager.getShowingPieces ());
-
-				if(AudioManager.GetInstance())
+				if (OnPiecesFinished != null) 
 				{
-					AudioManager.GetInstance().Stop("pieceCreated");
-					AudioManager.GetInstance().Play("pieceCreated");
+					OnPiecesFinished ();
+				} 
+				else 
+				{
+					piecesWhereCreated = true;
+					if (currentLevel.name == "0004") 
+					{
+						pieceManager.initializePiecesToShow (false);
+					} 
+					else 
+					{
+						pieceManager.initializePiecesToShow ();
+					}
+					hudManager.showPieces (pieceManager.getShowingPieces ());
+
+					if (AudioManager.GetInstance ()) {
+						AudioManager.GetInstance ().Stop ("pieceCreated");
+						AudioManager.GetInstance ().Play ("pieceCreated");
+					}
 				}
 			}
 
@@ -833,6 +852,11 @@ public class GameManager : MonoBehaviour
 	{
 		bool canFit;
 
+		if (pieceManager.getShowingPieces ().Count == 0) 
+		{
+			return true;
+		}
+
 		if (!rotationActive) 
 		{
 			canFit = cellManager.checkIfOnePieceCanFit (pieceManager.getShowingPieces ());
@@ -925,13 +949,21 @@ public class GameManager : MonoBehaviour
 			//Debug.Log ("Gano de verdad.");
 			gameOver = true;
 			unlockPowerUp ();
-			activatePopUp ("winGamePopUp");
 
-			if(AudioManager.GetInstance())
-			{
-				AudioManager.GetInstance().Stop("won");
-				AudioManager.GetInstance().Play("won");
-			}
+			wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
+
+			Invoke ("showWinPopUp",1.5f);
+		}
+	}
+
+	protected void showWinPopUp()
+	{
+		activatePopUp ("winGamePopUp");
+
+		if(AudioManager.GetInstance())
+		{
+			AudioManager.GetInstance().Stop("won");
+			AudioManager.GetInstance().Play("won");
 		}
 	}
 
@@ -943,7 +975,6 @@ public class GameManager : MonoBehaviour
 		}
 
 		HighLightManager.GetInstance ().turnOffAllHighLights ();
-		wordManager.updateGridLettersState (gridCharacters,WordManager.EWordState.WORDS_AVAILABLE);
 		updatePiecesLight (true);
 
 

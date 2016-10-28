@@ -372,64 +372,162 @@
 		<text id="Tutorial_lvl3_phase1">
 			<languages>
 				<language id="english" text="Drag {{b}}HELP{{/b}} to the board to find out a word you can form with your letters."/>
-				<language id="spanish" text="Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes hacer con tus letras."/>
-				<language id="default" text="Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes hacer con tus letras."/>
+				<language id="spanish" text="También puedes hacer líneas verticales."/>
+				<language id="default" text="También puedes hacer líneas verticales."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl3_phase2">
 			<languages>
 				<language id="english" text="The power up {{b}}HELP{{/b}} suggests you to form the word {{b}}YEN{{/b}}, form it."/>
-				<language id="spanish" text="El poder {{b}}AYUDA{{/b}} te sugiere formar la palabra {{b}}YEN{{/b}}. Forma esa palabra."/>
-				<language id="default" text="El poder {{b}}AYUDA{{/b}} te sugiere formar la palabra {{b}}YEN{{/b}}. Forma esa palabra."/>
+				<language id="spanish" text="Haz más líneas verticales."/>
+				<language id="default" text="Haz más líneas verticales."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl3_phase3">
 			<languages>
 				<language id="english" text="Get the remaining points to pass the level."/>
-				<language id="spanish" text="Haz los puntos que faltan para pasar el nivel."/>
-				<language id="default" text="Haz los puntos que faltan para pasar el nivel."/>
+				<language id="spanish" text="Recuerda, las piezas salen de 3 en 3."/>
+				<language id="default" text="Recuerda, las piezas salen de 3 en 3."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl3_phase4">
 			<languages>
 				<language id="english" text="Remember: /n Drag {{b}}HELP{{/b}} to the board to find out a word you can form with your letters."/>
-				<language id="spanish" text="Recuerda: /n Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes hacer con tus letras."/>
-				<language id="default" text="Recuerda: /n Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir que palabra puedes hacer con tus letras."/>
+				<language id="spanish" text="Haz otra línea vertical."/>
+				<language id="default" text="Haz otra línea vertical."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl4_phase1A">
+		<text id="Tutorial_lvl4_phase1">
 			<languages>
 				<language id="english" text="Press the button"/>
-				<language id="spanish" text="Presiona el botón"/>
-				<language id="default" text="Presiona el botón"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl4_phase1B">
-			<languages>
-				<language id="english" text="to deselect all the letters at the same time."/>
-				<language id="spanish" text="para deseleccionar todas las letras al mismo tiempo."/>
-				<language id="default" text="para deseleccionar todas las letras al mismo tiempo."/>
+				<language id="spanish" text="Arrastra piezas al tablero."/>
+				<language id="default" text="Arrastra piezas al tablero."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl4_phase2">
 			<languages>
+				<language id="english" text="to deselect all the letters at the same time."/>
+				<language id="spanish" text="Las letras no cuentan como bloques para hacer líneas."/>
+				<language id="default" text="Las letras no cuentan como bloques para hacer líneas."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl4_phase3">
+			<languages>
 				<language id="english" text="Get {{score}} points to complete the level."/>
-				<language id="spanish" text="Obtén {{score}} puntos para pasar el nivel."/>
-				<language id="default" text="Obtén {{score}} puntos para pasar el nivel."/>
+				<language id="spanish" text="Colocar piezas te da puntos."/>
+				<language id="default" text="Colocar piezas te da puntos."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl4_phase4">
+			<languages>
+				<language id="english" text="Get {{score}} points to complete the level."/>
+				<language id="spanish" text="Cuando haces una línea los bloques se vuelven letras."/>
+				<language id="default" text="Cuando haces una línea los bloques se vuelven letras."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl5_phase1">
+			<languages>
+				<language id="english" text="Press the button"/>
+				<language id="spanish" text="Haz una línea."/>
+				<language id="default" text="Haz una línea."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl5_phase2">
+			<languages>
+				<language id="english" text="to deselect all the letters at the same time."/>
+				<language id="spanish" text="Teclea la palabra {{b}}FELIZ{{/b}}."/>
+				<language id="default" text="Teclea la palabra {{b}}FELIZ{{/b}}."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl5_phase3">
+			<languages>
+				<language id="english" text="to deselect all the letters at the same time."/>
+				<language id="spanish" text="Presiona el botón verde para enviar una palabra correcta."/>
+				<language id="default" text="Presiona el botón verde para enviar una palabra correcta."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl6_phase1">
+			<languages>
+				<language id="english" text="Press the button"/>
+				<language id="spanish" text="Coloca una pieza."/>
+				<language id="default" text="Coloca una pieza."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl6_phase2">
+			<languages>
+				<language id="english" text="to deselect all the letters at the same time."/>
+				<language id="spanish" text="Forma palabras."/>
+				<language id="default" text="Forma palabras."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl7_phase1">
+			<languages>
+				<language id="english" text="Press the button"/>
+				<language id="spanish" text="Tienes 3 movimientos para alcanzar el objetivo del nivel ({{score}} puntos)."/>
+				<language id="default" text="Tienes 3 movimientos para alcanzar el objetivo del nivel ({{score}} puntos)."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl7_phase2">
+			<languages>
+				<language id="english" text="to deselect all the letters at the same time."/>
+				<language id="spanish" text="Poner una pieza o hacer una palabra cuenta como un movimiento."/>
+				<language id="default" text="Poner una pieza o hacer una palabra cuenta como un movimiento."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl7_phase3">
+			<languages>
+				<language id="english" text="Get {{score}} points to complete the level."/>
+				<language id="spanish" text="Con tu último movimiento forma una palabra de {{neededScore}} puntos o más para pasar el nivel."/>
+				<language id="default" text="Con tu último movimiento forma una palabra de {{neededScore}} puntos o más para pasar el nivel."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl7_phase4">
+			<languages>
+				<language id="english" text="Get {{score}} points to complete the level."/>
+				<language id="spanish" text="El valor de la palabra que estás formando aparece arriba de la palabra y es la suma de los valores de cada letra usada."/>
+				<language id="default" text="El valor de la palabra que estás formando aparece arriba de la palabra y es la suma de los valores de cada letra usada."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl8_phase1">
 			<languages>
 				<language id="english" text="Drag the {{b}}BOMB{{/b}} to a block."/>
-				<language id="spanish" text="Arrastra la {{b}}BOMBA{{/b}} a un bloque."/>
-				<language id="default" text="Arrastra la {{b}}BOMBA{{/b}} a un bloque."/>
+				<language id="spanish" text="Hacer 2 o más líneas simultáneamente te otorga letras con multiplicadores de palabra."/>
+				<language id="default" text="Hacer 2 o más líneas simultáneamente te otorga letras con multiplicadores de palabra."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl8_phase2">
 			<languages>
 				<language id="english" text="Use {{b}}BOMB{{/b}} as many times  as you need to pass the level."/>
-				<language id="spanish" text="Usa todas las {{b}}BOMBAS{{/b}} que necesites para pasar el nivel."/>
-				<language id="default" text="Usa todas las {{b}}BOMBAS{{/b}} que necesites para pasar el nivel."/>
+				<language id="spanish" text="Las letras con x2 duplican el valor de la palabra que formes."/>
+				<language id="default" text="Las letras con x2 duplican el valor de la palabra que formes."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl8_phase3">
+			<languages>
+				<language id="english" text="Use {{b}}BOMB{{/b}} as many times  as you need to pass the level."/>
+				<language id="spanish" text="Las letras con x3 triplican el valor de la palabra que formes."/>
+				<language id="default" text="Las letras con x3 triplican el valor de la palabra que formes."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl13_phase1">
+			<languages>
+				<language id="english" text="Drag the {{b}}BOMB{{/b}} to a block."/>
+				<language id="spanish" text="Arrastra el poder {{b}}BLOQUE{{/b}} al tablero para hacer dos líneas."/>
+				<language id="default" text="Arrastra el poder {{b}}BLOQUE{{/b}} al tablero para hacer dos líneas."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl13_phase2">
+			<languages>
+				<language id="english" text="Use {{b}}BOMB{{/b}} as many times  as you need to pass the level."/>
+				<language id="spanish" text="{{b}}BLOQUE{{/b}} es un poder que puedes usar a cambio de gemas."/>
+				<language id="default" text="{{b}}BLOQUE{{/b}} es un poder que puedes usar a cambio de gemas."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl13_phase3">
+			<languages>
+				<language id="english" text="Use {{b}}BOMB{{/b}} as many times  as you need to pass the level."/>
+				<language id="spanish" text="En este nivel {{b}}BLOQUE{{/b}} es gratis. Úsalo las veces que quieras."/>
+				<language id="default" text="En este nivel {{b}}BLOQUE{{/b}} es gratis. Úsalo las veces que quieras."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl22_phase1">
