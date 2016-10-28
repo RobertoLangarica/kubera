@@ -8,7 +8,6 @@ public class ScrollSnap : MonoBehaviour
 	public ScrollRect scrollRect;
 	public float lerpTime;
 
-	protected bool coroutineSend;
 	protected bool onLerp;
 	protected int closerIndex;
 	protected float distance;
@@ -42,7 +41,6 @@ public class ScrollSnap : MonoBehaviour
 			else 
 			{
 				onLerp = false;
-				coroutineSend = false;
 				lerpPercent = 0;
 				elapsedTime = 0;
 				scrollRect.enabled = true;

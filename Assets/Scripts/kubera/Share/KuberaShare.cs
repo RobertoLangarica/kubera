@@ -16,7 +16,7 @@ public class KuberaShare : MonoBehaviour
 		// Create share sheet
 		ShareSheet _shareSheet 	= new ShareSheet();	
 		_shareSheet.Text 		= MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SHARE_DEFAULT_TEXT);
-		_shareSheet.URL			= "http://shopika-store.cuatromedios.com/i/" + ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUser.shareCode;
+		_shareSheet.URL			= "http://shopika-store.cuatromedios.net/i/" + ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUser.shareCode;
 		_shareSheet.ExcludedShareOptions	= m_excludedOptions;
 
 		// Show composer

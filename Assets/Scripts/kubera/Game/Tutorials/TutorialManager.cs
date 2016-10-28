@@ -106,6 +106,9 @@ public class TutorialManager : Manager<TutorialManager>
 		switch (nEvent) 
 		{
 		case(TutorialBase.ENextPhaseEvent.CREATE_WORD):
+			wordManager.OnWordCompleteButtonActive += canCompletePhase;
+			break;
+		case(TutorialBase.ENextPhaseEvent.SELECT_LETTER):
 			inputWords.onDragFinish += canCompletePhase;
 			inputWords.onTap += canCompletePhase;
 			break;
@@ -162,6 +165,9 @@ public class TutorialManager : Manager<TutorialManager>
 		case(TutorialBase.ENextPhaseEvent.MOVEMENT_USED):
 			gameManager.OnMovementRemoved += canCompletePhase;
 			break;
+		case(TutorialBase.ENextPhaseEvent.ALL_PIECES_USED):
+			gameManager.OnPiecesFinished += canCompletePhase;
+			break;
 		}
 	}
 
@@ -170,6 +176,9 @@ public class TutorialManager : Manager<TutorialManager>
 		switch (nEvent) 
 		{
 		case(TutorialBase.ENextPhaseEvent.CREATE_WORD):
+			wordManager.OnWordCompleteButtonActive -= canCompletePhase;
+			break;
+		case(TutorialBase.ENextPhaseEvent.SELECT_LETTER):
 			inputWords.onDragFinish -= canCompletePhase;
 			inputWords.onTap -= canCompletePhase;
 			break;
@@ -225,6 +234,9 @@ public class TutorialManager : Manager<TutorialManager>
 			break;
 		case(TutorialBase.ENextPhaseEvent.MOVEMENT_USED):
 			gameManager.OnMovementRemoved -= canCompletePhase;
+			break;
+		case(TutorialBase.ENextPhaseEvent.ALL_PIECES_USED):
+			gameManager.OnPiecesFinished -= canCompletePhase;
 			break;
 		}
 	}

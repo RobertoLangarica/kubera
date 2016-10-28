@@ -37,6 +37,7 @@ public class WordManager : MonoBehaviour
 	public GameObject wordDeleteButton;
 	public Image deleteButtonImage;
 
+	public Action OnWordCompleteButtonActive;
 
 	public KeyBoardManager keyBoard;
 	public InputWords inputWords;
@@ -762,6 +763,8 @@ public class WordManager : MonoBehaviour
 						wordDeleteButton.SetActive (false);
 						wordCompleteButton.SetActive (true);
 						wordCompleteButtonRectTransform.DOScale(new Vector2(1,1),speed).SetEase(Ease.OutBack).SetId(wordCompleteButton);
+
+						if(OnWordCompleteButtonActive != null){OnWordCompleteButtonActive();}
 					});
 			}
 			else if(wordCompleteButton.activeSelf)
@@ -775,6 +778,8 @@ public class WordManager : MonoBehaviour
 				wordCompleteButtonRectTransform.anchoredPosition = new Vector2 (Screen.width * speed, wordCompleteButtonRectTransform.anchoredPosition.y);
 				wordCompleteButtonRectTransform.localScale = new Vector2 (1, 1);
 				wordCompleteButtonRectTransform.DOAnchorPos (Vector2.zero, speed).SetId(wordCompleteButton);
+
+				if(OnWordCompleteButtonActive != null){OnWordCompleteButtonActive();}
 			}
 		}
 		else if(isThereAnyLetterOnContainer)

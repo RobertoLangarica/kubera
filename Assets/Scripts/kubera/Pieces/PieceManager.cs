@@ -21,13 +21,25 @@ public class PieceManager : MonoBehaviour
 		singleSquarePrefab.GetComponent<BoxCollider2D>().enabled = false;	
 	}
 
-	public void initializePiecesToShow()
+	public void initializePiecesToShow(bool randomPieces = true)
 	{
-		for(int i= 0; i<piecesToShow; i++)
+		if (randomPieces) 
 		{
-			showingPieces.Add( GameObject.Instantiate(piecesPrefab.getNextRandomized()).GetComponent<Piece>() );
-			showingPieces[i].gameObject.SetActive(true);
-			showingPieces [i].createdIndex = i;
+			for (int i = 0; i < piecesToShow; i++) 
+			{
+				showingPieces.Add (GameObject.Instantiate (piecesPrefab.getNextRandomized ()).GetComponent<Piece> ());
+				showingPieces [i].gameObject.SetActive (true);
+				showingPieces [i].createdIndex = i;
+			}
+		} 
+		else 
+		{
+			for (int i = 0; i < piecesToShow; i++) 
+			{
+				showingPieces.Add (GameObject.Instantiate (piecesPrefab.getNext()).GetComponent<Piece> ());
+				showingPieces [i].gameObject.SetActive (true);
+				showingPieces [i].createdIndex = i;
+			}
 		}
 
 		piecesShowedCount = piecesToShow;

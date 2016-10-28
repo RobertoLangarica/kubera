@@ -6,11 +6,26 @@ public class RandomPool<T>
 {
 	private List<T> original;
 	private List<T> randomized;
+	private List<T> ordered;
 
 	public RandomPool(List<T> source)
 	{
 		original = new List<T>(source);//clone
 		randomized = randomizeList(original);
+		ordered = new List<T> (original);
+	}
+
+	public T getNext()
+	{
+		if(ordered.Count == 0)
+		{
+			ordered = new List<T> (original);
+		}
+
+		T temporal = ordered[0];
+		ordered.RemoveAt(0);
+
+		return temporal;
 	}
 
 	public T getNextRandomized()

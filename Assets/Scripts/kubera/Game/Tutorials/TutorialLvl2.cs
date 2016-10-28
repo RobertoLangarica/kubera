@@ -6,14 +6,44 @@ using DG.Tweening;
 
 public class TutorialLvl2 : TutorialBase 
 {
-	public List<ArrowAnimation> arrows;
+	public PieceManager pieceManager;
+	public InputPiece inputPiece;
 
 	protected bool doAnimation;
+	protected bool isWaitingForText;
+
+	protected int dommyIndex = -1;
+	protected GameObject powerUpDommy;
+	protected List<Cell> cells;
+
+	protected Vector3 posFrom;
+	protected Vector3 posTo;
 
 	protected override void Start()
 	{
-		base.Start ();
+		inputPiece.OnPlayer += animationController;
 
+		base.Start ();
+	}
+
+	protected void animationController(bool stop)
+	{
+		if(stop)
+		{
+			DOTween.Kill ("Tutorial2");
+			DestroyImmediate(powerUpDommy);
+			CancelInvoke ("powerUpAnim");
+
+			doAnimation = false;
+		}
+		else
+		{
+			if(!doAnimation)
+			{
+				doAnimation = true;
+				Invoke ("powerUpAnim", 0.2f);
+			}
+		}
 	}
 
 	public override bool canMoveToNextPhase ()
@@ -24,7 +54,7 @@ public class TutorialLvl2 : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
+			phaseEvent.Add (ENextPhaseEvent.CREATE_A_LINE);
 
 			firstAnim ();
 
@@ -34,6 +64,9 @@ public class TutorialLvl2 : TutorialBase
 			instructionsText = instructions [0];
 			instructionsText.text = "";
 
+			doAnimation = true;
+			Invoke ("powerUpAnim", 1);
+
 			Invoke ("writeLetterByLetter",initialAnim*2);
 
 			phase = 1;
@@ -41,7 +74,7 @@ public class TutorialLvl2 : TutorialBase
 		case(1):
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.EARNED_POINTS);
+			phaseEvent.Add (ENextPhaseEvent.ALL_PIECES_USED);
 
 			if (instructionIndex < currentInstruction.Length) 
 			{
@@ -51,9 +84,7 @@ public class TutorialLvl2 : TutorialBase
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.PIECES_AREA);
 
-			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE2),
-				new string[2]{ "{{points}}", "{{neededPoints}}" }, new string[2]{hudManager.points.text,hudManager.goalText.text.Split('/')[1].Split(' ')[0]});
+			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE2);
 			instructionsText = instructions [1];
 			instructionsText.text = "";
 			instructionIndex = 0;
@@ -67,27 +98,22 @@ public class TutorialLvl2 : TutorialBase
 		case(2):
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.EARNED_POINTS);
+			phaseEvent.Add (ENextPhaseEvent.WILDCARD_USED);
 
-			if (instructionIndex < currentInstruction.Length) 
-			{
+			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
 				foundStringTag = false;
 			}
 
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.MOVEMENTS);
-
-			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE3),
-				new string[1]{"/n"}, new string[1]{"\n"});
+			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE3);
 			instructionsText = instructions [2];
 			instructionsText.text = "";
 			instructionIndex = 0;
 
 			shakeToErrase ();
-			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+			Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
-			arrows[0].startAnimation ();
+			isWaitingForText = true;
 			
 			phase = 3;
 			return true;
@@ -109,35 +135,7 @@ public class TutorialLvl2 : TutorialBase
 			shakeToErrase ();
 			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
 
-			arrows[0].stopAnimation();
-			arrows[1].startAnimation ();
-
 			phase = 4;
-			doAnimation = false;
-			return true;
-		case(4):
-			phasesPanels [3].SetActive (false);
-			phasesPanels [4].SetActive (true);
-
-			if (instructionIndex < currentInstruction.Length) {
-				changeInstruction = true;
-				foundStringTag = false;
-			}
-
-			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.MOVEMENTS);
-
-			currentInstruction =  MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV2_PHASE5),
-				new string[3]{"{{b}}","{{/b}}","/n"}, new string[3]{"<b>","</b>","\n"});
-			instructionsText = instructions [4];
-			instructionsText.text = "";
-			instructionIndex = 0;
-
-			shakeToErrase ();
-			arrows[1].stopAnimation();
-			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);      
-
-			phase = 5;
 			doAnimation = false;
 			return true;
 		}
@@ -155,10 +153,83 @@ public class TutorialLvl2 : TutorialBase
 			return true;
 		case(3):
 			return true;
-		case(4):
-			return true;
 		}
 
 		return base.phaseObjectiveAchived ();
+	}
+
+	protected override void OnWritingFinished ()
+	{
+		if (isWaitingForText) 
+		{
+			isWaitingForText = false;
+			Invoke ("showPieces",1);
+		}
+
+		base.OnWritingFinished ();
+	}
+
+	protected void showPieces()
+	{
+		pieceManager.initializePiecesToShow ();
+		hudManager.showPieces (pieceManager.getShowingPieces ());
+
+		if (AudioManager.GetInstance ()) {
+			AudioManager.GetInstance ().Stop ("pieceCreated");
+			AudioManager.GetInstance ().Play ("pieceCreated");
+		}
+
+		canMoveToNextPhase ();
+	}
+
+	protected void powerUpAnim()
+	{
+		if (!doAnimation || cellManager.getAllEmptyCells().Length < 7 ) 
+		{
+			DOTween.Kill ("Tutorial2");
+			DestroyImmediate(powerUpDommy);
+			return;
+		}
+
+
+		posFrom = pieceManager.getShowingPieces () [0].transform.position;
+		posTo = cellManager.getAllEmptyCells()[2].transform.position;
+		posTo.x += cellManager.cellSize;
+
+		changeDommy ();
+
+		Vector3 originalScale = inputPiece.selectedScale;
+
+		powerUpDommy.transform.position = posFrom;
+
+		//Los valores de las animaciones los paso Liloo
+		powerUpDommy.transform.DOScale (new Vector3 (originalScale.x*1,originalScale.y*1,originalScale.z*1), 0.5f).SetId("Tutorial2");
+		powerUpDommy.GetComponent<Piece> ().moveAlphaByTween (0.75f, 0.75f, "Tutorial2",
+			() => {
+
+				//TODO: intentar que sea linea curva
+				powerUpDommy.transform.DOMove (posTo, 1);
+
+				powerUpDommy.GetComponent<Piece> ().moveAlphaByTween (0, 1, "Tutorial2", () => {
+					DestroyImmediate (powerUpDommy);
+				});
+			});
+
+		Invoke ("powerUpAnim",3.5f);
+	}
+
+	protected void changeDommy()
+	{
+		if (dommyIndex < 2) 
+		{
+			dommyIndex++;
+		} 
+		else 
+		{
+			dommyIndex = 0;
+		}
+		powerUpDommy = GameObject.Instantiate (pieceManager.getShowingPieces () [dommyIndex].gameObject) as GameObject;
+		powerUpDommy.transform.localScale = Vector3.zero;
+		powerUpDommy.GetComponent<Collider2D> ().enabled = false;
 	}
 }
