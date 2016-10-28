@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -435,7 +436,7 @@ namespace LevelBuilder
 			Invoke("hideLoadingIndicator",0.5f);
 		}
 
-		public void OnLeveleSelectedToLoad()
+		public void OnLevelSelectedToLoad()
 		{
 			if(lvlSelector.value != 0)
 			{
