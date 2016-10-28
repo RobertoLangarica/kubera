@@ -75,6 +75,11 @@ TextureImporter:
     textureFormat: 47
     compressionQuality: 50
     allowsAlphaSplitting: 0
+  - buildTarget: iPhone
+    maxTextureSize: 4096
+    textureFormat: 4
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
   spriteSheet:
     sprites:
     - name: Copia de K-popUps_close

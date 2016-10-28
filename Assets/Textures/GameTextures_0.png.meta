@@ -296,7 +296,7 @@ TextureImporter:
     allowsAlphaSplitting: 1
   - buildTarget: Android
     maxTextureSize: 2048
-    textureFormat: 47
+    textureFormat: 4
     compressionQuality: 50
     allowsAlphaSplitting: 1
   spriteSheet:
@@ -623,21 +623,21 @@ TextureImporter:
     - name: K-InGame_boardCorner
       rect:
         serializedVersion: 2
-        x: 671
-        y: 235
-        width: 51
-        height: 51
-      alignment: 9
-      pivot: {x: 0.51960784, y: 0.57843137}
+        x: 672
+        y: 237
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-InGame_boardoutline
       rect:
         serializedVersion: 2
         x: 860
-        y: 203
-        width: 54
-        height: 54
+        y: 204
+        width: 52
+        height: 52
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -854,7 +854,7 @@ TextureImporter:
     - name: K-InGame_Rotatetetris
       rect:
         serializedVersion: 2
-        x: 974
+        x: 973
         y: 203
         width: 44
         height: 46
@@ -888,7 +888,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 715
-        y: 34
+        y: 35
         width: 70
         height: 71
       alignment: 9
@@ -1317,7 +1317,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 671
-        y: 184
+        y: 185
         width: 47
         height: 47
       alignment: 9
@@ -1327,7 +1327,7 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0024
       rect:
         serializedVersion: 2
-        x: 918
+        x: 917
         y: 198
         width: 52
         height: 51
@@ -1338,7 +1338,7 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0025
       rect:
         serializedVersion: 2
-        x: 801
+        x: 800
         y: 202
         width: 55
         height: 55
@@ -1570,11 +1570,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 860
-        y: 203
-        width: 54
-        height: 54
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        y: 204
+        width: 52
+        height: 52
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: tetris-K-InGame_Tetrisblue
@@ -1591,7 +1591,7 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrisgray
       rect:
         serializedVersion: 2
-        x: 726
+        x: 725
         y: 194
         width: 71
         height: 71
@@ -1647,7 +1647,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 671
-        y: 109
+        y: 110
         width: 71
         height: 71
       alignment: 0

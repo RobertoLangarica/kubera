@@ -125,16 +125,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5, y: 0.50729924}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -4, y: 135}
-        - {x: -31, y: 124}
-        - {x: -64, y: 3}
-        - {x: -64, y: -133}
-        - {x: -48, y: -139}
-        - {x: 54, y: -139}
-        - {x: 67, y: -136}
-        - {x: 67, y: -3}
-        - {x: 18, y: 135}
+      outline: []
     - name: K-3-MapaRopa_blusas
       rect:
         serializedVersion: 2
@@ -145,16 +136,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.48876405, y: 0.47826087}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -87, y: 22}
-        - {x: -87, y: 3}
-        - {x: -61, y: -76}
-        - {x: -60, y: -77}
-        - {x: 88, y: -77}
-        - {x: 88, y: 58}
-        - {x: 85, y: 77}
-        - {x: -53, y: 77}
-        - {x: -58, y: 56}
+      outline: []
     - name: K-3-MapaRopa_calcetines
       rect:
         serializedVersion: 2
@@ -165,14 +147,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.45348838, y: 0.48550725}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -0.5, y: -30.5}
-        - {x: 14.5, y: -30.5}
-        - {x: 21.5, y: -28.5}
-        - {x: 21.5, y: -17.5}
-        - {x: 4.5, y: 35.5}
-        - {x: -19.5, y: 35.5}
-        - {x: -19.5, y: -9.5}
+      outline: []
     - name: K-3-MapaRopa_camisa
       rect:
         serializedVersion: 2
@@ -183,14 +158,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.48809522, y: 0.5245098}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 8.5, y: 145.5}
-        - {x: -30.5, y: 145.5}
-        - {x: -61.5, y: 14.5}
-        - {x: -61.5, y: -153.5}
-        - {x: 64.5, y: -153.5}
-        - {x: 64.5, y: 26.5}
-        - {x: 35.5, y: 129.5}
+      outline: []
     - name: K-3-MapaRopa_gancho
       rect:
         serializedVersion: 2
@@ -201,13 +169,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.47685185, y: 0.46825397}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -51.5, y: -29.5}
-        - {x: 56.5, y: -29.5}
-        - {x: 56.5, y: -0.5}
-        - {x: 24.5, y: 31.5}
-        - {x: -25.5, y: 31.5}
-        - {x: -51.5, y: -6.5}
+      outline: []
     - name: K-3-MapaRopa_LBD
       rect:
         serializedVersion: 2
@@ -218,20 +180,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.524, y: 0.495671}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 45.5, y: 115.5}
-        - {x: 33.5, y: 116.5}
-        - {x: -25.5, y: 116.5}
-        - {x: -49.5, y: 114.5}
-        - {x: -64.5, y: 106.5}
-        - {x: -64.5, y: -40.5}
-        - {x: -53.5, y: -43.5}
-        - {x: -52.5, y: -110.5}
-        - {x: -51.5, y: -112.5}
-        - {x: 52.5, y: -112.5}
-        - {x: 57.5, y: -111.5}
-        - {x: 59.5, y: -63.5}
-        - {x: 59.5, y: 104.5}
+      outline: []
     - name: K-3-MapaRopa_pantalones
       rect:
         serializedVersion: 2
@@ -242,16 +191,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.49603173, y: 0.50625}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -17.5, y: 118.5}
-        - {x: -25.5, y: 112.5}
-        - {x: -24.5, y: 104.5}
-        - {x: -22.5, y: 102.5}
-        - {x: -62.5, y: 63.5}
-        - {x: -62.5, y: -36.5}
-        - {x: -29.5, y: -121.5}
-        - {x: 63.5, y: -121.5}
-        - {x: 63.5, y: 118.5}
+      outline: []
     - name: K-3-MapaRopa_techoropa
       rect:
         serializedVersion: 2
@@ -273,12 +213,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.46875, y: 0.51598835}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -48.5, y: 165.5}
-        - {x: -48.5, y: -172.5}
-        - {x: -47.5, y: -176.5}
-        - {x: 57.5, y: -176.5}
-        - {x: 57.5, y: 165.5}
+      outline: []
     - name: K-5-MapaZapatos_adornopie
       rect:
         serializedVersion: 2
@@ -289,12 +224,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -26.5, y: 29}
-        - {x: -26.5, y: -29}
-        - {x: 17.5, y: -29}
-        - {x: 26.5, y: -10}
-        - {x: 26.5, y: 29}
+      outline: []
     - name: K-5-MapaZapatos_techozapato
       rect:
         serializedVersion: 2
@@ -316,15 +246,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.50729924, y: 0.50490195}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 48.5, y: 46.5}
-        - {x: 40.5, y: 39.5}
-        - {x: -63.5, y: -21.5}
-        - {x: -63.5, y: -46.5}
-        - {x: 60.5, y: -46.5}
-        - {x: 64.5, y: 2.5}
-        - {x: 64.5, y: 35.5}
-        - {x: 55.5, y: 46.5}
+      outline: []
     - name: K-5-MapaZapatos_z2
       rect:
         serializedVersion: 2
@@ -335,17 +257,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.52803737, y: 0.5033113}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -49.5, y: -41}
-        - {x: -49.5, y: -67}
-        - {x: -41.5, y: -74}
-        - {x: -27.5, y: -74}
-        - {x: 50.5, y: -32}
-        - {x: 50.5, y: 52}
-        - {x: 47.5, y: 69}
-        - {x: 33.5, y: 75}
-        - {x: 6.5, y: 75}
-        - {x: -29.5, y: 24}
+      outline: []
     - name: K-5-MapaZapatos_z3
       rect:
         serializedVersion: 2
@@ -356,14 +268,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.49615383, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -63.5, y: 101}
-        - {x: -64.5, y: 96}
-        - {x: -64.5, y: -93}
-        - {x: -47.5, y: -101}
-        - {x: 65.5, y: -101}
-        - {x: 65.5, y: 27}
-        - {x: 58.5, y: 101}
+      outline: []
     - name: 'K-5-MapaZapatos_z4 '
       rect:
         serializedVersion: 2
@@ -374,14 +279,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5084746, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 5, y: 69}
-        - {x: -26, y: 69}
-        - {x: -30, y: 42}
-        - {x: -30, y: -68}
-        - {x: 29, y: -68}
-        - {x: 29, y: 1}
-        - {x: 17, y: 50}
+      outline: []
     - name: K-5-MapaZapatos_z5
       rect:
         serializedVersion: 2
@@ -392,17 +290,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.46120688, y: 0.49690402}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 49.5, y: -142.5}
-        - {x: 34.5, y: 157.5}
-        - {x: 17.5, y: 160.5}
-        - {x: -46.5, y: 160.5}
-        - {x: -50.5, y: 140.5}
-        - {x: -50.5, y: -99.5}
-        - {x: -48.5, y: -159.5}
-        - {x: 62.5, y: -159.5}
-        - {x: 62.5, y: -149.5}
-        - {x: 61.5, y: -148.5}
+      outline: []
     - name: K-5-MapaZapatos_z7
       rect:
         serializedVersion: 2
@@ -413,16 +301,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.503125, y: 0.5522388}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 59.5, y: 30}
-        - {x: -54.5, y: 30}
-        - {x: -74.5, y: 26}
-        - {x: -74.5, y: -14}
-        - {x: -63.5, y: -17}
-        - {x: -13.5, y: -37}
-        - {x: 72.5, y: -37}
-        - {x: 72.5, y: 20}
-        - {x: 69.5, y: 24}
+      outline: []
     - name: K-5-MapaZapatos_zseis
       rect:
         serializedVersion: 2
@@ -433,13 +312,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5092025, y: 0.58196723}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 75, y: 25.5}
-        - {x: -79, y: 25.5}
-        - {x: -79, y: -35.5}
-        - {x: 53, y: -35.5}
-        - {x: 80, y: -26.5}
-        - {x: 80, y: 24.5}
+      outline: []
     - name: K-6-MapaMaquillaje_adorno blanco
       rect:
         serializedVersion: 2
@@ -450,16 +323,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.49264705, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 33, y: 52}
-        - {x: -42, y: 52}
-        - {x: -67, y: 31}
-        - {x: -67, y: -26}
-        - {x: -45, y: -50}
-        - {x: 52, y: -50}
-        - {x: 69, y: -31}
-        - {x: 69, y: 41}
-        - {x: 68, y: 42}
+      outline: []
     - name: K-6-MapaMaquillaje_brochas
       rect:
         serializedVersion: 2
@@ -470,30 +334,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.509375, y: 0.5488506}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16.5, y: 28.5}
-        - {x: -25.5, y: 21.5}
-        - {x: -25.5, y: -92.5}
-        - {x: -3.5, y: -92.5}
-        - {x: -3.5, y: 26.5}
-        - {x: -7.5, y: 28.5}
-      - - {x: 11.5, y: 78.5}
-        - {x: 1.5, y: 74.5}
-        - {x: 1.5, y: -91.5}
-        - {x: 17.5, y: -91.5}
-        - {x: 78.5, y: 0.5}
-        - {x: 78.5, y: 66.5}
-        - {x: 58.5, y: 78.5}
-      - - {x: -60.5, y: 31.5}
-        - {x: -73.5, y: 23.5}
-        - {x: -74.5, y: 21.5}
-        - {x: -74.5, y: -9.5}
-        - {x: -49.5, y: -67.5}
-        - {x: -46.5, y: -73.5}
-        - {x: -36.5, y: -73.5}
-        - {x: -28.5, y: -70.5}
-        - {x: -28.5, y: 16.5}
-        - {x: -36.5, y: 31.5}
+      outline: []
     - name: K-6-MapaMaquillaje_delineador
       rect:
         serializedVersion: 2
@@ -515,15 +356,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5, y: 0.52330506}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -45, y: 110.5}
-        - {x: -61, y: 108.5}
-        - {x: -69, y: 48.5}
-        - {x: -69, y: -123.5}
-        - {x: -49, y: -123.5}
-        - {x: -46, y: -122.5}
-        - {x: 70, y: 15.5}
-        - {x: 70, y: 110.5}
+      outline: []
     - name: K-6-MapaMaquillaje_esmalte2
       rect:
         serializedVersion: 2
@@ -534,16 +367,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5138889, y: 0.5107143}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -5, y: 65.5}
-        - {x: -33, y: 57.5}
-        - {x: -33, y: -11.5}
-        - {x: -12, y: -66.5}
-        - {x: 24, y: -66.5}
-        - {x: 30, y: -63.5}
-        - {x: 33, y: -43.5}
-        - {x: 33, y: 49.5}
-        - {x: 27, y: 65.5}
+      outline: []
     - name: K-6-MapaMaquillaje_lipstick2
       rect:
         serializedVersion: 2
@@ -554,14 +378,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.4722222, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -17, y: 33.5}
-        - {x: -17, y: -73.5}
-        - {x: 19, y: -73.5}
-        - {x: 19, y: 64.5}
-        - {x: 18, y: 73.5}
-        - {x: 1, y: 73.5}
-        - {x: -15, y: 64.5}
+      outline: []
     - name: K-6-MapaMaquillaje_rimel
       rect:
         serializedVersion: 2
@@ -583,17 +400,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.49691358, y: 0.50301206}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 42.5, y: 75.5}
-        - {x: -43.5, y: 75.5}
-        - {x: -77.5, y: 61.5}
-        - {x: -77.5, y: -54.5}
-        - {x: -29.5, y: -79.5}
-        - {x: 20.5, y: -79.5}
-        - {x: 54.5, y: -66.5}
-        - {x: 76.5, y: -43.5}
-        - {x: 77.5, y: -34.5}
-        - {x: 77.5, y: 35.5}
+      outline: []
     - name: K-6-MapaMaquillaje_sombras
       rect:
         serializedVersion: 2
@@ -604,14 +411,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5030488, y: 0.52}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -82.5, y: 47}
-        - {x: -82.5, y: -45}
-        - {x: -58.5, y: -51}
-        - {x: 79.5, y: -51}
-        - {x: 81.5, y: -42}
-        - {x: 81.5, y: 44}
-        - {x: 41.5, y: 47}
+      outline: []
     - name: K-6-MapaMaquillaje_techo
       rect:
         serializedVersion: 2
@@ -633,16 +433,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.49565217, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 17, y: 57}
-        - {x: -35, y: 57}
-        - {x: -57, y: 30}
-        - {x: -57, y: -45}
-        - {x: -27, y: -56}
-        - {x: 38, y: -56}
-        - {x: 57, y: -26}
-        - {x: 57, y: 26}
-        - {x: 52, y: 42}
+      outline: []
     - name: K-7-MapaDeportes_brillo2
       rect:
         serializedVersion: 2
@@ -653,15 +444,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5104167, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -5, y: 44.5}
-        - {x: -45, y: 44.5}
-        - {x: -45, y: -3.5}
-        - {x: -31, y: -46.5}
-        - {x: -22, y: -48.5}
-        - {x: 44, y: -48.5}
-        - {x: 44, y: 8.5}
-        - {x: 26, y: 38.5}
+      outline: []
     - name: K-7-MapaDeportes_brillo3
       rect:
         serializedVersion: 2
@@ -672,16 +455,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.48033708, y: 0.49122807}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -68.5, y: 29}
-        - {x: -84.5, y: 14}
-        - {x: -84.5, y: -10}
-        - {x: -82.5, y: -18}
-        - {x: -68.5, y: -26}
-        - {x: -66.5, y: -27}
-        - {x: 77.5, y: -27}
-        - {x: 88.5, y: -26}
-        - {x: 88.5, y: 29}
+      outline: []
     - name: K-7-MapaDeportes_brillo4
       rect:
         serializedVersion: 2
@@ -692,21 +466,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.47916666, y: 0.5074627}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 41.5, y: -29}
-        - {x: 43.5, y: -28}
-        - {x: 56.5, y: -20}
-        - {x: 58.5, y: -11}
-        - {x: 58.5, y: 23}
-        - {x: 56.5, y: 28}
-        - {x: -55.5, y: 28}
-        - {x: -55.5, y: -21}
-        - {x: -43.5, y: -28}
-        - {x: -36.5, y: -29}
-        - {x: -25.5, y: -29}
-        - {x: -21.5, y: -28}
-        - {x: -16.5, y: -22}
-        - {x: 8.5, y: -29}
+      outline: []
     - name: K-7-MapaDeportes_g1
       rect:
         serializedVersion: 2
@@ -717,16 +477,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5731707, y: 0.49596775}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -9.5, y: 62.5}
-        - {x: -18.5, y: 7.5}
-        - {x: -18.5, y: -47.5}
-        - {x: -6.5, y: -46.5}
-        - {x: -4.5, y: -41.5}
-        - {x: -4.5, y: -8.5}
-        - {x: 3.5, y: -61.5}
-        - {x: 17.5, y: -61.5}
-        - {x: 17.5, y: 62.5}
+      outline: []
     - name: K-7-MapaDeportes_g2
       rect:
         serializedVersion: 2
@@ -737,18 +488,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.55932206, y: 0.5086207}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -15, y: 27.5}
-        - {x: -28, y: 11.5}
-        - {x: -28, y: -3.5}
-        - {x: -27, y: -6.5}
-        - {x: -25, y: -15.5}
-        - {x: -13, y: -26.5}
-        - {x: -10, y: -27.5}
-        - {x: 12, y: -27.5}
-        - {x: 26, y: -16.5}
-        - {x: 26, y: 16.5}
-        - {x: 14, y: 27.5}
+      outline: []
     - name: K-7-MapaDeportes_g3
       rect:
         serializedVersion: 2
@@ -759,13 +499,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5151515, y: 0.5068493}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -33, y: -148}
-        - {x: 32, y: -148}
-        - {x: 32, y: 88}
-        - {x: 26, y: 144}
-        - {x: -22, y: 144}
-        - {x: -33, y: 18}
+      outline: []
     - name: K-7-MapaDeportes_g4
       rect:
         serializedVersion: 2
@@ -776,14 +510,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5102041, y: 0.50497514}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -45, y: 98.5}
-        - {x: -45, y: -35.5}
-        - {x: -31, y: -100.5}
-        - {x: 8, y: -100.5}
-        - {x: 46, y: -14.5}
-        - {x: 46, y: 77.5}
-        - {x: 26, y: 98.5}
+      outline: []
     - name: K-7-MapaDeportes_g5
       rect:
         serializedVersion: 2
@@ -794,19 +521,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.4878049, y: 0.4939759}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 84, y: 40}
-        - {x: -66, y: 40}
-        - {x: -78, y: 8}
-        - {x: -80, y: 2}
-        - {x: -80, y: -29}
-        - {x: -74, y: -36}
-        - {x: -51, y: -36}
-        - {x: -33, y: -27}
-        - {x: 42, y: -36}
-        - {x: 65, y: -36}
-        - {x: 83, y: -32}
-        - {x: 84, y: -29}
+      outline: []
     - name: K-7-MapaDeportes_g7
       rect:
         serializedVersion: 2
@@ -817,14 +532,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5191083, y: 0.517094}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 30.5, y: 55.5}
-        - {x: 32.5, y: 44.5}
-        - {x: -73.5, y: -33.5}
-        - {x: -73.5, y: -60.5}
-        - {x: 48.5, y: -60.5}
-        - {x: 73.5, y: 31.5}
-        - {x: 73.5, y: 55.5}
+      outline: []
     - name: K-7-MapaDeportes_g8
       rect:
         serializedVersion: 2
@@ -835,13 +543,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.48677248, y: 0.5394737}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -89, y: 51.5}
-        - {x: -89, y: -52.5}
-        - {x: 96, y: -52.5}
-        - {x: 97, y: -51.5}
-        - {x: 97, y: 33.5}
-        - {x: 87, y: 51.5}
+      outline: []
     - name: K-7-MapaDeportes_gseis
       rect:
         serializedVersion: 2
@@ -852,16 +554,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5117647, y: 0.49710983}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -44, y: 81}
-        - {x: -81, y: 49}
-        - {x: -82, y: 42}
-        - {x: -82, y: -48}
-        - {x: -34, y: -83}
-        - {x: 67, y: -83}
-        - {x: 83, y: -45}
-        - {x: 83, y: 64}
-        - {x: 55, y: 81}
+      outline: []
     - name: K-7-MapaDeportes_techogym
       rect:
         serializedVersion: 2
@@ -883,17 +576,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.4861111, y: 0.5416667}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 7, y: 33}
-        - {x: 5, y: 31}
-        - {x: 0, y: 33}
-        - {x: -35, y: 33}
-        - {x: -35, y: -37}
-        - {x: -32, y: -39}
-        - {x: 21, y: -39}
-        - {x: 37, y: -30}
-        - {x: 37, y: 25}
-        - {x: 24, y: 33}
+      outline: []
     - name: K-9-Mapaperfumeria_brillo2
       rect:
         serializedVersion: 2
@@ -904,16 +587,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5260417, y: 0.52061856}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -30.5, y: 44.5}
-        - {x: -50.5, y: 24.5}
-        - {x: -50.5, y: -39.5}
-        - {x: -47.5, y: -45.5}
-        - {x: -36.5, y: -50.5}
-        - {x: 28.5, y: -50.5}
-        - {x: 45.5, y: -30.5}
-        - {x: 45.5, y: 31.5}
-        - {x: 33.5, y: 44.5}
+      outline: []
     - name: K-9-Mapaperfumeria_brillo3
       rect:
         serializedVersion: 2
@@ -924,15 +598,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5, y: 0.5425532}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 13, y: 43}
-        - {x: -14, y: 43}
-        - {x: -47, y: 25}
-        - {x: -47, y: -19}
-        - {x: -33, y: -43}
-        - {x: 28, y: -43}
-        - {x: 42, y: -16}
-        - {x: 42, y: 18}
+      outline: []
     - name: K-9-Mapaperfumeria_p1
       rect:
         serializedVersion: 2
@@ -943,16 +609,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.49655172, y: 0.52272725}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -57, y: 78}
-        - {x: -63, y: 77}
-        - {x: -67, y: 50}
-        - {x: -67, y: -71}
-        - {x: -44, y: -84}
-        - {x: 58, y: -84}
-        - {x: 68, y: -81}
-        - {x: 68, y: 40}
-        - {x: -7, y: 78}
+      outline: []
     - name: K-9-Mapaperfumeria_p2
       rect:
         serializedVersion: 2
@@ -963,30 +620,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5126263, y: 0.5482456}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -101.50001, y: 153.5}
-        - {x: -101.50001, y: -85.5}
-        - {x: -78.50001, y: -173.5}
-        - {x: 60.499992, y: -173.5}
-        - {x: 61.499992, y: -172.5}
-        - {x: 70.49999, y: -131.5}
-        - {x: 70.49999, y: 72.5}
-        - {x: 20.499992, y: 153.5}
-      - - {x: 75.49999, y: -126.5}
-        - {x: 71.49999, y: -127.5}
-        - {x: 64.49999, y: -137.5}
-        - {x: 64.49999, y: -142.5}
-        - {x: 85.49999, y: -142.5}
-        - {x: 91.49999, y: -140.5}
-        - {x: 91.49999, y: -129.5}
-        - {x: 84.49999, y: -126.5}
-      - - {x: 15.499992, y: -129.5}
-        - {x: 22.499992, y: -134.5}
-        - {x: 33.499992, y: -134.5}
-        - {x: 33.499992, y: -127.5}
-        - {x: 27.499992, y: -115.5}
-        - {x: 16.499992, y: -115.5}
-        - {x: 15.499992, y: -119.5}
+      outline: []
     - name: K-9-Mapaperfumeria_p3
       rect:
         serializedVersion: 2
@@ -997,11 +631,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.58208954, y: 0.4852941}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -39, y: 105}
-        - {x: -39, y: -99}
-        - {x: 28, y: -99}
-        - {x: 28, y: 105}
+      outline: []
     - name: K-9-Mapaperfumeria_p4
       rect:
         serializedVersion: 2
@@ -1012,15 +642,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.56542057, y: 0.47560975}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16.5, y: 50.5}
-        - {x: -51.5, y: -0.5}
-        - {x: -51.5, y: -51.5}
-        - {x: -30.5, y: -57.5}
-        - {x: 33.5, y: -57.5}
-        - {x: 42.5, y: -48.5}
-        - {x: 42.5, y: 6.5}
-        - {x: 16.5, y: 50.5}
+      outline: []
     - name: K-9-Mapaperfumeria_p5
       rect:
         serializedVersion: 2
@@ -1031,16 +653,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.50364965, y: 0.54577464}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 39, y: 60.5}
-        - {x: -4, y: 60.5}
-        - {x: -66, y: -0.5}
-        - {x: -66, y: -34.5}
-        - {x: -49, y: -73.5}
-        - {x: -15, y: -73.5}
-        - {x: 66, y: -17.5}
-        - {x: 66, y: 14.5}
-        - {x: 59, y: 33.5}
+      outline: []
     - name: K-9-Mapaperfumeria_p7
       rect:
         serializedVersion: 2
@@ -1051,15 +664,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.52671754, y: 0.54518074}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -58, y: 71.5}
-        - {x: -63, y: 68.5}
-        - {x: -63, y: -9.5}
-        - {x: -40, y: -88.5}
-        - {x: 40, y: -88.5}
-        - {x: 62, y: -61.5}
-        - {x: 62, y: 69.5}
-        - {x: 57, y: 71.5}
+      outline: []
     - name: K-9-Mapaperfumeria_p8
       rect:
         serializedVersion: 2
@@ -1070,18 +675,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.46875, y: 0.5116279}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 22.5, y: 64}
-        - {x: -4.5, y: 78}
-        - {x: -52.5, y: 78}
-        - {x: -67.5, y: 67}
-        - {x: -67.5, y: -17}
-        - {x: -9.5, y: -80}
-        - {x: -3.5, y: -82}
-        - {x: 11.5, y: -82}
-        - {x: 69.5, y: -40}
-        - {x: 70.5, y: -36}
-        - {x: 70.5, y: -26}
+      outline: []
     - name: K-9-Mapaperfumeria_pseis
       rect:
         serializedVersion: 2
@@ -1092,17 +686,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5244755, y: 0.5460993}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -7, y: 61}
-        - {x: -57, y: 61}
-        - {x: -69, y: 53}
-        - {x: -69, y: 19}
-        - {x: -63, y: -43}
-        - {x: -33, y: -70}
-        - {x: 24, y: -70}
-        - {x: 59, y: -28}
-        - {x: 59, y: 20}
-        - {x: 50, y: 35}
+      outline: []
     - name: K-9-Mapaperfumeria_techo
       rect:
         serializedVersion: 2
@@ -1124,13 +708,7 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.50625, y: 0.51583713}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -40.5, y: 107}
-        - {x: -40.5, y: -65}
-        - {x: -37.5, y: -114}
-        - {x: 26.5, y: -114}
-        - {x: 39.5, y: 55}
-        - {x: 39.5, y: 107}
+      outline: []
     outline: []
   spritePackingTag: 
   userData: 
