@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -32,6 +33,7 @@ namespace LevelBuilder
 		public InputField inputStar3;
 		public InputField inputMovements;
 		public InputField tutorialInput;
+		public InputField quickLvlAccessInput;
 		public Text lblScore;
 		public Text lblTitle;
 		public Text lblName;
@@ -239,7 +241,8 @@ namespace LevelBuilder
 
 			//Default data
 			abcSelector.sincronizeDataWithCSV (defaultLetters);
-			abcObstacleSelector.sincronizeDataWithCSV(defaultObstacles);
+			//abcObstacleSelector.sincronizeDataWithCSV(defaultObstacles);
+
 			//levelGoalSelector.sincronizeDataWithString(level.winCondition);
 		}
 
@@ -435,11 +438,36 @@ namespace LevelBuilder
 			Invoke("hideLoadingIndicator",0.5f);
 		}
 
-		public void OnLeveleSelectedToLoad()
+		public void OnLevelSelectedToLoad()
 		{
 			if(lvlSelector.value != 0)
 			{
 				configureHUDFromLevel(lvlSelector.options[lvlSelector.value].text);
+				showLoadingIndicator();
+				Invoke("hideLoadingIndicator",0.5f);
+			}
+		}
+
+		public void OnLevelSelectedToLoadFromQuickAcces()
+		{
+			if(quickLvlAccessInput.text != "" && int.Parse(quickLvlAccessInput.text) != 0)
+			{
+
+				//Que el lvl selector tenga el valor adecuado
+				string value = int.Parse(quickLvlAccessInput.text).ToString("0000");
+
+				for(int i = 0; i < lvlSelector.options.Count; i++)
+				{
+					if(lvlSelector.options[i].text == value)
+					{
+						lvlSelector.value = i;
+						break;
+					}
+				}
+
+
+				//cargamos el nivel
+				configureHUDFromLevel(int.Parse(quickLvlAccessInput.text).ToString("0000"));
 				showLoadingIndicator();
 				Invoke("hideLoadingIndicator",0.5f);
 			}
