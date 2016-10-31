@@ -142,7 +142,6 @@ public class ScreenManager : Manager<ScreenManager> {
 	{
 		if(blocked || waitingScreen != null || (!sameScreen && newScene == SceneManager.GetActiveScene().name))
 		{
-			print ("s");
 			return;
 		}
 
