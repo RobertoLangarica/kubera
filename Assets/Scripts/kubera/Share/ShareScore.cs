@@ -10,12 +10,15 @@ public class ShareScore : MonoBehaviour
 	public Action OnFinishedSharing;
 
 
-	public void sharePassedLevel(String level)
+	public void sharePassedLevel(string points, int stars, String level)
 	{
 		// Create share sheet
 		ShareSheet _shareSheet 	= new ShareSheet();	
-		_shareSheet.Text 		= MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SHARE_DEFAULT_TEXT);
-		_shareSheet.URL			= "";
+	
+		_shareSheet.Text 		= MultiLanguageTextManager.instance.multipleReplace(MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SHARE_LEVEL_PASSED_TEXT),
+			new string[4]{ "{{pointsObtained}}" ,"{{starsObtained}}", "{{levelNumber}}" ,"/n" }, new string[4]{points, stars.ToString(), level,  Environment.NewLine });
+		_shareSheet.URL			= "https://www.villavanilla.com/juegos/kubera";
+		_shareSheet.AttachScreenShot();
 		_shareSheet.ExcludedShareOptions	= m_excludedOptions;
 
 		// Show composer

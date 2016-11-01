@@ -14,9 +14,12 @@
 
 		<text id="shareLevelPassedText">
 			<languages>
-				<language id="english" text="Pase Un nivel."/>
-				<language id="spanish" text="Pase Un nivel."/>
-				<language id="default" text="Pase Un nivel."/>
+				<language id="english" text="Acabo de obtener {{pointsObtained}} puntos y {{starsObtained}} estrellas en el nivel {{levelNumber}} de Kubera.
+											/n¿Puedes superarme?/n/nDescarga Kubera e intenta superar mi récord hoy."/>
+				<language id="spanish" text="Acabo de obtener {{pointsObtained}} puntos y {{starsObtained}} estrellas en el nivel {{levelNumber}} de Kubera.
+											/n¿Puedes superarme?/n/nDescarga Kubera e intenta superar mi récord hoy."/>
+				<language id="default" text="Acabo de obtener {{pointsObtained}} puntos y {{starsObtained}} estrellas en el nivel {{levelNumber}} de Kubera.
+											/n¿Puedes superarme?/n/nDescarga Kubera e intenta superar mi récord hoy."/>
 			</languages>
 		</text>
 
