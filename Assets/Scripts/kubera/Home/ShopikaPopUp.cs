@@ -20,7 +20,6 @@ public class ShopikaPopUp : PopUpBase {
 
 	public void exit()
 	{
-		share.OnFinishedSharing -= exit;
 		popUp.SetActive (false);
 	}
 
@@ -33,5 +32,10 @@ public class ShopikaPopUp : PopUpBase {
 	public void inviteFriends()
 	{
 		share.shareShopikaURL ();
+	}
+
+	void OnDestroy()
+	{
+		share.OnFinishedSharing -= exit;
 	}
 }

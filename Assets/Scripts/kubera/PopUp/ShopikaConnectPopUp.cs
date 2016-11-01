@@ -19,6 +19,9 @@ public class ShopikaConnectPopUp : PopUpBase {
 		title.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_SHOPIKA_TITLE);
 		Info.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_SHOPIKA_INFO);
 
+		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnDataRetrieved  += popUpCompleted;
+		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnDataRetrievedFailure += failure;
+		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnLoginFailure += failure;
 
 		WebViewManager.GetInstance ().OnFinishLoading += webClosed;
 	}
@@ -28,21 +31,12 @@ public class ShopikaConnectPopUp : PopUpBase {
 		popUp.SetActive (true);
 		exitBTN.gameObject.SetActive (false);
 
-		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnDataRetrieved  += popUpCompleted;
-		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnDataRetrievedFailure += failure;
-		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnLoginFailure += failure;
-
-
 		title.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_SHOPIKA_TITLE);
 		Info.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_SHOPIKA_INFO);
 	}
 
 	protected void failure()
 	{
-		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnDataRetrieved  -= popUpCompleted;
-		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnDataRetrievedFailure -= failure;
-		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnLoginFailure -= failure;
-		
 		title.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_FAILURE_SHOPIKA_TITLE);
 		Info.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_FAILURE_SHOPIKA_INFO);
 		exitBTN.gameObject.SetActive (true);
@@ -55,10 +49,6 @@ public class ShopikaConnectPopUp : PopUpBase {
 
 	protected void popUpCompleted()
 	{
-		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnDataRetrieved  -= popUpCompleted;
-		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnDataRetrievedFailure -= failure;
-		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnLoginFailure -= failure;
-
 		popUp.SetActive (false);
 		OnComplete ("");
 	}
@@ -69,5 +59,12 @@ public class ShopikaConnectPopUp : PopUpBase {
 		{
 			failure ();
 		}
+	}
+
+	void OnDestroy()
+	{
+		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnDataRetrieved  -= popUpCompleted;
+		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnDataRetrievedFailure -= failure;
+		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnLoginFailure -= failure;
 	}
 }
