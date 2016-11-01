@@ -22,7 +22,8 @@ public class MapManager : MonoBehaviour
 
 	[HideInInspector]public int currentWorld =-1;
 	public Transform worldParent;
-	public List<GameObject> worlds;
+	public int worldsCount = 9;
+
 	protected GameObject WorldPrefab;
 
 	protected List<MapLevel> mapLevels;
@@ -228,8 +229,16 @@ public class MapManager : MonoBehaviour
 
 	protected void InstantitateWorldByIndex(int worldIndex)
 	{
-		worlds [worldIndex].SetActive (false);
-		WorldPrefab = (GameObject)Instantiate (worlds [worldIndex]);
+		//worlds [worldIndex].SetActive (false);
+		GameObject world = Resources.Load("Worlds/World "+(worldIndex+1).ToString()) as GameObject;
+
+
+		if(WorldPrefab != null)
+		{
+			GameObject.DestroyImmediate(WorldPrefab);
+		}
+
+		WorldPrefab = (GameObject)Instantiate (world);
 		WorldPrefab.transform.SetParent (worldParent,false);
 	}
 
@@ -345,7 +354,7 @@ public class MapManager : MonoBehaviour
 
 				if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
 				{
-					if(currentWorld +1 <= worlds.Count)
+					if(currentWorld +1 <= worldsCount)
 					{
 						toStairs = true;
 					}
@@ -934,7 +943,7 @@ public class MapManager : MonoBehaviour
 
 	protected void showWorld ()
 	{
-		worlds [currentWorld-1].SetActive (true);
+		//worlds [currentWorld-1].SetActive (true);
 		WorldPrefab.SetActive (true);
 
 		if(toStairs)
@@ -945,7 +954,7 @@ public class MapManager : MonoBehaviour
 
 	protected void deActivateWorld ()
 	{
-		worlds [currentWorld-1].SetActive (false);
+		//worlds [currentWorld-1].SetActive (false);
 		WorldPrefab.SetActive (false);
 	}
 
