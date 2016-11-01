@@ -134,7 +134,7 @@ public class HomeManager : MonoBehaviour
 
 	public void activateShopikaPopUp()
 	{
-		shopikaPopUp.SetActive (true);
+		activatePopUp ("shopikaPopUp");
 	}
 		
 	protected void activatePopUp(string name)
