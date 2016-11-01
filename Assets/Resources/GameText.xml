@@ -1035,6 +1035,34 @@
 			</languages>                    
 		</text>
 
+		<text id="feedbackText">
+			<languages>
+				<language id="english" text="Envianos tus comentarios"/>
+				<language id="spanish" text="Envianos tus comentarios"/>
+				<language id="default" text="Envianos tus comentarios"/>
+			</languages>                    
+		</text>
+		<text id="feedbackContent">
+			<languages>
+				<language id="english" text="Muchas gracias por tomarte el tiempo de escribirnos. Tú opinión nos ayudará hacer Kubera aun más divertido.
+											/n/nSi le falta alguna palabra al diccionario escribela en este correo.
+											/n/nDe igual forma crees que el juego debería dar puntos por algo o podría mejorar con alguna mécanica de juego, somos todo oidos."/>
+				<language id="spanish" text="Muchas gracias por tomarte el tiempo de escribirnos. Tú opinión nos ayudará hacer Kubera aun más divertido.
+											/n/nSi le falta alguna palabra al diccionario escribela en este correo.
+											/n/nDe igual forma crees que el juego debería dar puntos por algo o podría mejorar con alguna mécanica de juego, somos todo oidos."/>
+				<language id="default" text="Muchas gracias por tomarte el tiempo de escribirnos. Tú opinión nos ayudará hacer Kubera aun más divertido.
+											/n/nSi le falta alguna palabra al diccionario escribela en este correo.
+											/n/nDe igual forma crees que el juego debería dar puntos por algo o podría mejorar con alguna mécanica de juego, somos todo oidos."/>
+			</languages>                    
+		</text>
+		<text id="feedbackSubject">
+			<languages>
+				<language id="english" text="Mis comentarios sobre Kubera"/>
+				<language id="spanish" text="Mis comentarios sobre Kubera"/>
+				<language id="default" text="Mis comentarios sobre Kubera"/>
+			</languages>                    
+		</text>
+
 		<!--
 		Invitation
 		-->

@@ -21,6 +21,8 @@ public class GoalPopUp : PopUpBase {
 	public Text inviteFriendsText;
 	public Text playText;
 
+	public Text feedback;
+
 	public Transform goalLettersContainer;
 
 	public GameObject lettersObjective;
@@ -83,6 +85,8 @@ public class GoalPopUp : PopUpBase {
 		inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVE_POPUP_FACEBOOK);
 		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVE_POPUP_PLAY);
 		LevelText.text = LevelTextShadow.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVES_NAME_TEXT_ID);
+
+		feedback.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.FEEDBACK_TEXT);
 	}
 
 	void Update()

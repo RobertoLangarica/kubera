@@ -18,6 +18,8 @@ public class GoalAfterGame : PopUpBase {
 	public Text playText;
 	public Text retryText;
 
+	public Text feedback;
+
 	public GameObject[] stars;
 	public GameObject[] starsGray;
 
@@ -47,11 +49,15 @@ public class GoalAfterGame : PopUpBase {
 	public Image topLevelImage;
 	public Image topIcon;
 	public Image topIconShadow;
+	public Image shareImage;
+
 	protected bool pressed;
 
 	public ShareScore shareScore;
-
 	protected int starsObtained;
+
+	public Sprite iosShare;
+	public Sprite androidShare;
 
 	void Start()
 	{
@@ -68,6 +74,14 @@ public class GoalAfterGame : PopUpBase {
 		PointsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_POINTS);
 
 		LevelText.text = LevelTextShadow.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVES_NAME_TEXT_ID);
+
+		feedback.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.FEEDBACK_TEXT);
+
+		#if UNITY_ANDROID
+		shareImage.sprite = androidShare;
+		#elif UNITY_IOS
+		shareImage.sprite = iosShare;
+		#endif
 	}
 
 	protected void fbLogin()

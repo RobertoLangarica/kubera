@@ -119,6 +119,10 @@ public class MultiLanguageTextManager
 	public const string FB_SUCCESS_LIFES_TEXT 				= "fbSuccessLifesText";
 	public const string FB_SUCCESS_KEYS_TEXT 				= "fbSuccessKeysText";
 
+	public const string FEEDBACK_TEXT 						= "feedbackText";
+	public const string FEEDBACK_SUBJECT					= "feedbackSubject";
+	public const string FEEDBACK_CONTENT					= "feedbackContent";
+
 	//GAME
 	public const string FLAVOR_TEXT							= "ticketFlavorText";
 	public const string EXIT_POPUP_ID 						= "exitText";
