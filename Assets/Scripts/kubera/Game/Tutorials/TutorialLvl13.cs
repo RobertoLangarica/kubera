@@ -84,6 +84,8 @@ public class TutorialLvl13 : TutorialBase
 			instructionsText.text = "";
 			instructionIndex = 0;
 
+			doAnimation = false;
+
 			shakeToErrase ();
 
 			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
@@ -137,14 +139,17 @@ public class TutorialLvl13 : TutorialBase
 
 	protected void powerUpAnim()
 	{
-		if (!doAnimation) 
+		if (!doAnimation || cellManager.getAllEmptyCells().Length < 3) 
 		{
 			DOTween.Kill ("Tutorial13");
 			return;
 		}
 
 		Vector3 posFrom = fromPosition.transform.position;
-		Vector3 posTo = cellManager.getAllEmptyCells()[1].transform.position;
+		Vector3 posTo = cellManager.getAllEmptyCells()[3].transform.position;
+
+		posTo.x += cellManager.cellSize;
+		posTo.y -= cellManager.cellSize;
 
 		powerUpDommy.transform.position = posFrom;
 		powerUpDommy.transform.localScale = Vector3.zero;

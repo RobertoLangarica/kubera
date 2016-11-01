@@ -51,6 +51,8 @@ public class GoalAfterGame : PopUpBase {
 
 	public ShareScore shareScore;
 
+	protected int starsObtained;
+
 	void Start()
 	{
 		//TODO checar login a facebook
@@ -94,6 +96,7 @@ public class GoalAfterGame : PopUpBase {
 
 		topLevelImage.sprite = worldTopBackground [currentWorld-1];
 		topIcon.sprite = topIconShadow.sprite = worldIcon [currentWorld-1];
+		starsObtained = starsReached;
 
 		showStars (starsReached);
 	}
@@ -171,7 +174,7 @@ public class GoalAfterGame : PopUpBase {
 
 	public void sharingScore()
 	{
-		shareScore.sharePassedLevel ("S");
+		shareScore.sharePassedLevel (Points.text,starsObtained,LevelNumber.text);
 	}
 
 	protected void setStartingPlaces()

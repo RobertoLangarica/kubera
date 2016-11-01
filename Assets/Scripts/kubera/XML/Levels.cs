@@ -176,4 +176,22 @@ public class Levels
 	{
 		return getLevelsByWorld(world).Length;
 	}
+
+	public void sortLevels()
+	{
+		string temp;
+		Level tempLevel;
+		for(int write=0; write<_levels.Count; write++)
+		{
+			for(int sort=0; sort<_levels.Count -1; sort++)
+			{
+				if(int.Parse(_levels[sort].name) > int.Parse(_levels[sort+1].name))
+				{
+					tempLevel = _levels[sort+1];
+					_levels[sort+1] = _levels[sort];
+					_levels[sort] = tempLevel;
+				}
+			}
+		}
+	}
 }

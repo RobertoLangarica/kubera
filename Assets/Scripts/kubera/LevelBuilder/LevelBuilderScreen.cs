@@ -299,7 +299,7 @@ namespace LevelBuilder
 			{
 				PersistentData.GetInstance().levelsData.addLevel(lvlToSave);
 			}
-
+				
 			saveLocalData();
 
 			#if UNITY_EDITOR
@@ -312,6 +312,8 @@ namespace LevelBuilder
 
 		protected void saveLocalData()
 		{
+			//Ordenamos de mayor a menor segun su nombre
+			PersistentData.GetInstance ().levelsData.sortLevels ();
 			//Guardamos el archivo
 			PersistentData.GetInstance().levelsData.Save(Application.dataPath+"/Resources/levels_"+languageSelector.options[languageSelector.value].text+".xml");	
 		}

@@ -116,37 +116,85 @@ public class TutorialLvl4 : TutorialBase
 		switch (phase) 
 		{
 		case(1):
-			if (fourPieceWasUsed ()) 
-			{
+			if (lineUsed ()) {
 				phase = 3;
+			}
+			if (littleLUsed ()) {
+				phase = 1;
+			}
+			if (bigLUsed ()) {
+				phase = 2;
 			}
 			return true;
 		case(2):
-			if (fourPieceWasUsed ()) 
-			{
+			if (lineUsed ()) {
 				phase = 3;
+			}
+			if (littleLUsed ()) {
+				phase = 1;
+			}
+			if (bigLUsed ()) {
+				phase = 2;
 			}
 			return true;
 		case(3):
+			if (lineUsed ()) {
+				phase = 3;
+			}
+			if (littleLUsed ()) {
+				phase = 1;
+			}
+			if (bigLUsed ()) {
+				phase = 2;
+			}
 			return true;
 		}
 
 		return base.phaseObjectiveAchived ();
 	}
 
-	protected bool fourPieceWasUsed()
+	protected bool lineUsed()
 	{
 		List<Piece> temp = pieceManager.getShowingPieces ();
 
-		if (temp [0].squares.Length == 2 && temp [1].squares.Length == 2) 
+		for (int i = 0; i < temp.Count; i++) 
 		{
-			return true;	
-		} 
-		else if (temp [0].squares.Length != 2 || temp [1].squares.Length != 2)
-		{
-			return false;
+			if (temp [i].name == "4A1") 
+			{
+				return false;
+			}
 		}
 
-		return false;
+		return true;
+	}
+
+	protected bool littleLUsed()
+	{
+		List<Piece> temp = pieceManager.getShowingPieces ();
+
+		for (int i = 0; i < temp.Count; i++) 
+		{
+			if (temp [i].name == "3B2") 
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	protected bool bigLUsed()
+	{
+		List<Piece> temp = pieceManager.getShowingPieces ();
+
+		for (int i = 0; i < temp.Count; i++) 
+		{
+			if (temp [i].name == "4D2") 
+			{
+				return false;
+			}
+		}
+
+		return true;
 	}
 }
