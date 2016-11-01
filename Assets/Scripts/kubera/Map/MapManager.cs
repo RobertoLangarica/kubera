@@ -1130,4 +1130,9 @@ public class MapManager : MonoBehaviour
 		//SceneManager.LoadScene ("Levels");
 		ScreenManager.GetInstance().GoToScene("Levels",true);
 	}
+
+	void OnDestroy()
+	{
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved -= restartScene;
+	}
 }
