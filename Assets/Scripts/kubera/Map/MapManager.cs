@@ -23,7 +23,7 @@ public class MapManager : MonoBehaviour
 	[HideInInspector]public int currentWorld =-1;
 	public Transform worldParent;
 	public int worldsCount = 9;
-
+	public List<GameObject> worlds;
 	protected GameObject WorldPrefab;
 
 	protected List<MapLevel> mapLevels;
@@ -156,7 +156,6 @@ public class MapManager : MonoBehaviour
 	protected void initializeWorldsQuickMenuInfo()
 	{
 		KuberaUser user = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser;
-		int worldCount = PersistentData.GetInstance().levelsData.getWorldCount();
 		int maxWorldReached = PersistentData.GetInstance ().maxWorldReached;
 		int starsObtained =0;
 		List<LevelData> worldLevels;
@@ -234,16 +233,18 @@ public class MapManager : MonoBehaviour
 
 	protected void InstantitateWorldByIndex(int worldIndex)
 	{
+		worlds [worldIndex].SetActive (false);
+		WorldPrefab = (GameObject)Instantiate (worlds [worldIndex]);
 		//worlds [worldIndex].SetActive (false);
-		GameObject world = Resources.Load("Worlds/World "+(worldIndex+1).ToString()) as GameObject;
+		//GameObject world = Resources.Load("Worlds/World "+(worldIndex+1).ToString()) as GameObject;
 
 
-		if(WorldPrefab != null)
+		/*if(WorldPrefab != null)
 		{
 			GameObject.DestroyImmediate(WorldPrefab);
-		}
+		}*/
 
-		WorldPrefab = (GameObject)Instantiate (world);
+		//WorldPrefab = (GameObject)Instantiate (world);
 		WorldPrefab.transform.SetParent (worldParent,false);
 	}
 
@@ -948,6 +949,7 @@ public class MapManager : MonoBehaviour
 
 	protected void showWorld ()
 	{
+		worlds [currentWorld-1].SetActive (true);
 		//worlds [currentWorld-1].SetActive (true);
 		WorldPrefab.SetActive (true);
 
@@ -959,6 +961,7 @@ public class MapManager : MonoBehaviour
 
 	protected void deActivateWorld ()
 	{
+		worlds [currentWorld-1].SetActive (false);
 		//worlds [currentWorld-1].SetActive (false);
 		WorldPrefab.SetActive (false);
 	}
