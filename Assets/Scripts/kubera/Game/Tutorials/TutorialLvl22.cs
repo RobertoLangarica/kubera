@@ -7,7 +7,7 @@ public class TutorialLvl22 : TutorialBase
 {
 	public Image powerUpDommy;
 	public GameObject fromPosition;
-	public InputBlockPowerUp inputBlock;
+	public InputBombAndDestroy inputBlock;
 
 	protected bool doAnimation;
 
@@ -35,18 +35,17 @@ public class TutorialLvl22 : TutorialBase
 			}
 		}
 	}
-
 	public override bool canMoveToNextPhase ()
 	{
 		phaseEvent.Clear ();
-		
+
 		switch (phase) 
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.BLOCK_USED);
+			phaseEvent.Add (ENextPhaseEvent.HINT_USED);
 
-			freeBlocks = true;
+			freeHint = true;
 
 			firstAnim ();
 
@@ -59,26 +58,24 @@ public class TutorialLvl22 : TutorialBase
 			instructionsText.text = "";
 
 			doAnimation = true;
-			Invoke ("powerUpAnim",1);
+			Invoke ("powerUpAnim", 1);
 
-			Invoke ("writeLetterByLetter",initialAnim*2);
+			Invoke ("writeLetterByLetter", initialAnim * 2);
 
 			phase = 1;
 			return true;
 		case(1):
-			inputBlock.OnPlayer -= animationController;
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.TAP);
+			phaseEvent.Add (ENextPhaseEvent.BLOCK_USED);
+			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
+
+			freeHint = true;
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
 				foundStringTag = false;
 			}
-
-			freeBlocks = true;
-
-			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.SQUARE_BUTTON);
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV22_PHASE2),
@@ -87,14 +84,14 @@ public class TutorialLvl22 : TutorialBase
 			instructionsText.text = "";
 			instructionIndex = 0;
 
-			shakeToErrase ();
-
 			doAnimation = false;
+
+			shakeToErrase ();
 
 			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
 
 			phase = 2;
-			return true;
+			return true;	
 		}
 
 		return base.canMoveToNextPhase ();
@@ -106,6 +103,8 @@ public class TutorialLvl22 : TutorialBase
 		{
 		case(1):
 			return true;
+		case(2):
+			return true;
 		}
 
 		return base.phaseObjectiveAchived ();
@@ -113,37 +112,30 @@ public class TutorialLvl22 : TutorialBase
 
 	protected void powerUpAnim()
 	{
-		if (!doAnimation) 
+		if (!doAnimation || cellManager.getAllEmptyCells().Length < 3) 
 		{
 			DOTween.Kill ("Tutorial22");
 			return;
 		}
 
 		Vector3 posFrom = fromPosition.transform.position;
-		Vector3 posTo = cellManager.getAllEmptyCells()[4].transform.position;
+		Vector3 posTo = cellManager.getAllEmptyCells()[3].transform.position;
+
+		posTo.x += cellManager.cellSize;
+		posTo.y -= cellManager.cellSize;
 
 		powerUpDommy.transform.position = posFrom;
+		powerUpDommy.transform.localScale = Vector3.zero;
 
 		//Los valores de las animaciones los paso Liloo
-		powerUpDommy.transform.DOScale (new Vector3 (1.4f, 1.4f, 1.4f), 0.5f).SetId("Tutorial22");
-		powerUpDommy.DOColor (new Color(1,1,1,0.5f),0.5f).OnComplete(
+		powerUpDommy.transform.DOScale (new Vector3 (1,1,1), 0.5f).SetId("Tutorial22");
+		powerUpDommy.DOColor (new Color(1,1,1,0.75f),0.5f).OnComplete(
 			()=>{
 
 				//TODO: intentar que sea linea curva
-				powerUpDommy.transform.DOMove (posTo,1).OnComplete(
-					()=>{
 
-						powerUpDommy.transform.DOScale (new Vector3 (1, 1, 1), 1f).OnComplete(
-							()=>{
-
-								powerUpDommy.DOColor (new Color(1,1,1,0),0.5f).SetId("Tutorial22");
-							}
-
-						).SetId("Tutorial22");
-
-					}
-
-				).SetId("Tutorial22");
+				powerUpDommy.DOColor (new Color(1,1,1,0),1).SetId("Tutorial22");
+				powerUpDommy.transform.DOMove (posTo,1).SetId("Tutorial22");
 
 			}
 		).SetId("Tutorial22");
