@@ -241,6 +241,8 @@ TextureImporter:
     21300468: popups vidas-K-popupsVidas_cajaPedirVidas
     21300470: popups vidas-K-popupsVidas_checkedBox
     21300472: popups vidas-K-popupsVidas_bannerUpPedirVidasSlice
+    21300474: share_ios
+    21300476: share_social
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -1252,6 +1254,28 @@ TextureImporter:
         height: 65
       alignment: 9
       pivot: {x: 0.4871795, y: 0.45384616}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: share_ios
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 569
+        width: 20
+        height: 26
+      alignment: 9
+      pivot: {x: 0.5, y: 0.46153846}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: share_social
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 316
+        width: 26
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     outline: []

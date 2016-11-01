@@ -2,11 +2,10 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class ShopikaPopUp : MonoBehaviour {
+public class ShopikaPopUp : PopUpBase {
 
 	public KuberaWebView kuberaWebView;
 
-	public GameObject popUp;
 	public Text conectButtonText;
 	public Text inviteFriendsButtonText;
 	public KuberaShare share;
@@ -21,6 +20,7 @@ public class ShopikaPopUp : MonoBehaviour {
 
 	public void exit()
 	{
+		share.OnFinishedSharing -= exit;
 		popUp.SetActive (false);
 	}
 

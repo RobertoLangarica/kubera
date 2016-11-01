@@ -16,9 +16,7 @@ public class FacebookLoadingConnectPopUp : PopUpBase {
 		title.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_FACEBOOK_TITLE);
 		Info.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_FACEBOOK_INFO);
 
-		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved  += popUpCompleted;
-		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrievedFailure += failure;
-		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnLoginFailure += failure;
+
 	}
 
 	public override void activate()
@@ -26,12 +24,20 @@ public class FacebookLoadingConnectPopUp : PopUpBase {
 		popUp.SetActive (true);
 		exitBTN.gameObject.SetActive (false);
 
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved  += popUpCompleted;
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrievedFailure += failure;
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnLoginFailure += failure;
+
 		title.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_FACEBOOK_TITLE);
 		Info.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_FACEBOOK_INFO);
 	}
 
 	protected void failure()
 	{
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved  -= popUpCompleted;
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrievedFailure -= failure;
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnLoginFailure -= failure;
+
 		title.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_FAILURE_FACEBOOK_TITLE);
 		Info.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.CONNECTING_FAILURE_FACEBOOK_INFO);
 		exitBTN.gameObject.SetActive (true);
@@ -44,6 +50,10 @@ public class FacebookLoadingConnectPopUp : PopUpBase {
 
 	protected void popUpCompleted()
 	{
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved  -= popUpCompleted;
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrievedFailure -= failure;
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnLoginFailure -= failure;
+
 		popUp.SetActive (false);
 		OnComplete ("");
 	}

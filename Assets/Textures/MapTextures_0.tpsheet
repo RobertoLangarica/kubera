@@ -4,7 +4,7 @@
 # To import these sprites into your Unity project, download "TexturePackerImporter":
 # http://www.codeandweb.com/texturepacker/unity
 #
-# $TexturePacker:SmartUpdate:c315b930144e9c0460a5656df4b88692:f83ed8d45dfa1586e0162d4fe4a68a53:53ac2d6033dc20f2edf3f43e6710edfd$
+# $TexturePacker:SmartUpdate:a59e4c03b3ff3f0e63875b4fd8a96fa0:74077cf09b6c799811607ca2490eac7c:53ac2d6033dc20f2edf3f43e6710edfd$
 #
 :format=40000
 :texture=MapTextures_0.png
@@ -98,3 +98,5 @@ popups vidas/K-popupsVidas_cajaPedirVidas;782;676;219;177;0.5;0.5
 popups vidas/K-popupsVidas_checkedBox;151;314;30;30;0.48333333333333334;0.5166666666666666
 popups vidas/K-popupsVidas_NOselectBTN;786;958;235;65;0.502127659574468;0.5
 popups vidas/K-popupsVidas_SelectBTN;785;856;234;65;0.48717948717948717;0.4538461538461539
+share_ios;688;569;20;26;0.5;0.46153846153846156
+share_social;184;316;26;28;0.5;0.5

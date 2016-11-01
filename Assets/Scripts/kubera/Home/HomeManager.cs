@@ -18,7 +18,6 @@ public class HomeManager : MonoBehaviour
 
 	public Text playText;
 	public GameObject block;
-	public GameObject shopikaPopUp;
 
 	public GameObject modal;
 
