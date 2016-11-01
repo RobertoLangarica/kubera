@@ -179,7 +179,6 @@ public class Levels
 
 	public void sortLevels()
 	{
-		string temp;
 		Level tempLevel;
 		for(int write=0; write<_levels.Count; write++)
 		{

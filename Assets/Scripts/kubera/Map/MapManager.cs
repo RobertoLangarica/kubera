@@ -22,6 +22,7 @@ public class MapManager : MonoBehaviour
 
 	[HideInInspector]public int currentWorld =-1;
 	public Transform worldParent;
+	public int worldsCount = 9;
 	public List<GameObject> worlds;
 	protected GameObject WorldPrefab;
 
@@ -155,7 +156,6 @@ public class MapManager : MonoBehaviour
 	protected void initializeWorldsQuickMenuInfo()
 	{
 		KuberaUser user = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser;
-		int worldCount = PersistentData.GetInstance().levelsData.getWorldCount();
 		int maxWorldReached = PersistentData.GetInstance ().maxWorldReached;
 		int starsObtained =0;
 		List<LevelData> worldLevels;
@@ -165,9 +165,14 @@ public class MapManager : MonoBehaviour
 			maxWorldReached++;
 		}
 
-		for(int i=0; i < worldCount; i++)
+		if(AllLevelsUnlocked)
 		{
-			if(maxWorldReached > i || AllLevelsUnlocked)
+			maxWorldReached = worldsCount;
+		}
+
+		for(int i=0; i < worldsCount; i++)
+		{
+			if(maxWorldReached > i )
 			{
 				worldLevels = user.getLevelsByWorld(i+1);
 
@@ -206,6 +211,8 @@ public class MapManager : MonoBehaviour
 		paralaxManager.enabled = true;
 		PersistentData.GetInstance ().currentWorld = currentWorld;
 
+		print ("worldname " + currentWorld);
+		worldsPopUp.scrollSnap.setToWorldPosition (currentWorld - 1);
 		if(fromGame)
 		{
 			Invoke ("onFinishLoad",0.1f);
@@ -230,6 +237,16 @@ public class MapManager : MonoBehaviour
 	{
 		worlds [worldIndex].SetActive (false);
 		WorldPrefab = (GameObject)Instantiate (worlds [worldIndex]);
+		//worlds [worldIndex].SetActive (false);
+		//GameObject world = Resources.Load("Worlds/World "+(worldIndex+1).ToString()) as GameObject;
+
+
+		/*if(WorldPrefab != null)
+		{
+			GameObject.DestroyImmediate(WorldPrefab);
+		}*/
+
+		//WorldPrefab = (GameObject)Instantiate (world);
 		WorldPrefab.transform.SetParent (worldParent,false);
 	}
 
@@ -345,7 +362,7 @@ public class MapManager : MonoBehaviour
 
 				if(mapLevels[i].status == MapLevel.EMapLevelsStatus.BOSS_PASSED && i+1 == mapLevels.Count)
 				{
-					if(currentWorld +1 <= worlds.Count)
+					if(currentWorld +1 <= worldsCount)
 					{
 						toStairs = true;
 					}
@@ -935,6 +952,7 @@ public class MapManager : MonoBehaviour
 	protected void showWorld ()
 	{
 		worlds [currentWorld-1].SetActive (true);
+		//worlds [currentWorld-1].SetActive (true);
 		WorldPrefab.SetActive (true);
 
 		if(toStairs)
@@ -946,6 +964,7 @@ public class MapManager : MonoBehaviour
 	protected void deActivateWorld ()
 	{
 		worlds [currentWorld-1].SetActive (false);
+		//worlds [currentWorld-1].SetActive (false);
 		WorldPrefab.SetActive (false);
 	}
 
@@ -1112,5 +1131,10 @@ public class MapManager : MonoBehaviour
 	{
 		//SceneManager.LoadScene ("Levels");
 		ScreenManager.GetInstance().GoToScene("Levels",true);
+	}
+
+	void OnDestroy()
+	{
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved -= restartScene;
 	}
 }

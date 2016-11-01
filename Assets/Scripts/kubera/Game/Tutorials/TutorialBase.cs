@@ -139,11 +139,13 @@ public class TutorialBase : MonoBehaviour
 	{
 		isWriting = true;
 
+		//Ignora escribir la siguiente letra cuando se cambia de instruccion
 		if (changeInstruction) 
 		{
 			changeInstruction = false;
 			return;
 		}
+
 
 		if (currentInstruction [instructionIndex].ToString () == "\\") 
 		{
@@ -177,7 +179,7 @@ public class TutorialBase : MonoBehaviour
 			instructionIndex++;
 		}
 
-		if (instructionIndex == currentInstruction.Length) 
+		if (instructionIndex >= currentInstruction.Length) 
 		{
 			isWriting = false;
 			OnWritingFinished ();

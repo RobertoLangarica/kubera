@@ -21,6 +21,7 @@ public class ShopikaConnectPopUp : PopUpBase {
 
 		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnDataRetrieved  += popUpCompleted;
 		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnDataRetrievedFailure += failure;
+		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnLoginFailure += failure;
 
 		WebViewManager.GetInstance ().OnFinishLoading += webClosed;
 	}
@@ -58,5 +59,12 @@ public class ShopikaConnectPopUp : PopUpBase {
 		{
 			failure ();
 		}
+	}
+
+	void OnDestroy()
+	{
+		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnDataRetrieved  -= popUpCompleted;
+		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnDataRetrievedFailure -= failure;
+		utils.gems.sync.ShopikaSyncManager.GetCastedInstance<utils.gems.sync.ShopikaSyncManager> ().OnLoginFailure -= failure;
 	}
 }

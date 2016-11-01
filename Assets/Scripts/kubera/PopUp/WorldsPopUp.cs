@@ -19,6 +19,8 @@ public class WorldsPopUp : PopUpBase {
 
 	public Transform previousParent;
 
+	public ScrollSnap scrollSnap;
+
 	void Start()
 	{
 		grid.cellSize = new Vector2 (Screen.width * 0.75f, Screen.height * 0.8f);

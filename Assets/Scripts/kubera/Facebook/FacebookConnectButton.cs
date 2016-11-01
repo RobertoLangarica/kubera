@@ -80,4 +80,10 @@ public class FacebookConnectButton : MonoBehaviour
 
 		syncManager.facebookLogout();
 	}
+
+	void OnDestroy()
+	{
+		syncManager.facebookProvider.OnLoginSuccessfull  -= OnLoginChange;
+		syncManager.facebookProvider.OnLogoutSuccessfull -= OnLoginChange;
+	}
 }

@@ -18,6 +18,9 @@ public class Feedback : MonoBehaviour {
 	void Start()
 	{
 		m_mailToRecipients [0] = CompanyEmail;
+		m_mailSubject = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.FEEDBACK_SUBJECT);
+		m_htmlMailBody =  MultiLanguageTextManager.instance.multipleReplace(MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FEEDBACK_CONTENT),
+			new string[1]{ "/n" }, new string[1]{Environment.NewLine });
 	}
 
 	public void SendHTMLTextMail () 

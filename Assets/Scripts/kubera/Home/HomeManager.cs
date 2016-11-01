@@ -18,7 +18,6 @@ public class HomeManager : MonoBehaviour
 
 	public Text playText;
 	public GameObject block;
-	public GameObject shopikaPopUp;
 
 	public GameObject modal;
 
@@ -134,7 +133,7 @@ public class HomeManager : MonoBehaviour
 
 	public void activateShopikaPopUp()
 	{
-		shopikaPopUp.SetActive (true);
+		activatePopUp ("shopikaPopUp");
 	}
 		
 	protected void activatePopUp(string name)
@@ -153,7 +152,7 @@ public class HomeManager : MonoBehaviour
 
 	public void activateFacebook()
 	{
-		print (KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().facebookProvider.isLoggedIn);
+		//print (KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().facebookProvider.isLoggedIn);
 		if(!KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 		{
 			activatePopUp ("facebookLoadingConnect");
