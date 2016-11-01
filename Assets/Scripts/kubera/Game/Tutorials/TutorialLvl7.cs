@@ -2,11 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/*
+ * Tiene un hardcoding en GameManager dónde su utiliza el nombre del nivel para hacerle modificaciones
+ * 
+*/
 public class TutorialLvl7 : TutorialBase 
 {
-	public string tutorialWord = "AZAFATA";
-
 	protected bool isWaitingForText;
+	protected string tutorialWord;
+
+	protected override void Start ()
+	{
+		base.Start ();
+
+		tutorialWord = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV7_WORD);
+	}
 
 	public override bool canMoveToNextPhase ()
 	{

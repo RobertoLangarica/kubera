@@ -153,7 +153,7 @@ public class HomeManager : MonoBehaviour
 
 	public void activateFacebook()
 	{
-		print (KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().facebookProvider.isLoggedIn);
+		//print (KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().facebookProvider.isLoggedIn);
 		if(!KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 		{
 			activatePopUp ("facebookLoadingConnect");
