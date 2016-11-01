@@ -25,6 +25,10 @@ public class TutorialLvl6 : TutorialBase
 			phase = 1;
 			return true;
 		case(1):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.HINT_USED);
