@@ -2,6 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/*
+ * Tiene un hardcoding en GameManager dónde su utiliza el nombre del nivel para hacerle modificaciones
+ * 
+*/
 public class TutorialLvl7 : TutorialBase 
 {
 	protected bool isWaitingForText;

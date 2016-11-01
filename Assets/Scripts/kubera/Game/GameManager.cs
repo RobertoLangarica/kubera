@@ -296,11 +296,6 @@ public class GameManager : MonoBehaviour
 	private void initPiecesFromLevel(Level level)
 	{
 		pieceManager.initializePiecesFromCSV(level.pieces);
-		if (level.name == "0004") 
-		{
-			pieceManager.initializePiecesToShow (false);	
-			return;
-		}
 		pieceManager.initializePiecesToShow ();	
 	}
 
@@ -470,14 +465,7 @@ public class GameManager : MonoBehaviour
 				else 
 				{
 					piecesWhereCreated = true;
-					if (currentLevel.name == "0004") 
-					{
-						pieceManager.initializePiecesToShow (false);
-					} 
-					else 
-					{
-						pieceManager.initializePiecesToShow ();
-					}
+					pieceManager.initializePiecesToShow ();
 					hudManager.showPieces (pieceManager.getShowingPieces ());
 
 					if (AudioManager.GetInstance ()) {
@@ -586,7 +574,7 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
-
+			
 		for (int i = 0; i < linesMultipliers [totalLines].Count; i++) 
 		{
 			tempIndex = Random.Range (0,temp.Count);
