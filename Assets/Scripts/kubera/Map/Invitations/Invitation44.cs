@@ -28,13 +28,24 @@ public class Invitation44 : MonoBehaviour {
 	{
 		switch (option) {
 		case 0:
-			invitationManager.finish ();
+			exit ();
 			break;
 		case 1:
 			//TODO mandarlo a la tienda para hacer la reseña
-			NPBinding.Utility.OpenStoreLink (NPBinding.Utility.GetBundleIdentifier());
+			NPBinding.Utility.OpenStoreLink (NPBinding.Utility.GetBundleIdentifier ());
+			Invoke ("activeExit", 0.15f);
 			break;
 		}
+	}
+
+	protected void activeExit()
+	{
+		exit ();
+	}
+
+	public void exit()
+	{
+		invitationManager.finish ();
 	}
 
 }
