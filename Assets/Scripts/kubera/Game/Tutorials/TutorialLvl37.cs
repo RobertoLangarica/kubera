@@ -66,6 +66,10 @@ public class TutorialLvl37 : TutorialBase
 			phase = 1;
 			return true;
 		case(1):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
 			inputBomb.OnPlayer -= animationController;
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);

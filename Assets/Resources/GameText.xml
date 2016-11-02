@@ -561,6 +561,13 @@
 				<language id="default" text="El poder {{b}}AYUDA{{/b}}, te sugiere formar {{b}}BEY{{/b}}."/>
 			</languages>
 		</text>
+		<text id="Tutorial_lvl22_phase3">
+			<languages>
+				<language id="english" text="Use {{b}}BLOCK{{/b}} as many times  as you need to pass the level."/>
+				<language id="spanish" text="Usa {{b}}AYUDA{{/b}} nuevamente."/>
+				<language id="default" text="Usa {{b}}AYUDA{{/b}} nuevamente."/>
+			</languages>
+		</text>
 		<text id="Tutorial_lvl37_phase1">
 			<languages>
 				<language id="english" text="Drag {{b}}ROTATE{{/b}} to a piece."/>

@@ -6,6 +6,10 @@ public class TutorialLvl4 : TutorialBase
 {
 	public PieceManager pieceManager;
 
+	protected bool bLineUsed;
+	protected bool bLUsed;
+	protected bool bLittleLUsed;
+
 	protected override void Start()
 	{
 		base.Start ();
@@ -37,7 +41,13 @@ public class TutorialLvl4 : TutorialBase
 			phase = 1;
 			return true;
 		case(1):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
 			phasesPanels [0].SetActive (false);
+			phasesPanels [1].SetActive (false);
+			phasesPanels [2].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.CREATE_A_LINE);
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
@@ -61,7 +71,13 @@ public class TutorialLvl4 : TutorialBase
 			phase = 2;
 			return true;
 		case(2):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
+			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (false);
+			phasesPanels [2].SetActive (false);
 			phasesPanels [2].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.CREATE_A_LINE);
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
@@ -83,6 +99,10 @@ public class TutorialLvl4 : TutorialBase
 			phase = 3;
 			return true;
 		case(3):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (false);
@@ -116,36 +136,25 @@ public class TutorialLvl4 : TutorialBase
 		switch (phase) 
 		{
 		case(1):
-			if (lineUsed ()) {
-				phase = 3;
-			}
-			if (littleLUsed ()) {
-				phase = 1;
-			}
-			if (bigLUsed ()) {
-				phase = 2;
-			}
-			return true;
 		case(2):
-			if (lineUsed ()) {
-				phase = 3;
-			}
-			if (littleLUsed ()) {
-				phase = 1;
-			}
-			if (bigLUsed ()) {
-				phase = 2;
-			}
-			return true;
 		case(3):
-			if (lineUsed ()) {
+			if (lineUsed () && !bLineUsed) 
+			{
+				bLineUsed = true;
 				phase = 3;
+				return true;
 			}
-			if (littleLUsed ()) {
+			if (littleLUsed () && !bLittleLUsed) 
+			{
+				bLittleLUsed = true;
 				phase = 1;
+				return true;
 			}
-			if (bigLUsed ()) {
+			if (bigLUsed () && !bLUsed) 
+			{
+				bLUsed = true;
 				phase = 2;
+				return true;
 			}
 			return true;
 		}
@@ -159,7 +168,7 @@ public class TutorialLvl4 : TutorialBase
 
 		for (int i = 0; i < temp.Count; i++) 
 		{
-			if (temp [i].name == "4A1") 
+			if (temp [i].name.Contains("4A1")) 
 			{
 				return false;
 			}
@@ -174,7 +183,7 @@ public class TutorialLvl4 : TutorialBase
 
 		for (int i = 0; i < temp.Count; i++) 
 		{
-			if (temp [i].name == "3B2") 
+			if (temp [i].name.Contains("3B2")) 
 			{
 				return false;
 			}
@@ -189,7 +198,7 @@ public class TutorialLvl4 : TutorialBase
 
 		for (int i = 0; i < temp.Count; i++) 
 		{
-			if (temp [i].name == "4D2") 
+			if (temp [i].name.Contains("4D2")) 
 			{
 				return false;
 			}

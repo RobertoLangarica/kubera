@@ -76,6 +76,10 @@ public class TutorialLvl3 : TutorialBase
 			phase = 1;
 			return true;
 		case(1):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.ALL_PIECES_USED);
@@ -101,6 +105,10 @@ public class TutorialLvl3 : TutorialBase
 			phase = 2;
 			return true;
 		case(2):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
@@ -128,6 +136,10 @@ public class TutorialLvl3 : TutorialBase
 			doAnimation = false;
 			return true;
 		case(3):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
 			phasesPanels [2].SetActive (false);
 			phasesPanels [3].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.EARNED_POINTS);

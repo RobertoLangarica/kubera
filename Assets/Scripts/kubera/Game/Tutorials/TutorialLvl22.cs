@@ -49,7 +49,7 @@ public class TutorialLvl22 : TutorialBase
 
 			firstAnim ();
 
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SQUARE_BUTTON);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WORD_HINT_BUTTON);
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV22_PHASE1),
@@ -65,10 +65,13 @@ public class TutorialLvl22 : TutorialBase
 			phase = 1;
 			return true;
 		case(1):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.BLOCK_USED);
-			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
+			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
 			freeHint = true;
 
@@ -91,6 +94,38 @@ public class TutorialLvl22 : TutorialBase
 			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
 
 			phase = 2;
+			return true;
+		case(2):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
+			phasesPanels [1].SetActive (false);
+			phasesPanels [2].SetActive (true);
+			phaseEvent.Add (ENextPhaseEvent.BLOCK_USED);
+			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
+
+			freeHint = true;
+
+			if (instructionIndex < currentInstruction.Length) {
+				changeInstruction = true;
+				foundStringTag = false;
+			}
+
+			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV22_PHASE3),
+				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+			instructionsText = instructions [2];
+			instructionsText.text = "";
+			instructionIndex = 0;
+
+			doAnimation = false;
+
+			shakeToErrase ();
+
+			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+
+			phase = 3;
 			return true;	
 		}
 
@@ -112,7 +147,7 @@ public class TutorialLvl22 : TutorialBase
 
 	protected void powerUpAnim()
 	{
-		if (!doAnimation || cellManager.getAllEmptyCells().Length < 3) 
+		if (!doAnimation || cellManager.getAllEmptyCells().Length < 9) 
 		{
 			DOTween.Kill ("Tutorial22");
 			return;
