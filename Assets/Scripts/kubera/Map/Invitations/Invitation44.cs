@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using VoxelBusters.NativePlugins;
 
 public class Invitation44 : MonoBehaviour {
 
@@ -31,7 +32,7 @@ public class Invitation44 : MonoBehaviour {
 			break;
 		case 1:
 			//TODO mandarlo a la tienda para hacer la reseña
-			NPBinding.Utility.OpenStoreLink ();
+			NPBinding.Utility.OpenStoreLink (NPBinding.Utility.GetBundleIdentifier());
 			break;
 		}
 	}

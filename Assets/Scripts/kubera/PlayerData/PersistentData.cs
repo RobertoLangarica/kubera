@@ -42,6 +42,8 @@ public class PersistentData : Manager<PersistentData>
 	public bool fromGameToEdit;
 	[HideInInspector]
 	public bool fromGameToLevels = false;
+	[HideInInspector]
+	public bool fromLevelsToHome = false;
 
 	[HideInInspector]
 	public bool fromLevelsToGame = false;

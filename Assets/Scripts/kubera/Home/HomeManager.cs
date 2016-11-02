@@ -23,6 +23,8 @@ public class HomeManager : MonoBehaviour
 
 	public PopUpManager popUpManager;
 
+	protected bool currentFacebookStatus;
+
 	void Start()
 	{
 		if(!DirectlyToPlayOnTheFirstTime)
@@ -55,6 +57,8 @@ public class HomeManager : MonoBehaviour
 		}
 
 		popUpManager.OnPopUpCompleted += closePopUp;
+
+		currentFacebookStatus = KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().facebookProvider.isLoggedIn;
 	}
 
 	void startScene()
@@ -81,6 +85,11 @@ public class HomeManager : MonoBehaviour
 
 		if(DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser.levels.Count != 0)
 		{
+			if(!PersistentData.GetInstance ().fromLevelsToHome && !KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().facebookProvider.isLoggedIn && KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().facebookProvider.isLoggedIn != currentFacebookStatus)
+			{
+				PersistentData.GetInstance ().fromLevelsToHome = false;
+			}
+
 			ScreenManager.GetInstance().GoToScene ("Levels");
 		}
 		else
