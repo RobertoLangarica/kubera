@@ -60,6 +60,8 @@ public class MapManager : MonoBehaviour
 	public GameObject hudWithOutShareButton;
 
 	protected bool cantPlay;
+	protected bool isLastLevel;
+	protected bool goToNextLevel;
 
 	void Start()
 	{
@@ -68,23 +70,24 @@ public class MapManager : MonoBehaviour
 			Debug.Log("<color=red>Modo test: NIVELES DESBLOQUEADOS</color>");
 		}
 
+
 		//determinamos el mundo a cargar
-		if(PersistentData.GetInstance().currentWorld == -1 || !PersistentData.GetInstance().fromGameToLevels)
+		if(PersistentData.GetInstance ().fromLevelsToHome)
+		{
+			currentWorld = PersistentData.GetInstance ().currentWorld;
+		}
+		else if(PersistentData.GetInstance ().currentWorld == -1 || !PersistentData.GetInstance().fromGameToLevels)
 		{
 			if(DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count != 0)
 			{
 				currentWorld = DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.maxWorldReached();
-
+				PersistentData.GetInstance().maxWorldReached = currentWorld;
 				int passedLevelsCount = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser.countPassedLevelsByWorld(currentWorld);
 				int levelsInWorld = PersistentData.GetInstance().levelsData.getLevelsByWorld(currentWorld).Length;
 
-				PersistentData.GetInstance().maxWorldReached = currentWorld;
-
 				if(passedLevelsCount == levelsInWorld)
 				{
-					int worldCount = PersistentData.GetInstance().levelsData.getWorldCount();
-
-					if(currentWorld+1 <= worldCount)
+					if(currentWorld+1 <= worldsCount)
 					{
 						currentWorld++;
 					}
@@ -95,8 +98,19 @@ public class MapManager : MonoBehaviour
 		else
 		{
 			currentWorld = PersistentData.GetInstance ().currentWorld;
+			int passedLevelsCount = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser.countPassedLevelsByWorld(currentWorld);
+			int levelsInWorld = PersistentData.GetInstance().levelsData.getLevelsByWorld(currentWorld).Length;
+
+			if(passedLevelsCount == levelsInWorld)
+			{
+				if(currentWorld+1 <= worldsCount)
+				{
+					isLastLevel = true;
+				}
+			}
 		}
 			
+
 		//Flujo entre game y levels
 		if(PersistentData.GetInstance ().fromGameToLevels)
 		{
@@ -115,7 +129,7 @@ public class MapManager : MonoBehaviour
 
 			}
 		}
-		PersistentData.GetInstance ().fromLevelsToGame = true;
+		PersistentData.GetInstance ().fromLevelsToHome = false;
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 		paralaxManager.OnFinish += showNextLevelGoalPopUp;
@@ -211,7 +225,6 @@ public class MapManager : MonoBehaviour
 		paralaxManager.enabled = true;
 		PersistentData.GetInstance ().currentWorld = currentWorld;
 
-		print ("worldname " + currentWorld);
 		worldsPopUp.scrollSnap.setToWorldPosition (currentWorld - 1);
 		if(fromGame)
 		{
@@ -220,6 +233,12 @@ public class MapManager : MonoBehaviour
 		else
 		{
 			Invoke ("onFinishLoad",0.7f);
+		}
+
+		if(goToNextLevel)
+		{
+			goToNextLevel = false;
+			OnLevelUnlockedPressed (mapLevels[0]);
 		}
 	}
 
@@ -697,6 +716,7 @@ public class MapManager : MonoBehaviour
 			return;
 		}
 		
+		PersistentData.GetInstance().fromLevelsToGame = true;
 		PersistentData.GetInstance ().setLevelNumber (int.Parse (pressed.lvlName));
 		PersistentData.GetInstance ().lastLevelPlayedName = pressed.lvlName;
 		PersistentData.GetInstance ().nextLevelIsReached = pressed.nextLevelIsReached;
@@ -765,6 +785,11 @@ public class MapManager : MonoBehaviour
 
 			changeWorld ();
 		}
+	}
+
+	public void fromLevelsToHome()
+	{
+		PersistentData.GetInstance ().fromLevelsToHome = true;
 	}
 
 	public void goToScene(string scene)
@@ -917,20 +942,30 @@ public class MapManager : MonoBehaviour
 		{
 			if(!invitationToReview.isHappeningAReview (level))
 			{
-				if(nextLevel.isBoss)
+				if(nextLevel == null)
 				{
-					OnBossReachedPressed (nextLevel);
+					if(isLastLevel)
+					{
+						goToNextLevel = true;
+						changeCurrentWorld (currentWorld+1, true, false);
+					}
 				}
 				else
 				{
-					OnLevelUnlockedPressed (nextLevel);
+					if(nextLevel.isBoss)
+					{
+						OnBossReachedPressed (nextLevel);
+					}
+					else
+					{
+						OnLevelUnlockedPressed (nextLevel);
+					}
 				}
 			}
 			else
 			{
 				invitationToReview.showInvitationProcessByLevelNumber(level);
 			}
-
 		}
 		else
 		{
@@ -990,9 +1025,21 @@ public class MapManager : MonoBehaviour
 				lastLevelPlayed.moveProgress (nextLevel);
 
 				toNextLevel = false;
+				int level = int.Parse (nameOfLastLevelPlayed);
+
+				if(invitationToReview.isHappeningAReview (level))
+				{
+					invitationToReview.showInvitationProcessByLevelNumber(level);
+				}
 			}
 			else
 			{
+				int level = int.Parse (nameOfLastLevelPlayed);
+				if(invitationToReview.isHappeningAReview (level))
+				{
+					invitationToReview.showInvitationProcessByLevelNumber(level);
+				}
+
 				stairsToWait ();
 			}
 			//showWorld();

@@ -112,15 +112,15 @@ public class PowerUpManager : MonoBehaviour
 		case PowerupBase.EType.HINT_WORD:
 			return 	5;
 			case PowerupBase.EType.BLOCK:
-			return 	30;
+			return 	5;
 			case PowerupBase.EType.BOMB: 
-			return 	15;
+			return 	10;
 			case PowerupBase.EType.DESTROY:
-			return 	70;
+			return 	25;
 			case PowerupBase.EType.ROTATE:
-			return 	50;
+			return 	15;
 			case PowerupBase.EType.WILDCARD:
-			return 	100;
+			return 	50;
 		}
 
 		return 0;

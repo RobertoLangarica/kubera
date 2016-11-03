@@ -35,6 +35,12 @@ public class CellsManager : MonoBehaviour
 	//TODO ver como referenciar mejor a CellsManager (que herede de Manager ser??
 	public static CellsManager instance;
 
+	/*Bug de calcular la posicion de una pieza si esta escalada o no*/
+	protected float betweenSquaresDist = 0;
+	protected float percent = 0;
+	protected float scaledBetweenSquaresDist = 0;
+	protected float scaledpercent = 0;
+
 	void Awake()
 	{
 		instance = this;
@@ -696,11 +702,8 @@ public class CellsManager : MonoBehaviour
 	{
 		Vector3 offset = Vector3.zero;
 		float extentsX = cellSize * 0.5f;
-		float betweenSquaresDist = (piecesList [0].squares [0].transform.position - piecesList [0].squares [1].transform.position).magnitude;
 		Vector3 moveLittle = new Vector3(extentsX,-extentsX,0);
 		Vector3[] vecArr;
-
-		float percent = ((extentsX * 200) / betweenSquaresDist) * 0.01f;
 
 
 		foreach(Cell val in cells)
@@ -717,7 +720,7 @@ public class CellsManager : MonoBehaviour
 					for(int j = 1;j < piecesList[i].squares.Length;j++)
 					{
 						vecArr[j] = (((piecesList[i].squares[j].transform.position -
-							piecesList[i].squares[0].transform.position) * percent) +
+							piecesList[i].squares[0].transform.position) * getPercentAccordingScale(piecesList[i])) +
 							piecesList[i].squares[0].transform.position) + offset;
 					}
 
@@ -729,6 +732,29 @@ public class CellsManager : MonoBehaviour
 			}
 		}
 		return false;
+	}
+
+	protected float getPercentAccordingScale(Piece piece)
+	{
+		if (piece.transform.localScale == piece.initialPieceScale) 
+		{
+			if (betweenSquaresDist == 0) 
+			{
+				betweenSquaresDist = (piece.squares [0].transform.position - piece.squares [1].transform.position).magnitude;
+				percent = ((cellSize * 100) / betweenSquaresDist) * 0.01f;
+			}
+			return percent;
+		} else 
+		{
+			if (scaledBetweenSquaresDist == 0) 
+			{
+				scaledBetweenSquaresDist = (piece.squares [0].transform.position - piece.squares [1].transform.position).magnitude;
+				scaledpercent = ((cellSize * 100) / scaledBetweenSquaresDist) * 0.01f;
+			}
+			return scaledpercent;
+		}
+
+		return 0;
 	}
 
 	/*
