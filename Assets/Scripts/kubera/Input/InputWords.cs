@@ -374,6 +374,13 @@ public class InputWords : MonoBehaviour
 		}
 	}
 
+	public void reset()
+	{
+		OnLetterGridFingerUp (null);
+		OnLetterGridTap (null);
+		OnFingerUp (null);
+	}
+
 	void OnLetterWordTap(TapGesture gesture)
 	{
 		if (allowInput && canDeleteLetter && gesture.Raycast.Hit2D) 

@@ -207,7 +207,8 @@ public class GoalPopUp : PopUpBase {
 		else 
 		{
 			pressed = false;
-			OnComplete ("NoLifes",false);
+			OnPopUpCompleted (this,"NoLifes",false);
+			//OnComplete ("NoLifes",false);
 		}
 	}
 

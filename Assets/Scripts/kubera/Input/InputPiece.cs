@@ -221,6 +221,15 @@ public class InputPiece : MonoBehaviour
 		isOnPlayer (false);
 	}
 
+	public void resetAndReturn()
+	{
+		if (currentSelected != null)
+		{
+			returnSelectedToInitialState();
+		}
+		reset ();
+	}
+
 	public void moveTo(GameObject target, Vector3 to, float delay = 0.1f)
 	{
 		DOTween.Kill("Input_Dragging",false);

@@ -6,7 +6,7 @@ public class PopUpBase : MonoBehaviour {
 	new public string name;
 	public GameObject popUp;
 
-	public delegate void DPopUpNotification(PopUpBase thisPopUp, string action ="");
+	public delegate void DPopUpNotification(PopUpBase thisPopUp, string action ="",bool deActivate = true);
 	public DPopUpNotification OnPopUpCompleted;
 
 	public virtual void activate()
@@ -27,7 +27,7 @@ public class PopUpBase : MonoBehaviour {
 		}
 		if(OnPopUpCompleted != null)
 		{
-			OnPopUpCompleted(this,action);
+			OnPopUpCompleted(this,action,deActivate);
 		}	
 	}
 }

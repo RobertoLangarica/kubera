@@ -59,15 +59,16 @@ public class PopUpManager : MonoBehaviour {
 		return null;
 	}
 
-	private void completePopUp(PopUpBase popup = null, string action ="")
+	private void completePopUp(PopUpBase popup = null, string action ="", bool deActivate = true)
 	{
-		if(popup != null)
+		if(popup != null && deActivate)
 		{
 			openPopUps.Remove (popup);
 		}
 
 		if(OnPopUpCompleted != null)
 		{
+			print ("S");
 			OnPopUpCompleted(action);
 		}
 	}
@@ -75,6 +76,7 @@ public class PopUpManager : MonoBehaviour {
 	public bool isPopUpOpen(string name)
 	{
 		PopUpBase popUp = getPopupByName (name);
+
 		if(popUp != null)
 		{
 			for(int i=0; i<openPopUps.Count; i++)
@@ -84,11 +86,7 @@ public class PopUpManager : MonoBehaviour {
 					return true;
 				}
 			}
-			return false;
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 }

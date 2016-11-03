@@ -698,11 +698,6 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
-	protected void stopInput(bool stopInput)
-	{
-		modal.SetActive (stopInput);
-	}
-
 	public void openPopUp(string popUpName)
 	{
 		popUpManager.activatePopUp (popUpName);
@@ -921,9 +916,10 @@ public class MapManager : MonoBehaviour
 		}
 			
 		goalPopUp.setGoalPopUpInfo (textA,textB,starsReached, letter, levelName,aABLetterObjectives,currentWorld);
-		popUpManager.activatePopUp ("goalPopUp");
+		openPopUp ("goalPopUp");
+		//popUpManager.activatePopUp ("goalPopUp");
 
-		stopInput (true);
+		//stopInput (true);
 
 		//goalText.text = MultiLanguageTextManager.instance.getTextByID(textId).Replace(textToReplace,replacement);
 		//activatePopUp("goalPopUp");
@@ -1015,7 +1011,11 @@ public class MapManager : MonoBehaviour
 
 	private void OnPopupCompleted(string action ="")
 	{
-		stopInput(false);
+		print (popUpManager.openPopUps.Count);
+		if(popUpManager.openPopUps.Count == 0)
+		{
+			stopInput(false);
+		}
 		switch (action) 
 		{
 		case "closeObjective":
@@ -1089,16 +1089,14 @@ public class MapManager : MonoBehaviour
 			openPopUp ("facebookNews");
 		break;
 		case "NoLifes":
-			stopInput(true);
 			openPopUp ("NoLifes");
 		break;
 		case "noLifesClose":
 			if (popUpManager.isPopUpOpen ("goalPopUp") || popUpManager.isPopUpOpen ("retryPopUp")) {
-				stopInput (false);
-			} else {
 				stopInput (true);
+			} else {
+				stopInput (false);
 			}
-			modal.SetActive (false);
 		break;
 		case "askKeys":
 			stopInput(true);
@@ -1120,6 +1118,7 @@ public class MapManager : MonoBehaviour
 					val.deactivate ();
 				}
 			}
+			popUpManager.openPopUps.Clear();
 
 			stopInput(true);
 			if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
@@ -1138,6 +1137,11 @@ public class MapManager : MonoBehaviour
 		default:
 		break;
 		}
+	}
+
+	protected void stopInput(bool stopInput)
+	{
+		modal.SetActive (stopInput);
 	}
 
 	protected void activateMusic(bool activate)
