@@ -70,8 +70,6 @@ public class MapManager : MonoBehaviour
 			Debug.Log("<color=red>Modo test: NIVELES DESBLOQUEADOS</color>");
 		}
 
-		int passedLevelsCount = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser.countPassedLevelsByWorld(currentWorld);
-		int levelsInWorld = PersistentData.GetInstance().levelsData.getLevelsByWorld(currentWorld).Length;
 
 		//determinamos el mundo a cargar
 		if(PersistentData.GetInstance ().fromLevelsToHome)
@@ -83,8 +81,9 @@ public class MapManager : MonoBehaviour
 			if(DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count != 0)
 			{
 				currentWorld = DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.maxWorldReached();
-
 				PersistentData.GetInstance().maxWorldReached = currentWorld;
+				int passedLevelsCount = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser.countPassedLevelsByWorld(currentWorld);
+				int levelsInWorld = PersistentData.GetInstance().levelsData.getLevelsByWorld(currentWorld).Length;
 
 				if(passedLevelsCount == levelsInWorld)
 				{
@@ -99,6 +98,8 @@ public class MapManager : MonoBehaviour
 		else
 		{
 			currentWorld = PersistentData.GetInstance ().currentWorld;
+			int passedLevelsCount = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser.countPassedLevelsByWorld(currentWorld);
+			int levelsInWorld = PersistentData.GetInstance().levelsData.getLevelsByWorld(currentWorld).Length;
 
 			if(passedLevelsCount == levelsInWorld)
 			{
