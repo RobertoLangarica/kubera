@@ -10,6 +10,7 @@ public class TutorialLvl22 : TutorialBase
 	public InputBombAndDestroy inputBlock;
 
 	protected bool doAnimation;
+	protected Vector3 posTo;
 
 	protected override void Start()
 	{
@@ -154,10 +155,12 @@ public class TutorialLvl22 : TutorialBase
 		}
 
 		Vector3 posFrom = fromPosition.transform.position;
-		Vector3 posTo = cellManager.getAllEmptyCells()[3].transform.position;
-
-		posTo.x += cellManager.cellSize;
-		posTo.y -= cellManager.cellSize;
+		if (posTo == Vector3.zero) 
+		{
+			posTo = cellManager.getAllEmptyCells () [3].transform.position;
+			posTo.x += cellManager.cellSize;
+			posTo.y -= cellManager.cellSize;
+		}
 
 		powerUpDommy.transform.position = posFrom;
 		powerUpDommy.transform.localScale = Vector3.zero;

@@ -9,6 +9,7 @@ public class TutorialLvl37 : TutorialBase
 	public GameObject fromPosition;
 
 	protected bool doAnimation;
+	protected Vector3 posTo;
 	public InputBombAndDestroy inputBomb;
 
 	protected override void Start()
@@ -124,31 +125,24 @@ public class TutorialLvl37 : TutorialBase
 		}
 
 		Vector3 posFrom = fromPosition.transform.position;
-		Vector3 posTo = hudManager.rotationImagePositions[1].transform.position;
+
+		if (posTo == Vector3.zero) 
+		{
+			posTo = hudManager.rotationImagePositions [1].transform.position;
+		}
 
 		print (hudManager.rotationImagePositions [1].transform.position);
 		powerUpDommy.transform.position = posFrom;
 
 		//Los valores de las animaciones los paso Liloo
-		powerUpDommy.transform.DOScale (new Vector3 (1.4f, 1.4f, 1.4f), 0.5f).SetId("Tutorial37");
+		powerUpDommy.transform.DOScale (new Vector3 (1f, 1f, 1f), 0.5f).SetId("Tutorial37");
 		powerUpDommy.DOColor (new Color(1,1,1,0.5f),0.5f).OnComplete(
 			()=>{
 
 				//TODO: intentar que sea linea curva
-				powerUpDommy.transform.DOMove (posTo,1).OnComplete(
-					()=>{
 
-						powerUpDommy.transform.DOScale (new Vector3 (1, 1, 1), 1f).OnComplete(
-							()=>{
-
-								powerUpDommy.DOColor (new Color(1,1,1,0),0.5f).SetId("Tutorial37");
-							}
-
-						).SetId("Tutorial37");
-
-					}
-
-				).SetId("Tutorial37");
+				powerUpDommy.DOColor (new Color(1,1,1,0),1).SetId("Tutorial37");
+				powerUpDommy.transform.DOMove (posTo,1).SetId("Tutorial37");
 
 			}
 		).SetId("Tutorial37");

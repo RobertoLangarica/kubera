@@ -205,8 +205,11 @@ public class TutorialLvl2 : TutorialBase
 
 
 		posFrom = pieceManager.getShowingPieces () [0].transform.position;
-		posTo = cellManager.getAllEmptyCells()[2].transform.position;
-		posTo.x += cellManager.cellSize;
+		if (posTo == Vector3.zero) 
+		{
+			posTo = cellManager.getAllEmptyCells () [2].transform.position;
+			posTo.x += cellManager.cellSize;
+		}
 
 		changeDommy ();
 
