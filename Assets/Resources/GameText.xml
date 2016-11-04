@@ -571,11 +571,18 @@
 		<text id="Tutorial_lvl37_phase1">
 			<languages>
 				<language id="english" text="Drag {{b}}ROTATE{{/b}} to a piece."/>
-				<language id="spanish" text="Arrastra {{b}}ROTAR{{/b}} a una pieza."/>
-				<language id="default" text="Arrastra {{b}}ROTAR{{/b}} a una pieza."/>
+				<language id="spanish" text="Arrastra {{b}}GIRAR{{/b}} a una pieza."/>
+				<language id="default" text="Arrastra {{b}}GIRAR{{/b}} a una pieza."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl37_phase2">
+			<languages>
+				<language id="english" text="Use {{b}}ROTATE{{/b}} as many times  as you need to pass the level."/>
+				<language id="spanish" text="Presiona una pieza para girarla."/>
+				<language id="default" text="Presiona una pieza para girarla."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl37_phase3">
 			<languages>
 				<language id="english" text="Use {{b}}ROTATE{{/b}} as many times  as you need to pass the level."/>
 				<language id="spanish" text="Usa {{b}}ROTAR{{/b}} las veces que necesites para pasar el nivel."/>

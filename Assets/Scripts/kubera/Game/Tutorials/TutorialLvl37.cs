@@ -44,7 +44,7 @@ public class TutorialLvl37 : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.POSITIONATE_PIECE);
+			phaseEvent.Add(ENextPhaseEvent.ROTATE_USED);
 
 			freeRotates = true;
 
