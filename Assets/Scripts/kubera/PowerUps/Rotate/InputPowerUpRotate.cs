@@ -115,9 +115,9 @@ public class InputPowerUpRotate : MonoBehaviour
 		case (ContinuousGesturePhase.Ended):
 			{	
 				
+				activateRayCasters(true);
 				if(currentSelected)
 				{
-					activateRayCasters(true);
 					if(!gameManager.canDropOnGrid(currentSelected.GetComponent<Piece>()))
 					{
 						returnSelectedToInitialState();
@@ -205,6 +205,7 @@ public class InputPowerUpRotate : MonoBehaviour
 			reset();
 		}
 
+		activateRayCasters(true);
 		isLongPressed = false;
 		allowInputDuringRotate = true;
 		somethingDragged = false;

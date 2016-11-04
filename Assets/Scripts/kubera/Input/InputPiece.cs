@@ -93,9 +93,9 @@ public class InputPiece : MonoBehaviour
 
 		case (ContinuousGesturePhase.Ended):
 			{	
+				activateRayCasters(true);
 				if(currentSelected)
 				{
-					activateRayCasters(true);
 
 					changePositionZ (currentSelected,selectedInitialPosition.z);
 
@@ -181,12 +181,12 @@ public class InputPiece : MonoBehaviour
 	{
 		if(!somethingDragged && currentSelected != null && isLongPressed)
 		{		
-			activateRayCasters(true);
 			DOTween.Kill (currentSelected);
 			returnSelectedToInitialState(0.1f);
 			reset();
 		}
 
+		activateRayCasters(true);
 		isLongPressed = false;
 
 		somethingDragged = false;
