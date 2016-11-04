@@ -33,6 +33,8 @@ public class FacebookNews : PopUpBase {
 		title.text = "MENSAJES";
 	}
 
+
+
 	public void actualizeMessageNumber(int messageCount = 0)
 	{
 		if(messageCount == 0)
@@ -73,10 +75,12 @@ public class FacebookNews : PopUpBase {
 		{
 			if (mapManager.worldsPopUp.gameObject.activeSelf) 
 			{
+				print (11);
 				mapManager.worldsPopUp.toMessages ();
 			} 
 			else 
 			{
+				print (22);
 				mapManager.openPopUp ("facebookNews");
 				messageCountImage.gameObject.SetActive (false);
 			}
@@ -85,16 +89,19 @@ public class FacebookNews : PopUpBase {
 
 	public void exit()
 	{
+		mapManager.OnClosePopUp -= exit;
 		CompletePopUp ();
 	}
 
 	public void toWorlds()
 	{
+		mapManager.OnClosePopUp -= exit;
 		CompletePopUp ("toWorldTraveler",false);
 	}
 
 	public override void activate()
 	{
+		mapManager.OnClosePopUp += exit;
 		if (mapButton.parent != popUpRect.parent) 
 		{
 			popUpRect.anchoredPosition = new Vector2 (-Screen.width * 0.85f, 0);

@@ -10,6 +10,9 @@ using utils.gems;
 
 public class MapManager : MonoBehaviour
 {
+	public delegate void DClosePopUp();
+	public DClosePopUp OnClosePopUp;
+
 	public const string fullLifes_PopUp 	= "FullLifes";
 	public const string missingLifes_PopUp 	= "MissingLifes";
 	public const string noLifes_PopUp 		= "NoLifes";
@@ -1011,7 +1014,6 @@ public class MapManager : MonoBehaviour
 
 	private void OnPopupCompleted(string action ="")
 	{
-		print (popUpManager.openPopUps.Count);
 		if(popUpManager.openPopUps.Count == 0)
 		{
 			stopInput(false);
@@ -1182,6 +1184,14 @@ public class MapManager : MonoBehaviour
 	{
 		//SceneManager.LoadScene ("Levels");
 		ScreenManager.GetInstance().GoToScene("Levels",true);
+	}
+
+	public void closePopUp()
+	{
+		if(OnClosePopUp != null)
+		{
+			OnClosePopUp ();
+		}
 	}
 
 	void OnDestroy()

@@ -68,7 +68,6 @@ public class PopUpManager : MonoBehaviour {
 
 		if(OnPopUpCompleted != null)
 		{
-			print ("S");
 			OnPopUpCompleted(action);
 		}
 	}

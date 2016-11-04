@@ -9,6 +9,8 @@ public class PopUpBase : MonoBehaviour {
 	public delegate void DPopUpNotification(PopUpBase thisPopUp, string action ="",bool deActivate = true);
 	public DPopUpNotification OnPopUpCompleted;
 
+
+
 	public virtual void activate()
 	{
 		popUp.SetActive (true);
