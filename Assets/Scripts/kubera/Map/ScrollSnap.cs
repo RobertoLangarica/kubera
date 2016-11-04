@@ -81,4 +81,10 @@ public class ScrollSnap : MonoBehaviour
 	{
 		closerIndex = Mathf.RoundToInt(scrollRect.normalizedPosition.y / distance);
 	}
+
+	public void setToWorldPosition(int index)
+	{
+		onLerp = true;
+		closerIndex = index;
+	}
 }

@@ -6,6 +6,10 @@ public class TutorialLvl4 : TutorialBase
 {
 	public PieceManager pieceManager;
 
+	protected bool bLineUsed;
+	protected bool bLUsed;
+	protected bool bLittleLUsed;
+
 	protected override void Start()
 	{
 		base.Start ();
@@ -37,7 +41,13 @@ public class TutorialLvl4 : TutorialBase
 			phase = 1;
 			return true;
 		case(1):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
 			phasesPanels [0].SetActive (false);
+			phasesPanels [1].SetActive (false);
+			phasesPanels [2].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.CREATE_A_LINE);
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
@@ -61,7 +71,13 @@ public class TutorialLvl4 : TutorialBase
 			phase = 2;
 			return true;
 		case(2):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
+			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (false);
+			phasesPanels [2].SetActive (false);
 			phasesPanels [2].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.CREATE_A_LINE);
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
@@ -83,6 +99,10 @@ public class TutorialLvl4 : TutorialBase
 			phase = 3;
 			return true;
 		case(3):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (false);
@@ -116,37 +136,74 @@ public class TutorialLvl4 : TutorialBase
 		switch (phase) 
 		{
 		case(1):
-			if (fourPieceWasUsed ()) 
-			{
-				phase = 3;
-			}
-			return true;
 		case(2):
-			if (fourPieceWasUsed ()) 
-			{
-				phase = 3;
-			}
-			return true;
 		case(3):
+			if (lineUsed () && !bLineUsed) 
+			{
+				bLineUsed = true;
+				phase = 3;
+				return true;
+			}
+			if (littleLUsed () && !bLittleLUsed) 
+			{
+				bLittleLUsed = true;
+				phase = 1;
+				return true;
+			}
+			if (bigLUsed () && !bLUsed) 
+			{
+				bLUsed = true;
+				phase = 2;
+				return true;
+			}
 			return true;
 		}
 
 		return base.phaseObjectiveAchived ();
 	}
 
-	protected bool fourPieceWasUsed()
+	protected bool lineUsed()
 	{
 		List<Piece> temp = pieceManager.getShowingPieces ();
 
-		if (temp [0].squares.Length == 2 && temp [1].squares.Length == 2) 
+		for (int i = 0; i < temp.Count; i++) 
 		{
-			return true;	
-		} 
-		else if (temp [0].squares.Length != 2 || temp [1].squares.Length != 2)
-		{
-			return false;
+			if (temp [i].name.Contains("4A1")) 
+			{
+				return false;
+			}
 		}
 
-		return false;
+		return true;
+	}
+
+	protected bool littleLUsed()
+	{
+		List<Piece> temp = pieceManager.getShowingPieces ();
+
+		for (int i = 0; i < temp.Count; i++) 
+		{
+			if (temp [i].name.Contains("3B2")) 
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	protected bool bigLUsed()
+	{
+		List<Piece> temp = pieceManager.getShowingPieces ();
+
+		for (int i = 0; i < temp.Count; i++) 
+		{
+			if (temp [i].name.Contains("4D2")) 
+			{
+				return false;
+			}
+		}
+
+		return true;
 	}
 }

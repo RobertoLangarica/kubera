@@ -408,7 +408,14 @@ public class Letter : MonoBehaviour
 
 	public void initializeFromABCChar(ABCChar abc)
 	{
-		abcChar = abc;
+		abcChar = new ABCChar ();
+		abcChar.wildcard = abc.wildcard;
+		abcChar.character = abc.character;
+		abcChar.value = abc.value;
+		abcChar.used = abc.used;
+		abcChar.pointsOrMultiple = abc.pointsOrMultiple;
+		abcChar.typeInfo = abc.typeInfo;
+
 		type = (EType)abcChar.typeInfo;
 
 		if(abcChar.character == ".")

@@ -16,6 +16,8 @@ public class RetryPopUp : PopUpBase
 	public Text inviteFriendsText;
 	public Text playText;
 
+	public Text feedback;
+
 	public RectTransform leftDoor;
 	public RectTransform rightDoor;
 	public RectTransform topLevel;
@@ -55,6 +57,8 @@ public class RetryPopUp : PopUpBase
 		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.LOOSEGAME_POPUP_NEXT);
 		content.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.LOOSEGAME_POPUP_TEXT);
 		LevelText.text = LevelTextShadow.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVES_NAME_TEXT_ID);
+
+		feedback.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.FEEDBACK_TEXT);
 	}
 
 	protected void fbLogin()

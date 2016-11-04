@@ -18,11 +18,12 @@ public class HomeManager : MonoBehaviour
 
 	public Text playText;
 	public GameObject block;
-	public GameObject shopikaPopUp;
 
 	public GameObject modal;
 
 	public PopUpManager popUpManager;
+
+	protected bool currentFacebookStatus;
 
 	void Start()
 	{
@@ -56,6 +57,8 @@ public class HomeManager : MonoBehaviour
 		}
 
 		popUpManager.OnPopUpCompleted += closePopUp;
+
+		currentFacebookStatus = KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().facebookProvider.isLoggedIn;
 	}
 
 	void startScene()
@@ -82,6 +85,11 @@ public class HomeManager : MonoBehaviour
 
 		if(DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser.levels.Count != 0)
 		{
+			if(!PersistentData.GetInstance ().fromLevelsToHome && !KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().facebookProvider.isLoggedIn && KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().facebookProvider.isLoggedIn != currentFacebookStatus)
+			{
+				PersistentData.GetInstance ().fromLevelsToHome = false;
+			}
+
 			ScreenManager.GetInstance().GoToScene ("Levels");
 		}
 		else
@@ -134,7 +142,7 @@ public class HomeManager : MonoBehaviour
 
 	public void activateShopikaPopUp()
 	{
-		shopikaPopUp.SetActive (true);
+		activatePopUp ("shopikaPopUp");
 	}
 		
 	protected void activatePopUp(string name)
@@ -153,7 +161,7 @@ public class HomeManager : MonoBehaviour
 
 	public void activateFacebook()
 	{
-		print (KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().facebookProvider.isLoggedIn);
+		//print (KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().facebookProvider.isLoggedIn);
 		if(!KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 		{
 			activatePopUp ("facebookLoadingConnect");

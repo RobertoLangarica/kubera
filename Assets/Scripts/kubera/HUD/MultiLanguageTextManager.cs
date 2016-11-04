@@ -119,6 +119,10 @@ public class MultiLanguageTextManager
 	public const string FB_SUCCESS_LIFES_TEXT 				= "fbSuccessLifesText";
 	public const string FB_SUCCESS_KEYS_TEXT 				= "fbSuccessKeysText";
 
+	public const string FEEDBACK_TEXT 						= "feedbackText";
+	public const string FEEDBACK_SUBJECT					= "feedbackSubject";
+	public const string FEEDBACK_CONTENT					= "feedbackContent";
+
 	//GAME
 	public const string FLAVOR_TEXT							= "ticketFlavorText";
 	public const string EXIT_POPUP_ID 						= "exitText";
@@ -151,6 +155,7 @@ public class MultiLanguageTextManager
 	public const string TUTORIAL_LV5_PHASE1					= "Tutorial_lvl5_phase1";
 	public const string TUTORIAL_LV5_PHASE2					= "Tutorial_lvl5_phase2";
 	public const string TUTORIAL_LV5_PHASE3					= "Tutorial_lvl5_phase3";
+	public const string TUTORIAL_LV5_WORD					= "Tutorial_lvl5_word";
 
 	public const string TUTORIAL_LV6_PHASE1					= "Tutorial_lvl6_phase1";
 	public const string TUTORIAL_LV6_PHASE2					= "Tutorial_lvl6_phase2";
@@ -159,6 +164,7 @@ public class MultiLanguageTextManager
 	public const string TUTORIAL_LV7_PHASE2					= "Tutorial_lvl7_phase2";
 	public const string TUTORIAL_LV7_PHASE3					= "Tutorial_lvl7_phase3";
 	public const string TUTORIAL_LV7_PHASE4					= "Tutorial_lvl7_phase4";
+	public const string TUTORIAL_LV7_WORD					= "Tutorial_lvl7_word";
 
 	public const string TUTORIAL_LV8_PHASE1					= "Tutorial_lvl8_phase1";
 	public const string TUTORIAL_LV8_PHASE2					= "Tutorial_lvl8_phase2";
@@ -170,6 +176,7 @@ public class MultiLanguageTextManager
 
 	public const string TUTORIAL_LV22_PHASE1				= "Tutorial_lvl22_phase1";
 	public const string TUTORIAL_LV22_PHASE2				= "Tutorial_lvl22_phase2";
+	public const string TUTORIAL_LV22_PHASE3				= "Tutorial_lvl22_phase3";
 
 	public const string TUTORIAL_LV37_PHASE1				= "Tutorial_lvl37_phase1";
 	public const string TUTORIAL_LV37_PHASE2				= "Tutorial_lvl37_phase2";

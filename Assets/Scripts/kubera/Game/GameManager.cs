@@ -296,11 +296,6 @@ public class GameManager : MonoBehaviour
 	private void initPiecesFromLevel(Level level)
 	{
 		pieceManager.initializePiecesFromCSV(level.pieces);
-		if (level.name == "0004") 
-		{
-			pieceManager.initializePiecesToShow (false);	
-			return;
-		}
 		pieceManager.initializePiecesToShow ();	
 	}
 
@@ -470,14 +465,7 @@ public class GameManager : MonoBehaviour
 				else 
 				{
 					piecesWhereCreated = true;
-					if (currentLevel.name == "0004") 
-					{
-						pieceManager.initializePiecesToShow (false);
-					} 
-					else 
-					{
-						pieceManager.initializePiecesToShow ();
-					}
+					pieceManager.initializePiecesToShow ();
 					hudManager.showPieces (pieceManager.getShowingPieces ());
 
 					if (AudioManager.GetInstance ()) {
@@ -574,6 +562,19 @@ public class GameManager : MonoBehaviour
 			totalLines = linesMultipliers.Count-1;
 		}
 
+		if (currentLevel.name == "0007") 
+		{
+			for (int i = temp.Count-1; i >= 0 ; i--) 
+			{
+				if (temp [i].abcChar.character != "A"
+					&& temp [i].abcChar.character != "S"
+					&& temp [i].abcChar.character != "T") 
+				{
+					temp.RemoveAt (i);
+				}
+			}
+		}
+			
 		for (int i = 0; i < linesMultipliers [totalLines].Count; i++) 
 		{
 			tempIndex = Random.Range (0,temp.Count);
@@ -598,7 +599,8 @@ public class GameManager : MonoBehaviour
 	public void OnAllCellsFlipped()
 	{
 		allowGameInput (true);
-		Invoke("checkIfLose",0);
+		checkIfLose ();
+		//Invoke("checkIfLose",0);
 	}
 
 	public void showShadowOnPiece (GameObject obj, bool showing = true)
@@ -804,7 +806,6 @@ public class GameManager : MonoBehaviour
 			return;
 		}
 		canFit = checkIfIsPosiblePutPieces ();
-
 		if((!canFit || remainingMoves == 0) && !gameOver)
 		{
 			updatePiecesLightAndUpdateLetterState ();
@@ -897,7 +898,6 @@ public class GameManager : MonoBehaviour
 	protected void updatePiecesLight(bool canFit)
 	{
 		List<Piece> temp = pieceManager.getShowingPieces ();
-
 		for (int i = 0; i < temp.Count; i++) 
 		{
 			temp [i].switchGreyPiece (!canFit);
@@ -980,7 +980,7 @@ public class GameManager : MonoBehaviour
 
 		bombAnimation.OnAllAnimationsCompleted += destroyAndCountAllLetters;
 
-		allowGameInput (false,true);
+		//allowGameInput (false,true);
 
 		cellToLetter = new List<Cell> ();
 
@@ -1245,8 +1245,12 @@ public class GameManager : MonoBehaviour
 		if(deactivateAll)
 		{
 			hudManager.activatePowerUpButtont (false);
+			inputPiece.resetAndReturn();
+			inputRotate.resetAndReturn ();
+			inputWords.reset ();
 			inputPiece.allowInput = false;
 			inputRotate.allowInput = false;
+			inputWords.allowInput = false;
 			hudManager.activatePowerUpButtont (false);
 		}
 
@@ -1255,8 +1259,6 @@ public class GameManager : MonoBehaviour
 			inputPiece.allowInput = allowInput;
 			inputWords.allowInput = allowInput;
 		}
-
-
 	}
 		
 	protected void unlockPowerUp()
@@ -1403,7 +1405,6 @@ public class GameManager : MonoBehaviour
 	private void OnPowerupCompletedNoGems(PowerupBase.EType type)
 	{
 		//TODO: abrimos el popUp de no Gems
-		print ("noGems");
 		activatePopUp ("NoGemsPopUp");
 		gemsExpendedFeedBack.myText.transform.DOScale (Vector3.zero, 0.15f).OnComplete (()=>{gemsExpendedFeedBack.gameObject.SetActive (false);});
 
@@ -1494,6 +1495,7 @@ public class GameManager : MonoBehaviour
 			}
 			break;
 		case "looseNoMovements":
+			//regresa las piezas a su posicion inicial
 			activatePopUp ("SecondChance");
 			break;
 		case "loose":
@@ -1505,13 +1507,13 @@ public class GameManager : MonoBehaviour
 			activatePopUp ("NoGemsPopUp");
 			break;
 		case "checkInSeconds":
+			CancelInvoke("checkIfLose");
 			Invoke ("checkIfLose", checkIfLoseSeconds);
 			allowGameInput ();
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.ALL_POPUPS);
 
 			break;
 		default:		
-			//print ("quien lo llama?");
 				Invoke ("allowInputFromInvoke", 0);
 			break;
 		}

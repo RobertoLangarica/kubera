@@ -449,6 +449,13 @@
 				<language id="default" text="Presiona el botón verde para enviar una palabra correcta."/>
 			</languages>
 		</text>
+		<text id="Tutorial_lvl5_word">
+			<languages>
+				<language id="english" text="Get {{score}} points to complete the level."/>
+				<language id="spanish" text="FELIZ"/>
+				<language id="default" text="FELIZ"/>
+			</languages>
+		</text>
 		<text id="Tutorial_lvl6_phase1">
 			<languages>
 				<language id="english" text="Press the button"/>
@@ -489,6 +496,13 @@
 				<language id="english" text="Get {{score}} points to complete the level."/>
 				<language id="spanish" text="El valor de la palabra que estás formando aparece arriba de la palabra y es la suma de los valores de cada letra usada."/>
 				<language id="default" text="El valor de la palabra que estás formando aparece arriba de la palabra y es la suma de los valores de cada letra usada."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl7_word">
+			<languages>
+				<language id="english" text="Get {{score}} points to complete the level."/>
+				<language id="spanish" text="AZAFATAS"/>
+				<language id="default" text="AZAFATAS"/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl8_phase1">
@@ -536,15 +550,22 @@
 		<text id="Tutorial_lvl22_phase1">
 			<languages>
 				<language id="english" text="Drag the {{b}}BLOCK{{/b}} to an empty space on the board."/>
-				<language id="spanish" text="Arrastra el {{b}}BLOQUE{{/b}} a un espacio vacío en el tablero."/>
-				<language id="default" text="Arrastra el {{b}}BLOQUE{{/b}} a un espacio vacío en el tablero."/>
+				<language id="spanish" text="Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir qué palabra puedes formar con tus letras."/>
+				<language id="default" text="Arrastra {{b}}AYUDA{{/b}} al tablero para descubrir qué palabra puedes formar con tus letras."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl22_phase2">
 			<languages>
 				<language id="english" text="Use {{b}}BLOCK{{/b}} as many times  as you need to pass the level."/>
-				<language id="spanish" text="Usa todos los {{b}}BLOQUES{{/b}} que necesites para pasar el nivel."/>
-				<language id="default" text="Usa todos los {{b}}BLOQUES{{/b}} que necesites para pasar el nivel."/>
+				<language id="spanish" text="El poder {{b}}AYUDA{{/b}}, te sugiere formar {{b}}BEY{{/b}}."/>
+				<language id="default" text="El poder {{b}}AYUDA{{/b}}, te sugiere formar {{b}}BEY{{/b}}."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl22_phase3">
+			<languages>
+				<language id="english" text="Use {{b}}BLOCK{{/b}} as many times  as you need to pass the level."/>
+				<language id="spanish" text="Usa {{b}}AYUDA{{/b}} nuevamente."/>
+				<language id="default" text="Usa {{b}}AYUDA{{/b}} nuevamente."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl37_phase1">
@@ -1032,6 +1053,34 @@
 				<language id="english" text="You just asked your friends for a key. Use it to unlock a new level!"/>
 				<language id="spanish" text="Has pedido una llave a tus amigos. ¡Usala para accerder al último nivel del mundo."/>
 				<language id="default" text="Has pedido una llave a tus amigos. ¡Usala para accerder al último nivel del mundo."/>
+			</languages>                    
+		</text>
+
+		<text id="feedbackText">
+			<languages>
+				<language id="english" text="Envianos tus comentarios"/>
+				<language id="spanish" text="Envianos tus comentarios"/>
+				<language id="default" text="Envianos tus comentarios"/>
+			</languages>                    
+		</text>
+		<text id="feedbackContent">
+			<languages>
+				<language id="english" text="Muchas gracias por tomarte el tiempo de escribirnos. Tú opinión nos ayudará hacer Kubera aun más divertido.
+											/n/nSi le falta alguna palabra al diccionario escribela en este correo.
+											/n/nDe igual forma crees que el juego debería dar puntos por algo o podría mejorar con alguna mécanica de juego, somos todo oidos."/>
+				<language id="spanish" text="Muchas gracias por tomarte el tiempo de escribirnos. Tú opinión nos ayudará hacer Kubera aun más divertido.
+											/n/nSi le falta alguna palabra al diccionario escribela en este correo.
+											/n/nDe igual forma crees que el juego debería dar puntos por algo o podría mejorar con alguna mécanica de juego, somos todo oidos."/>
+				<language id="default" text="Muchas gracias por tomarte el tiempo de escribirnos. Tú opinión nos ayudará hacer Kubera aun más divertido.
+											/n/nSi le falta alguna palabra al diccionario escribela en este correo.
+											/n/nDe igual forma crees que el juego debería dar puntos por algo o podría mejorar con alguna mécanica de juego, somos todo oidos."/>
+			</languages>                    
+		</text>
+		<text id="feedbackSubject">
+			<languages>
+				<language id="english" text="Mis comentarios sobre Kubera"/>
+				<language id="spanish" text="Mis comentarios sobre Kubera"/>
+				<language id="default" text="Mis comentarios sobre Kubera"/>
 			</languages>                    
 		</text>
 

@@ -19,6 +19,7 @@ public class FacebookLoadingConnectPopUp : PopUpBase {
 		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved  += popUpCompleted;
 		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrievedFailure += failure;
 		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnLoginFailure += failure;
+
 	}
 
 	public override void activate()
@@ -44,7 +45,16 @@ public class FacebookLoadingConnectPopUp : PopUpBase {
 
 	protected void popUpCompleted()
 	{
+		
+
 		popUp.SetActive (false);
 		OnComplete ("");
+	}
+
+	void OnDestroy()
+	{
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved  -= popUpCompleted;
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrievedFailure -= failure;
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnLoginFailure -= failure;
 	}
 }

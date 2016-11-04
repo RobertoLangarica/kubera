@@ -2,11 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/*
+ * Tiene un hardcoding en GameManager dónde su utiliza el nombre del nivel para hacerle modificaciones
+ * 
+*/
 public class TutorialLvl7 : TutorialBase 
 {
-	public string tutorialWord = "AZAFATA";
-
 	protected bool isWaitingForText;
+	protected string tutorialWord;
+
+	protected override void Start ()
+	{
+		base.Start ();
+
+		tutorialWord = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV7_WORD);
+	}
 
 	public override bool canMoveToNextPhase ()
 	{
@@ -30,6 +40,10 @@ public class TutorialLvl7 : TutorialBase
 			phase = 1;
 			return true;
 		case(1):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
@@ -51,6 +65,10 @@ public class TutorialLvl7 : TutorialBase
 			phase = 2;
 			return true;
 		case(2):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
@@ -74,6 +92,10 @@ public class TutorialLvl7 : TutorialBase
 			phase = 3;
 			return true;
 		case(3):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
 			phasesPanels [2].SetActive (false);
 			phasesPanels [3].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.SELECT_LETTER);
