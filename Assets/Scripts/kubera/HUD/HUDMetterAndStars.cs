@@ -69,9 +69,40 @@ public class HUDMetterAndStars : MonoBehaviour
 	{
 		float size = 0;
 
-		if(star3Reached)
+		if(!star1Reached && !star2Reached)
 		{
-			size = 1;
+			size = scoreToReachStar [0] / Star1;
+
+			size = (float)points / size;
+
+			if(size >= Star1)
+			{
+				StarsFilled [0].gameObject.SetActive (true);
+				Stars [0].gameObject.SetActive (false);
+
+				StarsFilled [0].transform.localScale *= 1.1f;
+				star1Reached = true;
+			}
+		}
+			
+		if(star1Reached && !star2Reached)
+		{
+			size = (scoreToReachStar [1] - scoreToReachStar [0]) / (Star2 -Star1);
+
+
+			size = (float)(points-scoreToReachStar [0]+1) / size;
+
+			size = size + Star1;
+
+			if(size >= Star2)
+			{
+				StarsFilled [1].gameObject.SetActive (true);
+				Stars [1].gameObject.SetActive (false);
+
+				StarsFilled [1].transform.localScale *= 1.1f;
+				//Stars [1].sprite = StarFilled;
+				star2Reached = true;
+			}
 		}
 
 		if(star2Reached && !star3Reached)
@@ -93,42 +124,10 @@ public class HUDMetterAndStars : MonoBehaviour
 			}
 		}
 
-		if(star1Reached && !star2Reached)
+		if(star3Reached)
 		{
-			size = (scoreToReachStar [1] - scoreToReachStar [0]) / (Star2 -Star1);
-
-
-			size = (float)(points-scoreToReachStar [0]+1) / size;
-
-			size = size + Star1;
-
-			if(size >= Star2)
-			{
-				StarsFilled [1].gameObject.SetActive (true);
-				Stars [1].gameObject.SetActive (false);
-
-				StarsFilled [1].transform.localScale *= 1.1f;
-				//Stars [1].sprite = StarFilled;
-				star2Reached = true;
-			}
+			size = 1;
 		}
-
-		if(!star1Reached && !star2Reached)
-		{
-			size = scoreToReachStar [0] / Star1;
-
-			size = (float)points / size;
-
-			if(size >= Star1)
-			{
-				StarsFilled [0].gameObject.SetActive (true);
-				Stars [0].gameObject.SetActive (false);
-
-				StarsFilled [0].transform.localScale *= 1.1f;
-				star1Reached = true;
-			}
-		}
-
 
 		pointsMeter.fillAmount = size;
 	}
