@@ -29,6 +29,8 @@ public class WorldsPopUp : PopUpBase {
 
 	public override void activate()
 	{
+		mapManager.OnClosePopUp += exit;
+
 		if (mapButton.parent != transform.parent) 
 		{
 			popUpRect.anchoredPosition = new Vector2 (-Screen.width * 0.85f, 0);
@@ -67,6 +69,7 @@ public class WorldsPopUp : PopUpBase {
 
 	public void exit()
 	{
+		mapManager.OnClosePopUp -= exit;
 		CompletePopUp ();
 	}
 
@@ -90,6 +93,7 @@ public class WorldsPopUp : PopUpBase {
 
 	public void toMessages()
 	{
+		mapManager.OnClosePopUp -= exit;
 		CompletePopUp ("toFacebookMessages",false);
 	}
 
