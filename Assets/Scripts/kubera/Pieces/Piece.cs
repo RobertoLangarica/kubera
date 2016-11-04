@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 using DG.Tweening;
 
@@ -54,6 +55,8 @@ public class Piece : MonoBehaviour
 	[HideInInspector]public Vector3 positionOnScene;
 
 	[HideInInspector]public Vector3 initialPieceScale;
+
+	public List<Vector2> squaresCoordinates;
 
 	public GameObject toRotateObject;
 
