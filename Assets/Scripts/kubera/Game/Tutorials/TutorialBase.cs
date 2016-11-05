@@ -190,5 +190,3 @@ public class TutorialBase : MonoBehaviour
 	{
 	}
 }
-
-/*3331700654*/
