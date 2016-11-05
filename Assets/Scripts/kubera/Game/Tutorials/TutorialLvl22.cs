@@ -11,6 +11,7 @@ public class TutorialLvl22 : TutorialBase
 
 	protected bool doAnimation;
 	protected Vector3 posTo;
+	protected int count = 0;
 
 	protected override void Start()
 	{
@@ -45,6 +46,7 @@ public class TutorialLvl22 : TutorialBase
 		case(0):
 			phasesPanels [0].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.HINT_USED);
+			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
 			freeHint = true;
 
@@ -101,6 +103,7 @@ public class TutorialLvl22 : TutorialBase
 			CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
+			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.BLOCK_USED);
@@ -126,7 +129,39 @@ public class TutorialLvl22 : TutorialBase
 
 			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
 
-			phase = 3;
+			phase = 4;
+			return true;	
+		case(3):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
+			phasesPanels [0].SetActive (false);
+			phasesPanels [1].SetActive (false);
+			phasesPanels [2].SetActive (true);
+			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
+
+			freeHint = true;
+
+			if (instructionIndex < currentInstruction.Length) {
+				changeInstruction = true;
+				foundStringTag = false;
+			}
+
+			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV22_PHASE4),
+				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+			instructionsText = instructions [2];
+			instructionsText.text = "";
+			instructionIndex = 0;
+
+			doAnimation = false;
+
+			shakeToErrase ();
+
+			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+
+			phase = 2;
 			return true;	
 		}
 
@@ -138,8 +173,18 @@ public class TutorialLvl22 : TutorialBase
 		switch (phase) 
 		{
 		case(1):
+			if (cellManager.getAllEmptyCells ().Length == 12) 
+			{
+				phase = 3;
+			}
 			return true;
 		case(2):
+		case(3):
+			count++;
+			if (count < 3) 
+			{
+				return false;
+			}
 			return true;
 		}
 

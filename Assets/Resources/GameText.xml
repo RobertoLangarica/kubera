@@ -564,8 +564,15 @@
 		<text id="Tutorial_lvl22_phase3">
 			<languages>
 				<language id="english" text="Use {{b}}BLOCK{{/b}} as many times  as you need to pass the level."/>
-				<language id="spanish" text="Usa {{b}}AYUDA{{/b}} nuevamente."/>
-				<language id="default" text="Usa {{b}}AYUDA{{/b}} nuevamente."/>
+				<language id="spanish" text="Usa {{b}}AYUDA{{/b}}."/>
+				<language id="default" text="Usa {{b}}AYUDA{{/b}}."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl22_phase4">
+			<languages>
+				<language id="english" text="Use {{b}}BLOCK{{/b}} as many times  as you need to pass the level."/>
+				<language id="spanish" text="Haz líneas."/>
+				<language id="default" text="Haz líneas."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl37_phase1">

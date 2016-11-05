@@ -35,12 +35,6 @@ public class CellsManager : MonoBehaviour
 	//TODO ver como referenciar mejor a CellsManager (que herede de Manager ser??
 	public static CellsManager instance;
 
-	/*Bug de calcular la posicion de una pieza si esta escalada o no*/
-	protected float betweenSquaresDist = 0;
-	protected float percent = 0;
-	protected float scaledBetweenSquaresDist = 0;
-	protected float scaledpercent = 0;
-
 	void Awake()
 	{
 		instance = this;
@@ -690,7 +684,6 @@ public class CellsManager : MonoBehaviour
 	{
 		cell.setType (cellType);
 	}
-
 	/*
 	 * Analiza si aun es posible colocar alguna de las piezas disponibles en la grid
 	 * 
@@ -700,61 +693,36 @@ public class CellsManager : MonoBehaviour
 	 */
 	public bool checkIfOnePieceCanFit(List<Piece> piecesList)
 	{
-		Vector3 offset = Vector3.zero;
 		float extentsX = cellSize * 0.5f;
 		Vector3 moveLittle = new Vector3(extentsX,-extentsX,0);
 		Vector3[] vecArr;
+		Vector2 temp = Vector2.zero;
 
-
-		foreach(Cell val in cells)
+		foreach (Cell val in cells) 
 		{
-			if(!val.occupied && val.canPositionateOnThisCell())
+			if (!val.occupied && val.canPositionateOnThisCell ()) 
 			{
-				for(int i = 0;i < piecesList.Count;i++)
+				for (int i = 0; i < piecesList.Count; i++) 
 				{
-					offset = (val.transform.position + moveLittle) - piecesList[i].squares[0].transform.position;
+					vecArr = new Vector3[piecesList [i].squares.Length];
 
-					vecArr = new Vector3[piecesList[i].squares.Length];
+					vecArr [0] = val.transform.position + moveLittle;
 
-					vecArr[0] = piecesList[i].squares[0].transform.position + offset;
-					for(int j = 1;j < piecesList[i].squares.Length;j++)
+					for (int j = 0; j < piecesList [i].squaresCoordinates.Count; j++) 
 					{
-						vecArr[j] = (((piecesList[i].squares[j].transform.position -
-							piecesList[i].squares[0].transform.position) * getPercentAccordingScale(piecesList[i])) +
-							piecesList[i].squares[0].transform.position) + offset;
+						temp = (piecesList [i].squaresCoordinates [j] * cellSize);
+						vecArr [j + 1] = new Vector3(temp.x + vecArr[0].x,temp.y + vecArr[0].y,vecArr[0].z);
 					}
 
-					if(canPositionateAll(vecArr))
+					if (canPositionateAll (vecArr)) 
 					{
 						return true;
 					}
+					
 				}
 			}
 		}
 		return false;
-	}
-
-	protected float getPercentAccordingScale(Piece piece)
-	{
-		if (piece.transform.localScale == piece.initialPieceScale) 
-		{
-			if (betweenSquaresDist == 0) 
-			{
-				betweenSquaresDist = (piece.squares [0].transform.position - piece.squares [1].transform.position).magnitude;
-				percent = ((cellSize * 100) / betweenSquaresDist) * 0.01f;
-			}
-			return percent;
-		} else 
-		{
-			if (scaledBetweenSquaresDist == 0) 
-			{
-				scaledBetweenSquaresDist = (piece.squares [0].transform.position - piece.squares [1].transform.position).magnitude;
-				scaledpercent = ((cellSize * 100) / scaledBetweenSquaresDist) * 0.01f;
-			}
-			return scaledpercent;
-		}
-
-		return 0;
 	}
 
 	/*

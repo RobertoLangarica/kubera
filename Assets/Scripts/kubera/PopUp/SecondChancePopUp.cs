@@ -43,7 +43,6 @@ public class SecondChancePopUp : PopUpBase
 		cancelText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SECONDCHANCE_GIVEUP);
 
 		setPrice ();
-		
 
 		v3 = thisObject.anchoredPosition;
 		thisObject.DOAnchorPos (new Vector3(thisObject.anchoredPosition.x,0), speed).SetEase(Ease.OutBack);
@@ -77,13 +76,21 @@ public class SecondChancePopUp : PopUpBase
 
 	protected void checkDiscount()
 	{
-		//Debug.Log (UserDataManager.instance.playerGems);
-		if (!ShopikaManager.GetCastedInstance<ShopikaManager>().isPossibleToConsumeGems(price)) 
+		if (ShopikaManager.GetCastedInstance<ShopikaManager> ()) 
+		{
+			if (!ShopikaManager.GetCastedInstance<ShopikaManager> ().isPossibleToConsumeGems (price)) 
+			{
+				price = (int)(price * 0.5f);
+				discountDisplay.SetActive (true);
+			}
+			priceText.text = price.ToString ();
+		} 
+		else 
 		{
 			price = (int)(price * 0.5f);
 			discountDisplay.SetActive (true);
+			priceText.text = price.ToString ();
 		}
-		priceText.text = price.ToString ();
 	}
 
 	public void buyASecondChance()

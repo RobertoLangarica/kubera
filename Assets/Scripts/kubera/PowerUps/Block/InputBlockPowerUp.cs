@@ -28,6 +28,8 @@ public class InputBlockPowerUp : MonoBehaviour
 	protected bool canUse;
 	public Transform parent;
 
+	protected bool isLongPressed = false;
+
 	[HideInInspector]public bool rayCastersRegistered = false;
 	void Start()
 	{
@@ -227,6 +229,44 @@ public class InputBlockPowerUp : MonoBehaviour
 		if(OnPlayer != null)
 		{
 			OnPlayer (isOn);
+		}
+	}
+
+	void OnFingerDown(FingerDownEvent  gesture)
+	{
+		if (!currentSelected && gesture.Raycast.Hits2D != null) 
+		{
+			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
+			offsetPositionOverFinger.y = Mathf.Round ((gesture.Raycast.Hit2D.collider.bounds.size.y - 0.15f) * 15) * .10f;
+			//currentSelected.transform.DOMove(overFingerPosition,.1f).SetId("Input_SelectedPosition");
+
+		}
+	}
+
+	void OnLongPress(LongPressGesture gesture)
+	{
+		if (currentSelected != null) 
+		{
+			/*DOTween.Kill ("InputRotate_InitialPosition", true);
+			DOTween.Kill ("InputRotate_SelectedScale", true);*/
+			/*selectedInitialPosition = currentSelected.transform.position;
+			selectedInitialScale = currentSelected.transform.localScale;*/
+
+			Vector3 posOverFinger = Camera.main.ScreenToWorldPoint(new Vector3(gesture.Position.x,gesture.Position.y,0));
+			posOverFinger.z = 0;
+			posOverFinger += offsetPositionOverFinger;
+
+			moveTo(currentSelected,posOverFinger,pieceSpeed);
+			currentSelected.transform.DOScale(initialScale,.1f);
+			gameManager.showShadowOnPiece (currentSelected, true);
+
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop("pieceSelected");
+				AudioManager.GetInstance().Play("pieceSelected");
+			}
+
+			isLongPressed = true;
 		}
 	}
 }

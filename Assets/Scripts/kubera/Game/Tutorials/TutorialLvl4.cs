@@ -46,7 +46,7 @@ public class TutorialLvl4 : TutorialBase
 			isWriting = false;
 
 			phasesPanels [0].SetActive (false);
-			phasesPanels [1].SetActive (false);
+			phasesPanels [3].SetActive (false);
 			phasesPanels [2].SetActive (false);
 			phasesPanels [1].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.CREATE_A_LINE);
@@ -77,7 +77,7 @@ public class TutorialLvl4 : TutorialBase
 
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (false);
-			phasesPanels [2].SetActive (false);
+			phasesPanels [3].SetActive (false);
 			phasesPanels [2].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.CREATE_A_LINE);
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
@@ -124,7 +124,7 @@ public class TutorialLvl4 : TutorialBase
 
 			Invoke ("writeLetterByLetter",initialAnim*1.5f);
 
-			phase = 4;
+			phase = 3;
 			return true;
 		}
 
@@ -166,6 +166,8 @@ public class TutorialLvl4 : TutorialBase
 	{
 		List<Piece> temp = pieceManager.getShowingPieces ();
 
+		if (temp.Count == 3) {return true;}
+
 		for (int i = 0; i < temp.Count; i++) 
 		{
 			if (temp [i].name.Contains("4A1")) 
@@ -181,6 +183,8 @@ public class TutorialLvl4 : TutorialBase
 	{
 		List<Piece> temp = pieceManager.getShowingPieces ();
 
+		if (temp.Count == 3) {return true;}
+
 		for (int i = 0; i < temp.Count; i++) 
 		{
 			if (temp [i].name.Contains("3B2")) 
@@ -195,6 +199,8 @@ public class TutorialLvl4 : TutorialBase
 	protected bool bigLUsed()
 	{
 		List<Piece> temp = pieceManager.getShowingPieces ();
+
+		if (temp.Count == 3) {return true;}
 
 		for (int i = 0; i < temp.Count; i++) 
 		{

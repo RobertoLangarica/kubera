@@ -25,7 +25,7 @@ public class KuberaWebView : MonoBehaviour
 
 	protected bool isWaiting;
 	protected float waitForAnswerTime;
-	public int totalTime = 10;
+	public int totalTime = 20;
 
 	void Start()
 	{
@@ -42,6 +42,7 @@ public class KuberaWebView : MonoBehaviour
 				closeWebView ();
 				isWaiting = false;
 				waitForAnswerTime = 0;
+				WebViewManager.GetInstance ().OnFinishLoading (WebViewManager.GetInstance ().displayWebView);
 			}
 		}
 	}
@@ -63,6 +64,7 @@ public class KuberaWebView : MonoBehaviour
 				ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUser.accesToken);
 		}
 
+		isWaiting = true;
 		WebViewManager.GetInstance ().OnFinishLoading += showToolBar;
 		registerForMessages ();
 	}
@@ -144,8 +146,8 @@ public class KuberaWebView : MonoBehaviour
 
 	public void showToolBar(WebView webview)
 	{
-		//Debug.Log (customToolBar + "******************");
 		WebViewManager.GetInstance().showWebView();
 		customToolBar.SetActive (true);
+		isWaiting = false;
 	}
 }
