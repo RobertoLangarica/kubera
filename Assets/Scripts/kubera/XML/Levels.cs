@@ -172,9 +172,19 @@ public class Levels
 		return sameWorldLevels.ToArray ();
 	}
 
-	public int getLevelsCountByWorld(int world)
+	public int getLevelsCountByWorld(int worldIndex)
 	{
-		return getLevelsByWorld(world).Length;
+		int count = 0;
+
+		for (int i = 0; i < levels.Length; i++)
+		{
+			if (levels [i].world == worldIndex)
+			{
+				count++;
+			}
+		}
+
+		return count;
 	}
 
 	public void sortLevels()

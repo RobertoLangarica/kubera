@@ -73,20 +73,23 @@ public class MapManager : MonoBehaviour
 			Debug.Log("<color=red>Modo test: NIVELES DESBLOQUEADOS</color>");
 		}
 
+		PersistentData persistentInstance = PersistentData.GetInstance();
+		DataManagerKubera dataManager = DataManagerKubera.GetCastedInstance<DataManagerKubera>();
 
-		//determinamos el mundo a cargar
-		if(PersistentData.GetInstance ().fromLevelsToHome)
+		//Mundo a cargar
+		if(persistentInstance.fromLevelsToHome)
 		{
-			currentWorld = PersistentData.GetInstance ().currentWorld;
+			currentWorld = persistentInstance.currentWorld;
 		}
-		else if(PersistentData.GetInstance ().currentWorld == -1 || !PersistentData.GetInstance().fromGameToLevels)
+		else if(persistentInstance.currentWorld == -1 || !persistentInstance.fromGameToLevels)
 		{
-			if(DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count != 0)
+			//Al maximo avance
+			if(dataManager.currentUser.levels.Count != 0)
 			{
-				currentWorld = DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.maxWorldReached();
-				PersistentData.GetInstance().maxWorldReached = currentWorld;
-				int passedLevelsCount = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser.countPassedLevelsByWorld(currentWorld);
-				int levelsInWorld = PersistentData.GetInstance().levelsData.getLevelsByWorld(currentWorld).Length;
+				currentWorld = dataManager.currentUser.maxWorldReached();
+				persistentInstance.maxWorldReached = currentWorld;
+				int passedLevelsCount = dataManager.currentUser.countPassedLevelsByWorld(currentWorld);
+				int levelsInWorld = persistentInstance.levelsData.getLevelsCountByWorld(currentWorld);
 
 				if(passedLevelsCount == levelsInWorld)
 				{
@@ -94,15 +97,16 @@ public class MapManager : MonoBehaviour
 					{
 						currentWorld++;
 					}
-					PersistentData.GetInstance().maxWorldReached = currentWorld;
+					persistentInstance.maxWorldReached = currentWorld;
 				}
 			}
 		}
 		else
 		{
-			currentWorld = PersistentData.GetInstance ().currentWorld;
-			int passedLevelsCount = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser.countPassedLevelsByWorld(currentWorld);
-			int levelsInWorld = PersistentData.GetInstance().levelsData.getLevelsByWorld(currentWorld).Length;
+			//Solo detecta si el que se paso
+			currentWorld = persistentInstance.currentWorld;
+			int passedLevelsCount = dataManager.currentUser.countPassedLevelsByWorld(currentWorld);
+			int levelsInWorld = persistentInstance.levelsData.getLevelsByWorld(currentWorld).Length;
 
 			if(passedLevelsCount == levelsInWorld)
 			{
@@ -115,24 +119,25 @@ public class MapManager : MonoBehaviour
 			
 
 		//Flujo entre game y levels
-		if(PersistentData.GetInstance ().fromGameToLevels)
+		if(persistentInstance.fromGameToLevels)
 		{
 			fromGame = true;
-			fromLoose= PersistentData.GetInstance ().fromLoose;
-			PersistentData.GetInstance ().fromGameToLevels = false;
-			nameOfLastLevelPlayed = PersistentData.GetInstance ().lastLevelPlayedName;
+			fromLoose= persistentInstance.fromLoose;
+			persistentInstance.fromGameToLevels = false;
+			nameOfLastLevelPlayed = persistentInstance.lastLevelPlayedName;
 			
-			if(PersistentData.GetInstance().fromLoose)
+			if(persistentInstance.fromLoose)
 			{
 				toNextLevel = false;
 			}
 			else
 			{
-				toNextLevel = !PersistentData.GetInstance ().nextLevelIsReached;
+				toNextLevel = !persistentInstance.nextLevelIsReached;
 
 			}
 		}
-		PersistentData.GetInstance ().fromLevelsToHome = false;
+
+		persistentInstance.fromLevelsToHome = false;
 
 		popUpManager.OnPopUpCompleted = OnPopupCompleted;
 		paralaxManager.OnFinish += showNextLevelGoalPopUp;
