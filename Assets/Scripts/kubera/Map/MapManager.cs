@@ -65,6 +65,7 @@ public class MapManager : MonoBehaviour
 	protected bool cantPlay;
 	protected bool isLastLevel;
 	protected bool goToNextLevel;
+	protected bool newWorldUnlocked;
 
 	void Start()
 	{
@@ -112,6 +113,11 @@ public class MapManager : MonoBehaviour
 			{
 				if(currentWorld+1 <= worldsCount)
 				{
+					if(persistentInstance.maxWorldReached == currentWorld)
+					{
+						//nuevo mundo desbloqueado
+						newWorldUnlocked = true;
+					}
 					isLastLevel = true;
 				}
 			}
@@ -190,6 +196,11 @@ public class MapManager : MonoBehaviour
 		if(AllLevelsUnlocked)
 		{
 			maxWorldReached = worldsCount;
+		}
+
+		if(newWorldUnlocked)
+		{
+			maxWorldReached++;
 		}
 
 		for(int i=0; i < worldsCount; i++)
