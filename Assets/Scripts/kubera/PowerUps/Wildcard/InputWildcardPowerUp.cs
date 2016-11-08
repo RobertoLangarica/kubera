@@ -67,6 +67,7 @@ public class InputWildcardPowerUp : MonoBehaviour {
 		blockGO.transform.SetParent (parent, false);
 
 		blockGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
+
 		this.canUse = canUse;
 	}
 
@@ -125,16 +126,20 @@ public class InputWildcardPowerUp : MonoBehaviour {
 
 					Cell cell = cellsManager.getCellUnderPoint (currentSelected.transform.position);
 
-					if(!canUse)
+
+					if (cell != null && cell.cellType != Cell.EType.EMPTY && cell.cellType != Cell.EType.OBSTACLE_LETTER) 
 					{
-						returnSelectedToInitialState(delaySpeed);
-						completePowerUpNoGems ();
-					}
-					else if (cell != null && cell.cellType != Cell.EType.EMPTY) 
-					{
-						insertWildcard (cellsManager.getCellUnderPoint (currentSelected.transform.position));
-						completePowerUp (true);
-						destroySelected ();
+						if(!canUse)
+						{
+							returnSelectedToInitialState(delaySpeed);
+							completePowerUpNoGems ();
+						}
+						else
+						{
+							insertWildcard (cellsManager.getCellUnderPoint (currentSelected.transform.position));
+							completePowerUp (true);
+							destroySelected ();
+						}
 					}
 					else
 					{
@@ -293,7 +298,6 @@ public class InputWildcardPowerUp : MonoBehaviour {
 
 			moveTo(currentSelected,posOverFinger,pieceSpeed);
 			currentSelected.transform.DOScale(initialScale,.1f);
-			gameManager.showShadowOnPiece (currentSelected, true);
 
 			if(AudioManager.GetInstance())
 			{

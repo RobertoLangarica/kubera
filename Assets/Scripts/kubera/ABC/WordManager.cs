@@ -142,7 +142,7 @@ public class WordManager : MonoBehaviour
 		wordContainerLayout.cellSize = new Vector2(cellSize,cellSize);
 
 
-		for(int i=0; i<5; i++)
+		for(int i=0; i<9; i++)
 		{
 			addInvisibleChildrenToPool ();
 		}
