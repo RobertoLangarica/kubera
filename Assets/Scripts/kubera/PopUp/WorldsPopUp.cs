@@ -6,58 +6,96 @@ using DG.Tweening;
 public class WorldsPopUp : PopUpBase {
 
 	public GridLayoutGroup grid;
-
 	public MapManager mapManager;
-
 	public RectTransform mapButton;
 	public RectTransform facebookMessagesButton;
 	public RectTransform popUpRect;
-
 	public ScrollRect scrollRect;
-
 	public MiniWorld[] worlds;
-
 	public Transform previousParent;
-
 	public ScrollSnap scrollSnap;
+
+	private bool initialized = false;
+	private float openWidthPercent;
+	private float closedBtnWidthPercent;
+
+	[HideInInspector]public int indexToshowOnFirstOpen = 0;
+	[HideInInspector]public bool firstTimeOpened = true;
 
 	void Start()
 	{
-		grid.cellSize = new Vector2 (Screen.width * 0.75f, Screen.height * 0.8f);
-		grid.spacing = new Vector2(0,Screen.height * 0.2f);
+		if(!initialized)
+		{
+			initialize();
+		}
+	}
+
+	public void initialize()
+	{
+		grid.cellSize = new Vector2 (Screen.width * 0.75f, Screen.height);
+		grid.spacing = Vector2.zero;
+
+		//Tamaños para cuando se abre el menu
+		openWidthPercent = Screen.width * 0.85f;
+		closedBtnWidthPercent = Screen.width * 0.78f;
+
+		initialized = true;
 	}
 
 	public override void activate()
 	{
+
+		if(!initialized)
+		{
+			initialize();
+		}
+
 		mapManager.OnClosePopUp += exit;
+
+		float delayTime = 0.5f;
+
+		if(firstTimeOpened)
+		{
+			scrollSnap.scrollToChild(indexToshowOnFirstOpen, false);
+			firstTimeOpened = false;
+		}
 
 		if (mapButton.parent != transform.parent) 
 		{
-			popUpRect.anchoredPosition = new Vector2 (-Screen.width * 0.85f, 0);
+			//Nos aseguramos de que este cerrado
+			popUpRect.anchoredPosition = new Vector2 (-openWidthPercent, 0);
 
-			//animateWorldsLights (true);
 			popUp.SetActive (true);
 
-			popUpRect.DOAnchorPos (Vector2.zero, 0.5f, true);
+			//Popup en posicion cero para que se abra
+			popUpRect.DOAnchorPos(Vector2.zero, 0.5f, true);
 
-			mapButton.DOAnchorPos (new Vector2 (Screen.width * 0.85f, 0), 0.5f, true);
+			//boton en posicion abierta
 			mapButton.SetParent (transform.parent);
+			mapButton.DOAnchorPos(new Vector2 (openWidthPercent, 0), 0.5f, true);
 
-			facebookMessagesButton.DOAnchorPos (new Vector2 (Screen.width * 0.78f,0), 0.5f, true);
-			facebookMessagesButton.SetParent (transform.parent);
 
-			transform.SetSiblingIndex (transform.parent.childCount - 1);
-		} 
+			//Boton cerrado
+			facebookMessagesButton.SetParent(transform.parent);
+			facebookMessagesButton.DOAnchorPos (new Vector2 (closedBtnWidthPercent,0), 0.5f, true);
+
+			//Este hijo hasta arriba
+			transform.SetAsLastSibling();
+		}  
 		else 
 		{
+			//Abierto sin delay
 			popUpRect.anchoredPosition = Vector2.zero;
 
 			popUp.SetActive (true);
 
-			mapButton.DOAnchorPos (new Vector2 (Screen.width * 0.85f, 0), 0.5f, true);
-			facebookMessagesButton.DOAnchorPos (new Vector2 (Screen.width * 0.78f,0), 0.5f, true);
+			//Boton abierto
+			mapButton.DOAnchorPos (new Vector2 (openWidthPercent, 0), delayTime, true);
+			//Boton cerrado
+			facebookMessagesButton.DOAnchorPos (new Vector2 (closedBtnWidthPercent,0), delayTime, true);
 
-			transform.SetSiblingIndex (transform.parent.childCount - 1);
+			//Este hijo hasta arriba
+			transform.SetAsLastSibling();
 		}
 	}
 
