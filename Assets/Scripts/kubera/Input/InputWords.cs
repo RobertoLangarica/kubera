@@ -78,7 +78,7 @@ public class InputWords : MonoBehaviour
 	void OnDrag(DragGesture gesture) 
 	{
 		//Solo se ejecuta una vez por frame (para que el multifinger funcione sin encimarse)
-		if(!allowInput || lastTimeDraggedFrame == Time.frameCount)
+		if(!allowInput || lastTimeDraggedFrame == Time.frameCount || !enabled)
 		{
 			return;
 		}
@@ -219,6 +219,11 @@ public class InputWords : MonoBehaviour
 	//Letters on Word
 	void OnFingerDown(FingerDownEvent gesture)
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if (allowInput && gesture.Raycast.Hit2D) 
 		{
 			letter = gesture.Raycast.Hit2D.transform.gameObject;
@@ -233,6 +238,11 @@ public class InputWords : MonoBehaviour
 
 	void OnLongPress(LongPressGesture gesture)
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if(allowInput && gesture.Raycast.Hit2D && letter != null)
 		{
 			activateRayCasters(false);
@@ -256,6 +266,11 @@ public class InputWords : MonoBehaviour
 
 	void OnFingerUp(FingerUpEvent gesture)
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if (allowInput && letter) 
 		{
 			activateRayCasters(true);
@@ -319,6 +334,11 @@ public class InputWords : MonoBehaviour
 
 	void OnLetterGridFingerDown(FingerDownEvent gesture)
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if (allowInput && gesture.Raycast.Hit2D && allowPushDownAnimation) 
 		{
 			gridLetter = gesture.Raycast.Hit2D.transform.gameObject;
@@ -364,6 +384,11 @@ public class InputWords : MonoBehaviour
 
 	void OnLetterGridTap(TapGesture gesture)
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if(allowInput && gridLetter && allowAnimation)
 		{		
 			if (gridLetter.layer == LayerMask.NameToLayer ("LetterOnGrid")) 
@@ -383,6 +408,11 @@ public class InputWords : MonoBehaviour
 
 	void OnLetterWordTap(TapGesture gesture)
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if (allowInput && canDeleteLetter && gesture.Raycast.Hit2D) 
 		{	
 			//onTapToDelete(gesture.Raycast.Hit2D.transform.gameObject);
