@@ -589,55 +589,132 @@
 				<language id="default" text="Presiona una pieza para girarla."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl37_phase3">
-			<languages>
-				<language id="english" text="Use {{b}}ROTATE{{/b}} as many times  as you need to pass the level."/>
-				<language id="spanish" text="Usa {{b}}ROTAR{{/b}} las veces que necesites para pasar el nivel."/>
-				<language id="default" text="Usa {{b}}ROTAR{{/b}} las veces que necesites para pasar el nivel."/>
-			</languages>
-		</text>
 		<text id="Tutorial_lvl52_phase1">
 			<languages>
 				<language id="english" text="Drag {{b}}THUNDER{{/b}} to a block."/>
-				<language id="spanish" text="Arrastra el {{b}}RAYO{{/b}} a un bloque."/>
-				<language id="default" text="Arrastra el {{b}}RAYO{{/b}} a un bloque."/>
+				<language id="spanish" text="Arrastra {{b}}BOMBA{{/b}} a un bloque en el tablero."/>
+				<language id="default" text="Arrastra {{b}}BOMBA{{/b}} a un bloque en el tablero."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl52_phase2">
 			<languages>
 				<language id="english" text="Use {{b}}THUNDER{{/b}} as many times  as you need to pass the level."/>
-				<language id="spanish" text="Usa el {{b}}RAYO{{/b}} las veces que necesites para pasar el nivel."/>
-				<language id="default" text="Usa el {{b}}RAYO{{/b}} las veces que necesites para pasar el nivel."/>
+				<language id="spanish" text="Arrastra otra {{b}}BOMBA{{/b}}."/>
+				<language id="default" text="Arrastra otra {{b}}BOMBA{{/b}}."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl52_phase3">
+			<languages>
+				<language id="english" text="Use {{b}}THUNDER{{/b}} as many times  as you need to pass the level."/>
+				<language id="spanish" text="La {{b}}BOMBA{{/b}} convierte en letras todos los bloques conectados del mismo color."/>
+				<language id="default" text="La {{b}}BOMBA{{/b}} convierte en letras todos los bloques conectados del mismo color."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl64_phase1">
 			<languages>
 				<language id="english" text="You need a {{b}}Z{{/b}} to form {{b}}PEZ{{/b}}. /nDrag {{b}}WILD CARD{{/b}} to the area for forming words."/>
-				<language id="spanish" text="Necesitas una {{b}}Z{{/b}} para formar {{b}}PEZ{{/b}}. /nArrastra el {{b}}COMODIN{{/b}} al área para formar palabras."/>
-				<language id="default" text="Necesitas una {{b}}Z{{/b}} para formar {{b}}PEZ{{/b}}. /nArrastra el {{b}}COMODIN{{/b}} al área para formar palabras."/>
+				<language id="spanish" text="Arrastra el {{b}}COMODÍN{{/b}} a una letra, bloque o espacio vacío para transformarlo en la letra de tu elección."/>
+				<language id="default" text="Arrastra el {{b}}COMODÍN{{/b}} a una letra, bloque o espacio vacío para transformarlo en la letra de tu elección."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl64_phase2">
 			<languages>
 				<language id="english" text="Tap the letter {{b}}Z{{/b}} do the {{b}}WILD CARD{{/b}} becomes a {{b}}Z{{/b}}."/>
-				<language id="spanish" text="Toca la letra {{b}}Z{{/b}} para que el {{b}}COMODIN{{/b}} se convierta en una {{b}}Z{{/b}}."/>
-				<language id="default" text="Toca la letra {{b}}Z{{/b}} para que el {{b}}COMODIN{{/b}} se convierta en una {{b}}Z{{/b}}."/>
+				<language id="spanish" text="Escoge la letra que necesitas."/>
+				<language id="default" text="Escoge la letra que necesitas."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl64_phase3">
 			<languages>
 				<language id="english" text="If you need to change the letter of the {{b}}WILD CARD{{/b}} just tap it."/>
-				<language id="spanish" text="Si necesitas cambiar la letra del {{b}}COMODIN{{/b}} basta con tocarlo."/>
-				<language id="default" text="Si necesitas cambiar la letra del {{b}}COMODIN{{/b}} basta con tocarlo."/>
+				<language id="spanish" text="Para cambiar una letra azul basta con tocarla."/>
+				<language id="default" text="Para cambiar una letra azul basta con tocarla."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl64_phase4">
 			<languages>
 				<language id="english" text="Use {{b}}WILD CARD{{/b}} as many times  as you need to pass the level."/>
-				<language id="spanish" text="Usa el {{b}}COMODIN{{/b}} las veces que necesites para pasar el nivel."/>
-				<language id="default" text="Usa el {{b}}COMODIN{{/b}} las veces que necesites para pasar el nivel."/>
+				<language id="spanish" text="Las letras negras no se pueden cambiar."/>
+				<language id="default" text="Las letras negras no se pueden cambiar."/>
 			</languages>
 		</text>
+		<!---<text id="Tutorial_lvl64_phase1">
+			<languages>
+				<language id="english" text="You need a {{b}}Z{{/b}} to form {{b}}PEZ{{/b}}. /nDrag {{b}}WILD CARD{{/b}} to the area for forming words."/>
+				<language id="spanish" text="Arrastra el {{b}}COMODÍN{{/b}} a la letra K para convertirla en {{b}}T{{/b}}."/>
+				<language id="default" text="Arrastra el {{b}}COMODÍN{{/b}} a la letra K para convertirla en {{b}}T{{/b}}."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl64_phase2">
+			<languages>
+				<language id="english" text="Tap the letter {{b}}Z{{/b}} do the {{b}}WILD CARD{{/b}} becomes a {{b}}Z{{/b}}."/>
+				<language id="spanish" text="Teclea la letra {{b}}T{{/b}}."/>
+				<language id="default" text="Teclea la letra {{b}}T{{/b}}."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl64_phase3">
+			<languages>
+				<language id="english" text="If you need to change the letter of the {{b}}WILD CARD{{/b}} just tap it."/>
+				<language id="spanish" text="Arrastra el {{b}}COMODÍN{{/b}} al bloque azul para convertirlo en {{b}}A{{/b}}."/>
+				<language id="default" text="Arrastra el {{b}}COMODÍN{{/b}} al bloque azul para convertirlo en {{b}}A{{/b}}."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl64_phase4">
+			<languages>
+				<language id="english" text="Use {{b}}WILD CARD{{/b}} as many times  as you need to pass the level."/>
+				<language id="spanish" text="Teclea la letra {{b}}A{{/b}}."/>
+				<language id="default" text="Teclea la letra {{b}}A{{/b}}."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl64_phase5">
+			<languages>
+				<language id="english" text="You need a {{b}}Z{{/b}} to form {{b}}PEZ{{/b}}. /nDrag {{b}}WILD CARD{{/b}} to the area for forming words."/>
+				<language id="spanish" text="Arrastra el {{b}}COMODÍN{{/b}} al espacio vacío para convertirlo en {{b}}X{{/b}}."/>
+				<language id="default" text="Arrastra el {{b}}COMODÍN{{/b}} al espacio vacío para convertirlo en {{b}}X{{/b}}."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl64_phase6">
+			<languages>
+				<language id="english" text="Tap the letter {{b}}Z{{/b}} do the {{b}}WILD CARD{{/b}} becomes a {{b}}Z{{/b}}."/>
+				<language id="spanish" text="Teclea la letra {{b}}X{{/b}}."/>
+				<language id="default" text="Teclea la letra {{b}}X{{/b}}."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl64_phase7">
+			<languages>
+				<language id="english" text="If you need to change the letter of the {{b}}WILD CARD{{/b}} just tap it."/>
+				<language id="spanish" text="Forma la palabra {{b}}TAXI{{/b}}."/>
+				<language id="default" text="Forma la palabra {{b}}TAXI{{/b}}."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl64_phase8">
+			<languages>
+				<language id="english" text="Use {{b}}WILD CARD{{/b}} as many times  as you need to pass the level."/>
+				<language id="spanish" text="Teclea las letras azules para transformarlas en otra letra."/>
+				<language id="default" text="Teclea las letras azules para transformarlas en otra letra."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl64_letter1">
+			<languages>
+				<language id="english" text="T"/>
+				<language id="spanish" text="T"/>
+				<language id="default" text="T"/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl64_letter2">
+			<languages>
+				<language id="english" text="A"/>
+				<language id="spanish" text="A"/>
+				<language id="default" text="A"/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl64_letter3">
+			<languages>
+				<language id="english" text="X"/>
+				<language id="spanish" text="X"/>
+				<language id="default" text="X"/>
+			</languages>
+		</text>-->
 		<text id="NoGemsPopUpTitle">
 			<languages>
 				<language id="english" text="Not enough Gems"/>

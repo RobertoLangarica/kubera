@@ -23,6 +23,7 @@ public class TutorialManager : Manager<TutorialManager>
 	public GameManager gameManager;
 	public PowerUpManager powerUpManager;
 	public LinesCreatedAnimation linesAnimation;
+	public InputWildcardPowerUp wildCardInput;
 
 	public void init()
 	{
@@ -168,6 +169,9 @@ public class TutorialManager : Manager<TutorialManager>
 		case(TutorialBase.ENextPhaseEvent.ALL_PIECES_USED):
 			gameManager.OnPiecesFinished += canCompletePhase;
 			break;
+		case(TutorialBase.ENextPhaseEvent.WILDCARD_OVER_OBSTACLE):
+			wildCardInput.OnPowerupOverObstacleLetter += canCompletePhase;
+			break;
 		}
 	}
 
@@ -237,6 +241,9 @@ public class TutorialManager : Manager<TutorialManager>
 			break;
 		case(TutorialBase.ENextPhaseEvent.ALL_PIECES_USED):
 			gameManager.OnPiecesFinished -= canCompletePhase;
+			break;
+		case(TutorialBase.ENextPhaseEvent.WILDCARD_OVER_OBSTACLE):
+			wildCardInput.OnPowerupOverObstacleLetter -= canCompletePhase;
 			break;
 		}
 	}

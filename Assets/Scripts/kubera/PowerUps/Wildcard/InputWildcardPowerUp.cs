@@ -26,6 +26,7 @@ public class InputWildcardPowerUp : MonoBehaviour {
 	public DPowerUpNotification OnPowerupCanceled;
 	public DPowerUpNotification OnPowerupCompleted;
 	public DPowerUpNotification OnPowerupCompletedNoGems;
+	public DPowerUpNotification OnPowerupOverObstacleLetter;
 
 	public delegate void DOnPlayer(bool onPlayer);
 	public DOnPlayer OnPlayer;
@@ -127,22 +128,40 @@ public class InputWildcardPowerUp : MonoBehaviour {
 					Cell cell = cellsManager.getCellUnderPoint (currentSelected.transform.position);
 
 
-					if (cell != null && cell.cellType != Cell.EType.EMPTY && cell.cellType != Cell.EType.OBSTACLE_LETTER) 
+					if (cell != null) 
 					{
-						if(!canUse)
+						if (cell.cellType != Cell.EType.EMPTY && cell.cellType != Cell.EType.OBSTACLE_LETTER && !isWildCard(cell)) 
 						{
-							returnSelectedToInitialState(delaySpeed);
-							completePowerUpNoGems ();
+							if (!canUse) 
+							{
+								returnSelectedToInitialState (delaySpeed);
+								completePowerUpNoGems ();
+							}
+							else 
+							{
+								insertWildcard (cellsManager.getCellUnderPoint (currentSelected.transform.position));
+								completePowerUp (true);
+								destroySelected ();
+							}
 						}
 						else
 						{
-							insertWildcard (cellsManager.getCellUnderPoint (currentSelected.transform.position));
-							completePowerUp (true);
-							destroySelected ();
+							if (cell.cellType == Cell.EType.OBSTACLE_LETTER && OnPowerupOverObstacleLetter != null) 
+							{
+								OnPowerupOverObstacleLetter ();
+							}
+
+							returnSelectedToInitialState(delaySpeed);
+							completePowerUp (false);
 						}
 					}
 					else
 					{
+							if (cell.cellType == Cell.EType.OBSTACLE_LETTER && OnPowerupOverObstacleLetter != null) 
+							{
+								OnPowerupOverObstacleLetter ();
+							}
+
 						returnSelectedToInitialState(delaySpeed);
 						completePowerUp (false);
 					}
@@ -152,6 +171,24 @@ public class InputWildcardPowerUp : MonoBehaviour {
 			}
 			break;
 		}
+	}
+
+	bool isWildCard(Cell cell)
+	{
+		if(cell.content != null)
+		{
+			Letter lett = cell.content.GetComponent<Letter> ();
+	
+			if (lett != null) 
+			{
+				if (lett.wildCard) 
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	void activateRayCasters(bool activate)

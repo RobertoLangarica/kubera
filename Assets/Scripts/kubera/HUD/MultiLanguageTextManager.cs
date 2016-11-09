@@ -184,11 +184,19 @@ public class MultiLanguageTextManager
 
 	public const string TUTORIAL_LV52_PHASE1				= "Tutorial_lvl52_phase1";
 	public const string TUTORIAL_LV52_PHASE2				= "Tutorial_lvl52_phase2";
+	public const string TUTORIAL_LV52_PHASE3				= "Tutorial_lvl52_phase3";
 
 	public const string TUTORIAL_LV64_PHASE1				= "Tutorial_lvl64_phase1";
 	public const string TUTORIAL_LV64_PHASE2				= "Tutorial_lvl64_phase2";
 	public const string TUTORIAL_LV64_PHASE3				= "Tutorial_lvl64_phase3";
 	public const string TUTORIAL_LV64_PHASE4				= "Tutorial_lvl64_phase4";
+	public const string TUTORIAL_LV64_PHASE5				= "Tutorial_lvl64_phase5";
+	public const string TUTORIAL_LV64_PHASE6				= "Tutorial_lvl64_phase6";
+	public const string TUTORIAL_LV64_PHASE7				= "Tutorial_lvl64_phase7";
+	public const string TUTORIAL_LV64_PHASE8				= "Tutorial_lvl64_phase8";
+	public const string TUTORIAL_LV64_LETTER1				= "Tutorial_lvl64_letter1";
+	public const string TUTORIAL_LV64_LETTER2				= "Tutorial_lvl64_letter2";
+	public const string TUTORIAL_LV64_LETTER3				= "Tutorial_lvl64_letter3";
 
 
 	//Invitation to review
