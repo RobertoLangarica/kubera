@@ -244,7 +244,8 @@ public class MapManager : MonoBehaviour
 		paralaxManager.enabled = true;
 		PersistentData.GetInstance ().currentWorld = currentWorld;
 
-		worldsPopUp.scrollSnap.setToWorldPosition (currentWorld - 1);
+		worldsPopUp.indexToshowOnFirstOpen = currentWorld - 1;
+
 		if(fromGame)
 		{
 			Invoke ("onFinishLoad",0.1f);

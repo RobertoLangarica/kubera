@@ -9,7 +9,7 @@ public class ScrollSnap : MonoBehaviour
 	public float lerpTime;
 
 	protected bool onLerp;
-	protected int closerIndex;
+	protected float closerIndex;
 	protected float distance;
 
 	protected float lerpPercent;
@@ -17,25 +17,40 @@ public class ScrollSnap : MonoBehaviour
 	protected float stepTime;
 
 	protected bool waiting;
+	protected Vector2 initialPos;
+	private bool initialized = false;
+	private float forcedIndexToScroll = -1;
 
 	void Start()
 	{
-		stepTime = Time.deltaTime/lerpTime;
+		if(!initialized)
+		{
+			initialize();
+		}
+	}
 
-		scrollRect.normalizedPosition = new Vector2 (0,0);
-
-		distance = 1.0f / (scrollRect.content.childCount-1);
+	public void initialize()
+	{
+		stepTime = 1.0f/lerpTime;
+		distance = 1.0f/(scrollRect.content.childCount-1);
+		initialized = true;
 	}
 
 	void Update()
 	{
+		if(forcedIndexToScroll >= 0)
+		{
+			scrollRect.normalizedPosition = new Vector2(0,forcedIndexToScroll * distance);
+
+			forcedIndexToScroll = -1;
+		}
+
 		if (onLerp) 
 		{
 			if (elapsedTime < lerpTime) 
 			{
-				lerpPercent += stepTime;
-				scrollRect.normalizedPosition = 
-					Vector2.Lerp(scrollRect.normalizedPosition,new Vector2(0,closerIndex * distance),lerpPercent);
+				lerpPercent += stepTime*Time.deltaTime;
+				scrollRect.normalizedPosition = Vector2.Lerp(initialPos,new Vector2(0,closerIndex * distance),lerpPercent);
 				elapsedTime += Time.deltaTime;
 			} 
 			else 
@@ -46,6 +61,7 @@ public class ScrollSnap : MonoBehaviour
 				scrollRect.enabled = true;
 			}
 		}
+
 		if (waiting) 
 		{
 			#if UNITY_EDITOR
@@ -82,9 +98,21 @@ public class ScrollSnap : MonoBehaviour
 		closerIndex = Mathf.RoundToInt(scrollRect.normalizedPosition.y / distance);
 	}
 
-	public void setToWorldPosition(int index)
+	public void scrollToChild(float index, bool animate = true)
 	{
-		onLerp = true;
 		closerIndex = index;
+
+		if(animate)
+		{
+			onLerp = true;
+			initialPos = scrollRect.normalizedPosition;
+		}
+		else
+		{
+			if(!initialized)
+			{
+				forcedIndexToScroll = index;
+			}
+		}
 	}
 }

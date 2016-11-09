@@ -156,6 +156,16 @@ public class HighLightManager : Manager<HighLightManager>
 			}
 			break;
 		case(EHighLightType.WILDCARD_POWERUP):
+			tempCell = cellManager.getAllShowedCels ();
+
+			for (int i = 0; i < tempCell.Length; i++) 
+			{
+				if(tempCell[i].contentType != Piece.EType.LETTER_OBSTACLE)
+				{
+					turnOnHighLights (tempCell[i].transform,EHighLightStatus.NORMAL);
+				}
+			}
+			break;
 		case(EHighLightType.WORD_HINT):
 			tempCell = cellManager.getAllShowedCels ();
 

@@ -75,12 +75,12 @@ public class FacebookNews : PopUpBase {
 		{
 			if (mapManager.worldsPopUp.gameObject.activeSelf) 
 			{
-				print (11);
+				//print (11);
 				mapManager.worldsPopUp.toMessages ();
 			} 
 			else 
 			{
-				print (22);
+				//print (22);
 				mapManager.openPopUp ("facebookNews");
 				messageCountImage.gameObject.SetActive (false);
 			}

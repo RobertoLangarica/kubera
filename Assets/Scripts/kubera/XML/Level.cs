@@ -80,5 +80,4 @@ public class Level
 	[XmlAttribute("tutorialLettersPool")]public string tutorialLettersPool;
 
 	[XmlAttribute("difficulty")]public int difficulty;//Dificultad que de momento no se utiliza
-
 }
