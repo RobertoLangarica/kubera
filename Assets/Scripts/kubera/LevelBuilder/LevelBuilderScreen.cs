@@ -312,10 +312,48 @@ namespace LevelBuilder
 
 		protected void saveLocalData()
 		{
-			//Ordenamos de mayor a menor segun su nombre
-			PersistentData.GetInstance ().levelsData.sortLevels ();
+			processLevelsBeforeSave();
+
 			//Guardamos el archivo
 			PersistentData.GetInstance().levelsData.Save(Application.dataPath+"/Resources/levels_"+languageSelector.options[languageSelector.value].text+".xml");	
+		}
+
+		protected void processLevelsBeforeSave()
+		{
+			//Ordenamos de mayor a menor segun su nombre
+			PersistentData.GetInstance ().levelsData.sortLevels();
+
+			//Configuracion de los bosses
+			bool bossValue = true;
+			Level[] levels = PersistentData.GetInstance ().levelsData.levels;
+
+			for(int i = 0; i < levels.Length; i++)
+			{
+				if(i+1 < levels.Length)
+				{
+					if(levels[i].world == levels[i+1].world)
+					{
+						//No es boss
+						levels[i].isBoss = !bossValue;
+						levels[i].friendsNeeded = 0;
+						levels[i].starsNeeded = 0;
+					}
+					else
+					{
+						//Es boss
+						levels[i].isBoss = bossValue;
+						levels[i].friendsNeeded = 1;
+						levels[i].starsNeeded = Mathf.RoundToInt((levels[i].index-1)*3*.8f);
+					}
+				}
+				else
+				{
+					//Es boss
+					levels[i].isBoss = bossValue;
+					levels[i].friendsNeeded = 1;
+					levels[i].starsNeeded = Mathf.RoundToInt((levels[i].index-1)*3*.8f);
+				}
+			}
 		}
 
 		public void InsertLevel(int index)
