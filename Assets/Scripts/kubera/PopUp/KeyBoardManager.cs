@@ -19,6 +19,9 @@ public class KeyBoardManager : MonoBehaviour
 	public GameManager gameManager;
 	protected List<RectTransform> keys = new List<RectTransform>();
 
+	[HideInInspector]
+	public bool isShowing;
+
 	void Start()
 	{
 		calculateCellSize ();
@@ -35,6 +38,8 @@ public class KeyBoardManager : MonoBehaviour
 		{
 			dictionaryReadyToread ();
 		}
+
+		isShowing = false;
 	}
 
 	protected void calculateCellSize()
@@ -119,6 +124,8 @@ public class KeyBoardManager : MonoBehaviour
 	{
 		gameObject.SetActive (false);
 		gameManager.popUpCompleted ();
+
+		isShowing = false;
 	}
 
 	public void showKeyBoardForWildCard()
@@ -126,6 +133,8 @@ public class KeyBoardManager : MonoBehaviour
 		gameObject.SetActive (true);
 		gameManager.allowGameInput (false);
 		moveAnchorsTo0 ();
+
+		isShowing = true;
 
 		if(AudioManager.GetInstance())
 		{
