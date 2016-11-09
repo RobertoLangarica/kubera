@@ -48,7 +48,8 @@ public class TutorialBase : MonoBehaviour
 		EARNED_POINTS,
 		MOVEMENT_USED,
 		HINT_USED,
-		ALL_PIECES_USED
+		ALL_PIECES_USED,
+		WILDCARD_OVER_OBSTACLE
 	}
 
 	[HideInInspector]public bool allowGridTap;
