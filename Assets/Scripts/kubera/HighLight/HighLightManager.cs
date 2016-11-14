@@ -47,64 +47,12 @@ public class HighLightManager : Manager<HighLightManager>
 	public Color hintHighLight;
 
 	protected List<HighLight> activeHighLight = new List<HighLight>();
-	public CellsManager _cellManager;
-	public HUDManager _hudManager;
-	public WordManager _wordManager;
-	public PowerUpManager _powerUpManager;
+	public CellsManager cellManager;
+	public HUDManager hudManager;
+	public WordManager wordManager;
+	public PowerUpManager powerUpManager;
 
 	protected EHighLightType currentType;
-
-	protected CellsManager cellManager
-	{
-		get
-		{
-			if (_cellManager == null) 
-			{
-				_cellManager = FindObjectOfType<CellsManager> ();
-			}
-
-			return _cellManager;
-		}
-	}
-
-	protected HUDManager hudManager
-	{
-		get
-		{
-			if (_hudManager == null) 
-			{
-				_hudManager = FindObjectOfType<HUDManager> ();
-			}
-
-			return _hudManager;
-		}
-	}
-
-	protected WordManager wordManager
-	{
-		get
-		{
-			if (_wordManager == null) 
-			{
-				_wordManager = FindObjectOfType<WordManager> ();
-			}
-
-			return _wordManager;
-		}
-	}
-
-	protected PowerUpManager powerUpManager
-	{
-		get
-		{
-			if (_powerUpManager == null) 
-			{
-				_powerUpManager = FindObjectOfType<PowerUpManager> ();
-			}
-
-			return _powerUpManager;
-		}
-	}
 
 	/**
 	 * NOTA: El que prenda el highLight se tiene que encargar de apagar su propio HighLight
