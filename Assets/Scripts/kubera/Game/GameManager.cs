@@ -1385,7 +1385,7 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			if(!powerupManager.getPowerupByType(type).isFree)
+			if(!powerupManager.getPowerupByType(type).isFree && ShopikaManager.GetCastedInstance<ShopikaManager>() != null)
 			{
 				ShopikaManager.GetCastedInstance<ShopikaManager>().tryToConsumeGems(powerupManager.getPowerUpPrice(type));
 				expendedGems += powerupManager.getPowerUpPrice (type);
