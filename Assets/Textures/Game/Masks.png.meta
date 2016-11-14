@@ -1,0 +1,151 @@
+fileFormatVersion: 2
+guid: 6a688b13f639b43dca69056471cfd3d8
+timeCreated: 1479148762
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: k-mascarasTutoriales_1
+    21300002: k-mascarasTutoriales_2
+    21300004: k-mascarasTutoriales_3
+    21300006: k-mascarasTutoriales_4
+    21300008: k-mascarasTutoriales_5
+    21300010: k-mascarasTutoriales_6
+    21300012: k-mascarasTutoriales_7
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 4096
+  textureSettings:
+    filterMode: -1
+    aniso: 0
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 5
+  buildTargetSettings:
+  - buildTarget: Android
+    maxTextureSize: 1024
+    textureFormat: 46
+    compressionQuality: 100
+    allowsAlphaSplitting: 0
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: 31
+    compressionQuality: 100
+    allowsAlphaSplitting: 0
+  spriteSheet:
+    sprites:
+    - name: k-mascarasTutoriales_1
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 723
+        width: 168
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: k-mascarasTutoriales_2
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 723
+        width: 168
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: k-mascarasTutoriales_3
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 723
+        width: 168
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: k-mascarasTutoriales_4
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 421
+        width: 168
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: k-mascarasTutoriales_5
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 119
+        width: 168
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: k-mascarasTutoriales_6
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 421
+        width: 168
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: k-mascarasTutoriales_7
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 421
+        width: 168
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
