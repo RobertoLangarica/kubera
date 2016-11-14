@@ -44,7 +44,7 @@ public class InputPiece : MonoBehaviour
 	void OnDrag(DragGesture gesture) 
 	{
 		//Solo se ejecuta una vez por frame (multifinger puede llamarlo mas de una vez)
-		if(!allowInput || lastTimeDraggedFrame == Time.frameCount)
+		if(!allowInput || lastTimeDraggedFrame == Time.frameCount || !enabled)
 		{
 			return;
 		}
@@ -131,6 +131,11 @@ public class InputPiece : MonoBehaviour
 
 	void OnFingerDown(FingerDownEvent  gesture)
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if(currentSelected == false && allowInput && gesture.Raycast.Hits2D != null)
 		{
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
@@ -143,6 +148,11 @@ public class InputPiece : MonoBehaviour
 
 	void OnLongPress(LongPressGesture gesture)
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if (allowInput && gesture.Raycast.Hits2D != null) 
 		{
 			activateRayCasters(false);
@@ -179,6 +189,11 @@ public class InputPiece : MonoBehaviour
 
 	void OnFingerUp()
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if(!somethingDragged && currentSelected != null && isLongPressed)
 		{		
 			DOTween.Kill (currentSelected);

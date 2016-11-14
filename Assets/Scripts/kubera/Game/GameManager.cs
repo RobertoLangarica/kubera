@@ -1319,9 +1319,6 @@ public class GameManager : MonoBehaviour
 
 	public void tryToActivatePowerup(int powerupTypeIndex)
 	{
-		//TODO: Chequeo con transaction manager para ver que onda con las gemas
-		//TODO: Checar lo del precio de los powerUps
-
 		if(!inputPiece.allowInput && !inputRotate.allowInput)
 		{
 			return;

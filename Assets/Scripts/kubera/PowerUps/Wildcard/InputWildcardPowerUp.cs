@@ -80,7 +80,7 @@ public class InputWildcardPowerUp : MonoBehaviour {
 	void OnDrag(DragGesture gesture) 
 	{
 		//Solo se ejecuta una vez por frame (multifinger puede llamarlo mas de una vez)
-		if(lastTimeDraggedFrame == Time.frameCount)
+		if(lastTimeDraggedFrame == Time.frameCount || !enabled)
 		{
 			return;
 		}
@@ -202,6 +202,11 @@ public class InputWildcardPowerUp : MonoBehaviour {
 
 	void OnFingerDown(FingerDownEvent  gesture)
 	{
+		if(!enabled)
+		{
+			return;
+		}
+		
 		if (!currentSelected && gesture.Raycast.Hits2D != null) 
 		{
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
@@ -213,6 +218,11 @@ public class InputWildcardPowerUp : MonoBehaviour {
 
 	void OnFingerUp()
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if(!somethingDragged && currentSelected != null)
 		{				
 			returnSelectedToInitialState (0.2f);
@@ -322,6 +332,11 @@ public class InputWildcardPowerUp : MonoBehaviour {
 
 	void OnLongPress(LongPressGesture gesture)
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if (currentSelected != null) 
 		{
 			/*DOTween.Kill ("InputRotate_InitialPosition", true);
