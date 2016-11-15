@@ -50,7 +50,6 @@ namespace LevelBuilder
 		public LoadingIndicator loadingIndicator;
 
 		public InputField inputWorld;
-		public Toggle bossToggle;
 		public InputField inputFriendsNeeded;
 		public InputField inputStarsNeeded;
 		public InputField inputGemsNeeded;
@@ -284,7 +283,6 @@ namespace LevelBuilder
 			lvlToSave.scoreToStar2 = int.Parse(inputStar2.text);
 			lvlToSave.scoreToStar3 = int.Parse(inputStar3.text);
 			lvlToSave.world = int.Parse (inputWorld.text);
-			lvlToSave.isBoss = bossToggle.isOn;
 			lvlToSave.friendsNeeded = int.Parse(inputFriendsNeeded.text);
 			lvlToSave.gemsNeeded = int.Parse(inputGemsNeeded.text);
 			lvlToSave.starsNeeded = int.Parse(inputStarsNeeded.text);
@@ -446,7 +444,6 @@ namespace LevelBuilder
 			inputStar2.text = level.scoreToStar2.ToString();
 			inputStar3.text = level.scoreToStar3.ToString();
 			inputWorld.text = level.world.ToString ();
-			bossToggle.isOn = level.isBoss;
 			inputFriendsNeeded.text = level.friendsNeeded.ToString ();
 			inputGemsNeeded.text = level.gemsNeeded.ToString ();
 			inputStarsNeeded.text = level.starsNeeded.ToString ();
