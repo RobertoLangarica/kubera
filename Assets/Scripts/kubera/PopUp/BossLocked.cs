@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using Kubera.Data;
 using utils.gems;
+using DG.Tweening;
 
 public class BossLocked : PopUpBase {
 
@@ -11,12 +12,18 @@ public class BossLocked : PopUpBase {
 	public MapManager mapManager;
 	public Text bossLockedUnlockText;
 	public Text bossLockedOptionText;
+	public Text unblockedText;
 	public Text starsText;
 	public Text friendsText;
 	public Text gemsText;
 
 	public Text starsNumber;
 	public Text gemsNumber;
+
+	public GameObject optionPanel;
+	public RectTransform upLock;
+	public Image upLockImage;
+	public Image downLockImage;
 
 	[HideInInspector]public int gemsNeeded;
 	[HideInInspector]public string lvlName;
@@ -56,12 +63,23 @@ public class BossLocked : PopUpBase {
 		{
 			ShopikaManager.GetCastedInstance<ShopikaManager>().tryToConsumeGems(gemsNeeded);
 			mapManager.unlockBoss (fullLvlName);
-			closePressed ();	
 		}
 		else
 		{
 			//TODO: abrir popUp de enviar a shopika
 		}
+	}
+
+	public void unlockAnimation()
+	{
+		optionPanel.SetActive (false);
+		bossLockedUnlockText.gameObject.SetActive (false);
+		bossLockedOptionText.gameObject.SetActive (false);
+		unblockedText.gameObject.SetActive (true);
+		unblockedText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.BOSS_UNLOCKED_TEXT);
+		upLock.DOLocalRotate (new Vector3 (0, 0, 45), 1.3f).OnComplete(()=>{OnComplete("afterBossAnimation");});
+		/*upLockImage.DOFade (0, 1).SetDelay(0.75f);
+		downLockImage.DOFade (0, 2).SetDelay(0.75f).OnComplete(()=>{OnComplete("afterBossAnimation");});*/
 	}
 
 	public void closePressed()

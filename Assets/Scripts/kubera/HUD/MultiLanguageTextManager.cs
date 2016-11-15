@@ -73,6 +73,7 @@ public class MultiLanguageTextManager
 	public const string AFTERGAME_POPUP_NEXT		 		= "afterGameNext";
 	public const string AFTERGAME_POPUP_RETRY		 		= "afterGameRetry";
 	public const string AFTERGAME_POPUP_FACEBOOK	 		= "afterGameFacebook";
+	public const string AFTERGAME_POPUP_CONNECT_FACEBOOK	= "afterGameConnectFacebook";
 
 	public const string LOOSEGAME_POPUP_TEXT		 		= "looseGameText";
 	public const string LOOSEGAME_POPUP_NEXT		 		= "looseGameNext";
@@ -88,6 +89,7 @@ public class MultiLanguageTextManager
 	public const string BOSS_LOCKED_KEY_TEXT 				= "BossLockedKeyText";
 	public const string BOSS_LOCKED_GEM_TEXT 				= "BossLockedGemText";
 	public const string BOSS_LOCKED_STAR_TEXT 				= "BossLockedStarText";
+	public const string BOSS_UNLOCKED_TEXT  				= "UnloclingBossText";
 
 	public const string FULL_LIFES_POPUP_TITLE				= "fullLifesTitle";
 	public const string FULL_LIFES_POPUP_INFO				= "fullLifesInfo";
