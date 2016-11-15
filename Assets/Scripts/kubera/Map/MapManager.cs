@@ -737,7 +737,7 @@ public class MapManager : MonoBehaviour
 		{
 			return;
 		}
-		print (pressed);
+		
 		PersistentData.GetInstance().fromLevelsToGame = true;
 		PersistentData.GetInstance ().setLevelNumber (int.Parse (pressed.lvlName));
 		PersistentData.GetInstance ().lastLevelPlayedName = pressed.lvlName;

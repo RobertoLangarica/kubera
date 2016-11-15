@@ -197,9 +197,14 @@ public class MapLevel : MonoBehaviour
 		facebookBackground.transform.DOLocalMove (nextLevel.facebookBackground.transform.localPosition, 1.5f).OnComplete(()=>
 			{
 				facebookBackground.transform.SetSiblingIndex (0); 
-
-				paralaxManager.finish();
+				Invoke("finish",0.5f);
 			});
+	}
+
+	protected void finish()
+	{
+		paralaxManager.finish();
+
 	}
 
 	public void setParalaxManager(ParalaxManager paralaxManager)
