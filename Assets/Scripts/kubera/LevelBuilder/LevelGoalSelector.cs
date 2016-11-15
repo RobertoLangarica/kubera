@@ -175,6 +175,7 @@ namespace LevelBuilder
 			else if(isPreviouslyUsedWord(wordPopup.getInputValueWithoutAcents()))
 			{
 				wordPopup.showWarning("Ya se utiliza en niveles creados anteriormente");
+				wordPopup.activateAddWord (true);
 			}
 			else
 			{
