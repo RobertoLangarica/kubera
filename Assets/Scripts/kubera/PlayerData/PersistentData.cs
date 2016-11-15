@@ -27,7 +27,7 @@ public class PersistentData : Manager<PersistentData>
 	[HideInInspector]public int lastPlayedLevelPoints = -1;
 	[HideInInspector]public bool nextLevelIsReached;
 	[HideInInspector]public Levels levelsData;
-	[HideInInspector]public ABCDictionary abcDictionary;
+	public ABCDictionary abcDictionary;
 
 	//El idioma en que se encuentra configurado actualmente el juego
 	private string currentLanguage;
@@ -72,7 +72,7 @@ public class PersistentData : Manager<PersistentData>
 			return;
 		}
 
-		abcDictionary = FindObjectOfType<ABCDictionary>();
+		//abcDictionary = FindObjectOfType<ABCDictionary>();
 		onDictionaryFinished += foo;
 		//HARDCODING
 		configureGameForLanguage("spanish");//english,spanish

@@ -47,7 +47,7 @@ namespace utils.gems
 
 				if(prevUser != null && !string.IsNullOrEmpty(prevUser.accesToken) && !string.IsNullOrEmpty(prevUser._id) && !string.IsNullOrEmpty(prevUser.shareCode))
 				{
-					OnUserLoggedIn(prevUser._id, prevUser.accesToken);
+					OnUserLoggedIn(prevUser._id, prevUser.accesToken, prevUser.shareCode);
 				}
 			}
 		}
@@ -55,7 +55,7 @@ namespace utils.gems
 		/**
 		 * Cuando se recibe la data desde el web-component
 		 **/ 
-		public void OnUserLoggedIn(string id, string token, string shareCode = "")
+		public void OnUserLoggedIn(string id, string token, string shareCode)
 		{
 			//Cambio de usuario
 			changeCurrentuser(id);

@@ -88,6 +88,10 @@ public class InputBlockPowerUp : MonoBehaviour
 
 	void OnDrag(DragGesture gesture) 
 	{
+		if(!enabled)
+		{
+			return;
+		}
 		//Solo se ejecuta una vez por frame (multifinger puede llamarlo mas de una vez)
 		if(lastTimeDraggedFrame == Time.frameCount)
 		{
@@ -167,6 +171,11 @@ public class InputBlockPowerUp : MonoBehaviour
 
 	void OnFingerUp()
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if(!somethingDragged && currentSelected != null)
 		{				
 			returnSelectedToInitialState (0.2f);
@@ -234,6 +243,11 @@ public class InputBlockPowerUp : MonoBehaviour
 
 	void OnFingerDown(FingerDownEvent  gesture)
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if (!currentSelected && gesture.Raycast.Hits2D != null) 
 		{
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
@@ -245,6 +259,11 @@ public class InputBlockPowerUp : MonoBehaviour
 
 	void OnLongPress(LongPressGesture gesture)
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if (currentSelected != null) 
 		{
 			/*DOTween.Kill ("InputRotate_InitialPosition", true);

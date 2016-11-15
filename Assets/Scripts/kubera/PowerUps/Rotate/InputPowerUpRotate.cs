@@ -69,7 +69,7 @@ public class InputPowerUpRotate : MonoBehaviour
 	void OnDrag(DragGesture gesture) 
 	{
 		//Solo se ejecuta una vez por frame (multifinger puede llamarlo mas de una vez)
-		if(!allowInput || lastTimeDraggedFrame == Time.frameCount || !allowInputDuringRotate)
+		if(!allowInput || lastTimeDraggedFrame == Time.frameCount || !allowInputDuringRotate || !enabled)
 		{
 			return;
 		}
@@ -151,9 +151,22 @@ public class InputPowerUpRotate : MonoBehaviour
 
 	void OnFingerDown(FingerDownEvent  gesture)
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if (!currentSelected && allowInput && gesture.Raycast.Hits2D != null) 
 		{
 			currentSelected = gesture.Raycast.Hit2D.transform.gameObject;
+
+			/*Piece currentPiece = currentSelected.GetComponent<Piece>();
+			if(currentPiece.positionOnScene == null)
+			{
+				Debug.Log("POSITION ONSCENE");
+				currentPiece.positionOnScene = currentPiece.transform.position;
+			}*/
+
 			offsetPositionOverFinger.y = Mathf.Round ((gesture.Raycast.Hit2D.collider.bounds.size.y - 0.15f) * 15) * .10f;
 		//currentSelected.transform.DOMove(overFingerPosition,.1f).SetId("Input_SelectedPosition");
 
@@ -166,6 +179,11 @@ public class InputPowerUpRotate : MonoBehaviour
 
 	void OnLongPress(LongPressGesture gesture)
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if (allowInput && currentSelected != null) 
 		{
 			/*DOTween.Kill ("InputRotate_InitialPosition", true);
@@ -193,15 +211,20 @@ public class InputPowerUpRotate : MonoBehaviour
 
 	void OnFingerUp()
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		if(!somethingDragged && currentSelected != null && !isLongPressed)
 		{			
 			RotatePiece (currentSelected);
 			reset ();
-			//returnSelectedToInitialState (0.1f);
 		}
 		else if(!somethingDragged && currentSelected != null && isLongPressed)
 		{
-			returnSelectedToInitialState(0.1f);
+			//returnSelectedToInitialState(0.1f);
+			returnSelectedToInitialState(0);
 			reset();
 		}
 
@@ -229,6 +252,7 @@ public class InputPowerUpRotate : MonoBehaviour
 			currentSelected.transform.DOMove (piece.positionOnScene, .1f).SetId("InputRotate_InitialPosition").OnComplete(()=>{allowInput = true; });;
 			currentSelected.transform.DOScale (piece.initialPieceScale, .1f).SetId("InputRotate_SelectedScale");
 		}
+
 		gameManager.showShadowOnPiece (currentSelected, false);
 
 	}
@@ -271,12 +295,18 @@ public class InputPowerUpRotate : MonoBehaviour
 			OnPowerupRotateCompleted ();
 		}
 	}
-
+		
 	public void RotatePiece(GameObject go)
 	{
-		if (go.GetComponent<Piece> ()) 
+		if (!allowInput)
 		{
-			RotatePiece(go.GetComponent<Piece>());
+			return;
+		}
+
+		Piece piece = go.GetComponent<Piece> ();
+		if (piece != null) 
+		{
+			RotatePiece(piece);
 		}
 	}
 
@@ -287,7 +317,7 @@ public class InputPowerUpRotate : MonoBehaviour
 		{
 			return;
 		}
-
+			
 		if (piece.toRotateObject != null) 
 		{
 			isRotating (true);
@@ -300,30 +330,25 @@ public class InputPowerUpRotate : MonoBehaviour
 				AudioManager.GetInstance().Play("rotate");
 			}
 
-			piece.gameObject.transform.DOScale (new Vector3 (0, 0), rotateSpeed).OnComplete (() => {
-
-				/*piece.transform.localRotation = Quaternion.Euler(new Vector3(0,0,piece.transform.rotation.eulerAngles.z+90));
-
-				piece.transform.DOScale (selectedInitialScale, 0.25f).OnComplete (() => {
-					isRotating(false);
-				});*/
+			/*piece.gameObject.transform.DOScale (new Vector3 (0, 0), rotateSpeed).OnComplete (() => {
 				
 				if(OnPieceRotated != null)
 				{
 					OnPieceRotated();
 				}
-
-				DestroyImmediate(piece.gameObject);
-			});
+			});*/
 		}
 	}
 
 	IEnumerator changePiece (Piece piece, Vector3 position, float delay =0)
 	{
 		yield return new WaitForSeconds(delay);
+
 		GameObject go = GameObject.Instantiate (piece.toRotateObject) as GameObject;
 		Piece newPiece = go.GetComponent<Piece> ();
+
 		initializeNewPiece (piece, newPiece);
+
 		go.transform.SetParent (hudManager.showingPiecesContainer);
 		pieceManager.showingPieces.Remove (piece);
 		pieceManager.showingPieces.Add (newPiece);
@@ -331,9 +356,14 @@ public class InputPowerUpRotate : MonoBehaviour
 		go.transform.localScale = new Vector3 (0, 0, 0);
 		go.transform.position = position;
 		go.SetActive (true);
+
 		go.transform.DOScale (selectedInitialScale, 0.25f).OnComplete (() => {
 			isRotating (false);
 		});
+
+		piece.gameObject.SetActive(false);
+
+		GameObject.DestroyImmediate(piece.gameObject);
 	}
 
 	protected void initializeNewPiece (Piece oldPiece, Piece piece)

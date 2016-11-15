@@ -1319,9 +1319,6 @@ public class GameManager : MonoBehaviour
 
 	public void tryToActivatePowerup(int powerupTypeIndex)
 	{
-		//TODO: Chequeo con transaction manager para ver que onda con las gemas
-		//TODO: Checar lo del precio de los powerUps
-
 		if(!inputPiece.allowInput && !inputRotate.allowInput)
 		{
 			return;
@@ -1385,7 +1382,7 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			if(!powerupManager.getPowerupByType(type).isFree)
+			if(!powerupManager.getPowerupByType(type).isFree && ShopikaManager.GetCastedInstance<ShopikaManager>() != null)
 			{
 				ShopikaManager.GetCastedInstance<ShopikaManager>().tryToConsumeGems(powerupManager.getPowerUpPrice(type));
 				expendedGems += powerupManager.getPowerUpPrice (type);

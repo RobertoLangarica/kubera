@@ -516,12 +516,24 @@ public class HUDManager : MonoBehaviour
 
 	public void enablePowerUps()
 	{
-		powerUps [0].gameObject.SetActive((DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count >= 21 || enableAllPowerUps ) ? true : false);//word hint
-		powerUps [1].gameObject.SetActive((DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count >= 13 || enableAllPowerUps ) ? true : false);//bomb
-		powerUps [2].gameObject.SetActive((DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count >= 35 || enableAllPowerUps ) ? true : false);//square
-		powerUps [3].gameObject.SetActive((DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count >= 50 || enableAllPowerUps ) ? true : false);//rotate
-		powerUps [4].gameObject.SetActive((DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count >= 65 || enableAllPowerUps ) ? true : false);//wildcard
-		powerUps [5].gameObject.SetActive(false);
+		if (DataManagerKubera.GetCastedInstance<DataManagerKubera> () != null) 
+		{
+			powerUps [0].gameObject.SetActive((DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count >= 21 || enableAllPowerUps || PersistentData.GetInstance().currentLevel.name == "0021") ? true : false);//word hint
+			powerUps [1].gameObject.SetActive((DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count >= 13 || enableAllPowerUps || PersistentData.GetInstance().currentLevel.name == "0013") ? true : false);//bomb
+			powerUps [2].gameObject.SetActive((DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count >= 35 || enableAllPowerUps || PersistentData.GetInstance().currentLevel.name == "0035") ? true : false);//square
+			powerUps [3].gameObject.SetActive((DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count >= 50 || enableAllPowerUps || PersistentData.GetInstance().currentLevel.name == "0050") ? true : false);//rotate
+			powerUps [4].gameObject.SetActive((DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count >= 65 || enableAllPowerUps || PersistentData.GetInstance().currentLevel.name == "0065") ? true : false);//wildcard
+			powerUps [5].gameObject.SetActive(false);
+		} 
+		else 
+		{
+			powerUps [0].gameObject.SetActive ( true);//word hint
+			powerUps [1].gameObject.SetActive (true);//bomb
+			powerUps [2].gameObject.SetActive (true);//square
+			powerUps [3].gameObject.SetActive (true);//rotate
+			powerUps [4].gameObject.SetActive (true);//wildcard
+			powerUps [5].gameObject.SetActive (true);
+		}
 	}
 
 	public void activateShopika()
