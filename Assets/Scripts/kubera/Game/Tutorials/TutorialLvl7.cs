@@ -11,6 +11,8 @@ public class TutorialLvl7 : TutorialBase
 	protected bool isWaitingForText;
 	protected string tutorialWord;
 
+	protected int count = 0;
+
 	protected override void Start ()
 	{
 		base.Start ();
@@ -37,6 +39,9 @@ public class TutorialLvl7 : TutorialBase
 
 			Invoke ("writeLetterByLetter",initialAnim*2);
 
+			Sprite[] masksAtlas = Resources.LoadAll<Sprite> ("Masks");
+			masks [0].sprite = Sprite.Create(masksAtlas[3].texture,masksAtlas[3].rect,new Vector2(0.5f,0.5f));
+
 			phase = 1;
 			return true;
 		case(1):
@@ -62,6 +67,8 @@ public class TutorialLvl7 : TutorialBase
 
 			Invoke ("writeLetterByLetter", initialAnim * 1.5f);
 
+			masks [0].gameObject.SetActive (false);
+
 			phase = 2;
 			return true;
 		case(2):
@@ -71,7 +78,7 @@ public class TutorialLvl7 : TutorialBase
 
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
+			phaseEvent.Add (ENextPhaseEvent.SELECT_LETTER);
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
@@ -98,7 +105,7 @@ public class TutorialLvl7 : TutorialBase
 
 			phasesPanels [2].SetActive (false);
 			phasesPanels [3].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.SELECT_LETTER);
+			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
@@ -130,6 +137,11 @@ public class TutorialLvl7 : TutorialBase
 		case(1):
 			return true;
 		case(2):
+			count++;
+			if (count < 2) 
+			{
+				return false;
+			}
 			return true;
 		case(3):
 			return true;
@@ -148,7 +160,7 @@ public class TutorialLvl7 : TutorialBase
 		if (isWaitingForText) 
 		{
 			isWaitingForText = false;
-			Invoke ("getTutorialWord",30);
+			Invoke ("getTutorialWord",12);
 		}
 
 		base.OnWritingFinished ();
