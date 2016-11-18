@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
 	public LinesCreatedAnimation linesAnimation;
 	public startGamePopUp startGameReference;
 	public FloatingTextBase gemsExpendedFeedBack;
+	public GameObject eventSystem;
 
 	private Level currentLevel;
 	private List<Letter> gridCharacters = new List<Letter>();
@@ -617,6 +618,7 @@ public class GameManager : MonoBehaviour
 	//TODO: checar el nombre de la funcion
 	protected void onUsersAction(int earnedPoints,int movementsUsed = 1)
 	{
+		CancelInvoke("checkIfLose");
 		addPoints (earnedPoints);
 		substractMoves(movementsUsed);
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
@@ -958,6 +960,8 @@ public class GameManager : MonoBehaviour
 
 	protected void showWinPopUp()
 	{
+		eventSystem.SetActive (false);
+
 		activatePopUp ("winGamePopUp");
 
 		if(AudioManager.GetInstance())
