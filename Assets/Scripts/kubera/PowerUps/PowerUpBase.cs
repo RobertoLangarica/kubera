@@ -20,11 +20,15 @@ public class PowerupBase : MonoBehaviour
 
 	public Transform powerUpButton;
 	public GameObject powerUpBlock;
+	public GameObject stockLeftGO;
+	public Text stockText;
 	public Sprite powerUpImage;
 	public Text priceText;
 	public Text freeText;
 
 	public bool isFree;
+
+	public int stock;
 
 	public virtual void activate(bool canUse)
 	{

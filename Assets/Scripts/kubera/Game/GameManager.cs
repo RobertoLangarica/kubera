@@ -1437,6 +1437,14 @@ public class GameManager : MonoBehaviour
 		return false;
 	}
 
+	protected bool hasStockThisPowerup(PowerupBase.EType powerupType)
+	{
+		if(powerupManager.getPowerupByType(powerupType).stock > 0)
+		{
+			return true;
+		}
+	}
+
 	public void useHintWord(bool use = false)
 	{
 		List<Letter> hintLetters = new List<Letter> ();
