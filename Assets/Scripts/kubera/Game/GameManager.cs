@@ -451,7 +451,6 @@ public class GameManager : MonoBehaviour
 
 	IEnumerator afterPiecePositioned(Piece piece)
 	{
-		yield return new WaitForSeconds (piecePositionedDelay+0.25f);
 
 		bool piecesWhereCreated = false;
 		int pointsMade = 0;
@@ -459,6 +458,7 @@ public class GameManager : MonoBehaviour
 		if(pieceManager.isAShowedPiece(piece))
 		{
 			pieceManager.removeFromShowedPieces (piece);
+			yield return new WaitForSeconds (piecePositionedDelay+0.25f);
 
 			if (pieceManager.getShowingPieces ().Count == 0) 
 			{

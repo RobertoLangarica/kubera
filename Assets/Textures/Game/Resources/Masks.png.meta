@@ -11,6 +11,8 @@ TextureImporter:
     21300008: k-mascarasTutoriales_5
     21300010: k-mascarasTutoriales_6
     21300012: k-mascarasTutoriales_7
+    21300014: k-mascarasTutoriales_8
+    21300016: k-mascarasTutoriales_9
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -57,7 +59,7 @@ TextureImporter:
   buildTargetSettings:
   - buildTarget: Android
     maxTextureSize: 1024
-    textureFormat: 46
+    textureFormat: 47
     compressionQuality: 100
     allowsAlphaSplitting: 0
   - buildTarget: iPhone
@@ -70,10 +72,10 @@ TextureImporter:
     - name: k-mascarasTutoriales_1
       rect:
         serializedVersion: 2
-        x: 1
-        y: 723
-        width: 168
-        height: 300
+        x: 3
+        y: 731
+        width: 163
+        height: 290
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -81,10 +83,10 @@ TextureImporter:
     - name: k-mascarasTutoriales_2
       rect:
         serializedVersion: 2
-        x: 171
-        y: 723
-        width: 168
-        height: 300
+        x: 169
+        y: 731
+        width: 163
+        height: 290
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -92,10 +94,10 @@ TextureImporter:
     - name: k-mascarasTutoriales_3
       rect:
         serializedVersion: 2
-        x: 341
-        y: 723
-        width: 168
-        height: 300
+        x: 335
+        y: 731
+        width: 163
+        height: 290
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -103,10 +105,10 @@ TextureImporter:
     - name: k-mascarasTutoriales_4
       rect:
         serializedVersion: 2
-        x: 1
-        y: 421
-        width: 168
-        height: 300
+        x: 3
+        y: 438
+        width: 163
+        height: 290
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,21 +116,10 @@ TextureImporter:
     - name: k-mascarasTutoriales_5
       rect:
         serializedVersion: 2
-        x: 1
-        y: 119
-        width: 168
-        height: 300
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: k-mascarasTutoriales_6
-      rect:
-        serializedVersion: 2
-        x: 171
-        y: 421
-        width: 168
-        height: 300
+        x: 3
+        y: 145
+        width: 163
+        height: 290
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -136,10 +127,32 @@ TextureImporter:
     - name: k-mascarasTutoriales_7
       rect:
         serializedVersion: 2
-        x: 341
-        y: 421
-        width: 168
-        height: 300
+        x: 169
+        y: 438
+        width: 163
+        height: 290
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: k-mascarasTutoriales_8
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 438
+        width: 163
+        height: 290
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: k-mascarasTutoriales_9
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 145
+        width: 163
+        height: 290
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

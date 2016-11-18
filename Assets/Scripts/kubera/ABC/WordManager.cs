@@ -499,6 +499,8 @@ public class WordManager : MonoBehaviour
 			DOTween.Complete (letter.GetInstanceID());
 		}
 		letter.transform.SetParent (this.transform, true);
+		print (letter.transform);
+		print (letter.letterReference.transform);
 		letter.transform.DOMove (letter.letterReference.transform.position, 0.1f).OnComplete (() => {
 
 			letter.deselect();

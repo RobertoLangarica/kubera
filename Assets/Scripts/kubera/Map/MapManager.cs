@@ -666,6 +666,10 @@ public class MapManager : MonoBehaviour
 		(DataManagerKubera.GetInstance () as DataManagerKubera).unlockLevel (lvlName);
 
 		//TODO Hacer animacion
+
+		openPopUp ("bossLocked");
+		bossLockedPopUp.unlockAnimation ();
+
 		for (int i = 0; i < mapLevels.Count; i++)
 		{
 			if (mapLevels [i].fullLvlName == lvlName)
@@ -675,6 +679,7 @@ public class MapManager : MonoBehaviour
 				mapLevels [i].OnClickNotification += OnLevelUnlockedPressed;
 			}
 		}
+
 	}
 
 	protected void OnBossReachedPressed(MapLevel pressed)
@@ -683,14 +688,11 @@ public class MapManager : MonoBehaviour
 		if ((DataManagerKubera.GetInstance () as DataManagerKubera).getAllEarnedStars() >= pressed.starsNeeded)
 		{
 			unlockBoss (pressed.fullLvlName);
-			if(nextLevel != null)
+			if(nextLevel == null)
 			{
-				OnLevelUnlockedPressed (nextLevel);
+				nextLevel = pressed;
 			}
-			else
-			{
-				OnLevelUnlockedPressed (pressed);
-			}
+			print (pressed);
 		}
 		else
 		{
@@ -698,6 +700,11 @@ public class MapManager : MonoBehaviour
 			bossLockedPopUp.fullLvlName = pressed.fullLvlName;
 
 			bossLockedPopUp.initializeValues (pressed.friendsNeeded,pressed.gemsNeeded,pressed.starsNeeded,pressed.lvlName);
+
+			if(nextLevel == null)
+			{
+				nextLevel = pressed;
+			}
 
 			openPopUp ("bossLocked");
 		}
@@ -1154,6 +1161,9 @@ public class MapManager : MonoBehaviour
 				popUpManager.activatePopUp ("fbConnectPopUp");
 			}
 		break;
+		case "afterBossAnimation":
+			OnLevelUnlockedPressed (nextLevel);
+			break;
 		case "notClose":
 			stopInput(true);
 			break;

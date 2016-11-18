@@ -69,6 +69,9 @@ public class TutorialLvl2 : TutorialBase
 
 			Invoke ("writeLetterByLetter",initialAnim*2);
 
+			Sprite[] masksAtlas = Resources.LoadAll<Sprite> ("Masks");
+			masks [0].sprite = Sprite.Create(masksAtlas[0].texture,masksAtlas[0].rect,new Vector2(0.5f,0.5f));
+
 			phase = 1;
 			return true;
 		case(1):
