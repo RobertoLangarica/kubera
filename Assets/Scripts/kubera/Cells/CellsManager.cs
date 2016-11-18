@@ -40,6 +40,7 @@ public class CellsManager : MonoBehaviour
 		instance = this;
 	}
 
+	#if UNITY_EDITOR
 	void Update()
 	{
 		if (Input.GetKeyDown (KeyCode.K)) 
@@ -47,6 +48,7 @@ public class CellsManager : MonoBehaviour
 			getAvailableVerticalAndHorizontalLines ();
 		}
 	}
+	#endif
 
 	public void setColorIndex(int colorIndex)
 	{

@@ -182,10 +182,12 @@ public class GameManager : MonoBehaviour
 
 		refreshCurrentWordScoreOnHUD (wordManager.wordPoints);
 
-		StartCoroutine (finishLoadingFix ());
+		//Que se deje de ver la carga
+		ScreenManager.GetInstance().hideLoading(3);
+		//StartCoroutine (finishLoadingFix ());
 	}
 
-	IEnumerator finishLoadingFix()
+	/*IEnumerator finishLoadingFix()
 	{
 		if(PersistentData.GetInstance().fromLevelsToGame)
 		{
@@ -199,8 +201,9 @@ public class GameManager : MonoBehaviour
 		{
 			ScreenManager.GetInstance().sceneFinishLoading ();
 		}
-	}
+	}*/
 
+	#if UNITY_EDITOR
 	void Update()
 	{
 		if (Input.GetKeyUp (KeyCode.R)) 
@@ -242,6 +245,7 @@ public class GameManager : MonoBehaviour
 			Debug.Break ();
 		}
 	}
+	#endif
 
 	protected void rotationActivated(GameObject go)
 	{
@@ -1227,7 +1231,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		ScreenManager.GetInstance().GoToScene ("Levels");
+		ScreenManager.GetInstance().GoToSceneAsync("Levels");
 	}
 
 	protected void showDestroyedLetterScore(Cell cell)
