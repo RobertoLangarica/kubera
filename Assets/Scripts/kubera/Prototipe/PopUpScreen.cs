@@ -3,31 +3,29 @@ using System.Collections;
 
 public class PopUpScreen : MonoBehaviour 
 {
+	PopUp popup;
 	// Use this for initialization
 	void Start () 
 	{
-		FindObjectOfType<PopUp>().redBDelegate += goToIntro;
-		FindObjectOfType<PopUp>().greenBDelegate += goToGame;
+		popup = FindObjectOfType<PopUp>();
+		popup.redBDelegate += goToIntro;
+		popup.greenBDelegate += goToGame;
 
-		FindObjectOfType<PopUp>().showUp();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+		popup.showUp();
 	}
 
 	protected void goToIntro()
 	{
 		//ScreenManager.instance.GoToScene("Intro");
-		FindObjectOfType<PopUp>().closePopUp();
-		ScreenManager.GetInstance().GoToSceneAsync("Intro",0.5f);
+		popup.closePopUp();
+		//ScreenManager.GetInstance().GoToSceneAsync("Intro",0.5f);
+		ScreenManager.GetInstance().GoToSceneAsync("Intro");
 	}
 
 	protected void goToGame()
 	{
 		//ScreenManager.instance.GoToScene("Game");
-		FindObjectOfType<PopUp>().closePopUp();
-		ScreenManager.GetInstance().GoToSceneAsync("Game",0.5f);
+		popup.closePopUp();
+		ScreenManager.GetInstance().GoToSceneAsync("Game");
 	}
 }

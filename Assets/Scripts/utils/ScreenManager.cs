@@ -11,17 +11,13 @@ public class ScreenManager : Manager<ScreenManager> {
 	public string firstEditorScreen;//Primer pantalla que se muestra en el editor
 	public string screenBeforeClose;//Pantalla que no tiene back (cierra la app)
 
-	[HideInInspector]
-	public bool blocked = false;
-	[HideInInspector]
-	public bool backAllowed = true;
+	[HideInInspector]public bool blocked = false;
+	[HideInInspector]public bool backAllowed = true;
 
 	public LoadingScene loading;
+	public bool autoHideLoading = true;
 
-	protected float waitTime;
 	protected string waitScreen;
-	private bool destroyed = false;//Indica si el objeto ya se destruyo
-
 	protected Dictionary<string,string> backScreens;
 
 	protected float timeBeforeNextScreen;
@@ -34,51 +30,32 @@ public class ScreenManager : Manager<ScreenManager> {
 
 	public AsyncOperation preloadSceneAsync;
 
-	protected override void Awake ()
-	{
-		base.Awake ();
-
-		backScreens = new Dictionary<string, string>();
-		transform.SetAsLastSibling(); 
-	}
-
 
 	void Start()
 	{
-		if(destroyed)
-		{
-			return;
-		}
-
-		//Cliente
+		backScreens = new Dictionary<string, string>();
 		#if UNITY_EDITOR
 		GoToScene(firstEditorScreen);
 		#else
 		GoToScene(firstScreenName);
 		#endif
 	}
-
-	// Update is called once per frame
-	void Update () {
-
-		if(destroyed)
-		{
-			return;
-		}
-
+		
+	void Update () 
+	{
 		if(waitingScreen != null)
 		{
 			timeBeforeNextScreen -= Time.deltaTime;
 
 			if(timeBeforeNextScreen <= 0)
 			{
-				//AsyncOperation no reporta 100% o isDone == true hasta que se permite activar
+				//AsyncOperation nos reporta 100% o isDone == true hasta que se permite activar
 				if(waitingScreen.progress >= 0.9f && --framesBeforeSwitch < 0)
 				{
-					if(SceneFadeInOut.instance != null)
+					/*if(SceneFadeInOut.instance != null)
 					{
 						//SceneFadeInOut.instance.Fade();
-					}
+					}*/
 					
 					waitingScreen.allowSceneActivation = true;
 					waitingScreen = null;
@@ -88,6 +65,10 @@ public class ScreenManager : Manager<ScreenManager> {
 					{
 						//Cambia de pantalla con delay
 						StartCoroutine("waitForScreen");
+					}
+					else if(autoHideLoading && loading != null)
+					{
+						StartCoroutine("hideLoadingDelayed",2);
 					}
 				}
 			}
@@ -138,9 +119,9 @@ public class ScreenManager : Manager<ScreenManager> {
 		}
 	}
 
-	public void GoToScene(string newScene,bool sameScreen = false)
+	public void GoToScene(string newScene,bool allowSameScreen = false)
 	{
-		if(blocked || waitingScreen != null || (!sameScreen && newScene == SceneManager.GetActiveScene().name))
+		if(blocked || waitingScreen != null || (!allowSameScreen && newScene == SceneManager.GetActiveScene().name))
 		{
 			return;
 		}
@@ -153,17 +134,10 @@ public class ScreenManager : Manager<ScreenManager> {
 			backScreens.Add(newScene,SceneManager.GetActiveScene().name);
 		}
 
-		if(loading != null)
-		{			
-			loading.showLoading (0,()=>{StartCoroutine(loadScene(newScene));});
-		}
-		else
-		{
-			SceneManager.LoadScene (newScene);
-		}
+		SceneManager.LoadScene (newScene);
 	}
 
-	public void preLoadingScene(string level)
+	/*public void preLoadingScene(string level)
 	{
 		preloadSceneAsync = SceneManager.LoadSceneAsync(level);
 		preloadSceneAsync.allowSceneActivation = false;
@@ -193,13 +167,11 @@ public class ScreenManager : Manager<ScreenManager> {
 		{
 			loading.hideLoading (speed);
 		}
-	}
+	}*/
 
-	public void GoToSceneAsync(string newScene,float waitTime = -1, int waitFrames = 10)
+	public void GoToSceneAsync(string newScene, bool allowSameScreen = false, float waitTime = -1, int waitFrames = 10)
 	{	
-		if(blocked){return;}
-
-		if(newScene == SceneManager.GetActiveScene().name)
+		if(blocked || waitingScreen != null || (!allowSameScreen && newScene == SceneManager.GetActiveScene().name))
 		{
 			return;
 		}
@@ -212,6 +184,8 @@ public class ScreenManager : Manager<ScreenManager> {
 		timeBeforeNextScreen = waitTime;
 		framesBeforeSwitch = waitFrames;
 
+		showLoading();
+
 		waitingScreen = SceneManager.LoadSceneAsync(newScene);
 		waitingScreen.allowSceneActivation = false;
 	}
@@ -220,21 +194,82 @@ public class ScreenManager : Manager<ScreenManager> {
 	{
 		blocked = true;
 		waitScreen = newScene;
-		waitTime = delay;
+
+		showLoading();
 
 		//Hay un nivel asincrono cargando?
 		//No se pueden encimar las acciones
 		if(waitingScreen == null)
 		{
-			StartCoroutine("waitForScreen");
+			StartCoroutine("waitForScreen",delay);
 		}
 	}
 
-	IEnumerator waitForScreen()
+	IEnumerator waitForScreen(float delay = 1.5f)
 	{
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(delay);
 		blocked = false;
 		GoToScene(waitScreen);
+
+		if(autoHideLoading && loading != null)
+		{
+			StartCoroutine("hideLoadingDelayed",2);
+		}
 	}
-	
+
+	IEnumerator hideLoadingDelayed(int framesDelay = 1)
+	{
+		for(int i = 0; i < framesDelay; i++)
+		{yield return new WaitForEndOfFrame();}
+
+		loading.hideLoading(0);
+	}
+
+	IEnumerator hideLoadingDelayedByTime(float timeDelay = 1.0f)
+	{
+		yield return new WaitForSeconds(timeDelay);
+
+		loading.hideLoading(0);
+	}
+
+	public void showLoading()
+	{
+		if(loading != null)
+		{			
+			loading.showLoading(0);
+		}
+	}
+
+	/**
+	 * Llamado externo para cuando no se usa el autoHideLoading
+	 **/ 
+	public void hideLoading(int framesDelay = 0)
+	{
+		if(loading != null)
+		{
+			if(framesDelay > 0)
+			{
+				StartCoroutine("hideLoadingDelayed",framesDelay);
+			}
+			else
+			{
+				loading.hideLoading (0);
+			}
+		}
+	}
+
+	public void hideLoading(float timeDelay = 0)
+	{
+		if(loading != null)
+		{
+			if(timeDelay > 0)
+			{
+				StartCoroutine("hideLoadingDelayedByTime",timeDelay);
+			}
+			else
+			{
+				loading.hideLoading (0);
+			}
+		}
+	}
 }

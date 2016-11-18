@@ -24,11 +24,17 @@ public class LoadingScene : MonoBehaviour
 		}
 	}
 
-	public void showLoading(float duration,TweenCallback callBack)
+	public void showLoading(float duration,TweenCallback callBack = null)
 	{
 		backGround.gameObject.SetActive(true);
 		animateKuberaLoading ();
-		backGround.DOFade (1,duration).SetId("backGround").OnComplete(callBack);
+		Tweener tween = backGround.DOFade (1,duration).SetId("backGround");
+
+		if(callBack != null)
+		{
+			tween.OnComplete(callBack);
+		}
+
 		for(int i=0; i<kuberaLoading.Length; i++)
 		{
 			kuberaLoading[i].DOFade (1,duration);

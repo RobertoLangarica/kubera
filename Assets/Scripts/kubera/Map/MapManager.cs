@@ -248,12 +248,16 @@ public class MapManager : MonoBehaviour
 
 		if(fromGame)
 		{
-			Invoke ("onFinishLoad",0.1f);
+			//Invoke ("onFinishLoad",0.1f);
+			ScreenManager.GetInstance().hideLoading(3);
 		}
 		else
 		{
-			Invoke ("onFinishLoad",0.7f);
+			//Invoke ("onFinishLoad",0.7f);
+			ScreenManager.GetInstance().hideLoading(1.0f);
 		}
+
+		//
 
 		if(goToNextLevel)
 		{
@@ -809,10 +813,10 @@ public class MapManager : MonoBehaviour
 
 	public void goToScene(string scene)
 	{
-		ScreenManager.GetInstance().GoToScene (scene);
+		ScreenManager.GetInstance().GoToSceneAsync(scene);
 	}
 
-	protected void onFinishLoad()
+	/*protected void onFinishLoad()
 	{
 		if(fromGame)
 		{
@@ -822,7 +826,7 @@ public class MapManager : MonoBehaviour
 		{
 			ScreenManager.GetInstance().sceneFinishLoading();
 		}
-	}
+	}*/
 
 	public void setGoalPopUp(string goalCondition, System.Object parameters,string levelName,int starsReached)
 	{
@@ -1068,7 +1072,7 @@ public class MapManager : MonoBehaviour
 			stopInput(true);
 			//TODO probablemente no haga falta mostrar el mundo
 			//showWorld();
-			ScreenManager.GetInstance().GoToScene ("Game");
+			ScreenManager.GetInstance().GoToSceneAsync("Game");
 		break;
 		case "continue":
 			if(toStairs)
@@ -1200,7 +1204,7 @@ public class MapManager : MonoBehaviour
 	protected void restartScene()
 	{
 		//SceneManager.LoadScene ("Levels");
-		ScreenManager.GetInstance().GoToScene("Levels",true);
+		ScreenManager.GetInstance().GoToSceneAsync("Levels",true);
 	}
 
 	public void closePopUp()

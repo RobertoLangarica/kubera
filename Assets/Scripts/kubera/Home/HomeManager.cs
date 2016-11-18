@@ -45,7 +45,7 @@ public class HomeManager : MonoBehaviour
 			}
 		}
 
-		Invoke ("startScene",0.3f);
+		//Invoke ("startScene",0.3f);
 
 		if(ShopikaSyncManager.GetCastedInstance<ShopikaSyncManager>().isGettingData)
 		{
@@ -59,12 +59,14 @@ public class HomeManager : MonoBehaviour
 		popUpManager.OnPopUpCompleted += closePopUp;
 
 		currentFacebookStatus = KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().facebookProvider.isLoggedIn;
+
+		ScreenManager.GetInstance().hideLoading(3);
 	}
 
-	void startScene()
+	/*void startScene()
 	{
 		ScreenManager.GetInstance().sceneFinishLoading ();
-	}
+	}*/
 
 	public void goToScene(string scene)
 	{
@@ -73,7 +75,7 @@ public class HomeManager : MonoBehaviour
 			AudioManager.GetInstance().Play("fxButton");
 		}
 
-		ScreenManager.GetInstance().GoToScene (scene);
+		ScreenManager.GetInstance().GoToSceneAsync(scene);
 	}
 
 	public void goToPlay()
@@ -90,7 +92,7 @@ public class HomeManager : MonoBehaviour
 				PersistentData.GetInstance ().fromLevelsToHome = false;
 			}
 
-			ScreenManager.GetInstance().GoToScene ("Levels");
+			ScreenManager.GetInstance().GoToSceneAsync("Levels");
 		}
 		else
 		{
@@ -99,11 +101,11 @@ public class HomeManager : MonoBehaviour
 
 			if(!DirectlyToPlayOnTheFirstTime)
 			{
-				ScreenManager.GetInstance().GoToScene ("Levels");	
+				ScreenManager.GetInstance().GoToSceneAsync("Levels");	
 			}
 			else
 			{
-				ScreenManager.GetInstance().GoToScene ("Game");	
+				ScreenManager.GetInstance().GoToSceneAsync("Game");	
 			}
 
 
@@ -115,7 +117,6 @@ public class HomeManager : MonoBehaviour
 		DataManagerKubera.GetInstance ().deleteData ();
 		if(AudioManager.GetInstance())
 		{
-			
 			AudioManager.GetInstance().Play("fxButton");
 		}
 	}
