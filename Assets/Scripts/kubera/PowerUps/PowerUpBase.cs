@@ -108,4 +108,19 @@ public class PowerupBase : MonoBehaviour
 			freeText.gameObject.SetActive (false);
 		}
 	}
+
+	public void updateStock(int newStock)
+	{
+		stock += newStock;
+		if(stock >0)
+		{
+			stockText.text = stock.ToString ();
+			stockLeftGO.SetActive (true);
+		}
+		else
+		{
+			stockText.text = stock.ToString ();
+			stockLeftGO.SetActive (false);
+		}
+	}
 }
