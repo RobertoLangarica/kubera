@@ -1443,6 +1443,7 @@ public class GameManager : MonoBehaviour
 		{
 			return true;
 		}
+		return false;
 	}
 
 	public void useHintWord(bool use = false)
