@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
 	public startGamePopUp startGameReference;
 	public FloatingTextBase gemsExpendedFeedBack;
 	public GameObject eventSystem;
+	public EventByWordManager eventByWordManager;
 
 	private Level currentLevel;
 	private List<Letter> gridCharacters = new List<Letter>();
@@ -114,6 +115,8 @@ public class GameManager : MonoBehaviour
 
 		hudManager.OnPopUpCompleted += popUpCompleted;
 		hudManager.OnPiecesScaled += checkIfLose;
+
+		eventByWordManager.OnEventFound += addPowerupStock;
 
 		if(ShopikaManager.GetCastedInstance<ShopikaManager>())
 		{
@@ -185,6 +188,8 @@ public class GameManager : MonoBehaviour
 		//Que se deje de ver la carga
 		ScreenManager.GetInstance().hideLoading(3);
 		//StartCoroutine (finishLoadingFix ());
+
+		initEventsFromLevelsData (PersistentData.GetInstance().levelsData.wordEvent);
 	}
 
 	/*IEnumerator finishLoadingFix()
@@ -307,6 +312,11 @@ public class GameManager : MonoBehaviour
 	private void initGoalsFromLevel(Level level)
 	{
 		goalManager.initializeFromString(currentLevel.goal);	
+	}
+
+	private void initEventsFromLevelsData(string data)
+	{
+		eventByWordManager.initializeEventsFromData (data);
 	}
 
 	protected void populateGridFromLevel(Level level)
@@ -694,6 +704,8 @@ public class GameManager : MonoBehaviour
 
 		checkIfLose ();
 		useHintWord (false);
+
+		eventByWordManager.existEventByWord (wordManager.getCurrentWordOnList ());
 	}
 
 	/**
