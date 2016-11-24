@@ -32,7 +32,6 @@ public class ExecutionDelayManager : MonoBehaviour
 
 				if(methodInfo != null)
 				{
-					Debug.Log("Invoking from: "+type.ToString()+"::"+methodName);
 					type.InvokeMember(methodName,BindingFlags.InvokeMethod,null,scripts[currentIndex],null);
 				}
 

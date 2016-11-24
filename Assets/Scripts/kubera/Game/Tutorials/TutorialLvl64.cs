@@ -105,7 +105,7 @@ public class TutorialLvl64 : TutorialBase
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE2),
 				new string[2]{ "{{b}}","{{/b}}"}, new string[2]{ "<b>", "</b>"});
 			instructionsText = instructions [1];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
@@ -113,7 +113,7 @@ public class TutorialLvl64 : TutorialBase
 			doAnimation = false;
 			inputBomb.OnPlayer -= animationController;
 
-			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+			//Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
 
 			phase = 2;
 			return true;

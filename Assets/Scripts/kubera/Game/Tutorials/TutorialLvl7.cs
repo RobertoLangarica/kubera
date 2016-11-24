@@ -24,6 +24,9 @@ public class TutorialLvl7 : TutorialBase
 	{
 		phaseEvent.Clear ();
 
+		int total = int.Parse (hudManager.goalText.text.Split ('/') [1].Split (' ') [0]);
+		int current = int.Parse (hudManager.goalText.text.Split('/')[0]);
+
 		switch (phase) 
 		{
 		case(0):
@@ -85,8 +88,6 @@ public class TutorialLvl7 : TutorialBase
 				foundStringTag = false;
 			}
 
-			int total = int.Parse (hudManager.goalText.text.Split ('/') [1].Split (' ') [0]);
-			int current = int.Parse (hudManager.goalText.text.Split('/')[0]);
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV7_PHASE3).Replace("{{neededScore}}",(total-current).ToString());
 			instructionsText = instructions [2];
 			instructionsText.text = "";
@@ -112,7 +113,7 @@ public class TutorialLvl7 : TutorialBase
 				foundStringTag = false;
 			}
 
-			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV7_PHASE4);
+			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV7_PHASE4).Replace("{{neededScore}}",(total-current).ToString());
 			instructionsText = instructions [3];
 			instructionsText.text = "";
 			instructionIndex = 0;
