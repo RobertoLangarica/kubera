@@ -15,7 +15,7 @@ public class PieceManager : MonoBehaviour
 
 	[HideInInspector]public int piecesShowedCount;
 
-	void Start()
+	public void DelayedStart()
 	{
 		//Para que las instancias ya lo traigan desactivado
 		singleSquarePrefab.GetComponent<BoxCollider2D>().enabled = false;	
