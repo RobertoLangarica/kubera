@@ -63,6 +63,9 @@ public class TutorialLvl13 : TutorialBase
 
 			Invoke ("writeLetterByLetter", initialAnim * 2);
 
+			Sprite[] masksAtlas = Resources.LoadAll<Sprite> ("Masks");
+			masks [0].sprite = Sprite.Create(masksAtlas[6].texture,masksAtlas[6].rect,new Vector2(0.5f,0.5f));
+
 			phase = 1;
 			return true;
 		case(1):
@@ -84,7 +87,7 @@ public class TutorialLvl13 : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV13_PHASE2),
-				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [1];
 			instructionsText.text = "";
 			instructionIndex = 0;
@@ -93,7 +96,9 @@ public class TutorialLvl13 : TutorialBase
 
 			shakeToErrase ();
 
-			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+			Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
+
+			masks [0].gameObject.SetActive (false);
 
 			phase = 2;
 			return true;		

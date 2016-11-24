@@ -12,6 +12,9 @@ public class Levels
 	[XmlIgnoreAttribute]
 	public Dictionary<int,List<Level>> worlds;
 
+	[XmlAttribute("event")]public string wordEvent; 
+
+
 	public Levels(){}
 	
 	public void Save(string path)

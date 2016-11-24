@@ -125,4 +125,24 @@ public class PowerUpManager : MonoBehaviour
 
 		return 0;
 	}
+
+	public bool hasStockThisPowerup(PowerupBase.EType powerupType)
+	{
+		if(getPowerupByType(powerupType).stock > 0)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	public void addPowerupStock(PowerupBase.EType type, int amount)
+	{
+		getPowerupByType (type).updateStock (amount);
+	}
+
+	public void consumePowerupStock(PowerupBase.EType type)
+	{
+		getPowerupByType (type).updateStock (-1);
+	}
 }

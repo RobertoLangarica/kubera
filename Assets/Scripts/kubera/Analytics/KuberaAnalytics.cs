@@ -137,12 +137,17 @@ public class KuberaAnalytics : Manager<KuberaAnalytics>
 
 	public void registerCreatedWord(string level,string word,int length)
 	{
-		if (level == "0001" && word == "FELIZ") 
+		if (level == "0005" && word == "FELIZ") 
 		{
 			return;
 		}
 
-		if (level == "0003" && word == "YEN") 
+		if (level == "0021" && word == "BEY") 
+		{
+			return;
+		}
+
+		if (level == "0021" && word == "CUY") 
 		{
 			return;
 		}
