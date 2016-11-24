@@ -30,6 +30,8 @@ public class ScreenManager : Manager<ScreenManager> {
 
 	public AsyncOperation preloadSceneAsync;
 
+	//Helpers para ver el rendimiendo
+	private float timeBeforeGoToScene;
 
 	void Start()
 	{
@@ -59,6 +61,12 @@ public class ScreenManager : Manager<ScreenManager> {
 					
 					waitingScreen.allowSceneActivation = true;
 					waitingScreen = null;
+
+
+					if(_mustShowDebugInfo)
+					{
+						Debug.Log("Carga de escena: "+(Time.realtimeSinceStartup-timeBeforeGoToScene)+"s");
+					}
 
 					//No se pueden encimar estas 2 acciones
 					if(blocked)
@@ -174,6 +182,11 @@ public class ScreenManager : Manager<ScreenManager> {
 		if(blocked || waitingScreen != null || (!allowSameScreen && newScene == SceneManager.GetActiveScene().name))
 		{
 			return;
+		}
+
+		if(_mustShowDebugInfo)
+		{
+			timeBeforeGoToScene = Time.realtimeSinceStartup;	
 		}
 
 		if(!backScreens.ContainsKey(newScene))

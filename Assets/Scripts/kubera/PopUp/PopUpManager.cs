@@ -11,7 +11,7 @@ public class PopUpManager : MonoBehaviour {
 
 	public List<PopUpBase> openPopUps = new List<PopUpBase>();
 
-	void Start()
+	public void DelayedStart()
 	{
 		/*print (FindObjectsOfType<PopUpBase> ().Length);
 		if(FindObjectsOfType<PopUpBase> ().Length != popups.Count)

@@ -51,7 +51,7 @@ public class InputWords : MonoBehaviour
 
 	public float limitWidth;
 
-	void Start()
+	public void DelayedStart()
 	{
 		onDragFinish += foo;
 		onDragUpdate += foo;

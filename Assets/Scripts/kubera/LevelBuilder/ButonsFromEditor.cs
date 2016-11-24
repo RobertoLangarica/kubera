@@ -7,7 +7,7 @@ public class ButonsFromEditor : MonoBehaviour
 	public GameObject resetSceneButton;
 
 
-	void Start()
+	public void DelayedStart()
 	{
 		if (PersistentData.GetInstance().fromLevelBuilder) 
 		{

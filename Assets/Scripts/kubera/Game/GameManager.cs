@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
 	protected Dictionary<string,int> powerUpsUsedCount = new Dictionary<string, int>();
 	protected int expendedGems = 0;
 
-	void Start()
+	public void DelayedStart()
 	{
 		isAnObjectMissing ();
 

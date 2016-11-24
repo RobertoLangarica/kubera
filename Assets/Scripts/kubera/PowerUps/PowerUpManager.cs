@@ -16,7 +16,7 @@ public class PowerUpManager : MonoBehaviour
 
 	protected PowerupBase powerup;
 
-	void Start()
+	public void DelayedStart()
 	{
 		allowPowerUps = true;
 
