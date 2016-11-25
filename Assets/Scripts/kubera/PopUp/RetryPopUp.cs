@@ -28,7 +28,10 @@ public class RetryPopUp : PopUpBase
 	public RectTransform icon;
 	public RectTransform ContentRT;
 	public Text content;
-
+	public RectTransform leftHeart;
+	public RectTransform rightHeart;
+	public Text textHeart;
+	public Text numberNegative;
 
 	public LeaderboardManager leaderboardManager;
 	public Transform slotParent;
@@ -43,6 +46,8 @@ public class RetryPopUp : PopUpBase
 	public Image topIcon;
 	public Image topIconShadow;
 	protected bool pressed;
+
+	public AnimationCurve heartAnimation;
 
 	void Start()
 	{
@@ -83,7 +88,10 @@ public class RetryPopUp : PopUpBase
 		topLevelImage.sprite = worldTopBackground [PersistentData.GetInstance().currentWorld-1];
 		topIcon.sprite = topIconShadow.sprite = worldIcon [PersistentData.GetInstance().currentWorld-1];
 
-		startAnimation ();
+		int currentLifes = LifesManager.GetInstance ().currentUser.playerLifes + 1;
+		textHeart.text = currentLifes.ToString();
+
+		Invoke ("startAnimation", 0.25f);
 	}
 
 	public void close()
@@ -131,6 +139,8 @@ public class RetryPopUp : PopUpBase
 		//starPanel.anchoredPosition = new Vector3 (0, starPanel.rect.height*2, 0);
 		//facebookInvite.anchoredPosition = new Vector3 (0, -facebookInvite.rect.height*2, 0);
 		this.transform.localScale = new Vector2(2,2);
+
+		numberNegative.color = new Color (1, 1, 1, 0);
 	}
 
 	protected void startAnimation()
@@ -138,6 +148,9 @@ public class RetryPopUp : PopUpBase
 		float fullTime = 0.5f;
 		float quarter = fullTime * 0.25f;
 		float tenth = fullTime * 0.1f;
+
+
+
 
 		leftDoor.DOAnchorPos (Vector2.zero, quarter);
 		rightDoor.DOAnchorPos (Vector2.zero, quarter).OnComplete(()=>
@@ -162,6 +175,17 @@ public class RetryPopUp : PopUpBase
 														scrollRect.horizontalNormalizedPosition = 0;
 
 														facebookInvite.DOScale(new Vector2(1,1),tenth);
+
+														leftHeart.DORotate(new Vector3(0,0,10),0.2f).SetEase(heartAnimation);
+														rightHeart.DORotate(new Vector3(0,0,-10),0.2f).SetEase(heartAnimation).OnComplete(()=>
+															{
+																numberNegative.DOColor(new Color(1,1,1,1),quarter).OnComplete(()=>
+																	{
+																		numberNegative.rectTransform.DOLocalMoveY(textHeart.rectTransform.localPosition.y*2,1f);
+																		numberNegative.DOColor(new Color(1,1,1,0),1f);
+																		textHeart.text = LifesManager.GetInstance().currentUser.playerLifes.ToString();
+																	});
+															});
 													});
 											});
 									});
