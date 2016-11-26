@@ -3,20 +3,18 @@ using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
 
-public class TutorialLvl52 : TutorialBase
+public class TutorialRotate : TutorialBase 
 {
 	public Image powerUpDommy;
 	public GameObject fromPosition;
 
-	public InputBombAndDestroy inputBomb;
-
 	protected bool doAnimation;
 	protected Vector3 posTo;
+	public InputBombAndDestroy inputBomb;
 
 	protected override void Start()
 	{
 		inputBomb.OnPlayer += animationController;
-
 		base.Start ();
 	}
 
@@ -24,9 +22,10 @@ public class TutorialLvl52 : TutorialBase
 	{
 		if(stop)
 		{
-			DOTween.Kill ("Tutorial52");
+			DOTween.Kill ("Tutorial37");
 			CancelInvoke ("powerUpAnim");
-			powerUpDommy.color = new Color(1,1,1,0);
+			powerUpDommy.transform.localScale = new Vector3 (1, 1, 1);
+			powerUpDommy.color =new Color(1,1,1,0);
 			doAnimation = false;
 		}
 		else
@@ -42,21 +41,20 @@ public class TutorialLvl52 : TutorialBase
 	public override bool canMoveToNextPhase ()
 	{
 		phaseEvent.Clear ();
-
 		switch (phase) 
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.BOMB_USED);
+			phaseEvent.Add(ENextPhaseEvent.ROTATE_USED);
 
-			freeBombs = true;
+			freeRotates = true;
 
 			firstAnim ();
 
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.BOMB_BUTTON);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.ROTATE_BUTTON);
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV52_PHASE1),
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE1),
 				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
 			instructionsText = instructions [0];
 			instructionsText.text = "";
@@ -67,7 +65,7 @@ public class TutorialLvl52 : TutorialBase
 			Invoke ("writeLetterByLetter",initialAnim*2);
 
 			Sprite[] masksAtlas = Resources.LoadAll<Sprite> ("Masks");
-			masks [0].sprite = Sprite.Create(masksAtlas[6].texture,masksAtlas[6].rect,new Vector2(0.5f,0.5f));
+			masks [0].sprite = Sprite.Create(masksAtlas[7].texture,masksAtlas[7].rect,new Vector2(0.5f,0.5f));
 
 			phase = 1;
 			return true;
@@ -76,21 +74,22 @@ public class TutorialLvl52 : TutorialBase
 			CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
+			inputBomb.OnPlayer -= animationController;
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.BOMB_USED);
-
-			freeBombs = true;
+			phaseEvent.Add (ENextPhaseEvent.TAP);
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
 				foundStringTag = false;
 			}
 
-			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.BOMB_BUTTON);
+			freeRotates = true;
+
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.ROTATE_BUTTON);
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV52_PHASE2),
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE2),
 				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [1];
 			instructionsText.text = "";
@@ -99,45 +98,13 @@ public class TutorialLvl52 : TutorialBase
 			shakeToErrase ();
 
 			doAnimation = false;
-			inputBomb.OnPlayer -= animationController;
 
 			Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
 			masks [0].gameObject.SetActive (false);
 
 			phase = 2;
-			return true;	
-		case(2):
-			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
-			isWriting = false;
-
-			phasesPanels [1].SetActive (false);
-			phasesPanels [2].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.BOMB_USED);
-
-			freeBombs = true;
-
-			if (instructionIndex < currentInstruction.Length) {
-				changeInstruction = true;
-				foundStringTag = false;
-			}
-
-			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV52_PHASE3),
-				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
-			instructionsText = instructions [2];
-			instructionsText.text = "";
-			instructionIndex = 0;
-
-			shakeToErrase ();
-
-			doAnimation = false;
-
-			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
-
-			phase = 3;
-			return true;		
+			return true;
 		}
 
 		return base.canMoveToNextPhase ();
@@ -148,8 +115,6 @@ public class TutorialLvl52 : TutorialBase
 		switch (phase) 
 		{
 		case(1):
-		case(2):
-		case(3):
 			return true;
 		}
 
@@ -160,7 +125,7 @@ public class TutorialLvl52 : TutorialBase
 	{
 		if (!doAnimation) 
 		{
-			DOTween.Kill ("Tutorial52");
+			DOTween.Kill ("Tutorial37");
 			return;
 		}
 
@@ -168,26 +133,24 @@ public class TutorialLvl52 : TutorialBase
 
 		if (posTo == Vector3.zero) 
 		{
-			posTo = cellManager.getCellsOfSameType(Piece.EType.PIECE)[2].transform.position;
-			posTo.x += cellManager.cellSize;
-			posTo.y -= cellManager.cellSize;
+			posTo = hudManager.rotationImagePositions [1].transform.position;
 		}
 
+		print (hudManager.rotationImagePositions [1].transform.position);
 		powerUpDommy.transform.position = posFrom;
-		powerUpDommy.transform.localScale = Vector3.zero;
 
 		//Los valores de las animaciones los paso Liloo
-		powerUpDommy.transform.DOScale (new Vector3 (1,1,1), 0.5f).SetId("Tutorial52");
-		powerUpDommy.DOColor (new Color(1,1,1,0.75f),0.5f).OnComplete(
+		powerUpDommy.transform.DOScale (new Vector3 (1f, 1f, 1f), 0.5f).SetId("Tutorial37");
+		powerUpDommy.DOColor (new Color(1,1,1,0.5f),0.5f).OnComplete(
 			()=>{
 
 				//TODO: intentar que sea linea curva
 
-				powerUpDommy.DOColor (new Color(1,1,1,0),1).SetId("Tutorial52");
-				powerUpDommy.transform.DOMove (posTo,1).SetId("Tutorial52");
+				powerUpDommy.DOColor (new Color(1,1,1,0),1).SetId("Tutorial37");
+				powerUpDommy.transform.DOMove (posTo,1).SetId("Tutorial37");
 
 			}
-		).SetId("Tutorial52");
+		).SetId("Tutorial37");
 
 		Invoke ("powerUpAnim",3.5f);
 	}

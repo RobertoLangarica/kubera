@@ -53,7 +53,6 @@ public class DestroyPowerUp : PowerupBase
 		bombInput.enabled = true;
 		bombInput.setCurrentSelected(destroyGO);
 		bombInput.OnDrop += powerUpPositioned;
-		bombInput.OnCellSelected += onOverCellChanged;
 		this.canUse = canUse;
 
 		destroyGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
@@ -69,7 +68,6 @@ public class DestroyPowerUp : PowerupBase
 
 	public void powerUpPositioned()
 	{
-		bombInput.OnCellSelected -= onOverCellChanged;
 		Cell cellSelected = cellsManager.getCellUnderPoint(destroyGO.transform.position);
 
 		if(AudioManager.GetInstance())
@@ -89,7 +87,6 @@ public class DestroyPowerUp : PowerupBase
 					bombInput.enabled = false;
 
 					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_POWERUP);
-					HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR);
 
 					OnComplete ();
 				}
@@ -122,14 +119,13 @@ public class DestroyPowerUp : PowerupBase
 		bombInput.enabled = false;
 
 		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_POWERUP);
-		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR);
 
 		OnCancel();
 	}
 
 	IEnumerator startAnim(Cell cellSelected)
 	{
-		Cell[] selection =  cellsManager.getCellsOfSameColor(cellSelected);
+		Cell[] selection =  cellsManager.getCellsOfSameType(cellSelected);
 		List<Cell> selectionList = new List<Cell>();
 		for(int i=0; i<selection.Length; i++)
 		{
@@ -237,35 +233,7 @@ public class DestroyPowerUp : PowerupBase
 		bombInput.enabled = false;
 
 		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_POWERUP);
-		HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR);
 
 		OnCompletedNoGems ();
-	}
-
-	public void onOverCellChanged(Cell cellSelected)
-	{
-		if (cellSelected != null) 
-		{
-			if (highLightCell == null) 
-			{
-				highLightCell = cellSelected;
-			}
-
-			if (cellSelected.contentColor != highLightCell.contentColor) 
-			{
-				HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR);
-			}
-
-
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR,cellSelected);
-			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_POWERUP);
-
-			highLightCell = cellSelected;
-		} 
-		else 
-		{
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.DESTROY_POWERUP);
-			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_SPECIFIC_COLOR);
-		}
 	}
 }

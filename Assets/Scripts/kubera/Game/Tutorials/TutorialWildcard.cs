@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
 
-public class TutorialLvl64 : TutorialBase 
+public class TutorialWildcard : TutorialBase 
 {
 	public KeyBoardManager keyBoard;
 

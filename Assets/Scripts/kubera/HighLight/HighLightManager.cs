@@ -13,7 +13,6 @@ public class HighLightManager : Manager<HighLightManager>
 		SQUARE_POWERUP,
 		WILDCARD_POWERUP,
 		BOMB_SPECIFIC_COLOR,
-		DESTROY_SPECIFIC_COLOR,
 		WORD_HINT,
 		NO_SPACE_FOR_PIECES,
 		PIECES_AREA,
@@ -76,14 +75,6 @@ public class HighLightManager : Manager<HighLightManager>
 			break;
 		case(EHighLightType.BOMB_SPECIFIC_COLOR):
 			tempCell = cellManager.getCellNeighborsOfSameColor (obj as Cell);
-
-			for (int i = 0; i < tempCell.Length; i++) 
-			{
-				turnOnHighLights (tempCell[i].transform,EHighLightStatus.NORMAL);
-			}
-			break;
-		case(EHighLightType.DESTROY_SPECIFIC_COLOR):
-			tempCell = cellManager.getCellsOfSameColor (obj as Cell);
 
 			for (int i = 0; i < tempCell.Length; i++) 
 			{
