@@ -847,10 +847,8 @@ namespace LevelBuilder
 		public void OnPlay()
 		{
 			writeLevelToXML();
-
 			PersistentData.GetInstance().setLevelNumber(int.Parse(currentEditingLevelName),true);
-
-			ScreenManager.GetInstance().GoToScene("Game");
+			ScreenManager.GetInstance().GoToSceneAsync("Game");
 		}
 
 		private void hideLoadingIndicator()

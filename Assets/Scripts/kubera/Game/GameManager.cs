@@ -77,6 +77,8 @@ public class GameManager : MonoBehaviour
 	public LinesCreatedAnimation linesAnimation;
 	public startGamePopUp startGameReference;
 	public FloatingTextBase gemsExpendedFeedBack;
+	public GameObject eventSystem;
+	public EventByWordManager eventByWordManager;
 
 	private Level currentLevel;
 	private List<Letter> gridCharacters = new List<Letter>();
@@ -87,7 +89,7 @@ public class GameManager : MonoBehaviour
 	protected Dictionary<string,int> powerUpsUsedCount = new Dictionary<string, int>();
 	protected int expendedGems = 0;
 
-	void Start()
+	public void DelayedStart()
 	{
 		isAnObjectMissing ();
 
@@ -113,6 +115,8 @@ public class GameManager : MonoBehaviour
 
 		hudManager.OnPopUpCompleted += popUpCompleted;
 		hudManager.OnPiecesScaled += checkIfLose;
+
+		eventByWordManager.OnEventFound += addPowerupStock;
 
 		if(ShopikaManager.GetCastedInstance<ShopikaManager>())
 		{
@@ -181,10 +185,14 @@ public class GameManager : MonoBehaviour
 
 		refreshCurrentWordScoreOnHUD (wordManager.wordPoints);
 
-		StartCoroutine (finishLoadingFix ());
+		//Que se deje de ver la carga
+		ScreenManager.GetInstance().hideLoading(3);
+		//StartCoroutine (finishLoadingFix ());
+
+		initEventsFromLevelsData (PersistentData.GetInstance().levelsData.wordEvent);
 	}
 
-	IEnumerator finishLoadingFix()
+	/*IEnumerator finishLoadingFix()
 	{
 		if(PersistentData.GetInstance().fromLevelsToGame)
 		{
@@ -198,8 +206,9 @@ public class GameManager : MonoBehaviour
 		{
 			ScreenManager.GetInstance().sceneFinishLoading ();
 		}
-	}
+	}*/
 
+	#if UNITY_EDITOR
 	void Update()
 	{
 		if (Input.GetKeyUp (KeyCode.R)) 
@@ -241,6 +250,7 @@ public class GameManager : MonoBehaviour
 			Debug.Break ();
 		}
 	}
+	#endif
 
 	protected void rotationActivated(GameObject go)
 	{
@@ -302,6 +312,11 @@ public class GameManager : MonoBehaviour
 	private void initGoalsFromLevel(Level level)
 	{
 		goalManager.initializeFromString(currentLevel.goal);	
+	}
+
+	private void initEventsFromLevelsData(string data)
+	{
+		eventByWordManager.initializeEventsFromData (data);
 	}
 
 	protected void populateGridFromLevel(Level level)
@@ -447,7 +462,6 @@ public class GameManager : MonoBehaviour
 
 	IEnumerator afterPiecePositioned(Piece piece)
 	{
-		yield return new WaitForSeconds (piecePositionedDelay+0.25f);
 
 		bool piecesWhereCreated = false;
 		int pointsMade = 0;
@@ -455,6 +469,7 @@ public class GameManager : MonoBehaviour
 		if(pieceManager.isAShowedPiece(piece))
 		{
 			pieceManager.removeFromShowedPieces (piece);
+			yield return new WaitForSeconds (piecePositionedDelay+0.25f);
 
 			if (pieceManager.getShowingPieces ().Count == 0) 
 			{
@@ -617,6 +632,7 @@ public class GameManager : MonoBehaviour
 	//TODO: checar el nombre de la funcion
 	protected void onUsersAction(int earnedPoints,int movementsUsed = 1)
 	{
+		CancelInvoke("checkIfLose");
 		addPoints (earnedPoints);
 		substractMoves(movementsUsed);
 		updateHudGameInfo(remainingMoves,pointsCount,goalManager.currentCondition);
@@ -688,6 +704,8 @@ public class GameManager : MonoBehaviour
 
 		checkIfLose ();
 		useHintWord (false);
+
+		eventByWordManager.existEventByWord (wordManager.getCurrentWordOnList ());
 	}
 
 	/**
@@ -935,9 +953,15 @@ public class GameManager : MonoBehaviour
 
 	protected void secondChanceFreeBombs()
 	{
-		bombsUsed += secondChance.bombs;
-		SecondChanceFreeBombs.actualizeFreeBombs (bombsUsed);
-		SecondChanceFreeBombs.activateFreeBombs (true);
+		//bombsUsed += secondChance.bombs;
+		addPowerupStock (PowerupBase.EType.BOMB, secondChance.bombs);
+		//SecondChanceFreeBombs.actualizeFreeBombs (bombsUsed);
+		//SecondChanceFreeBombs.activateFreeBombs (true);
+	}
+
+	protected void addPowerupStock(PowerupBase.EType type,int amount)
+	{
+		powerupManager.addPowerupStock (type, amount);
 	}
 
 	private void OnLevelGoalAchieved()
@@ -958,6 +982,8 @@ public class GameManager : MonoBehaviour
 
 	protected void showWinPopUp()
 	{
+		eventSystem.SetActive (false);
+
 		activatePopUp ("winGamePopUp");
 
 		if(AudioManager.GetInstance())
@@ -1223,7 +1249,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		ScreenManager.GetInstance().GoToScene ("Levels");
+		ScreenManager.GetInstance().GoToSceneAsync("Levels");
 	}
 
 	protected void showDestroyedLetterScore(Cell cell)
@@ -1333,13 +1359,13 @@ public class GameManager : MonoBehaviour
 			AudioManager.GetInstance().Play("fxButton");
 		}
 
-		if (!powerupManager.getPowerupByType ((PowerupBase.EType)powerupTypeIndex).isFree) 
+		if (powerupManager.getPowerupByType ((PowerupBase.EType)powerupTypeIndex).isFree ||  powerupManager.hasStockThisPowerup((PowerupBase.EType) powerupTypeIndex)) 
 		{
-			gemsExpendedFeedBack.myText.text = "-" + powerupManager.getPowerUpPrice ((PowerupBase.EType)powerupTypeIndex);
+			gemsExpendedFeedBack.myText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FREE_POWERUP_PRICE);
 		} 
 		else 
 		{
-			gemsExpendedFeedBack.myText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.FREE_POWERUP_PRICE);
+			gemsExpendedFeedBack.myText.text = "-" + powerupManager.getPowerUpPrice ((PowerupBase.EType)powerupTypeIndex);
 		}
 		gemsExpendedFeedBack.gameObject.SetActive (true);
 		gemsExpendedFeedBack.myText.transform.DOScale (new Vector3 (1, 1, 1), 0.15f);
@@ -1355,7 +1381,7 @@ public class GameManager : MonoBehaviour
 		#endif
 
 		//Checa si tiene dinero para usar el poder
-		return powerupManager.getPowerupByType(type).isFree || ShopikaManager.GetCastedInstance<ShopikaManager>().isPossibleToConsumeGems(powerupManager.getPowerUpPrice(type));
+		return powerupManager.getPowerupByType(type).isFree || powerupManager.hasStockThisPowerup(type) || ShopikaManager.GetCastedInstance<ShopikaManager>().isPossibleToConsumeGems(powerupManager.getPowerUpPrice(type));
 	}
 
 	private void OnPowerupCanceled(PowerupBase.EType type)
@@ -1375,9 +1401,10 @@ public class GameManager : MonoBehaviour
 	{
 		powerUpUsed = true;
 
-		if(isBombAndSecondChance(type))
+		if(powerupManager.hasStockThisPowerup(type))
 		{
-			useFreeBomb ();
+			powerupManager.consumePowerupStock (type);
+			//TODO ver que onda con los powerUps de stok
 			powerUpsUsedCount[type.ToString()]++;
 		}
 		else
@@ -1390,11 +1417,11 @@ public class GameManager : MonoBehaviour
 
 				gemsExpendedFeedBack.myText.text = "-" + powerupManager.getPowerUpPrice (type);
 			}
-
-			Vector3 tempV3 = gemsExpendedFeedBack.transform.position;
-			tempV3.y += cellManager.cellSize;
-			gemsExpendedFeedBack.startAnim (gemsExpendedFeedBack.transform.position,tempV3);
 		}
+
+		Vector3 tempV3 = gemsExpendedFeedBack.transform.position;
+		tempV3.y += cellManager.cellSize;
+		gemsExpendedFeedBack.startAnim (gemsExpendedFeedBack.transform.position,tempV3);
 
 		allowGameInput(true);
 	}
@@ -1408,21 +1435,18 @@ public class GameManager : MonoBehaviour
 		allowGameInput(true);
 	}
 
-	protected void useFreeBomb()
-	{
-		bombsUsed--;
-
-		SecondChanceFreeBombs.actualizeFreeBombs (bombsUsed);
-
-		if(bombsUsed == 0)
-		{
-			SecondChanceFreeBombs.activateFreeBombs (false);
-		}
-	}
-
 	protected bool isBombAndSecondChance(PowerupBase.EType type)
 	{
 		if(type == PowerupBase.EType.BOMB && bombsUsed > 0)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	protected bool hasStockThisPowerup(PowerupBase.EType powerupType)
+	{
+		if(powerupManager.getPowerupByType(powerupType).stock > 0)
 		{
 			return true;
 		}

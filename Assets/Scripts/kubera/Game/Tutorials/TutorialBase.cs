@@ -73,6 +73,8 @@ public class TutorialBase : MonoBehaviour
 
 	public List<GameObject> phasesPanels;
 
+	public List<Image> masks;
+
 	[HideInInspector]public int phase;
 	[HideInInspector]public string phaseObj;
 	[HideInInspector]public List<ENextPhaseEvent> phaseEvent;

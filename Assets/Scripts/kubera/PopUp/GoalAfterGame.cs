@@ -88,12 +88,11 @@ public class GoalAfterGame : PopUpBase {
 	{
 		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 		{
-			//TODO hardcoding de textos
-			inviteFriendsText.text = "invita Amigos";
+			inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_FACEBOOK);
 		}
 		else
 		{
-			inviteFriendsText.text = "Conectate";
+			inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_CONNECT_FACEBOOK);
 		}
 	}
 
@@ -276,13 +275,12 @@ public class GoalAfterGame : PopUpBase {
 		soundButton ();
 		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
 		{
-			//TODO HARCODING
-			inviteFriendsText.text = "invita Amigos";
+			inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_FACEBOOK);
 			FacebookManager.GetInstance ().requestNewFriends ();
 		}
 		else
 		{
-			inviteFriendsText.text = "Conectate";
+			inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_CONNECT_FACEBOOK);
 			KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookLogin();
 		}
 	}

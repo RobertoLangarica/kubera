@@ -98,10 +98,7 @@ public class FriendsController : MonoBehaviour {
 			friend.setFriendImage (image);
 			friend.imageSetted = true;
 		}
-		else
-		{
-			//friend.getTextureFromURL (imageURL);
-		}
+
 		friend.userName.text = userName;
 		friends.Add (friend);
 	}

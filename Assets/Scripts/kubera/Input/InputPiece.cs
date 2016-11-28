@@ -28,7 +28,7 @@ public class InputPiece : MonoBehaviour
 
 	protected bool isLongPressed = false;
 
-	void Start()
+	public void DelayedStart()
 	{
 		if(rayCasters != null)
 		{

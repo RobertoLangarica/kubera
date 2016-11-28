@@ -1,0 +1,21 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:8fc5aeb02d29074379ec6cd339b872d5:de9c5de24d2a4a442992ff2bd4bebd4c:ae951adef0b6cb6fb3d5ed659ee354c6$
+#
+:format=40000
+:texture=Masks.png
+:size=512x1024
+:pivotpoints=enabled
+
+k-mascarasTutoriales_1;3;731;163;290;0.5;0.5
+k-mascarasTutoriales_2;169;731;163;290;0.5;0.5
+k-mascarasTutoriales_3;335;731;163;290;0.5;0.5
+k-mascarasTutoriales_4;3;438;163;290;0.5;0.5
+k-mascarasTutoriales_5;3;145;163;290;0.5;0.5
+k-mascarasTutoriales_7;169;438;163;290;0.5;0.5
+k-mascarasTutoriales_8;335;438;163;290;0.5;0.5
+k-mascarasTutoriales_9;169;145;163;290;0.5;0.5

@@ -494,8 +494,8 @@
 		<text id="Tutorial_lvl7_phase4">
 			<languages>
 				<language id="english" text="Get {{score}} points to complete the level."/>
-				<language id="spanish" text="El valor de la palabra que estás formando aparece arriba de la palabra y es la suma de los valores de cada letra usada."/>
-				<language id="default" text="El valor de la palabra que estás formando aparece arriba de la palabra y es la suma de los valores de cada letra usada."/>
+				<language id="spanish" text="Arriba de la palabra aparece su valor y es la suma de los valores de cada letra usada. Haz una palabra de {{neededScore}} puntos para pasar el nivel."/>
+				<language id="default" text="Arriba de la palabra aparece su valor y es la suma de los valores de cada letra usada. Haz una palabra de {{neededScore}} puntos para pasar el nivel."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl7_word">
@@ -919,6 +919,13 @@
 				<language id="default" text="INVITAR AMIGOS"/>
 			</languages>
 		</text>
+		<text id="afterGameConnectFacebook">
+			<languages>
+				<language id="english" text="CONNECT"/>
+				<language id="spanish" text="CONECTATE"/>
+				<language id="default" text="CONECTATE"/>
+			</languages>
+		</text>
 
 		<text id="levlTextName">
 			<languages>
@@ -983,6 +990,13 @@
 				<language id="english" text="Play now"/>
 				<language id="spanish" text="JUEGA AHORA"/>
 				<language id="default" text="JUEGA AHORA"/>
+			</languages>
+		</text>
+		<text id="UnloclingBossText">
+			<languages>
+				<language id="english" text="Unlocking Boss"/>
+				<language id="spanish" text="Jefe desbloqueado"/>
+				<language id="default" text="Jefe desbloqueado"/>
 			</languages>
 		</text>
 

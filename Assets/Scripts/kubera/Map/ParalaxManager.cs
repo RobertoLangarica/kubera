@@ -151,8 +151,6 @@ public class ParalaxManager : MonoBehaviour {
 
 	public void finish()
 	{
-		print ("finish");
-		print (OnFinish);
 		if(OnFinish != null)
 		{
 			OnFinish();

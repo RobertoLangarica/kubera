@@ -3,14 +3,15 @@ using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
 
-public class TutorialLvl13 : TutorialBase 
+public class TutorialLvlHint : TutorialBase 
 {
 	public Image powerUpDommy;
 	public GameObject fromPosition;
-	public InputBlockPowerUp inputBlock;
+	public InputBombAndDestroy inputBlock;
 
 	protected bool doAnimation;
 	protected Vector3 posTo;
+	protected int count = 0;
 
 	protected override void Start()
 	{
@@ -22,7 +23,7 @@ public class TutorialLvl13 : TutorialBase
 	{
 		if(stop)
 		{
-			DOTween.Kill ("Tutorial13");
+			DOTween.Kill ("Tutorial22");
 			CancelInvoke ("powerUpAnim");
 			powerUpDommy.color = new Color(1,1,1,0);
 			doAnimation = false;
@@ -44,16 +45,17 @@ public class TutorialLvl13 : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.BLOCK_USED);
+			phaseEvent.Add (ENextPhaseEvent.HINT_USED);
+			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
-			freeBlocks = true;
+			freeHint = true;
 
 			firstAnim ();
 
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SQUARE_BUTTON);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WORD_HINT_BUTTON);
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV13_PHASE1),
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV22_PHASE1),
 				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
 			instructionsText = instructions [0];
 			instructionsText.text = "";
@@ -62,6 +64,9 @@ public class TutorialLvl13 : TutorialBase
 			Invoke ("powerUpAnim", 1);
 
 			Invoke ("writeLetterByLetter", initialAnim * 2);
+
+			Sprite[] masksAtlas = Resources.LoadAll<Sprite> ("Masks");
+			masks [0].sprite = Sprite.Create(masksAtlas[5].texture,masksAtlas[5].rect,new Vector2(0.5f,0.5f));
 
 			phase = 1;
 			return true;
@@ -72,10 +77,9 @@ public class TutorialLvl13 : TutorialBase
 
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.BLOCK_USED);
-			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
+			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
-			freeBlocks = true;
+			freeHint = true;
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
@@ -83,9 +87,76 @@ public class TutorialLvl13 : TutorialBase
 			}
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV13_PHASE2),
-				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV22_PHASE2),
+				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [1];
+			instructionsText.text = "";
+			instructionIndex = 0;
+
+			doAnimation = false;
+
+			shakeToErrase ();
+
+			Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
+
+			masks [0].gameObject.SetActive (false);
+
+			phase = 2;
+			return true;
+		case(2):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
+			phasesPanels [0].SetActive (false);
+			phasesPanels [1].SetActive (false);
+			phasesPanels [2].SetActive (true);
+			phaseEvent.Add (ENextPhaseEvent.BLOCK_USED);
+			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
+
+			freeHint = true;
+
+			if (instructionIndex < currentInstruction.Length) {
+				changeInstruction = true;
+				foundStringTag = false;
+			}
+
+			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV22_PHASE3),
+				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+			instructionsText = instructions [2];
+			instructionsText.text = "";
+			instructionIndex = 0;
+
+			doAnimation = false;
+
+			shakeToErrase ();
+
+			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+
+			phase = 4;
+			return true;	
+		case(3):
+			//Deteniendo escritura previa
+			CancelInvoke ("writeLetterByLetter");
+			isWriting = false;
+
+			phasesPanels [0].SetActive (false);
+			phasesPanels [1].SetActive (false);
+			phasesPanels [2].SetActive (true);
+			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
+
+			freeHint = true;
+
+			if (instructionIndex < currentInstruction.Length) {
+				changeInstruction = true;
+				foundStringTag = false;
+			}
+
+			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV22_PHASE4),
+				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+			instructionsText = instructions [2];
 			instructionsText.text = "";
 			instructionIndex = 0;
 
@@ -96,35 +167,6 @@ public class TutorialLvl13 : TutorialBase
 			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
 
 			phase = 2;
-			return true;		
-		case(2):
-			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
-			isWriting = false;
-
-			phasesPanels [1].SetActive (false);
-			phasesPanels [2].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.POSITIONATE_PIECE);
-
-			freeBlocks = true;
-
-			if (instructionIndex < currentInstruction.Length) {
-				changeInstruction = true;
-				foundStringTag = false;
-			}
-
-			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV13_PHASE3),
-				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
-			instructionsText = instructions [2];
-			instructionsText.text = "";
-			instructionIndex = 0;
-
-			shakeToErrase ();
-
-			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
-
-			phase = 3;
 			return true;	
 		}
 
@@ -136,10 +178,18 @@ public class TutorialLvl13 : TutorialBase
 		switch (phase) 
 		{
 		case(1):
+			if (cellManager.getAllEmptyCells ().Length == 12) 
+			{
+				phase = 3;
+			}
 			return true;
 		case(2):
-			return true;
 		case(3):
+			count++;
+			if (count < 3) 
+			{
+				return false;
+			}
 			return true;
 		}
 
@@ -148,14 +198,13 @@ public class TutorialLvl13 : TutorialBase
 
 	protected void powerUpAnim()
 	{
-		if (!doAnimation || cellManager.getAllEmptyCells().Length < 3) 
+		if (!doAnimation || cellManager.getAllEmptyCells().Length < 9) 
 		{
-			DOTween.Kill ("Tutorial13");
+			DOTween.Kill ("Tutorial22");
 			return;
 		}
 
 		Vector3 posFrom = fromPosition.transform.position;
-
 		if (posTo == Vector3.zero) 
 		{
 			posTo = cellManager.getAllEmptyCells () [3].transform.position;
@@ -167,17 +216,17 @@ public class TutorialLvl13 : TutorialBase
 		powerUpDommy.transform.localScale = Vector3.zero;
 
 		//Los valores de las animaciones los paso Liloo
-		powerUpDommy.transform.DOScale (new Vector3 (1,1,1), 0.5f).SetId("Tutorial13");
+		powerUpDommy.transform.DOScale (new Vector3 (1,1,1), 0.5f).SetId("Tutorial22");
 		powerUpDommy.DOColor (new Color(1,1,1,0.75f),0.5f).OnComplete(
 			()=>{
 
 				//TODO: intentar que sea linea curva
 
-				powerUpDommy.DOColor (new Color(1,1,1,0),1).SetId("Tutorial13");
-				powerUpDommy.transform.DOMove (posTo,1).SetId("Tutorial13");
+				powerUpDommy.DOColor (new Color(1,1,1,0),1).SetId("Tutorial22");
+				powerUpDommy.transform.DOMove (posTo,1).SetId("Tutorial22");
 
 			}
-		).SetId("Tutorial13");
+		).SetId("Tutorial22");
 
 		Invoke ("powerUpAnim",3.5f);
 	}

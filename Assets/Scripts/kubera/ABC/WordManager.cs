@@ -86,7 +86,7 @@ public class WordManager : MonoBehaviour
 	public List<Letter> hintedLetters;
 
 
-	void Awake()
+	public void DelayedAwake()
 	{
 		letters = new List<Letter>(maxLetters);
 		currentWordPosibleState = EWordState.WORDS_AVAILABLE;
@@ -133,7 +133,7 @@ public class WordManager : MonoBehaviour
 
 	}
 
-	void Start()
+	public void DelayedStart()
 	{
 		//Tamaño de las celdas
 
@@ -499,6 +499,7 @@ public class WordManager : MonoBehaviour
 			DOTween.Complete (letter.GetInstanceID());
 		}
 		letter.transform.SetParent (this.transform, true);
+	
 		letter.transform.DOMove (letter.letterReference.transform.position, 0.1f).OnComplete (() => {
 
 			letter.deselect();

@@ -290,7 +290,7 @@ public class InputPowerUpRotate : MonoBehaviour
 		activateRotateImage (cancel,posOnScene);
 
 		// por los delay cuando es 1 es cuando solo queda la pieza que se esta poniendo
-		if (pieceManager.getShowingPieces ().Count == 1) 
+		if (pieceManager.getShowingPieces ().Count == 0) 
 		{
 			OnPowerupRotateCompleted ();
 		}
