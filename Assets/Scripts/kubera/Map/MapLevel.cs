@@ -28,6 +28,7 @@ public class MapLevel : MonoBehaviour
 	public EMapLevelStars stars;
 	public EMapLevelsStatus status;
 	public Text lvlNameText;
+	public Color currentLevelColor;
 
 	public Sprite starsPassed;
 	public Sprite starsUnpassed;
@@ -36,6 +37,7 @@ public class MapLevel : MonoBehaviour
 
 	public Sprite levelLockedSprite;
 	public Sprite levelNormalSprite;
+	public Sprite levelCurrentSprite;
 
 	public Sprite levelLockedBossSprite;
 	public Sprite levelNormalBossSprite;
@@ -135,8 +137,11 @@ public class MapLevel : MonoBehaviour
 			levelIcon.sprite = levelUnlockedBossSprite;
 			break;
 		case(EMapLevelsStatus.NORMAL_PASSED):
-		case(EMapLevelsStatus.NORMAL_REACHED):
 			levelIcon.sprite = levelNormalSprite;
+			break;
+		case(EMapLevelsStatus.NORMAL_REACHED):
+			levelIcon.sprite = levelCurrentSprite;
+			//lvlNameText.color = currentLevelColor;
 			break;
 		}
 	}

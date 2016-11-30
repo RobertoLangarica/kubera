@@ -184,9 +184,9 @@
 		</text>
 		<text id="hudLevel">
 			<languages>
-				<language id="english" text="LVL"/>
-				<language id="spanish" text="NVL"/>
-				<language id="default" text="NVL"/>
+				<language id="english" text="Level"/>
+				<language id="spanish" text="Nivel"/>
+				<language id="default" text="Nivel"/>
 			</languages>
 		</text>
 		<text id="hudScore">
@@ -891,11 +891,18 @@
 			</languages>
 		</text>
 
-		<text id="afterGamePoints">
+		<text id="afterGamePointsUper">
 			<languages>
 				<language id="english" text="Score"/>
 				<language id="spanish" text="Puntuación"/>
 				<language id="default" text="Puntuación"/>
+			</languages>
+		</text>
+		<text id="afterGamePoints">
+			<languages>
+				<language id="english" text="Points"/>
+				<language id="spanish" text="Puntos"/>
+				<language id="default" text="Puntos"/>
 			</languages>
 		</text>
 		<text id="afterGameNext">
@@ -955,7 +962,13 @@
 				<language id="default" text="INVITAR AMIGOS"/>
 			</languages>
 		</text>
-
+		<text id="afterGameRetryNoLifes">
+			<languages>
+				<language id="english" text="ASK FOR LIFES"/>
+				<language id="spanish" text="PIDE VIDAS"/>
+				<language id="default" text="PIDE VIDAS"/>
+			</languages>
+		</text>
 
 		<text id="BossLockedUnlockText">
 			<languages>

@@ -100,6 +100,11 @@ public class MapManager : MonoBehaviour
 					}
 					persistentInstance.maxWorldReached = currentWorld;
 				}
+
+				if(currentWorld == 0)
+				{
+					currentWorld++;
+				}
 			}
 		}
 		else
@@ -1118,9 +1123,20 @@ public class MapManager : MonoBehaviour
 		case "toFacebookMessages":
 			openPopUp ("facebookNews");
 		break;
+		case "askLifes":
+			if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.isLoggedIn)
+			{
+				openPopUp ("fbFriendsRequestPanel");
+				fbFriendsRequestPanel.openFriendsRequestPanel (FBFriendsRequestPanel.ERequestType.ASK_LIFES);
+			}
+			else
+			{
+				popUpManager.activatePopUp ("fbConnectPopUp");
+			}
+		break;
 		case "NoLifes":
 			openPopUp ("NoLifes");
-		break;
+			break;
 		case "noLifesClose":
 			if (popUpManager.isPopUpOpen ("goalPopUp") || popUpManager.isPopUpOpen ("retryPopUp")) {
 				stopInput (true);
