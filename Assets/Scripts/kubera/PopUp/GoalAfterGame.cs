@@ -7,21 +7,23 @@ using Kubera.Data.Sync;
 
 public class GoalAfterGame : PopUpBase {
 
-	public Text LevelNumber;
-	public Text LevelNumberShadow;
+	public Text LevelNumberUnit;
+	public Text LevelNumberDecimal;
+	public Text LevelNumberHundred;
 	public Text LevelText;
-	public Text LevelTextShadow;
+	public Text LifesText;
+	protected string levelName;
 
-	public Text PointsText;
+	public Text PointsUpText;
 	public Text Points;
 	public Text inviteFriendsText;
 	public Text playText;
-	public Text retryText;
 
 	public Text feedback;
 
+	public Image starsBarr;
 	public GameObject[] stars;
-	public GameObject[] starsGray;
+	public GameObject[] balls;
 
 	public float speedShowStars = 0.5f;
 
@@ -31,11 +33,11 @@ public class GoalAfterGame : PopUpBase {
 	public RectTransform starPanel;
 	public RectTransform objetives;
 	public RectTransform play;
-	public RectTransform retry;
 	public RectTransform close;
 	public RectTransform facebookFriends;
 	public RectTransform facebookInvite;
 	public RectTransform icon;
+	public RectTransform share;
 
 	public LeaderboardManager leaderboardManager;
 	public Transform slotParent;
@@ -44,11 +46,6 @@ public class GoalAfterGame : PopUpBase {
 	public Transform goalPopUpSlotsParent;
 	public GridLayoutGroup FriendsgridLayoutGroup;
 
-	public Sprite[] worldTopBackground;
-	public Sprite[] worldIcon;
-	public Image topLevelImage;
-	public Image topIcon;
-	public Image topIconShadow;
 	public Image shareImage;
 
 	protected bool pressed;
@@ -70,12 +67,13 @@ public class GoalAfterGame : PopUpBase {
 
 		inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_FACEBOOK);
 		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_NEXT);
-		retryText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_RETRY);
-		PointsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_POINTS);
+		PointsUpText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_POINTS_UPER);
 
-		LevelText.text = LevelTextShadow.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVES_NAME_TEXT_ID);
+		LevelText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVES_NAME_TEXT_ID);
 
 		feedback.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.FEEDBACK_TEXT);
+
+		LifesText.text = LifesManager.GetInstance ().currentUser.playerLifes.ToString ();
 
 		#if UNITY_ANDROID
 		shareImage.sprite = androidShare;
@@ -99,16 +97,39 @@ public class GoalAfterGame : PopUpBase {
 	public override void activate()
 	{
 		popUp.SetActive (true);
-		startAnimation ();
+		Invoke ("startAnimation", 0.25f);
+
 	}
 
 	public void setGoalPopUpInfo(int starsReached, string levelName, string points,int currentWorld =0)
 	{
-		this.LevelNumber.text =	this.LevelNumberShadow.text  = levelName;
-		this.Points.text = points;
+		PersistentData.GetInstance().startLevel--;
+		char[] lvl;
 
-		topLevelImage.sprite = worldTopBackground [currentWorld-1];
-		topIcon.sprite = topIconShadow.sprite = worldIcon [currentWorld-1];
+		this.levelName = levelName;
+		switch (levelName.Length) 
+		{
+		case 1:
+			LevelNumberUnit.text = levelName;
+			LevelNumberDecimal.gameObject.SetActive (false);
+			LevelNumberHundred.gameObject.SetActive (false);
+			break;
+		case 2:
+			lvl = levelName.ToCharArray();
+			LevelNumberUnit.text = lvl[0].ToString();
+			LevelNumberDecimal.text = lvl[1].ToString();
+			LevelNumberHundred.gameObject.SetActive (false);
+			break;
+		case 3:
+			lvl = levelName.ToCharArray();
+			LevelNumberUnit.text = lvl[0].ToString();
+			LevelNumberDecimal.text = lvl[1].ToString();
+			LevelNumberHundred.text = lvl[2].ToString();
+			break;                                                                  
+		}
+
+		this.Points.text = points +" "+ MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_POINTS);
+
 		starsObtained = starsReached;
 
 		showStars (starsReached);
@@ -116,35 +137,32 @@ public class GoalAfterGame : PopUpBase {
 
 	protected void showStars(int starsReached)
 	{
-		for(int i=0; i<stars.Length; i++)
-		{
-			stars [i].SetActive (false);
-			stars [i].transform.localScale = new Vector3 (0, 0, 0);
-		}
-		showStarsByAnimation (starsReached);
-	}
+		starsBarr.fillAmount = 0.06f;
 
-	protected void showStarsByAnimation(int starsReached)
-	{
-		if(starsReached >=1)
+		switch (starsReached) 
 		{
-			winStar ();
-			stars [0].SetActive (true);
-			stars [0].transform.DOScale (new Vector2(1,1),speedShowStars).OnComplete (() => {
-				if (starsReached >= 2) {
-					winStar ();
-					stars [1].SetActive (true);
-					stars [1].transform.DOScale (new Vector2(1,1),speedShowStars).OnComplete (() => {
-						if (starsReached == 3) {
-							winStar ();
-							stars [2].SetActive (true);
-							stars [2].transform.DOScale (new Vector2(1,1),speedShowStars).OnComplete (() => {
-								//print ("Termino de mostrar estrellas");
-							});
-						}
-					});
-				}
-			});
+		case 1:
+			stars [0].SetActive(true);
+			balls [0].SetActive(true);
+			starsBarr.fillAmount = 0.349f;
+			break;
+		case 2:
+			stars [0].SetActive(true);
+			stars [1].SetActive(true);
+			balls [0].SetActive(true);
+			balls [1].SetActive(true);
+			starsBarr.fillAmount = 0.604f;
+			break;
+		case 3:
+			stars [0].SetActive(true);
+			stars [1].SetActive(true);
+			stars [2].SetActive(true);
+			balls [0].SetActive(true);
+			balls [1].SetActive(true);
+			balls [2].SetActive(true);
+			balls [3].SetActive(true);
+			starsBarr.fillAmount = 1;
+			break;
 		}
 	}
 
@@ -187,7 +205,7 @@ public class GoalAfterGame : PopUpBase {
 
 	public void sharingScore()
 	{
-		shareScore.sharePassedLevel (Points.text,starsObtained,LevelNumber.text);
+		shareScore.sharePassedLevel (Points.text,starsObtained,levelName);
 	}
 
 	protected void setStartingPlaces()
@@ -201,18 +219,19 @@ public class GoalAfterGame : PopUpBase {
 		starPanel.localScale = Vector2.zero;
 		objetives.localScale = Vector2.zero;
 		play.localScale = Vector2.zero;
-		retry.localScale = Vector2.zero;
+		share.localScale = Vector2.zero;
 		close.localScale = Vector2.zero;
 		facebookFriends.localScale = Vector2.zero;
 		facebookInvite.localScale = Vector2.zero;
 		//starPanel.anchoredPosition = new Vector3 (0, starPanel.rect.height*2, 0);
 		//facebookInvite.anchoredPosition = new Vector3 (0, -facebookInvite.rect.height*2, 0);
+		icon.transform.localScale = Vector2.zero;
 		this.transform.localScale = new Vector2(2,2);
 	}
 
 	protected void startAnimation()
 	{
-		float fullTime = 1;
+		float fullTime = 0.5f;
 		float quarter = fullTime * 0.25f;
 		float tenth = fullTime * 0.1f;
 
@@ -227,9 +246,10 @@ public class GoalAfterGame : PopUpBase {
 						close.DOScale(new Vector2(1,1),tenth);
 						starPanel.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 							{
+								icon.DOScale(new Vector2(1,1),tenth);
 								objetives.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 									{
-										retry.DOScale(new Vector2(1,1),tenth);
+										share.DOScale(new Vector2(1,1),tenth);
 										play.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 											{
 												facebookFriends.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
@@ -241,7 +261,6 @@ public class GoalAfterGame : PopUpBase {
 
 														facebookInvite.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 															{
-																icon.DOScale(new Vector2(1,1),tenth);
 															});
 													});
 											});

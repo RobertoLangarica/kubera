@@ -8,10 +8,10 @@ using Kubera.Data.Sync;
 
 public class RetryPopUp : PopUpBase
 {
-	public Text LevelNumber;
-	public Text LevelNumberShadow;
+	public Text LevelNumberUnit;
+	public Text LevelNumberDecimal;
+	public Text LevelNumberHundred;
 	public Text LevelText;
-	public Text LevelTextShadow;
 
 	public Text inviteFriendsText;
 	public Text playText;
@@ -30,8 +30,12 @@ public class RetryPopUp : PopUpBase
 	public Text content;
 	public RectTransform leftHeart;
 	public RectTransform rightHeart;
+	public RectTransform askFriendsButton;
+
 	public Text textHeart;
+	public Text textHeartShadow;
 	public Text numberNegative;
+	public Text numberNegativeShadow;
 
 	public LeaderboardManager leaderboardManager;
 	public Transform slotParent;
@@ -40,11 +44,6 @@ public class RetryPopUp : PopUpBase
 	public Transform goalPopUpSlotsParent;
 	public GridLayoutGroup FriendsgridLayoutGroup;
 
-	public Sprite[] worldTopBackground;
-	public Sprite[] worldIcon;
-	public Image topLevelImage;
-	public Image topIcon;
-	public Image topIconShadow;
 	protected bool pressed;
 
 	public AnimationCurve heartAnimation;
@@ -59,9 +58,8 @@ public class RetryPopUp : PopUpBase
 		FriendsgridLayoutGroup.cellSize = new Vector2 (Screen.width * 0.225f, Screen.height * 0.15f);
 
 		inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.LOOSEGAME_POPUP_FACEBOOK);
-		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.LOOSEGAME_POPUP_NEXT);
 		content.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.LOOSEGAME_POPUP_TEXT);
-		LevelText.text = LevelTextShadow.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVES_NAME_TEXT_ID);
+		LevelText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVES_NAME_TEXT_ID);
 
 		feedback.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.FEEDBACK_TEXT);
 	}
@@ -83,15 +81,44 @@ public class RetryPopUp : PopUpBase
 		popUp.SetActive (true);
 
 		PersistentData.GetInstance().startLevel--;
-		LevelNumber.text = LevelNumberShadow.text = PersistentData.GetInstance().lastLevelPlayedName;
+		char[] lvl;
 
-		topLevelImage.sprite = worldTopBackground [PersistentData.GetInstance().currentWorld-1];
-		topIcon.sprite = topIconShadow.sprite = worldIcon [PersistentData.GetInstance().currentWorld-1];
+		switch (PersistentData.GetInstance().lastLevelPlayedName.Length) 
+		{
+		case 1:
+			LevelNumberUnit.text = PersistentData.GetInstance ().lastLevelPlayedName;
+			LevelNumberDecimal.gameObject.SetActive (false);
+			LevelNumberHundred.gameObject.SetActive (false);
+			break;
+		case 2:
+			lvl = PersistentData.GetInstance ().lastLevelPlayedName.ToCharArray();
+			LevelNumberUnit.text = lvl[0].ToString();
+			LevelNumberDecimal.text = lvl[1].ToString();
+			LevelNumberHundred.gameObject.SetActive (false);
+			break;
+		case 3:
+			lvl = PersistentData.GetInstance ().lastLevelPlayedName.ToCharArray();
+			LevelNumberUnit.text = lvl[0].ToString();
+			LevelNumberDecimal.text = lvl[1].ToString();
+			LevelNumberHundred.text = lvl[2].ToString();
+			break;                                                                  
+		}
+
+		if((DataManagerKubera.GetInstance () as DataManagerKubera).currentUser.playerLifes == 0) 
+		{
+			playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.LOOSEGAME_POPUP_RETRY_NOLIFES);
+		}
+		else
+		{
+			playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.LOOSEGAME_POPUP_NEXT);
+		}
 
 		int currentLifes = LifesManager.GetInstance ().currentUser.playerLifes + 1;
-		textHeart.text = currentLifes.ToString();
+		textHeart.text = textHeartShadow.text = currentLifes.ToString();
 
 		Invoke ("startAnimation", 0.25f);
+
+
 	}
 
 	public void close()
@@ -99,6 +126,8 @@ public class RetryPopUp : PopUpBase
 		soundButton ();
 		leaderboardManager.moveCurrentLeaderboardSlots (goalPopUpSlotsParent);
 		setStartingPlaces ();
+
+		DOTween.Kill ("askFriendsButtonAnimation");
 		OnComplete ("closeRetry");
 	}
 
@@ -114,12 +143,14 @@ public class RetryPopUp : PopUpBase
 		if ((DataManagerKubera.GetInstance () as DataManagerKubera).currentUser.playerLifes > 0) 
 		{
 			setStartingPlaces ();
+			DOTween.Kill ("askFriendsButtonAnimation");
 			OnComplete ("retry",false);
 		} 
 		else 
 		{
 			pressed = false;
-			OnComplete ("NoLifes",false);
+			DOTween.Kill ("askFriendsButtonAnimation");
+			askForLifes ();
 		}
 	}
 
@@ -169,21 +200,25 @@ public class RetryPopUp : PopUpBase
 											{
 												facebookFriends.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 													{
-														LevelLeaderboard leaderboard = leaderboardManager.getLeaderboard(this.LevelNumber.text,slotParent);
+														/*LevelLeaderboard leaderboard = leaderboardManager.getLeaderboard(PersistentData.GetInstance().lastLevelPlayedName,slotParent);
 														leaderboard.showSlots(true);
 
-														scrollRect.horizontalNormalizedPosition = 0;
+														scrollRect.horizontalNormalizedPosition = 0;*/
 
 														facebookInvite.DOScale(new Vector2(1,1),tenth);
 
-														leftHeart.DORotate(new Vector3(0,0,10),0.2f).SetEase(heartAnimation);
-														rightHeart.DORotate(new Vector3(0,0,-10),0.2f).SetEase(heartAnimation).OnComplete(()=>
+														leftHeart.DORotate(new Vector3(0,0,5),0.2f).SetEase(heartAnimation);
+														rightHeart.DORotate(new Vector3(0,0,-5),0.2f).SetEase(heartAnimation).OnComplete(()=>
 															{
 																numberNegative.DOColor(new Color(1,1,1,1),quarter).OnComplete(()=>
 																	{
-																		numberNegative.rectTransform.DOLocalMoveY(textHeart.rectTransform.localPosition.y*2,1f);
 																		numberNegative.DOColor(new Color(1,1,1,0),1f);
-																		textHeart.text = LifesManager.GetInstance().currentUser.playerLifes.ToString();
+																		numberNegativeShadow.DOColor(new Color(1,1,1,0),1f);
+																		numberNegative.rectTransform.DOLocalMoveY(numberNegative.rectTransform.localPosition.y*3,1f);
+
+																		textHeart.DOText(LifesManager.GetInstance().currentUser.playerLifes.ToString(),0.4f);
+																		textHeartShadow.DOText(LifesManager.GetInstance().currentUser.playerLifes.ToString(),0.4f);
+
 																	});
 															});
 													});
@@ -201,6 +236,26 @@ public class RetryPopUp : PopUpBase
 		{
 			
 			AudioManager.GetInstance().Play("fxButton");
+		}
+	}
+
+	protected void askFriendsButtonAnimation()
+	{
+		askFriendsButton.DOPunchRotation (new Vector3 (0, 0, 5), 0.5f).OnComplete (() => 
+			{
+				askFriendsButtonAnimation();
+			}).SetId("askFriendsButtonAnimation");
+	}
+
+	public void askForLifes()
+	{
+		if ((DataManagerKubera.GetInstance () as DataManagerKubera).currentUser.playerLifes == 0)
+		{
+			OnComplete ("askLifes");
+		}
+		else
+		{
+			OnComplete ("askLifes",false);
 		}
 	}
 

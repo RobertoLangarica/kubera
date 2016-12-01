@@ -69,6 +69,7 @@ public class MultiLanguageTextManager
 	public const string OBJECTIVE_POPUP_PLAY		 		= "goalPlay";
 	public const string OBJECTIVE_POPUP_FACEBOOK	 		= "goalFacebook";
 
+	public const string AFTERGAME_POPUP_POINTS_UPER 		= "afterGamePointsUper";
 	public const string AFTERGAME_POPUP_POINTS		 		= "afterGamePoints";
 	public const string AFTERGAME_POPUP_NEXT		 		= "afterGameNext";
 	public const string AFTERGAME_POPUP_RETRY		 		= "afterGameRetry";
@@ -78,6 +79,7 @@ public class MultiLanguageTextManager
 	public const string LOOSEGAME_POPUP_TEXT		 		= "looseGameText";
 	public const string LOOSEGAME_POPUP_NEXT		 		= "looseGameNext";
 	public const string LOOSEGAME_POPUP_FACEBOOK	 		= "looseGameFacebook";
+	public const string LOOSEGAME_POPUP_RETRY_NOLIFES 		= "afterGameRetryNoLifes";
 
 	public const string NO_GEMS_POPUP_TITLE					= "NoGemsPopUpTitle";
 	public const string NO_GEMS_POPUP_INFO					= "NoGemsPopUpInfo";

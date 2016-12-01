@@ -47,6 +47,9 @@ namespace LevelBuilder
 		public PiecesSelector piecesSelector;
 		public TileGridEditor gridEditor;
 		public Toggle[] powerupToggles;
+		public InputField[] inputPowerup;
+
+
 		public LoadingIndicator loadingIndicator;
 
 		public InputField inputWorld;
@@ -160,6 +163,11 @@ namespace LevelBuilder
 			foreach(Toggle toggle in powerupToggles)
 			{
 				toggle.isOn = false;
+			}
+
+			foreach(InputField inputField in inputPowerup)
+			{
+				inputField.text = "";
 			}
 				
 			if(languageSelector.options[languageSelector.value].text != language)
@@ -276,8 +284,16 @@ namespace LevelBuilder
 			lvlToSave.unblockBomb = powerupToggles[BOMB_POWERUP].isOn;
 			lvlToSave.unblockBlock = powerupToggles[BLOCK_POWERUP].isOn;
 			lvlToSave.unblockRotate = powerupToggles[ROTATE_POWERUP].isOn;
-			lvlToSave.unblockDestroy = powerupToggles[DESTROY_POWERUP].isOn;
 			lvlToSave.unblockWildcard = powerupToggles[WILDCARD_POWERUP].isOn;
+			lvlToSave.unblockDestroy = powerupToggles[DESTROY_POWERUP].isOn;
+
+			lvlToSave.amountWordHint = int.Parse(inputPowerup [WORD_HINT_POWERUP].text);
+			lvlToSave.amountBomb = int.Parse(inputPowerup [BOMB_POWERUP].text);
+			lvlToSave.amountBlock = int.Parse(inputPowerup [BLOCK_POWERUP].text);
+			lvlToSave.amountRotate = int.Parse(inputPowerup [ROTATE_POWERUP].text);
+			lvlToSave.amountWildcard = int.Parse(inputPowerup [WILDCARD_POWERUP].text);
+			lvlToSave.amountDestroy = int.Parse(inputPowerup [DESTROY_POWERUP].text);
+
 			lvlToSave.moves = int.Parse(inputMovements.text);
 			lvlToSave.scoreToStar1 = int.Parse(inputStar1.text);
 			lvlToSave.scoreToStar2 = int.Parse(inputStar2.text);
@@ -439,6 +455,14 @@ namespace LevelBuilder
 			powerupToggles[ROTATE_POWERUP].isOn = level.unblockRotate;
 			powerupToggles[DESTROY_POWERUP].isOn = level.unblockDestroy;
 			powerupToggles[WILDCARD_POWERUP].isOn = level.unblockWildcard;
+
+			inputPowerup [WORD_HINT_POWERUP].text = level.amountWordHint.ToString();
+			inputPowerup [BOMB_POWERUP].text = level.amountBomb.ToString();
+			inputPowerup [BLOCK_POWERUP].text = level.amountBlock.ToString();
+			inputPowerup [ROTATE_POWERUP].text = level.amountRotate.ToString();
+			inputPowerup [WILDCARD_POWERUP].text = level.amountWildcard.ToString();
+			inputPowerup [DESTROY_POWERUP].text = level.amountDestroy.ToString();
+
 			inputMovements.text = level.moves.ToString();
 			inputStar1.text = level.scoreToStar1.ToString();
 			inputStar2.text = level.scoreToStar2.ToString();
