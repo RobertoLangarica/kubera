@@ -12,12 +12,28 @@ public class TutorialLvl7 : TutorialBase
 	protected string tutorialWord;
 
 	protected int count = 0;
+	protected int currentCount = 0;
 
 	protected override void Start ()
 	{
 		base.Start ();
 
 		tutorialWord = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV7_WORD);
+	}
+
+	protected override void Update()
+	{
+		base.Update ();
+
+		if (wordManager.letters.Count != currentCount) 
+		{
+			currentCount = wordManager.letters.Count;
+			for (int i = 0; i < wordManager.letters.Count; i++) 
+			{
+				wordManager.letters [i].letterCanvas.overrideSorting = true;
+				wordManager.letters [i].letterCanvas.sortingLayerName = "WebView";
+			}
+		}
 	}
 
 	public override bool canMoveToNextPhase ()
@@ -42,8 +58,10 @@ public class TutorialLvl7 : TutorialBase
 
 			Invoke ("writeLetterByLetter",initialAnim*2);
 
-			Sprite[] masksAtlas = Resources.LoadAll<Sprite> ("Masks");
-			masks [0].sprite = Sprite.Create(masksAtlas[3].texture,masksAtlas[3].rect,new Vector2(0.5f,0.5f));
+			moveCellsToTheFront ();
+			movePiecesToFront ();
+			moveToFront ();
+			tutorialMask.SetActive (true);
 
 			phase = 1;
 			return true;
@@ -69,8 +87,6 @@ public class TutorialLvl7 : TutorialBase
 			shakeToErrase ();
 
 			Invoke ("writeLetterByLetter", initialAnim * 1.5f);
-
-			masks [0].gameObject.SetActive (false);
 
 			phase = 2;
 			return true;
@@ -145,6 +161,15 @@ public class TutorialLvl7 : TutorialBase
 			}
 			return true;
 		case(3):
+			return true;
+		case(4):
+			phasesPanels [3].SetActive (false);
+
+			returnCellsToLayer ();
+			returnPieces ();
+			returnBack ();
+
+			tutorialMask.SetActive (false);
 			return true;
 		}
 

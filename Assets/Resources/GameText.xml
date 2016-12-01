@@ -638,6 +638,20 @@
 				<language id="default" text="Las letras negras no se pueden cambiar."/>
 			</languages>
 		</text>
+		<text id="Tutorial_lvl80_phase1">
+			<languages>
+				<language id="english" text="Arrastra {{b}}RAYO{{/b}} a un bloque en el tablero."/>
+				<language id="spanish" text="Arrastra {{b}}RAYO{{/b}} a un bloque en el tablero."/>
+				<language id="default" text="Arrastra {{b}}RAYO{{/b}} a un bloque en el tablero.."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl80_phase2">
+			<languages>
+				<language id="english" text="El {{b}}RAYO{{/b}} convierte en letras todos los bloques del tablero."/>
+				<language id="spanish" text="El {{b}}RAYO{{/b}} convierte en letras todos los bloques del tablero."/>
+				<language id="default" text="El {{b}}RAYO{{/b}} convierte en letras todos los bloques del tablero."/>
+			</languages>
+		</text>
 		<!---<text id="Tutorial_lvl64_phase1">
 			<languages>
 				<language id="english" text="You need a {{b}}Z{{/b}} to form {{b}}PEZ{{/b}}. /nDrag {{b}}WILD CARD{{/b}} to the area for forming words."/>

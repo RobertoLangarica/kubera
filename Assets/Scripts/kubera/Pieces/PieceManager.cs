@@ -138,13 +138,16 @@ public class PieceManager : MonoBehaviour
 			if(piece.shadows [i] != null)
 			{
 				piece.shadows [i].enabled = showing;
-				if(showing)
+				if (piece.squaresSprite [i].sortingLayerName != "WebView") 
 				{
-					piece.squaresSprite [i].sortingLayerName = "Selected";
-				}
-				else
-				{
-					piece.squaresSprite [i].sortingLayerName = "Piece";
+					if (showing) 
+					{
+						piece.squaresSprite [i].sortingLayerName = "Selected";
+					} 
+					else 
+					{
+						piece.squaresSprite [i].sortingLayerName = "Piece";
+					}
 				}
 			}
 		}

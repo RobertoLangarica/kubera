@@ -23,7 +23,7 @@ public class WordHintPowerUp : PowerupBase {
 		powerUpGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
 		powerUpGO.name = "WordHintPowerUp";
 		powerUpGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
-		powerUpGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
+		powerUpGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "WebView";
 
 		powerUpInput.enabled = true;
 		powerUpInput.setCurrentSelected(powerUpGO);

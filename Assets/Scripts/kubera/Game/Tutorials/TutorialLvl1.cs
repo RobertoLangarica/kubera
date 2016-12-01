@@ -47,8 +47,7 @@ public class TutorialLvl1 : TutorialBase
 	{
 		phaseEvent.Clear ();
 
-		switch (phase) 
-		{
+		switch (phase) {
 		case(0):
 			phasesPanels [0].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
@@ -67,14 +66,36 @@ public class TutorialLvl1 : TutorialBase
 
 			Invoke ("writeLetterByLetter", initialAnim * 2);
 
-			Sprite[] masksAtlas = Resources.LoadAll<Sprite> ("Masks");
-			masks [0].sprite = Sprite.Create(masksAtlas[0].texture,masksAtlas[0].rect,new Vector2(0.5f,0.5f));
+			moveCellsToTheFront ();
+			movePiecesToFront ();
+			moveToFront ();
+			tutorialMask.SetActive (true);
 
 			phase = 1;
+			return true;
+		case(1):
+			phasesPanels [0].SetActive (false);
+
+			returnCellsToLayer ();
+			returnPieces ();
+			returnBack ();
+
+			tutorialMask.SetActive (false);
 			return true;
 		}
 
 		return base.canMoveToNextPhase ();
+	}
+
+	public override bool phaseObjectiveAchived ()
+	{
+		switch (phase) 
+		{
+		case(1):
+			return true;
+		}
+
+		return base.phaseObjectiveAchived ();
 	}
 
 	protected void powerUpAnim()

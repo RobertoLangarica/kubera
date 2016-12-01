@@ -72,7 +72,7 @@ public class InputBlockPowerUp : MonoBehaviour
 		blockGO.name = "Block";
 		blockGO.transform.SetParent (parent, false);
 		blockGO.GetComponentInChildren<Square> ().oneSquare = false;
-		blockGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
+		blockGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "WebView";
 		this.canUse = canUse;
 	}
 

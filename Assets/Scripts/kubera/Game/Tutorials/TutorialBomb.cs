@@ -10,6 +10,12 @@ public class TutorialBomb : TutorialBase
 
 	public InputBombAndDestroy inputBomb;
 
+	public Canvas lastPhaseCanvas;
+	public GameObject bombButton;
+	protected Transform previousParent;
+
+	public HorizontalLayoutGroup layout;
+
 	protected bool doAnimation;
 	protected Vector3 posTo;
 
@@ -47,7 +53,7 @@ public class TutorialBomb : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.BOMB_USED);
+			phaseEvent.Add (ENextPhaseEvent.BOMB_USED);
 
 			freeBombs = true;
 
@@ -57,17 +63,25 @@ public class TutorialBomb : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV52_PHASE1),
-				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [0];
 			instructionsText.text = "";
 
 			doAnimation = true;
-			Invoke ("powerUpAnim",1);
+			Invoke ("powerUpAnim", 1);
 
-			Invoke ("writeLetterByLetter",initialAnim*2);
+			Invoke ("writeLetterByLetter", initialAnim * 2);
 
-			Sprite[] masksAtlas = Resources.LoadAll<Sprite> ("Masks");
-			masks [0].sprite = Sprite.Create(masksAtlas[6].texture,masksAtlas[6].rect,new Vector2(0.5f,0.5f));
+			moveCellsToTheFront ();
+			movePiecesToFront ();
+			moveToFront ();
+
+			previousParent = bombButton.transform.parent;
+			bombButton.transform.SetParent (transform);
+
+			layout.enabled = false;
+
+			tutorialMask.SetActive (true);
 
 			phase = 1;
 			return true;
@@ -103,7 +117,13 @@ public class TutorialBomb : TutorialBase
 
 			Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
-			masks [0].gameObject.SetActive (false);
+			returnCellsToLayer ();
+			returnPieces ();
+			returnBack ();
+
+			bombButton.transform.SetParent (previousParent);
+
+			tutorialMask.SetActive (false);
 
 			phase = 2;
 			return true;	
@@ -114,7 +134,7 @@ public class TutorialBomb : TutorialBase
 
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.BOMB_USED);
+			phaseEvent.Add (ENextPhaseEvent.BOMB_USED);
 
 			freeBombs = true;
 
@@ -125,7 +145,7 @@ public class TutorialBomb : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV52_PHASE3),
-				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [2];
 			instructionsText.text = "";
 			instructionIndex = 0;
@@ -134,7 +154,9 @@ public class TutorialBomb : TutorialBase
 
 			doAnimation = false;
 
-			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+			Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
+
+			lastPhaseCanvas.sortingLayerName = "Selected";
 
 			phase = 3;
 			return true;		

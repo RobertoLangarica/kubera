@@ -3,14 +3,15 @@ using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
 
-public class TutorialBlock : TutorialBase 
+public class TutorialDestroy : TutorialBase 
 {
 	public Image powerUpDommy;
 	public GameObject fromPosition;
-	public InputBlockPowerUp inputBlock;
+
+	public InputBombAndDestroy inputDestroy;
 
 	public Canvas lastPhaseCanvas;
-	public GameObject blockButton;
+	public GameObject destroyButton;
 	protected Transform previousParent;
 
 	public HorizontalLayoutGroup layout;
@@ -22,7 +23,8 @@ public class TutorialBlock : TutorialBase
 
 	protected override void Start()
 	{
-		inputBlock.OnPlayer += animationController;
+		inputDestroy.OnPlayer += animationController;
+
 		base.Start ();
 	}
 
@@ -45,7 +47,7 @@ public class TutorialBlock : TutorialBase
 	{
 		if(stop)
 		{
-			DOTween.Kill ("Tutorial13");
+			DOTween.Kill ("Tutorial80");
 			CancelInvoke ("powerUpAnim");
 			powerUpDommy.color = new Color(1,1,1,0);
 			doAnimation = false;
@@ -59,6 +61,7 @@ public class TutorialBlock : TutorialBase
 			}
 		}
 	}
+
 	public override bool canMoveToNextPhase ()
 	{
 		phaseEvent.Clear ();
@@ -67,16 +70,16 @@ public class TutorialBlock : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.BLOCK_USED);
+			phaseEvent.Add (ENextPhaseEvent.DESTROY_USED);
 
-			freeBlocks = true;
+			freeDestroy = true;
 
 			firstAnim ();
 
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.SQUARE_BUTTON);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.BOMB_BUTTON);
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV13_PHASE1),
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV80_PHASE1),
 				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [0];
 			instructionsText.text = "";
@@ -90,8 +93,8 @@ public class TutorialBlock : TutorialBase
 			movePiecesToFront ();
 			moveToFront ();
 
-			previousParent = blockButton.transform.parent;
-			blockButton.transform.SetParent (transform);
+			previousParent = destroyButton.transform.parent;
+			destroyButton.transform.SetParent (transform);
 
 			layout.enabled = false;
 
@@ -106,64 +109,39 @@ public class TutorialBlock : TutorialBase
 
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.BLOCK_USED);
 			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
-			freeBlocks = true;
+			freeDestroy = true;
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
 				foundStringTag = false;
 			}
 
+			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.DESTROY_BUTTON);
+
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV13_PHASE2),
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV80_PHASE2),
 				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [1];
 			instructionsText.text = "";
 			instructionIndex = 0;
 
-			doAnimation = false;
-
 			shakeToErrase ();
+
+			doAnimation = false;
+			inputDestroy.OnPlayer -= animationController;
 
 			Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
 			tutorialMask.gameObject.SetActive (false);
 
-			phase = 2;
-			return true;		
-		case(2):
-			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
-			isWriting = false;
-
-			phasesPanels [1].SetActive (false);
-			phasesPanels [2].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.POSITIONATE_PIECE);
-
-			freeBlocks = true;
-
-			if (instructionIndex < currentInstruction.Length) {
-				changeInstruction = true;
-				foundStringTag = false;
-			}
-
-			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
-				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV13_PHASE3),
-				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
-			instructionsText = instructions [2];
-			instructionsText.text = "";
-			instructionIndex = 0;
-
-			shakeToErrase ();
-
-			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
-
 			lastPhaseCanvas.sortingLayerName = "Selected";
 
-			phase = 3;
-			return true;	
+			destroyButton.transform.SetParent (previousParent);
+
+			phase = 2;
+			return true;			
 		}
 
 		return base.canMoveToNextPhase ();
@@ -176,13 +154,9 @@ public class TutorialBlock : TutorialBase
 		case(1):
 			return true;
 		case(2):
-			return true;
-		case(3):
 			returnCellsToLayer ();
 			returnPieces ();
 			returnBack ();
-
-			blockButton.transform.SetParent (previousParent);
 
 			tutorialMask.SetActive (false);
 			return true;
@@ -193,9 +167,9 @@ public class TutorialBlock : TutorialBase
 
 	protected void powerUpAnim()
 	{
-		if (!doAnimation || cellManager.getAllEmptyCells().Length < 3) 
+		if (!doAnimation) 
 		{
-			DOTween.Kill ("Tutorial13");
+			DOTween.Kill ("Tutorial80");
 			return;
 		}
 
@@ -203,7 +177,7 @@ public class TutorialBlock : TutorialBase
 
 		if (posTo == Vector3.zero) 
 		{
-			posTo = cellManager.getAllEmptyCells () [3].transform.position;
+			posTo = cellManager.getCellsOfSameType(Piece.EType.PIECE)[2].transform.position;
 			posTo.x += cellManager.cellSize;
 			posTo.y -= cellManager.cellSize;
 		}
@@ -212,17 +186,17 @@ public class TutorialBlock : TutorialBase
 		powerUpDommy.transform.localScale = Vector3.zero;
 
 		//Los valores de las animaciones los paso Liloo
-		powerUpDommy.transform.DOScale (new Vector3 (1,1,1), 0.5f).SetId("Tutorial13");
+		powerUpDommy.transform.DOScale (new Vector3 (1,1,1), 0.5f).SetId("Tutorial80");
 		powerUpDommy.DOColor (new Color(1,1,1,0.75f),0.5f).OnComplete(
 			()=>{
 
 				//TODO: intentar que sea linea curva
 
-				powerUpDommy.DOColor (new Color(1,1,1,0),1).SetId("Tutorial13");
-				powerUpDommy.transform.DOMove (posTo,1).SetId("Tutorial13");
+				powerUpDommy.DOColor (new Color(1,1,1,0),1).SetId("Tutorial80");
+				powerUpDommy.transform.DOMove (posTo,1).SetId("Tutorial80");
 
 			}
-		).SetId("Tutorial13");
+		).SetId("Tutorial80");
 
 		Invoke ("powerUpAnim",3.5f);
 	}

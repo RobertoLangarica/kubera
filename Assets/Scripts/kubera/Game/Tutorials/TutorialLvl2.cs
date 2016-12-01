@@ -8,6 +8,7 @@ public class TutorialLvl2 : TutorialBase
 {
 	public PieceManager pieceManager;
 	public InputPiece inputPiece;
+	public TutorialManager tutoManager;
 
 	protected bool doAnimation;
 	protected bool isWaitingForText;
@@ -69,8 +70,10 @@ public class TutorialLvl2 : TutorialBase
 
 			Invoke ("writeLetterByLetter",initialAnim*2);
 
-			Sprite[] masksAtlas = Resources.LoadAll<Sprite> ("Masks");
-			masks [0].sprite = Sprite.Create(masksAtlas[0].texture,masksAtlas[0].rect,new Vector2(0.5f,0.5f));
+			moveCellsToTheFront ();
+			movePiecesToFront ();
+			moveToFront ();
+			tutorialMask.SetActive (true);
 
 			phase = 1;
 			return true;
@@ -135,7 +138,7 @@ public class TutorialLvl2 : TutorialBase
 
 			phasesPanels [2].SetActive (false);
 			phasesPanels [3].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.EARNED_POINTS);
+			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
@@ -150,8 +153,19 @@ public class TutorialLvl2 : TutorialBase
 			shakeToErrase ();
 			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
 
+			movePiecesToFront ();
+
 			phase = 4;
 			doAnimation = false;
+			return true;
+		case(4):
+			phasesPanels [3].SetActive (false);
+
+			returnCellsToLayer ();
+			returnPieces ();
+			returnBack ();
+
+			tutorialMask.SetActive (false);
 			return true;
 		}
 
@@ -163,10 +177,9 @@ public class TutorialLvl2 : TutorialBase
 		switch (phase) 
 		{
 		case(1):
-			return true;
 		case(2):
-			return true;
 		case(3):
+		case(4):
 			return true;
 		}
 
@@ -194,7 +207,7 @@ public class TutorialLvl2 : TutorialBase
 			AudioManager.GetInstance ().Play ("pieceCreated");
 		}
 
-		canMoveToNextPhase ();
+		tutoManager.moveTutorialToNextPhase ();
 	}
 
 	protected void powerUpAnim()

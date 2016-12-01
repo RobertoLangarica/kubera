@@ -38,8 +38,10 @@ public class TutorialLvl4 : TutorialBase
 
 			Invoke ("writeLetterByLetter",initialAnim*2);
 
-			Sprite[] masksAtlas = Resources.LoadAll<Sprite> ("Masks");
-			masks [0].sprite = Sprite.Create(masksAtlas[1].texture,masksAtlas[1].rect,new Vector2(0.5f,0.5f));
+			moveCellsToTheFront ();
+			movePiecesToFront ();
+			moveToFront ();
+			tutorialMask.SetActive (true);
 
 			phase = 1;
 			return true;
@@ -141,20 +143,25 @@ public class TutorialLvl4 : TutorialBase
 		case(1):
 		case(2):
 		case(3):
-			if (lineUsed () && !bLineUsed) 
+			if (pieceManager.getShowingPieces ().Count == 1) 
 			{
+				returnCellsToLayer ();
+				returnPieces ();
+				returnBack ();
+
+				tutorialMask.SetActive (false);
+			}
+			if (lineUsed () && !bLineUsed) {
 				bLineUsed = true;
 				phase = 3;
 				return true;
 			}
-			if (littleLUsed () && !bLittleLUsed) 
-			{
+			if (littleLUsed () && !bLittleLUsed) {
 				bLittleLUsed = true;
 				phase = 1;
 				return true;
 			}
-			if (bigLUsed () && !bLUsed) 
-			{
+			if (bigLUsed () && !bLUsed) {
 				bLUsed = true;
 				phase = 2;
 				return true;
