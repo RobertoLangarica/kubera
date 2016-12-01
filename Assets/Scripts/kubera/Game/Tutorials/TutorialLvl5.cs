@@ -8,11 +8,28 @@ public class TutorialLvl5 : TutorialBase
 
 	protected bool isWaitingForText;
 
+	protected int currentCount = 0;
+
 	protected override void Start ()
 	{
 		base.Start ();
 
 		tutorialWord = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV5_WORD);
+	}
+
+	protected override void Update()
+	{
+		base.Update ();
+
+		if (wordManager.letters.Count != currentCount) 
+		{
+			currentCount = wordManager.letters.Count;
+			for (int i = 0; i < wordManager.letters.Count; i++) 
+			{
+				wordManager.letters [i].letterCanvas.overrideSorting = true;
+				wordManager.letters [i].letterCanvas.sortingLayerName = "WebView";
+			}
+		}
 	}
 
 	public override bool canMoveToNextPhase ()
@@ -31,10 +48,12 @@ public class TutorialLvl5 : TutorialBase
 			instructionsText = instructions [0];
 			instructionsText.text = "";
 
-			Invoke ("writeLetterByLetter",initialAnim*2);
+			Invoke ("writeLetterByLetter", initialAnim * 2);
 
-			Sprite[] masksAtlas = Resources.LoadAll<Sprite> ("Masks");
-			masks [0].sprite = Sprite.Create(masksAtlas[2].texture,masksAtlas[2].rect,new Vector2(0.5f,0.5f));
+			moveCellsToTheFront ();
+			movePiecesToFront ();
+			moveToFront ();
+			tutorialMask.SetActive (true);
 
 			phase = 1;
 			return true;
@@ -74,7 +93,7 @@ public class TutorialLvl5 : TutorialBase
 
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.HINT_USED);
+			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
@@ -106,6 +125,13 @@ public class TutorialLvl5 : TutorialBase
 		case(2):
 			return true;
 		case(3):
+			phasesPanels [2].SetActive (false);
+
+			returnCellsToLayer ();
+			returnPieces ();
+			returnBack ();
+
+			tutorialMask.SetActive (false);
 			return true;
 		}
 

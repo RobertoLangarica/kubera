@@ -523,7 +523,7 @@ public class HUDManager : MonoBehaviour
 			powerUps [2].gameObject.SetActive((DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count >= 35 || enableAllPowerUps || PersistentData.GetInstance().currentLevel.name == "0035") ? true : false);//square
 			powerUps [3].gameObject.SetActive((DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count >= 50 || enableAllPowerUps || PersistentData.GetInstance().currentLevel.name == "0050") ? true : false);//rotate
 			powerUps [4].gameObject.SetActive((DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count >= 65 || enableAllPowerUps || PersistentData.GetInstance().currentLevel.name == "0065") ? true : false);//wildcard
-			powerUps [5].gameObject.SetActive(false);
+			powerUps [5].gameObject.SetActive((DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count >= 80 || enableAllPowerUps || PersistentData.GetInstance().currentLevel.name == "0080") ? true : false);//destroy
 		} 
 		else 
 		{

@@ -8,14 +8,37 @@ public class TutorialRotate : TutorialBase
 	public Image powerUpDommy;
 	public GameObject fromPosition;
 
+	public Canvas lastPhaseCanvas;
+	public GameObject rotateButton;
+	protected Transform previousParent;
+
+	public HorizontalLayoutGroup layout;
+
 	protected bool doAnimation;
 	protected Vector3 posTo;
 	public InputBombAndDestroy inputBomb;
+
+	protected int currentCount = 0;
 
 	protected override void Start()
 	{
 		inputBomb.OnPlayer += animationController;
 		base.Start ();
+	}
+
+	protected override void Update()
+	{
+		base.Update ();
+
+		if (wordManager.letters.Count != currentCount) 
+		{
+			currentCount = wordManager.letters.Count;
+			for (int i = 0; i < wordManager.letters.Count; i++) 
+			{
+				wordManager.letters [i].letterCanvas.overrideSorting = true;
+				wordManager.letters [i].letterCanvas.sortingLayerName = "WebView";
+			}
+		}
 	}
 
 	protected void animationController(bool stop)
@@ -45,7 +68,7 @@ public class TutorialRotate : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.ROTATE_USED);
+			phaseEvent.Add (ENextPhaseEvent.ROTATE_USED);
 
 			freeRotates = true;
 
@@ -55,17 +78,25 @@ public class TutorialRotate : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE1),
-				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [0];
 			instructionsText.text = "";
 
 			doAnimation = true;
-			Invoke ("powerUpAnim",1);
+			Invoke ("powerUpAnim", 1);
 
-			Invoke ("writeLetterByLetter",initialAnim*2);
+			Invoke ("writeLetterByLetter", initialAnim * 2);
 
-			Sprite[] masksAtlas = Resources.LoadAll<Sprite> ("Masks");
-			masks [0].sprite = Sprite.Create(masksAtlas[7].texture,masksAtlas[7].rect,new Vector2(0.5f,0.5f));
+			moveCellsToTheFront ();
+			movePiecesToFront ();
+			moveToFront ();
+
+			previousParent = rotateButton.transform.parent;
+			rotateButton.transform.SetParent (transform);
+
+			layout.enabled = false;
+
+			tutorialMask.SetActive (true);
 
 			phase = 1;
 			return true;
@@ -100,8 +131,15 @@ public class TutorialRotate : TutorialBase
 			doAnimation = false;
 
 			Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
+			lastPhaseCanvas.sortingLayerName = "Selected";
 
-			masks [0].gameObject.SetActive (false);
+			returnCellsToLayer ();
+			returnPieces ();
+			returnBack ();
+
+			rotateButton.transform.SetParent (previousParent);
+
+			tutorialMask.SetActive (false);
 
 			phase = 2;
 			return true;

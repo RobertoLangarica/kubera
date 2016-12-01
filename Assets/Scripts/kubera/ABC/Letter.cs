@@ -31,6 +31,7 @@ public class Letter : MonoBehaviour
 	public Sprite obstacleWrongSprite;
 	public Sprite wildCardSprite;
 	public Sprite wildCardSelectedSprite;
+	public Canvas letterCanvas;
 
 	public Text txtLetter;
 	public Text txtPoints;
@@ -45,17 +46,6 @@ public class Letter : MonoBehaviour
 	protected bool textActualized; //texto actualizado
 
 	public ABCChar abcChar;
-
-	void Start()
-	{
-		myImage = gameObject.GetComponent<Image>();	
-	}
-
-	public void changeImageTexture(Sprite newSprite)
-	{
-		GetComponent<Image> ().sprite = newSprite;
-		updateSprite();
-	}
 
 	public void updateSprite()
 	{

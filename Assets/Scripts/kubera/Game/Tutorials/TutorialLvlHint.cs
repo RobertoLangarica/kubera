@@ -7,16 +7,39 @@ public class TutorialLvlHint : TutorialBase
 {
 	public Image powerUpDommy;
 	public GameObject fromPosition;
-	public InputBombAndDestroy inputBlock;
+	public InputBombAndDestroy inputHint;
+
+	public Canvas lastPhaseCanvas;
+	public GameObject hintButton;
+	protected Transform previousParent;
+
+	public HorizontalLayoutGroup layout;
 
 	protected bool doAnimation;
 	protected Vector3 posTo;
 	protected int count = 0;
 
+	protected int currentCount = 0;
+
 	protected override void Start()
 	{
-		inputBlock.OnPlayer += animationController;
+		inputHint.OnPlayer += animationController;
 		base.Start ();
+	}
+
+	protected override void Update()
+	{
+		base.Update ();
+
+		if (wordManager.letters.Count != currentCount) 
+		{
+			currentCount = wordManager.letters.Count;
+			for (int i = 0; i < wordManager.letters.Count; i++) 
+			{
+				wordManager.letters [i].letterCanvas.overrideSorting = true;
+				wordManager.letters [i].letterCanvas.sortingLayerName = "WebView";
+			}
+		}
 	}
 
 	protected void animationController(bool stop)
@@ -56,7 +79,7 @@ public class TutorialLvlHint : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV22_PHASE1),
-				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [0];
 			instructionsText.text = "";
 
@@ -65,8 +88,16 @@ public class TutorialLvlHint : TutorialBase
 
 			Invoke ("writeLetterByLetter", initialAnim * 2);
 
-			Sprite[] masksAtlas = Resources.LoadAll<Sprite> ("Masks");
-			masks [0].sprite = Sprite.Create(masksAtlas[5].texture,masksAtlas[5].rect,new Vector2(0.5f,0.5f));
+			moveCellsToTheFront ();
+			movePiecesToFront ();
+			moveToFront ();
+
+			previousParent = hintButton.transform.parent;
+			hintButton.transform.SetParent (transform);
+
+			layout.enabled = false;
+
+			tutorialMask.SetActive (true);
 
 			phase = 1;
 			return true;
@@ -77,7 +108,7 @@ public class TutorialLvlHint : TutorialBase
 
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
+			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
 			freeHint = true;
 
@@ -99,9 +130,7 @@ public class TutorialLvlHint : TutorialBase
 
 			Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
-			masks [0].gameObject.SetActive (false);
-
-			phase = 2;
+			phase = 3;
 			return true;
 		case(2):
 			//Deteniendo escritura previa
@@ -111,7 +140,6 @@ public class TutorialLvlHint : TutorialBase
 			phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.BLOCK_USED);
 			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
 			freeHint = true;
@@ -166,6 +194,8 @@ public class TutorialLvlHint : TutorialBase
 
 			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
 
+			lastPhaseCanvas.sortingLayerName = "Selected";
+
 			phase = 2;
 			return true;	
 		}
@@ -178,18 +208,22 @@ public class TutorialLvlHint : TutorialBase
 		switch (phase) 
 		{
 		case(1):
-			if (cellManager.getAllEmptyCells ().Length == 12) 
-			{
-				phase = 3;
-			}
+		case(3):
 			return true;
 		case(2):
-		case(3):
 			count++;
-			if (count < 3) 
-			{
+			if (count < 3) {
 				return false;
 			}
+			return true;
+		case(4):
+			returnCellsToLayer ();
+			returnPieces ();
+			returnBack ();
+
+			hintButton.transform.SetParent (previousParent);
+
+			tutorialMask.SetActive (false);
 			return true;
 		}
 

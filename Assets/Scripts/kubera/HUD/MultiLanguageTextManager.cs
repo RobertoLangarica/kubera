@@ -200,6 +200,9 @@ public class MultiLanguageTextManager
 	public const string TUTORIAL_LV64_LETTER2				= "Tutorial_lvl64_letter2";
 	public const string TUTORIAL_LV64_LETTER3				= "Tutorial_lvl64_letter3";
 
+	public const string TUTORIAL_LV80_PHASE1				= "Tutorial_lvl80_phase1";
+	public const string TUTORIAL_LV80_PHASE2				= "Tutorial_lvl80_phase2";
+
 
 	//Invitation to review
 	public const string INVITATION_TITLE_TEXT1 				="Invitation_title_text1";

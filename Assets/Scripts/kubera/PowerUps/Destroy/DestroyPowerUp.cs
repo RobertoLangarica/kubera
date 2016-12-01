@@ -55,7 +55,7 @@ public class DestroyPowerUp : PowerupBase
 		bombInput.OnDrop += powerUpPositioned;
 		this.canUse = canUse;
 
-		destroyGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
+		destroyGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "WebView";
 		updateDragableObjectImage (destroyGO);
 
 		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.DESTROY_POWERUP);

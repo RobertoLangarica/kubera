@@ -73,7 +73,10 @@ public class TutorialBase : MonoBehaviour
 
 	public List<GameObject> phasesPanels;
 
-	public List<Image> masks;
+	public GameObject tutorialMask;
+
+	public List<Canvas> objectsToMoveAbove;
+	public GameObject pieceStock;
 
 	[HideInInspector]public int phase;
 	[HideInInspector]public string phaseObj;
@@ -92,13 +95,8 @@ public class TutorialBase : MonoBehaviour
 	{
 	}
 
-	void Update()
+	protected virtual void Update()
 	{
-		if (Input.GetKeyDown (KeyCode.A)) 
-		{
-			firstAnim ();
-		}
-
 		if (isWriting) 
 		{
 			writingTimer += Time.deltaTime;
@@ -191,5 +189,63 @@ public class TutorialBase : MonoBehaviour
 
 	protected virtual void OnWritingFinished()
 	{
+	}
+
+	protected void moveCellsToTheFront()
+	{
+		Cell[] temp = cellManager.getAllShowedCels ();
+
+		for (int i = 0; i < temp.Length; i++) 
+		{
+			temp [i].sprite_renderer.sortingLayerName = "Modal";
+		}
+	}
+
+	protected void returnCellsToLayer()
+	{
+		Cell[] temp = cellManager.getAllShowedCels ();
+
+		for (int i = 0; i < temp.Length; i++) 
+		{
+			temp [i].sprite_renderer.sortingLayerName = "Grid";
+		}
+	}
+
+	protected void movePiecesToFront()
+	{
+		SpriteRenderer[] temp = pieceStock.GetComponentsInChildren<SpriteRenderer> ();
+
+		for (int i = 0; i < temp.Length; i++) 
+		{
+			temp [i].sortingLayerName = "WebView";
+		}
+	}
+
+	protected void returnPieces()
+	{
+		SpriteRenderer[] temp = pieceStock.GetComponentsInChildren<SpriteRenderer> ();
+
+		for (int i = 0; i < temp.Length; i++) 
+		{
+			temp [i].sortingLayerName = "Grid";
+		}
+	}
+
+	protected void moveToFront()
+	{
+		for (int i = 0; i < objectsToMoveAbove.Count; i++) 
+		{
+			objectsToMoveAbove [i].overrideSorting = true;
+			objectsToMoveAbove [i].sortingLayerName = "WebView";
+		}
+	}
+
+	protected void returnBack()
+	{
+		for (int i = 0; i < objectsToMoveAbove.Count; i++) 
+		{
+			objectsToMoveAbove [i].overrideSorting = true;
+			objectsToMoveAbove [i].sortingLayerName = "Grid";
+		}
 	}
 }
