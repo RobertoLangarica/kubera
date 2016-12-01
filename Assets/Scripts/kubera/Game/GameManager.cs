@@ -270,7 +270,7 @@ public class GameManager : MonoBehaviour
 		initPiecesFromLevel(level);
 
 		initGoalsFromLevel (level);
-
+		initPowerUpStockFromLevel (level);
 		remainingMoves = totalMoves = currentLevel.moves;
 	
 		cellManager.setColorIndex (currentLevel.world-1);
@@ -312,6 +312,16 @@ public class GameManager : MonoBehaviour
 	private void initGoalsFromLevel(Level level)
 	{
 		goalManager.initializeFromString(currentLevel.goal);	
+	}
+
+	private void initPowerUpStockFromLevel(Level level)
+	{
+		addPowerupStock (PowerupBase.EType.BOMB,level.amountBomb);	
+		addPowerupStock (PowerupBase.EType.BLOCK,level.amountBlock);	
+		addPowerupStock (PowerupBase.EType.HINT_WORD,level.amountWordHint);	
+		addPowerupStock (PowerupBase.EType.ROTATE,level.amountRotate);	
+		addPowerupStock (PowerupBase.EType.DESTROY,level.amountDestroy);	
+		addPowerupStock (PowerupBase.EType.WILDCARD,level.amountWildcard);	
 	}
 
 	private void initEventsFromLevelsData(string data)

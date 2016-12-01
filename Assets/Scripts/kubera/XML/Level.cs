@@ -53,6 +53,13 @@ public class Level
 	[XmlAttribute("unblockDestroy")]public bool unblockDestroy;
 	[XmlAttribute("unblockWildcard")]public bool unblockWildcard;
 
+	[XmlAttribute("amountWordHint")]public int amountWordHint;
+	[XmlAttribute("amountBomb")]public int amountBomb;
+	[XmlAttribute("amountBlock")]public int amountBlock;
+	[XmlAttribute("amountRotate")]public int amountRotate;
+	[XmlAttribute("amountDestroy")]public int amountDestroy;
+	[XmlAttribute("amountWildcard")]public int amountWildcard;
+
 
 	/**
 	 * Listado de piezas separado por ',' con el siguiente formato:

@@ -27,7 +27,7 @@ public class ButonsFromEditor : MonoBehaviour
 	{
 		PersistentData.GetInstance().fromGameToEdit = true;
 
-		ScreenManager.GetInstance().GoToSceneAsync("LevelBuilder");
+		ScreenManager.GetInstance().GoToScene("LevelBuilder");
 	}
 
 	public void resetLevel()
