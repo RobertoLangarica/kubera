@@ -85,6 +85,8 @@ public class WordManager : MonoBehaviour
 	protected RectTransform wordDeleteButtonRectTransform;
 	public List<Letter> hintedLetters;
 
+	public HUDManager hudManager;
+
 
 	public void DelayedAwake()
 	{
@@ -763,6 +765,7 @@ public class WordManager : MonoBehaviour
 					{
 						wordDeleteButton.SetActive (false);
 						wordCompleteButton.SetActive (true);
+						hudManager.lettersPointsTitle.gameObject.SetActive(true);
 						wordCompleteButtonRectTransform.DOScale(new Vector2(1,1),speed).SetEase(Ease.OutBack).SetId(wordCompleteButton);
 
 						if(OnWordCompleteButtonActive != null){OnWordCompleteButtonActive();}
@@ -776,6 +779,7 @@ public class WordManager : MonoBehaviour
 			{
 				wordDeleteButton.SetActive (false);
 				wordCompleteButton.SetActive (true);
+				hudManager.lettersPointsTitle.gameObject.SetActive(true);
 				wordCompleteButtonRectTransform.anchoredPosition = new Vector2 (Screen.width * speed, wordCompleteButtonRectTransform.anchoredPosition.y);
 				wordCompleteButtonRectTransform.localScale = new Vector2 (1, 1);
 				wordCompleteButtonRectTransform.DOAnchorPos (Vector2.zero, speed).SetId(wordCompleteButton);
@@ -792,6 +796,7 @@ public class WordManager : MonoBehaviour
 					{
 						wordDeleteButton.SetActive (true);
 						wordCompleteButton.SetActive (false);
+						hudManager.lettersPointsTitle.gameObject.SetActive(false);
 						wordDeleteButtonRectTransform.DOScale(new Vector2(1,1),speed).SetEase(Ease.OutBack).SetId(wordDeleteButton);
 					});
 			}
@@ -803,6 +808,7 @@ public class WordManager : MonoBehaviour
 			{
 				wordDeleteButton.SetActive (true);
 				wordCompleteButton.SetActive (false);
+				hudManager.lettersPointsTitle.gameObject.SetActive(false);
 				wordDeleteButtonRectTransform.anchoredPosition = new Vector2 (Screen.width * speed, wordDeleteButtonRectTransform.anchoredPosition.y);
 				wordDeleteButtonRectTransform.localScale = new Vector2 (1, 1);
 				wordDeleteButtonRectTransform.DOAnchorPos (Vector2.zero, speed).SetEase(Ease.OutBack).SetId(wordDeleteButton);
@@ -811,6 +817,7 @@ public class WordManager : MonoBehaviour
 		else
 		{
 			wordCompleteButton.SetActive (false);
+			hudManager.lettersPointsTitle.gameObject.SetActive(false);
 			wordDeleteButton.SetActive (false);
 		}
 	}
