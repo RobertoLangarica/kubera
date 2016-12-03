@@ -18,15 +18,15 @@ public class TutorialLvl6 : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV6_PHASE1);
 			instructionsText = instructions [0];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 
-			Invoke ("writeLetterByLetter",initialAnim*2);
+			//Invoke ("writeLetterByLetter",initialAnim*2);
 
 			phase = 1;
 			return true;
 		case(1):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			phasesPanels [0].SetActive (false);
@@ -38,14 +38,14 @@ public class TutorialLvl6 : TutorialBase
 				foundStringTag = false;
 			}
 
-			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV6_PHASE2);
+			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV6_PHASE2).Replace ("/n","\n");
 			instructionsText = instructions [1];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
 
-			Invoke ("writeLetterByLetter", initialAnim * 1.5f);
+			//Invoke ("writeLetterByLetter", initialAnim * 1.5f);
 
 			phase = 2;
 			return true;

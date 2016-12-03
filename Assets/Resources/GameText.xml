@@ -466,36 +466,29 @@
 		<text id="Tutorial_lvl6_phase2">
 			<languages>
 				<language id="english" text="to deselect all the letters at the same time."/>
-				<language id="spanish" text="Forma palabras."/>
-				<language id="default" text="Forma palabras."/>
+				<language id="spanish" text="Forma palabras. /nLas letras pueden no estar conectadas."/>
+				<language id="default" text="Forma palabras. /nLas letras pueden no estar conectadas."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl7_phase1">
 			<languages>
 				<language id="english" text="Press the button"/>
-				<language id="spanish" text="Tienes 3 movimientos para alcanzar el objetivo del nivel ({{score}} puntos)."/>
-				<language id="default" text="Tienes 3 movimientos para alcanzar el objetivo del nivel ({{score}} puntos)."/>
+				<language id="spanish" text="Tienes 2 movimientos para hacer {{score}} puntos. /nPoner una pieza o hacer una palabra cuenta como un movimiento."/>
+				<language id="default" text="Tienes 2 movimientos para hacer {{score}} puntos. /nPoner una pieza o hacer una palabra cuenta como un movimiento."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl7_phase2">
-			<languages>
-				<language id="english" text="to deselect all the letters at the same time."/>
-				<language id="spanish" text="Poner una pieza o hacer una palabra cuenta como un movimiento."/>
-				<language id="default" text="Poner una pieza o hacer una palabra cuenta como un movimiento."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl7_phase3">
 			<languages>
 				<language id="english" text="Get {{score}} points to complete the level."/>
 				<language id="spanish" text="Con tu último movimiento forma una palabra de {{neededScore}} puntos o más para pasar el nivel."/>
 				<language id="default" text="Con tu último movimiento forma una palabra de {{neededScore}} puntos o más para pasar el nivel."/>
 			</languages>
 		</text>
-		<text id="Tutorial_lvl7_phase4">
+		<text id="Tutorial_lvl7_phase3">
 			<languages>
 				<language id="english" text="Get {{score}} points to complete the level."/>
-				<language id="spanish" text="Arriba de la palabra aparece su valor y es la suma de los valores de cada letra usada. Haz una palabra de {{neededScore}} puntos para pasar el nivel."/>
-				<language id="default" text="Arriba de la palabra aparece su valor y es la suma de los valores de cada letra usada. Haz una palabra de {{neededScore}} puntos para pasar el nivel."/>
+				<language id="spanish" text="El valor de una palabra es la suma de sus letras. /n Haz una palabra de {{neededScore}} puntos para pasar el nivel."/>
+				<language id="default" text="El valor de una palabra es la suma de sus letras. /n Haz una palabra de {{neededScore}} puntos para pasar el nivel."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl7_word">
@@ -524,6 +517,13 @@
 				<language id="english" text="Use {{b}}BOMB{{/b}} as many times  as you need to pass the level."/>
 				<language id="spanish" text="Las letras con x3 triplican el valor de la palabra que formes."/>
 				<language id="default" text="Las letras con x3 triplican el valor de la palabra que formes."/>
+			</languages>
+		</text>
+		<text id="Tutorial_lvl8_phase4">
+			<languages>
+				<language id="english" text="Use {{b}}BOMB{{/b}} as many times  as you need to pass the level."/>
+				<language id="spanish" text="Usa los multiplicadores y forma una palabra de {{neededScore}} puntos o más para pasar el nivel."/>
+				<language id="default" text="Usa los multiplicadores y forma una palabra de {{neededScore}} puntos o más para pasar el nivel."/>
 			</languages>
 		</text>
 		<text id="Tutorial_lvl13_phase1">

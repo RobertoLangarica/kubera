@@ -81,12 +81,12 @@ public class TutorialLvlHint : TutorialBase
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV22_PHASE1),
 				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [0];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 
 			doAnimation = true;
 			Invoke ("powerUpAnim", 1);
 
-			Invoke ("writeLetterByLetter", initialAnim * 2);
+			//Invoke ("writeLetterByLetter", initialAnim * 2);
 
 			moveCellsToTheFront ();
 			movePiecesToFront ();
@@ -103,7 +103,7 @@ public class TutorialLvlHint : TutorialBase
 			return true;
 		case(1):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			phasesPanels [0].SetActive (false);
@@ -121,20 +121,20 @@ public class TutorialLvlHint : TutorialBase
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV22_PHASE2),
 				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [1];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			doAnimation = false;
 
 			shakeToErrase ();
 
-			Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
+			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
 			phase = 3;
 			return true;
 		case(2):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			phasesPanels [0].SetActive (false);
@@ -153,20 +153,20 @@ public class TutorialLvlHint : TutorialBase
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV22_PHASE3),
 				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
 			instructionsText = instructions [2];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			doAnimation = false;
 
 			shakeToErrase ();
 
-			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
 			phase = 4;
 			return true;	
 		case(3):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			phasesPanels [0].SetActive (false);
@@ -185,14 +185,14 @@ public class TutorialLvlHint : TutorialBase
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV22_PHASE4),
 				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
 			instructionsText = instructions [2];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			doAnimation = false;
 
 			shakeToErrase ();
 
-			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
 			lastPhaseCanvas.sortingLayerName = "Selected";
 

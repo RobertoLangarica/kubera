@@ -71,18 +71,18 @@ public class TutorialWildcard : TutorialBase
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE1),
 				new string[2]{ "{{b}}", "{{/b}}"}, new string[2]{ "<b>", "</b>"});
 			instructionsText = instructions [0];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 
 			doAnimation = true;
 			Invoke ("powerUpAnim", 1);
 
-			Invoke ("writeLetterByLetter", initialAnim * 2);
+			//Invoke ("writeLetterByLetter", initialAnim * 2);
 
 			phase = 1;
 			return true;
 		case(1):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			phasesPanels [0].SetActive (false);
@@ -113,13 +113,13 @@ public class TutorialWildcard : TutorialBase
 			doAnimation = false;
 			inputBomb.OnPlayer -= animationController;
 
-			//Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+			////Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
 			phase = 2;
 			return true;
 		case(2):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			phasesPanels [3].SetActive (false);
@@ -140,18 +140,18 @@ public class TutorialWildcard : TutorialBase
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE3),
 				new string[2]{ "{{b}}","{{/b}}"}, new string[2]{ "<b>", "</b>"});
 			instructionsText = instructions [2];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
 
-			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
 			phase = 3;
 			return true;
 		case(3):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			phasesPanels [2].SetActive (false);
@@ -171,7 +171,7 @@ public class TutorialWildcard : TutorialBase
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE4),
 				new string[2]{ "{{b}}","{{/b}}"}, new string[2]{ "<b>", "</b>"});
 			instructionsText = instructions [3];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
@@ -179,7 +179,7 @@ public class TutorialWildcard : TutorialBase
 			doAnimation = false;
 			inputBomb.OnPlayer -= animationController;
 
-			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
 			phase = 1;
 			return true;

@@ -80,12 +80,12 @@ public class TutorialRotate : TutorialBase
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE1),
 				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [0];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 
 			doAnimation = true;
 			Invoke ("powerUpAnim", 1);
 
-			Invoke ("writeLetterByLetter", initialAnim * 2);
+			//Invoke ("writeLetterByLetter", initialAnim * 2);
 
 			moveCellsToTheFront ();
 			movePiecesToFront ();
@@ -102,7 +102,7 @@ public class TutorialRotate : TutorialBase
 			return true;
 		case(1):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			inputBomb.OnPlayer -= animationController;
@@ -123,14 +123,14 @@ public class TutorialRotate : TutorialBase
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV37_PHASE2),
 				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [1];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
 
 			doAnimation = false;
 
-			Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
+			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 			lastPhaseCanvas.sortingLayerName = "Selected";
 
 			returnCellsToLayer ();

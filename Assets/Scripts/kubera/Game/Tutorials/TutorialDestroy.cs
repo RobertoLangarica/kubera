@@ -82,12 +82,12 @@ public class TutorialDestroy : TutorialBase
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV80_PHASE1),
 				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [0];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 
 			doAnimation = true;
 			Invoke ("powerUpAnim", 1);
 
-			Invoke ("writeLetterByLetter", initialAnim * 2);
+			//Invoke ("writeLetterByLetter", initialAnim * 2);
 
 			moveCellsToTheFront ();
 			movePiecesToFront ();
@@ -104,7 +104,7 @@ public class TutorialDestroy : TutorialBase
 			return true;
 		case(1):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			phasesPanels [0].SetActive (false);
@@ -124,7 +124,7 @@ public class TutorialDestroy : TutorialBase
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV80_PHASE2),
 				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [1];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
@@ -132,7 +132,7 @@ public class TutorialDestroy : TutorialBase
 			doAnimation = false;
 			inputDestroy.OnPlayer -= animationController;
 
-			Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
+			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
 			tutorialMask.gameObject.SetActive (false);
 
