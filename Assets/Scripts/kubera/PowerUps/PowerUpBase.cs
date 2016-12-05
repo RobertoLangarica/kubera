@@ -29,6 +29,7 @@ public class PowerupBase : MonoBehaviour
 	public bool isFree;
 
 	public int stock;
+	protected int maxValue = 9;
 
 	public virtual void activate(bool canUse)
 	{
@@ -114,7 +115,14 @@ public class PowerupBase : MonoBehaviour
 		stock += newStock;
 		if(stock >0)
 		{
-			stockText.text = stock.ToString ();
+			if(stock > maxValue)
+			{
+				stockText.text = "9+";
+			}
+			else
+			{
+				stockText.text = stock.ToString ();
+			}
 			stockLeftGO.SetActive (true);
 		}
 		else

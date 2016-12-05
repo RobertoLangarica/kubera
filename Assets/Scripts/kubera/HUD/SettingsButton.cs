@@ -130,13 +130,13 @@ public class SettingsButton : MonoBehaviour
 			Sounds.transform.localScale = Vector2.zero;
 
 			settingsBackground.transform.localScale = Vector3.one;
-			settingsBackground.transform.localRotation = Quaternion.Euler (Vector3.zero);
+			settingsBackground.transform.localRotation = Quaternion.Euler (new Vector3 (0, 0, -180));
 			settingsBackground.SetActive(true);
 
 			settingsBackground.GetComponent<RectTransform> ().pivot = new Vector2(0.5f,0.5f);
 
 			//Activar los otros botones
-			settingsBackground.transform.DOLocalRotate (new Vector3 (0, 0, -180),0.3f).SetId(settingsBackground).OnComplete(()=>
+			settingsBackground.transform.DOLocalRotate (Vector3.zero,0.3f).SetId(settingsBackground).OnComplete(()=>
 				{
 					Exit.enabled = true;
 					Music.enabled = true;
@@ -165,7 +165,7 @@ public class SettingsButton : MonoBehaviour
 						});
 				});*/
 
-			settingsBackground.transform.DOLocalRotate (Vector3.zero,0.3f).SetId(settingsBackground).OnComplete(()=>
+			settingsBackground.transform.DOLocalRotate (new Vector3 (0, 0, -180),0.3f).SetId(settingsBackground).OnComplete(()=>
 				{
 					settingsBackground.SetActive(false);
 					/*Exit.enabled = true;
