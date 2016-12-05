@@ -205,7 +205,6 @@
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_Enter.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_EnterPalomitacentro.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_Erase.png</key>
-            <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_FullStar.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_HUDbase.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_PWRBlock.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_PWRBomb.png</key>
@@ -214,13 +213,11 @@
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_PWRThunder.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_PWRTip.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_Rotatetetris.png</key>
-            <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_Stars1 .png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_WordsBase.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_bar2.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_barlight.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_boardCorner.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_boardoutline.png</key>
-            <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_fullCircle.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_lvl.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_musicOFF.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_musicON1.png</key>
@@ -229,6 +226,7 @@
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_settings.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_soundOFF.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-InGame_soundON2.png</key>
+            <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-MapaGeneral_HUDvidas.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-popups-pq_Tiket.png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-popups-pq_bolsaAtras (1).png</key>
             <key type="filename">../../../../../Users/ricar/Google Drive/Documentación de proyectos VV/Shopika/Kubera/Kubera Arte/UI/Game/K-popups-pq_btnAzul (1).png</key>

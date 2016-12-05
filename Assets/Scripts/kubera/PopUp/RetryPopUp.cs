@@ -218,7 +218,7 @@ public class RetryPopUp : PopUpBase
 
 																		textHeart.DOText(LifesManager.GetInstance().currentUser.playerLifes.ToString(),0.4f);
 																		textHeartShadow.DOText(LifesManager.GetInstance().currentUser.playerLifes.ToString(),0.4f);
-
+																		askFriendsButtonAnimation();
 																	});
 															});
 													});

@@ -12,14 +12,16 @@ public class GoalPopUp : PopUpBase {
 	public Text goalTextABB;
 	public Text goalTextA;
 	public Text goalTextLetters;
+	protected string levelName;
 
-	public Text LevelNumber;
-	public Text LevelNumberShadow;
+	public Text LevelNumberUnit;
+	public Text LevelNumberDecimal;
+	public Text LevelNumberHundred;
 	public Text LevelText;
-	public Text LevelTextShadow;
 
 	public Text inviteFriendsText;
 	public Text playText;
+	public Text playTextWithPowers;
 
 	public Text feedback;
 
@@ -31,17 +33,18 @@ public class GoalPopUp : PopUpBase {
 	public GameObject uiLetter;
 	public GridLayoutGroup gridLayoutGroup;
 
+	public Image starsBarr;
 	public GameObject[] stars;
-	public GameObject[] starsGray;
+	public GameObject[] balls;
 
 	protected int objective;
 
 	public RectTransform leftDoor;
 	public RectTransform rightDoor;
 	public RectTransform topLevel;
-	public RectTransform starPanel;
 	public RectTransform objetives;
 	public RectTransform play;
+	public RectTransform playWithPowers;
 	public RectTransform close;
 	public RectTransform facebookFriends;
 	public RectTransform facebookInvite;
@@ -53,11 +56,6 @@ public class GoalPopUp : PopUpBase {
 
 	public GridLayoutGroup FriendsgridLayoutGroup;
 
-	public Sprite[] worldTopBackground;
-	public Sprite[] worldIcon;
-	public Image topLevelImage;
-	public Image topIcon;
-	public Image topIconShadow;
 	protected bool pressed;
 
 	void Start()
@@ -83,8 +81,8 @@ public class GoalPopUp : PopUpBase {
 		}
 
 		inviteFriendsText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVE_POPUP_FACEBOOK);
-		playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVE_POPUP_PLAY);
-		LevelText.text = LevelTextShadow.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVES_NAME_TEXT_ID);
+		playTextWithPowers.text = playText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVE_POPUP_PLAY);
+		LevelText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.OBJECTIVES_NAME_TEXT_ID);
 
 		feedback.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.FEEDBACK_TEXT);
 	}
@@ -117,14 +115,33 @@ public class GoalPopUp : PopUpBase {
 
 	public void setGoalPopUpInfo(string textA,string textB,int starsReached, List<string> letters = null, string levelName = "" , int aABLetterObjectives = 0,int currentWorld =0)
 	{
-		this.LevelNumber.text = LevelNumberShadow.text = levelName;
 		ABObjective.SetActive (false);
 		AObjective.SetActive (false);
 		lettersObjective.SetActive (false);
-		resetStars ();
+		this.levelName = levelName;
 
-		topLevelImage.sprite = worldTopBackground [currentWorld-1];
-		topIcon.sprite = topIconShadow.sprite = worldIcon [currentWorld-1];
+		char[] lvl;
+
+		switch (levelName.Length) 
+		{
+		case 1:
+			LevelNumberUnit.text = levelName;
+			LevelNumberDecimal.gameObject.SetActive (false);
+			LevelNumberHundred.gameObject.SetActive (false);
+			break;
+		case 2:
+			lvl = levelName.ToCharArray();
+			LevelNumberUnit.text = lvl[0].ToString();
+			LevelNumberDecimal.text = lvl[1].ToString();
+			LevelNumberHundred.gameObject.SetActive (false);
+			break;
+		case 3:
+			lvl = levelName.ToCharArray();
+			LevelNumberUnit.text = lvl[0].ToString();
+			LevelNumberDecimal.text = lvl[1].ToString();
+			LevelNumberHundred.text = lvl[2].ToString();
+			break;                                                                  
+		}
 
 		objective = aABLetterObjectives;
 		switch (objective) {
@@ -173,22 +190,47 @@ public class GoalPopUp : PopUpBase {
 
 	protected void showStars(int starsReached)
 	{		
-		for(int i=0; i<starsReached; i++)
+		starsBarr.fillAmount = 0.06f;
+
+		switch (starsReached) 
 		{
-			stars [i].SetActive (true);
-			starsGray [i].SetActive (false);
+		case 1:
+			stars [0].SetActive(true);
+			balls [0].SetActive(true);
+			starsBarr.fillAmount = 0.349f;
+			break;
+		case 2:
+			stars [0].SetActive(true);
+			stars [1].SetActive(true);
+			balls [0].SetActive(true);
+			balls [1].SetActive(true);
+			starsBarr.fillAmount = 0.604f;
+			break;
+		case 3:
+			stars [0].SetActive(true);
+			stars [1].SetActive(true);
+			stars [2].SetActive(true);
+			balls [0].SetActive(true);
+			balls [1].SetActive(true);
+			balls [2].SetActive(true);
+			balls [3].SetActive(true);
+			starsBarr.fillAmount = 1;
+			break;
 		}
 	}
 
 	protected void resetStars()
-	{		
+	{
 		for(int i=0; i<stars.Length; i++)
 		{
 			stars [i].SetActive (false);
-			starsGray [i].SetActive (true);
+		}
+
+		for(int i=0; i<balls.Length; i++)
+		{
+			balls [i].SetActive (false);
 		}
 	}
-
 
 	public void playGame()
 	{
@@ -227,13 +269,12 @@ public class GoalPopUp : PopUpBase {
 		topLevel.anchoredPosition = new Vector3 (0, topLevel.rect.height*2, 0);
 		leftDoor.anchoredPosition = new Vector3 (-leftDoor.rect.width, 0, 0);
 		rightDoor.anchoredPosition = new Vector3 (rightDoor.rect.width, 0, 0);
-		starPanel.localScale = Vector2.zero;
 		objetives.localScale = Vector2.zero;
-		play.localScale = Vector2.zero;
+		playWithPowers.localScale = play.localScale = Vector2.zero;
 		close.localScale = Vector2.zero;
 		facebookFriends.localScale = Vector2.zero;
 		facebookInvite.localScale = Vector2.zero;
-		//starPanel.anchoredPosition = new Vector3 (0, starPanel.rect.height*2, 0);
+		icon.localScale = Vector2.zero;
 		//facebookInvite.anchoredPosition = new Vector3 (0, -facebookInvite.rect.height*2, 0);
 		this.transform.localScale = new Vector2(2,2);
 
@@ -254,27 +295,27 @@ public class GoalPopUp : PopUpBase {
 
 				this.transform.DOScale(new Vector2(1,1),quarter).OnComplete(()=>
 					{
-						close.DOScale(new Vector2(1,1),tenth);
-						starPanel.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
+
+						objetives.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 							{
-								objetives.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
+								icon.DOScale(new Vector2(1,1),tenth);
+								close.DOScale(new Vector2(1,1),tenth);
+
+								playWithPowers.DOScale(new Vector2(1,1),tenth);
+								play.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 									{
-										play.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
+										facebookFriends.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 											{
-												facebookFriends.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
+												if(leaderboardManager != null)
+												{
+													LevelLeaderboard leaderboard = leaderboardManager.getLeaderboard(this.levelName,slotParent);
+													leaderboard.showSlots(true);
+												}
+
+												scrollRect.horizontalNormalizedPosition = 0;
+
+												facebookInvite.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
 													{
-														if(leaderboardManager != null)
-														{
-															LevelLeaderboard leaderboard = leaderboardManager.getLeaderboard(this.LevelNumber.text,slotParent);
-															leaderboard.showSlots(true);
-														}
-
-														scrollRect.horizontalNormalizedPosition = 0;
-
-														facebookInvite.DOScale(new Vector2(1,1),tenth).OnComplete(()=>
-															{
-																icon.DOScale(new Vector2(1,1),tenth);
-															});
 													});
 											});
 									});
