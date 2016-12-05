@@ -173,6 +173,7 @@ public class MultiLanguageTextManager
 	public const string TUTORIAL_LV8_PHASE1					= "Tutorial_lvl8_phase1";
 	public const string TUTORIAL_LV8_PHASE2					= "Tutorial_lvl8_phase2";
 	public const string TUTORIAL_LV8_PHASE3					= "Tutorial_lvl8_phase3";
+	public const string TUTORIAL_LV8_PHASE4					= "Tutorial_lvl8_phase4";
 
 	public const string TUTORIAL_LV13_PHASE1				= "Tutorial_lvl13_phase1";
 	public const string TUTORIAL_LV13_PHASE2				= "Tutorial_lvl13_phase2";

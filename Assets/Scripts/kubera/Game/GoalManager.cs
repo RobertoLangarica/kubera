@@ -41,7 +41,7 @@ public class GoalManager : MonoBehaviour
 	protected List<string> _goalWordsToShow;
 	public List<string> goalWordsToShow  { get{return _goalWordsToShow;} protected set{_goalWordsToShow = value;}}
 
-	public delegate void DOnGoalAchieved();
+	public delegate void DOnGoalAchieved(bool goOn);
 	public DOnGoalAchieved OnGoalAchieved;
 
 	public delegate void DOnLetterFound(string letter);
@@ -147,7 +147,7 @@ public class GoalManager : MonoBehaviour
 		{
 			if(OnGoalAchieved != null)
 			{
-				OnGoalAchieved();
+				OnGoalAchieved(false);
 			}
 		}
 	}
@@ -195,7 +195,7 @@ public class GoalManager : MonoBehaviour
 		{
 			if(OnGoalAchieved != null)
 			{
-				OnGoalAchieved();
+				OnGoalAchieved(false);
 			}
 		}
 	}
@@ -218,7 +218,7 @@ public class GoalManager : MonoBehaviour
 				{
 					if(OnGoalAchieved != null)
 					{
-						OnGoalAchieved();
+						OnGoalAchieved(false);
 					}
 					break;
 				}
@@ -232,7 +232,7 @@ public class GoalManager : MonoBehaviour
 		{
 			if(OnGoalAchieved != null)
 			{
-				OnGoalAchieved();
+				OnGoalAchieved(false);
 			}
 		}
 	}
@@ -245,7 +245,7 @@ public class GoalManager : MonoBehaviour
 		{
 			if(OnGoalAchieved != null)
 			{
-				OnGoalAchieved();
+				OnGoalAchieved(false);
 			}
 		}
 	}

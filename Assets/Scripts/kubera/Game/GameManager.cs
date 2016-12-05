@@ -242,7 +242,7 @@ public class GameManager : MonoBehaviour
 		if (Input.GetKeyUp (KeyCode.Y)) 
 		{
 			cancelBonify = true;
-			goalManager.OnGoalAchieved ();
+			goalManager.OnGoalAchieved (false);
 		}
 
 		if (Input.GetKeyUp (KeyCode.Q)) 
@@ -974,8 +974,14 @@ public class GameManager : MonoBehaviour
 		powerupManager.addPowerupStock (type, amount);
 	}
 
-	private void OnLevelGoalAchieved()
+	private void OnLevelGoalAchieved(bool canPass = false)
 	{
+		if (currentLevel.name == "0004" && !canPass) 
+		{
+			gameOver = true;
+			return;
+		}
+
 		if (!gameOver) 
 		{
 			allowGameInput (false,true);
@@ -1000,6 +1006,15 @@ public class GameManager : MonoBehaviour
 		{
 			AudioManager.GetInstance().Stop("won");
 			AudioManager.GetInstance().Play("won");
+		}
+	}
+
+	public void callWinBonificationFromTutorial()
+	{
+		if (currentLevel.name == "0004") 
+		{
+			gameOver = false;
+			OnLevelGoalAchieved(true);
 		}
 	}
 

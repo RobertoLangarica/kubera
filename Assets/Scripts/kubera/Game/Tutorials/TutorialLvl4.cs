@@ -33,10 +33,10 @@ public class TutorialLvl4 : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV4_PHASE1);
 			instructionsText = instructions [0];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
-			Invoke ("writeLetterByLetter",initialAnim*2);
+			//Invoke ("writeLetterByLetter",initialAnim*2);
 
 			moveCellsToTheFront ();
 			movePiecesToFront ();
@@ -47,7 +47,7 @@ public class TutorialLvl4 : TutorialBase
 			return true;
 		case(1):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			phasesPanels [0].SetActive (false);
@@ -66,18 +66,18 @@ public class TutorialLvl4 : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV4_PHASE2);
 			instructionsText = instructions [1];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
 
-			Invoke ("writeLetterByLetter",initialAnim*1.5f);
+			//Invoke ("writeLetterByLetter",initialAnim*1.5f);
 
 			phase = 2;
 			return true;
 		case(2):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			phasesPanels [0].SetActive (false);
@@ -94,18 +94,18 @@ public class TutorialLvl4 : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV4_PHASE3);
 			instructionsText = instructions [2];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
 
-			Invoke ("writeLetterByLetter",initialAnim*1.5f);
+			//Invoke ("writeLetterByLetter",initialAnim*1.5f);
 
 			phase = 3;
 			return true;
 		case(3):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			phasesPanels [0].SetActive (false);
@@ -122,12 +122,12 @@ public class TutorialLvl4 : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV4_PHASE4);
 			instructionsText = instructions [3];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
 
-			Invoke ("writeLetterByLetter",initialAnim*1.5f);
+			//Invoke ("writeLetterByLetter",initialAnim*1.5f);
 
 			phase = 3;
 			return true;
@@ -138,38 +138,62 @@ public class TutorialLvl4 : TutorialBase
 
 	public override bool phaseObjectiveAchived ()
 	{
+		bool result = false;
+
 		switch (phase) 
 		{
 		case(1):
 		case(2):
 		case(3):
-			if (pieceManager.getShowingPieces ().Count == 1) 
+			if (lineUsed () && !bLineUsed) 
 			{
-				returnCellsToLayer ();
-				returnPieces ();
-				returnBack ();
-
-				tutorialMask.SetActive (false);
-			}
-			if (lineUsed () && !bLineUsed) {
 				bLineUsed = true;
 				phase = 3;
-				return true;
+				result = true;
+				break;
 			}
-			if (littleLUsed () && !bLittleLUsed) {
+			if (littleLUsed () && !bLittleLUsed) 
+			{
 				bLittleLUsed = true;
 				phase = 1;
-				return true;
+				result = true;
+				break;
 			}
-			if (bigLUsed () && !bLUsed) {
+			if (bigLUsed () && !bLUsed) 
+			{
 				bLUsed = true;
 				phase = 2;
-				return true;
+				result = true;
+				break;
 			}
-			return true;
+			result = false;
+			break;
 		}
 
+		if (bLUsed && bLineUsed && bLittleLUsed) 
+		{
+			Invoke ("ShowBonification",2);
+		}
+
+		return result;
+
 		return base.phaseObjectiveAchived ();
+	}
+
+	protected void ShowBonification()
+	{
+		phasesPanels [0].SetActive (false);
+		phasesPanels [1].SetActive (false);
+		phasesPanels [2].SetActive (false);
+		phasesPanels [3].SetActive (false);
+
+		gameManager.callWinBonificationFromTutorial ();
+
+		returnCellsToLayer ();
+		returnPieces ();
+		returnBack ();
+
+		tutorialMask.SetActive (false);
 	}
 
 	protected bool lineUsed()

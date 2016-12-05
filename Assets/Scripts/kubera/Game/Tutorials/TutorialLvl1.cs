@@ -56,7 +56,7 @@ public class TutorialLvl1 : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV1_PHASE1);
 			instructionsText = instructions [0];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.PIECES_AREA);
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.EMPTY_CELLS);
@@ -64,7 +64,7 @@ public class TutorialLvl1 : TutorialBase
 			doAnimation = true;
 			Invoke ("powerUpAnim", 1);
 
-			Invoke ("writeLetterByLetter", initialAnim * 2);
+			//Invoke ("writeLetterByLetter", initialAnim * 2);
 
 			moveCellsToTheFront ();
 			movePiecesToFront ();

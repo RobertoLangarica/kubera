@@ -63,12 +63,12 @@ public class TutorialLvl3 : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE1);
 			instructionsText = instructions [0];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 
 			doAnimation = true;
 			Invoke ("powerUpAnim", 1);
 
-			Invoke ("writeLetterByLetter", initialAnim * 2);
+			//Invoke ("writeLetterByLetter", initialAnim * 2);
 
 			moveCellsToTheFront ();
 			movePiecesToFront ();
@@ -79,7 +79,7 @@ public class TutorialLvl3 : TutorialBase
 			return true;
 		case(1):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			phasesPanels [0].SetActive (false);
@@ -95,20 +95,20 @@ public class TutorialLvl3 : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE2);
 			instructionsText = instructions [1];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
 
 			doAnimation = false;
 
-			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
 			phase = 2;
 			return true;
 		case(2):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			phasesPanels [0].SetActive (false);
@@ -125,21 +125,22 @@ public class TutorialLvl3 : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE3);
 			instructionsText = instructions [2];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
 
-			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
 			isWaitingForText = true;
+			Invoke ("OnWritingFinished", shakeDuraion * 1.5f);
 
 			phase = 3;
 			doAnimation = false;
 			return true;
 		case(3):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			phasesPanels [2].SetActive (false);
@@ -153,12 +154,12 @@ public class TutorialLvl3 : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV3_PHASE4);
 			instructionsText = instructions [3];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
 
-			Invoke ("writeLetterByLetter",shakeDuraion*1.5f);
+			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
 			movePiecesToFront ();
 

@@ -118,9 +118,14 @@ public class LifesManager : Manager<LifesManager>
 		if (tempUsr.playerLifes == maximumLifes) 
 		{
 			setLifeDate ();
+
+			currentMinutes = timeForLifeInMinutes;
+			currentSeconds = 0;
 		}
 
 		giveLifesToUser(-1);
+
+		showTimer = true;
 
 		//setLifeDate ();
 

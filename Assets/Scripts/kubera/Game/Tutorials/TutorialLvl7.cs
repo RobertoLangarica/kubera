@@ -14,6 +14,8 @@ public class TutorialLvl7 : TutorialBase
 	protected int count = 0;
 	protected int currentCount = 0;
 
+	public int wordTimer = 5;
+
 	protected override void Start ()
 	{
 		base.Start ();
@@ -47,27 +49,28 @@ public class TutorialLvl7 : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
-			phaseEvent.Add (ENextPhaseEvent.TAP);
+			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
 			firstAnim ();
 
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV7_PHASE1).Replace ("{{score}}",
 				hudManager.goalText.text.Split('/')[1].Split(' ')[0]);
+			currentInstruction = currentInstruction.Replace ("/n","\n");
 			instructionsText = instructions [0];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 
-			Invoke ("writeLetterByLetter",initialAnim*2);
+			//Invoke ("writeLetterByLetter",initialAnim*2);
 
 			moveCellsToTheFront ();
 			movePiecesToFront ();
 			moveToFront ();
 			tutorialMask.SetActive (true);
 
-			phase = 1;
+			phase = 2;
 			return true;
 		case(1):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			phasesPanels [0].SetActive (false);
@@ -81,21 +84,21 @@ public class TutorialLvl7 : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV7_PHASE2);
 			instructionsText = instructions [1];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
 
-			Invoke ("writeLetterByLetter", initialAnim * 1.5f);
+			//Invoke ("writeLetterByLetter", initialAnim * 1.5f);
 
 			phase = 2;
 			return true;
 		case(2):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [1].SetActive (false);
+			phasesPanels [0].SetActive (false);
 			phasesPanels [2].SetActive (true);
 			phaseEvent.Add (ENextPhaseEvent.SELECT_LETTER);
 
@@ -104,20 +107,20 @@ public class TutorialLvl7 : TutorialBase
 				foundStringTag = false;
 			}
 
-			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV7_PHASE3).Replace("{{neededScore}}",(total-current).ToString());
+			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV7_PHASE2).Replace ("{{neededScore}}", (total - current).ToString ());
 			instructionsText = instructions [2];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
 
-			Invoke ("writeLetterByLetter", initialAnim * 1.5f);
+			//Invoke ("writeLetterByLetter", initialAnim * 1.5f);
 
 			phase = 3;
 			return true;
 		case(3):
 			//Deteniendo escritura previa
-			CancelInvoke ("writeLetterByLetter");
+			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
 			phasesPanels [2].SetActive (false);
@@ -129,16 +132,18 @@ public class TutorialLvl7 : TutorialBase
 				foundStringTag = false;
 			}
 
-			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV7_PHASE4).Replace("{{neededScore}}",(total-current).ToString());
+			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV7_PHASE3).Replace ("{{neededScore}}", (total - current).ToString ());
+			currentInstruction = currentInstruction.Replace ("/n", "\n");
 			instructionsText = instructions [3];
-			instructionsText.text = "";
+			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
 
-			Invoke ("writeLetterByLetter", initialAnim * 1.5f);
+			//Invoke ("writeLetterByLetter", initialAnim * 1.5f);
 
 			isWaitingForText = true;
+			OnWritingFinished ();
 
 			phase = 4;
 			return true;
@@ -154,11 +159,6 @@ public class TutorialLvl7 : TutorialBase
 		case(1):
 			return true;
 		case(2):
-			count++;
-			if (count < 2) 
-			{
-				return false;
-			}
 			return true;
 		case(3):
 			return true;
@@ -186,7 +186,7 @@ public class TutorialLvl7 : TutorialBase
 		if (isWaitingForText) 
 		{
 			isWaitingForText = false;
-			Invoke ("getTutorialWord",12);
+			Invoke ("getTutorialWord",wordTimer);
 		}
 
 		base.OnWritingFinished ();

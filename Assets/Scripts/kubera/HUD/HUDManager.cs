@@ -90,7 +90,7 @@ public class HUDManager : MonoBehaviour
 
 	protected void setText()
 	{
-		scoreText.text = lettersPointsTitle.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SCORE_HUD_TITLE_ID);
+		scoreText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.SCORE_HUD_TITLE_ID);
 		levelText.text = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.LVL_HUD_TITLE_ID);
 	}
 
@@ -470,7 +470,7 @@ public class HUDManager : MonoBehaviour
 
 	public void setLettersPoints(int lettersPoints)
 	{
-		this.lettersPoints.text = lettersPoints.ToString();
+		this.lettersPoints.text = lettersPointsTitle.text = lettersPoints.ToString();
 	}
 
 	public void activateLettersPoints(bool activate)
