@@ -33,6 +33,12 @@ public class Square : MonoBehaviour
 		letterAfterFlip.gameObject.SetActive(false);
 		this.cellParent = cellParent;
 		letter = letterAfterFlip;
+
+		if (flipAnimation.spriteRenderer == null) 
+		{
+			return;
+		}
+
 		if (cellParent.sprite_renderer.sortingLayerName == "Modal") 
 		{
 			flipAnimation.spriteRenderer.sortingLayerName = "WebView";

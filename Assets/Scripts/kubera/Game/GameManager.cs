@@ -827,6 +827,11 @@ public class GameManager : MonoBehaviour
 	{
 		bool canFit = false;
 
+		if (gameOver) 
+		{
+			return;
+		}
+
 		//HACK: al inicio del nivel que sirve en los tutoriales
 		if (linesAnimation.isOnAnimation || (remainingMoves == currentLevel.moves && !powerUpUsed)) 
 		{

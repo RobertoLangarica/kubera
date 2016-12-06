@@ -132,7 +132,13 @@ public class TutorialBlock : TutorialBase
 
 			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
-			tutorialMask.gameObject.SetActive (false);
+			returnCellsToLayer ();
+			returnPieces ();
+			returnBack ();
+
+			blockButton.transform.SetParent (previousParent);
+
+			tutorialMask.SetActive (false);
 
 			phase = 2;
 			return true;		
@@ -183,13 +189,6 @@ public class TutorialBlock : TutorialBase
 		case(2):
 			return true;
 		case(3):
-			returnCellsToLayer ();
-			returnPieces ();
-			returnBack ();
-
-			blockButton.transform.SetParent (previousParent);
-
-			tutorialMask.SetActive (false);
 			return true;
 		}
 
