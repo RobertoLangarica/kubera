@@ -91,3 +91,4 @@ Thumbs.db
 #dotCover
 *.dotCover
 test local notification.apk
+*.apk
