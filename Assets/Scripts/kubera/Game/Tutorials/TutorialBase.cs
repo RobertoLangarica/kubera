@@ -146,14 +146,14 @@ public class TutorialBase : MonoBehaviour
 		int tempprev = previousPhase;
 		int tempcurr = currentPhase;
 
-		instructionsContainer = instructions [tempprev].rectTransform.parent as RectTransform;
+		instructionsContainer = instructions [tempprev].rectTransform;
 		instructionsContainer.DOAnchorPos (new Vector2(instructionsContainer.rect.width,0),0.5f).OnComplete(
 		()=>
 			{
 				phasesPanels[tempprev].SetActive(false);
 				phasesPanels[tempcurr].SetActive(true);
 
-				instructionsContainer = instructions [tempcurr].rectTransform.parent as RectTransform;
+				instructionsContainer = instructions [tempcurr].rectTransform;
 				instructionsContainer.anchoredPosition = new Vector2(-instructionsContainer.rect.width,0);
 				instructionsContainer.DOAnchorPos (Vector2.zero,0.5f);
 			});
@@ -278,10 +278,8 @@ public class TutorialBase : MonoBehaviour
 
 	protected void pauseTutorial()
 	{
-		Debug.Log ("Aqui");
 		if (hasMask) 
 		{
-			Debug.Log ("Paso");
 			returnCellsToLayer ();
 			returnPieces ();
 			returnBack ();

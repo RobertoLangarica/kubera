@@ -137,7 +137,11 @@ public class TutorialDestroy : TutorialBase
 
 			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
-			tutorialMask.gameObject.SetActive (false);
+			returnCellsToLayer ();
+			returnPieces ();
+			returnBack ();
+
+			tutorialMask.SetActive (false);
 
 			lastPhaseCanvas.sortingLayerName = "Selected";
 
@@ -157,11 +161,6 @@ public class TutorialDestroy : TutorialBase
 		case(1):
 			return true;
 		case(2):
-			returnCellsToLayer ();
-			returnPieces ();
-			returnBack ();
-
-			tutorialMask.SetActive (false);
 			return true;
 		}
 

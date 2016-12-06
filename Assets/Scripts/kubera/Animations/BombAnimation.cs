@@ -105,6 +105,12 @@ public class BombAnimation : MonoBehaviour
 		animSprite.enabled = true;
 		animSprite.autoUpdate = true;
 		yield return new WaitUntil (()=> animSprite.sequences[0].currentFrame >= 6);
+
+		if (square == null) 
+		{
+			StopCoroutine ("startAnimation");
+		}
+
 		square.OnCellFlipped += callbackOnFliped;
 		square.doFlip (cellParent, letter, delay);
 
