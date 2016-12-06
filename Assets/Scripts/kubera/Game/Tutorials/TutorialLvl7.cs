@@ -49,6 +49,7 @@ public class TutorialLvl7 : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
+			previousPhase = 0;
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
 			firstAnim ();
@@ -73,8 +74,10 @@ public class TutorialLvl7 : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [0].SetActive (false);
-			phasesPanels [1].SetActive (true);
+			/*phasesPanels [0].SetActive (false);
+			phasesPanels [1].SetActive (true);*/
+			previousPhase = 0;
+			currentPhase = 1;
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
 			if (instructionIndex < currentInstruction.Length) {
@@ -98,8 +101,10 @@ public class TutorialLvl7 : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [0].SetActive (false);
-			phasesPanels [2].SetActive (true);
+			/*phasesPanels [0].SetActive (false);
+			phasesPanels [2].SetActive (true);*/
+			previousPhase = 0;
+			currentPhase = 2;
 			phaseEvent.Add (ENextPhaseEvent.SELECT_LETTER);
 
 			if (instructionIndex < currentInstruction.Length) {
@@ -123,8 +128,10 @@ public class TutorialLvl7 : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [2].SetActive (false);
-			phasesPanels [3].SetActive (true);
+			/*phasesPanels [2].SetActive (false);
+			phasesPanels [3].SetActive (true);*/
+			previousPhase = 2;
+			currentPhase = 3;
 			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
 			if (instructionIndex < currentInstruction.Length) {

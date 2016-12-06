@@ -11,6 +11,7 @@ public class TutorialLvl6 : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
+			previousPhase = 0;
 			phaseEvent.Add (ENextPhaseEvent.CREATE_A_LINE);
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
@@ -29,8 +30,10 @@ public class TutorialLvl6 : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [0].SetActive (false);
-			phasesPanels [1].SetActive (true);
+			/*phasesPanels [0].SetActive (false);
+			phasesPanels [1].SetActive (true);*/
+			previousPhase = 0;
+			currentPhase = 1;
 			phaseEvent.Add (ENextPhaseEvent.HINT_USED);
 
 			if (instructionIndex < currentInstruction.Length) {

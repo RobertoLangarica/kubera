@@ -70,6 +70,7 @@ public class TutorialDestroy : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
+			previousPhase = 0;
 			phaseEvent.Add (ENextPhaseEvent.DESTROY_USED);
 
 			freeDestroy = true;
@@ -107,8 +108,10 @@ public class TutorialDestroy : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [0].SetActive (false);
-			phasesPanels [1].SetActive (true);
+			/*phasesPanels [0].SetActive (false);
+			phasesPanels [1].SetActive (true);*/
+			previousPhase = 0;
+			currentPhase = 1;
 			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
 			freeDestroy = true;

@@ -68,6 +68,9 @@ public class HUDManager : MonoBehaviour
 
 	public bool enableAllPowerUps = false;
 
+	public Action onSettingsActivated;
+	public Action onSettingsDeactivated;
+
 	void Start () 
 	{
 		if(enableAllPowerUps)
@@ -380,6 +383,11 @@ public class HUDManager : MonoBehaviour
 					Sounds.transform.DOScale(Vector3.one,0.2f).SetEase(Ease.OutBack);
 				});
 			PointerOnScene.SetActive(true);
+
+			if (onSettingsActivated != null) 
+			{
+				onSettingsActivated ();
+			}
 		}
 		else 
 		{
@@ -398,6 +406,11 @@ public class HUDManager : MonoBehaviour
 				});
 
 			PointerOnScene.SetActive(false);
+
+			if (onSettingsDeactivated != null) 
+			{
+				onSettingsDeactivated ();
+			}
 		}
 	}
 

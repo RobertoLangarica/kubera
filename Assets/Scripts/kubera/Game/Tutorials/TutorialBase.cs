@@ -22,8 +22,13 @@ public class TutorialBase : MonoBehaviour
 	protected int instructionIndex;
 	protected string currentInstruction;
 
-	protected Transform instructionsContainer;
+	protected RectTransform instructionsContainer;
 	protected Text instructionsText;
+
+	protected bool hasMask;
+
+	protected int previousPhase;
+	protected int currentPhase;
 	
 	public enum ENextPhaseEvent
 	{
@@ -91,8 +96,14 @@ public class TutorialBase : MonoBehaviour
 	public CellsManager cellManager;
 	public HUDManager hudManager;
 
+	public Button settingsButton;
+
 	protected virtual void Start()
 	{
+		hudManager.onSettingsActivated += pauseTutorial;
+		hudManager.onSettingsDeactivated += unPauseTutorial;
+
+		settingsButton.enabled = false;
 	}
 
 	protected virtual void Update()
@@ -132,8 +143,22 @@ public class TutorialBase : MonoBehaviour
 
 	protected void shakeToErrase()
 	{
-		instructionsContainer = instructionsText.transform.parent;
-		instructionsContainer.DOShakePosition (shakeDuraion,shakeStrength);
+		int tempprev = previousPhase;
+		int tempcurr = currentPhase;
+
+		instructionsContainer = instructions [tempprev].rectTransform.parent as RectTransform;
+		instructionsContainer.DOAnchorPos (new Vector2(instructionsContainer.rect.width,0),0.5f).OnComplete(
+		()=>
+			{
+				phasesPanels[tempprev].SetActive(false);
+				phasesPanels[tempcurr].SetActive(true);
+
+				instructionsContainer = instructions [tempcurr].rectTransform.parent as RectTransform;
+				instructionsContainer.anchoredPosition = new Vector2(-instructionsContainer.rect.width,0);
+				instructionsContainer.DOAnchorPos (Vector2.zero,0.5f);
+			});
+		/*instructionsContainer = instructionsText.transform.parent;
+		instructionsContainer.DOShakePosition (shakeDuraion,shakeStrength);*/
 	}
 
 	protected void writeLetterByLetter()
@@ -199,6 +224,8 @@ public class TutorialBase : MonoBehaviour
 		{
 			temp [i].sprite_renderer.sortingLayerName = "Modal";
 		}
+
+		hasMask = true;
 	}
 
 	protected void returnCellsToLayer()
@@ -246,6 +273,36 @@ public class TutorialBase : MonoBehaviour
 		{
 			objectsToMoveAbove [i].overrideSorting = true;
 			objectsToMoveAbove [i].sortingLayerName = "Grid";
+		}
+	}
+
+	protected void pauseTutorial()
+	{
+		Debug.Log ("Aqui");
+		if (hasMask) 
+		{
+			Debug.Log ("Paso");
+			returnCellsToLayer ();
+			returnPieces ();
+			returnBack ();
+
+			instructionsText.enabled = false;
+
+			tutorialMask.SetActive (false);
+		}
+	}
+
+	protected void unPauseTutorial()
+	{
+		if(hasMask)
+		{
+			moveCellsToTheFront ();
+			movePiecesToFront ();
+			moveToFront ();
+
+			instructionsText.enabled = true;
+
+			tutorialMask.SetActive (true);
 		}
 	}
 }

@@ -68,6 +68,7 @@ public class TutorialRotate : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
+			previousPhase = 0;
 			phaseEvent.Add (ENextPhaseEvent.ROTATE_USED);
 
 			freeRotates = true;
@@ -106,8 +107,10 @@ public class TutorialRotate : TutorialBase
 			isWriting = false;
 
 			inputBomb.OnPlayer -= animationController;
-			phasesPanels [0].SetActive (false);
-			phasesPanels [1].SetActive (true);
+			/*phasesPanels [0].SetActive (false);
+			phasesPanels [1].SetActive (true);*/
+			previousPhase = 0;
+			currentPhase = 1;
 			phaseEvent.Add (ENextPhaseEvent.TAP);
 
 			if (instructionIndex < currentInstruction.Length) {

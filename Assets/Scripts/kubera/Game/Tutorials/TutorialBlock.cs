@@ -67,6 +67,7 @@ public class TutorialBlock : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
+			previousPhase = 0;
 			phaseEvent.Add (ENextPhaseEvent.BLOCK_USED);
 
 			freeBlocks = true;
@@ -104,8 +105,10 @@ public class TutorialBlock : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [0].SetActive (false);
-			phasesPanels [1].SetActive (true);
+			/*phasesPanels [0].SetActive (false);
+			phasesPanels [1].SetActive (true);*/
+			previousPhase = 0;
+			currentPhase = 1;
 			phaseEvent.Add (ENextPhaseEvent.BLOCK_USED);
 			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
@@ -138,8 +141,10 @@ public class TutorialBlock : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [1].SetActive (false);
-			phasesPanels [2].SetActive (true);
+			/*phasesPanels [1].SetActive (false);
+			phasesPanels [2].SetActive (true);*/
+			previousPhase = 1;
+			currentPhase = 2;
 			phaseEvent.Add(ENextPhaseEvent.POSITIONATE_PIECE);
 
 			freeBlocks = true;

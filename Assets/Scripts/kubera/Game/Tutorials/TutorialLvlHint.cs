@@ -68,6 +68,7 @@ public class TutorialLvlHint : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
+			previousPhase = 0;
 			phaseEvent.Add (ENextPhaseEvent.HINT_USED);
 			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
@@ -106,8 +107,10 @@ public class TutorialLvlHint : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [0].SetActive (false);
-			phasesPanels [1].SetActive (true);
+			/*phasesPanels [0].SetActive (false);
+			phasesPanels [1].SetActive (true);*/
+			previousPhase = 0;
+			currentPhase = 1;
 			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
 			freeHint = true;
@@ -127,6 +130,7 @@ public class TutorialLvlHint : TutorialBase
 			doAnimation = false;
 
 			shakeToErrase ();
+			previousPhase = 1;
 
 			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
@@ -137,9 +141,10 @@ public class TutorialLvlHint : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [0].SetActive (false);
+			/*phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (false);
-			phasesPanels [2].SetActive (true);
+			phasesPanels [2].SetActive (true);*/
+			currentPhase = 2;
 			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
 			freeHint = true;
@@ -151,7 +156,7 @@ public class TutorialLvlHint : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV22_PHASE3),
-				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [2];
 			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
@@ -159,6 +164,7 @@ public class TutorialLvlHint : TutorialBase
 			doAnimation = false;
 
 			shakeToErrase ();
+			previousPhase = 2;
 
 			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
@@ -169,9 +175,10 @@ public class TutorialLvlHint : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [0].SetActive (false);
+			/*phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (false);
-			phasesPanels [2].SetActive (true);
+			phasesPanels [2].SetActive (true);*/
+			currentPhase = 2;
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
 			freeHint = true;
@@ -183,7 +190,7 @@ public class TutorialLvlHint : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV22_PHASE4),
-				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [2];
 			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
@@ -191,6 +198,7 @@ public class TutorialLvlHint : TutorialBase
 			doAnimation = false;
 
 			shakeToErrase ();
+			previousPhase = 2;
 
 			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 

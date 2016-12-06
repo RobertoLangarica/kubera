@@ -24,6 +24,7 @@ public class TutorialLvl4 : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
+			previousPhase = 0;
 			phaseEvent.Add (ENextPhaseEvent.CREATE_A_LINE);
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
@@ -44,16 +45,18 @@ public class TutorialLvl4 : TutorialBase
 			tutorialMask.SetActive (true);
 
 			phase = 1;
+			previousPhase = 0;
 			return true;
 		case(1):
 			//Deteniendo escritura previa
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [0].SetActive (false);
+			/*phasesPanels [0].SetActive (false);
 			phasesPanels [3].SetActive (false);
-			phasesPanels [2].SetActive (false);
-			phasesPanels [1].SetActive (true);
+			phasesPanels [2].SetActive (false);*/
+			//phasesPanels [1].SetActive (true);
+			currentPhase = 1;
 			phaseEvent.Add (ENextPhaseEvent.CREATE_A_LINE);
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
@@ -70,6 +73,7 @@ public class TutorialLvl4 : TutorialBase
 			instructionIndex = 0;
 
 			shakeToErrase ();
+			previousPhase = 1;
 
 			//Invoke ("writeLetterByLetter",initialAnim*1.5f);
 
@@ -80,10 +84,11 @@ public class TutorialLvl4 : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [0].SetActive (false);
+			/*phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (false);
-			phasesPanels [3].SetActive (false);
-			phasesPanels [2].SetActive (true);
+			phasesPanels [3].SetActive (false);*/
+			//phasesPanels [2].SetActive (true);
+			currentPhase = 2;
 			phaseEvent.Add (ENextPhaseEvent.CREATE_A_LINE);
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
@@ -98,6 +103,7 @@ public class TutorialLvl4 : TutorialBase
 			instructionIndex = 0;
 
 			shakeToErrase ();
+			previousPhase = 2;
 
 			//Invoke ("writeLetterByLetter",initialAnim*1.5f);
 
@@ -108,10 +114,11 @@ public class TutorialLvl4 : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [0].SetActive (false);
+			/*phasesPanels [0].SetActive (false);
 			phasesPanels [1].SetActive (false);
-			phasesPanels [2].SetActive (false);
-			phasesPanels [3].SetActive (true);
+			phasesPanels [2].SetActive (false);*/
+			//phasesPanels [3].SetActive (true);
+			currentPhase = 3;
 			phaseEvent.Add (ENextPhaseEvent.CREATE_A_LINE);
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
@@ -126,6 +133,7 @@ public class TutorialLvl4 : TutorialBase
 			instructionIndex = 0;
 
 			shakeToErrase ();
+			previousPhase = 3;
 
 			//Invoke ("writeLetterByLetter",initialAnim*1.5f);
 

@@ -21,6 +21,7 @@ public class TutorialLvl8 : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
+			previousPhase = 0;
 			phaseEvent.Add (ENextPhaseEvent.CREATE_A_LINE);
 
 
@@ -33,15 +34,17 @@ public class TutorialLvl8 : TutorialBase
 			//Invoke ("writeLetterByLetter", initialAnim * 2);
 
 			phase = 1;
+			previousPhase = 0;
 			return true;
 		case(1):
 			//Deteniendo escritura previa
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [0].SetActive (false);
+			/*phasesPanels [0].SetActive (false);
 			phasesPanels [2].SetActive (false);
-			phasesPanels [1].SetActive (true);
+			phasesPanels [1].SetActive (true);*/
+			currentPhase = 1;
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
 			if (instructionIndex < currentInstruction.Length) {
@@ -55,6 +58,7 @@ public class TutorialLvl8 : TutorialBase
 			instructionIndex = 0;
 
 			shakeToErrase ();
+			previousPhase = 1;
 
 			x2Showed = true;
 
@@ -68,9 +72,10 @@ public class TutorialLvl8 : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [1].SetActive (false);
+			/*phasesPanels [1].SetActive (false);
 			phasesPanels [0].SetActive (false);
-			phasesPanels [2].SetActive (true);
+			phasesPanels [2].SetActive (true);*/
+			currentPhase = 2;
 			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
 			if (instructionIndex < currentInstruction.Length) {
@@ -84,6 +89,7 @@ public class TutorialLvl8 : TutorialBase
 			instructionIndex = 0;
 
 			shakeToErrase ();
+			previousPhase = 2;
 
 			x3Showed = true;
 
@@ -97,22 +103,25 @@ public class TutorialLvl8 : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [1].SetActive (false);
+			/*phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (false);
-			phasesPanels [3].SetActive (true);
-			phaseEvent.Add(ENextPhaseEvent.SELECT_LETTER);
+			phasesPanels [3].SetActive (true);*/
+			currentPhase = 3;
+			phaseEvent.Add (ENextPhaseEvent.SELECT_LETTER);
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
 				foundStringTag = false;
 			}
 
-			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE4).Replace ("{{neededScore}}", (total - current).ToString ());;
+			currentInstruction = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV8_PHASE4).Replace ("{{neededScore}}", (total - current).ToString ());
+			;
 			instructionsText = instructions [3];
 			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
+			previousPhase = 3;
 
 			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 

@@ -62,8 +62,10 @@ public class TutorialLvl5 : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [0].SetActive (false);
-			phasesPanels [1].SetActive (true);
+			/*phasesPanels [0].SetActive (false);
+			phasesPanels [1].SetActive (true);*/
+			previousPhase = 0;
+			currentPhase = 1;
 			phaseEvent.Add (ENextPhaseEvent.CREATE_WORD);
 
 			if (instructionIndex < currentInstruction.Length) {
@@ -92,8 +94,10 @@ public class TutorialLvl5 : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [1].SetActive (false);
-			phasesPanels [2].SetActive (true);
+			/*phasesPanels [1].SetActive (false);
+			phasesPanels [2].SetActive (true);*/
+			previousPhase = 1;
+			currentPhase = 2;
 			phaseEvent.Add (ENextPhaseEvent.SUBMIT_WORD);
 
 			if (instructionIndex < currentInstruction.Length) {

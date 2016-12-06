@@ -58,6 +58,7 @@ public class TutorialWildcard : TutorialBase
 		{
 		case(0):
 			phasesPanels [0].SetActive (true);
+			previousPhase = 0;
 			phaseEvent.Add (ENextPhaseEvent.WILDCARD_USED);
 			phaseEvent.Add(ENextPhaseEvent.WILDCARD_OVER_OBSTACLE);
 
@@ -85,8 +86,10 @@ public class TutorialWildcard : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [0].SetActive (false);
-			phasesPanels [1].SetActive (true);
+			/*phasesPanels [0].SetActive (false);
+			phasesPanels [1].SetActive (true);*/
+			previousPhase = 0;
+			currentPhase = 1;
 
 			phasesPanels [1].transform.SetParent (keyBoard.transform);
 
@@ -122,10 +125,12 @@ public class TutorialWildcard : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [3].SetActive (false);
-			phasesPanels [2].SetActive (true);
+			/*phasesPanels [3].SetActive (false);
+			phasesPanels [2].SetActive (true);*/
+			previousPhase = 3;
+			currentPhase = 2;
 
-			phaseEvent.Add(ENextPhaseEvent.WILDCARD_OVER_OBSTACLE);
+			phaseEvent.Add (ENextPhaseEvent.WILDCARD_OVER_OBSTACLE);
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
@@ -138,12 +143,13 @@ public class TutorialWildcard : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE3),
-				new string[2]{ "{{b}}","{{/b}}"}, new string[2]{ "<b>", "</b>"});
+				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [2];
 			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
+			previousPhase = 2;
 
 			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
@@ -154,11 +160,12 @@ public class TutorialWildcard : TutorialBase
 			//CancelInvoke ("writeLetterByLetter");
 			isWriting = false;
 
-			phasesPanels [2].SetActive (false);
+			/*phasesPanels [2].SetActive (false);
 			phasesPanels [0].SetActive (false);
-			phasesPanels [3].SetActive (true);
+			phasesPanels [3].SetActive (true);*/
+			currentPhase = 3;
 
-			phaseEvent.Add(ENextPhaseEvent.WILDCARD_USED);
+			phaseEvent.Add (ENextPhaseEvent.WILDCARD_USED);
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
@@ -169,12 +176,13 @@ public class TutorialWildcard : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE4),
-				new string[2]{ "{{b}}","{{/b}}"}, new string[2]{ "<b>", "</b>"});
+				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [3];
 			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
 
 			shakeToErrase ();
+			previousPhase = 3;
 
 			doAnimation = false;
 			inputBomb.OnPlayer -= animationController;
