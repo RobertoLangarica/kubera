@@ -92,15 +92,15 @@ public class RetryPopUp : PopUpBase
 			break;
 		case 2:
 			lvl = PersistentData.GetInstance ().lastLevelPlayedName.ToCharArray();
-			LevelNumberUnit.text = lvl[0].ToString();
-			LevelNumberDecimal.text = lvl[1].ToString();
+			LevelNumberUnit.text = lvl[1].ToString();
+			LevelNumberDecimal.text = lvl[0].ToString();
 			LevelNumberHundred.gameObject.SetActive (false);
 			break;
 		case 3:
 			lvl = PersistentData.GetInstance ().lastLevelPlayedName.ToCharArray();
-			LevelNumberUnit.text = lvl[0].ToString();
+			LevelNumberUnit.text = lvl[2].ToString();
 			LevelNumberDecimal.text = lvl[1].ToString();
-			LevelNumberHundred.text = lvl[2].ToString();
+			LevelNumberHundred.text = lvl[0].ToString();
 			break;                                                                  
 		}
 
