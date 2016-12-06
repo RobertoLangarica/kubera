@@ -98,7 +98,7 @@ public class TutorialBlock : TutorialBase
 
 			tutorialMask.SetActive (true);
 
-			phase = 1;
+			phase = 2;
 			return true;
 		case(1):
 			//Deteniendo escritura previa
@@ -132,14 +132,6 @@ public class TutorialBlock : TutorialBase
 
 			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
-			returnCellsToLayer ();
-			returnPieces ();
-			returnBack ();
-
-			blockButton.transform.SetParent (previousParent);
-
-			tutorialMask.SetActive (false);
-
 			phase = 2;
 			return true;		
 		case(2):
@@ -149,7 +141,7 @@ public class TutorialBlock : TutorialBase
 
 			/*phasesPanels [1].SetActive (false);
 			phasesPanels [2].SetActive (true);*/
-			previousPhase = 1;
+			previousPhase = 0;
 			currentPhase = 2;
 			phaseEvent.Add(ENextPhaseEvent.POSITIONATE_PIECE);
 
@@ -172,6 +164,17 @@ public class TutorialBlock : TutorialBase
 			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
 			lastPhaseCanvas.sortingLayerName = "Selected";
+
+			returnCellsToLayer ();
+			returnPieces ();
+			returnBack ();
+
+			blockButton.transform.SetParent (previousParent);
+
+			tutorialMask.SetActive (false);
+
+			doAnimation = false;
+			inputBlock.OnPlayer -= animationController;
 
 			phase = 3;
 			return true;	
@@ -197,7 +200,7 @@ public class TutorialBlock : TutorialBase
 
 	protected void powerUpAnim()
 	{
-		if (!doAnimation || cellManager.getAllEmptyCells().Length < 3) 
+		if (!doAnimation) 
 		{
 			DOTween.Kill ("Tutorial13");
 			return;
