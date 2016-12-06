@@ -119,7 +119,6 @@ public class GoalPopUp : PopUpBase {
 		AObjective.SetActive (false);
 		lettersObjective.SetActive (false);
 		this.levelName = levelName;
-
 		char[] lvl;
 
 		switch (levelName.Length) 
@@ -177,6 +176,7 @@ public class GoalPopUp : PopUpBase {
 			}
 		}
 
+		resetStars ();
 		showStars (starsReached);
 	}
 
@@ -191,7 +191,7 @@ public class GoalPopUp : PopUpBase {
 	protected void showStars(int starsReached)
 	{		
 		starsBarr.fillAmount = 0.06f;
-
+		print ("showStars");
 		switch (starsReached) 
 		{
 		case 1:
@@ -221,6 +221,7 @@ public class GoalPopUp : PopUpBase {
 
 	protected void resetStars()
 	{
+		print ("resetStars");
 		for(int i=0; i<stars.Length; i++)
 		{
 			stars [i].SetActive (false);
@@ -262,7 +263,6 @@ public class GoalPopUp : PopUpBase {
 
 	protected void setStartingPlaces()
 	{
-		resetStars ();
 
 		/*leftDoor.localScale = new Vector3 (1, 1.4f);
 		rightDoor.localScale = new Vector3 (1, 1.4f);*/
