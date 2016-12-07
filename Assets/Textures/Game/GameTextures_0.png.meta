@@ -270,6 +270,7 @@ TextureImporter:
     21300526: K-popups-pq_btnVerde (1)
     21300528: K-MapaGeneral_HUDvidas
     21300530: K-InGame_invetario
+    21300532: K-popups-pq_baseGris-27
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -329,8 +330,8 @@ TextureImporter:
     - name: "barraEstrellas Peque\xF1a-K-InGame_barlight"
       rect:
         serializedVersion: 2
-        x: 841
-        y: 585
+        x: 0
+        y: 262
         width: 167
         height: 5
       alignment: 9
@@ -340,8 +341,8 @@ TextureImporter:
     - name: "barraEstrellas Peque\xF1a-K-InGame_EmptyCircle"
       rect:
         serializedVersion: 2
-        x: 1014
-        y: 656
+        x: 1013
+        y: 1000
         width: 10
         height: 10
       alignment: 0
@@ -351,8 +352,8 @@ TextureImporter:
     - name: "barraEstrellas Peque\xF1a-K-InGame_EmptyStar"
       rect:
         serializedVersion: 2
-        x: 806
-        y: 489
+        x: 872
+        y: 655
         width: 30
         height: 28
       alignment: 0
@@ -362,8 +363,8 @@ TextureImporter:
     - name: "barraEstrellas Peque\xF1a-K-InGame_fullCircle"
       rect:
         serializedVersion: 2
-        x: 998
-        y: 605
+        x: 1013
+        y: 948
         width: 8
         height: 8
       alignment: 0
@@ -373,8 +374,8 @@ TextureImporter:
     - name: "barraEstrellas Peque\xF1a-K-InGame_FullStar"
       rect:
         serializedVersion: 2
-        x: 596
-        y: 340
+        x: 703
+        y: 5
         width: 27
         height: 27
       alignment: 0
@@ -384,8 +385,8 @@ TextureImporter:
     - name: "barraEstrellas Peque\xF1a-K-InGame_Stars1"
       rect:
         serializedVersion: 2
-        x: 327
-        y: 524
+        x: 0
+        y: 475
         width: 204
         height: 43
       alignment: 9
@@ -395,8 +396,8 @@ TextureImporter:
     - name: "barraEstrellas Peque\xF1a-K-InGame_Stars2"
       rect:
         serializedVersion: 2
-        x: 327
-        y: 477
+        x: 0
+        y: 428
         width: 204
         height: 43
       alignment: 9
@@ -417,8 +418,8 @@ TextureImporter:
     - name: Copia de K-MapaGeneral_HUDgemas
       rect:
         serializedVersion: 2
-        x: 302
-        y: 380
+        x: 917
+        y: 722
         width: 89
         height: 91
       alignment: 9
@@ -428,8 +429,8 @@ TextureImporter:
     - name: Copia de K-menus_Musicabolsa_frente
       rect:
         serializedVersion: 2
-        x: 841
-        y: 348
+        x: 0
+        y: 24
         width: 159
         height: 233
       alignment: 9
@@ -439,8 +440,8 @@ TextureImporter:
     - name: Copia de K-popUps_close
       rect:
         serializedVersion: 2
-        x: 811
-        y: 52
+        x: 502
+        y: 295
         width: 68
         height: 69
       alignment: 9
@@ -472,8 +473,8 @@ TextureImporter:
     - name: glow0001
       rect:
         serializedVersion: 2
-        x: 0
-        y: 2
+        x: 146
+        y: 290
         width: 87
         height: 87
       alignment: 9
@@ -483,8 +484,8 @@ TextureImporter:
     - name: glowcuadrado0001
       rect:
         serializedVersion: 2
-        x: 180
-        y: 5
+        x: 784
+        y: 453
         width: 84
         height: 84
       alignment: 9
@@ -494,8 +495,8 @@ TextureImporter:
     - name: k-bomba explosion-Kub_06_Bomba_assets0001
       rect:
         serializedVersion: 2
-        x: 998
-        y: 751
+        x: 283
+        y: 454
         width: 17
         height: 17
       alignment: 9
@@ -505,8 +506,8 @@ TextureImporter:
     - name: k-bomba explosion-Kub_06_Bomba_assets0002
       rect:
         serializedVersion: 2
-        x: 998
-        y: 836
+        x: 123
+        y: 2
         width: 20
         height: 18
       alignment: 9
@@ -516,8 +517,8 @@ TextureImporter:
     - name: k-bomba explosion-Kub_06_Bomba_assets0003
       rect:
         serializedVersion: 2
-        x: 998
-        y: 962
+        x: 205
+        y: 264
         width: 24
         height: 22
       alignment: 9
@@ -527,8 +528,8 @@ TextureImporter:
     - name: k-bomba explosion-Kub_06_Bomba_assets0004
       rect:
         serializedVersion: 2
-        x: 677
-        y: 429
+        x: 172
+        y: 261
         width: 29
         height: 25
       alignment: 9
@@ -538,8 +539,8 @@ TextureImporter:
     - name: k-bomba explosion-Kub_06_Bomba_assets0005
       rect:
         serializedVersion: 2
-        x: 559
-        y: 391
+        x: 632
+        y: 5
         width: 34
         height: 27
       alignment: 0
@@ -549,8 +550,8 @@ TextureImporter:
     - name: k-bomba explosion-Kub_06_Bomba_assets0006
       rect:
         serializedVersion: 2
-        x: 494
-        y: 315
+        x: 208
+        y: 489
         width: 33
         height: 29
       alignment: 9
@@ -560,8 +561,8 @@ TextureImporter:
     - name: k-bomba explosion-Kub_06_Bomba_assets0007
       rect:
         serializedVersion: 2
-        x: 559
-        y: 422
+        x: 334
+        y: 0
         width: 34
         height: 31
       alignment: 0
@@ -582,7 +583,7 @@ TextureImporter:
     - name: k-bomba explosion-Kub_06_Bomba_assets0009
       rect:
         serializedVersion: 2
-        x: 285
+        x: 284
         y: 475
         width: 37
         height: 32
@@ -593,8 +594,8 @@ TextureImporter:
     - name: k-bomba explosion-Kub_06_Bomba_assets0010
       rect:
         serializedVersion: 2
-        x: 156
-        y: 450
+        x: 738
+        y: 463
         width: 36
         height: 33
       alignment: 9
@@ -604,8 +605,8 @@ TextureImporter:
     - name: k-ejemploAnim20000
       rect:
         serializedVersion: 2
-        x: 998
-        y: 858
+        x: 233
+        y: 265
         width: 20
         height: 21
       alignment: 0
@@ -615,8 +616,8 @@ TextureImporter:
     - name: K-InGame_Aspiradora
       rect:
         serializedVersion: 2
-        x: 712
-        y: 491
+        x: 917
+        y: 817
         width: 90
         height: 26
       alignment: 9
@@ -626,8 +627,8 @@ TextureImporter:
     - name: K-InGame_BACK1
       rect:
         serializedVersion: 2
-        x: 782
-        y: 201
+        x: 475
+        y: 368
         width: 69
         height: 69
       alignment: 0
@@ -637,8 +638,8 @@ TextureImporter:
     - name: K-InGame_BACK2
       rect:
         serializedVersion: 2
-        x: 794
-        y: 275
+        x: 429
+        y: 295
         width: 69
         height: 69
       alignment: 0
@@ -648,19 +649,30 @@ TextureImporter:
     - name: K-InGame_BACK3
       rect:
         serializedVersion: 2
-        x: 709
-        y: 198
+        x: 830
+        y: 186
         width: 69
         height: 71
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: K-InGame_bar2
+    - name: K-InGame_bar1
       rect:
         serializedVersion: 2
         x: 0
-        y: 487
+        y: 381
+        width: 203
+        height: 43
+      alignment: 9
+      pivot: {x: 0.5, y: 0.53488374}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-InGame_bar2
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 500
         width: 196
         height: 37
       alignment: 0
@@ -670,8 +682,8 @@ TextureImporter:
     - name: K-InGame_barlight
       rect:
         serializedVersion: 2
-        x: 841
-        y: 594
+        x: 0
+        y: 271
         width: 168
         height: 5
       alignment: 0
@@ -703,8 +715,8 @@ TextureImporter:
     - name: K-InGame_boardCorner
       rect:
         serializedVersion: 2
-        x: 482
-        y: 348
+        x: 530
+        y: 441
         width: 50
         height: 50
       alignment: 0
@@ -714,8 +726,8 @@ TextureImporter:
     - name: K-InGame_boardoutline
       rect:
         serializedVersion: 2
-        x: 424
-        y: 344
+        x: 680
+        y: 407
         width: 54
         height: 54
       alignment: 0
@@ -725,8 +737,8 @@ TextureImporter:
     - name: K-InGame_DobleArrow
       rect:
         serializedVersion: 2
-        x: 385
-        y: 344
+        x: 436
+        y: 0
         width: 35
         height: 32
       alignment: 0
@@ -736,8 +748,8 @@ TextureImporter:
     - name: K-InGame_EmptyCircle
       rect:
         serializedVersion: 2
-        x: 998
-        y: 617
+        x: 1013
+        y: 1014
         width: 11
         height: 10
       alignment: 9
@@ -747,8 +759,8 @@ TextureImporter:
     - name: K-InGame_EmptyStar
       rect:
         serializedVersion: 2
-        x: 805
-        y: 424
+        x: 207
+        y: 381
         width: 29
         height: 28
       alignment: 9
@@ -758,8 +770,8 @@ TextureImporter:
     - name: K-InGame_Enter
       rect:
         serializedVersion: 2
-        x: 200
-        y: 455
+        x: 780
+        y: 380
         width: 81
         height: 69
       alignment: 0
@@ -769,8 +781,8 @@ TextureImporter:
     - name: K-InGame_EnterPalomitacentro
       rect:
         serializedVersion: 2
-        x: 998
-        y: 815
+        x: 147
+        y: 3
         width: 20
         height: 17
       alignment: 0
@@ -780,8 +792,8 @@ TextureImporter:
     - name: K-InGame_Erase
       rect:
         serializedVersion: 2
-        x: 712
-        y: 424
+        x: 917
+        y: 655
         width: 89
         height: 63
       alignment: 9
@@ -813,8 +825,8 @@ TextureImporter:
     - name: K-InGame_lvl
       rect:
         serializedVersion: 2
-        x: 155
-        y: 150
+        x: 917
+        y: 847
         width: 92
         height: 177
       alignment: 9
@@ -824,8 +836,8 @@ TextureImporter:
     - name: K-InGame_musicOFF
       rect:
         serializedVersion: 2
-        x: 409
-        y: 97
+        x: 333
+        y: 110
         width: 71
         height: 71
       alignment: 9
@@ -835,8 +847,8 @@ TextureImporter:
     - name: K-InGame_musicON1
       rect:
         serializedVersion: 2
-        x: 395
-        y: 402
+        x: 380
+        y: 186
         width: 71
         height: 71
       alignment: 9
@@ -846,8 +858,8 @@ TextureImporter:
     - name: K-InGame_musicON2
       rect:
         serializedVersion: 2
-        x: 334
-        y: 95
+        x: 208
+        y: 413
         width: 71
         height: 72
       alignment: 9
@@ -857,8 +869,8 @@ TextureImporter:
     - name: K-InGame_PWRBlock
       rect:
         serializedVersion: 2
-        x: 536
-        y: 330
+        x: 355
+        y: 380
         width: 56
         height: 57
       alignment: 9
@@ -868,8 +880,8 @@ TextureImporter:
     - name: K-InGame_PWRBomb
       rect:
         serializedVersion: 2
-        x: 677
-        y: 45
+        x: 415
+        y: 381
         width: 56
         height: 56
       alignment: 9
@@ -879,8 +891,8 @@ TextureImporter:
     - name: K-InGame_PWRLetter
       rect:
         serializedVersion: 2
-        x: 855
-        y: 215
+        x: 784
+        y: 51
         width: 56
         height: 56
       alignment: 9
@@ -890,8 +902,8 @@ TextureImporter:
     - name: K-InGame_PWRRotate
       rect:
         serializedVersion: 2
-        x: 867
-        y: 288
+        x: 844
+        y: 51
         width: 56
         height: 56
       alignment: 9
@@ -901,8 +913,8 @@ TextureImporter:
     - name: K-InGame_PWRThunder
       rect:
         serializedVersion: 2
-        x: 927
-        y: 288
+        x: 857
+        y: 126
         width: 56
         height: 56
       alignment: 9
@@ -912,8 +924,8 @@ TextureImporter:
     - name: K-InGame_PWRTip
       rect:
         serializedVersion: 2
-        x: 915
-        y: 228
+        x: 903
+        y: 201
         width: 55
         height: 56
       alignment: 9
@@ -923,8 +935,8 @@ TextureImporter:
     - name: K-InGame_Rotatetetris
       rect:
         serializedVersion: 2
-        x: 535
-        y: 521
+        x: 430
+        y: 445
         width: 44
         height: 46
       alignment: 0
@@ -935,18 +947,18 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 588
-        y: 603
-        width: 406
-        height: 421
+        y: 687
+        width: 325
+        height: 337
       alignment: 9
-      pivot: {x: 0.5086207, y: 0.51068884}
+      pivot: {x: 0.4923077, y: 0.48961425}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-InGame_settings
       rect:
         serializedVersion: 2
-        x: 155
-        y: 93
+        x: 962
+        y: 145
         width: 52
         height: 53
       alignment: 0
@@ -956,8 +968,8 @@ TextureImporter:
     - name: K-InGame_soundOFF
       rect:
         serializedVersion: 2
-        x: 677
-        y: 105
+        x: 783
+        y: 111
         width: 70
         height: 71
       alignment: 9
@@ -967,8 +979,8 @@ TextureImporter:
     - name: K-InGame_soundON2
       rect:
         serializedVersion: 2
-        x: 377
-        y: 19
+        x: 305
+        y: 185
         width: 71
         height: 72
       alignment: 9
@@ -989,12 +1001,23 @@ TextureImporter:
     - name: K-MapaGeneral_HUDvidas
       rect:
         serializedVersion: 2
-        x: 267
-        y: 95
+        x: 163
+        y: 24
         width: 63
         height: 58
       alignment: 9
       pivot: {x: 0.5, y: 0.5086207}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: K-popups-pq_baseGris-27
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 541
+        width: 284
+        height: 142
+      alignment: 9
+      pivot: {x: 0.50176054, y: 0.5140845}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: K-popups-pq_bolsaAtras (1)
@@ -1022,8 +1045,8 @@ TextureImporter:
     - name: K-popups-pq_btnRojo (1)
       rect:
         serializedVersion: 2
-        x: 584
-        y: 521
+        x: 327
+        y: 495
         width: 253
         height: 78
       alignment: 9
@@ -1044,8 +1067,8 @@ TextureImporter:
     - name: K-popups-pq_gemaLibre
       rect:
         serializedVersion: 2
-        x: 825
-        y: 129
+        x: 283
+        y: 381
         width: 68
         height: 68
       alignment: 9
@@ -1055,8 +1078,8 @@ TextureImporter:
     - name: K-popups-pq_lineapunteada
       rect:
         serializedVersion: 2
-        x: 327
-        y: 571
+        x: 0
+        y: 522
         width: 247
         height: 2
       alignment: 9
@@ -1066,8 +1089,8 @@ TextureImporter:
     - name: K-popups-pq_oferta
       rect:
         serializedVersion: 2
-        x: 0
-        y: 331
+        x: 872
+        y: 499
         width: 152
         height: 152
       alignment: 9
@@ -1077,8 +1100,8 @@ TextureImporter:
     - name: K-popups-pq_Tiket
       rect:
         serializedVersion: 2
-        x: 0
-        y: 93
+        x: 872
+        y: 261
         width: 151
         height: 234
       alignment: 9
@@ -1088,8 +1111,8 @@ TextureImporter:
     - name: K-Tutoriales_Estrellita0001
       rect:
         serializedVersion: 2
-        x: 91
-        y: 5
+        x: 163
+        y: 173
         width: 85
         height: 84
       alignment: 9
@@ -1099,8 +1122,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0001
       rect:
         serializedVersion: 2
-        x: 566
-        y: 489
+        x: 290
+        y: 262
         width: 28
         height: 28
       alignment: 9
@@ -1110,8 +1133,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0002
       rect:
         serializedVersion: 2
-        x: 566
-        y: 489
+        x: 290
+        y: 262
         width: 28
         height: 28
       alignment: 9
@@ -1121,8 +1144,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0003
       rect:
         serializedVersion: 2
-        x: 566
-        y: 457
+        x: 404
+        y: 3
         width: 28
         height: 28
       alignment: 9
@@ -1132,8 +1155,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0004
       rect:
         serializedVersion: 2
-        x: 558
-        y: 208
+        x: 601
+        y: 4
         width: 27
         height: 28
       alignment: 9
@@ -1143,8 +1166,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0005
       rect:
         serializedVersion: 2
-        x: 677
-        y: 489
+        x: 240
+        y: 381
         width: 29
         height: 28
       alignment: 9
@@ -1154,8 +1177,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0006
       rect:
         serializedVersion: 2
-        x: 805
-        y: 456
+        x: 257
+        y: 261
         width: 29
         height: 29
       alignment: 9
@@ -1165,8 +1188,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0007
       rect:
         serializedVersion: 2
-        x: 677
-        y: 394
+        x: 372
+        y: 0
         width: 28
         height: 31
       alignment: 9
@@ -1176,8 +1199,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0008
       rect:
         serializedVersion: 2
-        x: 535
-        y: 485
+        x: 475
+        y: 0
         width: 27
         height: 32
       alignment: 9
@@ -1187,8 +1210,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0009
       rect:
         serializedVersion: 2
-        x: 998
-        y: 883
+        x: 755
+        y: 426
         width: 21
         height: 33
       alignment: 9
@@ -1198,8 +1221,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0010
       rect:
         serializedVersion: 2
-        x: 998
-        y: 672
+        x: 341
+        y: 262
         width: 15
         height: 35
       alignment: 9
@@ -1209,8 +1232,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0011
       rect:
         serializedVersion: 2
-        x: 998
-        y: 631
+        x: 1011
+        y: 806
         width: 12
         height: 37
       alignment: 9
@@ -1220,8 +1243,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0012
       rect:
         serializedVersion: 2
-        x: 1017
-        y: 670
+        x: 1013
+        y: 867
         width: 6
         height: 36
       alignment: 9
@@ -1231,8 +1254,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0013
       rect:
         serializedVersion: 2
-        x: 1017
-        y: 710
+        x: 1013
+        y: 907
         width: 6
         height: 37
       alignment: 9
@@ -1242,8 +1265,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0014
       rect:
         serializedVersion: 2
-        x: 1014
-        y: 616
+        x: 1013
+        y: 960
         width: 9
         height: 36
       alignment: 9
@@ -1253,8 +1276,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0015
       rect:
         serializedVersion: 2
-        x: 998
-        y: 711
+        x: 322
+        y: 261
         width: 15
         height: 36
       alignment: 9
@@ -1264,8 +1287,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0016
       rect:
         serializedVersion: 2
-        x: 998
-        y: 772
+        x: 360
+        y: 264
         width: 19
         height: 39
       alignment: 9
@@ -1275,8 +1298,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0017
       rect:
         serializedVersion: 2
-        x: 998
-        y: 920
+        x: 325
+        y: 453
         width: 22
         height: 38
       alignment: 9
@@ -1286,8 +1309,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0018
       rect:
         serializedVersion: 2
-        x: 998
-        y: 988
+        x: 351
+        y: 455
         width: 24
         height: 36
       alignment: 9
@@ -1297,8 +1320,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0019
       rect:
         serializedVersion: 2
-        x: 527
-        y: 8
+        x: 506
+        y: 0
         width: 27
         height: 32
       alignment: 9
@@ -1308,8 +1331,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0020
       rect:
         serializedVersion: 2
-        x: 494
-        y: 208
+        x: 537
+        y: 4
         width: 28
         height: 28
       alignment: 9
@@ -1319,8 +1342,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0021
       rect:
         serializedVersion: 2
-        x: 677
-        y: 458
+        x: 670
+        y: 5
         width: 29
         height: 27
       alignment: 9
@@ -1330,8 +1353,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0022
       rect:
         serializedVersion: 2
-        x: 526
-        y: 208
+        x: 569
+        y: 4
         width: 28
         height: 28
       alignment: 9
@@ -1341,8 +1364,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0023
       rect:
         serializedVersion: 2
-        x: 784
-        y: 373
+        x: 379
+        y: 444
         width: 47
         height: 47
       alignment: 9
@@ -1352,8 +1375,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0024
       rect:
         serializedVersion: 2
-        x: 211
-        y: 95
+        x: 917
+        y: 90
         width: 52
         height: 51
       alignment: 9
@@ -1363,8 +1386,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0025
       rect:
         serializedVersion: 2
-        x: 915
-        y: 169
+        x: 962
+        y: 202
         width: 55
         height: 55
       alignment: 0
@@ -1374,8 +1397,8 @@ TextureImporter:
     - name: Kub_02_Voltear_assets-Kub_02_Voltear_assets0026
       rect:
         serializedVersion: 2
-        x: 526
-        y: 208
+        x: 569
+        y: 4
         width: 28
         height: 28
       alignment: 9
@@ -1385,8 +1408,8 @@ TextureImporter:
     - name: letras-K-InGame_BlackTile
       rect:
         serializedVersion: 2
-        x: 452
-        y: 22
+        x: 334
+        y: 35
         width: 71
         height: 71
       alignment: 0
@@ -1396,8 +1419,8 @@ TextureImporter:
     - name: letras-K-InGame_bloquedBlackTile
       rect:
         serializedVersion: 2
-        x: 494
-        y: 240
+        x: 605
+        y: 186
         width: 71
         height: 71
       alignment: 0
@@ -1408,7 +1431,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 559
-        y: 133
+        y: 36
         width: 71
         height: 71
       alignment: 0
@@ -1418,8 +1441,8 @@ TextureImporter:
     - name: letras-K-InGame_BlueSpecialTile
       rect:
         serializedVersion: 2
-        x: 419
-        y: 269
+        x: 408
+        y: 111
         width: 71
         height: 71
       alignment: 0
@@ -1429,8 +1452,8 @@ TextureImporter:
     - name: letras-K-InGame_BlueTile
       rect:
         serializedVersion: 2
-        x: 470
-        y: 402
+        x: 455
+        y: 186
         width: 71
         height: 71
       alignment: 0
@@ -1440,8 +1463,8 @@ TextureImporter:
     - name: letras-K-InGame_Hint
       rect:
         serializedVersion: 2
-        x: 419
-        y: 194
+        x: 409
+        y: 36
         width: 71
         height: 71
       alignment: 0
@@ -1451,8 +1474,8 @@ TextureImporter:
     - name: letras-K-InGame_HintSelected
       rect:
         serializedVersion: 2
-        x: 484
-        y: 119
+        x: 483
+        y: 111
         width: 71
         height: 71
       alignment: 0
@@ -1462,8 +1485,8 @@ TextureImporter:
     - name: letras-K-InGame_SpecialBlackTile
       rect:
         serializedVersion: 2
-        x: 527
-        y: 44
+        x: 530
+        y: 186
         width: 71
         height: 71
       alignment: 0
@@ -1473,8 +1496,8 @@ TextureImporter:
     - name: letras-K-InGame_SpecialTile
       rect:
         serializedVersion: 2
-        x: 602
-        y: 446
+        x: 484
+        y: 36
         width: 71
         height: 71
       alignment: 0
@@ -1484,8 +1507,8 @@ TextureImporter:
     - name: letras-K-InGame_WhiteTile
       rect:
         serializedVersion: 2
-        x: 602
-        y: 371
+        x: 558
+        y: 111
         width: 71
         height: 71
       alignment: 0
@@ -1495,8 +1518,8 @@ TextureImporter:
     - name: movimientos0001
       rect:
         serializedVersion: 2
-        x: 352
-        y: 341
+        x: 251
+        y: 489
         width: 29
         height: 35
       alignment: 9
@@ -1517,8 +1540,8 @@ TextureImporter:
     - name: palabras0001
       rect:
         serializedVersion: 2
-        x: 558
-        y: 9
+        x: 584
+        y: 465
         width: 150
         height: 31
       alignment: 9
@@ -1528,8 +1551,8 @@ TextureImporter:
     - name: piezasglow
       rect:
         serializedVersion: 2
-        x: 229
-        y: 331
+        x: 0
+        y: 1
         width: 119
         height: 19
       alignment: 9
@@ -1539,8 +1562,8 @@ TextureImporter:
     - name: rayo-rayo0001
       rect:
         serializedVersion: 2
-        x: 367
-        y: 172
+        x: 282
+        y: 9
         width: 48
         height: 75
       alignment: 9
@@ -1550,8 +1573,8 @@ TextureImporter:
     - name: rayo-rayo0002
       rect:
         serializedVersion: 2
-        x: 369
-        y: 263
+        x: 283
+        y: 102
         width: 46
         height: 74
       alignment: 9
@@ -1561,8 +1584,8 @@ TextureImporter:
     - name: rayo-rayo0003
       rect:
         serializedVersion: 2
-        x: 324
-        y: 14
+        x: 252
+        y: 180
         width: 49
         height: 77
       alignment: 9
@@ -1572,8 +1595,8 @@ TextureImporter:
     - name: rayo-rayo0004
       rect:
         serializedVersion: 2
-        x: 251
-        y: 244
+        x: 237
+        y: 294
         width: 60
         height: 83
       alignment: 9
@@ -1583,8 +1606,8 @@ TextureImporter:
     - name: rayo-rayo0005
       rect:
         serializedVersion: 2
-        x: 156
-        y: 349
+        x: 0
+        y: 280
         width: 69
         height: 97
       alignment: 9
@@ -1594,8 +1617,8 @@ TextureImporter:
     - name: rayo-rayo0006
       rect:
         serializedVersion: 2
-        x: 268
-        y: 10
+        x: 227
+        y: 88
         width: 52
         height: 81
       alignment: 9
@@ -1605,8 +1628,8 @@ TextureImporter:
     - name: rayo-rayo0007
       rect:
         serializedVersion: 2
-        x: 315
-        y: 251
+        x: 301
+        y: 301
         width: 50
         height: 76
       alignment: 9
@@ -1616,8 +1639,8 @@ TextureImporter:
     - name: rayo-rayo0008
       rect:
         serializedVersion: 2
-        x: 315
-        y: 171
+        x: 230
+        y: 8
         width: 48
         height: 76
       alignment: 9
@@ -1627,8 +1650,8 @@ TextureImporter:
     - name: rayo-rayo0009
       rect:
         serializedVersion: 2
-        x: 251
-        y: 157
+        x: 163
+        y: 86
         width: 60
         height: 83
       alignment: 9
@@ -1638,8 +1661,8 @@ TextureImporter:
     - name: rayo-rayo0010
       rect:
         serializedVersion: 2
-        x: 229
-        y: 354
+        x: 73
+        y: 280
         width: 69
         height: 97
       alignment: 9
@@ -1649,8 +1672,8 @@ TextureImporter:
     - name: Square
       rect:
         serializedVersion: 2
-        x: 424
-        y: 344
+        x: 680
+        y: 407
         width: 54
         height: 54
       alignment: 1
@@ -1660,8 +1683,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrisblue
       rect:
         serializedVersion: 2
-        x: 602
-        y: 58
+        x: 633
+        y: 111
         width: 71
         height: 71
       alignment: 0
@@ -1671,8 +1694,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrisgray
       rect:
         serializedVersion: 2
-        x: 569
-        y: 255
+        x: 680
+        y: 186
         width: 71
         height: 71
       alignment: 0
@@ -1682,8 +1705,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrisgreen
       rect:
         serializedVersion: 2
-        x: 737
-        y: 32
+        x: 355
+        y: 307
         width: 70
         height: 69
       alignment: 9
@@ -1694,7 +1717,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 634
-        y: 180
+        y: 36
         width: 71
         height: 71
       alignment: 0
@@ -1704,8 +1727,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrispink
       rect:
         serializedVersion: 2
-        x: 644
-        y: 273
+        x: 708
+        y: 111
         width: 71
         height: 71
       alignment: 0
@@ -1715,8 +1738,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrispurple
       rect:
         serializedVersion: 2
-        x: 709
-        y: 349
+        x: 755
+        y: 186
         width: 71
         height: 71
       alignment: 0
@@ -1726,8 +1749,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrissoft
       rect:
         serializedVersion: 2
-        x: 719
-        y: 274
+        x: 709
+        y: 36
         width: 71
         height: 71
       alignment: 0
@@ -1737,8 +1760,8 @@ TextureImporter:
     - name: tetris-K-InGame_Tetrisyellow
       rect:
         serializedVersion: 2
-        x: 751
-        y: 125
+        x: 584
+        y: 392
         width: 70
         height: 69
       alignment: 9
