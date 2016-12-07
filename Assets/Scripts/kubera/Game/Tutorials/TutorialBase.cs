@@ -102,8 +102,6 @@ public class TutorialBase : MonoBehaviour
 	{
 		hudManager.onSettingsActivated += pauseTutorial;
 		hudManager.onSettingsDeactivated += unPauseTutorial;
-
-		settingsButton.enabled = false;
 	}
 
 	protected virtual void Update()
@@ -226,6 +224,8 @@ public class TutorialBase : MonoBehaviour
 		}
 
 		hasMask = true;
+
+		settingsButton.enabled = false;
 	}
 
 	protected void returnCellsToLayer()
@@ -236,6 +236,8 @@ public class TutorialBase : MonoBehaviour
 		{
 			temp [i].sprite_renderer.sortingLayerName = "Grid";
 		}
+
+		settingsButton.enabled = true;
 	}
 
 	protected void movePiecesToFront()
