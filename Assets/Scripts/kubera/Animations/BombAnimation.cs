@@ -53,6 +53,38 @@ public class BombAnimation : MonoBehaviour
 			AudioManager.GetInstance().Play("bombBlock");
 		}
 	}
+	public IEnumerator destroyColorSearchAnimation(Cell cellSelected)
+	{
+		Cell[] selection =  cellsManager.getCellsOfSameType(cellSelected);
+		List<Cell> selectionList = new List<Cell>();
+		for(int i=0; i<selection.Length; i++)
+		{
+			selectionList.Add (selection [i]);
+		}
+
+		animationsFinished = 0;
+		animationsCount = selectionList.Count;
+		while (selectionList.Count >0)
+		{
+			int random = Random.Range (0, selectionList.Count);
+			yield return new WaitForSeconds (0.1f);
+
+			Square square = selectionList [random].content.GetComponent<Square> ();
+
+			Letter letter = wordManager.getGridLetterFromPool (WordManager.EPoolType.NORMAL);
+			letter.gameObject.SetActive(false);
+
+			StartCoroutine (startAnimation (square, selectionList [random], letter, 0.1f));
+			selectionList.Remove (selectionList [random]);
+
+			if(AudioManager.GetInstance())
+			{
+				AudioManager.GetInstance().Stop("bombBlock");
+				AudioManager.GetInstance().Play("bombBlock");
+			}
+		}
+
+	}
 
 	public IEnumerator startSameColorSearchAnimation(Cell cellSelected)
 	{
