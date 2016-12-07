@@ -57,6 +57,7 @@ public class Stairs : MonoBehaviour {
 
 	public void animateStairs()
 	{
+		outOfOrder.gameObject.SetActive (false);
 		active = true;
 	}
 

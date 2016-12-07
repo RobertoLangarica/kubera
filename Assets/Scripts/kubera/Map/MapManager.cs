@@ -161,7 +161,7 @@ public class MapManager : MonoBehaviour
 		//Cambiando al mundo adecuado
 		changeWorld();
 
-		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved += restartScene;
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved += reloadDataProgress;
 
 
 		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
@@ -229,7 +229,7 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
-	protected void changeWorld()
+	protected void changeWorld(bool setParalax = true)
 	{
 		paralaxManager.enabled = false;
 		if(WorldPrefab != null)
@@ -243,7 +243,10 @@ public class MapManager : MonoBehaviour
 		initializeLevels ();
 		setLevelsData ();
 		setLastLevelReached ();
-		Invoke ("setParalaxManager",0.06f);
+		if(setParalax)
+		{
+			Invoke ("setParalaxManager",0.06f);
+		}
 		Invoke ("showWorld", 0.05f);
 
 		paralaxManager.enabled = true;
@@ -1227,10 +1230,20 @@ public class MapManager : MonoBehaviour
 		openPopUp ("OpeningShopika");
 	}
 
-	protected void restartScene()
+	protected void reloadDataProgress()
 	{
 		//SceneManager.LoadScene ("Levels");
-		ScreenManager.GetInstance().GoToSceneAsync("Levels",true);
+		//ScreenManager.GetInstance().GoToSceneAsync("Levels",true);
+
+		PersistentData.GetInstance().maxWorldReached = DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.maxWorldReached();
+
+		//changeWorld (false);
+		initializeLevels ();
+		setLevelsData ();
+		Invoke ("showWorld", 0.05f);
+
+		//Menu de acceso rapido
+		initializeWorldsQuickMenuInfo ();
 	}
 
 	public void closePopUp()
@@ -1243,6 +1256,6 @@ public class MapManager : MonoBehaviour
 
 	void OnDestroy()
 	{
-		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved -= restartScene;
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved -= reloadDataProgress;
 	}
 }

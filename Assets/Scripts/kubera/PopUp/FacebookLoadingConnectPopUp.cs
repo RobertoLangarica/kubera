@@ -44,9 +44,7 @@ public class FacebookLoadingConnectPopUp : PopUpBase {
 	}
 
 	protected void popUpCompleted()
-	{
-		
-
+	{		
 		popUp.SetActive (false);
 		OnComplete ("");
 	}
