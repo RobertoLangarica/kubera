@@ -117,8 +117,6 @@ public class RetryPopUp : PopUpBase
 		textHeart.text = textHeartShadow.text = currentLifes.ToString();
 
 		Invoke ("startAnimation", 0.25f);
-
-
 	}
 
 	public void close()
@@ -156,7 +154,6 @@ public class RetryPopUp : PopUpBase
 
 	protected void setStartingPlaces()
 	{
-
 		/*leftDoor.localScale = new Vector3 (1, 1.4f);
 		rightDoor.localScale = new Vector3 (1, 1.4f);*/
 		topLevel.anchoredPosition = new Vector3 (0, topLevel.rect.height*2, 0);
@@ -179,9 +176,6 @@ public class RetryPopUp : PopUpBase
 		float fullTime = 0.5f;
 		float quarter = fullTime * 0.25f;
 		float tenth = fullTime * 0.1f;
-
-
-
 
 		leftDoor.DOAnchorPos (Vector2.zero, quarter);
 		rightDoor.DOAnchorPos (Vector2.zero, quarter).OnComplete(()=>
@@ -251,7 +245,7 @@ public class RetryPopUp : PopUpBase
 	{
 		if ((DataManagerKubera.GetInstance () as DataManagerKubera).currentUser.playerLifes == 0)
 		{
-			OnComplete ("askLifes");
+			OnComplete ("askLifes",false);
 		}
 		else
 		{

@@ -191,7 +191,6 @@ public class GoalPopUp : PopUpBase {
 	protected void showStars(int starsReached)
 	{		
 		starsBarr.fillAmount = 0.06f;
-		print ("showStars");
 		switch (starsReached) 
 		{
 		case 1:
