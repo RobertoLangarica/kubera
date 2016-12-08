@@ -61,8 +61,7 @@ public class NoLifesPopUp : PopUpBase
 		}
 		else 
 		{
-			//TODO mandar a shopika o mostrar popus de gemas o algo
-			Debug.Log ("Fondos insuficientes");
+			OnComplete ("notMoney",false);
 		}
 	}
 }

@@ -58,15 +58,15 @@ public class BossLocked : PopUpBase {
 
 	public void gemsCharge()
 	{
-		print (lvlName);
 		if(ShopikaManager.GetCastedInstance<ShopikaManager>().isPossibleToConsumeGems(gemsNeeded))
 		{
 			ShopikaManager.GetCastedInstance<ShopikaManager>().tryToConsumeGems(gemsNeeded);
+			OnComplete ();
 			mapManager.unlockBoss (fullLvlName);
 		}
 		else
 		{
-			//TODO: abrir popUp de enviar a shopika
+			OnComplete ("notMoney",false);
 		}
 	}
 
@@ -80,6 +80,7 @@ public class BossLocked : PopUpBase {
 		upLock.DOLocalRotate (new Vector3 (0, 0, 45), 1.3f).OnComplete(()=>{OnComplete("afterBossAnimation");});
 		/*upLockImage.DOFade (0, 1).SetDelay(0.75f);
 		downLockImage.DOFade (0, 2).SetDelay(0.75f).OnComplete(()=>{OnComplete("afterBossAnimation");});*/
+		OnComplete ("",false);
 	}
 
 	public void closePressed()

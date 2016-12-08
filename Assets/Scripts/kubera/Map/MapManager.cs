@@ -334,7 +334,7 @@ public class MapManager : MonoBehaviour
 			settingMapLevelInfo (mapLevels[i],worldsLevels[i]);
 			settingMapLevelStatus (mapLevels[i]);
 			setOnClickDelegates (mapLevels[i]);
-
+			
 			if(i==0 && mapLevels[i].status == MapLevel.EMapLevelsStatus.NORMAL_LOCKED)
 			{
 				mapLevels [i].status = MapLevel.EMapLevelsStatus.NORMAL_REACHED;
@@ -1185,6 +1185,9 @@ public class MapManager : MonoBehaviour
 			break;
 		case "notClose":
 			stopInput(true);
+			break;
+		case "notMoney":
+			activateOpeningShopika ();
 			break;
 		default:
 		break;
