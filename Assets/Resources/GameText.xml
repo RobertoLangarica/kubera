@@ -1183,8 +1183,8 @@
 		<text id="fbSuccessKeysText">
 			<languages>
 				<language id="english" text="You just asked your friends for a key. Use it to unlock a new level!"/>
-				<language id="spanish" text="Has pedido una llave a tus amigos. ¡Usala para accerder al último nivel del mundo."/>
-				<language id="default" text="Has pedido una llave a tus amigos. ¡Usala para accerder al último nivel del mundo."/>
+				<language id="spanish" text="Has pedido una llave a tus amigos. ¡Usala para acceder al último nivel del mundo."/>
+				<language id="default" text="Has pedido una llave a tus amigos. ¡Usala para acceder al último nivel del mundo."/>
 			</languages>                    
 		</text>
 

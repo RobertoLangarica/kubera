@@ -220,7 +220,6 @@ public class GoalPopUp : PopUpBase {
 
 	protected void resetStars()
 	{
-		print ("resetStars");
 		for(int i=0; i<stars.Length; i++)
 		{
 			stars [i].SetActive (false);

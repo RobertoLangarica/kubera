@@ -131,7 +131,7 @@ public class GoalAfterGame : PopUpBase {
 		this.Points.text = points +" "+ MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.AFTERGAME_POPUP_POINTS);
 
 		starsObtained = starsReached;
-
+		resetStars ();
 		showStars (starsReached);
 	}
 
@@ -163,6 +163,19 @@ public class GoalAfterGame : PopUpBase {
 			balls [3].SetActive(true);
 			starsBarr.fillAmount = 1;
 			break;
+		}
+	}
+
+	protected void resetStars()
+	{
+		for(int i=0; i<stars.Length; i++)
+		{
+			stars [i].SetActive (false);
+		}
+
+		for(int i=0; i<balls.Length; i++)
+		{
+			balls [i].SetActive (false);
 		}
 	}
 

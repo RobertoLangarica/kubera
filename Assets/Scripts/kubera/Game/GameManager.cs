@@ -257,6 +257,12 @@ public class GameManager : MonoBehaviour
 		rotationActive = true;
 	}
 
+	public void win()
+	{
+		cancelBonify = true;
+		goalManager.OnGoalAchieved (false);
+	}
+
 	protected void rotationDeactivated()
 	{
 		rotationActive = false;
