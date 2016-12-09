@@ -100,8 +100,6 @@ public class TutorialBase : MonoBehaviour
 
 	protected virtual void Start()
 	{
-		hudManager.onSettingsActivated += pauseTutorial;
-		hudManager.onSettingsDeactivated += unPauseTutorial;
 	}
 
 	protected virtual void Update()
@@ -275,6 +273,11 @@ public class TutorialBase : MonoBehaviour
 		{
 			objectsToMoveAbove [i].overrideSorting = true;
 			objectsToMoveAbove [i].sortingLayerName = "Grid";
+
+			if (objectsToMoveAbove [i].name == "BackGroundImage") 
+			{
+				objectsToMoveAbove [i].sortingLayerName = "UI";
+			}
 		}
 	}
 
