@@ -27,7 +27,7 @@ public class TutorialLvl7 : TutorialBase
 	{
 		base.Update ();
 
-		if (wordManager.letters.Count != currentCount) 
+		if (wordManager.letters.Count != currentCount && hasMask) 
 		{
 			currentCount = wordManager.letters.Count;
 			for (int i = 0; i < wordManager.letters.Count; i++) 

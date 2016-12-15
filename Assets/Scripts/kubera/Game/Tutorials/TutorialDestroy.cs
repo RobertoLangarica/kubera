@@ -32,8 +32,9 @@ public class TutorialDestroy : TutorialBase
 	{
 		base.Update ();
 
-		if (wordManager.letters.Count != currentCount) 
+		if (wordManager.letters.Count != currentCount && hasMask)
 		{
+			Debug.Log ("!!!!!!!!!!!!!!");
 			currentCount = wordManager.letters.Count;
 			for (int i = 0; i < wordManager.letters.Count; i++) 
 			{
@@ -77,7 +78,7 @@ public class TutorialDestroy : TutorialBase
 
 			firstAnim ();
 
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.BOMB_BUTTON);
+			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.DESTROY_BUTTON);
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV80_PHASE1),
@@ -93,6 +94,10 @@ public class TutorialDestroy : TutorialBase
 			moveCellsToTheFront ();
 			movePiecesToFront ();
 			moveToFront ();
+
+			disablePowerUps ();
+
+			powerUpManager.getPowerupByType (PowerupBase.EType.DESTROY).powerUpButton.GetComponent<Button> ().enabled = true;
 
 			previousParent = destroyButton.transform.parent;
 			destroyButton.transform.SetParent (transform);
@@ -140,6 +145,8 @@ public class TutorialDestroy : TutorialBase
 			returnCellsToLayer ();
 			returnPieces ();
 			returnBack ();
+
+			enablePowerUps ();
 
 			tutorialMask.SetActive (false);
 

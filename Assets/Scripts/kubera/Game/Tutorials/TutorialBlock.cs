@@ -30,7 +30,7 @@ public class TutorialBlock : TutorialBase
 	{
 		base.Update ();
 
-		if (wordManager.letters.Count != currentCount) 
+		if (wordManager.letters.Count != currentCount && hasMask) 
 		{
 			currentCount = wordManager.letters.Count;
 			for (int i = 0; i < wordManager.letters.Count; i++) 
@@ -91,6 +91,10 @@ public class TutorialBlock : TutorialBase
 			movePiecesToFront ();
 			moveToFront ();
 
+			disablePowerUps ();
+
+			powerUpManager.getPowerupByType (PowerupBase.EType.BLOCK).powerUpButton.GetComponent<Button> ().enabled = true;
+
 			previousParent = blockButton.transform.parent;
 			blockButton.transform.SetParent (transform);
 
@@ -143,7 +147,7 @@ public class TutorialBlock : TutorialBase
 			phasesPanels [2].SetActive (true);*/
 			previousPhase = 0;
 			currentPhase = 2;
-			phaseEvent.Add(ENextPhaseEvent.POSITIONATE_PIECE);
+			phaseEvent.Add (ENextPhaseEvent.POSITIONATE_PIECE);
 
 			freeBlocks = true;
 
@@ -154,7 +158,7 @@ public class TutorialBlock : TutorialBase
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV13_PHASE3),
-				new string[2]{"{{b}}", "{{/b}}" }, new string[2]{"<b>","</b>"});
+				new string[2]{ "{{b}}", "{{/b}}" }, new string[2]{ "<b>", "</b>" });
 			instructionsText = instructions [2];
 			instructionsText.text = currentInstruction;
 			instructionIndex = 0;
@@ -168,6 +172,8 @@ public class TutorialBlock : TutorialBase
 			returnCellsToLayer ();
 			returnPieces ();
 			returnBack ();
+
+			enablePowerUps ();
 
 			blockButton.transform.SetParent (previousParent);
 

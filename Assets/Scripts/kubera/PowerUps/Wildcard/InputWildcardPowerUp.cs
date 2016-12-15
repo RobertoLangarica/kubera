@@ -157,11 +157,6 @@ public class InputWildcardPowerUp : MonoBehaviour {
 					}
 					else
 					{
-							if (cell.cellType == Cell.EType.OBSTACLE_LETTER && OnPowerupOverObstacleLetter != null) 
-							{
-								OnPowerupOverObstacleLetter ();
-							}
-
 						returnSelectedToInitialState(delaySpeed);
 						completePowerUp (false);
 					}

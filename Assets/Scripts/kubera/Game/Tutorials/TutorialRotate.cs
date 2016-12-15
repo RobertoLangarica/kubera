@@ -30,7 +30,7 @@ public class TutorialRotate : TutorialBase
 	{
 		base.Update ();
 
-		if (wordManager.letters.Count != currentCount) 
+		if (wordManager.letters.Count != currentCount && hasMask) 
 		{
 			currentCount = wordManager.letters.Count;
 			for (int i = 0; i < wordManager.letters.Count; i++) 
@@ -92,6 +92,10 @@ public class TutorialRotate : TutorialBase
 			movePiecesToFront ();
 			moveToFront ();
 
+			disablePowerUps ();
+
+			powerUpManager.getPowerupByType (PowerupBase.EType.ROTATE).powerUpButton.GetComponent<Button> ().enabled = true;
+
 			previousParent = rotateButton.transform.parent;
 			rotateButton.transform.SetParent (transform);
 
@@ -139,6 +143,8 @@ public class TutorialRotate : TutorialBase
 			returnCellsToLayer ();
 			returnPieces ();
 			returnBack ();
+
+			enablePowerUps ();
 
 			rotateButton.transform.SetParent (previousParent);
 

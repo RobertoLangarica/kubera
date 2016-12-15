@@ -68,6 +68,10 @@ public class TutorialWildcard : TutorialBase
 
 			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.WILDCARD_BUTTON);
 
+			disablePowerUps ();
+
+			powerUpManager.getPowerupByType (PowerupBase.EType.WILDCARD).powerUpButton.GetComponent<Button> ().enabled = true;
+
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE1),
 				new string[2]{ "{{b}}", "{{/b}}"}, new string[2]{ "<b>", "</b>"});
@@ -93,7 +97,7 @@ public class TutorialWildcard : TutorialBase
 
 			phasesPanels [1].transform.SetParent (keyBoard.transform);
 
-			phaseEvent.Add(ENextPhaseEvent.KEYBOARD_LETER_SELECTED);
+			phaseEvent.Add (ENextPhaseEvent.KEYBOARD_LETER_SELECTED);
 
 			if (instructionIndex < currentInstruction.Length) {
 				changeInstruction = true;
@@ -101,6 +105,8 @@ public class TutorialWildcard : TutorialBase
 			}
 
 			HighLightManager.GetInstance ().turnOffHighLights (HighLightManager.EHighLightType.WILDCARD_BUTTON);
+
+			enablePowerUps ();
 
 			freeWildCard = true;
 

@@ -468,6 +468,8 @@ public class GameManager : MonoBehaviour
 
 			piece.squares [i].GetComponent<Collider2D> ().enabled = true;
 
+			piece.squares [i].GetComponent<SpriteRenderer> ().sortingLayerName = cellsUnderPiece [i].sprite_renderer.sortingLayerName;
+
 			Transform target = piece.squares[i].transform;
 
 			target.DOMove (piecePosition, piecePositionedDelay);

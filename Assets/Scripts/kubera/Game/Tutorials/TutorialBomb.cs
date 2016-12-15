@@ -77,6 +77,10 @@ public class TutorialBomb : TutorialBase
 			movePiecesToFront ();
 			moveToFront ();
 
+			disablePowerUps ();
+
+			powerUpManager.getPowerupByType (PowerupBase.EType.BOMB).powerUpButton.GetComponent<Button> ().enabled = true;
+
 			previousParent = bombButton.transform.parent;
 			bombButton.transform.SetParent (transform);
 
@@ -123,6 +127,8 @@ public class TutorialBomb : TutorialBase
 			returnCellsToLayer ();
 			returnPieces ();
 			returnBack ();
+
+			enablePowerUps ();
 
 			bombButton.transform.SetParent (previousParent);
 

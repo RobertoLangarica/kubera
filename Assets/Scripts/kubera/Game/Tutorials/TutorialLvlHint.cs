@@ -31,7 +31,7 @@ public class TutorialLvlHint : TutorialBase
 	{
 		base.Update ();
 
-		if (wordManager.letters.Count != currentCount) 
+		if (wordManager.letters.Count != currentCount && hasMask) 
 		{
 			currentCount = wordManager.letters.Count;
 			for (int i = 0; i < wordManager.letters.Count; i++) 
@@ -92,6 +92,10 @@ public class TutorialLvlHint : TutorialBase
 			moveCellsToTheFront ();
 			movePiecesToFront ();
 			moveToFront ();
+
+			disablePowerUps ();
+
+			powerUpManager.getPowerupByType (PowerupBase.EType.HINT_WORD).powerUpButton.GetComponent<Button> ().enabled = true;
 
 			previousParent = hintButton.transform.parent;
 			hintButton.transform.SetParent (transform);
@@ -228,6 +232,8 @@ public class TutorialLvlHint : TutorialBase
 			returnCellsToLayer ();
 			returnPieces ();
 			returnBack ();
+
+			enablePowerUps ();
 
 			hintButton.transform.SetParent (previousParent);
 

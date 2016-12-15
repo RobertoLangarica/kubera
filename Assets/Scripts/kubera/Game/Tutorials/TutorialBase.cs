@@ -95,8 +95,10 @@ public class TutorialBase : MonoBehaviour
 	public GameManager gameManager;
 	public CellsManager cellManager;
 	public HUDManager hudManager;
+	public PowerUpManager powerUpManager;
 
 	public Button settingsButton;
+	public Button gemsButton;
 
 	protected virtual void Start()
 	{
@@ -224,6 +226,7 @@ public class TutorialBase : MonoBehaviour
 		hasMask = true;
 
 		settingsButton.enabled = false;
+		gemsButton.enabled = false;
 	}
 
 	protected void returnCellsToLayer()
@@ -233,9 +236,21 @@ public class TutorialBase : MonoBehaviour
 		for (int i = 0; i < temp.Length; i++) 
 		{
 			temp [i].sprite_renderer.sortingLayerName = "Grid";
+
+			if (temp [i].content != null) 
+			{
+				SpriteRenderer sptR = temp [i].content.GetComponentInChildren<SpriteRenderer> ();
+				if (sptR != null) 
+				{
+					sptR.sortingLayerName = "Grid";
+				}
+			}
 		}
 
+		hasMask = false;
+
 		settingsButton.enabled = true;
+		gemsButton.enabled = true;
 	}
 
 	protected void movePiecesToFront()
@@ -278,6 +293,22 @@ public class TutorialBase : MonoBehaviour
 			{
 				objectsToMoveAbove [i].sortingLayerName = "UI";
 			}
+		}
+	}
+
+	protected void disablePowerUps()
+	{
+		for(int i = 0;i < powerUpManager.powerups.Count;i++)
+		{
+			powerUpManager.powerups [i].powerUpButton.GetComponent<Button> ().enabled = false;
+		}
+	}
+
+	protected void enablePowerUps()
+	{
+		for(int i = 0;i < powerUpManager.powerups.Count;i++)
+		{
+			powerUpManager.powerups [i].powerUpButton.GetComponent<Button> ().enabled = true;
 		}
 	}
 
