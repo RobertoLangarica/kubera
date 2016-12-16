@@ -468,7 +468,15 @@ public class GameManager : MonoBehaviour
 
 			piece.squares [i].GetComponent<Collider2D> ().enabled = true;
 
-			piece.squares [i].GetComponent<SpriteRenderer> ().sortingLayerName = cellsUnderPiece [i].sprite_renderer.sortingLayerName;
+
+			if (cellsUnderPiece [i].sprite_renderer.sortingLayerName == "Modal") 
+			{
+				piece.squares [i].GetComponent<SpriteRenderer> ().sortingLayerName = "WebView";
+			}
+			else 
+			{
+				piece.squares [i].GetComponent<SpriteRenderer> ().sortingLayerName = "Piece";
+			}
 
 			Transform target = piece.squares[i].transform;
 
