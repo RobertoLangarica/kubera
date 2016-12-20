@@ -414,7 +414,7 @@ public class HUDManager : MonoBehaviour
 		}
 	}
 
-	public void showScoreTextAt(Vector3 scorePosition,int score)
+	public void showScoreTextAt(Vector3 scorePosition,int score,bool wordPoints = false)
 	{
 		Vector3 finish = scorePosition;
 
@@ -422,6 +422,15 @@ public class HUDManager : MonoBehaviour
 
 		//bText.myText.text = "+" + (score < 10 ? " ":"") +score.ToString();
 		bText.myText.text = "+" + score.ToString();
+
+		if (wordPoints) 
+		{
+			bText.myText.color = Color.white;
+		} 
+		else 
+		{
+			bText.myText.color = new Color (0.196078f,0.196078f,0.196078f);
+		}
 
 		scorePosition.z = 0;
 		finish.y += 1;// HACK: poolText.rectTransform.rect.height;
@@ -538,7 +547,7 @@ public class HUDManager : MonoBehaviour
 			powerUps [4].gameObject.SetActive((DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count >= 65 || enableAllPowerUps || PersistentData.GetInstance().currentLevel.name == "0065") ? true : false);//wildcard
 			powerUps [5].gameObject.SetActive((DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.levels.Count >= 80 || enableAllPowerUps || PersistentData.GetInstance().currentLevel.name == "0080") ? true : false);//destroy
 		} 
-		else 
+		else
 		{
 			powerUps [0].gameObject.SetActive ( true);//word hint
 			powerUps [1].gameObject.SetActive (true);//bomb

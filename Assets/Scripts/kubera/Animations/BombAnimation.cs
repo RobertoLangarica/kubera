@@ -141,10 +141,12 @@ public class BombAnimation : MonoBehaviour
 		if (square == null) 
 		{
 			StopCoroutine ("startAnimation");
+		} 
+		else 
+		{
+			square.OnCellFlipped += callbackOnFliped;
+			square.doFlip (cellParent, letter, delay);
 		}
-
-		square.OnCellFlipped += callbackOnFliped;
-		square.doFlip (cellParent, letter, delay);
 
 		yield return new WaitUntil (()=> animSprite.sequences[0].currentFrame >= 11);
 

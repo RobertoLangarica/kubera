@@ -9,7 +9,6 @@ public class TutorialLvlHint : TutorialBase
 	public GameObject fromPosition;
 	public InputBombAndDestroy inputHint;
 
-	public Canvas lastPhaseCanvas;
 	public GameObject hintButton;
 	protected Transform previousParent;
 
@@ -25,21 +24,6 @@ public class TutorialLvlHint : TutorialBase
 	{
 		inputHint.OnPlayer += animationController;
 		base.Start ();
-	}
-
-	protected override void Update()
-	{
-		base.Update ();
-
-		if (wordManager.letters.Count != currentCount && hasMask) 
-		{
-			currentCount = wordManager.letters.Count;
-			for (int i = 0; i < wordManager.letters.Count; i++) 
-			{
-				wordManager.letters [i].letterCanvas.overrideSorting = true;
-				wordManager.letters [i].letterCanvas.sortingLayerName = "WebView";
-			}
-		}
 	}
 
 	protected void animationController(bool stop)
@@ -89,13 +73,11 @@ public class TutorialLvlHint : TutorialBase
 
 			//Invoke ("writeLetterByLetter", initialAnim * 2);
 
-			moveCellsToTheFront ();
-			movePiecesToFront ();
-			moveToFront ();
+			activateMask ();
 
 			disablePowerUps ();
 
-			powerUpManager.getPowerupByType (PowerupBase.EType.HINT_WORD).powerUpButton.GetComponent<Button> ().enabled = true;
+			powerUpManager.getPowerupByType (PowerupBase.EType.HINT_WORD).powerUpButton.gameObject.SetActive(true);
 
 			previousParent = hintButton.transform.parent;
 			hintButton.transform.SetParent (transform);
@@ -206,8 +188,6 @@ public class TutorialLvlHint : TutorialBase
 
 			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
-			lastPhaseCanvas.sortingLayerName = "Selected";
-
 			phase = 2;
 			return true;	
 		}
@@ -229,9 +209,7 @@ public class TutorialLvlHint : TutorialBase
 			}
 			return true;
 		case(4):
-			returnCellsToLayer ();
-			returnPieces ();
-			returnBack ();
+			deactivateMask ();
 
 			enablePowerUps ();
 

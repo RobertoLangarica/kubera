@@ -29,7 +29,7 @@ public class BombPowerUp : PowerupBase
 		bombGO = Instantiate (powerUpBlock,powerUpButton.position,Quaternion.identity) as GameObject;
 		bombGO.name = "BombPowerUp";
 		bombGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
-		bombGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "WebView";
+		bombGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
 
 		bombInput.enabled = true;
 		bombInput.setCurrentSelected(bombGO);

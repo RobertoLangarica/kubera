@@ -38,7 +38,7 @@ public class RotatePowerUp : PowerupBase
 		powerUpGO.name = "RotatePowerUp";
 		powerUpGO.transform.position = new Vector3(powerUpButton.position.x,powerUpButton.position.y,0);
 		powerUpGO.transform.localScale = new Vector3 (4, 4, 4);
-		powerUpGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "WebView";
+		powerUpGO.GetComponentInChildren<SpriteRenderer> ().sortingLayerName = "Selected";
 		inputPowerUp.enabled = true;
 		inputPowerUp.setCurrentSelected(powerUpGO);
 		inputPowerUp.OnDrop += powerUpPositioned;

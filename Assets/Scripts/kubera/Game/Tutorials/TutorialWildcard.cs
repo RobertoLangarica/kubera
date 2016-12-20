@@ -60,7 +60,7 @@ public class TutorialWildcard : TutorialBase
 			phasesPanels [0].SetActive (true);
 			previousPhase = 0;
 			phaseEvent.Add (ENextPhaseEvent.WILDCARD_USED);
-			phaseEvent.Add(ENextPhaseEvent.WILDCARD_OVER_OBSTACLE);
+			phaseEvent.Add (ENextPhaseEvent.WILDCARD_OVER_OBSTACLE);
 
 			freeWildCard = true;
 
@@ -70,7 +70,7 @@ public class TutorialWildcard : TutorialBase
 
 			disablePowerUps ();
 
-			powerUpManager.getPowerupByType (PowerupBase.EType.WILDCARD).powerUpButton.GetComponent<Button> ().enabled = true;
+			powerUpManager.getPowerupByType (PowerupBase.EType.WILDCARD).powerUpButton.gameObject.SetActive (true);
 
 			currentInstruction = MultiLanguageTextManager.instance.multipleReplace (
 				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV64_PHASE1),

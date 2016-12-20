@@ -80,9 +80,6 @@ public class TutorialBase : MonoBehaviour
 
 	public GameObject tutorialMask;
 
-	public List<Canvas> objectsToMoveAbove;
-	public GameObject pieceStock;
-
 	[HideInInspector]public int phase;
 	[HideInInspector]public string phaseObj;
 	[HideInInspector]public List<ENextPhaseEvent> phaseEvent;
@@ -214,129 +211,41 @@ public class TutorialBase : MonoBehaviour
 	{
 	}
 
-	protected void moveCellsToTheFront()
+	protected void activateMask()
 	{
-		Cell[] temp = cellManager.getAllShowedCels ();
-
-		for (int i = 0; i < temp.Length; i++) 
-		{
-			temp [i].sprite_renderer.sortingLayerName = "Modal";
-		}
-
 		hasMask = true;
+		tutorialMask.SetActive (true);
 
 		settingsButton.enabled = false;
 		gemsButton.enabled = false;
 	}
 
-	protected void returnCellsToLayer()
+	protected void deactivateMask()
 	{
-		Cell[] temp = cellManager.getAllShowedCels ();
-
-		for (int i = 0; i < temp.Length; i++) 
-		{
-			temp [i].sprite_renderer.sortingLayerName = "Grid";
-
-			if (temp [i].content != null) 
-			{
-				SpriteRenderer sptR = temp [i].content.GetComponentInChildren<SpriteRenderer> ();
-				if (sptR != null) 
-				{
-					sptR.sortingLayerName = "Grid";
-				}
-			}
-		}
-
 		hasMask = false;
+		tutorialMask.SetActive (false);
 
 		settingsButton.enabled = true;
 		gemsButton.enabled = true;
-	}
-
-	protected void movePiecesToFront()
-	{
-		SpriteRenderer[] temp = pieceStock.GetComponentsInChildren<SpriteRenderer> ();
-
-		for (int i = 0; i < temp.Length; i++) 
-		{
-			temp [i].sortingLayerName = "WebView";
-		}
-	}
-
-	protected void returnPieces()
-	{
-		SpriteRenderer[] temp = pieceStock.GetComponentsInChildren<SpriteRenderer> ();
-
-		for (int i = 0; i < temp.Length; i++) 
-		{
-			temp [i].sortingLayerName = "Grid";
-		}
-	}
-
-	protected void moveToFront()
-	{
-		for (int i = 0; i < objectsToMoveAbove.Count; i++) 
-		{
-			objectsToMoveAbove [i].overrideSorting = true;
-			objectsToMoveAbove [i].sortingLayerName = "WebView";
-		}
-	}
-
-	protected void returnBack()
-	{
-		for (int i = 0; i < objectsToMoveAbove.Count; i++) 
-		{
-			objectsToMoveAbove [i].overrideSorting = true;
-			objectsToMoveAbove [i].sortingLayerName = "Grid";
-
-			if (objectsToMoveAbove [i].name == "BackGroundImage") 
-			{
-				objectsToMoveAbove [i].sortingLayerName = "UI";
-			}
-		}
 	}
 
 	protected void disablePowerUps()
 	{
 		for(int i = 0;i < powerUpManager.powerups.Count;i++)
 		{
-			powerUpManager.powerups [i].powerUpButton.GetComponent<Button> ().enabled = false;
+			if(powerUpManager.powerups [i].powerUpButton.gameObject.activeSelf)
+			{
+				powerUpManager.powerups [i].powerUpButton.gameObject.SetActive (false);
+				phasesPanels.Add (powerUpManager.powerups [i].powerUpButton.gameObject);
+			}
 		}
 	}
 
 	protected void enablePowerUps()
 	{
-		for(int i = 0;i < powerUpManager.powerups.Count;i++)
+		for(int i = instructions.Count;i < phasesPanels.Count;i++)
 		{
-			powerUpManager.powerups [i].powerUpButton.GetComponent<Button> ().enabled = true;
-		}
-	}
-
-	protected void pauseTutorial()
-	{
-		if (hasMask) 
-		{
-			returnCellsToLayer ();
-			returnPieces ();
-			returnBack ();
-
-			instructionsText.enabled = false;
-
-			tutorialMask.SetActive (false);
-		}
-	}
-
-	protected void unPauseTutorial()
-	{
-		if(hasMask)
-		{
-			moveCellsToTheFront ();
-			movePiecesToFront ();
-			moveToFront ();
-
-			instructionsText.enabled = true;
-
-			tutorialMask.SetActive (true);
+			phasesPanels[i].SetActive (true);
 		}
 	}
 }

@@ -17,21 +17,6 @@ public class TutorialLvl5 : TutorialBase
 		tutorialWord = MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.TUTORIAL_LV5_WORD);
 	}
 
-	protected override void Update()
-	{
-		base.Update ();
-
-		if (wordManager.letters.Count != currentCount && hasMask) 
-		{
-			currentCount = wordManager.letters.Count;
-			for (int i = 0; i < wordManager.letters.Count; i++) 
-			{
-				wordManager.letters [i].letterCanvas.overrideSorting = true;
-				wordManager.letters [i].letterCanvas.sortingLayerName = "WebView";
-			}
-		}
-	}
-
 	public override bool canMoveToNextPhase ()
 	{
 		phaseEvent.Clear ();
@@ -50,10 +35,7 @@ public class TutorialLvl5 : TutorialBase
 
 			//Invoke ("writeLetterByLetter", initialAnim * 2);
 
-			moveCellsToTheFront ();
-			movePiecesToFront ();
-			moveToFront ();
-			tutorialMask.SetActive (true);
+			activateMask ();
 
 			phase = 1;
 			return true;
@@ -132,11 +114,7 @@ public class TutorialLvl5 : TutorialBase
 		case(3):
 			phasesPanels [2].SetActive (false);
 
-			returnCellsToLayer ();
-			returnPieces ();
-			returnBack ();
-
-			tutorialMask.SetActive (false);
+			deactivateMask ();
 			return true;
 		}
 

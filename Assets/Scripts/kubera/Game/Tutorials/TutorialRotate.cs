@@ -8,7 +8,6 @@ public class TutorialRotate : TutorialBase
 	public Image powerUpDommy;
 	public GameObject fromPosition;
 
-	public Canvas lastPhaseCanvas;
 	public GameObject rotateButton;
 	protected Transform previousParent;
 
@@ -24,21 +23,6 @@ public class TutorialRotate : TutorialBase
 	{
 		inputBomb.OnPlayer += animationController;
 		base.Start ();
-	}
-
-	protected override void Update()
-	{
-		base.Update ();
-
-		if (wordManager.letters.Count != currentCount && hasMask) 
-		{
-			currentCount = wordManager.letters.Count;
-			for (int i = 0; i < wordManager.letters.Count; i++) 
-			{
-				wordManager.letters [i].letterCanvas.overrideSorting = true;
-				wordManager.letters [i].letterCanvas.sortingLayerName = "WebView";
-			}
-		}
 	}
 
 	protected void animationController(bool stop)
@@ -88,13 +72,11 @@ public class TutorialRotate : TutorialBase
 
 			//Invoke ("writeLetterByLetter", initialAnim * 2);
 
-			moveCellsToTheFront ();
-			movePiecesToFront ();
-			moveToFront ();
+			activateMask ();
 
 			disablePowerUps ();
 
-			powerUpManager.getPowerupByType (PowerupBase.EType.ROTATE).powerUpButton.GetComponent<Button> ().enabled = true;
+			powerUpManager.getPowerupByType (PowerupBase.EType.ROTATE).powerUpButton.gameObject.SetActive(true);
 
 			previousParent = rotateButton.transform.parent;
 			rotateButton.transform.SetParent (transform);
@@ -138,11 +120,8 @@ public class TutorialRotate : TutorialBase
 			doAnimation = false;
 
 			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
-			lastPhaseCanvas.sortingLayerName = "Selected";
 
-			returnCellsToLayer ();
-			returnPieces ();
-			returnBack ();
+			deactivateMask ();
 
 			enablePowerUps ();
 

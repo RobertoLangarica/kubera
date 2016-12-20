@@ -71,10 +71,7 @@ public class TutorialLvl2 : TutorialBase
 
 			//Invoke ("writeLetterByLetter",initialAnim*2);
 
-			moveCellsToTheFront ();
-			movePiecesToFront ();
-			moveToFront ();
-			tutorialMask.SetActive (true);
+			activateMask ();
 
 			phase = 1;
 			return true;
@@ -161,19 +158,13 @@ public class TutorialLvl2 : TutorialBase
 			shakeToErrase ();
 			////Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
-			movePiecesToFront ();
-
 			phase = 4;
 			doAnimation = false;
 			return true;
 		case(4):
 			phasesPanels [3].SetActive (false);
 
-			returnCellsToLayer ();
-			returnPieces ();
-			returnBack ();
-
-			tutorialMask.SetActive (false);
+			deactivateMask ();
 			return true;
 		}
 

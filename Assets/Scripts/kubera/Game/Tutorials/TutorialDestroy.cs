@@ -10,7 +10,6 @@ public class TutorialDestroy : TutorialBase
 
 	public InputBombAndDestroy inputDestroy;
 
-	public Canvas lastPhaseCanvas;
 	public GameObject destroyButton;
 	protected Transform previousParent;
 
@@ -26,22 +25,6 @@ public class TutorialDestroy : TutorialBase
 		inputDestroy.OnPlayer += animationController;
 
 		base.Start ();
-	}
-
-	protected override void Update()
-	{
-		base.Update ();
-
-		if (wordManager.letters.Count != currentCount && hasMask)
-		{
-			Debug.Log ("!!!!!!!!!!!!!!");
-			currentCount = wordManager.letters.Count;
-			for (int i = 0; i < wordManager.letters.Count; i++) 
-			{
-				wordManager.letters [i].letterCanvas.overrideSorting = true;
-				wordManager.letters [i].letterCanvas.sortingLayerName = "WebView";
-			}
-		}
 	}
 
 	protected void animationController(bool stop)
@@ -91,13 +74,11 @@ public class TutorialDestroy : TutorialBase
 
 			//Invoke ("writeLetterByLetter", initialAnim * 2);
 
-			moveCellsToTheFront ();
-			movePiecesToFront ();
-			moveToFront ();
+			activateMask ();
 
 			disablePowerUps ();
 
-			powerUpManager.getPowerupByType (PowerupBase.EType.DESTROY).powerUpButton.GetComponent<Button> ().enabled = true;
+			powerUpManager.getPowerupByType (PowerupBase.EType.DESTROY).powerUpButton.gameObject.SetActive (true);
 
 			previousParent = destroyButton.transform.parent;
 			destroyButton.transform.SetParent (transform);
@@ -142,15 +123,11 @@ public class TutorialDestroy : TutorialBase
 
 			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
-			returnCellsToLayer ();
-			returnPieces ();
-			returnBack ();
+			deactivateMask ();
 
 			enablePowerUps ();
 
 			tutorialMask.SetActive (false);
-
-			lastPhaseCanvas.sortingLayerName = "Selected";
 
 			destroyButton.transform.SetParent (previousParent);
 

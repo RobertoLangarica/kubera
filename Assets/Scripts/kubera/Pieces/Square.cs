@@ -39,14 +39,7 @@ public class Square : MonoBehaviour
 			return;
 		}
 
-		if (cellParent.sprite_renderer.sortingLayerName == "Modal") 
-		{
-			flipAnimation.spriteRenderer.sortingLayerName = "WebView";
-		}
-		else 
-		{
-			flipAnimation.spriteRenderer.sortingLayerName = "Flipping";
-		}
+		flipAnimation.spriteRenderer.sortingLayerName = "Flipping";
 
 		StartCoroutine (startFlipAnimation (delay*0.01f));
 	}

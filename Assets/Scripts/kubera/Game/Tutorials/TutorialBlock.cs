@@ -9,7 +9,6 @@ public class TutorialBlock : TutorialBase
 	public GameObject fromPosition;
 	public InputBlockPowerUp inputBlock;
 
-	public Canvas lastPhaseCanvas;
 	public GameObject blockButton;
 	protected Transform previousParent;
 
@@ -24,21 +23,6 @@ public class TutorialBlock : TutorialBase
 	{
 		inputBlock.OnPlayer += animationController;
 		base.Start ();
-	}
-
-	protected override void Update()
-	{
-		base.Update ();
-
-		if (wordManager.letters.Count != currentCount && hasMask) 
-		{
-			currentCount = wordManager.letters.Count;
-			for (int i = 0; i < wordManager.letters.Count; i++) 
-			{
-				wordManager.letters [i].letterCanvas.overrideSorting = true;
-				wordManager.letters [i].letterCanvas.sortingLayerName = "WebView";
-			}
-		}
 	}
 
 	protected void animationController(bool stop)
@@ -87,13 +71,11 @@ public class TutorialBlock : TutorialBase
 
 			//Invoke ("writeLetterByLetter", initialAnim * 2);
 
-			moveCellsToTheFront ();
-			movePiecesToFront ();
-			moveToFront ();
+			activateMask ();
 
 			disablePowerUps ();
 
-			powerUpManager.getPowerupByType (PowerupBase.EType.BLOCK).powerUpButton.GetComponent<Button> ().enabled = true;
+			powerUpManager.getPowerupByType (PowerupBase.EType.BLOCK).powerUpButton.gameObject.SetActive(true);
 
 			previousParent = blockButton.transform.parent;
 			blockButton.transform.SetParent (transform);
@@ -167,11 +149,7 @@ public class TutorialBlock : TutorialBase
 
 			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
-			lastPhaseCanvas.sortingLayerName = "Selected";
-
-			returnCellsToLayer ();
-			returnPieces ();
-			returnBack ();
+			deactivateMask ();
 
 			enablePowerUps ();
 

@@ -467,16 +467,7 @@ public class GameManager : MonoBehaviour
 				-cellsUnderPiece[i].GetComponent<SpriteRenderer> ().bounds.extents.y, 0));
 
 			piece.squares [i].GetComponent<Collider2D> ().enabled = true;
-
-
-			if (cellsUnderPiece [i].sprite_renderer.sortingLayerName == "Modal") 
-			{
-				piece.squares [i].GetComponent<SpriteRenderer> ().sortingLayerName = "WebView";
-			}
-			else 
-			{
-				piece.squares [i].GetComponent<SpriteRenderer> ().sortingLayerName = "Piece";
-			}
+			piece.squares [i].GetComponent<SpriteRenderer> ().sortingLayerName = "Piece";
 
 			Transform target = piece.squares[i].transform;
 
@@ -714,7 +705,7 @@ public class GameManager : MonoBehaviour
 		//Contamos obstaculos y si la meta es usar letras entonces vemos si se usan
 		goalManager.submitWord(wordManager.letters);
 
-		showFloatingPointsAt (wordManager.wordCompleteButton.transform.position, wordManager.wordPoints);
+		showFloatingPointsAt (wordManager.wordCompleteButton.transform.position, wordManager.wordPoints,true);
 
 		//Los puntos se leen antes de limpiar porque sin letras no hay puntos
 		onUsersAction (wordManager.wordPoints);
@@ -1640,9 +1631,9 @@ public class GameManager : MonoBehaviour
 		hudManager.setLettersPoints (wordScore);
 	}
 
-	protected void showFloatingPointsAt(Vector3 pos,int amount)
+	protected void showFloatingPointsAt(Vector3 pos,int amount,bool wordPoints = false)
 	{
-		hudManager.showScoreTextAt(pos,amount);
+		hudManager.showScoreTextAt(pos,amount,wordPoints);
 
 		//Se movio el chequeo para aca ya que aqui se suman lineas y puntos
 		if (OnPointsEarned != null) 

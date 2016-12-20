@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class CellHighLight : HighLight 
 {
 	public const string PIECE_LAYER 		= "Piece";
-	public const string OVER_PIECE_LAYER 	= "ShadowPiece";
+	public const string OVER_PIECE_LAYER 	= "OnGrid";
 
 	public Sprite square;
 	public Sprite roundedSquare;

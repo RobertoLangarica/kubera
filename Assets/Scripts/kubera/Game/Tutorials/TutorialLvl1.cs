@@ -66,21 +66,14 @@ public class TutorialLvl1 : TutorialBase
 
 			//Invoke ("writeLetterByLetter", initialAnim * 2);
 
-			moveCellsToTheFront ();
-			movePiecesToFront ();
-			moveToFront ();
-			tutorialMask.SetActive (true);
+			activateMask ();
 
 			phase = 1;
 			return true;
 		case(1):
 			phasesPanels [0].SetActive (false);
 
-			returnCellsToLayer ();
-			returnPieces ();
-			returnBack ();
-
-			tutorialMask.SetActive (false);
+			deactivateMask ();
 			return true;
 		}
 

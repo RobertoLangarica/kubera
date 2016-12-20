@@ -39,10 +39,7 @@ public class TutorialLvl4 : TutorialBase
 
 			//Invoke ("writeLetterByLetter",initialAnim*2);
 
-			moveCellsToTheFront ();
-			movePiecesToFront ();
-			moveToFront ();
-			tutorialMask.SetActive (true);
+			activateMask ();
 
 			phase = 1;
 			previousPhase = 0;
@@ -197,11 +194,7 @@ public class TutorialLvl4 : TutorialBase
 
 		gameManager.callWinBonificationFromTutorial ();
 
-		returnCellsToLayer ();
-		returnPieces ();
-		returnBack ();
-
-		tutorialMask.SetActive (false);
+		deactivateMask ();
 	}
 
 	protected bool lineUsed()

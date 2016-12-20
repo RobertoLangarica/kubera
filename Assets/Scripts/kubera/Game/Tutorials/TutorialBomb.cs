@@ -10,7 +10,6 @@ public class TutorialBomb : TutorialBase
 
 	public InputBombAndDestroy inputBomb;
 
-	public Canvas lastPhaseCanvas;
 	public GameObject bombButton;
 	protected Transform previousParent;
 
@@ -73,13 +72,12 @@ public class TutorialBomb : TutorialBase
 
 			//Invoke ("writeLetterByLetter", initialAnim * 2);
 
-			moveCellsToTheFront ();
-			movePiecesToFront ();
-			moveToFront ();
+			activateMask ();
 
+			Debug.Log ("desactivando powerups");
 			disablePowerUps ();
 
-			powerUpManager.getPowerupByType (PowerupBase.EType.BOMB).powerUpButton.GetComponent<Button> ().enabled = true;
+			powerUpManager.getPowerupByType (PowerupBase.EType.BOMB).powerUpButton.gameObject.SetActive (true);
 
 			previousParent = bombButton.transform.parent;
 			bombButton.transform.SetParent (transform);
@@ -124,9 +122,7 @@ public class TutorialBomb : TutorialBase
 
 			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
 
-			returnCellsToLayer ();
-			returnPieces ();
-			returnBack ();
+			deactivateMask ();
 
 			enablePowerUps ();
 
@@ -166,8 +162,6 @@ public class TutorialBomb : TutorialBase
 			doAnimation = false;
 
 			//Invoke ("writeLetterByLetter", shakeDuraion * 1.5f);
-
-			lastPhaseCanvas.sortingLayerName = "Selected";
 
 			phase = 3;
 			return true;		
