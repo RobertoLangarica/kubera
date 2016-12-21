@@ -19,6 +19,8 @@ public class noOptionsPopUp : PopUpBase {
 	public RectTransform LetterContainer;
 	public Vector2 startPosition;
 
+	public Canvas powerUpCanvas;
+
 	void Start()
 	{
 		FirstText.text = MultiLanguageTextManager.instance.getTextByID(MultiLanguageTextManager.NO_PIECES_POPUP_ID);
@@ -47,6 +49,8 @@ public class noOptionsPopUp : PopUpBase {
 						toChose.SetActive(true);
 					});
 			});
+
+		powerUpCanvas.sortingLayerName = "WebView";
 	}
 
 	public void continuePlaying()
@@ -66,6 +70,7 @@ public class noOptionsPopUp : PopUpBase {
 	protected void popUpCompleted(string action ="")
 	{
 		popUp.SetActive (false);
+		powerUpCanvas.sortingLayerName = "PowerUps";
 		OnComplete (action);
 	}
 }

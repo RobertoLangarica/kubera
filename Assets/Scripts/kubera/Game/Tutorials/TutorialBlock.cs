@@ -192,7 +192,7 @@ public class TutorialBlock : TutorialBase
 
 		Vector3 posFrom = fromPosition.transform.position;
 
-		if (posTo == Vector3.zero) 
+		if (posTo == Vector3.zero  && cellManager.getAllEmptyCells().Length >= 4) 
 		{
 			posTo = cellManager.getAllEmptyCells () [3].transform.position;
 			posTo.x += cellManager.cellSize;
