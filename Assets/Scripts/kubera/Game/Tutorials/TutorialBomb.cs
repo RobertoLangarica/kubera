@@ -193,7 +193,7 @@ public class TutorialBomb : TutorialBase
 
 		Vector3 posFrom = fromPosition.transform.position;
 
-		if (posTo == Vector3.zero) 
+		if (posTo == Vector3.zero && cellManager.getCellsOfSameType(Piece.EType.PIECE).Length >= 3) 
 		{
 			posTo = cellManager.getCellsOfSameType(Piece.EType.PIECE)[2].transform.position;
 			posTo.x += cellManager.cellSize;
