@@ -93,7 +93,9 @@ public class TutorialLvl1 : TutorialBase
 
 	protected void powerUpAnim()
 	{
-		if (!doAnimation || cellManager.getAllEmptyCells().Length < 3 ) 
+		Cell[] emptyCells = cellManager.getAllEmptyCells();
+
+		if (!doAnimation || emptyCells.Length < 3 ) 
 		{
 			DOTween.Kill ("Tutorial1");
 			DestroyImmediate(powerUpDommy);
@@ -104,18 +106,18 @@ public class TutorialLvl1 : TutorialBase
 		posFrom = pieceManager.getShowingPieces () [0].transform.position;
 		if (posTo == Vector3.zero) 
 		{
-			posTo = cellManager.getAllEmptyCells () [4].transform.position;
+			posTo = emptyCells[4].transform.position;
 			posTo.x += cellManager.cellSize;
 		}
 
-		changeDommy ();
+		changeDommy();
 
 		Vector3 originalScale = inputPiece.selectedScale;
 
 		powerUpDommy.transform.position = posFrom;
 
 		//Los valores de las animaciones los paso Liloo
-		powerUpDommy.transform.DOScale (new Vector3 (originalScale.x*1,originalScale.y*1,originalScale.z*1), 0.5f).SetId("Tutorial1");
+		powerUpDommy.transform.DOScale (new Vector3(originalScale.x*1,originalScale.y*1,originalScale.z*1), 0.5f).SetId("Tutorial1");
 		powerUpDommy.GetComponent<Piece> ().moveAlphaByTween (0.75f, 0.75f, "Tutorial1",
 			() => {
 
@@ -143,5 +145,19 @@ public class TutorialLvl1 : TutorialBase
 		powerUpDommy = GameObject.Instantiate (pieceManager.getShowingPieces () [dommyIndex].gameObject) as GameObject;
 		powerUpDommy.transform.localScale = Vector3.zero;
 		powerUpDommy.GetComponent<Collider2D> ().enabled = false;
+	}
+
+	protected void OnDestroy()
+	{
+		DOTween.Kill ("Tutorial1");
+
+		if(powerUpDommy)
+		{
+			DestroyImmediate(powerUpDommy);
+		}
+
+		CancelInvoke ("powerUpAnim");
+
+		doAnimation = false;
 	}
 }

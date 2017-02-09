@@ -45,13 +45,15 @@ public class KuberaLocalNotifications : MonoBehaviour
 	{
 		//86400 sconds per day
 
-		//3 days
-		int currentLevel = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser.levels.Count + 1;
-
-		(LocalNotificationManager.GetInstance () as LocalNotificationManager).modifyAndScheduleNotificationByName (
-			villavanilla.Notifications.ERegisteredNotification.NO_PLAYING_GAMES,
-			MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.NOTIFICATION_3_DAYS).Replace ("{{level}}", currentLevel.ToString ()),
-			"Kubera",259200);
+		if(DataManagerKubera.GetCastedInstance<DataManagerKubera> () != null)
+		{
+			//3 days
+			int currentLevel = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser.levels.Count + 1;
+			(LocalNotificationManager.GetInstance () as LocalNotificationManager).modifyAndScheduleNotificationByName (
+				villavanilla.Notifications.ERegisteredNotification.NO_PLAYING_GAMES,
+				MultiLanguageTextManager.instance.getTextByID (MultiLanguageTextManager.NOTIFICATION_3_DAYS).Replace ("{{level}}", currentLevel.ToString ()),
+				"Kubera",259200);
+		}
 
 		//7 days
 		(LocalNotificationManager.GetInstance () as LocalNotificationManager).modifyAndScheduleNotificationByName (

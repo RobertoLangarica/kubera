@@ -11,19 +11,24 @@ public class ParalaxLayers : MonoBehaviour {
 	public bool clamped;
 	public float initialValue;
 
-	void Awake()
+	private float XAnchorPos;//para evitar leer el anchor pos cada frame
+
+	void Start()
 	{
 		if(rectTransform == null)
 		{
 			rectTransform = GetComponent<RectTransform> ();
 		}
-		content = FindObjectOfType<ParalaxManager> ();
+		content = ParalaxManager.instance;
 		content.OnMove += OnMove;
 		content.OnUnsubscribe += OnUnsubscribe;
+
 		if (clamped) 
 		{
 			initialValue = rectTransform.anchoredPosition.y;
 		}
+
+		XAnchorPos = rectTransform.anchoredPosition.x;
 	}
 
 	protected void OnMove(Vector2 pos)
@@ -32,24 +37,27 @@ public class ParalaxLayers : MonoBehaviour {
 		{
 			if(pos.y*value > initialValue)
 			{
-				rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x,initialValue);
+				pos.x = XAnchorPos;
+				pos.y = initialValue;
+				rectTransform.anchoredPosition = pos;
 				return;
 			}
 
 			if(pos.y * value < -rectTransform.rect.yMax)
 			{
-				rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x,-rectTransform.rect.yMax);
+				pos.x = XAnchorPos;
+				pos.y = -rectTransform.rect.yMax;
+				rectTransform.anchoredPosition = pos;
 				return;
 			}
 
 		}
+
 		if(value != -1)
 		{
-			rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x,pos.y*value);
-		}
-		else
-		{
-			rectTransform.anchoredPosition = rectTransform.anchoredPosition;
+			pos.y*=value;
+			pos.x = XAnchorPos;
+			rectTransform.anchoredPosition = pos;
 		}
 	}
 

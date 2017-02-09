@@ -4,6 +4,8 @@ using System.Collections;
 
 public class ParalaxManager : MonoBehaviour {
 
+	public static ParalaxManager instance;
+
 	public delegate void DOnMove(Vector2 newPos);
 	public DOnMove OnMove;
 
@@ -14,6 +16,7 @@ public class ParalaxManager : MonoBehaviour {
 	public DOnUnsubscribe OnUnsubscribe;
 
 	public RectTransform rectTransform;
+	public RectTransform parentRectTransform;
 	public RectTransform canvasRectTransform;
 
 	protected Vector2 oldPos;
@@ -28,7 +31,7 @@ public class ParalaxManager : MonoBehaviour {
 
 	void Awake()
 	{
-		rectTransform = GetComponent<RectTransform> ();
+		instance = this;
 		oldPos = rectTransform.anchoredPosition;
 		//OnMove (rectTransform.anchoredPosition);
 		//scrollRect.verticalNormalizedPosition = 0.5f;
@@ -42,15 +45,10 @@ public class ParalaxManager : MonoBehaviour {
 		{
 			if(OnMove != null)
 			{
-				//Intento de 
-				/*//print (rectTransform.localPosition.y);
-				if (rectTransform.localPosition.y > Screen.height*0.2f || rectTransform.localPosition.y < -Screen.height*0.2f)
-				{
-					scrollRect.
-				}*/
 				OnMove( rectTransform.anchoredPosition);
 			}
 		}
+
 		if(toDoor)
 		{
 			scrollRect.verticalNormalizedPosition = scrollRect.verticalNormalizedPosition + 0.01f;
@@ -59,10 +57,12 @@ public class ParalaxManager : MonoBehaviour {
 				toDoor = false;
 			}
 		}
+
 		if(toNextLevel)
 		{
 			scrollRect.enabled = false;
 			scrollRect.verticalNormalizedPosition = scrollRect.verticalNormalizedPosition + 0.005f;
+
 			if(scrollRect.verticalNormalizedPosition >= posNextLevel)
 			{
 				toNextLevel = false;
@@ -73,10 +73,10 @@ public class ParalaxManager : MonoBehaviour {
 
 	public void setFixHeight()
 	{
-		float fullHeight = GetComponent<RectTransform> ().rect.height;
+		float fullHeight = rectTransform.rect.height;
 		fixHeight = fullHeight * 0.5f;
 	
-		fixMin = fullHeight - transform.parent.GetComponent<RectTransform> ().rect.height *0.8f;
+		fixMin = fullHeight - parentRectTransform.rect.height *0.8f;
 	}
 
 	public void setRectTransform(RectTransform rectTransform)

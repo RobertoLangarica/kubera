@@ -13,7 +13,6 @@ public class FBGraph : MonoBehaviour
 	//
 	// Make a Graph API GET call to /me/ to retrieve a player's information
 	// See: https://developers.facebook.com/docs/graph-api/reference/user/
-
 	public delegate void DOnGetPlayerInfo(string id, string name);
 	public delegate void DOnGetFriends(List<object> friends);
 	public delegate void DOnGetAppRequest(List<object> friends);
@@ -72,19 +71,19 @@ public class FBGraph : MonoBehaviour
 		GraphUtil.LoadImgFromURL(playerImgUrl, delegate(Texture pictureTexture)
 			{
 				// Setup the User's profile picture
-				if (pictureTexture != null)
+				if(OnGetFriendTextures != null)
 				{
-					//Imagen del usuario
-					//GameStateManager.UserTexture = pictureTexture;
-
+					OnGetFriendTextures (id,pictureTexture,true);
 				}
-				OnGetFriendTextures (id,pictureTexture,true);
 				textureReady = true;
 				setPlayerInfoReady(infoReady,textureReady);
 				//print("finishPLAYERINFO");
 			});
-		
-		OnPlayerInfo (id,name);
+
+		if(OnPlayerInfo != null)
+		{
+			OnPlayerInfo (id,name);
+		}
 		infoReady = true;
 		setPlayerInfoReady(infoReady,textureReady);
 	}
@@ -168,7 +167,10 @@ public class FBGraph : MonoBehaviour
 		{
 			var friendsList = (List<object>)dataList;
 			CacheFriends(friendsList);
-			OnGetGameFriends (friendsList);
+			if(OnGetGameFriends != null)
+			{
+				OnGetGameFriends (friendsList);
+			}
 			gameFriendsReady = true;
 			mergeFriends ();
 			AllinfoGathered ();
@@ -213,7 +215,10 @@ public class FBGraph : MonoBehaviour
 		{
 			var invitableFriendsList = (List<object>)dataList;
 			CacheFriends(invitableFriendsList);
-			OnGetInvitableFriends (invitableFriendsList);
+			if(OnGetInvitableFriends != null)
+			{
+				OnGetInvitableFriends (invitableFriendsList);
+			}
 			invitableFriendsReady = true;
 			mergeFriends ();
 			AllinfoGathered ();
@@ -238,7 +243,10 @@ public class FBGraph : MonoBehaviour
 	{
 		if(gameFriendsReady && invitableFriendsReady)
 		{
-			onFinishGettingFriends ();
+			if(onFinishGettingFriends != null)
+			{
+				onFinishGettingFriends ();
+			}
 		}
 	}
 
@@ -250,7 +258,10 @@ public class FBGraph : MonoBehaviour
 				if (pictureTexture != null)
 				{
 					texture = pictureTexture;
-					OnGetFriendTextures (friendID, pictureTexture);
+					if(OnGetFriendTextures != null)
+					{
+						OnGetFriendTextures (friendID, pictureTexture);
+					}
 					textureAdded();
 				}
 			});
@@ -303,7 +314,12 @@ public class FBGraph : MonoBehaviour
 		{
 			apprequestsData = (List<object>)(((Dictionary<string, object>)dataObject) ["data"]);
 		}
-		OnGetAppRequest (apprequestsData);
+
+		if(OnGetAppRequest != null)
+		{
+			OnGetAppRequest (apprequestsData);
+		}
+
 		appRequestReady = true;
 		AllinfoGathered ();
 	}
@@ -313,9 +329,11 @@ public class FBGraph : MonoBehaviour
 	{
 		if(gameFriendsReady&& invitableFriendsReady && appRequestReady && playerInfoReady && texturesFriendReady && !allInfoGather)
 		{
-			print ("AllinfoGathered");
 			allInfoGather = true;
-			onFinishGettingInfo ();
+			if(onFinishGettingInfo != null)
+			{
+				onFinishGettingInfo ();
+			}
 		}
 	}   
 

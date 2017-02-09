@@ -88,7 +88,7 @@ public class MapManager : MonoBehaviour
 			if(dataManager.currentUser.levels.Count != 0)
 			{
 				currentWorld = dataManager.currentUser.maxWorldReached();
-				persistentInstance.maxWorldReached = currentWorld;
+
 				int passedLevelsCount = dataManager.currentUser.countPassedLevelsByWorld(currentWorld);
 				int levelsInWorld = persistentInstance.levelsData.getLevelsCountByWorld(currentWorld);
 
@@ -98,7 +98,6 @@ public class MapManager : MonoBehaviour
 					{
 						currentWorld++;
 					}
-					persistentInstance.maxWorldReached = currentWorld;
 				}
 
 				if(currentWorld == 0)
@@ -109,7 +108,7 @@ public class MapManager : MonoBehaviour
 		}
 		else
 		{
-			//Solo detecta si el que se paso
+			//Solo detecta el que se paso
 			currentWorld = persistentInstance.currentWorld;
 			int passedLevelsCount = dataManager.currentUser.countPassedLevelsByWorld(currentWorld);
 			int levelsInWorld = persistentInstance.levelsData.getLevelsByWorld(currentWorld).Length;
@@ -118,7 +117,7 @@ public class MapManager : MonoBehaviour
 			{
 				if(currentWorld+1 <= worldsCount)
 				{
-					if(persistentInstance.maxWorldReached == currentWorld)
+					if(DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.maxWorldReached() == currentWorld)
 					{
 						//nuevo mundo desbloqueado
 						newWorldUnlocked = true;
@@ -128,7 +127,6 @@ public class MapManager : MonoBehaviour
 			}
 		}
 			
-
 		//Flujo entre game y levels
 		if(persistentInstance.fromGameToLevels)
 		{
@@ -156,7 +154,7 @@ public class MapManager : MonoBehaviour
 		settingButtons.OnActivateMusic += activateMusic;
 
 		//Menu de acceso rapido
-		initializeWorldsQuickMenuInfo ();
+		initializeWorldsQuickMenuInfo();
 
 		//Cambiando al mundo adecuado
 		changeWorld();
@@ -189,7 +187,7 @@ public class MapManager : MonoBehaviour
 	protected void initializeWorldsQuickMenuInfo()
 	{
 		KuberaUser user = DataManagerKubera.GetCastedInstance<DataManagerKubera> ().currentUser;
-		int maxWorldReached = PersistentData.GetInstance ().maxWorldReached;
+		int maxWorldReached = user.maxWorldReached();
 		int starsObtained =0;
 		List<LevelData> worldLevels;
 
@@ -243,6 +241,7 @@ public class MapManager : MonoBehaviour
 		initializeLevels ();
 		setLevelsData ();
 		setLastLevelReached ();
+
 		if(setParalax)
 		{
 			Invoke ("setParalaxManager",0.06f);
@@ -422,7 +421,7 @@ public class MapManager : MonoBehaviour
 			}
 		}
 
-		if(PersistentData.GetInstance().maxWorldReached <= currentWorld)
+		if(DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.maxWorldReached() <= currentWorld)
 		{
 			if(toNextLevel)
 			{
@@ -700,7 +699,6 @@ public class MapManager : MonoBehaviour
 			{
 				nextLevel = pressed;
 			}
-			print (pressed);
 		}
 		else
 		{
@@ -811,11 +809,6 @@ public class MapManager : MonoBehaviour
 		{
 			currentWorld = world;
 			isInLastLevelWorld = false;
-
-			if(PersistentData.GetInstance().maxWorldReached < world)
-			{
-				PersistentData.GetInstance ().maxWorldReached = world;
-			}
 
 			changeWorld ();
 		}
@@ -1013,9 +1006,29 @@ public class MapManager : MonoBehaviour
 
 	protected void afterInvitation()
 	{
-		if (toNextLevel) 
+		/*if (toNextLevel) 
 		{
 			OnLevelUnlockedPressed (nextLevel);
+		}*/
+
+		if(nextLevel == null)
+		{
+			if(isLastLevel)
+			{
+				goToNextLevel = true;
+				changeCurrentWorld (currentWorld+1, true, false);
+			}
+		}
+		else
+		{
+			if(nextLevel.isBoss)
+			{
+				OnBossReachedPressed (nextLevel);
+			}
+			else
+			{
+				OnLevelUnlockedPressed (nextLevel);
+			}
 		}
 	}
 
@@ -1063,11 +1076,14 @@ public class MapManager : MonoBehaviour
 				lastLevelPlayed.moveProgress (nextLevel);
 
 				toNextLevel = false;
-				int level = int.Parse (nameOfLastLevelPlayed);
-
-				if(invitationToReview.isHappeningAReview (level))
+				if(!string.IsNullOrEmpty(nameOfLastLevelPlayed))
 				{
-					invitationToReview.showInvitationProcessByLevelNumber(level);
+					int level = int.Parse (nameOfLastLevelPlayed);
+
+					if(invitationToReview.isHappeningAReview (level))
+					{
+						invitationToReview.showInvitationProcessByLevelNumber(level);
+					}
 				}
 			}
 			else
@@ -1085,8 +1101,6 @@ public class MapManager : MonoBehaviour
 		case "retry":
 		case "playGame":
 			stopInput(true);
-			//TODO probablemente no haga falta mostrar el mundo
-			//showWorld();
 			ScreenManager.GetInstance().GoToSceneAsync("Game");
 		break;
 		case "continue":
@@ -1095,7 +1109,7 @@ public class MapManager : MonoBehaviour
 				//showWorld();
 				stairsToWait ();
 
-				if(PersistentData.GetInstance().maxWorldReached > currentWorld)
+					if(DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.maxWorldReached() > currentWorld)
 				{
 					toNextLevel = true;
 					showNextLevelGoalPopUp ();
@@ -1107,7 +1121,6 @@ public class MapManager : MonoBehaviour
 			}
 			else if(toNextLevel)
 			{
-				//showWorld();
 				paralaxManager.setPosToNextLevel (nextLevel);
 				lastLevelPlayed.moveProgress (nextLevel);
 			}
@@ -1222,10 +1235,12 @@ public class MapManager : MonoBehaviour
 
 	public void activateShopika()
 	{
+		#if !UNITY_EDITOR
 		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
 		{
 			openPopUp ("shopikaConnect");
 		}
+		#endif
 	}
 
 	public void activateOpeningShopika()
@@ -1237,8 +1252,6 @@ public class MapManager : MonoBehaviour
 	{
 		//SceneManager.LoadScene ("Levels");
 		//ScreenManager.GetInstance().GoToSceneAsync("Levels",true);
-
-		PersistentData.GetInstance().maxWorldReached = DataManagerKubera.GetCastedInstance<DataManagerKubera>().currentUser.maxWorldReached();
 
 		//changeWorld (false);
 		initializeLevels ();
@@ -1259,6 +1272,9 @@ public class MapManager : MonoBehaviour
 
 	void OnDestroy()
 	{
-		KuberaSyncManger.GetCastedInstance<KuberaSyncManger> ().OnDataRetrieved -= reloadDataProgress;
+		if(KuberaSyncManger.GetCastedInstance<KuberaSyncManger>() != null)
+		{
+			KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().OnDataRetrieved -= reloadDataProgress;
+		}
 	}
 }

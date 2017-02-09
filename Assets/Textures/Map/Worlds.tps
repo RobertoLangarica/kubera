@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.2.3</string>
         <key>fileName</key>
-        <string>/Users/Roberto/Documents/Trabajo/VillaVanilla/kubera/Assets/Textures/Worlds.tps</string>
+        <string>/Users/Roberto/Documents/Trabajo/VillaVanilla/kubera/Assets/Textures/Map/Worlds.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -188,81 +188,73 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/K-1-MapaMúsica_PlataformaChica.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/K-1-MapaMúsica_PllataformaGrande.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/K-Mapa1_CD.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/K-Mapa1_PlataformaChica.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/K-Mapa1_PllataformaGrande.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/K-Mapa1_Tambor.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/K-Mapa1_arpa.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/K-Mapa1_bocina.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/K-Mapa1_columna.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/K-Mapa1_guitarra.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/K-Mapa1_piano.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1-17.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_Estrallasdeco.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_Luz1.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_Luz2 .png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_Luz3h.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_Luz4.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_Luz5.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_Luz6.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_bolitaparallax.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_nota1.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_nota2.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_nota3.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_nota5.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_nota6.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_nota7.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_nota8.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_nota9.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo1/fondo/K-Mapa1_partitura.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo2/K-2-MapaMascotas_cotorros.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo2/K-2-MapaMascotas_gato.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo2/K-2-MapaMascotas_huella1.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo2/K-2-MapaMascotas_huella3.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo2/K-2-MapaMascotas_huella4.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo2/K-2-MapaMascotas_huella5.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo2/K-2-MapaMascotas_huello2.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo2/K-2-MapaMascotas_hueso.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo2/K-2-MapaMascotas_jirafa.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo2/K-2-MapaMascotas_perro.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo2/K-2-MapaMascotas_pez.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo2/K-2-MapaMascotas_serpiente.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo2/K-2-MapaMascotas_techomascotas.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo4/K-4-MapaLibros_L.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo4/K-4-MapaLibros_L1.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo4/K-4-MapaLibros_L2.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo4/K-4-MapaLibros_L3.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo4/K-4-MapaLibros_L4.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo4/K-4-MapaLibros_L7.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo4/K-4-MapaLibros_L8.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo4/K-4-MapaLibros_L9.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo4/K-4-MapaLibros_LSEIS.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo4/K-4-MapaLibros_estante1.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo4/K-4-MapaLibros_librero.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo4/K-4-MapaLibros_librero2.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo4/K-4-MapaLibros_libreroamarillo.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo4/K-4-MapaLibros_libreroazul.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo4/K-4-MapaLibros_separador.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo4/K-4-MapaLibros_techolibros.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_j1.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_j10 .png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_j11.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_j13.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_j14.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_j2.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_j3 .png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_j4.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_j5.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_j7.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_j8.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_j9 .png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_joyablanca1.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_joyablanca2.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_joyablanca3.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_jseis.png</key>
-            <key type="filename">../../../../../../Downloads/mundos/mundo8/K-8-MapaJoyería_techo-20.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/K-1-MapaMúsica_PlataformaChica.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/K-1-MapaMúsica_PllataformaGrande.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/K-Mapa1_CD.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/K-Mapa1_PlataformaChica.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/K-Mapa1_PllataformaGrande.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/K-Mapa1_Tambor.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/K-Mapa1_arpa.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/K-Mapa1_bocina.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/K-Mapa1_columna.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/K-Mapa1_guitarra.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/K-Mapa1_piano.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/fondo/K-Mapa1-17.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/fondo/K-Mapa1_nota1.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/fondo/K-Mapa1_nota2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/fondo/K-Mapa1_nota3.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/fondo/K-Mapa1_nota5.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/fondo/K-Mapa1_nota6.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/fondo/K-Mapa1_nota7.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/fondo/K-Mapa1_nota8.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/fondo/K-Mapa1_nota9.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo1/fondo/K-Mapa1_partitura.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo2/K-2-MapaMascotas_cotorros.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo2/K-2-MapaMascotas_gato.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo2/K-2-MapaMascotas_huella1.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo2/K-2-MapaMascotas_huella3.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo2/K-2-MapaMascotas_huella4.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo2/K-2-MapaMascotas_huella5.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo2/K-2-MapaMascotas_huello2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo2/K-2-MapaMascotas_hueso.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo2/K-2-MapaMascotas_jirafa.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo2/K-2-MapaMascotas_perro.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo2/K-2-MapaMascotas_pez.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo2/K-2-MapaMascotas_serpiente.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo2/K-2-MapaMascotas_techomascotas.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo4/K-4-MapaLibros_L.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo4/K-4-MapaLibros_L1.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo4/K-4-MapaLibros_L2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo4/K-4-MapaLibros_L3.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo4/K-4-MapaLibros_L4.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo4/K-4-MapaLibros_L7.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo4/K-4-MapaLibros_L8.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo4/K-4-MapaLibros_L9.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo4/K-4-MapaLibros_LSEIS.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo4/K-4-MapaLibros_estante1.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo4/K-4-MapaLibros_librero.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo4/K-4-MapaLibros_librero2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo4/K-4-MapaLibros_libreroamarillo.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo4/K-4-MapaLibros_libreroazul.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo4/K-4-MapaLibros_separador.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo4/K-4-MapaLibros_techolibros.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_j1.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_j10 .png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_j11.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_j13.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_j14.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_j2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_j3 .png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_j4.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_j5.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_j7.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_j8.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_j9 .png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_joyablanca1.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_joyablanca2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_joyablanca3.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_jseis.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/mundos/mundo8/K-8-MapaJoyería_techo-20.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -270,10 +262,10 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../../../../../../Downloads/mundos/mundo1</filename>
-            <filename>../../../../../../Downloads/mundos/mundo2</filename>
-            <filename>../../../../../../Downloads/mundos/mundo4</filename>
-            <filename>../../../../../../Downloads/mundos/mundo8</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/mundos/mundo2</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/mundos/mundo4</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/mundos/mundo8</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/mundos/mundo1</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.2.3</string>
         <key>fileName</key>
-        <string>/Users/Roberto/Documents/Trabajo/VillaVanilla/kubera/Assets/Textures/Home.tps</string>
+        <string>/Users/Roberto/Documents/Trabajo/VillaVanilla/kubera/Assets/Textures/Home/Home.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -188,26 +188,26 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../../../../../Downloads/home/Copia de K-popUps_close.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-InGame_BACK3.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-InGame_musicOFF.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-InGame_musicON2.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-InGame_ruedasettings.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-InGame_soundOFF.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-InGame_soundON2.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-MapaGeneral_settings.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-inicio_btnshopika.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-inicio_shopika.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-magia-del-gamplay2.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-menus1_corazon.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-menus_fondo-menus.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-popUps_objetiveBase.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-popups-pq_btnAzul.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-popups-pq_btnVerde.png</key>
-            <key type="filename">../../../../../../Downloads/home/K-popups-pq_gemaLibre.png</key>
-            <key type="filename">../../../../../../Downloads/home/KuberaLogo-02.png</key>
-            <key type="filename">../../../../../../Downloads/home/facebook_blanco.png</key>
-            <key type="filename">../../../../../../Downloads/home/piezasglow.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/Copia de K-popUps_close.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/K-InGame_BACK3.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/K-InGame_musicOFF.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/K-InGame_musicON2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/K-InGame_ruedasettings.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/K-InGame_soundOFF.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/K-InGame_soundON2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/K-MapaGeneral_settings.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/K-inicio_btnshopika.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/K-inicio_shopika.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/K-magia-del-gamplay2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/K-menus1_corazon.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/K-menus_fondo-menus.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/K-popUps_objetiveBase.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/K-popups-pq_btnAzul.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/K-popups-pq_btnVerde.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/K-popups-pq_gemaLibre.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/KuberaLogo-02.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/facebook_blanco.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/home/piezasglow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -215,26 +215,26 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../../../../../../Downloads/home/facebook_blanco.png</filename>
-            <filename>../../../../../../Downloads/home/K-InGame_BACK3.png</filename>
-            <filename>../../../../../../Downloads/home/K-InGame_musicOFF.png</filename>
-            <filename>../../../../../../Downloads/home/K-InGame_musicON2.png</filename>
-            <filename>../../../../../../Downloads/home/K-InGame_ruedasettings.png</filename>
-            <filename>../../../../../../Downloads/home/K-InGame_soundOFF.png</filename>
-            <filename>../../../../../../Downloads/home/K-InGame_soundON2.png</filename>
-            <filename>../../../../../../Downloads/home/K-inicio_btnshopika.png</filename>
-            <filename>../../../../../../Downloads/home/K-inicio_shopika.png</filename>
-            <filename>../../../../../../Downloads/home/K-MapaGeneral_settings.png</filename>
-            <filename>../../../../../../Downloads/home/K-popups-pq_btnAzul.png</filename>
-            <filename>../../../../../../Downloads/home/K-popups-pq_btnVerde.png</filename>
-            <filename>../../../../../../Downloads/home/KuberaLogo-02.png</filename>
-            <filename>../../../../../../Downloads/home/K-menus_fondo-menus.png</filename>
-            <filename>../../../../../../Downloads/home/K-magia-del-gamplay2.png</filename>
-            <filename>../../../../../../Downloads/home/Copia de K-popUps_close.png</filename>
-            <filename>../../../../../../Downloads/home/K-menus1_corazon.png</filename>
-            <filename>../../../../../../Downloads/home/K-popups-pq_gemaLibre.png</filename>
-            <filename>../../../../../../Downloads/home/piezasglow.png</filename>
-            <filename>../../../../../../Downloads/home/K-popUps_objetiveBase.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/Copia de K-popUps_close.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/facebook_blanco.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/K-InGame_BACK3.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/K-InGame_musicOFF.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/K-InGame_musicON2.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/K-InGame_ruedasettings.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/K-InGame_soundOFF.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/K-InGame_soundON2.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/K-inicio_btnshopika.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/K-inicio_shopika.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/K-magia-del-gamplay2.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/K-MapaGeneral_settings.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/K-menus_fondo-menus.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/K-menus1_corazon.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/K-popUps_objetiveBase.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/K-popups-pq_btnAzul.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/K-popups-pq_btnVerde.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/K-popups-pq_gemaLibre.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/KuberaLogo-02.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/home/piezasglow.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

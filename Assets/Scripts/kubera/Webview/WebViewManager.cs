@@ -182,6 +182,9 @@ public class WebViewManager : Manager<WebViewManager>
 
 	protected void failLoadingEvent (WebView webview, string error)
 	{
+		if(_mustShowDebugInfo)
+		{Debug.Log("Failed to load: "+webview.URL);}
+
 		if (OnFailLoading != null) 
 		{
 			OnFailLoading (webview,error);

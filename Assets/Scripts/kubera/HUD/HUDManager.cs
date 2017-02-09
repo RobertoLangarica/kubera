@@ -506,6 +506,11 @@ public class HUDManager : MonoBehaviour
 		modal.SetActive (true);
 	}
 
+	public bool isShowingPopup(string popupName)
+	{
+		return popUpManager.isPopUpOpen(popupName);
+	}
+
 	private void popUpCompleted(string action ="")
 	{
 		OnPopUpCompleted (action);
@@ -560,6 +565,11 @@ public class HUDManager : MonoBehaviour
 
 	public void activateShopika()
 	{
+		#if UNITY_EDITOR
+		//En editor no hay webview
+		return;
+		#endif
+
 		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
 		{
 			activatePopUp ("shopikaConnect");

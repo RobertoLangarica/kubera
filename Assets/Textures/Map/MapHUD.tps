@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.2.3</string>
         <key>fileName</key>
-        <string>/Users/Roberto/Documents/Trabajo/VillaVanilla/kubera/Assets/Textures/MapHUD.tps</string>
+        <string>/Users/Roberto/Documents/Trabajo/VillaVanilla/kubera/Assets/Textures/Map/MapHUD.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -166,7 +166,7 @@
         <key>globalSpriteSettings</key>
         <struct type="SpriteSettings">
             <key>scale</key>
-            <double>0.09</double>
+            <double>0.06</double>
             <key>scaleMode</key>
             <enum type="ScaleMode">Smooth</enum>
             <key>extrude</key>
@@ -188,87 +188,105 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral-31.png</key>
-            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_HUDbaseAbajo.png</key>
-            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_HUDbaseGem-Cor.png</key>
-            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_HUDgemas.png</key>
-            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_HUDshopika.png</key>
-            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_HUDvidas.png</key>
-            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_Navegacion.png</key>
-            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_interaccionFB.png</key>
-            <key type="filename">../../../../../../Downloads/map/HUD/K-MapaGeneral_settings.png</key>
-            <key type="filename">../../../../../../Downloads/map/K-Mapa_MarcoAvatardorado.png</key>
-            <key type="filename">../../../../../../Downloads/map/K-Mapa_MarcoAvatargris.png</key>
-            <key type="filename">../../../../../../Downloads/map/K-Mapa_Puertas.png</key>
-            <key type="filename">../../../../../../Downloads/map/K-Mapa_bloqued.png</key>
-            <key type="filename">../../../../../../Downloads/map/K-Mapa_bossbloqued.png</key>
-            <key type="filename">../../../../../../Downloads/map/K-Mapa_bossplay.png</key>
-            <key type="filename">../../../../../../Downloads/map/K-Mapa_bosswin.png</key>
-            <key type="filename">../../../../../../Downloads/map/K-Mapa_brilloAvatar.png</key>
-            <key type="filename">../../../../../../Downloads/map/K-Mapa_play.png</key>
-            <key type="filename">../../../../../../Downloads/map/K-Mapa_stargray.png</key>
-            <key type="filename">../../../../../../Downloads/map/K-Mapa_starwin.png</key>
-            <key type="filename">../../../../../../Downloads/map/K-popUps_close.png</key>
-            <key type="filename">../../../../../../Downloads/map/camino/K-Mapa_1caminoAzul.png</key>
-            <key type="filename">../../../../../../Downloads/map/camino/K-Mapa_1caminoBlanco.png</key>
-            <key type="filename">../../../../../../Downloads/map/camino/K-Mapa_2caminoAzul.png</key>
-            <key type="filename">../../../../../../Downloads/map/camino/K-Mapa_2caminoBlanco.png</key>
-            <key type="filename">../../../../../../Downloads/map/camino/K-Mapa_3caminoAzul.png</key>
-            <key type="filename">../../../../../../Downloads/map/camino/K-Mapa_3caminoBlanco.png</key>
-            <key type="filename">../../../../../../Downloads/map/config/K-InGame_BACK3.png</key>
-            <key type="filename">../../../../../../Downloads/map/config/K-InGame_musicOFF.png</key>
-            <key type="filename">../../../../../../Downloads/map/config/K-InGame_musicON2.png</key>
-            <key type="filename">../../../../../../Downloads/map/config/K-InGame_ruedasettings.png</key>
-            <key type="filename">../../../../../../Downloads/map/config/K-InGame_soundOFF.png</key>
-            <key type="filename">../../../../../../Downloads/map/config/K-InGame_soundON2.png</key>
-            <key type="filename">../../../../../../Downloads/map/escalera/K-MapaGeneral_HUDvidas_barandal-escalera.png</key>
-            <key type="filename">../../../../../../Downloads/map/escalera/K-MapaGeneral_HUDvidas_base-escalera2.png</key>
-            <key type="filename">../../../../../../Downloads/map/escalera/K-Mapa_base-coming soon.png</key>
-            <key type="filename">../../../../../../Downloads/map/escalera/K-Mapa_base-escalera.png</key>
-            <key type="filename">../../../../../../Downloads/map/escalera/K-Mapa_base-proximanete.png</key>
-            <key type="filename">../../../../../../Downloads/map/escalera/K-Mapa_base_out-of-order.png</key>
-            <key type="filename">../../../../../../Downloads/map/escalera/K-Mapa_escalera.png</key>
-            <key type="filename">../../../../../../Downloads/map/facebook_blanco.png</key>
-            <key type="filename">../../../../../../Downloads/map/luces/K-_estrella1.png</key>
-            <key type="filename">../../../../../../Downloads/map/luces/K-_estrella2.png</key>
-            <key type="filename">../../../../../../Downloads/map/luces/K-_luz1.png</key>
-            <key type="filename">../../../../../../Downloads/map/luces/K-_luz2.png</key>
-            <key type="filename">../../../../../../Downloads/map/luces/K-_luz3.png</key>
-            <key type="filename">../../../../../../Downloads/map/luces/K-_luz4.png</key>
-            <key type="filename">../../../../../../Downloads/map/luces/K-_luz5.png</key>
-            <key type="filename">../../../../../../Downloads/map/luces/K-_luz6.png</key>
-            <key type="filename">../../../../../../Downloads/map/luces/K-_luz7-22.png</key>
-            <key type="filename">../../../../../../Downloads/map/luces/K-_luz7-24.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_Avatar1.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_corazonRoto.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_grayStar.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_monito.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_monito2.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_monitoblink.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_objetiveBase.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_playBTN.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_rug.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_socialBTN.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_socialBase.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_socialBasepick.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_stars-base.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popUps_winStar.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popups-pq_baseGris.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popups-pq_btnAzul.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popups-pq_btnRojo.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popups-pq_btnVerde.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popups-pq_candado.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popups-pq_candado1.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popups-pq_candado2.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/K-popups-pq_gemaLibre.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/popups pequeños/K-popups-pq_baseGris.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/popups pequeños/K-popups-pq_bolsaAtras.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/popups pequeños/K-popups-pq_btnVerde.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/popups pequeños/K-popups-pq_candado.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/popups pequeños/K-popups-pq_gemaLibre.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/popups vidas/K-popupsVidas_NOselectBTN.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/popups vidas/K-popupsVidas_SelectBTN.png</key>
-            <key type="filename">../../../../../../Downloads/map/popup/popups vidas/K-popupsVidas_kindBTN.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral-31.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_HUDbaseAbajo.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_HUDbaseGem-Cor.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_HUDcircamarillo.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_HUDgemas .png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_HUDgemas.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_HUDmasBTN.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_HUDshopika.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_HUDvidas.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_Navegacion.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_barandal-escalera.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_base-escalera2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_comming soon.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_interaccionFB.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_out-of-order.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_playNext.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_proximamente.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/HUD/K-MapaGeneral_settings.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_MarcoAvatardorado.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_MarcoAvatargris.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_Puertas.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_bloqued.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_bossbloqued.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_bossplay.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_bosswin.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_brilloAvatar.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_play.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_stargray.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_starwin.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/K-popUps_close.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/camino/K-Mapa_1caminoAzul.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/camino/K-Mapa_1caminoBlanco.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/camino/K-Mapa_2caminoAzul.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/camino/K-Mapa_2caminoBlanco.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/camino/K-Mapa_3caminoAzul.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/camino/K-Mapa_3caminoBlanco.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/config/K-InGame_BACK3.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/config/K-InGame_musicOFF.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/config/K-InGame_musicON2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/config/K-InGame_ruedasettings.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/config/K-InGame_soundOFF.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/config/K-InGame_soundON2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/escalera/K-MapaGeneral_HUDvidas_barandal-escalera.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/escalera/K-MapaGeneral_HUDvidas_base-escalera2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/escalera/K-Mapa_base-coming soon.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/escalera/K-Mapa_base-escalera.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/escalera/K-Mapa_base-proximanete.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/escalera/K-Mapa_base_out-of-order.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/escalera/K-Mapa_escalera.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/facebook_blanco.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_Avatar1.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_Avatar2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_Avatar3.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_FullStar.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_banderas LVL.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_bar2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_barlight.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_compartirANDROID.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_compartirBTN.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_compartirBTNpq.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_compartirIOS.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_corazon.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_corazonDer.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_corazonIzq.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_emoji ganar.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_emoji inicio.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_emoji perder.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_fullCircle.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_objetiveBase.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_playBTN.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_puerta degradado.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_puerta1.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_puerta2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_puertaluz1.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_puertaluz2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_puertaluz3.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_puertaluz4.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_rug.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_socialBTN.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_socialBase.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_socialBasepick.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_stars1.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/K-popUps_sumarBTN.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/popups pequeños/K-popups-pq_baseGris-27.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/popups pequeños/K-popups-pq_baseGris.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/popups pequeños/K-popups-pq_btnAzul.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/popups pequeños/K-popups-pq_btnRojo.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/popups pequeños/K-popups-pq_btnVerde.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/popups pequeños/K-popups-pq_candado.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/popups pequeños/K-popups-pq_candado1.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/popups pequeños/K-popups-pq_candado2.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/popups pequeños/K-popups-pq_gemaLibre.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/popups vidas/K-popupsVidas_NOselectBTN.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/popups vidas/K-popupsVidas_SelectBTN.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/popups vidas/K-popupsVidas_bannerUpPedirVidas.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/popups vidas/K-popupsVidas_bannerUpPedirVidasSlice.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/popups vidas/K-popupsVidas_box.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/popups vidas/K-popupsVidas_cajaPedirVidas.png</key>
+            <key type="filename">../../../../../../../Downloads/KuberaAtlases/map2/popup/popups vidas/K-popupsVidas_checkedBox.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -276,25 +294,24 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../../../../../../Downloads/map/camino</filename>
-            <filename>../../../../../../Downloads/map/escalera</filename>
-            <filename>../../../../../../Downloads/map/facebook_blanco.png</filename>
-            <filename>../../../../../../Downloads/map/HUD</filename>
-            <filename>../../../../../../Downloads/map/K-Mapa_bloqued.png</filename>
-            <filename>../../../../../../Downloads/map/K-Mapa_bossbloqued.png</filename>
-            <filename>../../../../../../Downloads/map/K-Mapa_bossplay.png</filename>
-            <filename>../../../../../../Downloads/map/K-Mapa_bosswin.png</filename>
-            <filename>../../../../../../Downloads/map/K-Mapa_brilloAvatar.png</filename>
-            <filename>../../../../../../Downloads/map/K-Mapa_MarcoAvatardorado.png</filename>
-            <filename>../../../../../../Downloads/map/K-Mapa_MarcoAvatargris.png</filename>
-            <filename>../../../../../../Downloads/map/K-Mapa_play.png</filename>
-            <filename>../../../../../../Downloads/map/K-Mapa_Puertas.png</filename>
-            <filename>../../../../../../Downloads/map/K-Mapa_stargray.png</filename>
-            <filename>../../../../../../Downloads/map/K-Mapa_starwin.png</filename>
-            <filename>../../../../../../Downloads/map/K-popUps_close.png</filename>
-            <filename>../../../../../../Downloads/map/luces</filename>
-            <filename>../../../../../../Downloads/map/popup</filename>
-            <filename>../../../../../../Downloads/map/config</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/camino</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/config</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/escalera</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/facebook_blanco.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/HUD</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_bloqued.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_bossbloqued.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_bossplay.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_bosswin.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_brilloAvatar.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_MarcoAvatardorado.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_MarcoAvatargris.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_play.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_Puertas.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_stargray.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/K-Mapa_starwin.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/K-popUps_close.png</filename>
+            <filename>../../../../../../../Downloads/KuberaAtlases/map2/popup</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -121,6 +121,7 @@ public class WorldsPopUp : PopUpBase {
 		worlds [world].worldPopUp = this;
 		if(unLocked)
 		{
+			worlds [world].unblocked();
 			worlds [world].setStars (starsObtained, worldStars);
 		}
 		else

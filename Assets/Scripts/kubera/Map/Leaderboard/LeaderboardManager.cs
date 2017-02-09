@@ -84,26 +84,29 @@ public class LeaderboardManager : MonoBehaviour {
 			test = new test[Random.Range(3,6)];
 		}
 
-		for(int i=0; i<test.Length; i++)
+		if(test != null)
 		{
-			test [i] = new test ();
-			test [i].idFacebook = Random.Range(0,100).ToString();
-			test [i].score = Random.Range(100,20000);
-			test [i].rank = i+1;
-		}
-
-		for(int i=0; i<test.Length; i++)
-		{
-			Sprite sprite = facebook.getSpritePictureById (test [i].idFacebook);
-			string name = facebook.getFriendNameById (test [i].idFacebook);
-			int score = test[i].score;
-			int rank = test[i].rank;
-
-			if(sprite == null)
+			for(int i=0; i<test.Length; i++)
 			{
-				sprite = dummyIconImages [Random.Range (0, dummyIconImages.Length)];
+				test [i] = new test ();
+				test [i].idFacebook = Random.Range(0,100).ToString();
+				test [i].score = Random.Range(100,20000);
+				test [i].rank = i+1;
 			}
-			leaderboard.setSlotInfo (sprite,name,score,rank);
+
+			for(int i=0; i<test.Length; i++)
+			{
+				Sprite sprite = facebook.getSpritePictureById (test [i].idFacebook);
+				string name = facebook.getFriendNameById (test [i].idFacebook);
+				int score = test[i].score;
+				int rank = test[i].rank;
+
+				if(sprite == null)
+				{
+					sprite = dummyIconImages [Random.Range (0, dummyIconImages.Length)];
+				}
+				leaderboard.setSlotInfo (sprite,name,score,rank);
+			}
 		}
 
 		leaderboards.Insert (0,leaderboard);

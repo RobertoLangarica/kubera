@@ -9,6 +9,10 @@ namespace utils.gems
 {
 	public class ShopikaManager : LocalDataManager<MultipleUserGem>
 	{
+		public int gemsToGiveLocally = 25;//TODO eliminar porque es un parche para SHOPIKA
+		public float localGemsWaitMinutes = 0.5f;//TODO eliminar porque es un parche para SHOPIKA
+		protected DateTime localGemsLastDate;//TODO eliminar porque es un parche para SHOPIKA
+
 		public bool _freeTestMode = false;
 
 		public Action<int> OnGemsUpdated;
@@ -40,6 +44,12 @@ namespace utils.gems
 		protected override void afterFirstRead ()
 		{
 			base.afterFirstRead ();
+
+			//TODO esto se va porque es un parche para SHOPIKA
+			if(!string.IsNullOrEmpty(currentData.lastTimeLocalGemsGranted))
+			{
+				localGemsLastDate = DateTime.ParseExact (currentData.lastTimeLocalGemsGranted,"dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+			}
 
 			if(!string.IsNullOrEmpty(currentData.lastUsedId))
 			{
@@ -83,7 +93,15 @@ namespace utils.gems
 				return true;
 			}
 
-			return currentUser.gems >= amount;
+			//HARDCODING para ue este cambio este en android e iOS
+			//TODO cambio temporal para SHOPIKA
+			/*#if UNITY_IOS || UNITY_EDITOR
+			return (currentUser.gems + currentData.localGems) >= amount;
+			#endif*/
+			return (currentUser.gems + currentData.localGems) >= amount;
+
+			//Descomentar esta linea cuando se eliminen las gemas locales
+			//return currentUser.gems >= amount;
 		}
 
 		public void tryToConsumeGems(int amount)
@@ -91,6 +109,48 @@ namespace utils.gems
 			if(_freeTestMode)
 			{
 				return;	
+			}
+
+			//HARDCODING para ue este cambio este en android e iOS
+			//TODO cambio temporal para SHOPIKA
+			/*#if UNITY_IOS || UNITY_EDITOR
+			if(currentData.localGems > 0)
+			{
+				currentData.localGems -= amount;
+
+				//suficientes
+				if(currentData.localGems >= 0)
+				{
+					//suficientes y no hay nada mas que hacer
+					afterGemsModified();
+					saveLocalData(false);
+					return;
+				}
+				else
+				{
+					//insuficientes y consumimos las restantes
+					amount = -currentData.localGems;
+				}
+			}
+			#endif*/
+			//TODO cambio temporal para SHOPIKA
+			if(currentData.localGems > 0)
+			{
+				currentData.localGems -= amount;
+
+				//suficientes
+				if(currentData.localGems >= 0)
+				{
+					//suficientes y no hay nada mas que hacer
+					afterGemsModified();
+					saveLocalData(false);
+					return;
+				}
+				else
+				{
+					//insuficientes y consumimos las restantes
+					amount = -currentData.localGems;
+				}
 			}
 
 			//En local
@@ -102,7 +162,60 @@ namespace utils.gems
 			syncManager.consumeGems(amount);
 
 			afterGemsModified();
+
+			saveLocalData(false);
 		}
+
+
+		public void giveLocalAnonymousGems()
+		{
+			//TODO esta funcion no debe existir y hay que quitarla
+			currentData.localGems += gemsToGiveLocally;
+			localGemsLastDate = DateTime.UtcNow;
+			currentData.lastTimeLocalGemsGranted = localGemsLastDate.ToString ("dd-MM-yyyy HH:mm:ss");
+
+
+			saveLocalData(false);
+
+			afterGemsModified();
+		}
+			
+		public string remainingTimeToGiveGemsString()
+		{
+			//TODO esta funcion no debe existir y hay que quitarla
+			if(!string.IsNullOrEmpty(currentData.lastTimeLocalGemsGranted))
+			{
+				TimeSpan elapsedSpan = DateTime.UtcNow - localGemsLastDate;
+
+				double waitTimeInSeconds = (double)(localGemsWaitMinutes*60);
+				if(elapsedSpan.TotalSeconds < waitTimeInSeconds)
+				{
+					double remainingSeconds = waitTimeInSeconds-elapsedSpan.TotalSeconds;
+					int minutes = ((int)remainingSeconds/60);
+					int seconds = (int)remainingSeconds - (minutes*60);
+
+					return minutes.ToString("00")+":"+seconds.ToString("00");
+				}
+			}
+				
+			return "00:00";
+		}
+
+		public bool canGiveLocalGems()
+		{
+			//TODO esta funcion no debe existir y hay que quitarla
+			if(!string.IsNullOrEmpty(currentData.lastTimeLocalGemsGranted))
+			{
+				TimeSpan elapsedSpan = DateTime.UtcNow - localGemsLastDate;
+
+				int waitTimeInSeconds = (int)(localGemsWaitMinutes*60);
+				return elapsedSpan.TotalSeconds >= waitTimeInSeconds;
+			}
+
+			return true;
+		}
+
+
 
 		public void registerInvite(string invitedFacebookId,string inviterFacebookId, string invitedEmail = "", string invitedPhoneNumber = "", string invitedId = "", string inviterId = "")
 		{
@@ -111,7 +224,10 @@ namespace utils.gems
 
 		public int currentGems
 		{
-			get{return currentUser.gems;}
+			get
+			{
+				return currentUser.gems + currentData.localGems;
+			}
 		}
 
 		public override void changeCurrentuser (string newUserId)
@@ -198,7 +314,8 @@ namespace utils.gems
 		{
 			if(OnGemsUpdated != null)
 			{
-				OnGemsUpdated(currentUser.gems);
+				OnGemsUpdated(currentUser.gems + currentData.localGems);
+				//OnGemsUpdated(currentUser.gems);
 			}
 		}
 	}

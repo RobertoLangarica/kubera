@@ -27,6 +27,8 @@ public class KuberaWebView : MonoBehaviour
 	protected float waitForAnswerTime;
 	public int totalTime = 20;
 
+	public string shopikaLandingURI = "https://shopika.net/afiliado";
+
 	void Start()
 	{
 		videoModal.SetActive(false);
@@ -49,6 +51,11 @@ public class KuberaWebView : MonoBehaviour
 
 	public void showShopikaAndRegisterForEvents()
 	{
+		#if UNITY_EDITOR
+		//en editor no hay webview
+		return;
+		#endif
+
 		videoModal.SetActive(true);
 		if (ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId == ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER) 
 		{
@@ -67,6 +74,24 @@ public class KuberaWebView : MonoBehaviour
 		isWaiting = true;
 		WebViewManager.GetInstance ().OnFinishLoading += showToolBar;
 		registerForMessages ();
+	}
+
+	public void showShopikaLanding()
+	{
+		videoModal.SetActive(true);
+
+		string url = shopikaLandingURI;
+
+		if(ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId != ShopikaManager.GetCastedInstance<ShopikaManager> ().ANONYMOUS_USER)
+		{
+			url += "?userId="+ShopikaManager.GetCastedInstance<ShopikaManager> ().currentUserId;
+		}
+
+		isWaiting = true;
+		WebViewManager.GetInstance ().OnFinishLoading += showToolBar;
+		registerForMessages ();
+
+		WebViewManager.GetInstance ().createWebView (url,webViewSize,webViewRectCanvasCamera,false);
 	}
 
 	protected void showShopikaLogin()
@@ -97,7 +122,6 @@ public class KuberaWebView : MonoBehaviour
 
 			break;
 		case(WEBVIEW_GEMS):
-			
 			if (!((DataManagerKubera)DataManagerKubera.GetInstance ()).alreadyPurchaseGems ()) 
 			{
 				KuberaAnalytics.GetInstance ().registerGemsFirstPurchase (PersistentData.GetInstance().lastLevelReachedName);

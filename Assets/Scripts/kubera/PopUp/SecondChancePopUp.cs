@@ -135,7 +135,9 @@ public class SecondChancePopUp : PopUpBase
 		{
 			return;
 		}
+
 		pressed = true;
+
 		thisObject.DOAnchorPos (new Vector3(thisObject.anchoredPosition.x,0), speed).OnComplete(()=>
 			{
 				thisObject.DOAnchorPos (-v3, speed).SetEase(Ease.InBack).OnComplete(()=>

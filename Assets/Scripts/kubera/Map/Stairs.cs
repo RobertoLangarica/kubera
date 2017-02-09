@@ -27,10 +27,12 @@ public class Stairs : MonoBehaviour {
 
 	void Update()
 	{
+		#if UNITY_EDITOR
 		if (Input.GetKey (KeyCode.C))
 		{
 			animateStairs ();
 		}
+		#endif
 
 		if(!active)
 		{

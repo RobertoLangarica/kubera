@@ -209,7 +209,6 @@ public class MapLevel : MonoBehaviour
 	protected void finish()
 	{
 		paralaxManager.finish();
-
 	}
 
 	public void setParalaxManager(ParalaxManager paralaxManager)

@@ -41,6 +41,13 @@ public class MiniWorld : MonoBehaviour {
 		starImage.enabled = false;
 	}
 
+	public void unblocked()
+	{
+		obtained.SetActive (true);
+		imageBloqued.SetActive (false);
+		starImage.enabled = true;
+	}
+
 	public void animateLights()
 	{
 		float randomRotation = Random.Range (180f, 360f);

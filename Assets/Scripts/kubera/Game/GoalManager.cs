@@ -249,7 +249,7 @@ public class GoalManager : MonoBehaviour
 			}
 		}
 	}
-
+		
 	private string getStringFromWord(List<Letter> word)
 	{
 		string result = "";

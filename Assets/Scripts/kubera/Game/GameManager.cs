@@ -211,6 +211,11 @@ public class GameManager : MonoBehaviour
 	#if UNITY_EDITOR
 	void Update()
 	{
+		if(Input.GetKeyUp(KeyCode.W))
+		{
+			OnLevelGoalAchieved(false);	
+		}
+
 		if (Input.GetKeyUp (KeyCode.R)) 
 		{
 			PersistentData.GetInstance().startLevel -= 1;
@@ -876,16 +881,24 @@ public class GameManager : MonoBehaviour
 				AudioManager.GetInstance().Stop("loose");
 				AudioManager.GetInstance().Play("losse");
 			}
-
-			if(remainingMoves <=0)
+				
+			if(hudManager.isShowingPopup("OpeningShopika") || hudManager.isShowingPopup("NoGemsPopUp"))
 			{
-				activatePopUp ("noMovementsPopUp");
+				//Evitamos encimar popups
+				Debug.Log("EVITAMOS ENCIMARLOS");
+				waitingCheckAfterPopup();
 			}
 			else
 			{
-				activatePopUp ("noOptionsPopUp");
+				if(remainingMoves <=0)
+				{
+					activatePopUp ("noMovementsPopUp");
+				}
+				else
+				{
+					activatePopUp ("noOptionsPopUp");
+				}
 			}
-
 		}
 	}
 
@@ -1527,7 +1540,8 @@ public class GameManager : MonoBehaviour
 
 	public void popUpCompleted (string action ="")
 	{
-		switch (action) {
+		switch (action) 
+		{
 		case "startGame":
 			allowGameInput ();
 			updatePiecesLightAndUpdateLetterState ();
@@ -1557,6 +1571,7 @@ public class GameManager : MonoBehaviour
 			activatePopUp ("SecondChance");
 			break;
 		case "loose":
+			CancelInvoke();
 			PersistentData.GetInstance ().fromLoose = true;
 			PersistentData.GetInstance ().fromGameToLevels = true;
 			toLevels ();
@@ -1565,16 +1580,20 @@ public class GameManager : MonoBehaviour
 			activatePopUp ("NoGemsPopUp");
 			break;
 		case "checkInSeconds":
-			CancelInvoke("checkIfLose");
-			Invoke ("checkIfLose", checkIfLoseSeconds);
-			allowGameInput ();
-			HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.ALL_POPUPS);
-
+				waitingCheckAfterPopup();
 			break;
 		default:		
 				Invoke ("allowInputFromInvoke", 0);
 			break;
 		}
+	}
+
+	protected void waitingCheckAfterPopup()
+	{
+		CancelInvoke("checkIfLose");
+		Invoke ("checkIfLose", checkIfLoseSeconds);
+		allowGameInput ();
+		HighLightManager.GetInstance ().setHighLightOfType (HighLightManager.EHighLightType.ALL_POPUPS);
 	}
 
 	protected void allowInputFromInvoke()

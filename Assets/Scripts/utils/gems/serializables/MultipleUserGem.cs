@@ -9,6 +9,8 @@ namespace utils.gems
 	[Serializable]
 	public class MultipleUserGem : BasicData 
 	{
+		public int localGems;//TODO eliminar porque es un parche para SHOPIKA
+		public string lastTimeLocalGemsGranted;//TODO eliminar porque es un parche para SHOPIKA
 		public string lastUsedId;
 
 		public List<UserGem> users;

@@ -62,7 +62,7 @@ public class FacebookManager : Manager<FacebookManager>
 			conectFacebook.transform.SetParent (panelMessages,false);
 			facebookConectMessageCreated = true;
 		}
-		//KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.OnLoginSuccessfull += OnLoginComplete;
+		KuberaSyncManger.GetCastedInstance<KuberaSyncManger>().facebookProvider.OnLoginSuccessfull += OnLoginComplete;
 
 		fbGraph.OnPlayerInfo += showPlayerInfo;
 		fbGraph.OnGetGameFriends += addGameFriends;

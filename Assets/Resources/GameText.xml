@@ -28,23 +28,23 @@
 		-->
 		<text id="visitShopikaTitle">
 			<languages>
-				<language id="english" text="Visita Shop!ka"/>
-				<language id="spanish" text="Visita Shop!ka"/>
-				<language id="default" text="Visita Shop!ka"/>
+				<language id="english" text="Visita SHOPiKA"/>
+				<language id="spanish" text="Visita SHOPiKA"/>
+				<language id="default" text="Visita SHOPiKA"/>
 			</languages>
 		</text>
 		<text id="visitShopikaDescription">
 			<languages>
-				<language id="english" text="¡Compra fabulosos productos y obten gemas gratis!"/>
-				<language id="spanish" text="¡Compra fabulosos productos y obten gemas gratis!"/>
-				<language id="default" text="¡Compra fabulosos productos y obten gemas gratis!"/>
+				<language id="english" text="¡Gana dinero con SHOPiKA!"/>
+				<language id="spanish" text="¡Gana dinero con SHOPiKA!"/>
+				<language id="default" text="¡Gana dinero con SHOPiKA!"/>
 			</languages>
 		</text>
 		<text id="visitShopikaButton">
 			<languages>
-				<language id="english" text="¡ir de compras!"/>
-				<language id="spanish" text="¡ir de compras!"/>
-				<language id="default" text="¡ir de compras!"/>
+				<language id="english" text="Visitanos"/>
+				<language id="spanish" text="Visitanos"/>
+				<language id="default" text="Visitanos"/>
 			</languages>
 		</text>
 
@@ -82,15 +82,15 @@
 		<text id="connecting_shopika_info">
 			<languages>
 				<language id="english" text="Getting your info of shopika"/>
-				<language id="spanish" text="Obteniendo tu progreso de shopika"/>
-				<language id="default" text="Obteniendo tu progreso de shopika"/>
+				<language id="spanish" text="Buscando a SHOPiKA"/>
+				<language id="default" text="Buscando a SHOPiKA"/>
 			</languages>
 		</text>
 		<text id="connecting_failure_shopika_title">
 			<languages>
 				<language id="english" text="Something fail"/>
-				<language id="spanish" text="Algo fallo"/>
-				<language id="default" text="Algo fallo"/>
+				<language id="spanish" text="Algo falló"/>
+				<language id="default" text="Algo falló"/>
 			</languages>
 		</text>
 		<text id="connecting_failure_shopika_info">
@@ -118,8 +118,8 @@
 		<text id="connecting_failure_facebook_title">
 			<languages>
 				<language id="english" text="Something fail"/>
-				<language id="spanish" text="Algo fallo"/>
-				<language id="default" text="Algo fallo"/>
+				<language id="spanish" text="Algo falló"/>
+				<language id="default" text="Algo falló"/>
 			</languages>
 		</text>
 		<text id="connecting_failure_facebook_info">
@@ -143,8 +143,8 @@
 		<text id="secondChanceGiveUp">
 			<languages>
 				<language id="english" text="GIVE UP"/>
-				<language id="spanish" text="RENDIRSE"/>
-				<language id="default" text="RENDIRSE"/>
+				<language id="spanish" text="REINICIAR"/>
+				<language id="default" text="REINICIAR"/>
 			</languages>
 		</text>
 		<text id="secondChanceRetry">
@@ -171,15 +171,15 @@
 		<text id="noOptionsGameGiveUp">
 			<languages>
 				<language id="english" text="GIVE UP"/>
-				<language id="spanish" text="RENDIRSE"/>
-				<language id="default" text="RENDIRSE"/>
+				<language id="spanish" text="REINICIAR"/>
+				<language id="default" text="REINICIAR"/>
 			</languages>
 		</text>
 		<text id="noOptionGameTitle">
 			<languages>
 				<language id="english" text="Use a power up or give up"/>
-				<language id="spanish" text="Usa un poder o rindete"/>
-				<language id="default" text="Usa un poder o rindete"/>
+				<language id="spanish" text="¡Casi lo logras!"/>
+				<language id="default" text="¡Casi lo logras!"/>
 			</languages>
 		</text>
 		<text id="hudLevel">
@@ -652,83 +652,6 @@
 				<language id="default" text="El {{b}}RAYO{{/b}} convierte en letras todos los bloques del tablero."/>
 			</languages>
 		</text>
-		<!---<text id="Tutorial_lvl64_phase1">
-			<languages>
-				<language id="english" text="You need a {{b}}Z{{/b}} to form {{b}}PEZ{{/b}}. /nDrag {{b}}WILD CARD{{/b}} to the area for forming words."/>
-				<language id="spanish" text="Arrastra el {{b}}COMODÍN{{/b}} a la letra K para convertirla en {{b}}T{{/b}}."/>
-				<language id="default" text="Arrastra el {{b}}COMODÍN{{/b}} a la letra K para convertirla en {{b}}T{{/b}}."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase2">
-			<languages>
-				<language id="english" text="Tap the letter {{b}}Z{{/b}} do the {{b}}WILD CARD{{/b}} becomes a {{b}}Z{{/b}}."/>
-				<language id="spanish" text="Teclea la letra {{b}}T{{/b}}."/>
-				<language id="default" text="Teclea la letra {{b}}T{{/b}}."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase3">
-			<languages>
-				<language id="english" text="If you need to change the letter of the {{b}}WILD CARD{{/b}} just tap it."/>
-				<language id="spanish" text="Arrastra el {{b}}COMODÍN{{/b}} al bloque azul para convertirlo en {{b}}A{{/b}}."/>
-				<language id="default" text="Arrastra el {{b}}COMODÍN{{/b}} al bloque azul para convertirlo en {{b}}A{{/b}}."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase4">
-			<languages>
-				<language id="english" text="Use {{b}}WILD CARD{{/b}} as many times  as you need to pass the level."/>
-				<language id="spanish" text="Teclea la letra {{b}}A{{/b}}."/>
-				<language id="default" text="Teclea la letra {{b}}A{{/b}}."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase5">
-			<languages>
-				<language id="english" text="You need a {{b}}Z{{/b}} to form {{b}}PEZ{{/b}}. /nDrag {{b}}WILD CARD{{/b}} to the area for forming words."/>
-				<language id="spanish" text="Arrastra el {{b}}COMODÍN{{/b}} al espacio vacío para convertirlo en {{b}}X{{/b}}."/>
-				<language id="default" text="Arrastra el {{b}}COMODÍN{{/b}} al espacio vacío para convertirlo en {{b}}X{{/b}}."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase6">
-			<languages>
-				<language id="english" text="Tap the letter {{b}}Z{{/b}} do the {{b}}WILD CARD{{/b}} becomes a {{b}}Z{{/b}}."/>
-				<language id="spanish" text="Teclea la letra {{b}}X{{/b}}."/>
-				<language id="default" text="Teclea la letra {{b}}X{{/b}}."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase7">
-			<languages>
-				<language id="english" text="If you need to change the letter of the {{b}}WILD CARD{{/b}} just tap it."/>
-				<language id="spanish" text="Forma la palabra {{b}}TAXI{{/b}}."/>
-				<language id="default" text="Forma la palabra {{b}}TAXI{{/b}}."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_phase8">
-			<languages>
-				<language id="english" text="Use {{b}}WILD CARD{{/b}} as many times  as you need to pass the level."/>
-				<language id="spanish" text="Teclea las letras azules para transformarlas en otra letra."/>
-				<language id="default" text="Teclea las letras azules para transformarlas en otra letra."/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_letter1">
-			<languages>
-				<language id="english" text="T"/>
-				<language id="spanish" text="T"/>
-				<language id="default" text="T"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_letter2">
-			<languages>
-				<language id="english" text="A"/>
-				<language id="spanish" text="A"/>
-				<language id="default" text="A"/>
-			</languages>
-		</text>
-		<text id="Tutorial_lvl64_letter3">
-			<languages>
-				<language id="english" text="X"/>
-				<language id="spanish" text="X"/>
-				<language id="default" text="X"/>
-			</languages>
-		</text>-->
 		<text id="NoGemsPopUpTitle">
 			<languages>
 				<language id="english" text="Not enough Gems"/>
@@ -739,22 +662,22 @@
 		<text id="NoGemsPopUpInfo">
 			<languages>
 				<language id="english" text="Visit Shop!ka to buy awesome products and get Gems."/>
-				<language id="spanish" text="Visita Shop!ka para comprar fabulosos productos y obtener gemas."/>
-				<language id="default" text="Visita Shop!ka para comprar fabulosos productos y obtener gemas."/>
+				<language id="spanish" text="¡Gana dinero con SHOPiKA!"/>
+				<language id="default" text="¡Gana dinero con SHOPiKA!"/>
 			</languages>
 		</text>
 		<text id="NoGemsPopUpInfoNoShopikaLogin">
 			<languages>
 				<language id="english" text="Sing up to Shopika and get 100 free gems!"/>
-				<language id="spanish" text="¡Registrate a Shopika para obtener 100 gemas!"/>
-				<language id="default" text="¡Registrate a Shopika para obtener 100 gemas!"/>
+				<language id="spanish" text="¡Gana dinero con SHOPiKA!"/>
+				<language id="default" text="¡Gana dinero con SHOPiKA!"/>
 			</languages>
 		</text>
 		<text id="NoGemsPopUpButton">
 			<languages>
 				<language id="english" text="Go shopping"/>
-				<language id="spanish" text="Ir de compras"/>
-				<language id="default" text="Ir de compras"/>
+				<language id="spanish" text="Visitanos"/>
+				<language id="default" text="Visitanos"/>
 			</languages>
 		</text>
 		<text id="WinTextPopUpID">

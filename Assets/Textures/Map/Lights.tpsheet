@@ -1,0 +1,19 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:67f1c3e176351dc4279d1074c7e9bc8c:d2e05cd7e4f20e98413208d6559881da:0f6c0495d9e1f9aac404ab3d527c59ba$
+#
+:format=40000
+:texture=Lights.png
+:size=512x512
+:pivotpoints=enabled
+
+K-Mapa1_Luz1;1;325;249;186;0.5;0.5
+K-Mapa1_Luz2 ;256;275;203;236;0.7906403940886699;0.7584745762711864
+K-Mapa1_Luz3h;244;50;112;219;1.3169642857142858;0.06621004566210043
+K-Mapa1_Luz4;362;96;122;173;0.8565573770491803;0.2167630057803468
+K-Mapa1_Luz5;1;31;133;238;0.13533834586466165;0.7878151260504201
+K-Mapa1_Luz6;140;104;98;215;-0.46938775510204084;-0.1441860465116278
